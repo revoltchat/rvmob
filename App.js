@@ -438,7 +438,7 @@ class MainView extends React.Component {
                     <Modal visible={!!this.state.inviteBot} transparent={true} animationType="fade">
                         {this.state.inviteBot &&
                         <View style={{flex: 1, backgroundColor: currentTheme.backgroundPrimary}}>
-                            <Pressable onPress={() => {this.setState({inviteServer: null})}}><Text style={{fontSize: 24}}>Cancel</Text></Pressable>
+                            <Pressable onPress={() => {this.setState({inviteBot: null})}}><Text style={{fontSize: 24}}>Cancel</Text></Pressable>
                             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     <GeneralAvatar attachment={this.state.inviteBot.avatar} size={48} /><Text style={{paddingLeft: 10, fontSize: 24, fontWeight: 'bold'}}>{this.state.inviteBot.username}</Text>
@@ -477,6 +477,7 @@ class MainView extends React.Component {
                         }} value={this.state.tokenInput} />
                         {this.state.logInError && <Text>{this.state.logInError.message}</Text>}
                         <TouchableOpacity onPress={async () => {
+                                this.setState({status: "tryingLogin"})
                             try {
                                 await client.useExistingSession({token: this.state.tokenInput})
                                 this.setState({status: "loggedIn", tokenInput: "", passwordInput: "", emailInput: "", logInError: null})
