@@ -532,8 +532,13 @@ class Messages extends React.Component {
             messages: [],
             loading: false,
             forceUpdate: false,
-            newMessageCount: 0
+            newMessageCount: 0,
+            error: null
         };
+    }
+    componentDidCatch(error, errorInfo) {
+        this.setState({error})
+        console.error(error)
     }
     shouldComponentUpdate(nextProps, nextState) {
         if (nextProps.rerender != this.props.rerender) return true
@@ -594,6 +599,7 @@ class Messages extends React.Component {
         }
     }
     render() {
+        if (this.state.error) return <Text style={{color: "#ff6666"}}>Error rendering: {this.state.error.message}</Text>
         return (
             this.state.loading ? 
             <Text>Loading...</Text>
