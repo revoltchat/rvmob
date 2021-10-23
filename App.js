@@ -17,7 +17,7 @@ import dayjs from 'dayjs'
 import { decodeTime } from 'ulid'
 import ImageViewer from 'react-native-image-zoom-viewer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ProgressViewIOSComponent } from 'react-native';
+import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 
 const client = new Client();
 
@@ -457,6 +457,19 @@ class MainView extends React.Component {
                 : 
                 (this.state.status == "awaitingLogin" ? 
                 <View style={styles.app}>
+                    {/* <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+                        <Text style={{fontWeight: 'bold', fontSize: 48}}>RVMob</Text>
+                        <TextInput placeholderTextColor={currentTheme.textSecondary} style={{borderRadius: 8, padding: 3, paddingLeft: 10, paddingRight: 10, margin: 8, width: "80%", backgroundColor: currentTheme.backgroundSecondary, color: currentTheme.textPrimary}} placeholder={"Email"} onChangeText={(text) => {
+                            this.setState({emailInput: text})
+                        }} value={this.state.emailInput} />
+                        <TextInput placeholderTextColor={currentTheme.textSecondary} style={{borderRadius: 8, padding: 3, paddingLeft: 10, paddingRight: 10, margin: 8, width: "80%", backgroundColor: currentTheme.backgroundSecondary, color: currentTheme.textPrimary}} placeholder={"Password"} onChangeText={(text) => {
+                            this.setState({passwordInput: text})
+                        }} value={this.state.passwordInput} />
+                        {this.state.logInError && <Text>{this.state.logInError.message}</Text>}
+                        <TouchableOpacity onPress={async () => {
+                            this.setState({status: "awaitingCaptcha"})
+                        }} style={{borderRadius: 8, padding: 5, paddingLeft: 10, paddingRight: 10, backgroundColor: currentTheme.backgroundSecondary}}><Text>Log in</Text></TouchableOpacity>
+                    </View> */}
                     <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
                         <Text style={{fontWeight: 'bold', fontSize: 48}}>RVMob</Text>
                         <TextInput placeholderTextColor={currentTheme.textSecondary} style={{borderRadius: 8, padding: 3, paddingLeft: 10, paddingRight: 10, margin: 8, width: "80%", backgroundColor: currentTheme.backgroundSecondary, color: currentTheme.textPrimary}} placeholder={"Token"} onChangeText={(text) => {
@@ -464,10 +477,9 @@ class MainView extends React.Component {
                         }} value={this.state.tokenInput} />
                         {this.state.logInError && <Text>{this.state.logInError.message}</Text>}
                         <TouchableOpacity onPress={async () => {
-                            this.setState({status: "tryingLogin"})
                             try {
                                 await client.useExistingSession({token: this.state.tokenInput})
-                                this.setState({tokenInput: "", logInError: null})
+                                this.setState({status: "loggedIn", tokenInput: "", passwordInput: "", emailInput: "", logInError: null})
                             } catch (e) {
                                 console.error(e)
                                 this.setState({logInError: e, status: "awaitingLogin"})
@@ -475,6 +487,23 @@ class MainView extends React.Component {
                         }} style={{borderRadius: 8, padding: 5, paddingLeft: 10, paddingRight: 10, backgroundColor: currentTheme.backgroundSecondary}}><Text>Log in</Text></TouchableOpacity>
                     </View>
                 </View>
+                :
+                this.state.status == "awaitingCaptcha" ? 
+                    <View style={styles.app}>
+                        <ConfirmHcaptcha siteKey={"3daae85e-09ab-4ff6-9f24-e8f4f335e433"} backgroundColor={currentTheme.backgroundPrimary} baseUrl={"https://app.revolt.chat"} onMessage={async e => {
+                            if (!['cancel', 'error', 'expired'].includes(e.nativeEvent.data)) {
+                                try {
+                                    await client.login({email: this.state.emailInput, password: this.state.passwordInput, captcha: e.nativeEvent.data});
+                                    //await client.useExistingSession({token: this.state.tokenInput})
+                                    this.setState({status: "loggedIn", tokenInput: "", passwordInput: "", emailInput: "", logInError: null})
+                                } catch (e) {
+                                    console.error(e)
+                                    this.setState({logInError: e, status: "awaitingLogin"})
+                                }
+                                return;
+                            }
+                        }} />
+                    </View>
                 :
                 <View style={styles.app}>
                     <View style={styles.loggingInScreen}>
