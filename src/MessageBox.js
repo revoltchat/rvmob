@@ -35,7 +35,7 @@ export class MessageBox extends React.Component {
                             setTimeout((() => typing = false).bind(this), 2500);
                         }
                     }
-                }} value={this.props.value} />
+                }} value={this.state.currentText} />
                 {this.state.currentText.length > 0 ? <TouchableOpacity style={styles.sendButton} onPress={() => {
                     this.props.channel.sendMessage({
                         content: this.state.currentText, 
