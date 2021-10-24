@@ -1,4 +1,4 @@
-import { client, Text, MarkdownView } from './Generic';
+import { client, Text, MarkdownView, app } from './Generic';
 import { View, FlatList, TouchableOpacity, Pressable, Dimensions } from 'react-native';
 import { Avatar, Username } from './Profile'
 import React from 'react';
@@ -104,7 +104,7 @@ export class Messages extends React.Component {
                     message={m.item.message} 
                     grouped={m.item.grouped} 
                     onLongPress={() => this.props.onLongPress(m.item.message)} 
-                    onUserPress={() => this.props.onUserPress(m.item.message)} 
+                    onUserPress={() => app.openProfile(m.item.message.author)} 
                     onImagePress={(a) => this.props.onImagePress(a)} 
                     onUsernamePress={() => this.props.onUsernamePress(m.item.message)}
                     />
