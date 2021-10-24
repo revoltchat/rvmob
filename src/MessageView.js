@@ -90,7 +90,7 @@ export class Messages extends React.Component {
             <Text>Loading...</Text>
             :
             <View style={{flex: 1}}>
-                {this.state.newMessageCount > 0 && <Text style={{height: 32, padding: 6, backgroundColor: currentTheme.accentColor, color: currentTheme.accentColorForeground}}>{this.state.newMessageCount} new messages...</Text>}
+                {this.state.newMessageCount > 0 ? <Text style={{height: 32, padding: 6, backgroundColor: currentTheme.accentColor, color: currentTheme.accentColorForeground}}>{this.state.newMessageCount} new messages...</Text> : null}
                 <FlatList data={this.state.messages} 
                 removeClippedSubviews={false}
                 disableVirtualization={true}
@@ -139,12 +139,12 @@ export const Message = observer((props) => {
     try {
         return (
             <TouchableOpacity activeOpacity={0.8} delayLongPress={750} onLongPress={props.onLongPress}>
-                {(props.message.reply_ids !== null) && <View style={styles.repliedMessagePreviews}>{props.message.reply_ids.map(id => <ReplyMessage key={id} message={client.messages.get(id)} />)}</View>}
+                {(props.message.reply_ids !== null) ? <View style={styles.repliedMessagePreviews}>{props.message.reply_ids.map(id => <ReplyMessage key={id} message={client.messages.get(id)} />)}</View> : null}
                 <View style={props.grouped ? styles.messageGrouped : styles.message}>
-                    {(props.message.author && !props.grouped) && <Pressable onPress={() => props.onUserPress()}><Avatar user={props.message.author} server={props.message.channel?.server} size={35} /></Pressable>}
+                    {(props.message.author && !props.grouped) ? <Pressable onPress={() => props.onUserPress()}><Avatar user={props.message.author} server={props.message.channel?.server} size={35} /></Pressable> : null}
                     <View style={styles.messageInner}>
-                        {props.grouped && (props.message.edited && <Text style={{fontSize: 12, color: currentTheme.textSecondary, position: 'relative', right: 47, marginBottom: -16}}> (edited)</Text>)}
-                        {(props.message.author && !props.grouped) && <View style={{flexDirection: 'row'}}><Pressable onPress={props.onUsernamePress}><Username user={props.message.author} server={props.message.channel?.server} /></Pressable><Text style={styles.timestamp}> {dayjs(decodeTime(props.message._id)).format('YYYY-MM-DD hh:mm:ss A')}</Text>{props.message.edited && <Text style={{fontSize: 12, color: currentTheme.textSecondary, position: 'relative', top: 2, left: 2}}> (edited)</Text>}</View>}
+                        {(props.grouped && props.message.edited) ? <Text style={{fontSize: 12, color: currentTheme.textSecondary, position: 'relative', right: 47, marginBottom: -16}}> (edited)</Text> : null}
+                        {(props.message.author && !props.grouped) ? <View style={{flexDirection: 'row'}}><Pressable onPress={props.onUsernamePress}><Username user={props.message.author} server={props.message.channel?.server} /></Pressable><Text style={styles.timestamp}> {dayjs(decodeTime(props.message._id)).format('YYYY-MM-DD hh:mm:ss A')}</Text>{props.message.edited && <Text style={{fontSize: 12, color: currentTheme.textSecondary, position: 'relative', top: 2, left: 2}}> (edited)</Text>}</View> : null}
                         <MarkdownView>{props.message.content}</MarkdownView>
                         {props.message.attachments?.map((a) => {
                             if (a.metadata?.type == "Image") {
@@ -163,10 +163,10 @@ export const Message = observer((props) => {
                         {props.message.embeds?.map((e) => {
                             if (e.type=="Website")
                             return <View style={{backgroundColor: currentTheme.backgroundSecondary, padding: 8, borderRadius: 8}}>
-                                {e.site_name && <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>{e.site_name}</Text>}
+                                {e.site_name ? <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>{e.site_name}</Text> : null}
                                 {e.title && 
                                     e.url ? <Pressable onPress={() => openUrl(e.url)}><Text style={{color: currentTheme.accentColor}}>{e.title}</Text></Pressable> : <Text>{e.title}</Text>}
-                                {e.description && <Text>{e.description}</Text>}
+                                {e.description ? <Text>{e.description}</Text> : null}
                                 {(() => {
                                     if (e.image) {
                                         let width = e.image.width;
@@ -212,11 +212,11 @@ export class ReplyMessage extends React.PureComponent {
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                 <Text style={{marginLeft: 15, marginRight: 15}}>↱</Text>
                 {this.props.message ? 
-                    this.props.message.author && <>
+                    this.props.message.author ? <>
                         <Avatar user={this.props.message.author} server={this.props.message.channel?.server} size={16} />
                         <Username user={this.props.message.author} server={this.props.message.channel?.server} />
                         <Text style={styles.messageContentReply}>{this.props.message.content.split("\n").join(" ")}</Text>
-                    </>
+                    </> : null
                 : <Text style={styles.messageContentReply}>Message not loaded</Text>
                 }
             </View>

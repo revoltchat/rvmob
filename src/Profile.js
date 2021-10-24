@@ -25,12 +25,11 @@ export const Username = observer(({ server, user, noBadge, size }) => {
             <Text style={{color, fontWeight: 'bold', fontSize: size || 14}}>
                 {name}
             </Text>
-            {!noBadge && (
-            user?.bot && 
+            {!noBadge && user?.bot ?
                 <Text style={{color: currentTheme.accentColorForeground, backgroundColor: currentTheme.accentColor, marginLeft: 4, paddingLeft: 3, paddingRight: 3, borderRadius: 3, fontSize: (size || 14)}}>
                     BOT
                 </Text>
-            )}
+            : null}
         </View>
     )
 })
@@ -45,13 +44,13 @@ export const Avatar = observer(({ channel, user, server, status, size, backgroun
     return ( 
         <View>
             <Image source={{uri: ((server && memberObject?.generateAvatarURL && memberObject?.generateAvatarURL()) ? memberObject?.generateAvatarURL() : user?.generateAvatarURL()) + "?max_side=" + defaultMaxSide}} style={{width: size || 35, height: size || 35, borderRadius: 10000}} />
-            {status && <View style={{width: size / statusScale, height: size / statusScale, backgroundColor: statusColor, borderRadius: 10000, marginTop: -(size / statusScale), left: size - (size / statusScale), borderWidth: size / 20, borderColor: backgroundColor || currentTheme.backgroundPrimary}} />}
+            {status ? <View style={{width: size / statusScale, height: size / statusScale, backgroundColor: statusColor, borderRadius: 10000, marginTop: -(size / statusScale), left: size - (size / statusScale), borderWidth: size / 20, borderColor: backgroundColor || currentTheme.backgroundPrimary}} /> : null}
         </View>
     )
     if (channel)
     return (
         <View>
-            {channel?.generateIconURL() && <Image source={{uri: channel?.generateIconURL() + "?max_side=" + defaultMaxSide}} style={{width: size || 35, height: size || 35, borderRadius: 10000}} />}
+            {channel?.generateIconURL() ? <Image source={{uri: channel?.generateIconURL() + "?max_side=" + defaultMaxSide}} style={{width: size || 35, height: size || 35, borderRadius: 10000}} /> : null}
         </View>
     )
 })
@@ -83,7 +82,7 @@ export const RoleView = observer(({ server, user }) => {
             <Text>{roles.length} Roles</Text>
             <View>{roles.map(r => <Text style={{flexDirection: 'row', padding: 8, paddingLeft: 12, paddingRight: 12, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8, color: r.colour}}>{r.name}</Text>)}</View>
         </>
-        : <></>
+        : null
     )
 })
 

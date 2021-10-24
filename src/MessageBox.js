@@ -15,14 +15,14 @@ export class MessageBox extends React.Component {
     render() {
         return <View style={styles.messageBoxOuter}>
             <TypingIndicator channel={this.props.channel}/>
-            {this.props.replyingMessages && this.props.replyingMessages.map(m => 
+            {this.props.replyingMessages ? this.props.replyingMessages.map(m => 
                 <View key={m._id} style={styles.replyingMessagePreview}>
                     <Pressable onPress={() => 
                         this.props.setReplyingMessages(this.props.replyingMessages?.filter(m2 => m2._id != m._id))
                     }><Text>X</Text></Pressable>
                     <Text> Replying to {m.author?.username}</Text>
                 </View>
-            )}
+            ) : null}
             <View style={styles.messageBoxInner}>
                 <TextInput placeholderTextColor={currentTheme.textSecondary} style={styles.messageBox} placeholder={"Message " + (this.props.channel?.channel_type != "Group" ? (this.props.channel?.channel_type == "DirectMessage" ? "@" : "#") : "") + (this.props.channel?.name || this.props.channel.recipient?.username)} onChangeText={(text) => {
                     this.setState({currentText: text})
@@ -36,7 +36,7 @@ export class MessageBox extends React.Component {
                         }
                     }
                 }} value={this.props.value} />
-                {this.state.currentText.length > 0 && <TouchableOpacity style={styles.sendButton} onPress={() => {
+                {this.state.currentText.length > 0 ? <TouchableOpacity style={styles.sendButton} onPress={() => {
                     this.props.channel.sendMessage({
                         content: this.state.currentText, 
                         replies: this.props.replyingMessages.map((m) => {
@@ -45,7 +45,8 @@ export class MessageBox extends React.Component {
                     }); 
                     this.setState({currentText: ""})
                     this.props.setReplyingMessages([]);
-                }}><Text>Send</Text></TouchableOpacity>}
+                }}><Text>Send</Text></TouchableOpacity> 
+                : null}
             </View>
         </View>
     }

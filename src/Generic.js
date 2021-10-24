@@ -1,10 +1,21 @@
 import Markdown, { MarkdownIt } from 'react-native-markdown-display';
-import ReactNative, { View } from 'react-native';
+import ReactNative, { View, TouchableOpacity } from 'react-native';
 import { Client } from 'revolt.js';
-import { currentTheme } from './Theme';
+import { currentTheme, styles } from './Theme';
+import { MiniProfile } from './Profile';
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import FastImage from 'react-native-fast-image';
 const Image = FastImage;
+
+export const app = {};
+app.openProfile = (u) => {};
+app.openInvite = (i) => {};
+app.openBotInvite = (i) => {};
+app.openServer = (s) => {};
+export function setFunction(name, func) {
+    app[name] = func;
+}
 
 export const defaultMaxSide = "128";
 
@@ -100,3 +111,107 @@ export const GeneralAvatar = ({ attachment, size }) => {
         </View>
     )
 }
+
+
+export const ServerList = observer(({ onServerPress }) => {
+    return [...client.servers.values()].map((s) => {
+        let iconURL = s.generateIconURL();
+        return <TouchableOpacity onPress={
+            ()=>{onServerPress(s)}
+        } 
+        key={s._id} 
+        style={styles.serverButton}>
+            {iconURL ? <Image source={{uri: iconURL + "?max_side=" + defaultMaxSide}} style={styles.serverIcon}/> : <Text>{s.name}</Text>}
+        </TouchableOpacity>
+    })
+})
+
+export const ChannelList = observer((props) => {
+    return (
+        <>
+            {!props.currentServer ? <>
+            <TouchableOpacity onPress={
+                async ()=>{props.onChannelClick(null)}
+            } 
+            key={"home"} 
+            style={props.currentChannel?._id == null ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
+                <Text>Home</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={
+                ()=>{props.onChannelClick("friends")}
+            } 
+            key={"friends"} 
+            style={props.currentChannel == "friends" ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
+                <Text>Friends</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={
+                async ()=>{props.onChannelClick(await client.user.openDM())}
+            } 
+            key={"notes"} 
+            style={props.currentChannel?.channel_type == "SavedMessages" ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
+                <Text>Saved Notes</Text>
+            </TouchableOpacity>
+            {[...client.channels.values()].filter(c => c.channel_type == "DirectMessage" || c.channel_type == "Group").map(dm => {
+                if (dm.channel_type == "DirectMessage") return <TouchableOpacity onPress={
+                    ()=>{props.onChannelClick(dm)}
+                } onLongPress={
+                    ()=>{openProfile(dm.recipient)}
+                } 
+                key={dm._id} 
+                style={props.currentChannel?._id == dm._id ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <MiniProfile user={dm.recipient} />
+                    </View>
+                </TouchableOpacity>
+                if (dm.channel_type == "Group") return <TouchableOpacity onPress={
+                    ()=>{props.onChannelClick(dm)}
+                } 
+                key={dm._id} 
+                style={props.currentChannel?._id == dm._id ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
+                    <MiniProfile channel={dm} />
+                </TouchableOpacity>
+            })}
+            </>
+            : null}
+            {props.currentServer ? <>
+                {props.currentServer.banner ? <Image source={{uri: props.currentServer.generateBannerURL()}} style={{width: "100%", height: 110, justifyContent: 'flex-end'}}><Text style={{margin: 10, marginTop: 13, marginBottom: 9, fontSize: 18, fontWeight: 'bold'}}>{props.currentServer.name}</Text></Image> : <Text style={{margin: 10, marginTop: 13, marginBottom: 9, fontSize: 18, fontWeight: 'bold'}}>{props.currentServer.name}</Text>}
+                {(() => {
+                    let processedChannels = [];
+                    let res = props.currentServer.categories?.map(c => {
+                        return <View key={c.id}>
+                            <Text style={{marginLeft: 5, marginTop: 10, fontSize: 12, fontWeight: 'bold'}}>{c.title?.toUpperCase()}</Text>
+                            {c.channels.map((cid) => {
+                                processedChannels.push(cid)
+                                let c = client.channels.get(cid)
+                                if (c) {
+                                    return <TouchableOpacity onPress={
+                                        ()=>{props.onChannelClick(c)}
+                                    } 
+                                    key={c._id} 
+                                    style={props.currentChannel?._id == c._id ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
+                                        {(c.generateIconURL && c.generateIconURL()) ? <Image source={{uri: c.generateIconURL() + "?max_side=" + defaultMaxSide}} style={{width: 20, height: 20, marginRight: 5}}/> : <Text>#</Text>}<Text>{c.name}</Text>
+                                    </TouchableOpacity>
+                                }
+                            })}
+                        </View>
+                    })
+                    return <>
+                        {props.currentServer.channels.map((c) => {
+                            if (c) {
+                                if (!processedChannels.includes(c._id))
+                                return <TouchableOpacity onPress={
+                                    ()=>{props.onChannelClick(c)}
+                                } 
+                                key={c._id} 
+                                style={props.currentChannel?._id == c._id ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
+                                    {(c.generateIconURL && c.generateIconURL()) ? <Image source={{uri: c.generateIconURL() + "?max_side=" + defaultMaxSide}} style={{width: 20, height: 20, marginRight: 5}}/> : <Text>#</Text>}<Text>{c.name}</Text>
+                                </TouchableOpacity>
+                            }
+                        })}
+                        {res}
+                    </>
+                })()}
+            </> : null}
+        </>
+    );
+})
