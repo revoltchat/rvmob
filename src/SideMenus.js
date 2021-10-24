@@ -60,7 +60,7 @@ export class RightMenu extends React.Component {
         return (
             <View style={styles.rightView}>
                 {this.props.currentChannel?.recipients?.map(u => 
-                    <TouchableOpacity style={{justifyContent: 'center', marginLeft: 6, marginRight: 6, marginTop: 3, padding: 6, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8}} onPress={() => this.props.onOpenProfile(u)}>
+                    <TouchableOpacity style={{justifyContent: 'center', marginLeft: 6, marginRight: 6, marginTop: 3, padding: 6, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8}} onPress={() => app.openProfile(u)}>
                         <MiniProfile user={u} />
                     </TouchableOpacity>
                 )}
@@ -70,7 +70,7 @@ export class RightMenu extends React.Component {
         return (
             <View style={styles.rightView}>
                 {this.state.users?.map(u => 
-                    <TouchableOpacity style={{justifyContent: 'center', marginLeft: 6, marginRight: 6, marginTop: 3, padding: 6, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8}} onPress={() => this.props.onOpenProfile(u)}>
+                    <TouchableOpacity style={{justifyContent: 'center', marginLeft: 6, marginRight: 6, marginTop: 3, padding: 6, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8}} onPress={() => app.openProfile(u)}>
                         <MiniProfile user={u} server={this.props.currentChannel?.server} />
                     </TouchableOpacity>
                 )}

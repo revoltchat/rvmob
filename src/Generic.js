@@ -62,18 +62,18 @@ export const openUrl = (url) => {
         let id = url.slice(2)
         let user = client.users.get(id)
         if (user) {
-            openProfile(user)
+            app.openProfile(user)
         }
         return
     }
     let match = url.match(RE_INVITE);
     if (match) {
-        openInvite(match[0].split("/").pop())
+        app.openInvite(match[0].split("/").pop())
         return
     }
     let botmatch = url.match(RE_BOT_INVITE);
     if (botmatch) {
-        openBotInvite(botmatch[0].split("/").pop())
+        app.openBotInvite(botmatch[0].split("/").pop())
         return
     }
     
@@ -155,8 +155,8 @@ export const ChannelList = observer((props) => {
                 if (dm.channel_type == "DirectMessage") return <TouchableOpacity onPress={
                     ()=>{props.onChannelClick(dm)}
                 } onLongPress={
-                    ()=>{openProfile(dm.recipient)}
-                } 
+                    ()=>{app.openProfile(dm.recipient)}
+                } delayLongPress={750}
                 key={dm._id} 
                 style={props.currentChannel?._id == dm._id ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -214,4 +214,16 @@ export const ChannelList = observer((props) => {
             </> : null}
         </>
     );
+})
+
+
+
+export const ServerName = observer(({ server, size }) => { 
+    return (
+        <View style={{flexDirection: 'row'}}>
+            <Text style={{fontWeight: 'bold', fontSize: size || 14, flexWrap: 'wrap'}}>
+                {server.server_name || server.name}
+            </Text>
+        </View>
+    )
 })

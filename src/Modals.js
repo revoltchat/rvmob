@@ -1,11 +1,13 @@
 import { View, TouchableOpacity, Pressable, Modal, ScrollView, Dimensions, Linking } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import React from 'react';
-import { client, Text, MarkdownView } from './Generic';
+import { client, Text, MarkdownView, app, GeneralAvatar, ServerName, ServerList } from './Generic';
 import { styles, currentTheme, themes, setTheme, currentThemeName } from './Theme';
 import { ReplyMessage } from './MessageView';
 import { Avatar, Username, MiniProfile, RoleView } from './Profile';
 import { RelationshipStatus } from "revolt-api/types/Users";
+import FastImage from 'react-native-fast-image';
+const Image = FastImage;
 
 export const Modals = ({state, setState}) => {
     return (
@@ -51,9 +53,9 @@ export const Modals = ({state, setState}) => {
         animationType="slide"
         transparent={true}
         visible={!!state.contextMenuUser}
-        onRequestClose={() => openProfile(null)}
+        onRequestClose={() => app.openProfile(null)}
         >
-            <Pressable onPress={() => openProfile(null)} style={{width: Dimensions.get("window").width, height: Dimensions.get("window").height, position: 'absolute', backgroundColor: "#00000000"}} />
+            <Pressable onPress={() => app.openProfile(null)} style={{width: Dimensions.get("window").width, height: Dimensions.get("window").height, position: 'absolute', backgroundColor: "#00000000"}} />
             <View style={{width: "100%", height: "75%", top: "25%", padding: 15, backgroundColor: currentTheme.backgroundSecondary}}>
                 <View>
                     <View style={{flexDirection: 'row'}}>
@@ -75,7 +77,7 @@ export const Modals = ({state, setState}) => {
                     {state.contextMenuUser?.relationship != RelationshipStatus.User ? 
                         !state.contextMenuUser?.bot ? 
                         (state.contextMenuUser?.relationship == RelationshipStatus.Friend ? 
-                            <TouchableOpacity style={styles.actionTile} onPress={async () => {openProfile(null); setState({currentChannel: (await state.contextMenuUser.openDM()), messages: []})}}>
+                            <TouchableOpacity style={styles.actionTile} onPress={async () => {app.openProfile(null); setState({currentChannel: (await state.contextMenuUser.openDM()), messages: []})}}>
                                 <Text>Message</Text>
                             </TouchableOpacity> 
                             :
@@ -102,7 +104,7 @@ export const Modals = ({state, setState}) => {
                         <>
                             <Text style={{fontWeight: 'bold'}}>BOT OWNER</Text>
                             {client.users.get(state.contextMenuUser?.bot?.owner) ? 
-                            <TouchableOpacity style={styles.actionTile} onPress={async () => {openProfile(client.users.get(state.contextMenuUser.bot.owner))}}>
+                            <TouchableOpacity style={styles.actionTile} onPress={async () => {app.openProfile(client.users.get(state.contextMenuUser.bot.owner))}}>
                                 <MiniProfile user={client.users.get(state.contextMenuUser.bot.owner)} />
                             </TouchableOpacity>
                             :

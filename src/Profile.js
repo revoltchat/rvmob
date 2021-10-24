@@ -85,15 +85,3 @@ export const RoleView = observer(({ server, user }) => {
         : null
     )
 })
-
-
-
-const ServerName = observer(({ server, size }) => { 
-    return (
-        <View style={{flexDirection: 'row'}}>
-            <Text style={{fontWeight: 'bold', fontSize: size || 14, flexWrap: 'wrap'}}>
-                {server.server_name || server.name}
-            </Text>
-        </View>
-    )
-})

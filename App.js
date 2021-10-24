@@ -175,7 +175,7 @@ class MainView extends React.Component {
                             </View>
                         </SideMenu>
                     </SideMenu>
-                    <Modals state={this.state} setState={this.setState} />
+                    <Modals state={this.state} setState={this.setState.bind(this)} />
                 </View>
                 : 
                 (this.state.status == "awaitingLogin" ? 
