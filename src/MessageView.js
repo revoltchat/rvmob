@@ -104,7 +104,7 @@ export class Messages extends React.Component {
                     message={m.item.message} 
                     grouped={m.item.grouped} 
                     onLongPress={() => this.props.onLongPress(m.item.message)} 
-                    onUserPress={() => app.openProfile(m.item.message.author)} 
+                    onUserPress={() => app.openProfile(m.item.message.author, this.props.channel?.server)} 
                     onImagePress={(a) => this.props.onImagePress(a)} 
                     onUsernamePress={() => this.props.onUsernamePress(m.item.message)}
                     />

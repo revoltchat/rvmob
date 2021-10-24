@@ -1,7 +1,7 @@
-import { View, TouchableOpacity, Pressable, Modal, ScrollView, Dimensions, Linking } from 'react-native';
+import { View, TouchableOpacity, Pressable, Modal, ScrollView, Dimensions } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import React from 'react';
-import { client, Text, MarkdownView, app, GeneralAvatar, ServerName, ServerList } from './Generic';
+import { client, Text, MarkdownView, app, GeneralAvatar, ServerName, ServerList, openUrl } from './Generic';
 import { styles, currentTheme, themes, setTheme, currentThemeName } from './Theme';
 import { ReplyMessage } from './MessageView';
 import { Avatar, Username, MiniProfile, RoleView } from './Profile';
@@ -56,7 +56,7 @@ export const Modals = ({state, setState}) => {
         onRequestClose={() => app.openProfile(null)}
         >
             <Pressable onPress={() => app.openProfile(null)} style={{width: Dimensions.get("window").width, height: Dimensions.get("window").height, position: 'absolute', backgroundColor: "#00000000"}} />
-            <View style={{width: "100%", height: "75%", top: "25%", padding: 15, backgroundColor: currentTheme.backgroundSecondary}}>
+            <View style={{width: "100%", height: Dimensions.get("window").height * 0.75, top: "25%", padding: 15, backgroundColor: currentTheme.backgroundSecondary}}>
                 <View>
                     <View style={{flexDirection: 'row'}}>
                         <Avatar size={100} user={state.contextMenuUser} server={state.contextMenuUserServer} backgroundColor={currentTheme.backgroundSecondary} status />
@@ -118,13 +118,14 @@ export const Modals = ({state, setState}) => {
                     <ScrollView>
                         <RoleView user={state.contextMenuUser} server={state.contextMenuUserServer}/>
                         <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>BIO</Text>
-                        {state.contextMenuUserProfile?.content ? <MarkdownView style={{margin: 5}}>{state.contextMenuUserProfile?.content}</MarkdownView> : null}
+                        {state.contextMenuUserProfile?.content ? <MarkdownView>{state.contextMenuUserProfile?.content}</MarkdownView> : null}
+                        <View style={{marginTop: 150}} />
                     </ScrollView>
                 </View>
             </View>
         </Modal>
         <Modal visible={!!state.imageViewerImage} transparent={true} animationType="fade">
-            <ImageViewer imageUrls={state.imageViewerImage?.metadata ? [{url: client.generateFileURL(state.imageViewerImage), width: state.imageViewerImage.metadata.width, height: state.imageViewerImage.metadata.height}] : [{url: state.imageViewerImage}]} renderHeader={() => <View style={{height: 50, width: "100%", justifyContent: 'center', paddingLeft: 10, paddingRight: 10}}><Pressable onPress={() => Linking.openURL(state.imageViewerImage?.metadata ? client.generateFileURL(state.imageViewerImage) : state.imageViewerImage)}><Text>Open URL</Text></Pressable><View style={{marginLeft: 20}}/><Pressable onPress={() => setState({imageViewerImage: null})}><Text>Close</Text></Pressable></View>} renderIndicator={(_1, _2) => null} enableSwipeDown={true} onCancel={() => setState({imageViewerImage: null})}/>
+            <ImageViewer imageUrls={state.imageViewerImage?.metadata ? [{url: client.generateFileURL(state.imageViewerImage), width: state.imageViewerImage.metadata.width, height: state.imageViewerImage.metadata.height}] : [{url: state.imageViewerImage}]} renderHeader={() => <View style={{height: 50, width: "100%", justifyContent: 'center', paddingLeft: 10, paddingRight: 10}}><Pressable onPress={() => openUrl(state.imageViewerImage?.metadata ? client.generateFileURL(state.imageViewerImage) : state.imageViewerImage)}><Text>Open URL</Text></Pressable><View style={{marginLeft: 20}}/><Pressable onPress={() => setState({imageViewerImage: null})}><Text>Close</Text></Pressable></View>} renderIndicator={(_1, _2) => null} enableSwipeDown={true} onCancel={() => setState({imageViewerImage: null})}/>
         </Modal>
         <Modal visible={state.settingsOpen} transparent={true} animationType="slide">
             <View style={{flex: 1, backgroundColor: currentTheme.backgroundPrimary, padding: 15, borderTopLeftRadius: 15, borderTopRightRadius: 15}}>

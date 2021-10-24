@@ -1,19 +1,16 @@
 import 'react-native-get-random-values' // react native moment
 import './shim' // react native moment 2
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Pressable, Modal, ScrollView, TextInput, StatusBar, Dimensions, Linking, FlatList } from 'react-native';
+import { View, TouchableOpacity, ScrollView, TextInput, StatusBar, Dimensions } from 'react-native';
 import SideMenu from 'react-native-side-menu';
-import { Channel } from 'revolt.js/dist/maps/Channels';
-import { Message as MessageType } from 'revolt.js/dist/maps/Messages';
 import { RelationshipStatus } from "revolt-api/types/Users";
-import ImageViewer from 'react-native-image-zoom-viewer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
-import { setTheme, currentTheme, currentThemeName, styles, themes } from './src/Theme'
-import { openUrl, Text, MarkdownView, client, defaultMaxSide } from './src/Generic'
+import { currentTheme, styles } from './src/Theme'
+import { Text, client, app } from './src/Generic'
 import { Messages, ReplyMessage } from './src/MessageView'
 import { MessageBox } from './src/MessageBox';
-import { MiniProfile, Username, Avatar, RoleView, ServerName } from './src/Profile'
+import { MiniProfile } from './src/Profile'
 import { setFunction } from './src/Generic';
 import { LeftMenu, RightMenu } from './src/SideMenus';
 import { Modals } from './src/Modals';
@@ -115,7 +112,7 @@ class MainView extends React.Component {
                                             <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10, marginTop: 10}}>INCOMING REQUESTS</Text>
                                             <View>
                                                 {[...client.users.values()].filter((x) => x.relationship === RelationshipStatus.Incoming).map(f => {
-                                                    return <TouchableOpacity key={f._id} onPress={() => openProfile(f)} style={{justifyContent: 'center', margin: 6, padding: 6, backgroundColor: currentTheme.backgroundSecondary, borderRadius: 8}}>
+                                                    return <TouchableOpacity key={f._id} onPress={() => app.openProfile(f)} style={{justifyContent: 'center', margin: 6, padding: 6, backgroundColor: currentTheme.backgroundSecondary, borderRadius: 8}}>
                                                         <MiniProfile user={f} scale={1.15} />
                                                     </TouchableOpacity>
                                                 })}
@@ -123,7 +120,7 @@ class MainView extends React.Component {
                                             <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10, marginTop: 10}}>OUTGOING REQUESTS</Text>
                                             <View>
                                                 {[...client.users.values()].filter((x) => x.relationship === RelationshipStatus.Outgoing).map(f => {
-                                                    return <TouchableOpacity key={f._id} onPress={() => openProfile(f)} style={{justifyContent: 'center', margin: 6, padding: 6, backgroundColor: currentTheme.backgroundSecondary, borderRadius: 8}}>
+                                                    return <TouchableOpacity key={f._id} onPress={() => app.openProfile(f)} style={{justifyContent: 'center', margin: 6, padding: 6, backgroundColor: currentTheme.backgroundSecondary, borderRadius: 8}}>
                                                         <MiniProfile user={f} scale={1.15} />
                                                     </TouchableOpacity>
                                                 })}
@@ -131,7 +128,7 @@ class MainView extends React.Component {
                                             <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10}}>FRIENDS</Text>
                                             <View>
                                                 {[...client.users.values()].filter((x) => x.relationship === RelationshipStatus.Friend).map(f => {
-                                                    return <TouchableOpacity key={f._id} onPress={() => openProfile(f)} style={{flexDirection: "row", alignItems: 'center', margin: 8, padding: 4, backgroundColor: currentTheme.backgroundSecondary, borderRadius: 8}}>
+                                                    return <TouchableOpacity key={f._id} onPress={() => app.openProfile(f)} style={{flexDirection: "row", alignItems: 'center', margin: 8, padding: 4, backgroundColor: currentTheme.backgroundSecondary, borderRadius: 8}}>
                                                         <MiniProfile user={f} scale={1.15} />
                                                     </TouchableOpacity>
                                                 })}
@@ -146,7 +143,7 @@ class MainView extends React.Component {
                                         </View>
                                         {(!this.state.currentChannel?.name?.includes("nsfw") || this.state.nsfwConsented) ?
                                         <>
-                                            <Messages channel={this.state.currentChannel} onLongPress={async (m) => {this.setState({contextMenuMessage: m})}} onUserPress={(m) => {openProfile(m.author, this.state.currentChannel.server)}} onImagePress={(a) => {this.setState({imageViewerImage: a})}} rerender={this.state.rerender} onUsernamePress={(m) => this.setState({currentText: this.state.currentText + "<@" + m.author?._id + ">"})} />
+                                            <Messages channel={this.state.currentChannel} onLongPress={async (m) => {this.setState({contextMenuMessage: m})}} onUserPress={(m) => {app.openProfile(m.author, this.state.currentChannel.server)}} onImagePress={(a) => {this.setState({imageViewerImage: a})}} rerender={this.state.rerender} onUsernamePress={(m) => this.setState({currentText: this.state.currentText + "<@" + m.author?._id + ">"})} />
                                             <MessageBox channel={this.state.currentChannel} 
                                             setReplyingMessages={(r) => this.setState({replyingMessages: r})}
                                             replyingMessages={this.state.replyingMessages} />
