@@ -61,6 +61,9 @@ class MainView extends React.Component {
         setFunction("openChannel", async (c) => {
             this.setState({currentChannel: c})
         })
+        setFunction("openImage", async (a) => {
+            this.setState({imageViewerImage: a})
+        })
     }
     async componentDidMount() {
         console.log("mount app")

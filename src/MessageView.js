@@ -1,5 +1,5 @@
 import { client, Text, MarkdownView, app } from './Generic';
-import { View, FlatList, TouchableOpacity, Pressable, Dimensions } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Pressable, Dimensions } from 'react-native';
 import { Avatar, Username } from './Profile'
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
@@ -21,7 +21,7 @@ export class Messages extends React.Component {
             newMessageCount: 0,
             error: null
         };
-        this.renderItem = this.renderItem.bind(this);
+        this.renderMessage = this.renderMessage.bind(this);
     }
     componentDidCatch(error, errorInfo) {
         this.setState({error})
@@ -48,9 +48,10 @@ export class Messages extends React.Component {
     	    		this.setState((prev) => {
                         let newMessages = prev.messages
                         if (newMessages.length >= (!this.state.bottomOfPage ? 150 : 50)) {
-                            newMessages = newMessages.slice(0, 50)
+                            newMessages = newMessages.slice(newMessages.length - 50, newMessages.length)
                         }
-                        newMessages.unshift({message, grouped: (newMessages[0].message.author?._id == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0)})
+                        let grouped = (newMessages[0].message.author?._id == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0)
+                        newMessages.push({message, grouped, rendered: this.renderMessage({grouped, message})})
                         return {messages: newMessages, newMessageCount: !this.state.bottomOfPage ? (this.state.newMessageCount + 1) || 1 : 0}
                     })
     	    	}
@@ -75,28 +76,31 @@ export class Messages extends React.Component {
                 console.log("fetch messages")
                 let lastAuthor = "";
                 let lastTime = null;
-                this.props.channel.fetchMessagesWithUsers({limit: 50}).then((res) => {console.log("done fetching"); this.setState({messages: res.messages.reverse().map((message) => {
+                this.props.channel.fetchMessagesWithUsers({limit: 50}).then((res) => {console.log("done fetching"); this.setState({messages: res.messages.reverse().map((message, i) => {
+                    try {
                     let time = dayjs(decodeTime(message._id))
-                    let res = {grouped: ((lastAuthor == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (lastTime && time.diff(lastTime, "minute") < 5)), message: message}
-                    lastAuthor = (message.author ? message.author._id : lastAuthor)
-                    lastTime = time
-                    return res
-                }).reverse(), loading: false, newMessageCount: 0})});
+                    // let grouped = ((lastAuthor == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (lastTime && time.diff(lastTime, "minute") < 5))
+                    let grouped = i != 0 && ((res.messages[i - 1].author._id == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (time.diff(dayjs(decodeTime(res.messages[i - 1]._id)), "minute") < 5))
+                    let out = {grouped, message: message, rendered: this.renderMessage({grouped, message})}
+                    // lastAuthor = (message.author ? message.author._id : lastAuthor)
+                    // lastTime = time
+                    return out
+                    } catch (e) {
+                        console.error(e)
+                    }
+                }), loading: false, newMessageCount: 0})});
             })
         }
     }
-    keyExtractor(item) {
-        return item.message._id
-    }
-    renderItem(m) {
+    renderMessage(m) {
         return (
-            <Message key={m.item.message._id} 
-            message={m.item.message} 
-            grouped={m.item.grouped} 
-            onLongPress={() => this.props.onLongPress(m.item.message)} 
-            onUserPress={() => app.openProfile(m.item.message.author, this.props.channel?.server)} 
+            <Message key={m.message._id} 
+            message={m.message} 
+            grouped={m.grouped} 
+            onLongPress={() => this.props.onLongPress(m.message)} 
+            onUserPress={() => app.openProfile(m.message.author, this.props.channel?.server)} 
             onImagePress={(a) => this.props.onImagePress(a)} 
-            onUsernamePress={() => this.props.onUsernamePress(m.item.message)}
+            onUsernamePress={() => this.props.onUsernamePress(m.message)}
             />
         )
     }
@@ -108,7 +112,7 @@ export class Messages extends React.Component {
             :
             <View style={{flex: 1}}>
                 {this.state.newMessageCount > 0 ? <Text style={{height: 32, padding: 6, backgroundColor: currentTheme.accentColor, color: currentTheme.accentColorForeground}}>{this.state.newMessageCount} new messages...</Text> : null}
-                <FlatList data={this.state.messages} 
+                {/* <FlatList data={this.state.messages} 
                 removeClippedSubviews={false}
                 disableVirtualization={true}
                 maxToRenderPerBatch={12}
@@ -130,7 +134,24 @@ export class Messages extends React.Component {
                     }} 
                 onLayout={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToOffset({offset: 0, animated: false})}}}
                 onContentSizeChange={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToOffset({offset: 0, animated: true})}}} 
-                style={styles.messagesView} />
+                style={styles.messagesView} /> */}
+                <ScrollView style={styles.messagesView} 
+                ref={ref => {this.scrollView = ref}} 
+                onScroll={e => {this.setState({
+                    bottomOfPage: (e.nativeEvent.contentOffset.y >= 
+                        (e.nativeEvent.contentSize.height - 
+                        e.nativeEvent.layoutMeasurement.height)), 
+                        newMessageCount: (e.nativeEvent.contentOffset.y >= 
+                        (e.nativeEvent.contentSize.height - 
+                        e.nativeEvent.layoutMeasurement.height)) 
+                        ? 0 : 
+                        this.state.newMessageCount}); 
+                }}
+                onLayout={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToEnd({animated: false})}}}
+                onContentSizeChange={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToEnd({animated: true})}}} >
+                    {this.state.messages.map(m => m.rendered)}
+                    <View style={{marginTop: 15}} />
+                </ScrollView>
             </View>
         )
     }

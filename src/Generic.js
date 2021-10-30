@@ -1,5 +1,5 @@
 import Markdown, { MarkdownIt } from 'react-native-markdown-display';
-import ReactNative, { View, TouchableOpacity } from 'react-native';
+import ReactNative, { View, TouchableOpacity, Linking } from 'react-native';
 import { Client } from 'revolt.js';
 import { currentTheme, styles } from './Theme';
 import { MiniProfile } from './Profile';
@@ -16,6 +16,7 @@ app.openInvite = (i) => {};
 app.openBotInvite = (i) => {};
 app.openServer = (s) => {};
 app.openChannel = (c) => {};
+app.openImage = (a) => {};
 
 export function setFunction(name, func) {
     app[name] = func;

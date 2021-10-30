@@ -59,11 +59,9 @@ export const Modals = ({state, setState}) => {
             <View style={{width: "100%", height: Dimensions.get("window").height * 0.75, top: "25%", padding: 15, backgroundColor: currentTheme.backgroundSecondary}}>
                 <View>
                     <View style={{flexDirection: 'row'}}>
-                        <Avatar size={100} user={state.contextMenuUser} server={state.contextMenuUserServer} backgroundColor={currentTheme.backgroundSecondary} status />
+                        <Pressable onPress={() => app.openImage(state.contextMenuUser?.avatar)}><Avatar size={100} user={state.contextMenuUser} server={state.contextMenuUserServer} backgroundColor={currentTheme.backgroundSecondary} status /></Pressable>
                         <View style={{justifyContent: 'center', marginLeft: 6}}>
-                            <View key={0} style={{flexDirection: 'row'}}>
-                                <Username user={state.contextMenuUser} server={state.contextMenuUserServer} size={24} />
-                            </View>
+                            <Username user={state.contextMenuUser} server={state.contextMenuUserServer} size={24} />
                             <View key={1} style={{flexDirection: 'row'}}>
                                 {!!state.contextMenuUserServer &&
                                 client.members.getKey({server: state.contextMenuUserServer?._id, user: state.contextMenuUser?._id})?.avatar?._id != state.contextMenuUser?.avatar?._id ?
