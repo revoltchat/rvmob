@@ -7,6 +7,9 @@ import FastImage from 'react-native-fast-image';
 const Image = FastImage;
 
 export const Username = observer(({ server, user, noBadge, size }) => { 
+    if (typeof user != 'object') return <Text style={size ? {fontSize: size} : {}}>
+        {"<Unknown User>"}
+    </Text>
     let memberObject = client.members.getKey({server: server?._id, user: user?._id})
     let color = styles.textDefault.color
     let name = server && memberObject?.nickname ? memberObject?.nickname : user.username;
@@ -22,11 +25,11 @@ export const Username = observer(({ server, user, noBadge, size }) => {
     }
     return (
         <View style={{flexDirection: 'row'}}>
-            <Text style={{color, fontWeight: 'bold', fontSize: size || 14}}>
+            <Text style={{color, fontWeight: 'bold', fontSize: size}}>
                 {name}
             </Text>
             {!noBadge && user?.bot ?
-                <Text style={{color: currentTheme.accentColorForeground, backgroundColor: currentTheme.accentColor, marginLeft: 4, paddingLeft: 3, paddingRight: 3, borderRadius: 3, fontSize: (size || 14)}}>
+                <Text style={{color: currentTheme.accentColorForeground, backgroundColor: currentTheme.accentColor, marginLeft: 4, paddingLeft: 3, paddingRight: 3, borderRadius: 3, fontSize: size}}>
                     BOT
                 </Text>
             : null}
@@ -80,7 +83,7 @@ export const RoleView = observer(({ server, user }) => {
         memberObject && roles ?
         <>
             <Text>{roles.length} Roles</Text>
-            <View>{roles.map(r => <Text style={{flexDirection: 'row', padding: 8, paddingLeft: 12, paddingRight: 12, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8, color: r.colour}}>{r.name}</Text>)}</View>
+            <View style={{flexDirection: 'row'}}>{roles.map(r => <View style={{flexDirection: 'row', padding: 6, paddingLeft: 8, paddingRight: 8, margin: 2, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8}}><View style={{borderRadius: 10000, backgroundColor: r.colour, height: 16, width: 16, margin: 2, marginRight: 6}} /><Text>{r.name}</Text></View>)}</View>
         </>
         : null
     )

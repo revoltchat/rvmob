@@ -40,8 +40,8 @@ export class LeftMenu extends React.Component {
             borderTopWidth: currentTheme.generalBorderWidth,
             borderColor: currentTheme.generalBorderColor,
             flexDirection: 'row'}}>
-                <Pressable onPress={this.props.onOpenSettings} style={{width: 60, height: 30, margin: 10, backgroundColor: currentTheme.backgroundPrimary, alignItems: 'center', justifyContent: 'center', borderRadius: 8, borderColor: currentTheme.buttonBorderColor, borderWidth: currentTheme.buttonBorderWidth}}><Text>Config</Text></Pressable>
-                <Pressable onPress={this.props.onLogOut} style={{width: 80, height: 30, margin: 10, backgroundColor: currentTheme.backgroundPrimary, alignItems: 'center', justifyContent: 'center', borderRadius: 8, borderColor: currentTheme.buttonBorderColor, borderWidth: currentTheme.buttonBorderWidth}}><Text>Log Out</Text></Pressable>
+                <Pressable onPress={this.props.onOpenSettings} style={styles.buttonSecondary}><Text>Config</Text></Pressable>
+                <Pressable onPress={this.props.onLogOut} style={styles.buttonSecondary}><Text>Log Out</Text></Pressable>
             </View>
             </>
         );

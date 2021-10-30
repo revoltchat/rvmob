@@ -62,18 +62,41 @@ export const Modals = ({state, setState}) => {
                         <Avatar size={100} user={state.contextMenuUser} server={state.contextMenuUserServer} backgroundColor={currentTheme.backgroundSecondary} status />
                         <View style={{justifyContent: 'center', marginLeft: 6}}>
                             <View key={0} style={{flexDirection: 'row'}}>
-                                {!!state.contextMenuUserServer &&
-                                client.members.getKey({server: state.contextMenuUserServer?._id, user: state.contextMenuUser?._id})?.avatar?._id != state.contextMenuUser?.avatar?._id ?
-                                <Avatar size={30} user={state.contextMenuUser} />
-                                : null}
                                 <Username user={state.contextMenuUser} server={state.contextMenuUserServer} size={24} />
                             </View>
                             <View key={1} style={{flexDirection: 'row'}}>
+                                {!!state.contextMenuUserServer &&
+                                client.members.getKey({server: state.contextMenuUserServer?._id, user: state.contextMenuUser?._id})?.avatar?._id != state.contextMenuUser?.avatar?._id ?
+                                <Avatar size={24} user={state.contextMenuUser} />
+                                : null}
                                 <Text style={{fontSize: 16}}>@</Text><Username user={state.contextMenuUser} size={16} noBadge />
                             </View>
                             {state.contextMenuUser?.status?.text ? <Text>{state.contextMenuUser?.status?.text}</Text> : <></>}
                         </View>
                     </View>
+                    {state.contextMenuUser?.flags ?
+                        state.contextMenuUser.flags & 1 ?
+                        <Text style={{color: '#ff3333'}}>User is suspended</Text> :
+                        state.contextMenuUser.flags & 2 ?
+                        <Text style={{color: '#ff3333'}}>User deleted their account</Text> :
+                        state.contextMenuUser.flags & 4 ?
+                        <Text style={{color: '#ff3333'}}>User is banned</Text> : 
+                        null
+                    : null}
+                    {state.contextMenuUser?.badges ?
+                        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+                            {state.contextMenuUser.badges & 1 ?
+                            <Text style={{color: 'orange', marginLeft: 8}}>Revolt Developer</Text> : null}
+                            {state.contextMenuUser.badges & 2 ?
+                            <Text style={{color: 'green', marginLeft: 8}}>Revolt Translator</Text> : null}
+                            {state.contextMenuUser.badges & 4 ?
+                            <Text style={{color: 'yellow', marginLeft: 8}}>Revolt Supporter</Text> : null}
+                            {state.contextMenuUser.badges & 8 ?
+                            <Text style={{color: 'purple', marginLeft: 8}}>Bug Catcher</Text> : null}
+                            {state.contextMenuUser.badges & 256 ?
+                            <Text style={{color: 'cyan', marginLeft: 8}}>Early Adopter</Text> : null} 
+                        </View>
+                    : null}
                     {state.contextMenuUser?.relationship != RelationshipStatus.User ? 
                         !state.contextMenuUser?.bot ? 
                         (state.contextMenuUser?.relationship == RelationshipStatus.Friend ? 

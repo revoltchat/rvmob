@@ -15,8 +15,8 @@ import { setFunction } from './src/Generic';
 import { LeftMenu, RightMenu } from './src/SideMenus';
 import { Modals } from './src/Modals';
 import FastImage from 'react-native-fast-image';
+import { observer } from 'mobx-react-lite';
 const Image = FastImage;
-
 
 class MainView extends React.Component {
     constructor(props) {
@@ -46,21 +46,33 @@ class MainView extends React.Component {
         setFunction("openProfile", async (u, s) => {
             this.setState({contextMenuUser: u || null, contextMenuUserProfile: u ? (await u.fetchProfile()) : null, contextMenuUserServer: s || null})
         })
+        setFunction("openLeftMenu", async (o) => {
+            this.setState(typeof o == 'boolean' ? {leftMenuOpen: o} : {leftMenuOpen: !this.state.leftMenuOpen})
+        })
+        setFunction("openRightMenu", async (o) => {
+            this.setState(typeof o == 'boolean' ? {rightMenuOpen: o} : {rightMenuOpen: !this.state.rightMenuOpen})
+        })
         setFunction("openInvite", async (i) => {
             this.setState({inviteServer: (await client.fetchInvite(i).catch(e => e)), inviteServerCode: i})
         })
         setFunction("openBotInvite", async (id) => {
             this.setState({inviteBot: (await client.bots.fetchPublic(id).catch(e => e))})
         })
+        setFunction("openChannel", async (c) => {
+            this.setState({currentChannel: c})
+        })
     }
     async componentDidMount() {
         console.log("mount app")
         client.on('ready', (async () => {
-            this.setState({status: "loggedIn"});
+            this.setState({status: "loggedIn", network: "ready"});
             if (this.state.tokenInput) {
                 AsyncStorage.setItem('token', this.state.tokenInput)
                 this.setState({tokenInput: ""})
             }
+        }).bind(this));
+        client.on('dropped', (async () => {
+            this.setState({network: "dropped"});
         }).bind(this));
         AsyncStorage.getItem('token', async (err, res) => {
             if (!err) {
@@ -71,7 +83,9 @@ class MainView extends React.Component {
                 try {
                     await client.useExistingSession({token: res});
                 } catch (e) {
-                    this.setState({logInError: e, status: "awaitingLogin"})
+                    !(e.message.startsWith("Read error") || e.message === "Network Error") && client.user ?
+                    this.setState({logInError: e, status: "awaitingLogin"}) : 
+                    this.state.status == "loggedIn" ? this.setState({logInError: e}) : this.setState({logInError: e, status: "awaitingLogin"})
                 }
             } else {
                 console.log(err)
@@ -173,6 +187,7 @@ class MainView extends React.Component {
                         </SideMenu>
                     </SideMenu>
                     <Modals state={this.state} setState={this.setState.bind(this)} />
+                    <NetworkIndicator client={client} />
                 </View>
                 : 
                 (this.state.status == "awaitingLogin" ? 
@@ -219,7 +234,9 @@ class MainView extends React.Component {
                                     this.setState({status: "loggedIn", tokenInput: "", passwordInput: "", emailInput: "", logInError: null})
                                 } catch (e) {
                                     console.error(e)
-                                    this.setState({logInError: e, status: "awaitingLogin"})
+                                    !(e.message.startsWith("Read error") || e.message === "Network Error") && client.user ?
+                                    this.setState({logInError: e, status: "awaitingLogin"}) : 
+                                    this.state.status == "loggedIn" ? this.setState({logInError: e}) : this.setState({logInError: e, status: "awaitingLogin"})
                                 }
                                 return;
                             }
@@ -236,6 +253,15 @@ class MainView extends React.Component {
         );
     }
 }
+
+export const NetworkIndicator = observer(({client}) => {
+    if (!client.user?.online) {
+        return <View style={{width: "100%", height: 32, alignItems: 'center', justifyContent: 'center', backgroundColor: currentTheme.accentColor}}>
+            <Text style={{fontSize: 16, color: currentTheme.accentColorForeground}}>Connection lost</Text>
+        </View>
+    }
+    return <></>;
+})
 
 
 export default class App extends React.Component {

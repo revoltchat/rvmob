@@ -3,6 +3,7 @@ import { Pressable, View, TextInput, TouchableOpacity } from 'react-native';
 import { Text } from './Generic';
 import { styles, currentTheme } from './Theme';
 import { observer } from 'mobx-react-lite';
+import { Username } from './Profile';
 
 let typing = false;
 export class MessageBox extends React.Component {
@@ -55,21 +56,21 @@ export class MessageBox extends React.Component {
 export const TypingIndicator = observer(({ channel }) => {
     if (channel) {
         let users = channel.typing.filter(entry => !!entry);
-        let text;
+        let out = <></>;
         switch (users.length) {
             case 1:
-                text = `${users[0].username} is typing...`; break
+                out = <>{<Username user={users[0]} />}<Text> is typing...</Text></>; break
             case 2:
-                text = `${users[0].username} and ${users[1].username} are typing...`; break
+                out = <>{<Username user={users[0]} />}<Text> and </Text>{<Username user={users[1]} />}<Text> are typing...</Text></>; break
             case 3:
-                text = `${users[0].username}, ${users[1].username}, and ${users[2].username} are typing...`; break
+                out = <>{<Username user={users[0]} />}<Text>, </Text>{<Username user={users[1]} />}<Text>, and </Text>{<Username user={users[2]} />}<Text> are typing...</Text></>; break
             default:
-                text = "Several people are typing..."; break
+                out = <>{users.length} people are typing...</>; break
         }
         if (users.length > 0) {
             return (
                 <View style={styles.typingBar}>
-                    <Text>{text}</Text>
+                    {out}
                 </View>
             );
         }

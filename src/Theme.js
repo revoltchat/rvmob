@@ -155,7 +155,8 @@ function refreshStyles() {
             padding: 3,
             backgroundColor: currentTheme.backgroundSecondary,
             borderBottomColor: currentTheme.backgroundPrimary,
-            borderBottomWidth: 1
+            borderBottomWidth: 1,
+            flexDirection: "row"
         },
         messageUsername: {
             fontWeight: 'bold'
@@ -196,7 +197,19 @@ function refreshStyles() {
             paddingRight: 10,
             borderRadius: 8,
             backgroundColor: currentTheme.backgroundSecondary,
-            margin: 5
+            margin: 5,
+            justifyContent: 'center',
+            alignItems: 'center'
+        },
+        buttonSecondary: {
+            padding: 5,
+            paddingLeft: 10,
+            paddingRight: 10,
+            borderRadius: 8,
+            backgroundColor: currentTheme.backgroundPrimary,
+            margin: 5,
+            justifyContent: 'center',
+            alignItems: 'center'
         },
         channelButtonSelected: {
             borderColor: currentTheme.buttonBorderColorActive,

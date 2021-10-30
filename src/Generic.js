@@ -10,9 +10,13 @@ const Image = FastImage;
 
 export const app = {};
 app.openProfile = (u) => {};
+app.openLeftMenu = (o) => {};
+app.openRightMenu = (o) => {};
 app.openInvite = (i) => {};
 app.openBotInvite = (i) => {};
 app.openServer = (s) => {};
+app.openChannel = (c) => {};
+
 export function setFunction(name, func) {
     app[name] = func;
 }
@@ -24,7 +28,7 @@ export const client = new Client();
 export const Text = (props) => {
     let newProps = {...props}
     if (!props.style) newProps = Object.assign({style: {}}, newProps)
-    newProps.style = Object.assign({color: currentTheme.textPrimary}, newProps.style)
+    newProps.style = Object.assign({color: currentTheme.textPrimary, flexWrap: 'wrap'}, newProps.style)
     return (
         <ReactNative.Text {...newProps}>{newProps.children}</ReactNative.Text>
     )

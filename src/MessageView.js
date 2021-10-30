@@ -1,7 +1,7 @@
 import { client, Text, MarkdownView, app } from './Generic';
 import { View, FlatList, TouchableOpacity, Pressable, Dimensions } from 'react-native';
 import { Avatar, Username } from './Profile'
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { styles, currentTheme } from './Theme';
 import dayjs from 'dayjs'
@@ -9,6 +9,7 @@ import { decodeTime } from 'ulid'
 import FastImage from 'react-native-fast-image';
 const Image = FastImage;
 let didUpdateFirstTime = false;
+
 
 export class Messages extends React.Component {
     constructor(props) {
@@ -20,6 +21,7 @@ export class Messages extends React.Component {
             newMessageCount: 0,
             error: null
         };
+        this.renderItem = this.renderItem.bind(this);
     }
     componentDidCatch(error, errorInfo) {
         this.setState({error})
@@ -83,6 +85,21 @@ export class Messages extends React.Component {
             })
         }
     }
+    keyExtractor(item) {
+        return item.message._id
+    }
+    renderItem(m) {
+        return (
+            <Message key={m.item.message._id} 
+            message={m.item.message} 
+            grouped={m.item.grouped} 
+            onLongPress={() => this.props.onLongPress(m.item.message)} 
+            onUserPress={() => app.openProfile(m.item.message.author, this.props.channel?.server)} 
+            onImagePress={(a) => this.props.onImagePress(a)} 
+            onUsernamePress={() => this.props.onUsernamePress(m.item.message)}
+            />
+        )
+    }
     render() {
         if (this.state.error) return <Text style={{color: "#ff6666"}}>Error rendering: {this.state.error.message}</Text>
         return (
@@ -94,21 +111,12 @@ export class Messages extends React.Component {
                 <FlatList data={this.state.messages} 
                 removeClippedSubviews={false}
                 disableVirtualization={true}
-                maxToRenderPerBatch={50}
-                initialNumToRender={50}
+                maxToRenderPerBatch={12}
+                initialNumToRender={12}
                 inverted={true}
-                windowSize={51}
-                keyExtractor={(item) => {return item.message._id}}
-                renderItem={m => 
-                    <Message key={m.item.message._id} 
-                    message={m.item.message} 
-                    grouped={m.item.grouped} 
-                    onLongPress={() => this.props.onLongPress(m.item.message)} 
-                    onUserPress={() => app.openProfile(m.item.message.author, this.props.channel?.server)} 
-                    onImagePress={(a) => this.props.onImagePress(a)} 
-                    onUsernamePress={() => this.props.onUsernamePress(m.item.message)}
-                    />
-                } 
+                windowSize={17}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderItem} 
                 ref={ref => {this.scrollView = ref}} 
                 onScroll={e => {this.setState({
                     bottomOfPage: (e.nativeEvent.contentOffset.y >= 
@@ -132,13 +140,31 @@ export const Message = observer((props) => {
     let [error, setError] = React.useState(null)
     if (error) 
     return (
-        <View>
+        <View key={props.message._id}>
             <Text style={{color: "#ff4444"}}>Failed to render message:{'\n'}{error?.message}</Text>
         </View>
     )
     try {
+        if (typeof props.message.content == "object") 
         return (
-            <TouchableOpacity activeOpacity={0.8} delayLongPress={750} onLongPress={props.onLongPress}>
+            <View key={props.message._id} style={styles.messsageInner}>
+                <View style={{flexDirection: 'row'}}>
+                    <Username user={client.users.get(props.message.content.id)} server={props.message.channel?.server} />
+                    {props.message.content.type === "user_joined" ? <Text> joined the server</Text> : 
+                    props.message.content.type === "user_left" ? <Text> left</Text> :
+                    props.message.content.type === "user_banned" ? <Text> was banned</Text> :
+                    props.message.content.type === "user_kicked" ? <Text> was kicked</Text> :
+                    props.message.content.type === "user_added" ? <Text> was added to the group</Text> :
+                    props.message.content.type === "user_remove" ? <Text> was removed from the group</Text> :
+                    props.message.content.type === "channel_renamed" ? <Text> renamed the channel to <Text style={{fontWeight: 'bold'}}>{props.message.content.name}</Text>.</Text> :
+                    props.message.content.type === "channel_description_changed" ? <Text> changed the channel description.</Text> :
+                    props.message.content.type === "channel_icon_changed" ? <Text> changed the channel icon.</Text> :
+                    null}
+                </View>
+            </View>
+        )
+        return (
+            <TouchableOpacity key={props.message._id} activeOpacity={0.8} delayLongPress={750} onLongPress={props.onLongPress}>
                 {(props.message.reply_ids !== null) ? <View style={styles.repliedMessagePreviews}>{props.message.reply_ids.map(id => <ReplyMessage key={id} message={client.messages.get(id)} />)}</View> : null}
                 <View style={props.grouped ? styles.messageGrouped : styles.message}>
                     {(props.message.author && !props.grouped) ? <Pressable onPress={() => props.onUserPress()}><Avatar user={props.message.author} server={props.message.channel?.server} size={35} /></Pressable> : null}
