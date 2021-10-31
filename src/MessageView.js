@@ -1,4 +1,4 @@
-import { client, Text, MarkdownView, app } from './Generic';
+import { client, Text, MarkdownView, app, defaultMessageLoadCount } from './Generic';
 import { View, ScrollView, TouchableOpacity, Pressable, Dimensions } from 'react-native';
 import { Avatar, Username } from './Profile'
 import React, { useCallback } from 'react';
@@ -19,7 +19,8 @@ export class Messages extends React.Component {
             loading: false,
             forceUpdate: false,
             newMessageCount: 0,
-            error: null
+            error: null,
+            atLatestMessages: true
         };
         this.renderMessage = this.renderMessage.bind(this);
     }
@@ -43,7 +44,7 @@ export class Messages extends React.Component {
     componentDidMount() {
         console.log("mount component")
     	client.on('message', async message => {
-    		if (this.props.channel) { // !this.props.loading && 
+    		if (this.state.atLatestMessages && this.props.channel) { // !this.props.loading && 
     			if (this.props.channel._id == message.channel._id && this.state.messages?.length > 0) {
     	    		this.setState((prev) => {
                         let newMessages = prev.messages
@@ -72,25 +73,46 @@ export class Messages extends React.Component {
         if (this.props.channel && (!didUpdateFirstTime || prev.channel._id != this.props.channel._id)) {
             didUpdateFirstTime = true
             this.setState({loading: true})
-            requestAnimationFrame(() => {
-                console.log("fetch messages")
-                let lastAuthor = "";
-                let lastTime = null;
-                this.props.channel.fetchMessagesWithUsers({limit: 50}).then((res) => {console.log("done fetching"); this.setState({messages: res.messages.reverse().map((message, i) => {
-                    try {
-                    let time = dayjs(decodeTime(message._id))
-                    // let grouped = ((lastAuthor == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (lastTime && time.diff(lastTime, "minute") < 5))
-                    let grouped = i != 0 && ((res.messages[i - 1].author._id == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (time.diff(dayjs(decodeTime(res.messages[i - 1]._id)), "minute") < 5))
-                    let out = {grouped, message: message, rendered: this.renderMessage({grouped, message})}
-                    // lastAuthor = (message.author ? message.author._id : lastAuthor)
-                    // lastTime = time
-                    return out
-                    } catch (e) {
-                        console.error(e)
-                    }
-                }), loading: false, newMessageCount: 0})});
-            })
+            this.fetchMessages()
         }
+    }
+    async fetchMessages(input = {}) {
+        console.log("fetch messages")
+        let params = {limit: input.before ? defaultMessageLoadCount / 2 : defaultMessageLoadCount};
+        params[input.type] = input.id;
+        // if (input.type == "after") {
+        //     params.sort = "Oldest"
+        // }
+        this.props.channel.fetchMessagesWithUsers(params).then((res) => {
+            console.log("done fetching");
+            let oldMessages = this.state.messages;
+            if (input.type == "before") {
+                oldMessages = oldMessages.slice(0, (defaultMessageLoadCount / 2) - 1)
+            } else if (input.type == "after") {
+                oldMessages = oldMessages.slice((defaultMessageLoadCount / 2) - 1, defaultMessageLoadCount - 1)
+            }
+            let messages = res.messages.reverse().map((message, i) => {
+                try {
+                let time = dayjs(decodeTime(message._id))
+                // let grouped = ((lastAuthor == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (lastTime && time.diff(lastTime, "minute") < 5))
+                let grouped = i != 0 && ((res.messages[i - 1].author._id == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (time.diff(dayjs(decodeTime(res.messages[i - 1]._id)), "minute") < 5))
+                let out = {grouped, message: message, rendered: this.renderMessage({grouped, message})}
+                // lastAuthor = (message.author ? message.author._id : lastAuthor)
+                // lastTime = time
+                return out
+                } catch (e) {
+                    console.error(e)
+                }
+            })
+            let result = input.type == "before" ? messages.concat(oldMessages) : input.type == "after" ? oldMessages.concat(messages) : messages;
+            this.setState({
+                messages: result, 
+                loading: false, 
+                newMessageCount: 0,
+                atLatestMessages: true
+                // atLatestMessages: input.type != "before" && this.props.channel.last_message_id == result[result.length - 1]?._id
+            })
+        });
     }
     renderMessage(m) {
         return (
@@ -137,21 +159,27 @@ export class Messages extends React.Component {
                 style={styles.messagesView} /> */}
                 <ScrollView style={styles.messagesView} 
                 ref={ref => {this.scrollView = ref}} 
-                onScroll={e => {this.setState({
-                    bottomOfPage: (e.nativeEvent.contentOffset.y >= 
-                        (e.nativeEvent.contentSize.height - 
-                        e.nativeEvent.layoutMeasurement.height)), 
-                        newMessageCount: (e.nativeEvent.contentOffset.y >= 
-                        (e.nativeEvent.contentSize.height - 
-                        e.nativeEvent.layoutMeasurement.height)) 
-                        ? 0 : 
-                        this.state.newMessageCount}); 
+                onScroll={e => {
+                    let bottomOfPage = (e.nativeEvent.contentOffset.y >= 
+                    (e.nativeEvent.contentSize.height - 
+                    e.nativeEvent.layoutMeasurement.height));
+                    // if (e.nativeEvent.contentOffset.y == 0) {
+                    //     this.fetchMessages({type: "before", id: this.state.messages[0].message._id})
+                    // }
+                    // if (!this.state.atLatestMessages && bottomOfPage) {
+                    //     this.fetchMessages({type: "after", id: this.state.messages[this.state.messages.length - 1].message._id})
+                    // }
+                    this.setState({
+                        bottomOfPage, 
+                        newMessageCount: bottomOfPage ? 0 : this.state.newMessageCount
+                    }); 
                 }}
                 onLayout={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToEnd({animated: false})}}}
                 onContentSizeChange={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToEnd({animated: true})}}} >
                     {this.state.messages.map(m => m.rendered)}
                     <View style={{marginTop: 15}} />
                 </ScrollView>
+                {!this.state.atLatestMessages ? <TouchableOpacity style={{height: 32, justifyContent: 'center', alignItems: 'center', backgroundColor: currentTheme.accentColor}} onPress={() => this.fetchMessages()}><Text style={{color: currentTheme.accentColorForeground}}>Go to latest messages</Text></TouchableOpacity> : null}
             </View>
         )
     }
@@ -188,7 +216,7 @@ export const Message = observer((props) => {
             <TouchableOpacity key={props.message._id} activeOpacity={0.8} delayLongPress={750} onLongPress={props.onLongPress}>
                 {(props.message.reply_ids !== null) ? <View style={styles.repliedMessagePreviews}>{props.message.reply_ids.map(id => <ReplyMessage key={id} message={client.messages.get(id)} />)}</View> : null}
                 <View style={props.grouped ? styles.messageGrouped : styles.message}>
-                    {(props.message.author && !props.grouped) ? <Pressable onPress={() => props.onUserPress()}><Avatar user={props.message.author} server={props.message.channel?.server} size={35} /></Pressable> : null}
+                    {(props.message.author && !props.grouped) ? <Pressable onPress={() => props.onUserPress()}><Avatar user={props.message.author} server={props.message.channel?.server} size={35} {...(app.settings.get("Show user status in chat avatars") ? {status: true} : {})} /></Pressable> : null}
                     <View style={styles.messageInner}>
                         {(props.grouped && props.message.edited) ? <Text style={{fontSize: 12, color: currentTheme.textSecondary, position: 'relative', right: 47, marginBottom: -16}}> (edited)</Text> : null}
                         {(props.message.author && !props.grouped) ? <View style={{flexDirection: 'row'}}><Pressable onPress={props.onUsernamePress}><Username user={props.message.author} server={props.message.channel?.server} /></Pressable><Text style={styles.timestamp}> {dayjs(decodeTime(props.message._id)).format('YYYY-MM-DD hh:mm:ss A')}</Text>{props.message.edited && <Text style={{fontSize: 12, color: currentTheme.textSecondary, position: 'relative', top: 2, left: 2}}> (edited)</Text>}</View> : null}

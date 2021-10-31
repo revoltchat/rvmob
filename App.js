@@ -261,7 +261,7 @@ class MainView extends React.Component {
 
 export const NetworkIndicator = observer(({client}) => {
     if (!client.user?.online) {
-        return <View style={{position: 'absolute', top: 0, left: 0,  width: "100%", height: 32, alignItems: 'center', justifyContent: 'center', backgroundColor: currentTheme.accentColor}}>
+        return <View style={{position: 'absolute', top: 0, left: 0, width: "100%", height: 32, alignItems: 'center', justifyContent: 'center', backgroundColor: currentTheme.accentColor}}>
             <Text style={{fontSize: 16, color: currentTheme.accentColorForeground}}>Connection lost</Text>
         </View>
     }

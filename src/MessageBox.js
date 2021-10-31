@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, View, TextInput, TouchableOpacity } from 'react-native';
-import { Text } from './Generic';
+import { Text, app, client } from './Generic';
 import { styles, currentTheme } from './Theme';
 import { observer } from 'mobx-react-lite';
 import { Username } from './Profile';
@@ -56,6 +56,7 @@ export class MessageBox extends React.Component {
 export const TypingIndicator = observer(({ channel }) => {
     if (channel) {
         let users = channel.typing.filter(entry => !!entry);
+        !app.settings.get("Show self in typing indicator") && (users = users.filter(entry => entry._id != client.user._id));
         let out = <></>;
         switch (users.length) {
             case 1:

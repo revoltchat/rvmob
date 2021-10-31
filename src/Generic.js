@@ -1,14 +1,87 @@
 import Markdown, { MarkdownIt } from 'react-native-markdown-display';
 import ReactNative, { View, TouchableOpacity, Linking } from 'react-native';
 import { Client } from 'revolt.js';
-import { currentTheme, styles } from './Theme';
+import { currentTheme, setTheme, themes, styles } from './Theme';
 import { MiniProfile } from './Profile';
 import React from 'react';
 import { observer } from 'mobx-react-lite';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image';
 const Image = FastImage;
 
-export const app = {};
+export const app = {
+    settings: {
+        "Theme": {
+            default: "Dark",
+            type: "string",
+            options: Object.keys(themes),
+            onChange: (v) => {
+                setTheme(v);
+            },
+            onInitialize: (v) => {
+                setTheme(v);
+            }
+        },
+        "Test": {
+            default: "Dark",
+            type: "string",
+            onChange: (v) => {}
+        },
+        "Show self in typing indicator": {
+            default: true,
+            type: "boolean"
+        },
+        "Show user status in chat avatars": {
+            default: false,
+            type: "boolean"
+        }
+    }
+};
+
+app.settings.get = (k) => {
+    return typeof app.settings[k].value == app.settings[k].type ? app.settings[k].value : app.settings[k].default;
+}
+app.settings.set = (k, v) => {
+    app.settings[k].value = v;
+    app.settings[k].onChange && app.settings[k].onChange(v);
+    app.settings.save();
+}
+app.settings.save = async () => {
+    let out = {}
+    Object.keys(app.settings).filter(
+        s => typeof app.settings[s] == "object"
+    ).forEach(
+        s => out[s] = app.settings[s].value
+    )
+    await AsyncStorage.setItem("settings", JSON.stringify(out));
+}
+app.settings.clear = async () => {
+    await AsyncStorage.setItem("settings", "{}");
+    Object.keys(app.settings).forEach(s => {
+        delete app.settings[s].value;
+    })
+}
+
+// i gotta say github copilot is actually pretty good at this
+AsyncStorage.getItem('settings').then(s => {
+    console.log(s)
+    if (s) {
+        try {
+            const settings = JSON.parse(s);
+            Object.keys(settings).forEach(key => {
+                if (app.settings[key]) {
+                    app.settings[key].value = settings[key];
+                    app.settings[key].onInitialize && app.settings[key].onInitialize(settings[key]);
+                } else {
+                    console.warn(`Unknown setting ${key}`);
+                }
+            })
+        } catch (e) {
+            console.error(e);
+        }
+    }
+});
+
 app.openProfile = (u) => {};
 app.openLeftMenu = (o) => {};
 app.openRightMenu = (o) => {};
@@ -23,6 +96,7 @@ export function setFunction(name, func) {
 }
 
 export const defaultMaxSide = "128";
+export const defaultMessageLoadCount = 50;
 
 export const client = new Client();
 

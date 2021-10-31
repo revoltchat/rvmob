@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Pressable, Modal, ScrollView, Dimensions } from 'react-native';
+import { View, TouchableOpacity, Pressable, Modal, ScrollView, Dimensions, TextInput } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import React from 'react';
 import { client, Text, MarkdownView, app, GeneralAvatar, ServerName, ServerList, openUrl } from './Generic';
@@ -10,6 +10,9 @@ import FastImage from 'react-native-fast-image';
 const Image = FastImage;
 
 export const Modals = ({state, setState}) => {
+    function rerender() {
+        setState({})
+    }
     return (
         <>
         <Modal
@@ -152,14 +155,35 @@ export const Modals = ({state, setState}) => {
             <View style={{flex: 1, backgroundColor: currentTheme.backgroundPrimary, padding: 15, borderTopLeftRadius: 15, borderTopRightRadius: 15}}>
                 <Pressable onPress={() => {setState({settingsOpen: false})}}><Text style={{fontSize: 24}}>Close</Text></Pressable>
                 <ScrollView style={{flex: 1}}>
-                    <Text>Change Theme</Text>
-                    <ScrollView style={{height: "30%", width: "90%", margin: 10, padding: 10 - currentTheme.generalBorderWidth, borderRadius: 8, backgroundColor: currentTheme.backgroundSecondary, borderWidth: currentTheme.generalBorderWidth, borderColor: currentTheme.generalBorderColor}}>
-                        {Object.keys(themes).map(name => <Pressable style={{padding: 10 - currentTheme.generalBorderWidth, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8, marginBottom: 5, borderColor: currentTheme.buttonBorderColor, borderWidth: currentTheme.buttonBorderWidth}} onPress={() => {
-                            setTheme(name)
-                            setState({rerender: state.rerender + 1})
-                        }}><Text>{name}{currentThemeName == name ? " (active)" : ""}</Text></Pressable>)}
-                    </ScrollView>
-                    <Text>some text here</Text>
+                    {Object.entries(app.settings).map(([k, v]) => {
+                        if (v.type == "boolean") {
+                            return <View key={k} style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
+                                <Text style={{flex: 1, fontWeight: 'bold'}}>{k}</Text>
+                                <TouchableOpacity style={{
+                                    width: 40, height: 40, borderRadius: 8, 
+                                    backgroundColor: app.settings.get(k) ? currentTheme.accentColor : currentTheme.backgroundSecondary,
+                                    alignItems: 'center', justifyContent: 'center'
+                                }} onPress={() => {app.settings.set(k, !app.settings.get(k)); rerender()}}><Text style={{color: app.settings.get(k) ? currentTheme.accentColorForeground : currentTheme.textPrimary}}>{app.settings.get(k) ? "On" : "Off"}</Text></TouchableOpacity>
+                            </View>
+                        } else if (v.type == "string") {
+                            return <View key={k} style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
+                                {v.options ? 
+                                <View>
+                                    <Text style={{flex: 1, fontWeight: 'bold'}}>{k}</Text>
+                                    <ScrollView style={{borderRadius: 8, maxHeight: 160, minWidth: "100%", backgroundColor: currentTheme.backgroundSecondary, padding: 8, paddingRight: 12}}>
+                                        {v.options.map((o) => <TouchableOpacity key={o} style={styles.actionTile} onPress={() => {app.settings.set(k, o); rerender()}}><Text>{o} {app.settings.get(k) == o ? <Text>(active)</Text> : null}</Text></TouchableOpacity>)}
+                                        <View style={{marginTop: 16}} />
+                                    </ScrollView>
+                                </View>
+                                :
+                                <View>
+                                    <Text style={{flex: 1, fontWeight: 'bold'}}>{k}</Text>
+                                    <TextInput style={{minWidth: "100%", borderRadius: 8, backgroundColor: currentTheme.backgroundSecondary, padding: 6, paddingLeft: 10, paddingRight: 10, color: currentTheme.textPrimary}} value={app.settings.get(k)} onChangeText={(v) => {app.settings.set(k, v); rerender()}} />
+                                </View>}
+                            </View>
+                        }
+                    })}
+                    <TouchableOpacity style={{marginTop: 10, marginBottom: 10, backgroundColor: currentTheme.accentColor, borderRadius: 8, padding: 8, alignItems: 'center', justifyContent: 'center'}} onPress={() => {app.settings.clear(); rerender()}}><Text style={{color: currentTheme.accentColorForeground}}>Reset Settings</Text></TouchableOpacity>
                 </ScrollView>
             </View>
         </Modal>
