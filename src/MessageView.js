@@ -214,7 +214,7 @@ export const Message = observer((props) => {
         )
         return (
             <TouchableOpacity key={props.message._id} activeOpacity={0.8} delayLongPress={750} onLongPress={props.onLongPress}>
-                {(props.message.reply_ids !== null) ? <View style={styles.repliedMessagePreviews}>{props.message.reply_ids.map(id => <ReplyMessage key={id} message={client.messages.get(id)} />)}</View> : null}
+                {(props.message.reply_ids !== null) ? <View style={styles.repliedMessagePreviews}>{props.message.reply_ids.map(id => <ReplyMessage key={id} message={client.messages.get(id)} mention={client.messages.get(id)?.mention_ids?.includes(client.messages.get(id)?.author_id)} />)}</View> : null}
                 <View style={props.grouped ? styles.messageGrouped : styles.message}>
                     {(props.message.author && !props.grouped) ? <Pressable onPress={() => props.onUserPress()}><Avatar user={props.message.author} server={props.message.channel?.server} size={35} {...(app.settings.get("Show user status in chat avatars") ? {status: true} : {})} /></Pressable> : null}
                     <View style={styles.messageInner}>
@@ -289,6 +289,7 @@ export class ReplyMessage extends React.PureComponent {
                 {this.props.message ? 
                     this.props.message.author ? <>
                         <Avatar user={this.props.message.author} server={this.props.message.channel?.server} size={16} />
+                        {this.props.mention ? <Text>@</Text> : null}
                         <Username user={this.props.message.author} server={this.props.message.channel?.server} />
                         <Text style={styles.messageContentReply}>{this.props.message.content.split("\n").join(" ")}</Text>
                     </> : null

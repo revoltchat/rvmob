@@ -59,6 +59,7 @@ app.settings.clear = async () => {
     await AsyncStorage.setItem("settings", "{}");
     Object.keys(app.settings).forEach(s => {
         delete app.settings[s].value;
+        app.settings[s].onChange && app.settings[s].onChange(app.settings[s].default);
     })
 }
 

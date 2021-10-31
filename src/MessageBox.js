@@ -3,7 +3,7 @@ import { Pressable, View, TextInput, TouchableOpacity } from 'react-native';
 import { Text, app, client } from './Generic';
 import { styles, currentTheme } from './Theme';
 import { observer } from 'mobx-react-lite';
-import { Username } from './Profile';
+import { Username, Avatar } from './Profile';
 
 let typing = false;
 export class MessageBox extends React.Component {
@@ -60,18 +60,20 @@ export const TypingIndicator = observer(({ channel }) => {
         let out = <></>;
         switch (users.length) {
             case 1:
-                out = <>{<Username user={users[0]} />}<Text> is typing...</Text></>; break
+                out = <>{<Username server={channel.server || undefined} user={users[0]} />}<Text> is typing...</Text></>; break
             case 2:
-                out = <>{<Username user={users[0]} />}<Text> and </Text>{<Username user={users[1]} />}<Text> are typing...</Text></>; break
+                out = <>{<Username server={channel.server || undefined} user={users[0]} />}<Text> and </Text>{<Username server={channel.server || undefined} user={users[1]} />}<Text> are typing...</Text></>; break
             case 3:
-                out = <>{<Username user={users[0]} />}<Text>, </Text>{<Username user={users[1]} />}<Text>, and </Text>{<Username user={users[2]} />}<Text> are typing...</Text></>; break
+                out = <>{<Username server={channel.server || undefined} user={users[0]} />}<Text>, </Text>{<Username server={channel.server || undefined} user={users[1]} />}<Text>, and </Text>{<Username server={channel.server || undefined} user={users[2]} />}<Text> are typing...</Text></>; break
             default:
-                out = <>{users.length} people are typing...</>; break
+                out = <Text>{users.length} people are typing...</Text>; break
         }
         if (users.length > 0) {
             return (
                 <View style={styles.typingBar}>
-                    {out}
+                    {users.map(u => {
+                        return <View key={u._id} style={{marginRight: -10}}><Avatar user={u} server={channel.server || undefined} size={20} /></View>
+                    })}<View style={{marginRight: 14}}/>{out}
                 </View>
             );
         }

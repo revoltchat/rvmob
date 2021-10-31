@@ -268,7 +268,6 @@ function refreshStyles() {
             alignItems: 'center',
             flexDirection: 'row',
             backgroundColor: currentTheme.backgroundPrimary,
-            marginBottom: 3,
             borderRadius: 8,
             paddingLeft: 10,
             paddingRight: 10,
