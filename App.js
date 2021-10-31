@@ -2,7 +2,7 @@ import 'react-native-get-random-values' // react native moment
 import './shim' // react native moment 2
 import React from 'react';
 import { View, TouchableOpacity, ScrollView, TextInput, StatusBar, Dimensions } from 'react-native';
-import SideMenu from 'react-native-side-menu';
+import SideMenu from 'react-native-side-menu-updated';
 import { RelationshipStatus } from "revolt-api/types/Users";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
@@ -103,6 +103,7 @@ class MainView extends React.Component {
                     <SideMenu openMenuOffset={Dimensions.get('window').width - 50}
                     menuPosition="right" 
                     disableGestures={this.state.leftMenuOpen} 
+                    overlayColor={"#00000040"}
                     edgeHitWidth={120} 
                     isOpen={this.state.rightMenuOpen} 
                     onChange={(open) => this.setState({rightMenuOpen: open})} 
@@ -111,6 +112,7 @@ class MainView extends React.Component {
                     bounceBackOnOverdraw={false}>
                         <SideMenu openMenuOffset={Dimensions.get('window').width - 50} 
                         disableGestures={this.state.rightMenuOpen} 
+                        overlayColor={"#00000040"}
                         edgeHitWidth={120} 
                         isOpen={this.state.leftMenuOpen} 
                         onChange={(open) => this.setState({leftMenuOpen: open})} 
@@ -259,7 +261,7 @@ class MainView extends React.Component {
 
 export const NetworkIndicator = observer(({client}) => {
     if (!client.user?.online) {
-        return <View style={{width: "100%", height: 32, alignItems: 'center', justifyContent: 'center', backgroundColor: currentTheme.accentColor}}>
+        return <View style={{position: 'absolute', top: 0, left: 0,  width: "100%", height: 32, alignItems: 'center', justifyContent: 'center', backgroundColor: currentTheme.accentColor}}>
             <Text style={{fontSize: 16, color: currentTheme.accentColorForeground}}>Connection lost</Text>
         </View>
     }

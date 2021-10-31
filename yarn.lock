@@ -7514,6 +7514,13 @@
   "resolved" "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-3.3.2.tgz"
   "version" "3.3.2"
 
+"react-native-side-menu-updated@^1.3.2":
+  "integrity" "sha512-38MErOgwoUQdFY4IEIYAO+JokWk3hCOhqirqwWBBXqwgTD9qeezlv9eWEMBaDsQSk/iW+cqLPkAafOAWeSXCVw=="
+  "resolved" "https://registry.npmjs.org/react-native-side-menu-updated/-/react-native-side-menu-updated-1.3.2.tgz"
+  "version" "1.3.2"
+  dependencies:
+    "prop-types" "^15.5.10"
+
 "react-native-side-menu@^1.1.3":
   "integrity" "sha1-bvXSIy7PcYMS32zt7wGRSLrDBzo="
   "resolved" "https://registry.npmjs.org/react-native-side-menu/-/react-native-side-menu-1.1.3.tgz"
