@@ -50,7 +50,7 @@ export class Messages extends React.Component {
                         if (newMessages.length >= (!this.state.bottomOfPage ? 150 : 50)) {
                             newMessages = newMessages.slice(newMessages.length - 50, newMessages.length)
                         }
-                        let grouped = (newMessages[0].message.author?._id == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0)
+                        let grouped = newMessages.length > 0 && ((newMessages[newMessages.length - 1].message?.author?._id == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (dayjs(decodeTime(message._id)).diff(dayjs(decodeTime(newMessages[newMessages.length - 1].message?._id)), "minute") < 5))
                         newMessages.push({message, grouped, rendered: this.renderMessage({grouped, message})})
                         return {messages: newMessages, newMessageCount: !this.state.bottomOfPage ? (this.state.newMessageCount + 1) || 1 : 0}
                     })
