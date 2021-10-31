@@ -22,8 +22,8 @@ export const app = {
                 setTheme(v);
             }
         },
-        "Test": {
-            default: "Dark",
+        "Textarea Test": {
+            default: "blabla",
             type: "string",
             onChange: (v) => {}
         },
