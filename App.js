@@ -174,7 +174,7 @@ class MainView extends React.Component {
                                             <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><Text>☰</Text></TouchableOpacity>
                                             <Text style={{flex: 1}}>#{this.state.currentChannel.name}</Text>
                                         </View>
-                                        {(!this.state.currentChannel?.name?.includes("nsfw") || app.settings.get("Consented to 18+ content")) ?
+                                        {(!this.state.currentChannel?.nsfw || app.settings.get("Consented to 18+ content")) ?
                                         <>
                                             <Messages channel={this.state.currentChannel} onLongPress={async (m) => {this.setState({contextMenuMessage: m})}} onUserPress={(m) => {app.openProfile(m.author, this.state.currentChannel.server)}} onImagePress={(a) => {this.setState({imageViewerImage: a})}} rerender={this.state.rerender} onUsernamePress={(m) => this.setState({currentText: this.state.currentText + "<@" + m.author?._id + ">"})} />
                                             <MessageBox channel={this.state.currentChannel} 
