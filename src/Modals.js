@@ -84,8 +84,8 @@ export const Modals = ({state, setState}) => {
                         <Text style={{color: '#ff3333'}}>User is banned</Text> : 
                         null
                     : null}
-                    {state.contextMenuUser?.badges ?
-                        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+                    <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+                        {state.contextMenuUser?.badges ? <>
                             {state.contextMenuUser.badges & 1 ?
                             <Text style={{color: 'orange', marginLeft: 8}}>Revolt Developer</Text> : null}
                             {state.contextMenuUser.badges & 2 ?
@@ -96,8 +96,10 @@ export const Modals = ({state, setState}) => {
                             <Text style={{color: 'purple', marginLeft: 8}}>Bug Catcher</Text> : null}
                             {state.contextMenuUser.badges & 256 ?
                             <Text style={{color: 'cyan', marginLeft: 8}}>Early Adopter</Text> : null} 
-                        </View>
-                    : null}
+                        </> : null}
+                        {state.contextMenuUser?._id == "01FC1HP5H22F0M34MFFM9DZ099" ? 
+                        <Text style={{color: currentTheme.accentColor, marginLeft: 8}}>RVMob Author (hi there!)</Text> : null}
+                    </View>
                     {state.contextMenuUser?.relationship != RelationshipStatus.User ? 
                         !state.contextMenuUser?.bot ? 
                         (state.contextMenuUser?.relationship == RelationshipStatus.Friend ? 
@@ -165,20 +167,20 @@ export const Modals = ({state, setState}) => {
                                     alignItems: 'center', justifyContent: 'center'
                                 }} onPress={() => {app.settings.set(k, !app.settings.get(k)); rerender()}}><Text style={{color: app.settings.get(k) ? currentTheme.accentColorForeground : currentTheme.textPrimary}}>{app.settings.get(k) ? "On" : "Off"}</Text></TouchableOpacity>
                             </View>
-                        } else if (v.type == "string") {
+                        } else if (v.type == "string" || v.type == "number") {
                             return <View key={k} style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
                                 {v.options ? 
                                 <View>
                                     <Text style={{flex: 1, fontWeight: 'bold'}}>{k}</Text>
-                                    <ScrollView style={{borderRadius: 8, maxHeight: 160, minWidth: "100%", backgroundColor: currentTheme.backgroundSecondary, padding: 8, paddingRight: 12}}>
-                                        {v.options.map((o) => <TouchableOpacity key={o} style={styles.actionTile} onPress={() => {app.settings.set(k, o); rerender()}}><Text>{o} {app.settings.get(k) == o ? <Text>(active)</Text> : null}</Text></TouchableOpacity>)}
-                                        <View style={{marginTop: 16}} />
+                                    <ScrollView style={{borderRadius: 8, /*maxHeight: 160,*/ minWidth: "100%", backgroundColor: currentTheme.backgroundSecondary, padding: 8, paddingRight: 12}}>
+                                        {v.options.map((o) => <TouchableOpacity key={o} style={styles.actionTile} onPress={() => {app.settings.set(k, o); rerender()}}><Text>{o} {app.settings.getRaw(k) == o ? <Text>(active)</Text> : null}</Text></TouchableOpacity>)}
+                                        <View style={{marginTop: 2}} />
                                     </ScrollView>
                                 </View>
                                 :
                                 <View>
                                     <Text style={{flex: 1, fontWeight: 'bold'}}>{k}</Text>
-                                    <TextInput style={{minWidth: "100%", borderRadius: 8, backgroundColor: currentTheme.backgroundSecondary, padding: 6, paddingLeft: 10, paddingRight: 10, color: currentTheme.textPrimary}} value={app.settings.get(k)} onChangeText={(v) => {app.settings.set(k, v); rerender()}} />
+                                    <TextInput style={{minWidth: "100%", borderRadius: 8, backgroundColor: currentTheme.backgroundSecondary, padding: 6, paddingLeft: 10, paddingRight: 10, color: currentTheme.textPrimary}} value={app.settings.getRaw(k)} keyboardType={v.type == "number" ? 'decimal-pad' : 'default'} onChangeText={(v) => {app.settings.set(k, v); rerender()}} />
                                 </View>}
                             </View>
                         }

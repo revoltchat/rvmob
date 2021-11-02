@@ -6,7 +6,7 @@ export const themes = {
         blockQuoteBackground: '#11111166',
         textPrimary: '#000000',
         textSecondary: '#555555',
-        accentColor: '#913edc',
+        accentColor: '#1ad4b2',
         accentColorForeground: '#000000',
         contentType: 'dark',
         buttonBorderWidth: 0,
@@ -26,7 +26,7 @@ export const themes = {
         blockQuoteBackground: '#11111166',
         textPrimary: '#dddddd',
         textSecondary: '#888888',
-        accentColor: '#913edc',
+        accentColor: '#1ad4b2',
         accentColorForeground: '#000000',
         contentType: 'light',
         buttonBorderWidth: 0,
@@ -46,7 +46,7 @@ export const themes = {
         blockQuoteBackground: '#11111166',
         textPrimary: '#dddddd',
         textSecondary: '#888888',
-        accentColor: '#913edc',
+        accentColor: '#1ad4b2',
         accentColorForeground: '#000000',
         contentType: 'light',
         buttonBorderWidth: 0,
@@ -66,7 +66,7 @@ export const themes = {
         blockQuoteBackground: '#111111',
         textPrimary: '#dddddd',
         textSecondary: '#888888',
-        accentColor: '#913edc',
+        accentColor: '#1ad4b2',
         accentColorForeground: '#000000',
         contentType: 'light',
         buttonBorderColor: "#ffffff99",
@@ -124,8 +124,7 @@ function refreshStyles() {
         message: {
             width: "100%",
             flex: 1,
-            flexDirection: "row",
-            marginBottom: 3
+            flexDirection: "row"
         },
         messageGrouped: {
             paddingLeft: 35,
@@ -182,7 +181,7 @@ function refreshStyles() {
             flex: 1000
         },
         channelButton: {
-            padding: 8 - currentTheme.generalBorderWidth,
+            padding: 10 - currentTheme.generalBorderWidth,
             margin: 3,
             marginRight: 5,
             borderRadius: 8,
@@ -192,24 +191,28 @@ function refreshStyles() {
             borderColor: currentTheme.buttonBorderColor
         },
         button: {
-            padding: 5,
-            paddingLeft: 10,
-            paddingRight: 10,
+            padding: 10 - currentTheme.generalBorderWidth,
+            paddingLeft: 16 - currentTheme.generalBorderWidth,
+            paddingRight: 16 - currentTheme.generalBorderWidth,
             borderRadius: 8,
             backgroundColor: currentTheme.backgroundSecondary,
             margin: 5,
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            borderWidth: currentTheme.buttonBorderWidth,
+            borderColor: currentTheme.buttonBorderColor
         },
         buttonSecondary: {
-            padding: 5,
-            paddingLeft: 10,
-            paddingRight: 10,
+            padding: 10 - currentTheme.generalBorderWidth,
+            paddingLeft: 16 - currentTheme.generalBorderWidth,
+            paddingRight: 16 - currentTheme.generalBorderWidth,
             borderRadius: 8,
             backgroundColor: currentTheme.backgroundPrimary,
             margin: 5,
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            borderWidth: currentTheme.buttonBorderWidth,
+            borderColor: currentTheme.buttonBorderColor
         },
         channelButtonSelected: {
             borderColor: currentTheme.buttonBorderColorActive,

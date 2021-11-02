@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Pressable, ScrollView } from 'react-native';
+import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { ChannelList, ServerList, app, setFunction, client, Text } from './Generic';
 import { MiniProfile, Avatar } from './Profile';
 import { styles, currentTheme } from './Theme';
@@ -40,8 +40,8 @@ export class LeftMenu extends React.Component {
             borderTopWidth: currentTheme.generalBorderWidth,
             borderColor: currentTheme.generalBorderColor,
             flexDirection: 'row'}}>
-                <Pressable onPress={this.props.onOpenSettings} style={styles.buttonSecondary}><Text>Config</Text></Pressable>
-                <Pressable onPress={this.props.onLogOut} style={styles.buttonSecondary}><Text>Log Out</Text></Pressable>
+                <TouchableOpacity onPress={this.props.onOpenSettings} style={styles.buttonSecondary}><Text>Settings</Text></TouchableOpacity>
+                <TouchableOpacity onPress={this.props.onLogOut} style={styles.buttonSecondary}><Text>Log Out</Text></TouchableOpacity>
             </View>
             </>
         );

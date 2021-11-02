@@ -22,11 +22,6 @@ export const app = {
                 setTheme(v);
             }
         },
-        "Textarea Test": {
-            default: "blabla",
-            type: "string",
-            onChange: (v) => {}
-        },
         "Show self in typing indicator": {
             default: true,
             type: "boolean"
@@ -34,12 +29,24 @@ export const app = {
         "Show user status in chat avatars": {
             default: false,
             type: "boolean"
+        },
+        "Message spacing": {
+            default: "3",
+            type: "number"
+        },
+        "Consented to 18+ content": {
+            default: false,
+            type: "boolean"
         }
     }
 };
 
+app.settings.getRaw = (k) => {
+    return (typeof app.settings[k].value == (app.settings[k].type == "number" ? "string" : app.settings[k].type) ? app.settings[k].value : app.settings[k].default);
+}
 app.settings.get = (k) => {
-    return typeof app.settings[k].value == app.settings[k].type ? app.settings[k].value : app.settings[k].default;
+    let val = (typeof app.settings[k].value == (app.settings[k].type == "number" ? "string" : app.settings[k].type) ? app.settings[k].value : app.settings[k].default);
+    return app.settings[k].type == "number" ? (parseInt(val) || 0) : val;
 }
 app.settings.set = (k, v) => {
     app.settings[k].value = v;

@@ -10,13 +10,23 @@ import { currentTheme, styles } from './src/Theme'
 import { Text, client, app } from './src/Generic'
 import { Messages, ReplyMessage } from './src/MessageView'
 import { MessageBox } from './src/MessageBox';
-import { MiniProfile } from './src/Profile'
+import { MiniProfile, Avatar, Username } from './src/Profile'
 import { setFunction } from './src/Generic';
 import { LeftMenu, RightMenu } from './src/SideMenus';
 import { Modals } from './src/Modals';
 import FastImage from 'react-native-fast-image';
 import { observer } from 'mobx-react-lite';
 const Image = FastImage;
+
+const remarkStyle = {color: currentTheme.textSecondary, textAlign: 'center', fontSize: 16, marginTop: 5}
+const loadingScreenRemarks = [
+    <Text style={remarkStyle}>I'm writing a complaint to the Head of Loading Screens.</Text>,
+    <Text style={remarkStyle}>I don't think we can load any longer!</Text>,
+    <Text style={remarkStyle}>Better grab a book or something.</Text>,
+    <Text style={remarkStyle}>When will the madness end?</Text>,
+    <Text style={remarkStyle}>You know, what does RVMob even stand for?</Text>
+]
+let selectedRemark = loadingScreenRemarks[Math.floor(Math.random() * loadingScreenRemarks.length)];
 
 class MainView extends React.Component {
     constructor(props) {
@@ -64,6 +74,10 @@ class MainView extends React.Component {
         setFunction("openImage", async (a) => {
             this.setState({imageViewerImage: a})
         })
+    }
+    componentDidUpdate(_, prevState) {
+        if (prevState.status != this.state.status && this.state.status == "tryingLogin")
+        selectedRemark = loadingScreenRemarks[Math.floor(Math.random() * loadingScreenRemarks.length)];
     }
     async componentDidMount() {
         console.log("mount app")
@@ -160,7 +174,7 @@ class MainView extends React.Component {
                                             <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><Text>☰</Text></TouchableOpacity>
                                             <Text style={{flex: 1}}>#{this.state.currentChannel.name}</Text>
                                         </View>
-                                        {(!this.state.currentChannel?.name?.includes("nsfw") || this.state.nsfwConsented) ?
+                                        {(!this.state.currentChannel?.name?.includes("nsfw") || app.settings.get("Consented to 18+ content")) ?
                                         <>
                                             <Messages channel={this.state.currentChannel} onLongPress={async (m) => {this.setState({contextMenuMessage: m})}} onUserPress={(m) => {app.openProfile(m.author, this.state.currentChannel.server)}} onImagePress={(a) => {this.setState({imageViewerImage: a})}} rerender={this.state.rerender} onUsernamePress={(m) => this.setState({currentText: this.state.currentText + "<@" + m.author?._id + ">"})} />
                                             <MessageBox channel={this.state.currentChannel} 
@@ -170,8 +184,8 @@ class MainView extends React.Component {
                                         :
                                         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', padding: 25}}>
                                             <Text style={{fontWeight: 'bold', fontSize: 20}}>Hold it!</Text>
-                                            <Text style={{textAlign: 'center'}}>This is an NSFW channel. Are you sure you want to enter?</Text>
-                                            <TouchableOpacity style={{padding: 5, margin: 10, paddingLeft: 10, paddingRight: 10, backgroundColor: currentTheme.backgroundSecondary, borderRadius: 8}} onPress={() => this.setState({nsfwConsented: true})}><Text>Enter</Text></TouchableOpacity>
+                                            <Text style={{textAlign: 'center'}}>This is an NSFW channel. Are you sure you want to enter?{'\n'}(This can be reversed in Settings)</Text>
+                                            <TouchableOpacity style={{padding: 5, margin: 10, paddingLeft: 10, paddingRight: 10, backgroundColor: currentTheme.backgroundSecondary, borderRadius: 8}} onPress={() => app.settings.set("Consented to 18+ content", true)}><Text>Enter</Text></TouchableOpacity>
                                         </View>
                                         }
                                     </View>
@@ -183,8 +197,22 @@ class MainView extends React.Component {
                                             <Text style={{flex: 1}}>Home</Text>
                                         </View>
                                         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20}}>
-                                            <Text key="app-name" style={{fontWeight: 'bold', fontSize: 48, marginBottom: 10}}>RVMob</Text>
-                                            <Text key="no-channel-selected">Swipe from the left of the screen, or press the three lines icon to open the server selector!</Text>
+                                            <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}} onPress={() => app.openProfile(client.user)}>
+                                                <Avatar size={40} user={client.user} status />
+                                                <View style={{marginLeft: 4}} />
+                                                <Username size={20} user={client.user} />
+                                            </TouchableOpacity>
+                                            <Text key="app-name" style={{fontWeight: 'bold', fontSize: 48}}>RVMob</Text>
+                                            <Text key="no-channel-selected" style={{textAlign: 'center', marginBottom: 10}}>Swipe from the left of the screen, or press the three lines icon to open the server selector!</Text>
+                                            <TouchableOpacity style={styles.button} onPress={() => this.setState({settingsOpen: true})}>
+                                                <Text style={{fontSize: 16}}>Settings</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={styles.button} onPress={() => app.openInvite("Testers")}>
+                                                <Text style={{fontSize: 16}}>Join Revolt Testers</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={styles.button} onPress={() => app.openInvite("ZFGGw6ry")}>
+                                                <Text style={{fontSize: 16}}>Join RVMob</Text>
+                                            </TouchableOpacity>
                                         </View>
                                     </>
                                 }
@@ -250,7 +278,8 @@ class MainView extends React.Component {
                 :
                 <View style={styles.app}>
                     <View style={styles.loggingInScreen}>
-                        <Text>Logging in...</Text>
+                        <Text style={{fontSize: 30, fontWeight: 'bold'}}>Logging in...</Text>
+                        <View style={{paddingLeft: 30, paddingRight: 30}}>{selectedRemark || null}</View>
                     </View>
                 </View>
                 )
