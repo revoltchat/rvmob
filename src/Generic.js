@@ -98,6 +98,7 @@ app.openBotInvite = (i) => {};
 app.openServer = (s) => {};
 app.openChannel = (c) => {};
 app.openImage = (a) => {};
+app.openServerContextMenu = (s) => {};
 
 export function setFunction(name, func) {
     app[name] = func;
@@ -200,11 +201,13 @@ export const GeneralAvatar = ({ attachment, size }) => {
 }
 
 
-export const ServerList = observer(({ onServerPress }) => {
+export const ServerList = observer(({ onServerPress, onServerLongPress }) => {
     return [...client.servers.values()].map((s) => {
         let iconURL = s.generateIconURL();
         return <TouchableOpacity onPress={
             ()=>{onServerPress(s)}
+        } onLongPress={
+            ()=>{onServerLongPress(s)}
         } 
         key={s._id} 
         style={styles.serverButton}>

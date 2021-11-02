@@ -37,11 +37,13 @@ class MainView extends React.Component {
         	currentChannel: null,
             currentText: "",
             tokenInput: "",
+            userStatusInput: "",
             replyingMessages: [],
             leftMenuOpen: false,
             rightMenuOpen: false,
             contextMenuMessage: null,
             contextMenuUser: null,
+            contextMenuServer: null,
             inviteBot: null,
             inviteBotDestination: null,
             imageViewerImage: null,
@@ -73,6 +75,9 @@ class MainView extends React.Component {
         })
         setFunction("openImage", async (a) => {
             this.setState({imageViewerImage: a})
+        })
+        setFunction("openServerContextMenu", async (s) => {
+            this.setState({contextMenuServer: s})
         })
     }
     componentDidUpdate(_, prevState) {
@@ -183,9 +188,9 @@ class MainView extends React.Component {
                                         </>
                                         :
                                         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', padding: 25}}>
-                                            <Text style={{fontWeight: 'bold', fontSize: 20}}>Hold it!</Text>
-                                            <Text style={{textAlign: 'center'}}>This is an NSFW channel. Are you sure you want to enter?{'\n'}(This can be reversed in Settings)</Text>
-                                            <TouchableOpacity style={{padding: 5, margin: 10, paddingLeft: 10, paddingRight: 10, backgroundColor: currentTheme.backgroundSecondary, borderRadius: 8}} onPress={() => app.settings.set("Consented to 18+ content", true)}><Text>Enter</Text></TouchableOpacity>
+                                            <Text style={{fontWeight: 'bold', fontSize: 28}}>Hold it!</Text>
+                                            <Text style={{textAlign: 'center', fontSize: 16}}>This is an NSFW channel. Are you sure you want to enter?{'\n'}(This can be reversed in Settings)</Text>
+                                            <TouchableOpacity style={styles.button} onPress={() => {app.settings.set("Consented to 18+ content", true); this.setState({})}}><Text style={{fontSize: 16}}>Enter</Text></TouchableOpacity>
                                         </View>
                                         }
                                     </View>

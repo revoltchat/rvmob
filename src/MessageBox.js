@@ -14,6 +14,7 @@ export class MessageBox extends React.Component {
         }
     }
     render() {
+        // let memberObject = client.members.getKey({server: this.props.channel?.server, user: client.user?._id})
         return <View style={styles.messageBoxOuter}>
             <TypingIndicator channel={this.props.channel}/>
             {this.props.replyingMessages ? this.props.replyingMessages.map(m => 

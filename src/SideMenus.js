@@ -29,7 +29,8 @@ export class LeftMenu extends React.Component {
                     style={{margin: 4}}>
                         <Avatar user={client.user} size={48} backgroundColor={currentTheme.backgroundSecondary} status />
                     </TouchableOpacity>
-                    <ServerList onServerPress={(s) => this.setState({currentServer: s})} />
+                    <View style={{margin: 6, height: 2, width: "80%", backgroundColor: currentTheme.backgroundPrimary}} />
+                    <ServerList onServerPress={(s) => this.setState({currentServer: s})} onServerLongPress={(s) => app.openServerContextMenu(s)} />
                 </ScrollView>
                 <ScrollView style={styles.channelList}>
                     <ChannelList onChannelClick={this.props.onChannelClick} currentChannel={this.props.currentChannel} currentServer={this.state.currentServer} />

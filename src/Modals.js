@@ -58,7 +58,7 @@ export const Modals = ({state, setState}) => {
         visible={!!state.contextMenuUser}
         onRequestClose={() => app.openProfile(null)}
         >
-            <Pressable onPress={() => app.openProfile(null)} style={{width: Dimensions.get("window").width, height: Dimensions.get("window").height, position: 'absolute', backgroundColor: "#00000000"}} />
+            <Pressable onPress={() => {app.openProfile(null); setState({userStatusInput: ""})}} style={{width: Dimensions.get("window").width, height: Dimensions.get("window").height, position: 'absolute', backgroundColor: "#00000000"}} />
             <View style={{width: "100%", height: Dimensions.get("window").height * 0.75, top: "25%", padding: 15, backgroundColor: currentTheme.backgroundSecondary}}>
                 <View>
                     <View style={{flexDirection: 'row'}}>
@@ -137,9 +137,12 @@ export const Modals = ({state, setState}) => {
                             <Text style={{color: currentTheme.textSecondary}}>Unloaded user</Text>}
                         </>
                         : 
+                        <>
                         <View style={{flexDirection: 'row'}}>
                             {["Online", "Idle", "Busy", "Invisible"].map((s) => <TouchableOpacity key={s} style={[styles.actionTile, {flex: 1, alignItems: 'center', justifyContent: 'center'}]} onPress={() => {client.users.edit({status: {...client.user.status, presence: s}})}}><View style={{backgroundColor: currentTheme["status" + s], height: 16, width: 16, borderRadius: 10000}} /></TouchableOpacity>)}
                         </View>
+                        {/* <TextInput onChangeText={(v) => setState({userStatusInput: v})} value={state.userStatusInput || client.user.status.text || ""} onSubmitEditing={() => client.users.edit({...client.user.status, text: state.userStatusInput})} /> */}
+                        </>
                     }
                     <ScrollView>
                         <RoleView user={state.contextMenuUser} server={state.contextMenuUserServer}/>
@@ -187,6 +190,16 @@ export const Modals = ({state, setState}) => {
                     })}
                     <TouchableOpacity style={{marginTop: 10, marginBottom: 10, backgroundColor: currentTheme.accentColor, borderRadius: 8, padding: 8, alignItems: 'center', justifyContent: 'center'}} onPress={() => {app.settings.clear(); rerender()}}><Text style={{color: currentTheme.accentColorForeground}}>Reset Settings</Text></TouchableOpacity>
                 </ScrollView>
+            </View>
+        </Modal>
+        <Modal visible={!!state.contextMenuServer} transparent={true} animationType="slide">
+            <Pressable onPress={() => app.openServerContextMenu(null)} style={{width: Dimensions.get("window").width, height: Dimensions.get("window").height, position: 'absolute', backgroundColor: "#00000000"}} />
+            <View style={{width: "100%", height: Dimensions.get("window").height * 0.75, top: "25%", padding: 15, backgroundColor: currentTheme.backgroundSecondary}}>
+                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                    {state.contextMenuServer?.icon ? <GeneralAvatar attachment={state.contextMenuServer?.icon} size={72} /> : null}
+                    <Text style={{color: currentTheme.textPrimary, fontWeight: 'bold', marginTop: 10, fontSize: 24, textAlign: 'center'}}>{state.contextMenuServer?.name}</Text>
+                    <Text style={{color: currentTheme.textSecondary, fontSize: 16, textAlign: 'center'}}>{state.contextMenuServer?.description}</Text>
+                </View>
             </View>
         </Modal>
         <Modal visible={!!state.inviteServer} transparent={true} animationType="fade">
