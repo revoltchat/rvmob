@@ -4,7 +4,7 @@ import { Avatar, Username } from './Profile'
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { styles, currentTheme } from './Theme';
-import dayjs from 'dayjs'
+import { differenceInMinutes, formatRelative } from 'date-fns';
 import { decodeTime } from 'ulid'
 import FastImage from 'react-native-fast-image';
 const Image = FastImage;
@@ -51,7 +51,7 @@ export class Messages extends React.Component {
                         if (newMessages.length >= (!this.state.bottomOfPage ? 150 : 50)) {
                             newMessages = newMessages.slice(newMessages.length - 50, newMessages.length)
                         }
-                        let grouped = newMessages.length > 0 && ((newMessages[newMessages.length - 1].message?.author?._id == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (dayjs(decodeTime(message._id)).diff(dayjs(decodeTime(newMessages[newMessages.length - 1].message?._id)), "minute") < 5))
+                        let grouped = newMessages.length > 0 && ((newMessages[newMessages.length - 1].message?.author?._id == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && differenceInMinutes(decodeTime(message._id), decodeTime(newMessages[newMessages.length - 1].message?._id)) < 5)
                         newMessages.push({message, grouped, rendered: this.renderMessage({grouped, message})})
                         return {messages: newMessages, newMessageCount: !this.state.bottomOfPage ? (this.state.newMessageCount + 1) || 1 : 0}
                     })
@@ -93,9 +93,9 @@ export class Messages extends React.Component {
             }
             let messages = res.messages.reverse().map((message, i) => {
                 try {
-                let time = dayjs(decodeTime(message._id))
+                let time = decodeTime(message._id)
                 // let grouped = ((lastAuthor == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (lastTime && time.diff(lastTime, "minute") < 5))
-                let grouped = i != 0 && ((res.messages[i - 1].author._id == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (time.diff(dayjs(decodeTime(res.messages[i - 1]._id)), "minute") < 5))
+                let grouped = i != 0 && ((res.messages[i - 1].author._id == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && differenceInMinutes(time, decodeTime(res.messages[i - 1]._id)) < 5)
                 let out = {grouped, message: message, rendered: this.renderMessage({grouped, message})}
                 // lastAuthor = (message.author ? message.author._id : lastAuthor)
                 // lastTime = time
@@ -218,10 +218,10 @@ export const Message = observer((props) => {
                 <View style={{marginTop: app.settings.get("Message spacing")}} />
                 {(props.message.reply_ids !== null) ? <View style={styles.repliedMessagePreviews}>{props.message.reply_ids.map(id => <ReplyMessage key={id} message={client.messages.get(id)} mention={props.message?.mention_ids?.includes(props.message?.author_id)} />)}</View> : null}
                 <View style={props.grouped ? styles.messageGrouped : styles.message}>
-                    {(props.message.author && !props.grouped) ? <Pressable onPress={() => props.onUserPress()}><Avatar user={props.message.author} server={props.message.channel?.server} size={35} {...(app.settings.get("Show user status in chat avatars") ? {status: true} : {})} /></Pressable> : null}
+                    {(props.message.author && !props.grouped) ? <Pressable onPress={() => props.onUserPress()}><Avatar user={props.message.author} masquerade={props.message.generateMasqAvatarURL()} server={props.message.channel?.server} size={35} {...(app.settings.get("Show user status in chat avatars") ? {status: true} : {})} /></Pressable> : null}
                     <View style={styles.messageInner}>
                         {(props.grouped && props.message.edited) ? <Text style={{fontSize: 12, color: currentTheme.textSecondary, position: 'relative', right: 47, marginBottom: -16}}> (edited)</Text> : null}
-                        {(props.message.author && !props.grouped) ? <View style={{flexDirection: 'row'}}><Pressable onPress={props.onUsernamePress}><Username user={props.message.author} server={props.message.channel?.server} /></Pressable><Text style={styles.timestamp}> {dayjs(decodeTime(props.message._id)).format('YYYY-MM-DD hh:mm:ss A')}</Text>{props.message.edited && <Text style={{fontSize: 12, color: currentTheme.textSecondary, position: 'relative', top: 2, left: 2}}> (edited)</Text>}</View> : null}
+                        {(props.message.author && !props.grouped) ? <View style={{flexDirection: 'row'}}><Pressable onPress={props.onUsernamePress}><Username user={props.message.author} server={props.message.channel?.server} masquerade={props.message.masquerade?.name} /></Pressable><Text style={styles.timestamp}> {formatRelative(decodeTime(props.message._id), new Date())}</Text>{props.message.edited && <Text style={{fontSize: 12, color: currentTheme.textSecondary, position: 'relative', top: 2, left: 2}}> (edited)</Text>}</View> : null}
                         <MarkdownView>{props.message.content}</MarkdownView>
                         {props.message.attachments?.map((a) => {
                             if (a.metadata?.type == "Image") {
@@ -285,19 +285,21 @@ export class ReplyMessage extends React.PureComponent {
         super(props);
     }
     render() {
+        if (typeof this.props.message?.content === "string") 
         return (
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                 <Text style={{marginLeft: 15, marginRight: 15}}>↱</Text>
                 {this.props.message ? 
                     this.props.message.author ? <>
-                        <Avatar user={this.props.message.author} server={this.props.message.channel?.server} size={16} />
+                        <Avatar user={this.props.message.author} server={this.props.message.channel?.server} masquerade={this.props.message.generateMasqAvatarURL()} size={16} />
                         {this.props.mention ? <Text>@</Text> : null}
-                        <Username user={this.props.message.author} server={this.props.message.channel?.server} />
+                        <Username user={this.props.message.author} server={this.props.message.channel?.server} masquerade={this.props.message.masquerade?.name} />
                         <Text style={styles.messageContentReply}>{this.props.message.content.split("\n").join(" ")}</Text>
                     </> : null
                 : <Text style={styles.messageContentReply}>Message not loaded</Text>
                 }
             </View>
         );
+        return <></>
     }
 }

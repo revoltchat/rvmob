@@ -19,6 +19,7 @@
     "browserify-zlib": "^0.1.4",
     "console-browserify": "^1.2.0",
     "constants-browserify": "^1.0.0",
+    "date-fns": "^2.25.0",
     "dayjs": "^1.10.7",
     "dns.js": "^1.0.1",
     "domain-browser": "^1.2.0",

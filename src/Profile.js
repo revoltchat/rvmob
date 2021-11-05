@@ -6,7 +6,7 @@ import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 const Image = FastImage;
 
-export const Username = observer(({ server, user, noBadge, size }) => { 
+export const Username = observer(({ server, user, noBadge, size, masquerade }) => { 
     if (typeof user != 'object') return <Text style={size ? {fontSize: size} : {}}>
         {"<Unknown User>"}
     </Text>
@@ -23,31 +23,49 @@ export const Username = observer(({ server, user, noBadge, size }) => {
             }
         }
     }
+    let badgeSize = ((size || 14) * 0.6)
+    let badgeStyle = {color: currentTheme.accentColorForeground, backgroundColor: currentTheme.accentColor, marginLeft: badgeSize * 0.3, paddingLeft: badgeSize * 0.4, paddingRight: badgeSize * 0.4, borderRadius: 3, fontSize: badgeSize, height: badgeSize + (badgeSize * 0.45), top: badgeSize * 0.5}
     return (
         <View style={{flexDirection: 'row'}}>
-            <Text style={{color, fontWeight: 'bold', fontSize: size}}>
-                {name}
+            <Text style={{color, fontWeight: 'bold', fontSize: (size || 14)}}>
+                {masquerade ? masquerade : name}
             </Text>
-            {!noBadge && user?.bot ?
-                <Text style={{color: currentTheme.accentColorForeground, backgroundColor: currentTheme.accentColor, marginLeft: 4, paddingLeft: 3, paddingRight: 3, borderRadius: 3, fontSize: size}}>
-                    BOT
-                </Text>
+            {!noBadge ?
+                <>
+                    {user?.bot ? <Text style={badgeStyle}>
+                        BOT
+                    </Text> : null}
+                    {masquerade ? <Text style={badgeStyle}>
+                        MASQ.
+                    </Text> : null}
+                    </>
             : null}
         </View>
     )
 })
-export const Avatar = observer(({ channel, user, server, status, size, backgroundColor }) => {
+export const Avatar = observer(({ channel, user, server, status, size, backgroundColor, masquerade }) => {
     let memberObject = client.members.getKey({server: server?._id, user: user?._id});
     let statusColor
-    let statusScale = 2.75
+    let statusScale = 2.7
     if (status) {
         statusColor = currentTheme["status" + (user.online ? (user.status?.presence || "Online") : "Offline")]
     }
     if (user)
     return ( 
         <View>
-            <Image source={{uri: ((server && memberObject?.generateAvatarURL && memberObject?.generateAvatarURL()) ? memberObject?.generateAvatarURL() : user?.generateAvatarURL()) + "?max_side=" + defaultMaxSide}} style={{width: size || 35, height: size || 35, borderRadius: 10000}} />
-            {status ? <View style={{width: size / statusScale, height: size / statusScale, backgroundColor: statusColor, borderRadius: 10000, marginTop: -(size / statusScale), left: size - (size / statusScale), borderWidth: size / 20, borderColor: backgroundColor || currentTheme.backgroundPrimary}} /> : null}
+            <Image source={{uri: (
+                masquerade ? masquerade
+                :
+                (server && memberObject?.generateAvatarURL && memberObject?.generateAvatarURL()) ? 
+                memberObject?.generateAvatarURL() : 
+                user?.generateAvatarURL()
+            ) + "?max_side=" + defaultMaxSide}} style={{width: size || 35, height: size || 35, borderRadius: 10000}} />
+            {status ? <View style={{width: Math.round(size / statusScale), height: Math.round(size / statusScale), backgroundColor: statusColor, borderRadius: 10000, marginTop: -Math.round(size / statusScale), left: size - Math.round(size / statusScale), borderWidth: Math.round(size / 20), borderColor: backgroundColor || currentTheme.backgroundPrimary}} /> : null}
+            {masquerade ? <Image style={{width: Math.round(size / statusScale), height: Math.round(size / statusScale), marginBottom: -Math.round(size / statusScale), bottom: size, borderRadius: 10000, borderWidth: Math.round(size / 30), borderColor: backgroundColor || currentTheme.backgroundPrimary}} source={{uri:
+                (server && memberObject?.generateAvatarURL && memberObject?.generateAvatarURL()) ? 
+                memberObject?.generateAvatarURL() : 
+                user?.generateAvatarURL()
+            }}/> : null}
         </View>
     )
     if (channel)
