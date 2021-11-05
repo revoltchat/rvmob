@@ -276,7 +276,7 @@ function refreshStyles() {
             paddingRight: 10,
             margin: 3
         },
-        replyingMessagePreview: {
+        messageBoxBar: {
             padding: 4,
             borderBottomColor: currentTheme.backgroundPrimary,
             borderBottomWidth: 1,

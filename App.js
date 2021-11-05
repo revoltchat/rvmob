@@ -38,7 +38,6 @@ class MainView extends React.Component {
             currentText: "",
             tokenInput: "",
             userStatusInput: "",
-            replyingMessages: [],
             leftMenuOpen: false,
             rightMenuOpen: false,
             contextMenuMessage: null,
@@ -182,9 +181,7 @@ class MainView extends React.Component {
                                         {(!this.state.currentChannel?.nsfw || app.settings.get("Consented to 18+ content")) ?
                                         <>
                                             <Messages channel={this.state.currentChannel} onLongPress={async (m) => {this.setState({contextMenuMessage: m})}} onUserPress={(m) => {app.openProfile(m.author, this.state.currentChannel.server)}} onImagePress={(a) => {this.setState({imageViewerImage: a})}} rerender={this.state.rerender} onUsernamePress={(m) => this.setState({currentText: this.state.currentText + "<@" + m.author?._id + ">"})} />
-                                            <MessageBox channel={this.state.currentChannel} 
-                                            setReplyingMessages={(r) => this.setState({replyingMessages: r})}
-                                            replyingMessages={this.state.replyingMessages} />
+                                            <MessageBox channel={this.state.currentChannel} />
                                         </>
                                         :
                                         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', padding: 25}}>

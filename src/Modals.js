@@ -38,13 +38,14 @@ export const Modals = ({state, setState}) => {
                     <TouchableOpacity
                         style={styles.actionTile}
                         onPress={() => {
-                            let replyingMessages = state.replyingMessages || []
+                            let replyingMessages = [...app.getReplyingMessages()]
                             if (replyingMessages.filter(m => m._id === state.contextMenuMessage._id).length > 0) return
                             if (replyingMessages.length >= 4) {
                                 return
                             }
                             replyingMessages.push(state.contextMenuMessage)
-                            setState({replyingMessages, contextMenuMessage: null})
+                            app.setReplyingMessages(replyingMessages)
+                            setState({contextMenuMessage: null})
                         }}
                     >
                         <Text>Reply</Text>
@@ -58,6 +59,19 @@ export const Modals = ({state, setState}) => {
                             }}
                         >
                             <Text>Delete</Text>
+                        </TouchableOpacity>
+                    ) : null}
+                    {state.contextMenuMessage?.author.relationship == RelationshipStatus.User ? (
+                        <TouchableOpacity
+                            style={styles.actionTile}
+                            onPress={() => {
+                                app.setMessageBoxInput(state.contextMenuMessage?.content)
+                                app.setEditingMessage(state.contextMenuMessage)
+                                app.setReplyingMessages([])
+                                setState({contextMenuMessage: null})
+                            }}
+                        >
+                            <Text>Edit</Text>
                         </TouchableOpacity>
                     ) : null}
                 </View>

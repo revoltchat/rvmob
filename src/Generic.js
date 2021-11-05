@@ -99,6 +99,9 @@ app.openServer = (s) => {};
 app.openChannel = (c) => {};
 app.openImage = (a) => {};
 app.openServerContextMenu = (s) => {};
+app.setMessageBoxInput = (t) => {};
+app.setReplyingMessages = (m, a) => {};
+app.getReplyingMessages = () => {};
 
 export function setFunction(name, func) {
     app[name] = func;
