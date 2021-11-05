@@ -40,7 +40,7 @@ export const MessageBox = observer((props) => {
                 }
             }} value={currentText} />
             {currentText.length > 0 ? <TouchableOpacity style={styles.sendButton} onPress={() => {
-                this.props.channel.sendMessage({
+                props.channel.sendMessage({
                     content: currentText, 
                     replies: props.replyingMessages.map((m) => {
                         return {id: m._id, mention: false}

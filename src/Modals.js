@@ -6,6 +6,7 @@ import { styles, currentTheme, themes, setTheme, currentThemeName } from './Them
 import { ReplyMessage } from './MessageView';
 import { Avatar, Username, MiniProfile, RoleView } from './Profile';
 import { RelationshipStatus } from "revolt-api/types/Users";
+import { ChannelPermission } from "revolt.js/dist/api/permissions";
 import FastImage from 'react-native-fast-image';
 const Image = FastImage;
 
@@ -48,6 +49,17 @@ export const Modals = ({state, setState}) => {
                     >
                         <Text>Reply</Text>
                     </TouchableOpacity>
+                    {state.contextMenuMessage?.channel.permission & ChannelPermission.ManageMessages || state.contextMenuMessage?.author.relationship == RelationshipStatus.User ? (
+                        <TouchableOpacity
+                            style={styles.actionTile}
+                            onPress={() => {
+                                state.contextMenuMessage.delete()
+                                setState({contextMenuMessage: null})
+                            }}
+                        >
+                            <Text>Delete</Text>
+                        </TouchableOpacity>
+                    ) : null}
                 </View>
             </View>
         </Modal>

@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, ScrollView } from 'react-native';
-import { ChannelList, ServerList, app, setFunction, client, Text } from './Generic';
+import { ChannelList, ServerList, app, setFunction, client, Text, MarkdownView } from './Generic';
 import { MiniProfile, Avatar } from './Profile';
 import { styles, currentTheme } from './Theme';
 import FastImage from 'react-native-fast-image';
@@ -70,6 +70,10 @@ export class RightMenu extends React.Component {
         if (this.props.currentChannel?.server)
         return (
             <View style={styles.rightView}>
+                <View style={{margin: 10, padding: 10, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8}}>
+                    <Text style={{fontSize: 20, fontWeight: 'bold'}}>#{this.props.currentChannel?.name}</Text>
+                    {this.props.currentChannel?.description ? <MarkdownView>{this.props.currentChannel?.description}</MarkdownView> : null}
+                </View>
                 {this.state.users?.map(u => 
                     <TouchableOpacity style={{justifyContent: 'center', marginLeft: 6, marginRight: 6, marginTop: 3, padding: 6, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8}} onPress={() => app.openProfile(u)}>
                         <MiniProfile user={u} server={this.props.currentChannel?.server} />
