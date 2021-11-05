@@ -20,14 +20,15 @@ export const MessageBox = observer((props) => {
         <TypingIndicator channel={props.channel}/>
         {props.replyingMessages ? props.replyingMessages.map(m => 
             <View key={m._id} style={styles.replyingMessagePreview}>
-                <Pressable onPress={() => 
+                <Pressable style={{width: 30, height: 20, alignItems: 'center', justifyContent: 'center'}} onPress={() => 
                     props.setReplyingMessages(props.replyingMessages?.filter(m2 => m2._id != m._id))
-                }><Text>X</Text></Pressable>
-                <Text> Replying to {m.author?.username}</Text>
+                }><Text style={{fontSize: 20, margin: -4}}>X</Text></Pressable>
+                <Text> Replying to </Text>
+                <Username user={m.author} server={props.channel.server}/>
             </View>
         ) : null}
         <View style={styles.messageBoxInner}>
-            <TextInput placeholderTextColor={currentTheme.textSecondary} style={styles.messageBox} placeholder={"Message " + (props.channel?.channel_type != "Group" ? (props.channel?.channel_type == "DirectMessage" ? "@" : "#") : "") + (props.channel?.name || props.channel.recipient?.username)} onChangeText={(text) => {
+            <TextInput multiline placeholderTextColor={currentTheme.textSecondary} style={styles.messageBox} placeholder={"Message " + (props.channel?.channel_type != "Group" ? (props.channel?.channel_type == "DirectMessage" ? "@" : "#") : "") + (props.channel?.name || props.channel.recipient?.username)} onChangeText={(text) => {
                 setCurrentText(text)
                 if (currentText.length == 0) {
                     props.channel.stopTyping();
@@ -39,14 +40,15 @@ export const MessageBox = observer((props) => {
                     }
                 }
             }} value={currentText} />
-            {currentText.length > 0 ? <TouchableOpacity style={styles.sendButton} onPress={() => {
+            {currentText.trim().length > 0 ? <TouchableOpacity style={styles.sendButton} onPress={() => {
+                let thisCurrentText = currentText;
+                setCurrentText('');
                 props.channel.sendMessage({
-                    content: currentText, 
+                    content: thisCurrentText, 
                     replies: props.replyingMessages.map((m) => {
                         return {id: m._id, mention: false}
                     })
-                }); 
-                setCurrentText("")
+                });
                 props.setReplyingMessages([]);
             }}><Text>Send</Text></TouchableOpacity> 
             : null}
