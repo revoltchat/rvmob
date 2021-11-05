@@ -4,55 +4,55 @@ import { Text, app, client } from './Generic';
 import { styles, currentTheme } from './Theme';
 import { observer } from 'mobx-react-lite';
 import { Username, Avatar } from './Profile';
+import { ChannelPermission } from "revolt.js/dist/api/permissions";
 
 let typing = false;
-export class MessageBox extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentText: ""
-        }
-    }
-    render() {
-        // let memberObject = client.members.getKey({server: this.props.channel?.server, user: client.user?._id})
-        return <View style={styles.messageBoxOuter}>
-            <TypingIndicator channel={this.props.channel}/>
-            {this.props.replyingMessages ? this.props.replyingMessages.map(m => 
-                <View key={m._id} style={styles.replyingMessagePreview}>
-                    <Pressable onPress={() => 
-                        this.props.setReplyingMessages(this.props.replyingMessages?.filter(m2 => m2._id != m._id))
-                    }><Text>X</Text></Pressable>
-                    <Text> Replying to {m.author?.username}</Text>
-                </View>
-            ) : null}
-            <View style={styles.messageBoxInner}>
-                <TextInput placeholderTextColor={currentTheme.textSecondary} style={styles.messageBox} placeholder={"Message " + (this.props.channel?.channel_type != "Group" ? (this.props.channel?.channel_type == "DirectMessage" ? "@" : "#") : "") + (this.props.channel?.name || this.props.channel.recipient?.username)} onChangeText={(text) => {
-                    this.setState({currentText: text})
-                    if (this.state.currentText.length == 0) {
-                        this.props.channel.stopTyping();
-                    } else {
-                        if (!typing) {
-                            typing = true;
-                            this.props.channel.startTyping();
-                            setTimeout((() => typing = false).bind(this), 2500);
-                        }
-                    }
-                }} value={this.state.currentText} />
-                {this.state.currentText.length > 0 ? <TouchableOpacity style={styles.sendButton} onPress={() => {
-                    this.props.channel.sendMessage({
-                        content: this.state.currentText, 
-                        replies: this.props.replyingMessages.map((m) => {
-                            return {id: m._id, mention: false}
-                        })
-                    }); 
-                    this.setState({currentText: ""})
-                    this.props.setReplyingMessages([]);
-                }}><Text>Send</Text></TouchableOpacity> 
-                : null}
-            </View>
+
+export const MessageBox = observer((props) => {
+    let [currentText, setCurrentText] = React.useState('');
+    // let memberObject = client.members.getKey({server: this.props.channel?.server, user: client.user?._id})
+    if (!(props.channel.permission & ChannelPermission.SendMessage)) {
+        return <View style={{backgroundColor: currentTheme.backgroundSecondary, height: 80, padding: 20, alignItems: 'center', justifyContent: 'center'}}>
+            <Text style={{textAlign: 'center'}}>You do not have permission to send messages in this channel.</Text>
         </View>
-    }
-}
+    }     
+    return <View style={styles.messageBoxOuter}>
+        <TypingIndicator channel={props.channel}/>
+        {props.replyingMessages ? props.replyingMessages.map(m => 
+            <View key={m._id} style={styles.replyingMessagePreview}>
+                <Pressable onPress={() => 
+                    props.setReplyingMessages(props.replyingMessages?.filter(m2 => m2._id != m._id))
+                }><Text>X</Text></Pressable>
+                <Text> Replying to {m.author?.username}</Text>
+            </View>
+        ) : null}
+        <View style={styles.messageBoxInner}>
+            <TextInput placeholderTextColor={currentTheme.textSecondary} style={styles.messageBox} placeholder={"Message " + (props.channel?.channel_type != "Group" ? (props.channel?.channel_type == "DirectMessage" ? "@" : "#") : "") + (props.channel?.name || props.channel.recipient?.username)} onChangeText={(text) => {
+                setCurrentText(text)
+                if (currentText.length == 0) {
+                    props.channel.stopTyping();
+                } else {
+                    if (!typing) {
+                        typing = true;
+                        props.channel.startTyping();
+                        setTimeout((() => typing = false).bind(this), 2500);
+                    }
+                }
+            }} value={currentText} />
+            {currentText.length > 0 ? <TouchableOpacity style={styles.sendButton} onPress={() => {
+                this.props.channel.sendMessage({
+                    content: currentText, 
+                    replies: props.replyingMessages.map((m) => {
+                        return {id: m._id, mention: false}
+                    })
+                }); 
+                setCurrentText("")
+                props.setReplyingMessages([]);
+            }}><Text>Send</Text></TouchableOpacity> 
+            : null}
+        </View>
+    </View>
+})
 
 export const TypingIndicator = observer(({ channel }) => {
     if (channel) {
