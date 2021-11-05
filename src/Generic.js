@@ -30,6 +30,10 @@ export const app = {
             default: false,
             type: "boolean"
         },
+        "Show masqueraded avatar in corner": {
+            default: true,
+            type: "boolean"
+        },
         "Message spacing": {
             default: "3",
             type: "number"

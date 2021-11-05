@@ -43,6 +43,9 @@ export const Modals = ({state, setState}) => {
                             if (replyingMessages.length >= 4) {
                                 return
                             }
+                            if (app.getEditingMessage()) {
+                                return
+                            }
                             replyingMessages.push(state.contextMenuMessage)
                             app.setReplyingMessages(replyingMessages)
                             setState({contextMenuMessage: null})

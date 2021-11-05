@@ -5,7 +5,6 @@ import { styles, currentTheme } from './Theme';
 import { observer } from 'mobx-react-lite';
 import { Username, Avatar } from './Profile';
 import { ChannelPermission } from "revolt.js/dist/api/permissions";
-
 let typing = false;
 
 export const MessageBox = observer((props) => {

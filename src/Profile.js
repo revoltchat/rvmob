@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { Text, client, defaultMaxSide } from './Generic';
+import { Text, client, defaultMaxSide, app } from './Generic';
 import { currentTheme, styles } from './Theme';
 import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -61,7 +61,7 @@ export const Avatar = observer(({ channel, user, server, status, size, backgroun
                 user?.generateAvatarURL()
             ) + "?max_side=" + defaultMaxSide}} style={{width: size || 35, height: size || 35, borderRadius: 10000}} />
             {status ? <View style={{width: Math.round(size / statusScale), height: Math.round(size / statusScale), backgroundColor: statusColor, borderRadius: 10000, marginTop: -Math.round(size / statusScale), left: size - Math.round(size / statusScale), borderWidth: Math.round(size / 20), borderColor: backgroundColor || currentTheme.backgroundPrimary}} /> : null}
-            {masquerade ? <Image style={{width: Math.round(size / statusScale), height: Math.round(size / statusScale), marginBottom: -Math.round(size / statusScale), bottom: size, borderRadius: 10000, borderWidth: Math.round(size / 30), borderColor: backgroundColor || currentTheme.backgroundPrimary}} source={{uri:
+            {masquerade && app.settings.get("Show masqueraded avatar in corner") ? <Image style={{width: Math.round(size / statusScale), height: Math.round(size / statusScale), marginBottom: -Math.round(size / statusScale), bottom: size, borderRadius: 10000, borderWidth: Math.round(size / 30), borderColor: backgroundColor || currentTheme.backgroundPrimary}} source={{uri:
                 (server && memberObject?.generateAvatarURL && memberObject?.generateAvatarURL()) ? 
                 memberObject?.generateAvatarURL() : 
                 user?.generateAvatarURL()
