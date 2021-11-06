@@ -182,12 +182,17 @@ android {
 
         }
     }
+    packagingOptions {
+        // Make sure libjsc.so does not packed in APK
+        exclude "**/libjsc.so"
+    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation 'org.chromium:v8-android:9.93.+'
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 

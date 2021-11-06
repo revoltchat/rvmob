@@ -7581,6 +7581,13 @@
     "ip-regex" "^1.0.3"
     "util" "^0.10.3"
 
+"react-native-v8@^0.65.1-patch.1":
+  "integrity" "sha512-n1D3QtLsK47+5J/WHfOejFjxQRvTsy1MhUYqHK1ybS0INUAFASY7CrCsKhPym6wCIRCVf+ORbEPlocRSdZgtSg=="
+  "resolved" "https://registry.npmjs.org/react-native-v8/-/react-native-v8-0.65.1-patch.1.tgz"
+  "version" "0.65.1-patch.1"
+  dependencies:
+    "v8-android-jit" "~9.93.0"
+
 "react-native-vector-icons@>7.0.0":
   "integrity" "sha512-sHIdBB6Y0dHaot2fMXgy5J/hhCn5YuyN7SKDNFgPzL8KA1oF2/v7mgYMavnK7LIIs2dJoGnDANKf61dsU+TZlg=="
   "resolved" "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-8.1.0.tgz"
@@ -7657,7 +7664,7 @@
     "whatwg-fetch" "^3.0.0"
     "ws" "^6.1.4"
 
-"react-native@*", "react-native@^0.0.0-0 || ^0.60.6 || ^0.61.5 || ^0.62.2 || ^0.63.2 || ^0.64.0 || ^0.65.0 || ^0.66.0 || 1000.0.0", "react-native@^0.65.0", "react-native@>=0.40.0", "react-native@>=0.41.0", "react-native@>=0.50.4", "react-native@>=0.56", "react-native@>=0.57.0", "react-native@>=0.60 <0.62", "react-native@>=0.60.0", "react-native@>=0.61.3", "react-native@0.65.1":
+"react-native@*", "react-native@^0.0.0-0 || ^0.60.6 || ^0.61.5 || ^0.62.2 || ^0.63.2 || ^0.64.0 || ^0.65.0 || ^0.66.0 || 1000.0.0", "react-native@^0.65.0", "react-native@>=0.40.0", "react-native@>=0.41.0", "react-native@>=0.50.4", "react-native@>=0.56", "react-native@>=0.57.0", "react-native@>=0.60 <0.62", "react-native@>=0.60.0", "react-native@>=0.61.3", "react-native@~0.65.1", "react-native@0.65.1":
   "integrity" "sha512-0UOVSnlssweQZjuaUtzViCifE/4tXm8oRbxwakopc8GavPu9vLulde145GOw6QVYiOy4iL50f+2XXRdX9NmMeQ=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.65.1.tgz"
   "version" "0.65.1"
@@ -9075,6 +9082,11 @@
   "integrity" "sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A=="
   "resolved" "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz"
   "version" "3.4.0"
+
+"v8-android-jit@~9.93.0":
+  "integrity" "sha512-qSEnxj/7x2lqvAjRtdox0fx20J5ekcLg/O1/M4vNKUtbWG75+/ACspP3n0KD0RIYLhD8F2iGxERRbwu9FbjKRg=="
+  "resolved" "https://registry.npmjs.org/v8-android-jit/-/v8-android-jit-9.93.0.tgz"
+  "version" "9.93.0"
 
 "v8-compile-cache@^2.0.3":
   "integrity" "sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA=="
