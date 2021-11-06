@@ -94,6 +94,7 @@ export const Modals = ({state, setState}) => {
                             <Text>Edit</Text>
                         </TouchableOpacity>
                     ) : null}
+                    <View style={{marginTop: 7}} />
                 </ScrollView>
             </View>
         </Modal>
