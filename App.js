@@ -7,7 +7,7 @@ import { RelationshipStatus } from "revolt-api/types/Users";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import { currentTheme, styles } from './src/Theme'
-import { Text, client, app } from './src/Generic'
+import { Text, client, app, selectedRemark, randomizeRemark } from './src/Generic'
 import { Messages, ReplyMessage } from './src/MessageView'
 import { MessageBox } from './src/MessageBox';
 import { MiniProfile, Avatar, Username } from './src/Profile'
@@ -17,16 +17,6 @@ import { Modals } from './src/Modals';
 import FastImage from 'react-native-fast-image';
 import { observer } from 'mobx-react-lite';
 const Image = FastImage;
-
-const remarkStyle = {color: currentTheme.textSecondary, textAlign: 'center', fontSize: 16, marginTop: 5}
-const loadingScreenRemarks = [
-    <Text style={remarkStyle}>I'm writing a complaint to the Head of Loading Screens.</Text>,
-    <Text style={remarkStyle}>I don't think we can load any longer!</Text>,
-    <Text style={remarkStyle}>Better grab a book or something.</Text>,
-    <Text style={remarkStyle}>When will the madness end?</Text>,
-    <Text style={remarkStyle}>You know, what does RVMob even stand for?</Text>
-]
-let selectedRemark = loadingScreenRemarks[Math.floor(Math.random() * loadingScreenRemarks.length)];
 
 class MainView extends React.Component {
     constructor(props) {
@@ -81,7 +71,7 @@ class MainView extends React.Component {
     }
     componentDidUpdate(_, prevState) {
         if (prevState.status != this.state.status && this.state.status == "tryingLogin")
-        selectedRemark = loadingScreenRemarks[Math.floor(Math.random() * loadingScreenRemarks.length)];
+        randomizeRemark();
     }
     async componentDidMount() {
         console.log("mount app")

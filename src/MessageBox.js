@@ -5,6 +5,7 @@ import { styles, currentTheme } from './Theme';
 import { observer } from 'mobx-react-lite';
 import { Username, Avatar } from './Profile';
 import { ChannelPermission } from "revolt.js/dist/api/permissions";
+import { ulid } from 'ulid';
 let typing = false;
 
 export const MessageBox = observer((props) => {
@@ -62,11 +63,14 @@ export const MessageBox = observer((props) => {
                     editingMessage.edit({content: thisCurrentText});
                     setEditingMessage(null);
                 } else {
+                    let nonce = ulid();
+                    app.pushToQueue({content: thisCurrentText, channel: props.channel, nonce: nonce, reply_ids: replyingMessages?.map(m => m._id)});
                     props.channel.sendMessage({
                         content: thisCurrentText, 
                         replies: replyingMessages.map((m) => {
                             return {id: m._id, mention: false}
-                        })
+                        }),
+                        nonce
                     });
                     setReplyingMessages([]);
                 }

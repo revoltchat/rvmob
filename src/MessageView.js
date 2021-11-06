@@ -1,4 +1,4 @@
-import { client, Text, MarkdownView, app, defaultMessageLoadCount } from './Generic';
+import { client, Text, MarkdownView, app, defaultMessageLoadCount, setFunction, selectedRemark, randomizeRemark } from './Generic';
 import { View, ScrollView, TouchableOpacity, Pressable, Dimensions } from 'react-native';
 import { Avatar, Username } from './Profile'
 import React, { useCallback } from 'react';
@@ -16,13 +16,26 @@ export class Messages extends React.Component {
         super(props);
         this.state = {
             messages: [],
-            loading: false,
+            queuedMessages: [],
+            loading: true,
             forceUpdate: false,
             newMessageCount: 0,
             error: null,
             atLatestMessages: true
         };
         this.renderMessage = this.renderMessage.bind(this);
+        setFunction("pushToQueue", (m) => {
+            m.rendered = (
+                <Message key={m.nonce} 
+                message={m}
+                grouped={this.state.queuedMessages.length > 0} 
+                queued={true}
+                />
+            )
+            this.setState((prev) => {
+                return {queuedMessages: prev.queuedMessages.concat(m)}
+            })
+        })
     }
     componentDidCatch(error, errorInfo) {
         this.setState({error})
@@ -53,7 +66,7 @@ export class Messages extends React.Component {
                         }
                         let grouped = newMessages.length > 0 && ((newMessages[newMessages.length - 1].message?.author?._id == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && differenceInMinutes(decodeTime(message._id), decodeTime(newMessages[newMessages.length - 1].message?._id)) < 5)
                         newMessages.push({message, grouped, rendered: this.renderMessage({grouped, message})})
-                        return {messages: newMessages, newMessageCount: !this.state.bottomOfPage ? (this.state.newMessageCount + 1) || 1 : 0}
+                        return {messages: newMessages, newMessageCount: !this.state.bottomOfPage ? (this.state.newMessageCount + 1) || 1 : 0, queuedMessages: this.state.queuedMessages.filter(m => m.nonce != message.nonce)}
                     })
     	    	}
     	    }
@@ -69,11 +82,12 @@ export class Messages extends React.Component {
         didUpdateFirstTime = false
         this.componentDidUpdate(this.state)
     }
-    componentDidUpdate(prev) {
+    async componentDidUpdate(prev) {
         if (this.props.channel && (!didUpdateFirstTime || prev.channel._id != this.props.channel._id)) {
             didUpdateFirstTime = true
-            this.setState({loading: true})
-            this.fetchMessages()
+            randomizeRemark()
+            this.setState({loading: true, messages: [], queuedMessages: []})
+            await this.fetchMessages()
         }
     }
     async fetchMessages(input = {}) {
@@ -119,9 +133,9 @@ export class Messages extends React.Component {
             <Message key={m.message._id} 
             message={m.message} 
             grouped={m.grouped} 
+            queued={m.queued}
             onLongPress={() => this.props.onLongPress(m.message)} 
-            onUserPress={() => app.openProfile(m.message.author, this.props.channel?.server)} 
-            onImagePress={(a) => this.props.onImagePress(a)} 
+            onUserPress={() => app.openProfile(m.message.author, this.props.channel?.server)}
             onUsernamePress={() => this.props.onUsernamePress(m.message)}
             />
         )
@@ -130,7 +144,10 @@ export class Messages extends React.Component {
         if (this.state.error) return <Text style={{color: "#ff6666"}}>Error rendering: {this.state.error.message}</Text>
         return (
             this.state.loading ? 
-            <Text>Loading...</Text>
+            <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+                <Text style={{fontSize: 30, fontWeight: 'bold'}}>Loading...</Text>
+                <View style={{paddingLeft: 30, paddingRight: 30}}>{selectedRemark || null}</View>
+            </View> 
             :
             <View style={{flex: 1}}>
                 {this.state.newMessageCount > 0 ? <Text style={{height: 32, padding: 6, backgroundColor: currentTheme.accentColor, color: currentTheme.accentColorForeground}}>{this.state.newMessageCount} new messages...</Text> : null}
@@ -177,6 +194,7 @@ export class Messages extends React.Component {
                 onLayout={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToEnd({animated: false})}}}
                 onContentSizeChange={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToEnd({animated: true})}}} >
                     {this.state.messages.map(m => m.rendered)}
+                    {this.state.queuedMessages.map(m => m.rendered)}
                     <View style={{marginTop: 15}} />
                 </ScrollView>
                 {!this.state.atLatestMessages ? <TouchableOpacity style={{height: 32, justifyContent: 'center', alignItems: 'center', backgroundColor: currentTheme.accentColor}} onPress={() => this.fetchMessages()}><Text style={{color: currentTheme.accentColorForeground}}>Go to latest messages</Text></TouchableOpacity> : null}
@@ -213,6 +231,21 @@ export const Message = observer((props) => {
                 </View>
             </View>
         )
+        if (props.message.queued) {
+            return (
+                <Pressable key={props.message._id} style={{opacity: 0.6}} delayLongPress={750} onLongPress={props.onLongPress}>
+                    <View style={{marginTop: app.settings.get("Message spacing")}} />
+                    {(props.message.reply_ids !== null) ? <View style={styles.repliedMessagePreviews}>{props.message.reply_ids.map(id => <ReplyMessage key={id} message={client.messages.get(id)} />)}</View> : null}
+                    <View style={props.grouped ? styles.messageGrouped : styles.message}>
+                        {(!props.grouped) ? <Avatar user={client.user} masquerade={props.message.masquerade?.avatar} server={props.message.channel?.server} size={35} {...(app.settings.get("Show user status in chat avatars") ? {status: true} : {})} /> : null}
+                        <View style={styles.messageInner}>
+                            {(!props.grouped) ? <View style={{flexDirection: 'row'}}><Username user={client.user} server={props.message.channel?.server} masquerade={props.message.masquerade?.name} /><Text style={styles.timestamp}> {formatRelative(decodeTime(props.message.nonce), new Date())}</Text></View> : null}
+                            <MarkdownView>{props.message.content}</MarkdownView>
+                        </View>
+                    </View>
+                </Pressable>
+            );
+        }
         return (
             <TouchableOpacity key={props.message._id} activeOpacity={0.8} delayLongPress={750} onLongPress={props.onLongPress}>
                 <View style={{marginTop: app.settings.get("Message spacing")}} />
@@ -238,37 +271,7 @@ export const Message = observer((props) => {
                             }
                         })}
                         {props.message.embeds?.map((e) => {
-                            if (e.type=="Website")
-                            return <View style={{backgroundColor: currentTheme.backgroundSecondary, padding: 8, borderRadius: 8}}>
-                                {e.site_name ? <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>{e.site_name}</Text> : null}
-                                {e.title && 
-                                    e.url ? <Pressable onPress={() => openUrl(e.url)}><Text style={{color: currentTheme.accentColor}}>{e.title}</Text></Pressable> : <Text>{e.title}</Text>}
-                                {e.description ? <Text>{e.description}</Text> : null}
-                                {(() => {
-                                    if (e.image) {
-                                        let width = e.image.width;
-                                        let height = e.image.height;
-                                        if (width > (Dimensions.get("screen").width - 82)) {
-                                            let sizeFactor = (Dimensions.get("screen").width - 82) / width;
-                                            width = width * sizeFactor
-                                            height = height * sizeFactor
-                                        }
-                                        return <Pressable onPress={() => props.onImagePress(e.image.url)}><Image source={{uri: client.proxyFile(e.image.url)}} style={{width: width, height: height, marginTop: 4, borderRadius: 3}} /></Pressable>
-                                    }
-                                })()}
-                            </View>
-                            if (e.type == "Image") {
-                                // if (e.image?.size == "Large") {
-                                let width = e.width;
-                                let height = e.height;
-                                if (width > (Dimensions.get("screen").width - 75)) {
-                                    let sizeFactor = (Dimensions.get("screen").width - 75) / width;
-                                    width = width * sizeFactor
-                                    height = height * sizeFactor
-                                }
-                                return <Image source={{uri: client.proxyFile(e.url)}} style={{width: width, height: height, marginBottom: 4, borderRadius: 3}} />
-                                // if (e.image?.size)
-                            }
+                            return <MessageEmbed embed={e} />
                         })}
                     </View>
                 </View>
@@ -278,6 +281,41 @@ export const Message = observer((props) => {
         setError(e)
         console.error(e)
     }
+})
+
+const MessageEmbed = observer(({embed: e}) => {
+    if (e.type=="Website")
+    return <View style={{backgroundColor: currentTheme.backgroundSecondary, padding: 8, borderRadius: 8}}>
+        {e.site_name ? <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>{e.site_name}</Text> : null}
+        {e.title && 
+            e.url ? <Pressable onPress={() => openUrl(e.url)}><Text style={{color: currentTheme.accentColor}}>{e.title}</Text></Pressable> : <Text>{e.title}</Text>}
+        {e.description ? <Text>{e.description}</Text> : null}
+        {(() => {
+            if (e.image) {
+                let width = e.image.width;
+                let height = e.image.height;
+                if (width > (Dimensions.get("screen").width - 82)) {
+                    let sizeFactor = (Dimensions.get("screen").width - 82) / width;
+                    width = width * sizeFactor
+                    height = height * sizeFactor
+                }
+                return <Pressable onPress={() => app.openImage(e.image.url)}><Image source={{uri: client.proxyFile(e.image.url)}} style={{width: width, height: height, marginTop: 4, borderRadius: 3}} /></Pressable>
+            }
+        })()}
+    </View>
+    if (e.type == "Image") {
+        // if (e.image?.size == "Large") {
+        let width = e.width;
+        let height = e.height;
+        if (width > (Dimensions.get("screen").width - 75)) {
+            let sizeFactor = (Dimensions.get("screen").width - 75) / width;
+            width = width * sizeFactor
+            height = height * sizeFactor
+        }
+        return <Pressable onPress={() => app.openImage(client.proxyFile(e.url))}><Image source={{uri: client.proxyFile(e.url)}} style={{width: width, height: height, marginBottom: 4, borderRadius: 3}} /></Pressable>
+        // if (e.image?.size)
+    }
+    return <></>
 })
 
 export class ReplyMessage extends React.PureComponent {

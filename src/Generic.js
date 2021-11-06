@@ -106,6 +106,7 @@ app.openServerContextMenu = (s) => {};
 app.setMessageBoxInput = (t) => {};
 app.setReplyingMessages = (m, a) => {};
 app.getReplyingMessages = () => {};
+app.pushToQueue = (m) => {};
 
 export function setFunction(name, func) {
     app[name] = func;
@@ -324,3 +325,23 @@ export const ServerName = observer(({ server, size }) => {
         </View>
     )
 })
+
+
+export const remarkStyle = {
+    color: currentTheme.textSecondary, 
+    textAlign: 'center', 
+    fontSize: 16, 
+    marginTop: 5
+}
+export const loadingScreenRemarks = [
+    <Text style={remarkStyle}>I'm writing a complaint to the Head of Loading Screens.</Text>,
+    <Text style={remarkStyle}>I don't think we can load any longer!</Text>,
+    <Text style={remarkStyle}>Better grab a book or something.</Text>,
+    <Text style={remarkStyle}>When will the madness end?</Text>,
+    <Text style={remarkStyle}>You know, what does RVMob even stand for?</Text>,
+    <Text style={remarkStyle}>Why do they call it a "building" if it's already built?</Text>,
+]
+export var selectedRemark = loadingScreenRemarks[Math.floor(Math.random() * loadingScreenRemarks.length)];
+export function randomizeRemark() {
+    selectedRemark = loadingScreenRemarks[Math.floor(Math.random() * loadingScreenRemarks.length)];
+}
