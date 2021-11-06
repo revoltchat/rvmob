@@ -7,6 +7,7 @@ import { ReplyMessage } from './MessageView';
 import { Avatar, Username, MiniProfile, RoleView } from './Profile';
 import { RelationshipStatus } from "revolt-api/types/Users";
 import { ChannelPermission } from "revolt.js/dist/api/permissions";
+import Clipboard from '@react-native-community/clipboard';
 import FastImage from 'react-native-fast-image';
 const Image = FastImage;
 
@@ -26,9 +27,9 @@ export const Modals = ({state, setState}) => {
         }}
         >
             <Pressable onPress={() => setState({contextMenuMessage: null})} style={{width: Dimensions.get("window").width, height: Dimensions.get("window").height, position: 'absolute', backgroundColor: "#00000000"}} />
-            <View style={{width: "100%", height: "40%", top: "60%", backgroundColor: currentTheme.backgroundSecondary}}>
-                <View>
-                    <ReplyMessage message={state.contextMenuMessage} style={{margin: 3, width: "100%"}} />
+            <View style={{width: "100%", height: "45%", top: "55%", backgroundColor: currentTheme.backgroundSecondary}}>
+                <ReplyMessage message={state.contextMenuMessage} style={{margin: 3, width: "100%"}} />
+                <ScrollView style={{flex: 1, padding: 3}}>
                     <TouchableOpacity
                         style={styles.actionTile}
                         onPress={() => setState({contextMenuMessage: null})}
@@ -52,6 +53,22 @@ export const Modals = ({state, setState}) => {
                         }}
                     >
                         <Text>Reply</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.actionTile}
+                        onPress={() => {
+                            Clipboard.setString(state.contextMenuMessage.content);
+                        }}
+                    >
+                        <Text>Copy content</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.actionTile}
+                        onPress={() => {
+                            Clipboard.setString(state.contextMenuMessage._id);
+                        }}
+                    >
+                        <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({state.contextMenuMessage?._id})</Text></Text>
                     </TouchableOpacity>
                     {state.contextMenuMessage?.channel.permission & ChannelPermission.ManageMessages || state.contextMenuMessage?.author.relationship == RelationshipStatus.User ? (
                         <TouchableOpacity
@@ -77,7 +94,7 @@ export const Modals = ({state, setState}) => {
                             <Text>Edit</Text>
                         </TouchableOpacity>
                     ) : null}
-                </View>
+                </ScrollView>
             </View>
         </Modal>
         <Modal
@@ -96,6 +113,7 @@ export const Modals = ({state, setState}) => {
                             <Username user={state.contextMenuUser} server={state.contextMenuUserServer} size={24} />
                             <View key={1} style={{flexDirection: 'row'}}>
                                 {!!state.contextMenuUserServer &&
+                                client.members.getKey({server: state.contextMenuUserServer?._id, user: state.contextMenuUser?._id})?.avatar &&
                                 client.members.getKey({server: state.contextMenuUserServer?._id, user: state.contextMenuUser?._id})?.avatar?._id != state.contextMenuUser?.avatar?._id ?
                                 <Avatar size={24} user={state.contextMenuUser} />
                                 : null}
@@ -129,55 +147,56 @@ export const Modals = ({state, setState}) => {
                         {state.contextMenuUser?._id == "01FC1HP5H22F0M34MFFM9DZ099" ? 
                         <Text style={{color: currentTheme.accentColor, marginLeft: 8}}>RVMob Author (hi there!)</Text> : null}
                     </View>
-                    {state.contextMenuUser?.relationship != RelationshipStatus.User ? 
-                        !state.contextMenuUser?.bot ? 
-                        (state.contextMenuUser?.relationship == RelationshipStatus.Friend ? 
-                            <TouchableOpacity style={styles.actionTile} onPress={async () => {app.openProfile(null); setState({currentChannel: (await state.contextMenuUser.openDM()), messages: []})}}>
-                                <Text>Message</Text>
-                            </TouchableOpacity> 
-                            :
-                            state.contextMenuUser?.relationship == RelationshipStatus.Incoming ? 
-                            <>
-                            <TouchableOpacity style={styles.actionTile} onPress={() => {state.contextMenuUser?.addFriend(); setState({})}}>
-                                <Text>Accept Friend</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.actionTile} onPress={() => {state.contextMenuUser?.removeFriend(); setState({})}}>
-                                <Text>Reject Friend</Text>
-                            </TouchableOpacity>
-                            </>
-                            :
-                            state.contextMenuUser?.relationship == RelationshipStatus.Outgoing ? 
-                            <TouchableOpacity style={styles.actionTile} onPress={() => {state.contextMenuUser?.removeFriend(); setState({})}}>
-                                <Text>Cancel Friend</Text>
-                            </TouchableOpacity>
-                            :
-                            <TouchableOpacity style={styles.actionTile} onPress={() => {state.contextMenuUser?.addFriend(); setState({})}}>
-                                <Text>Add Friend</Text>
-                            </TouchableOpacity>
-                        ) 
-                        :
-                        <>
-                            <Text style={{fontWeight: 'bold'}}>BOT OWNER</Text>
-                            {client.users.get(state.contextMenuUser?.bot?.owner) ? 
-                            <TouchableOpacity style={styles.actionTile} onPress={async () => {app.openProfile(client.users.get(state.contextMenuUser.bot.owner))}}>
-                                <MiniProfile user={client.users.get(state.contextMenuUser.bot.owner)} />
-                            </TouchableOpacity>
-                            :
-                            <Text style={{color: currentTheme.textSecondary}}>Unloaded user</Text>}
-                        </>
-                        : 
-                        <>
-                        <View style={{flexDirection: 'row'}}>
-                            {["Online", "Idle", "Busy", "Invisible"].map((s) => <TouchableOpacity key={s} style={[styles.actionTile, {flex: 1, alignItems: 'center', justifyContent: 'center'}]} onPress={() => {client.users.edit({status: {...client.user.status, presence: s}})}}><View style={{backgroundColor: currentTheme["status" + s], height: 16, width: 16, borderRadius: 10000}} /></TouchableOpacity>)}
-                        </View>
-                        {/* <TextInput onChangeText={(v) => setState({userStatusInput: v})} value={state.userStatusInput || client.user.status.text || ""} onSubmitEditing={() => client.users.edit({...client.user.status, text: state.userStatusInput})} /> */}
-                        </>
-                    }
                     <ScrollView>
+                        {state.contextMenuUser?.relationship != RelationshipStatus.User ? 
+                            !state.contextMenuUser?.bot ? 
+                            (state.contextMenuUser?.relationship == RelationshipStatus.Friend ? 
+                                <TouchableOpacity style={styles.actionTile} onPress={async () => {app.openProfile(null); setState({currentChannel: (await state.contextMenuUser.openDM()), messages: []})}}>
+                                    <Text>Message</Text>
+                                </TouchableOpacity> 
+                                :
+                                state.contextMenuUser?.relationship == RelationshipStatus.Incoming ? 
+                                <>
+                                <TouchableOpacity style={styles.actionTile} onPress={() => {state.contextMenuUser?.addFriend(); setState({})}}>
+                                    <Text>Accept Friend</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.actionTile} onPress={() => {state.contextMenuUser?.removeFriend(); setState({})}}>
+                                    <Text>Reject Friend</Text>
+                                </TouchableOpacity>
+                                </>
+                                :
+                                state.contextMenuUser?.relationship == RelationshipStatus.Outgoing ? 
+                                <TouchableOpacity style={styles.actionTile} onPress={() => {state.contextMenuUser?.removeFriend(); setState({})}}>
+                                    <Text>Cancel Friend</Text>
+                                </TouchableOpacity>
+                                :
+                                <TouchableOpacity style={styles.actionTile} onPress={() => {state.contextMenuUser?.addFriend(); setState({})}}>
+                                    <Text>Add Friend</Text>
+                                </TouchableOpacity>
+                            ) 
+                            :
+                            <>
+                                <Text style={{fontWeight: 'bold'}}>BOT OWNER</Text>
+                                {client.users.get(state.contextMenuUser?.bot?.owner) ? 
+                                <TouchableOpacity style={styles.actionTile} onPress={async () => {app.openProfile(client.users.get(state.contextMenuUser.bot.owner))}}>
+                                    <MiniProfile user={client.users.get(state.contextMenuUser.bot.owner)} />
+                                </TouchableOpacity>
+                                :
+                                <Text style={{color: currentTheme.textSecondary}}>Unloaded user</Text>}
+                            </>
+                            : 
+                            <>
+                            <View style={{flexDirection: 'row'}}>
+                                {["Online", "Idle", "Busy", "Invisible"].map((s) => <TouchableOpacity key={s} style={[styles.actionTile, {flex: 1, alignItems: 'center', justifyContent: 'center', marginRight: 3}]} onPress={() => {client.users.edit({status: {...client.user.status, presence: s}})}}><View style={{backgroundColor: currentTheme["status" + s], height: 16, width: 16, borderRadius: 10000}} /></TouchableOpacity>)}
+                            </View>
+                            {/* <TextInput onChangeText={(v) => setState({userStatusInput: v})} value={state.userStatusInput || client.user.status.text || ""} onSubmitEditing={() => client.users.edit({...client.user.status, text: state.userStatusInput})} /> */}
+                            </>
+                        }
+                        <TouchableOpacity key={"Copy ID"} style={styles.actionTile} onPress={() => {Clipboard.setString(state.contextMenuUser._id)}}><Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({state.contextMenuUser?._id})</Text></Text></TouchableOpacity>
                         <RoleView user={state.contextMenuUser} server={state.contextMenuUserServer}/>
                         <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>BIO</Text>
                         {state.contextMenuUserProfile?.content ? <MarkdownView>{state.contextMenuUserProfile?.content}</MarkdownView> : null}
-                        <View style={{marginTop: 150}} />
+                        <View style={{marginTop: 130}} />
                     </ScrollView>
                 </View>
             </View>
@@ -226,9 +245,10 @@ export const Modals = ({state, setState}) => {
             <View style={{width: "100%", height: Dimensions.get("window").height * 0.75, top: "25%", padding: 15, backgroundColor: currentTheme.backgroundSecondary}}>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                     {state.contextMenuServer?.icon ? <GeneralAvatar attachment={state.contextMenuServer?.icon} size={72} /> : null}
-                    <Text style={{color: currentTheme.textPrimary, fontWeight: 'bold', marginTop: 10, fontSize: 24, textAlign: 'center'}}>{state.contextMenuServer?.name}</Text>
-                    <Text style={{color: currentTheme.textSecondary, fontSize: 16, textAlign: 'center'}}>{state.contextMenuServer?.description}</Text>
+                    <Text style={{color: currentTheme.textPrimary, fontWeight: 'bold', fontSize: 24, textAlign: 'center'}}>{state.contextMenuServer?.name}</Text>
+                    {state.contextMenuServer?.description ? <Text style={{color: currentTheme.textSecondary, fontSize: 16, textAlign: 'center'}}>{state.contextMenuServer?.description}</Text> : null}
                 </View>
+                    <TouchableOpacity key={"Copy ID"} style={styles.actionTile} onPress={() => {Clipboard.setString(state.contextMenuServer._id)}}><Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({state.contextMenuServer?._id})</Text></Text></TouchableOpacity>
             </View>
         </Modal>
         <Modal visible={!!state.inviteServer} transparent={true} animationType="fade">

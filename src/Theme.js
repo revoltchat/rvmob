@@ -274,7 +274,7 @@ function refreshStyles() {
             borderRadius: 8,
             paddingLeft: 10,
             paddingRight: 10,
-            margin: 3
+            marginTop: 5
         },
         messageBoxBar: {
             padding: 4,
