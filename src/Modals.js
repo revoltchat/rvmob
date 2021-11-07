@@ -40,14 +40,14 @@ export const Modals = ({state, setState}) => {
                         style={styles.actionTile}
                         onPress={() => {
                             let replyingMessages = [...app.getReplyingMessages()]
-                            if (replyingMessages.filter(m => m._id === state.contextMenuMessage._id).length > 0) return
+                            if (replyingMessages.filter(m => m.message._id === state.contextMenuMessage._id).length > 0) return
                             if (replyingMessages.length >= 4) {
                                 return
                             }
                             if (app.getEditingMessage()) {
                                 return
                             }
-                            replyingMessages.push(state.contextMenuMessage)
+                            replyingMessages.push({message: state.contextMenuMessage, mentions: false})
                             app.setReplyingMessages(replyingMessages)
                             setState({contextMenuMessage: null})
                         }}

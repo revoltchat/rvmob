@@ -25,13 +25,22 @@ export const MessageBox = observer((props) => {
     }     
     return <View style={styles.messageBoxOuter}>
         <TypingIndicator channel={props.channel}/>
-        {replyingMessages ? replyingMessages.map(m => 
-            <View key={m._id} style={styles.messageBoxBar}>
+        {replyingMessages ? replyingMessages.map((m, i) => 
+            <View key={m.message._id} style={styles.messageBoxBar}>
                 <Pressable style={{width: 30, height: 20, alignItems: 'center', justifyContent: 'center'}} onPress={() => 
-                    setReplyingMessages(replyingMessages?.filter(m2 => m2._id != m._id))
-                }><Text style={{fontSize: 20, margin: -4}}>X</Text></Pressable>
+                    setReplyingMessages(replyingMessages?.filter(m2 => m2.message._id != m.message._id))
+                }>
+                    <Text style={{fontSize: 20, margin: -4}}>X</Text>
+                </Pressable>
+                <Pressable style={{width: 45, height: 20, alignItems: 'center', justifyContent: 'center'}} onPress={() => {
+                    let replacing = [...replyingMessages]
+                    replacing[i].mentions = !replacing[i].mentions
+                    setReplyingMessages(replacing)
+                }}>
+                    <Text style={{fontWeight: 'bold', color: m.mentions ? currentTheme.accentColor : currentTheme.textPrimary}}>@{m.mentions ? "ON" : "OFF"}</Text>
+                </Pressable>
                 <Text> Replying to </Text>
-                <Username user={m.author} server={props.channel.server}/>
+                <Username user={m.message.author} server={props.channel.server}/>
             </View>
         ) : null}
         {editingMessage ? (
@@ -68,7 +77,7 @@ export const MessageBox = observer((props) => {
                     props.channel.sendMessage({
                         content: thisCurrentText, 
                         replies: replyingMessages.map((m) => {
-                            return {id: m._id, mention: false}
+                            return {id: m.message._id, mention: m.mentions}
                         }),
                         nonce
                     });
