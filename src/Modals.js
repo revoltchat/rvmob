@@ -5,7 +5,7 @@ import { client, Text, MarkdownView, app, GeneralAvatar, ServerName, ServerList,
 import { styles, currentTheme, themes, setTheme, currentThemeName } from './Theme';
 import { ReplyMessage } from './MessageView';
 import { Avatar, Username, MiniProfile, RoleView } from './Profile';
-import { RelationshipStatus } from "revolt-api/types/Users";
+import { RelationshipStatus, Badges } from "revolt-api/types/Users";
 import { ChannelPermission } from "revolt.js/dist/api/permissions";
 import Clipboard from '@react-native-community/clipboard';
 import FastImage from 'react-native-fast-image';
@@ -134,16 +134,28 @@ export const Modals = ({state, setState}) => {
                     : null}
                     <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
                         {state.contextMenuUser?.badges ? <>
-                            {state.contextMenuUser.badges & 1 ?
-                            <Text style={{color: 'orange', marginLeft: 8}}>Revolt Developer</Text> : null}
-                            {state.contextMenuUser.badges & 2 ?
-                            <Text style={{color: 'green', marginLeft: 8}}>Revolt Translator</Text> : null}
-                            {state.contextMenuUser.badges & 4 ?
-                            <Text style={{color: 'yellow', marginLeft: 8}}>Revolt Supporter</Text> : null}
-                            {state.contextMenuUser.badges & 8 ?
-                            <Text style={{color: 'purple', marginLeft: 8}}>Bug Catcher</Text> : null}
-                            {state.contextMenuUser.badges & 256 ?
-                            <Text style={{color: 'cyan', marginLeft: 8}}>Early Adopter</Text> : null} 
+                            {Object.keys(Badges).map(b => {
+                                if (state.contextMenuUser.badges & Badges[b]) {
+                                    switch (b) {
+                                        case "Founder":
+                                            return <Text style={{color: 'red', marginLeft: 8}}>Revolt Founder</Text> 
+                                        case "Developer":
+                                            return <Text style={{color: 'orange', marginLeft: 8}}>Revolt Developer</Text>
+                                        case "Translator":
+                                            return <Text style={{color: 'green', marginLeft: 8}}>Revolt Translator</Text>
+                                        case "Supporter":
+                                            return <Text style={{color: 'yellow', marginLeft: 8}}>Revolt Supporter</Text>
+                                        case "ResponsibleDisclosure":
+                                            return <Text style={{color: 'purple', marginLeft: 8}}>Bug Catcher</Text>
+                                        case "EarlyAdopter":
+                                            return <Text style={{color: 'cyan', marginLeft: 8}}>Early Adopter</Text>
+                                        case "PlatformModeration":
+                                            return <Text style={{color: 'darkcyan', marginLeft: 8}}>Platform Moderation</Text>
+                                        default:
+                                            return <Text style={{color: currentTheme.textSecondary, marginLeft: 8}}>[{b}]</Text>
+                                    }
+                                }
+                            })}
                         </> : null}
                         {state.contextMenuUser?._id == "01FC1HP5H22F0M34MFFM9DZ099" ? 
                         <Text style={{color: currentTheme.accentColor, marginLeft: 8}}>RVMob Author (hi there!)</Text> : null}

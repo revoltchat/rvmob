@@ -12,11 +12,13 @@ export const MessageBox = observer((props) => {
     let [currentText, setCurrentText] = React.useState('');
     let [editingMessage, setEditingMessage] = React.useState(null);
     let [replyingMessages, setReplyingMessages] = React.useState([]);
+    
     setFunction('setMessageBoxInput', setCurrentText.bind(this))
     setFunction('setReplyingMessages', setReplyingMessages.bind(this))
     setFunction('getReplyingMessages', () => {return replyingMessages})
     setFunction('setEditingMessage', setEditingMessage.bind(this))
     setFunction('getEditingMessage', () => {return editingMessage})
+    
     // let memberObject = client.members.getKey({server: this.props.channel?.server, user: client.user?._id})
     if (!(props.channel.permission & ChannelPermission.SendMessage)) {
         return <View style={{backgroundColor: currentTheme.backgroundSecondary, height: 80, padding: 20, alignItems: 'center', justifyContent: 'center'}}>
