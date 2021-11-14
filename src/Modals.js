@@ -278,7 +278,7 @@ export const Modals = ({state, setState}) => {
                                     <View style={{marginLeft: 10}} />
                                     <ServerName server={state.inviteServer} size={26} />
                                 </View>
-                                <TouchableOpacity onPress={async () => {!client.servers.get(state.inviteServer?.server_id) && await client.joinInvite(state.inviteServerCode); openServer(client.servers.get(state.inviteServer?.server_id)); setState({inviteServer: null, inviteServerCode: null})}} style={styles.button}><Text>{client.servers.get(state.inviteServer) ? "Go to Server" : "Join Server"}</Text></TouchableOpacity>
+                                <TouchableOpacity onPress={async () => {!client.servers.get(state.inviteServer?.server_id) && await client.joinInvite(state.inviteServerCode); app.openServer(client.servers.get(state.inviteServer?.server_id)); setState({inviteServer: null, inviteServerCode: null})}} style={styles.button}><Text>{client.servers.get(state.inviteServer) ? "Go to Server" : "Join Server"}</Text></TouchableOpacity>
                             </View>
                         </View>
                     </>
