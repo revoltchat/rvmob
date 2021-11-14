@@ -46,11 +46,12 @@ export class Modals extends React.Component {
         setFunction("openMessage", async (m) => {
             this.setState({contextMenuMessage: m})
         })
-    }
-    rerender() {
-        this.setState({})
+        setFunction("openSettings", async (o) => {
+            this.setState({settingsOpen: o || !this.state.settingsOpen})
+        })
     }
     render() {
+        let rerender = (() => this.setState({})).bind(this);
         return (
             <>
             <Modal

@@ -41,7 +41,7 @@ export class LeftMenu extends React.Component {
             borderTopWidth: currentTheme.generalBorderWidth,
             borderColor: currentTheme.generalBorderColor,
             flexDirection: 'row'}}>
-                <TouchableOpacity onPress={this.props.onOpenSettings} style={styles.buttonSecondary}><Text>Settings</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => app.openSettings(true)} style={styles.buttonSecondary}><Text>Settings</Text></TouchableOpacity>
                 <TouchableOpacity onPress={this.props.onLogOut} style={styles.buttonSecondary}><Text>Log Out</Text></TouchableOpacity>
             </View>
             </>

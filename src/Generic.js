@@ -34,6 +34,10 @@ export const app = {
             default: true,
             type: "boolean"
         },
+        "Refetch messages on reconnect": {
+            default: true,
+            type: "boolean"
+        },
         "Message spacing": {
             default: "3",
             type: "number"
@@ -104,6 +108,7 @@ app.openChannel = (c) => {};
 app.openImage = (a) => {};
 app.openMessage = (m) => {};
 app.openServerContextMenu = (s) => {};
+app.openSettings = (o) => {};
 app.setMessageBoxInput = (t) => {};
 app.setReplyingMessages = (m, a) => {};
 app.getReplyingMessages = () => {};

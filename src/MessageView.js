@@ -3,6 +3,7 @@ import { View, ScrollView, TouchableOpacity, Pressable, Dimensions } from 'react
 import { Avatar, Username } from './Profile'
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
+import { autorun } from 'mobx';
 import { styles, currentTheme } from './Theme';
 import { differenceInMinutes, formatRelative } from 'date-fns';
 import { decodeTime } from 'ulid'
@@ -79,6 +80,13 @@ export class Messages extends React.Component {
                 })
     	    }
     	});
+        autorun(async () => {
+            if (client.user?.online && this.props.channel && app.settings.get("Refetch messages on reconnect")) {
+                this.setState({loading: true, messages: []})
+                await this.fetchMessages()
+                this.setState({loading: false})
+            }
+        })
         didUpdateFirstTime = false
         this.componentDidUpdate(this.state)
     }

@@ -109,7 +109,7 @@ class MainView extends React.Component {
                         edgeHitWidth={120} 
                         isOpen={this.state.leftMenuOpen} 
                         onChange={(open) => this.setState({leftMenuOpen: open})} 
-                        menu={<LeftMenu rerender={this.state.rerender} onOpenSettings={() => this.setState({settingsOpen: true})} onChannelClick={(s) => this.setState({currentChannel: s, leftMenuOpen: false, messages: []})} currentChannel={this.state.currentChannel} onLogOut={() => {AsyncStorage.setItem('token', ""); this.setState({status: "awaitingLogin"})}} />} 
+                        menu={<LeftMenu rerender={this.state.rerender} onChannelClick={(s) => this.setState({currentChannel: s, leftMenuOpen: false, messages: []})} currentChannel={this.state.currentChannel} onLogOut={() => {AsyncStorage.setItem('token', ""); this.setState({status: "awaitingLogin"})}} />} 
                         style={styles.app} 
                         bounceBackOnOverdraw={false}>
                             <View style={styles.mainView}>
@@ -181,7 +181,7 @@ class MainView extends React.Component {
                                             </TouchableOpacity>
                                             <Text key="app-name" style={{fontWeight: 'bold', fontSize: 48}}>RVMob</Text>
                                             <Text key="no-channel-selected" style={{textAlign: 'center', marginBottom: 10}}>Swipe from the left of the screen, or press the three lines icon to open the server selector!</Text>
-                                            <TouchableOpacity style={styles.button} onPress={() => this.setState({settingsOpen: true})}>
+                                            <TouchableOpacity style={styles.button} onPress={() => app.openSettings(true)}>
                                                 <Text style={{fontSize: 16}}>Settings</Text>
                                             </TouchableOpacity>
                                             <TouchableOpacity style={styles.button} onPress={() => app.openInvite("Testers")}>
