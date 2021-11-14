@@ -1,4 +1,4 @@
-import { client, Text, MarkdownView, app, defaultMessageLoadCount, setFunction, selectedRemark, randomizeRemark } from './Generic';
+import { client, Text, MarkdownView, app, defaultMessageLoadCount, setFunction, selectedRemark, randomizeRemark, openUrl } from './Generic';
 import { View, ScrollView, TouchableOpacity, Pressable, Dimensions } from 'react-native';
 import { Avatar, Username } from './Profile'
 import React, { useCallback } from 'react';
