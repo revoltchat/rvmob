@@ -31,12 +31,6 @@ export class Modals extends React.Component {
         setFunction("openProfile", async (u, s) => {
             this.setState({contextMenuUser: u || null, contextMenuUserProfile: u ? (await u.fetchProfile()) : null, contextMenuUserServer: s || null})
         })
-        setFunction("openLeftMenu", async (o) => {
-            this.setState(typeof o == 'boolean' ? {leftMenuOpen: o} : {leftMenuOpen: !this.state.leftMenuOpen})
-        })
-        setFunction("openRightMenu", async (o) => {
-            this.setState(typeof o == 'boolean' ? {rightMenuOpen: o} : {rightMenuOpen: !this.state.rightMenuOpen})
-        })
         setFunction("openInvite", async (i) => {
             this.setState({inviteServer: (await client.fetchInvite(i).catch(e => e)), inviteServerCode: i})
         })

@@ -14,6 +14,12 @@ export class LeftMenu extends React.Component {
             rerender: 0
         };
         setFunction("openServer", (s) => {this.setState({currentServer: s})})
+        setFunction("openLeftMenu", async (o) => {
+            this.setState(typeof o == 'boolean' ? {leftMenuOpen: o} : {leftMenuOpen: !this.state.leftMenuOpen})
+        })
+        setFunction("openRightMenu", async (o) => {
+            this.setState(typeof o == 'boolean' ? {rightMenuOpen: o} : {rightMenuOpen: !this.state.rightMenuOpen})
+        })
     }
     render() {
         return (
