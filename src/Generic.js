@@ -193,6 +193,10 @@ export const MarkdownView = (props) => {
     newProps.style.paragraph = Object.assign({color: currentTheme.textPrimary, marginTop: -3, marginBottom: 2}, newProps.style.paragraph)
     if (!newProps.style.link) newProps.style = Object.assign({link: {}}, newProps.style)
     newProps.style.link = Object.assign({color: currentTheme.accentColor}, newProps.style.link)
+    if (!newProps.style.code_inline) newProps.style = Object.assign({ code_inline: {} }, newProps.style)
+    newProps.style.code_inline = Object.assign({ color: currentTheme.textPrimary, backgroundColor: currentTheme.backgroundSecondary }, newProps.style.code_inline);
+    if (!newProps.style.fence) newProps.style = Object.assign({fence: {}}, newProps.style);
+    newProps.style.fence = Object.assign({ color: currentTheme.textPrimary, backgroundColor: currentTheme.backgroundSecondary, borderWidth: 0 }, newProps.style.fence);
     // if (!newProps.styles.block_quote) newProps.styles = Object.assign({blockQuote: {}}, newProps.styles)
     // newProps.styles.block_quote = Object.assign({borderRadius: 3, borderLeftWidth: 3, borderColor: currentTheme.backgroundSecondary, backgroundColor: currentTheme.blockQuoteBackground}, newProps.styles.blockQuote)
     try {
