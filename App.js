@@ -47,6 +47,12 @@ class MainView extends React.Component {
         setFunction("openChannel", async (c) => {
             this.setState({currentChannel: c})
         })
+        setFunction("openLeftMenu", async (o) => {
+            this.setState(typeof o == 'boolean' ? {leftMenuOpen: o} : {leftMenuOpen: !this.state.leftMenuOpen})
+        })
+        setFunction("openRightMenu", async (o) => {
+            this.setState(typeof o == 'boolean' ? {rightMenuOpen: o} : {rightMenuOpen: !this.state.rightMenuOpen})
+        })
     }
     componentDidUpdate(_, prevState) {
         if (prevState.status != this.state.status && this.state.status == "tryingLogin")
