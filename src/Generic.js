@@ -102,6 +102,7 @@ app.openBotInvite = (i) => {};
 app.openServer = (s) => {};
 app.openChannel = (c) => {};
 app.openImage = (a) => {};
+app.openMessage = (m) => {};
 app.openServerContextMenu = (s) => {};
 app.setMessageBoxInput = (t) => {};
 app.setReplyingMessages = (m, a) => {};

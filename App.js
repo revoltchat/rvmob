@@ -44,29 +44,8 @@ class MainView extends React.Component {
             rerender: 0
         };
         console.log("construct app");
-        setFunction("openProfile", async (u, s) => {
-            this.setState({contextMenuUser: u || null, contextMenuUserProfile: u ? (await u.fetchProfile()) : null, contextMenuUserServer: s || null})
-        })
-        setFunction("openLeftMenu", async (o) => {
-            this.setState(typeof o == 'boolean' ? {leftMenuOpen: o} : {leftMenuOpen: !this.state.leftMenuOpen})
-        })
-        setFunction("openRightMenu", async (o) => {
-            this.setState(typeof o == 'boolean' ? {rightMenuOpen: o} : {rightMenuOpen: !this.state.rightMenuOpen})
-        })
-        setFunction("openInvite", async (i) => {
-            this.setState({inviteServer: (await client.fetchInvite(i).catch(e => e)), inviteServerCode: i})
-        })
-        setFunction("openBotInvite", async (id) => {
-            this.setState({inviteBot: (await client.bots.fetchPublic(id).catch(e => e))})
-        })
         setFunction("openChannel", async (c) => {
             this.setState({currentChannel: c})
-        })
-        setFunction("openImage", async (a) => {
-            this.setState({imageViewerImage: a})
-        })
-        setFunction("openServerContextMenu", async (s) => {
-            this.setState({contextMenuServer: s})
         })
     }
     componentDidUpdate(_, prevState) {
@@ -170,7 +149,7 @@ class MainView extends React.Component {
                                         </View>
                                         {(!this.state.currentChannel?.nsfw || app.settings.get("Consented to 18+ content")) ?
                                         <>
-                                            <Messages channel={this.state.currentChannel} onLongPress={async (m) => {this.setState({contextMenuMessage: m})}} onUserPress={(m) => {app.openProfile(m.author, this.state.currentChannel.server)}} onImagePress={(a) => {this.setState({imageViewerImage: a})}} rerender={this.state.rerender} onUsernamePress={(m) => this.setState({currentText: this.state.currentText + "<@" + m.author?._id + ">"})} />
+                                            <Messages channel={this.state.currentChannel} onLongPress={async (m) => {app.openMessage(m)}} onUserPress={(m) => {app.openProfile(m.author, this.state.currentChannel.server)}} onImagePress={(a) => {this.setState({imageViewerImage: a})}} rerender={this.state.rerender} onUsernamePress={(m) => this.setState({currentText: this.state.currentText + "<@" + m.author?._id + ">"})} />
                                             <MessageBox channel={this.state.currentChannel} />
                                         </>
                                         :
