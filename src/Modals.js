@@ -78,7 +78,7 @@ export class Modals extends React.Component {
                             onPress={() => {
                                 let replyingMessages = [...app.getReplyingMessages()]
                                 if (replyingMessages.filter(m => m.message._id === this.state.contextMenuMessage._id).length > 0) return
-                                if (replyingMessages.length >= 4) {
+                                if (replyingMessages.length >= 5) {
                                     return
                                 }
                                 if (app.getEditingMessage()) {
