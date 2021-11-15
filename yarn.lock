@@ -1318,6 +1318,11 @@
     "Base64" "~0.2.0"
     "inherits" "~2.0.1"
 
+"@traptitech/markdown-it-spoiler@^1.1.6":
+  "integrity" "sha512-tH/Fk1WMsnSuLpuRsXw8iHtdivoCEI5V08hQ7doVm6WmzAnBf/cUzyH9+GbOldPq9Hwv9v9tuy5t/MxmdNAGXg=="
+  "resolved" "https://registry.npmjs.org/@traptitech/markdown-it-spoiler/-/markdown-it-spoiler-1.1.6.tgz"
+  "version" "1.1.6"
+
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.14":
   "integrity" "sha512-EAEHtisTMM+KaKwfWdC3oyllIqswlznXCIVCt7/oRNrh+DhgT4UEBNC/jlADNjvw7UnfbcdkGQcPVZ1xYiLcrQ=="
   "resolved" "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.1.16.tgz"
@@ -6102,6 +6107,11 @@
   "version" "1.0.0"
   dependencies:
     "object-visit" "^1.0.0"
+
+"markdown-it-regexp@^0.4.0":
+  "integrity" "sha1-1k1xPuzsVc5M/esyF1DswJniwtw="
+  "resolved" "https://registry.npmjs.org/markdown-it-regexp/-/markdown-it-regexp-0.4.0.tgz"
+  "version" "0.4.0"
 
 "markdown-it@^10.0.0":
   "integrity" "sha512-YWOP1j7UbDNz+TumYP1kpwnP0aEa711cJjrAQrzd0UXlbJfc5aAq0F/PZHjiioqDC1NKgvIMX+o+9Bk7yuM2dg=="
