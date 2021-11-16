@@ -1,4 +1,4 @@
-import Markdown, { MarkdownIt } from 'react-native-markdown-display';
+import Markdown, { hasParents, MarkdownIt } from 'react-native-markdown-display';
 import ReactNative, { View, TouchableOpacity, Linking } from 'react-native';
 import { Client } from 'revolt.js';
 import { currentTheme, setTheme, themes, styles } from './Theme';
@@ -7,8 +7,8 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image';
+import spoilerPlugin from '@traptitech/markdown-it-spoiler';
 const Image = FastImage;
-
 export const app = {
     settings: {
         "Theme": {
@@ -132,7 +132,7 @@ export const Text = (props) => {
     )
 }
 
-export const defaultMarkdownIt = MarkdownIt({typographer: true, linkify: true}).disable([ 'image' ]);
+export const defaultMarkdownIt = MarkdownIt({ typographer: true, linkify: true }).disable(['image']).use(spoilerPlugin);
 
 export const INVITE_PATHS = [
     "app.revolt.chat/invite",
@@ -182,10 +182,79 @@ export const openUrl = (url) => {
     Linking.openURL(url)
 }
 
+const spoilerStyle = {
+    hiddenSpoiler: {
+        backgroundColor: '#000',
+        color: 'transparent',
+    },
+    revealedSpoiler: {
+        backgroundColor: currentTheme.backgroundSecondary,
+        color: currentTheme.textPrimary,
+    },
+};
+
+
+const SpoilerContext = React.createContext()
+const Spoiler = ({ content }) => {
+    const [revealed, setRevealed] = React.useState(false)
+    return (
+      <SpoilerContext.Provider value={revealed}>
+        <Text
+          onPress={() => setRevealed(!revealed)}>
+          {content}
+        </Text>
+      </SpoilerContext.Provider>
+    );
+}
+
+// the text and code_inline rules are the same as the built-in ones,
+// except with spoiler support
+const spoilerRule = {
+    spoiler: (node, children) => <Spoiler key={node.key} content={children} />,
+    text: (node, children, parent, styles, inheritedStyles = {}) => {
+        if (hasParents(parent, 'spoiler')) {
+            return (
+                <SpoilerContext.Consumer key={node.key}>
+                    {isRevealed => (
+                        <Text style={{ ...inheritedStyles, ...styles.text, ...(isRevealed ? spoilerStyle.revealedSpoiler : spoilerStyle.hiddenSpoiler), }}>
+                            {node.content}
+                        </Text>
+                    )}
+                </SpoilerContext.Consumer>
+            );
+        }
+
+        return (
+            <Text key={node.key} style={{...inheritedStyles, ...styles.text}}>
+                {node.content}
+            </Text>
+        );
+    },
+    code_inline: (node, children, parent, styles, inheritedStyles = {}) => {
+        if (hasParents(parent, 'spoiler')) {
+            return (
+                <SpoilerContext.Consumer key={node.key}>
+                    {isRevealed => (
+                        <Text style={{ ...inheritedStyles, ...styles.code_inline, ...(isRevealed ? spoilerStyle.revealedSpoiler : spoilerStyle.hiddenSpoiler), }}>
+                            {node.content}
+                        </Text>
+                    )}
+                </SpoilerContext.Consumer>
+            );
+        }
+
+        return (
+            <Text key={node.key} style={{...inheritedStyles, ...styles.code_inline}}>
+                {node.content}
+            </Text>
+        );
+    },
+};
 export const MarkdownView = (props) => {
     let newProps = {...props}
     if (!newProps.onLinkPress) newProps = Object.assign({onLinkPress: openUrl}, newProps)
     if (!newProps.markdownit) newProps = Object.assign({markdownit: defaultMarkdownIt}, newProps)
+    if (!newProps.rules) newProps = Object.assign({rules: spoilerRule}, newProps)
     if (!newProps.style) newProps = Object.assign({style: {}}, newProps)
     if (!newProps.style.body) newProps.style = Object.assign({body: {}}, newProps.style)
     newProps.style.body = Object.assign({color: currentTheme.textPrimary}, newProps.style.body)
@@ -193,6 +262,10 @@ export const MarkdownView = (props) => {
     newProps.style.paragraph = Object.assign({color: currentTheme.textPrimary, marginTop: -3, marginBottom: 2}, newProps.style.paragraph)
     if (!newProps.style.link) newProps.style = Object.assign({link: {}}, newProps.style)
     newProps.style.link = Object.assign({color: currentTheme.accentColor}, newProps.style.link)
+    if (!newProps.style.code_inline) newProps.style = Object.assign({ code_inline: {} }, newProps.style)
+    newProps.style.code_inline = Object.assign({ color: currentTheme.textPrimary, backgroundColor: currentTheme.backgroundSecondary }, newProps.style.code_inline);
+    if (!newProps.style.fence) newProps.style = Object.assign({fence: {}}, newProps.style);
+    newProps.style.fence = Object.assign({ color: currentTheme.textPrimary, backgroundColor: currentTheme.backgroundSecondary, borderWidth: 0 }, newProps.style.fence);
     // if (!newProps.styles.block_quote) newProps.styles = Object.assign({blockQuote: {}}, newProps.styles)
     // newProps.styles.block_quote = Object.assign({borderRadius: 3, borderLeftWidth: 3, borderColor: currentTheme.backgroundSecondary, backgroundColor: currentTheme.blockQuoteBackground}, newProps.styles.blockQuote)
     try {
