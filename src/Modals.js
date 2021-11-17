@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, Pressable, Modal, ScrollView, Dimensions, TextInput } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import React from 'react';
-import { client, Text, MarkdownView, app, GeneralAvatar, ServerName, ServerList, openUrl, setFunction } from './Generic';
+import { client, Text, MarkdownView, app, parseRevoltNodes, GeneralAvatar, ServerName, ServerList, openUrl, setFunction } from './Generic';
 import { styles, currentTheme, themes, setTheme, currentThemeName } from './Theme';
 import { ReplyMessage } from './MessageView';
 import { Avatar, Username, MiniProfile, RoleView } from './Profile';
@@ -245,7 +245,7 @@ export class Modals extends React.Component {
                             <TouchableOpacity key={"Copy ID"} style={styles.actionTile} onPress={() => {Clipboard.setString(this.state.contextMenuUser._id)}}><Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuUser?._id})</Text></Text></TouchableOpacity>
                             <RoleView user={this.state.contextMenuUser} server={this.state.contextMenuUserServer}/>
                             <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>BIO</Text>
-                            {this.state.contextMenuUserProfile?.content ? <MarkdownView>{this.state.contextMenuUserProfile?.content}</MarkdownView> : null}
+                            {this.state.contextMenuUserProfile?.content ? <MarkdownView>{parseRevoltNodes(this.state.contextMenuUserProfile?.content)}</MarkdownView> : null}
                             <View style={{marginTop: 130}} />
                         </ScrollView>
                     </View>

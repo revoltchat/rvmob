@@ -266,8 +266,10 @@ export const MarkdownView = (props) => {
     newProps.style.code_inline = Object.assign({ color: currentTheme.textPrimary, backgroundColor: currentTheme.backgroundSecondary }, newProps.style.code_inline);
     if (!newProps.style.fence) newProps.style = Object.assign({fence: {}}, newProps.style);
     newProps.style.fence = Object.assign({ color: currentTheme.textPrimary, backgroundColor: currentTheme.backgroundSecondary, borderWidth: 0 }, newProps.style.fence);
-    // if (!newProps.styles.block_quote) newProps.styles = Object.assign({blockQuote: {}}, newProps.styles)
-    // newProps.styles.block_quote = Object.assign({borderRadius: 3, borderLeftWidth: 3, borderColor: currentTheme.backgroundSecondary, backgroundColor: currentTheme.blockQuoteBackground}, newProps.styles.blockQuote)
+    if (!newProps.style.code_block) newProps.style = Object.assign({code_block: {}}, newProps.style);
+    newProps.style.code_block = Object.assign({ borderColor: currentTheme.textPrimary, color: currentTheme.textPrimary, backgroundColor: currentTheme.backgroundSecondary }, newProps.style.code_block);
+    if (!newProps.style.blockquote) newProps.style = Object.assign({ blockquote: {} }, newProps.style)
+    newProps.style.blockquote = Object.assign({ borderColor: currentTheme.textPrimary, color: currentTheme.textPrimary, backgroundColor: currentTheme.blockQuoteBackground }, newProps.style.block_quote);
     try {
         return (
             <Markdown {...newProps}>{newProps.children}</Markdown>
@@ -277,6 +279,26 @@ export const MarkdownView = (props) => {
             <Text>Error rendering markdown</Text>
         )
     }
+}
+
+export function parseRevoltNodes(text) {
+    text = text.replace(/<@[0-9A-Z]*>/g, ping => {
+        let id = ping.slice(2, -1)
+        let user = client.users.get(id)
+        if (user) {
+            return `[@${user.username}](/@${user._id})`
+        }
+        return ping
+    })
+    text = text.replace(/<#[0-9A-Z]*>/g, ping => {
+        let id = ping.slice(2, -1)
+        let channel = client.channels.get(id)
+        if (channel) { 
+            return `[#${channel.name.split("]").join("\\]").split("[").join("\\[").split("*").join("\\*").split("`").join("\\`")}](/server/${channel.server._id}/channel/${channel._id})`
+        }
+        return ping
+    })
+    return text
 }
 
 export const GeneralAvatar = ({ attachment, size }) => {

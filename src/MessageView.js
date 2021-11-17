@@ -1,4 +1,4 @@
-import { client, Text, MarkdownView, app, defaultMessageLoadCount, setFunction, selectedRemark, randomizeRemark, openUrl } from './Generic';
+import { client, Text, MarkdownView, app, parseRevoltNodes, defaultMessageLoadCount, setFunction, selectedRemark, randomizeRemark, openUrl } from './Generic';
 import { View, ScrollView, TouchableOpacity, Pressable, Dimensions } from 'react-native';
 import { Avatar, Username } from './Profile'
 import React, { useCallback } from 'react';
@@ -263,7 +263,7 @@ export const Message = observer((props) => {
                     <View style={styles.messageInner}>
                         {(props.grouped && props.message.edited) ? <Text style={{fontSize: 12, color: currentTheme.textSecondary, position: 'relative', right: 47, marginBottom: -16}}> (edited)</Text> : null}
                         {(props.message.author && !props.grouped) ? <View style={{flexDirection: 'row'}}><Pressable onPress={props.onUsernamePress}><Username user={props.message.author} server={props.message.channel?.server} masquerade={props.message.masquerade?.name} /></Pressable><Text style={styles.timestamp}> {formatRelative(decodeTime(props.message._id), new Date())}</Text>{props.message.edited && <Text style={{fontSize: 12, color: currentTheme.textSecondary, position: 'relative', top: 2, left: 2}}> (edited)</Text>}</View> : null}
-                        <MarkdownView>{props.message.content}</MarkdownView>
+                        <MarkdownView>{parseRevoltNodes(props.message.content)}</MarkdownView>
                         {props.message.attachments?.map((a) => {
                             if (a.metadata?.type == "Image") {
                                 let width = a.metadata.width;
