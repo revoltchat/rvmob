@@ -17,6 +17,15 @@ import { Modals } from './src/Modals';
 import FastImage from 'react-native-fast-image';
 import { observer } from 'mobx-react-lite';
 const Image = FastImage;
+import notifee from '@notifee/react-native';
+
+let defaultnotif; 
+notifee.createChannel({
+    id: 'rvmob',
+    name: 'RVMob'
+}).then(channel => {
+    defaultnotif = channel;
+})
 
 class MainView extends React.Component {
     constructor(props) {
@@ -69,6 +78,20 @@ class MainView extends React.Component {
         }).bind(this));
         client.on('dropped', (async () => {
             this.setState({network: "dropped"});
+        }).bind(this));
+        client.on('message', (async (msg) => {
+            if (msg.author._id != client.user._id && (msg.mention_ids?.includes(client.user._id) || msg.channel.channel_type == "DirectMessage") && app.settings.get("Push notifications")) {
+                let notifs = (await notifee.getDisplayedNotifications()).filter(n => n.id == msg.channel._id);
+                notifee.displayNotification({
+                    title: (msg.channel.server?.name ? msg.channel.server.name + ", #" : "") + msg.channel.name + " (RVMob)",
+                    body: msg.author.username + ": " + msg.content.replaceAll("<@" + client.user._id + ">", "@" + client.user.username).replaceAll("\\", "\\\\").replaceAll("<", "\\<").replaceAll(">", "\\>") + (notifs.length > 0 ? notifs[0]?.notification.body.split("<br>").length > 1 ? " <i><br>(and " + (Number.parseInt(notifs[0].notification.body.split("<br>")[1].split(" ")[1]) + 1) + " more messages)</i>" : " <i><br>(and 1 more message)</i>" : ""),
+                    android: {
+                        largeIcon: msg.channel.server?.generateIconURL() || msg.author.generateAvatarURL(),
+                        channelId: defaultnotif
+                    },
+                    id: msg.channel._id
+                })
+            }
         }).bind(this));
         AsyncStorage.getItem('token', async (err, res) => {
             if (!err) {

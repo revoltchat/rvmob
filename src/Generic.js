@@ -38,6 +38,10 @@ export const app = {
             default: true,
             type: "boolean"
         },
+        "Push notifications": {
+            default: true,
+            type: "boolean"
+        },
         "Message spacing": {
             default: "3",
             type: "number"
