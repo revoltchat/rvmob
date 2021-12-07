@@ -14,6 +14,7 @@ import { MiniProfile, Avatar, Username } from './src/Profile'
 import { setFunction } from './src/Generic';
 import { LeftMenu, RightMenu } from './src/SideMenus';
 import { Modals } from './src/Modals';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FastImage from 'react-native-fast-image';
 import { observer } from 'mobx-react-lite';
 const Image = FastImage;
@@ -93,6 +94,8 @@ class MainView extends React.Component {
                 })
             }
         }).bind(this));
+        // notifee.onBackgroundEvent(async ({ type, detail }) => {
+            
         AsyncStorage.getItem('token', async (err, res) => {
             if (!err) {
                 if ((typeof res) != "string") {
@@ -140,7 +143,7 @@ class MainView extends React.Component {
                                     (this.state.currentChannel == "friends" ?
                                     <View style={{flex: 1}}>
                                         <View style={styles.channelHeader}>
-                                            <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><Text>☰</Text></TouchableOpacity>
+                                            <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><View style={styles.iconContainer}><MaterialIcon name="menu" size={20} color={currentTheme.textPrimary} /></View></TouchableOpacity>
                                             <Text style={{flex: 1}}>{this.state.currentChannel?.channel_type != "Group" && (this.state.currentChannel?.channel_type == "DirectMessage" ? "@" : "#")}{this.state.currentChannel.name || this.state.currentChannel.recipient?.username}</Text>
                                         </View>
                                         <ScrollView style={{flex: 1}}>
@@ -173,7 +176,7 @@ class MainView extends React.Component {
                                     :
                                     <View style={{flex: 1}}>
                                         <View style={styles.channelHeader}>
-                                            <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><Text>☰</Text></TouchableOpacity>
+                                            <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><View style={styles.iconContainer}><MaterialIcon name="menu" size={20} color={currentTheme.textPrimary} /></View></TouchableOpacity>
                                             <Text style={{flex: 1}}>#{this.state.currentChannel.name}</Text>
                                         </View>
                                         {(!this.state.currentChannel?.nsfw || app.settings.get("Consented to 18+ content")) ?
@@ -193,7 +196,7 @@ class MainView extends React.Component {
                                     :
                                     <>
                                         <View style={styles.channelHeader}>
-                                            <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><Text>☰</Text></TouchableOpacity>
+                                            <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><View style={styles.iconContainer}><MaterialIcon name="menu" size={20} color={currentTheme.textPrimary} /></View></TouchableOpacity>
                                             <Text style={{flex: 1}}>Home</Text>
                                         </View>
                                         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20}}>

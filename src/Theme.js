@@ -120,8 +120,7 @@ function refreshStyles() {
         },
         mainView: {
             flex: 1,
-            backgroundColor: currentTheme.backgroundPrimary,
-            borderRadius: 8
+            backgroundColor: currentTheme.backgroundPrimary
         },
         loggingInScreen: {
             flex: 1,
@@ -206,6 +205,7 @@ function refreshStyles() {
             marginRight: 5,
             borderRadius: 8,
             flexDirection: 'row',
+            alignItems: 'center',
             backgroundColor: currentTheme.backgroundPrimary,
             borderWidth: currentTheme.buttonBorderWidth,
             borderColor: currentTheme.buttonBorderColor
@@ -219,6 +219,7 @@ function refreshStyles() {
             margin: 5,
             justifyContent: 'center',
             alignItems: 'center',
+            flexDirection: 'row',
             borderWidth: currentTheme.buttonBorderWidth,
             borderColor: currentTheme.buttonBorderColor
         },
@@ -231,6 +232,7 @@ function refreshStyles() {
             margin: 5,
             justifyContent: 'center',
             alignItems: 'center',
+            flexDirection: 'row',
             borderWidth: currentTheme.buttonBorderWidth,
             borderColor: currentTheme.buttonBorderColor
         },
@@ -238,27 +240,32 @@ function refreshStyles() {
             borderColor: currentTheme.buttonBorderColorActive,
             borderWidth: currentTheme.buttonBorderWidth > 0 ? currentTheme.buttonBorderWidth : 1
         },
+        iconContainer: {
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            width: 20, 
+            height: 20, 
+            marginRight: 5
+        },
         messagesView: {
             padding: 10,
             flex: 1
         },
         messageBoxInner: {
-            flexDirection: 'row'
+            flexDirection: 'row',
+            alignItems: 'center',
+            minHeight: 50,
+            paddingLeft: 8,
+            paddingRight: 8
         },
         messageBoxOuter: {
             backgroundColor: currentTheme.backgroundSecondary,
-            margin: 5,
-            borderRadius: 8,
             overflow: "hidden",
             borderColor: currentTheme.messageBoxBorderColor,
             borderWidth: currentTheme.messageBoxBorderWidth
         },
         sendButton: {
             margin: 3,
-            marginLeft: 0,
-            borderRadius: 8,
-            backgroundColor: currentTheme.backgroundPrimary,
-            width: 50,
             justifyContent: 'center',
             alignItems: 'center'
         },

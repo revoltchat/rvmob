@@ -6,6 +6,11 @@ import { MiniProfile } from './Profile';
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// import Icon from 'react-native-vector-icons/MaterialIcons';
+import FontistoIcon from 'react-native-vector-icons/Fontisto';
+import FA5Icon from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import FAIcon from 'react-native-vector-icons/FontAwesome';
 import FastImage from 'react-native-fast-image';
 import spoilerPlugin from '@traptitech/markdown-it-spoiler';
 const Image = FastImage;
@@ -314,7 +319,7 @@ export const GeneralAvatar = ({ attachment, size }) => {
 }
 
 
-export const ServerList = observer(({ onServerPress, onServerLongPress }) => {
+export const ServerList = observer(({ onServerPress, onServerLongPress, showUnread }) => {
     return [...client.servers.values()].map((s) => {
         let iconURL = s.generateIconURL();
         return <TouchableOpacity onPress={
@@ -324,9 +329,37 @@ export const ServerList = observer(({ onServerPress, onServerLongPress }) => {
         } 
         key={s._id} 
         style={styles.serverButton}>
+            {/* {showUnread ? <View style={{borderRadius: 10000, backgroundColor: getUnread()}}></View> } */}
             {iconURL ? <Image source={{uri: iconURL + "?max_side=" + defaultMaxSide}} style={styles.serverIcon}/> : <Text>{s.name}</Text>}
         </TouchableOpacity>
     })
+})
+
+export const ChannelButton = observer(({channel, onClick, selected}) => {
+    return <TouchableOpacity onPress={
+        ()=>onClick()
+    } 
+    key={channel._id} 
+    style={
+        selected ? 
+        [styles.channelButton, styles.channelButtonSelected] : 
+        styles.channelButton
+    }>
+        {(channel.generateIconURL && channel.generateIconURL()) ? 
+        <Image 
+        source={{uri: channel.generateIconURL() + "?max_side=" + defaultMaxSide}} 
+        style={{width: 20, height: 20}}/> 
+        : 
+        <View style={{alignItems: 'center', justifyContent: 'center', width: 20}}>
+            {channel.channel_type == "DirectMessage" ? 
+            <FontistoIcon name="at" size={16} color={currentTheme.textPrimary}/>
+            :
+            <FontistoIcon name="hashtag" size={16} color={currentTheme.textPrimary} />
+            }
+        </View>
+        }
+        <Text style={{marginLeft: 5}}>{channel.name}</Text>
+    </TouchableOpacity>
 })
 
 export const ChannelList = observer((props) => {
@@ -338,6 +371,9 @@ export const ChannelList = observer((props) => {
             } 
             key={"home"} 
             style={props.currentChannel?._id == null ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
+                <View style={styles.iconContainer}>
+                    <FA5Icon name="house-user" size={16} color={currentTheme.textPrimary} />
+                </View>
                 <Text>Home</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={
@@ -345,6 +381,9 @@ export const ChannelList = observer((props) => {
             } 
             key={"friends"} 
             style={props.currentChannel == "friends" ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
+                <View style={styles.iconContainer}>
+                    <FA5Icon name="users" size={16} color={currentTheme.textPrimary} />
+                </View>
                 <Text>Friends</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={
@@ -352,6 +391,9 @@ export const ChannelList = observer((props) => {
             } 
             key={"notes"} 
             style={props.currentChannel?.channel_type == "SavedMessages" ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
+                <View style={styles.iconContainer}>
+                    <MaterialIcon name="sticky-note-2" size={20} color={currentTheme.textPrimary} />
+                </View>
                 <Text>Saved Notes</Text>
             </TouchableOpacity>
             {[...client.channels.values()].filter(c => c.channel_type == "DirectMessage" || c.channel_type == "Group").map(dm => {
@@ -387,13 +429,7 @@ export const ChannelList = observer((props) => {
                                 processedChannels.push(cid)
                                 let c = client.channels.get(cid)
                                 if (c) {
-                                    return <TouchableOpacity onPress={
-                                        ()=>{props.onChannelClick(c)}
-                                    } 
-                                    key={c._id} 
-                                    style={props.currentChannel?._id == c._id ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
-                                        {(c.generateIconURL && c.generateIconURL()) ? <Image source={{uri: c.generateIconURL() + "?max_side=" + defaultMaxSide}} style={{width: 20, height: 20, marginRight: 5}}/> : <Text>#</Text>}<Text>{c.name}</Text>
-                                    </TouchableOpacity>
+                                    return <ChannelButton key={c._id} channel={c} onClick={()=>{props.onChannelClick(c)}} selected={props.currentChannel?._id == c._id} />
                                 }
                             })}
                         </View>
@@ -402,13 +438,7 @@ export const ChannelList = observer((props) => {
                         {props.currentServer.channels.map((c) => {
                             if (c) {
                                 if (!processedChannels.includes(c._id))
-                                return <TouchableOpacity onPress={
-                                    ()=>{props.onChannelClick(c)}
-                                } 
-                                key={c._id} 
-                                style={props.currentChannel?._id == c._id ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
-                                    {(c.generateIconURL && c.generateIconURL()) ? <Image source={{uri: c.generateIconURL() + "?max_side=" + defaultMaxSide}} style={{width: 20, height: 20, marginRight: 5}}/> : <Text>#</Text>}<Text>{c.name}</Text>
-                                </TouchableOpacity>
+                                return <ChannelButton key={c._id} channel={c} onClick={()=>{props.onChannelClick(c)}} selected={props.currentChannel?._id == c._id} />
                             }
                         })}
                         {res}
@@ -449,4 +479,38 @@ export const loadingScreenRemarks = [
 export var selectedRemark = loadingScreenRemarks[Math.floor(Math.random() * loadingScreenRemarks.length)];
 export function randomizeRemark() {
     selectedRemark = loadingScreenRemarks[Math.floor(Math.random() * loadingScreenRemarks.length)];
+}
+
+export var unreads = {servers: {}, channels: {}};
+export function fetchUnreads() {
+    unreads = {servers: {}, channels: {}};
+    client.syncFetchUnreads().then((u) => {
+        u.forEach(c => {
+            // if (c.last_id != client.channels.get(c._id)?.last_message_id) {
+            let server = client.channels.get(c._id)?.server_id;
+            if (server) {
+                if (!unreads.servers[server]) unreads.servers[server] = {};
+                
+            }
+            unreads[c.channel_id] = {mentions: c.mentions.length};
+            // }
+        })
+    })
+}
+export function getUnread(c) {
+    if (unreads[c]) {
+        return unreads[c].mentions ? unreads[c].mentions : true;
+    }
+    return false;
+}
+export function pushUnread(c, unread = null, mention = false) {
+    if (!unread) delete unreads[c];
+    else {
+        if (mention) {
+            if (!unreads[c]) unreads[c] = {mentions: 0};
+            unreads[c].mentions += 1;
+        } else {
+            if (!unreads[c]) unreads[c] = {mentions: 0};
+        }
+    }
 }

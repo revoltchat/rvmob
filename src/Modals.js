@@ -8,6 +8,9 @@ import { Avatar, Username, MiniProfile, RoleView } from './Profile';
 import { RelationshipStatus, Badges } from "revolt-api/types/Users";
 import { ChannelPermission } from "revolt.js/dist/api/permissions";
 import Clipboard from '@react-native-community/clipboard';
+import AntIcon from 'react-native-vector-icons/AntDesign';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import FastImage from 'react-native-fast-image';
 import { observer } from 'mobx-react';
 const Image = FastImage;
@@ -71,6 +74,9 @@ export class Modals extends React.Component {
                             style={styles.actionTile}
                             onPress={() => this.setState({contextMenuMessage: null})}
                         >
+                            <View style={styles.iconContainer}>
+                                <AntIcon name="closecircle" size={16} color={currentTheme.textPrimary} />
+                            </View>
                             <Text>Close</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -89,6 +95,9 @@ export class Modals extends React.Component {
                                 this.setState({contextMenuMessage: null})
                             }}
                         >
+                            <View style={styles.iconContainer}>
+                                <MaterialIcon name="reply" size={20} color={currentTheme.textPrimary} />
+                            </View>
                             <Text>Reply</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -97,6 +106,9 @@ export class Modals extends React.Component {
                                 Clipboard.setString(this.state.contextMenuMessage.content);
                             }}
                         >
+                            <View style={styles.iconContainer}>
+                                <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
+                            </View>
                             <Text>Copy content</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -105,6 +117,9 @@ export class Modals extends React.Component {
                                 Clipboard.setString(this.state.contextMenuMessage._id);
                             }}
                         >
+                            <View style={styles.iconContainer}>
+                                <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
+                            </View>
                             <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuMessage?._id})</Text></Text>
                         </TouchableOpacity>
                         {this.state.contextMenuMessage?.channel.permission & ChannelPermission.ManageMessages || this.state.contextMenuMessage?.author.relationship == RelationshipStatus.User ? (
@@ -115,6 +130,9 @@ export class Modals extends React.Component {
                                     this.setState({contextMenuMessage: null})
                                 }}
                             >
+                                <View style={styles.iconContainer}>
+                                    <FA5Icon name="trash" size={18} color={currentTheme.textPrimary} />
+                                </View>
                                 <Text>Delete</Text>
                             </TouchableOpacity>
                         ) : null}
@@ -128,6 +146,9 @@ export class Modals extends React.Component {
                                     this.setState({contextMenuMessage: null})
                                 }}
                             >
+                                <View style={styles.iconContainer}>
+                                    <FA5Icon name="edit" size={18} color={currentTheme.textPrimary} />
+                                </View>
                                 <Text>Edit</Text>
                             </TouchableOpacity>
                         ) : null}
@@ -202,15 +223,24 @@ export class Modals extends React.Component {
                                 !this.state.contextMenuUser?.bot ? 
                                 (this.state.contextMenuUser?.relationship == RelationshipStatus.Friend ? 
                                     <TouchableOpacity style={styles.actionTile} onPress={async () => {app.openProfile(null); this.setState({currentChannel: (await this.state.contextMenuUser.openDM()), messages: []})}}>
+                                        <View style={styles.iconContainer}>
+                                            <MaterialIcon name="message" size={20} color={currentTheme.textPrimary} />
+                                        </View>
                                         <Text>Message</Text>
                                     </TouchableOpacity> 
                                     :
                                     this.state.contextMenuUser?.relationship == RelationshipStatus.Incoming ? 
                                     <>
                                     <TouchableOpacity style={styles.actionTile} onPress={() => {this.state.contextMenuUser?.addFriend(); this.setState({})}}>
+                                        <View style={styles.iconContainer}>
+                                            <FA5Icon name="user-plus" size={16} color={currentTheme.textPrimary} />
+                                        </View>
                                         <Text>Accept Friend</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.actionTile} onPress={() => {this.state.contextMenuUser?.removeFriend(); this.setState({})}}>
+                                        <View style={styles.iconContainer}>
+                                            <FA5Icon name="user-times" size={16} color={currentTheme.textPrimary} />
+                                        </View>
                                         <Text>Reject Friend</Text>
                                     </TouchableOpacity>
                                     </>
@@ -242,7 +272,12 @@ export class Modals extends React.Component {
                                 {/* <TextInput onChangeText={(v) => this.setState({userStatusInput: v})} value={this.state.userStatusInput || client.user.status.text || ""} onSubmitEditing={() => client.users.edit({...client.user.status, text: this.state.userStatusInput})} /> */}
                                 </>
                             }
-                            <TouchableOpacity key={"Copy ID"} style={styles.actionTile} onPress={() => {Clipboard.setString(this.state.contextMenuUser._id)}}><Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuUser?._id})</Text></Text></TouchableOpacity>
+                            <TouchableOpacity key={"Copy ID"} style={styles.actionTile} onPress={() => {Clipboard.setString(this.state.contextMenuUser._id)}}>
+                                <View style={styles.iconContainer}>
+                                    <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
+                                </View>
+                                <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuUser?._id})</Text></Text>
+                            </TouchableOpacity>
                             <RoleView user={this.state.contextMenuUser} server={this.state.contextMenuUserServer}/>
                             <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>BIO</Text>
                             {this.state.contextMenuUserProfile?.content ? <MarkdownView>{parseRevoltNodes(this.state.contextMenuUserProfile?.content)}</MarkdownView> : null}
@@ -298,7 +333,12 @@ export class Modals extends React.Component {
                         <Text style={{color: currentTheme.textPrimary, fontWeight: 'bold', fontSize: 24, textAlign: 'center'}}>{this.state.contextMenuServer?.name}</Text>
                         {this.state.contextMenuServer?.description ? <Text style={{color: currentTheme.textSecondary, fontSize: 16, textAlign: 'center'}}>{this.state.contextMenuServer?.description}</Text> : null}
                     </View>
-                        <TouchableOpacity key={"Copy ID"} style={styles.actionTile} onPress={() => {Clipboard.setString(this.state.contextMenuServer._id)}}><Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuServer?._id})</Text></Text></TouchableOpacity>
+                        <TouchableOpacity key={"Copy ID"} style={styles.actionTile} onPress={() => {Clipboard.setString(this.state.contextMenuServer._id)}}>
+                            <View style={styles.iconContainer}>
+                                <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
+                            </View>
+                            <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuServer?._id})</Text></Text>
+                        </TouchableOpacity>
                 </View>
             </Modal>
             <Modal visible={!!this.state.inviteServer} transparent={true} animationType="fade">

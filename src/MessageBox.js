@@ -6,6 +6,9 @@ import { observer } from 'mobx-react-lite';
 import { Username, Avatar } from './Profile';
 import { ChannelPermission } from "revolt.js/dist/api/permissions";
 import { ulid } from 'ulid';
+import AntIcon from 'react-native-vector-icons/AntDesign';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 let typing = false;
 
 export const MessageBox = observer((props) => {
@@ -32,17 +35,17 @@ export const MessageBox = observer((props) => {
                 <Pressable style={{width: 30, height: 20, alignItems: 'center', justifyContent: 'center'}} onPress={() => 
                     setReplyingMessages(replyingMessages?.filter(m2 => m2.message._id != m.message._id))
                 }>
-                    <Text style={{fontSize: 20, margin: -4}}>X</Text>
+                    <View style={styles.iconContainer}><AntIcon name="closecircle" size={16} color={currentTheme.textPrimary}/></View>
                 </Pressable>
                 <Pressable style={{width: 45, height: 20, alignItems: 'center', justifyContent: 'center'}} onPress={() => {
                     let replacing = [...replyingMessages]
                     replacing[i].mentions = !replacing[i].mentions
                     setReplyingMessages(replacing)
                 }}>
-                    <Text style={{fontWeight: 'bold', color: m.mentions ? currentTheme.accentColor : currentTheme.textPrimary}}>@{m.mentions ? "ON" : "OFF"}</Text>
+                    <Text style={{fontWeight: 'bold', color: m.mentions ? currentTheme.accentColor : currentTheme.textPrimary, marginTop: -3}}>@{m.mentions ? "ON" : "OFF"}</Text>
                 </Pressable>
-                <Text> Replying to </Text>
-                <Username user={m.message.author} server={props.channel.server}/>
+                <Text style={{marginTop: -1}}> Replying to </Text>
+                <View style={{marginTop: -1}}><Username user={m.message.author} server={props.channel.server}/></View>
             </View>
         ) : null}
         {editingMessage ? (
@@ -50,8 +53,10 @@ export const MessageBox = observer((props) => {
                 <Pressable style={{width: 30, height: 20, alignItems: 'center', justifyContent: 'center'}} onPress={() => {
                     setEditingMessage(null)
                     setCurrentText("")
-                }}><Text style={{fontSize: 20, margin: -4}}>X</Text></Pressable>
-                <Text> Editing message</Text>
+                }}>
+                    <View style={styles.iconContainer}><AntIcon name="closecircle" size={16} color={currentTheme.textPrimary}/></View>
+                </Pressable>
+                <Text style={{marginTop: -1}}> Editing message</Text>
             </View>
         ) : null}
         <View style={styles.messageBoxInner}>
@@ -86,7 +91,7 @@ export const MessageBox = observer((props) => {
                     setReplyingMessages([]);
                 }
             }}>
-                {editingMessage ? <Text>Edit</Text> : <Text>Send</Text>}
+                {editingMessage ? <FA5Icon name="edit" size={24} color={currentTheme.textPrimary}/> : <MaterialIcon name="send" size={24} color={currentTheme.textPrimary}/>}
             </TouchableOpacity> 
             : null}
         </View>

@@ -273,7 +273,7 @@ export const Message = observer((props) => {
                                     width = width * sizeFactor
                                     height = height * sizeFactor
                                 }
-                                return <Pressable onPress={() => props.onImagePress(a)}><Image source={{uri: client.generateFileURL(a)}} resizeMode={FastImage.resizeMode.contain} style={{width: width, height: height, marginBottom: 4, borderRadius: 3}} /></Pressable>
+                                return <Pressable onPress={() => app.openImage(a)}><Image source={{uri: client.generateFileURL(a)}} resizeMode={FastImage.resizeMode.contain} style={{width: width, height: height, marginBottom: 4, borderRadius: 3}} /></Pressable>
                             } else {
                                 return <View style={{padding: 15, borderRadius: 6, backgroundColor: currentTheme.backgroundSecondary, marginBottom: 15}}><Text>{a.filename}</Text><Text>{a.size.toLocaleString()} bytes</Text></View>
                             }

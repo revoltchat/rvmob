@@ -2,6 +2,8 @@ import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { ChannelList, ServerList, app, setFunction, client, Text, MarkdownView } from './Generic';
 import { MiniProfile, Avatar } from './Profile';
 import { styles, currentTheme } from './Theme';
+import FAIcon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FastImage from 'react-native-fast-image';
 const Image = FastImage;
 import React from 'react';
@@ -41,8 +43,8 @@ export class LeftMenu extends React.Component {
             borderTopWidth: currentTheme.generalBorderWidth,
             borderColor: currentTheme.generalBorderColor,
             flexDirection: 'row'}}>
-                <TouchableOpacity onPress={() => app.openSettings(true)} style={styles.buttonSecondary}><Text>Settings</Text></TouchableOpacity>
-                <TouchableOpacity onPress={this.props.onLogOut} style={styles.buttonSecondary}><Text>Log Out</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => app.openSettings(true)} style={styles.buttonSecondary}><FAIcon name="gear" size={20} color={currentTheme.textPrimary} /></TouchableOpacity>
+                <TouchableOpacity onPress={this.props.onLogOut} style={styles.buttonSecondary}><MaterialIcon name="logout" size={20} color={currentTheme.textPrimary} /></TouchableOpacity>
             </View>
             </>
         );
