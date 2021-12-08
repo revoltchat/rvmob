@@ -15,6 +15,8 @@ import { setFunction } from './src/Generic';
 import { LeftMenu, RightMenu } from './src/SideMenus';
 import { Modals } from './src/Modals';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import FontistoIcon from 'react-native-vector-icons/Fontisto';
+import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import FastImage from 'react-native-fast-image';
 import { observer } from 'mobx-react-lite';
 const Image = FastImage;
@@ -162,7 +164,10 @@ class MainView extends React.Component {
                                     <View style={{flex: 1}}>
                                         <View style={styles.channelHeader}>
                                             <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><View style={styles.iconContainer}><MaterialIcon name="menu" size={20} color={currentTheme.textPrimary} /></View></TouchableOpacity>
-                                            <Text style={{flex: 1}}>{this.state.currentChannel?.channel_type != "Group" && (this.state.currentChannel?.channel_type == "DirectMessage" ? "@" : "#")}{this.state.currentChannel.name || this.state.currentChannel.recipient?.username}</Text>
+                                            <View style={styles.iconContainer}>
+                                                <FA5Icon name="users" size={16} color={currentTheme.textPrimary} />
+                                            </View>
+                                            <Text style={{flex: 1}}>Friends</Text>
                                         </View>
                                         <ScrollView style={{flex: 1}}>
                                             <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10, marginTop: 10}}>INCOMING REQUESTS</Text>
@@ -195,9 +200,37 @@ class MainView extends React.Component {
                                     <View style={{flex: 1}}>
                                         <View style={styles.channelHeader}>
                                             <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><View style={styles.iconContainer}><MaterialIcon name="menu" size={20} color={currentTheme.textPrimary} /></View></TouchableOpacity>
-                                            <Text style={{flex: 1}}>#{this.state.currentChannel.name}</Text>
+                                            <View style={styles.iconContainer}>
+                                                {this.state.currentChannel.channel_type == "DirectMessage" ? 
+                                                <FontistoIcon name="at" size={16} color={currentTheme.textPrimary}/>
+                                                :
+                                                this.state.currentChannel.channel_type == "VoiceChannel" ? 
+                                                <FA5Icon name="volume-up" size={16} color={currentTheme.textPrimary}/>
+                                                :
+                                                this.state.currentChannel.channel_type == "Group" ? 
+                                                <FA5Icon name="users" size={16} color={currentTheme.textPrimary}/>
+                                                :
+                                                this.state.currentChannel.channel_type == "SavedMessages" ? 
+                                                <MaterialIcon name="sticky-note-2" size={20} color={currentTheme.textPrimary}/>
+                                                :
+                                                <FontistoIcon name="hashtag" size={16} color={currentTheme.textPrimary} />
+                                                }
+                                            </View>
+                                            <Text style={{flex: 1}}>{
+                                                this.state.currentChannel.channel_type == "DirectMessage" ? 
+                                                this.state.currentChannel.recipient?.username :
+                                                this.state.currentChannel.channel_type == "SavedMessages" ? 
+                                                "Saved Messages" :
+                                                this.state.currentChannel.name
+                                            }</Text>
                                         </View>
-                                        {(!this.state.currentChannel?.nsfw || app.settings.get("Consented to 18+ content")) ?
+                                        {this.state.currentChannel?.channel_type == "VoiceChannel" ?
+                                        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', padding: 30}}>
+                                            <Text style={{fontSize: 20, textAlign: 'center'}}>Voice channels aren't supported in RVMob yet!</Text>
+                                            <Text style={{fontSize: 16, textAlign: 'center'}}>You can use the desktop client to join them in the meantime.</Text>
+                                        </View>
+                                        :
+                                        (!this.state.currentChannel?.nsfw || app.settings.get("Consented to 18+ content")) ?
                                         <>
                                             <Messages channel={this.state.currentChannel} onLongPress={async (m) => {app.openMessage(m)}} onUserPress={(m) => {app.openProfile(m.author, this.state.currentChannel.server)}} onImagePress={(a) => {this.setState({imageViewerImage: a})}} rerender={this.state.rerender} onUsernamePress={(m) => this.setState({currentText: this.state.currentText + "<@" + m.author?._id + ">"})} />
                                             <MessageBox channel={this.state.currentChannel} />
@@ -215,6 +248,9 @@ class MainView extends React.Component {
                                     <>
                                         <View style={styles.channelHeader}>
                                             <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><View style={styles.iconContainer}><MaterialIcon name="menu" size={20} color={currentTheme.textPrimary} /></View></TouchableOpacity>
+                                            <View style={styles.iconContainer}>
+                                                <FA5Icon name="house-user" size={16} color={currentTheme.textPrimary} />
+                                            </View>
                                             <Text style={{flex: 1}}>Home</Text>
                                         </View>
                                         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20}}>
