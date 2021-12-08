@@ -160,7 +160,7 @@ export const client = new Client();
 export const Text = (props) => {
     let newProps = {...props}
     if (!props.style) newProps = Object.assign({style: {}}, newProps)
-    newProps.style = Object.assign({color: currentTheme.textPrimary, flexWrap: 'wrap'}, newProps.style)
+    newProps.style = Object.assign({color: currentTheme.textPrimary, flexWrap: 'wrap', fontFamily: 'OpenSans'}, newProps.style)
     return (
         <ReactNative.Text {...newProps}>{newProps.children}</ReactNative.Text>
     )
