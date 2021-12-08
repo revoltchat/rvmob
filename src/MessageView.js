@@ -65,7 +65,7 @@ export class Messages extends React.Component {
                         if (newMessages.length >= (!this.state.bottomOfPage ? 150 : 50)) {
                             newMessages = newMessages.slice(newMessages.length - 50, newMessages.length)
                         }
-                        let grouped = newMessages.length > 0 && ((newMessages[newMessages.length - 1].message?.author?._id == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && differenceInMinutes(decodeTime(message._id), decodeTime(newMessages[newMessages.length - 1].message?._id)) < 5)
+                        let grouped = newMessages.length > 0 && this.calculateGrouped(newMessages[newMessages.length - 1].message, message)
                         newMessages.push({message, grouped, rendered: this.renderMessage({grouped, message})})
                         return {messages: newMessages, newMessageCount: !this.state.bottomOfPage ? (this.state.newMessageCount + 1) || 1 : 0, queuedMessages: this.state.queuedMessages.filter(m => m.nonce != message.nonce)}
                     })
@@ -117,7 +117,7 @@ export class Messages extends React.Component {
                 try {
                 let time = decodeTime(message._id)
                 // let grouped = ((lastAuthor == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (lastTime && time.diff(lastTime, "minute") < 5))
-                let grouped = i != 0 && ((res.messages[i - 1].author._id == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && differenceInMinutes(time, decodeTime(res.messages[i - 1]._id)) < 5)
+                let grouped = i != 0 && this.calculateGrouped(res.messages[i - 1], message);
                 let out = {grouped, message: message, rendered: this.renderMessage({grouped, message})}
                 // lastAuthor = (message.author ? message.author._id : lastAuthor)
                 // lastTime = time
@@ -135,6 +135,20 @@ export class Messages extends React.Component {
                 // atLatestMessages: input.type != "before" && this.props.channel.last_message_id == result[result.length - 1]?._id
             })
         });
+    }
+    calculateGrouped(lastMessage, message) {
+        return ( // a message is grouped with the previous message if all of the following is true:
+            (lastMessage.author?._id == message.author?._id) && // the author is the same
+            !(message.reply_ids && message.reply_ids.length > 0) && // the message is not a reply
+            differenceInMinutes( // the time difference is less than 5 minutes
+                decodeTime(message._id), 
+                decodeTime(lastMessage._id)
+            ) < 5 && 
+            (message.masquerade ? // the masquerade is the same
+                message.masquerade.avatar?._id != lastMessage.masquerade?.avatar?._id &&
+                message.masquerade.name != lastMessage.masquerade?.name
+            : true) 
+        )
     }
     renderMessage(m) {
         return (

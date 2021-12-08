@@ -44,14 +44,28 @@ export const app = {
             type: "boolean"
         },
         "Push notifications": {
-            default: true,
-            type: "boolean"
+            default: false,
+            type: "boolean",
+            experimental: true
+        },
+        "Notify for pings from yourself": {
+            default: false,
+            type: "boolean",
+            developer: true
         },
         "Message spacing": {
             default: "3",
             type: "number"
         },
         "Consented to 18+ content": {
+            default: false,
+            type: "boolean"
+        },
+        "Show experimental features": {
+            default: false,
+            type: "boolean"
+        },
+        "Show developer tools": {
             default: false,
             type: "boolean"
         }
@@ -62,8 +76,19 @@ app.settings.getRaw = (k) => {
     return (typeof app.settings[k].value == (app.settings[k].type == "number" ? "string" : app.settings[k].type) ? app.settings[k].value : app.settings[k].default);
 }
 app.settings.get = (k) => {
-    let val = (typeof app.settings[k].value == (app.settings[k].type == "number" ? "string" : app.settings[k].type) ? app.settings[k].value : app.settings[k].default);
-    return app.settings[k].type == "number" ? (parseInt(val) || 0) : val;
+    if (!app.settings[k]) {console.warn(`No setting named "${k}"`); return null;}
+    let raw = (typeof(app.settings[k].value) == (
+        app.settings[k].type == "number" ? "string"
+        :
+        app.settings[k].type
+    ) && 
+    (app.settings[k].experimental ? app.settings["Show experimental features"].value : true) && 
+    (app.settings[k].developer ? app.settings["Show developer tools"].value : true) ? 
+        app.settings[k].value
+        : 
+        app.settings[k].default
+    );
+    return app.settings[k].type == "number" ? (parseInt(raw) || 0) : raw;
 }
 app.settings.set = (k, v) => {
     app.settings[k].value = v;
@@ -353,6 +378,9 @@ export const ChannelButton = observer(({channel, onClick, selected}) => {
         <View style={{alignItems: 'center', justifyContent: 'center', width: 20}}>
             {channel.channel_type == "DirectMessage" ? 
             <FontistoIcon name="at" size={16} color={currentTheme.textPrimary}/>
+            :
+            channel.channel_type == "VoiceChannel" ? 
+            <FA5Icon name="volume-up" size={16} color={currentTheme.textPrimary}/>
             :
             <FontistoIcon name="hashtag" size={16} color={currentTheme.textPrimary} />
             }

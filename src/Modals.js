@@ -111,6 +111,7 @@ export class Modals extends React.Component {
                             </View>
                             <Text>Copy content</Text>
                         </TouchableOpacity>
+                        {app.settings.get("Show developer tools") ?
                         <TouchableOpacity
                             style={styles.actionTile}
                             onPress={() => {
@@ -122,6 +123,7 @@ export class Modals extends React.Component {
                             </View>
                             <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuMessage?._id})</Text></Text>
                         </TouchableOpacity>
+                        : null}
                         {this.state.contextMenuMessage?.channel.permission & ChannelPermission.ManageMessages || this.state.contextMenuMessage?.author.relationship == RelationshipStatus.User ? (
                             <TouchableOpacity
                                 style={styles.actionTile}
@@ -272,12 +274,14 @@ export class Modals extends React.Component {
                                 {/* <TextInput onChangeText={(v) => this.setState({userStatusInput: v})} value={this.state.userStatusInput || client.user.status.text || ""} onSubmitEditing={() => client.users.edit({...client.user.status, text: this.state.userStatusInput})} /> */}
                                 </>
                             }
+                            {app.settings.get("Show developer tools") ?
                             <TouchableOpacity key={"Copy ID"} style={styles.actionTile} onPress={() => {Clipboard.setString(this.state.contextMenuUser._id)}}>
                                 <View style={styles.iconContainer}>
                                     <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
                                 </View>
                                 <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuUser?._id})</Text></Text>
                             </TouchableOpacity>
+                            : null}
                             <RoleView user={this.state.contextMenuUser} server={this.state.contextMenuUserServer}/>
                             <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>BIO</Text>
                             {this.state.contextMenuUserProfile?.content ? <MarkdownView>{parseRevoltNodes(this.state.contextMenuUserProfile?.content)}</MarkdownView> : null}
@@ -294,19 +298,25 @@ export class Modals extends React.Component {
                     <Pressable onPress={() => {this.setState({settingsOpen: false})}}><Text style={{fontSize: 24}}>Close</Text></Pressable>
                     <ScrollView style={{flex: 1}}>
                         {Object.entries(app.settings).map(([k, v]) => {
+                            if (v.experimental && !app.settings.get("Show experimental features")) return null;
+                            if (v.developer && !app.settings.get("Show developer tools")) return null;
                             if (v.type == "boolean") {
                                 return <View key={k} style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
+                                    {v.experimental ? <View style={styles.iconContainer}><FA5Icon name="flask" size={16} color={currentTheme.accentColor} /></View> : null}
+                                    {v.developer ? <View style={styles.iconContainer}><FA5Icon name="bug" size={16} color={currentTheme.accentColor} /></View> : null}
                                     <Text style={{flex: 1, fontWeight: 'bold'}}>{k}</Text>
                                     <TouchableOpacity style={{
                                         width: 40, height: 40, borderRadius: 8, 
                                         backgroundColor: app.settings.get(k) ? currentTheme.accentColor : currentTheme.backgroundSecondary,
                                         alignItems: 'center', justifyContent: 'center'
-                                    }} onPress={() => {app.settings.set(k, !app.settings.get(k)); rerender()}}><Text style={{color: app.settings.get(k) ? currentTheme.accentColorForeground : currentTheme.textPrimary}}>{app.settings.get(k) ? "On" : "Off"}</Text></TouchableOpacity>
+                                    }} onPress={() => {app.settings.set(k, !app.settings.get(k)); rerender()}}><Text style={{color: app.settings.get(k) ? currentTheme.accentColorForeground : currentTheme.textPrimary}}>{app.settings.get(k) ? <FA5Icon name="check" color={currentTheme.accentColorForeground} size={24} /> : null}</Text></TouchableOpacity>
                                 </View>
                             } else if (v.type == "string" || v.type == "number") {
                                 return <View key={k} style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
                                     {v.options ? 
                                     <View>
+                                        {v.experimental ? <View style={styles.iconContainer}><FA5Icon name="flask" size={16} color={currentTheme.accentColor} /></View> : null}
+                                        {v.developer ? <View style={styles.iconContainer}><FA5Icon name="bug" size={16} color={currentTheme.accentColor} /></View> : null}
                                         <Text style={{flex: 1, fontWeight: 'bold'}}>{k}</Text>
                                         <ScrollView style={{borderRadius: 8, /*maxHeight: 160,*/ minWidth: "100%", backgroundColor: currentTheme.backgroundSecondary, padding: 8, paddingRight: 12}}>
                                             {v.options.map((o) => <TouchableOpacity key={o} style={styles.actionTile} onPress={() => {app.settings.set(k, o); rerender()}}><Text>{o} {app.settings.getRaw(k) == o ? <Text>(active)</Text> : null}</Text></TouchableOpacity>)}
@@ -315,6 +325,8 @@ export class Modals extends React.Component {
                                     </View>
                                     :
                                     <View>
+                                        {v.experimental ? <FA5Icon name="flask" size={16} color={currentTheme.accentColor} /> : null}
+                                        {v.developer ? <FA5Icon name="bug" size={16} color={currentTheme.accentColor} /> : null}
                                         <Text style={{flex: 1, fontWeight: 'bold'}}>{k}</Text>
                                         <TextInput style={{minWidth: "100%", borderRadius: 8, backgroundColor: currentTheme.backgroundSecondary, padding: 6, paddingLeft: 10, paddingRight: 10, color: currentTheme.textPrimary}} value={app.settings.getRaw(k)} keyboardType={v.type == "number" ? 'decimal-pad' : 'default'} onChangeText={(v) => {app.settings.set(k, v); rerender()}} />
                                     </View>}
@@ -333,12 +345,16 @@ export class Modals extends React.Component {
                         <Text style={{color: currentTheme.textPrimary, fontWeight: 'bold', fontSize: 24, textAlign: 'center'}}>{this.state.contextMenuServer?.name}</Text>
                         {this.state.contextMenuServer?.description ? <Text style={{color: currentTheme.textSecondary, fontSize: 16, textAlign: 'center'}}>{this.state.contextMenuServer?.description}</Text> : null}
                     </View>
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 10}}>
+                        {app.settings.get("Show developer tools") ?
                         <TouchableOpacity key={"Copy ID"} style={styles.actionTile} onPress={() => {Clipboard.setString(this.state.contextMenuServer._id)}}>
                             <View style={styles.iconContainer}>
                                 <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
                             </View>
                             <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuServer?._id})</Text></Text>
                         </TouchableOpacity>
+                        : null}
+                    </View>
                 </View>
             </Modal>
             <Modal visible={!!this.state.inviteServer} transparent={true} animationType="fade">

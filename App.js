@@ -81,11 +81,29 @@ class MainView extends React.Component {
             this.setState({network: "dropped"});
         }).bind(this));
         client.on('message', (async (msg) => {
-            if (msg.author._id != client.user._id && (msg.mention_ids?.includes(client.user._id) || msg.channel.channel_type == "DirectMessage") && app.settings.get("Push notifications")) {
+            if (
+                (app.settings.get("Notify for pings from yourself") ? true : msg.author._id != client.user._id) && 
+                (msg.mention_ids?.includes(client.user._id) || msg.channel.channel_type == "DirectMessage") && 
+                app.settings.get("Push notifications")
+            ) {
                 let notifs = (await notifee.getDisplayedNotifications()).filter(n => n.id == msg.channel._id);
                 notifee.displayNotification({
                     title: (msg.channel.server?.name ? msg.channel.server.name + ", #" : "") + msg.channel.name + " (RVMob)",
-                    body: msg.author.username + ": " + msg.content.replaceAll("<@" + client.user._id + ">", "@" + client.user.username).replaceAll("\\", "\\\\").replaceAll("<", "\\<").replaceAll(">", "\\>") + (notifs.length > 0 ? notifs[0]?.notification.body.split("<br>").length > 1 ? " <i><br>(and " + (Number.parseInt(notifs[0].notification.body.split("<br>")[1].split(" ")[1]) + 1) + " more messages)</i>" : " <i><br>(and 1 more message)</i>" : ""),
+                    body: msg.author.username + ": " + msg.content.replaceAll(
+                        "<@" + client.user._id + ">", 
+                        "@" + client.user.username
+                    ).replaceAll("\\", "\\\\")
+                    .replaceAll("<", "\\<")
+                    .replaceAll(">", "\\>") + 
+                    (notifs.length > 0 ? 
+                        notifs[0]?.notification.body.split("<br>").length > 1 ? 
+                            " <i><br>(and " + 
+                            (Number.parseInt(
+                                notifs[0].notification.body.split("<br>")[1].split(" ")[1]
+                            ) + 1) + 
+                            " more messages)</i>" 
+                        : " <i><br>(and 1 more message)</i>" 
+                    : ""),
                     android: {
                         largeIcon: msg.channel.server?.generateIconURL() || msg.author.generateAvatarURL(),
                         channelId: defaultnotif
@@ -188,7 +206,7 @@ class MainView extends React.Component {
                                         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', padding: 25}}>
                                             <Text style={{fontWeight: 'bold', fontSize: 28}}>Hold it!</Text>
                                             <Text style={{textAlign: 'center', fontSize: 16}}>This is an NSFW channel. Are you sure you want to enter?{'\n'}(This can be reversed in Settings)</Text>
-                                            <TouchableOpacity style={styles.button} onPress={() => {app.settings.set("Consented to 18+ content", true); this.setState({})}}><Text style={{fontSize: 16}}>Enter</Text></TouchableOpacity>
+                                            <TouchableOpacity style={styles.button} onPress={() => {app.settings.set("Consented to 18+ content", true); this.setState({})}}><Text style={{fontSize: 16}}>I am 18 or older and wish to enter</Text></TouchableOpacity>
                                         </View>
                                         }
                                     </View>
