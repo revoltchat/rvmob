@@ -289,7 +289,7 @@ export const Message = observer((props) => {
                                 }
                                 return <Pressable onPress={() => app.openImage(a)}><Image source={{uri: client.generateFileURL(a)}} resizeMode={FastImage.resizeMode.contain} style={{width: width, height: height, marginBottom: 4, borderRadius: 3}} /></Pressable>
                             } else {
-                                return <View style={{padding: 15, borderRadius: 6, backgroundColor: currentTheme.backgroundSecondary, marginBottom: 15}}><Text>{a.filename}</Text><Text>{a.size.toLocaleString()} bytes</Text></View>
+                                return <Pressable onPress={() => openUrl(client.generateFileURL(a))}><View style={{padding: 15, borderRadius: 6, backgroundColor: currentTheme.backgroundSecondary, marginBottom: 15}}><Text>{a.filename}</Text><Text>{a.size.toLocaleString()} bytes</Text></View></Pressable>
                             }
                         })}
                         {props.message.embeds?.map((e) => {
