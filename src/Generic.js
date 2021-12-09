@@ -379,29 +379,32 @@ export const ChannelButton = observer(({channel, onPress=()=>{}, onLongPress=()=
         :
         <>
         <View style={styles.iconContainer}>
-            {(channel.generateIconURL && channel.generateIconURL()) ? 
-            <Image 
-            source={{uri: channel.generateIconURL() + "?max_side=" + defaultMaxSide}} 
-            style={{width: 20, height: 20}}/> :
-            channel == "Home" ?
-            <FA5Icon name="house-user" size={16} color={currentTheme.textPrimary} /> : 
-            channel == "Friends" ?
-            <FA5Icon name="users" size={16} color={currentTheme.textPrimary} /> : 
-            channel == "Saved Notes" ? 
-            <MaterialIcon name="sticky-note-2" size={20} color={currentTheme.textPrimary} /> :
-            channel.channel_type == "DirectMessage" ? 
-            <FontistoIcon name="at" size={16} color={currentTheme.textPrimary}/>
-            :
-            channel.channel_type == "VoiceChannel" ? 
-            <FA5Icon name="volume-up" size={16} color={currentTheme.textPrimary}/>
-            :
-            <FontistoIcon name="hashtag" size={16} color={currentTheme.textPrimary} />
-            }
+            <ChannelIcon channel={channel} />
         </View>
         <Text>{channel.name || channel}</Text>
         </>}
     </TouchableOpacity>
 })
+
+export const ChannelIcon = ({channel}) => {
+    return (channel.generateIconURL && channel.generateIconURL()) ? 
+    <Image 
+    source={{uri: channel.generateIconURL() + "?max_side=" + defaultMaxSide}} 
+    style={{width: 20, height: 20}}/> :
+    channel == "Home" ?
+    <FA5Icon name="house-user" size={16} color={currentTheme.textPrimary} /> : 
+    channel == "Friends" ?
+    <FA5Icon name="users" size={16} color={currentTheme.textPrimary} /> : 
+    channel == "Saved Notes" ? 
+    <MaterialIcon name="sticky-note-2" size={20} color={currentTheme.textPrimary} /> :
+    channel.channel_type == "DirectMessage" ? 
+    <FontistoIcon name="at" size={16} color={currentTheme.textPrimary}/>
+    :
+    channel.channel_type == "VoiceChannel" ? 
+    <FA5Icon name="volume-up" size={16} color={currentTheme.textPrimary}/>
+    :
+    <FontistoIcon name="hashtag" size={16} color={currentTheme.textPrimary} />
+}
 
 export const ChannelList = observer((props) => {
     return (

@@ -145,8 +145,8 @@ export class Messages extends React.Component {
                 decodeTime(lastMessage._id)
             ) < 5 && 
             (message.masquerade ? // the masquerade is the same
-                message.masquerade.avatar?._id != lastMessage.masquerade?.avatar?._id &&
-                message.masquerade.name != lastMessage.masquerade?.name
+                message.masquerade.avatar == lastMessage.masquerade?.avatar &&
+                message.masquerade.name == lastMessage.masquerade?.name
             : true) 
         )
     }

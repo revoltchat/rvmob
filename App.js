@@ -7,7 +7,7 @@ import { RelationshipStatus } from "revolt-api/types/Users";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import { currentTheme, styles } from './src/Theme'
-import { Text, client, app, selectedRemark, randomizeRemark, Button } from './src/Generic'
+import { Text, client, app, selectedRemark, randomizeRemark, Button, ChannelIcon } from './src/Generic'
 import { Messages, ReplyMessage } from './src/MessageView'
 import { MessageBox } from './src/MessageBox';
 import { MiniProfile, Avatar, Username } from './src/Profile'
@@ -168,7 +168,7 @@ class MainView extends React.Component {
                                     <View style={{flex: 1}}>
                                         <ChannelHeader>
                                             <View style={styles.iconContainer}>
-                                                <FA5Icon name="users" size={16} color={currentTheme.textPrimary} />
+                                                <ChannelIcon channel={"Friends"} />
                                             </View>
                                             <Text style={{flex: 1}}>Friends</Text>
                                         </ChannelHeader>
@@ -203,26 +203,13 @@ class MainView extends React.Component {
                                     <View style={{flex: 1}}>
                                         <ChannelHeader>
                                             <View style={styles.iconContainer}>
-                                                {this.state.currentChannel.channel_type == "DirectMessage" ? 
-                                                <FontistoIcon name="at" size={16} color={currentTheme.textPrimary}/>
-                                                :
-                                                this.state.currentChannel.channel_type == "VoiceChannel" ? 
-                                                <FA5Icon name="volume-up" size={16} color={currentTheme.textPrimary}/>
-                                                :
-                                                this.state.currentChannel.channel_type == "Group" ? 
-                                                <FA5Icon name="users" size={16} color={currentTheme.textPrimary}/>
-                                                :
-                                                this.state.currentChannel.channel_type == "SavedMessages" ? 
-                                                <MaterialIcon name="sticky-note-2" size={20} color={currentTheme.textPrimary}/>
-                                                :
-                                                <FontistoIcon name="hashtag" size={16} color={currentTheme.textPrimary} />
-                                                }
+                                                <ChannelIcon channel={this.state.currentChannel} />
                                             </View>
                                             <Text style={{flex: 1}}>{
                                                 this.state.currentChannel.channel_type == "DirectMessage" ? 
                                                 this.state.currentChannel.recipient?.username :
                                                 this.state.currentChannel.channel_type == "SavedMessages" ? 
-                                                "Saved Messages" :
+                                                "Saved Notes" :
                                                 this.state.currentChannel.name
                                             }</Text>
                                         </ChannelHeader>
@@ -250,7 +237,7 @@ class MainView extends React.Component {
                                     <>
                                         <ChannelHeader>
                                             <View style={styles.iconContainer}>
-                                                <FA5Icon name="house-user" size={16} color={currentTheme.textPrimary} />
+                                                <ChannelIcon channel={"Home"} />
                                             </View>
                                             <Text style={{flex: 1}}>Home</Text>
                                         </ChannelHeader>
@@ -344,7 +331,11 @@ class MainView extends React.Component {
 
 export const ChannelHeader = ({children}) => {
     return <View style={styles.channelHeader}>
-        <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><View style={styles.iconContainer}><MaterialIcon name="menu" size={20} color={currentTheme.textPrimary} /></View></TouchableOpacity>
+        <TouchableOpacity style={styles.headerIcon} onPress={() => {app.openLeftMenu()}}>
+            <View style={styles.iconContainer}>
+                <MaterialIcon name="menu" size={20} color={currentTheme.textPrimary} />
+            </View>
+        </TouchableOpacity>
         {children}
     </View>
 }

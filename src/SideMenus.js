@@ -74,11 +74,11 @@ export class RightMenu extends React.Component {
                     <Text style={{fontSize: 20, fontWeight: 'bold'}}>#{this.props.currentChannel?.name}</Text>
                     {this.props.currentChannel?.description ? <MarkdownView>{this.props.currentChannel?.description}</MarkdownView> : null}
                 </View>
-                <FlatList style={{flex: 1}}
+                {/* <FlatList style={{flex: 1}}
                 data={[...client.members.keys()]}
                 renderItem={this.renderMember}
                 keyExtractor={(item) => item}
-                />
+                /> */}
             </View>
         );
         return (
