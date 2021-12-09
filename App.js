@@ -176,7 +176,7 @@ class MainView extends React.Component {
                                             <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10, marginTop: 10}}>INCOMING REQUESTS</Text>
                                             <View>
                                                 {[...client.users.values()].filter((x) => x.relationship === RelationshipStatus.Incoming).map(f => {
-                                                    return <Button key={f._id} onPress={() => app.openProfile(f)}>
+                                                    return <Button style={{justifyContent: 'flex-start'}} key={f._id} onPress={() => app.openProfile(f)}>
                                                         <MiniProfile user={f} scale={1.15} />
                                                     </Button>
                                                 })}
@@ -184,7 +184,7 @@ class MainView extends React.Component {
                                             <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10, marginTop: 10}}>OUTGOING REQUESTS</Text>
                                             <View>
                                                 {[...client.users.values()].filter((x) => x.relationship === RelationshipStatus.Outgoing).map(f => {
-                                                    return <Button key={f._id} onPress={() => app.openProfile(f)}>
+                                                    return <Button style={{justifyContent: 'flex-start'}} key={f._id} onPress={() => app.openProfile(f)}>
                                                         <MiniProfile user={f} scale={1.15} />
                                                     </Button>
                                                 })}
@@ -192,7 +192,7 @@ class MainView extends React.Component {
                                             <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10}}>FRIENDS</Text>
                                             <View>
                                                 {[...client.users.values()].filter((x) => x.relationship === RelationshipStatus.Friend).map(f => {
-                                                    return <Button key={f._id} onPress={() => app.openProfile(f)}>
+                                                    return <Button style={{justifyContent: 'flex-start'}} key={f._id} onPress={() => app.openProfile(f)}>
                                                         <MiniProfile user={f} scale={1.15} />
                                                     </Button>
                                                 })}
