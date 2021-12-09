@@ -197,6 +197,14 @@ class MainView extends React.Component {
                                                     </Button>
                                                 })}
                                             </View>
+                                            <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10}}>BLOCKED</Text>
+                                            <View>
+                                                {[...client.users.values()].filter((x) => x.relationship === RelationshipStatus.Blocked).map(f => {
+                                                    return <Button style={{justifyContent: 'flex-start'}} key={f._id} onPress={() => app.openProfile(f)}>
+                                                        <MiniProfile user={f} scale={1.15} />
+                                                    </Button>
+                                                })}
+                                            </View>
                                         </ScrollView>
                                     </View>
                                     :

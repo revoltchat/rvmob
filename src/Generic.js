@@ -414,12 +414,12 @@ export const ChannelList = observer((props) => {
             <ChannelButton 
             onPress={async ()=>{props.onChannelClick(null)}} 
             key={"home"} channel={"Home"}
-            selected={props.currentChannel?._id == null} />
+            selected={props.currentChannel === null} />
 
             <ChannelButton 
             onPress={()=>{props.onChannelClick("friends")}} 
             key={"friends"} channel={"Friends"}
-            selected={props.currentChannel == "friends"} />
+            selected={props.currentChannel === "friends"} />
 
             <ChannelButton 
             onPress={async ()=>{props.onChannelClick(await client.user.openDM())}} 
