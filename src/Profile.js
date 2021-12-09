@@ -101,7 +101,7 @@ export const RoleView = observer(({ server, user }) => {
         memberObject && roles ?
         <>
             <Text>{roles.length} Roles</Text>
-            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>{roles.map(r => <View style={{flexDirection: 'row', padding: 6, paddingLeft: 8, paddingRight: 8, margin: 2, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8}}><View style={{borderRadius: 10000, backgroundColor: r.colour, height: 16, width: 16, margin: 2, marginRight: 6}} /><Text>{r.name}</Text></View>)}</View>
+            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>{roles.map(r => <View style={{flexDirection: 'row', padding: 6, paddingLeft: 8, paddingRight: 8, margin: 2, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8}}><View style={{borderRadius: 10000, backgroundColor: r.colour || currentTheme.textSecondary, height: 16, width: 16, margin: 2, marginRight: 6}} /><Text>{r.name}</Text></View>)}</View>
         </>
         : null
     )

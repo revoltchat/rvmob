@@ -1,5 +1,5 @@
-import { View, TouchableOpacity, ScrollView } from 'react-native';
-import { ChannelList, ServerList, app, setFunction, client, Text, MarkdownView } from './Generic';
+import { View, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { ChannelList, ServerList, app, setFunction, client, Text, MarkdownView, Button } from './Generic';
 import { MiniProfile, Avatar } from './Profile';
 import { styles, currentTheme } from './Theme';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
@@ -43,8 +43,8 @@ export class LeftMenu extends React.Component {
             borderTopWidth: currentTheme.generalBorderWidth,
             borderColor: currentTheme.generalBorderColor,
             flexDirection: 'row'}}>
-                <TouchableOpacity onPress={() => app.openSettings(true)} style={styles.buttonSecondary}><FAIcon name="gear" size={20} color={currentTheme.textPrimary} /></TouchableOpacity>
-                <TouchableOpacity onPress={this.props.onLogOut} style={styles.buttonSecondary}><MaterialIcon name="logout" size={20} color={currentTheme.textPrimary} /></TouchableOpacity>
+                <Button onPress={() => app.openSettings(true)} backgroundColor={currentTheme.backgroundPrimary}><FAIcon name="gear" size={20} color={currentTheme.textPrimary} /></Button>
+                <Button onPress={this.props.onLogOut} backgroundColor={currentTheme.backgroundPrimary}><MaterialIcon name="logout" size={20} color={currentTheme.textPrimary} /></Button>
             </View>
             </>
         );
@@ -54,18 +54,16 @@ export class RightMenu extends React.Component {
     constructor(props) {
         super(props);
         this.state = {}
-    }
-    componentDidUpdate(newProps, newState) {
-        if (newProps.currentChannel?._id != this.props.currentChannel?._id && newProps.currentChannel?.server) this.setState(async () => {return {users: (await this.props.currentChannel?.server?.fetchMembers()).users}})
+        this.renderMember = this.renderMember.bind(this);
     }
     render() {
         if (this.props.currentChannel?.channel_type == "Group" || this.props.currentChannel?.channel_type == "DirectMessage")
         return (
             <View style={styles.rightView}>
                 {this.props.currentChannel?.recipients?.map(u => 
-                    <TouchableOpacity style={{justifyContent: 'center', marginLeft: 6, marginRight: 6, marginTop: 3, padding: 6, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8}} onPress={() => app.openProfile(u)}>
+                    <Button backgroundColor={currentTheme.backgroundPrimary} style={{margin: 6}} onPress={() => app.openProfile(u)}>
                         <MiniProfile user={u} />
-                    </TouchableOpacity>
+                    </Button>
                 )}
             </View>
         );
@@ -76,11 +74,11 @@ export class RightMenu extends React.Component {
                     <Text style={{fontSize: 20, fontWeight: 'bold'}}>#{this.props.currentChannel?.name}</Text>
                     {this.props.currentChannel?.description ? <MarkdownView>{this.props.currentChannel?.description}</MarkdownView> : null}
                 </View>
-                {this.state.users?.map(u => 
-                    <TouchableOpacity style={{justifyContent: 'center', marginLeft: 6, marginRight: 6, marginTop: 3, padding: 6, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8}} onPress={() => app.openProfile(u)}>
-                        <MiniProfile user={u} server={this.props.currentChannel?.server} />
-                    </TouchableOpacity>
-                )}
+                <FlatList style={{flex: 1}}
+                data={[...client.members.keys()]}
+                renderItem={this.renderMember}
+                keyExtractor={(item) => item}
+                />
             </View>
         );
         return (
@@ -90,5 +88,15 @@ export class RightMenu extends React.Component {
                 } style={{width: 300, height: 250}} />
             </View>
         );
+    }
+    renderMember({item}) {
+        let obj = JSON.parse(item);
+        if (obj.server == this.props.currentChannel?.server._id) {
+            let u = client.users.get(obj.user);
+            if (u)
+            return <TouchableOpacity style={{justifyContent: 'center', marginLeft: 6, marginRight: 6, marginTop: 3, padding: 6, backgroundColor: currentTheme.backgroundPrimary, borderRadius: 8}} onPress={() => app.openProfile(u)}>
+                <MiniProfile user={u} server={this.props.currentChannel?.server} />
+            </TouchableOpacity>
+        }
     }
 }

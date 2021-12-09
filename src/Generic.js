@@ -347,11 +347,9 @@ export const GeneralAvatar = ({ attachment, size }) => {
 export const ServerList = observer(({ onServerPress, onServerLongPress, showUnread }) => {
     return [...client.servers.values()].map((s) => {
         let iconURL = s.generateIconURL();
-        return <TouchableOpacity onPress={
-            ()=>{onServerPress(s)}
-        } onLongPress={
-            ()=>{onServerLongPress(s)}
-        } 
+        return <TouchableOpacity 
+        onPress={()=>{onServerPress(s)}} 
+        onLongPress={()=>{onServerLongPress(s)}} 
         key={s._id} 
         style={styles.serverButton}>
             {/* {showUnread ? <View style={{borderRadius: 10000, backgroundColor: getUnread()}}></View> } */}
@@ -360,23 +358,39 @@ export const ServerList = observer(({ onServerPress, onServerLongPress, showUnre
     })
 })
 
-export const ChannelButton = observer(({channel, onClick, selected}) => {
-    return <TouchableOpacity onPress={
-        ()=>onClick()
-    } 
+export const ChannelButton = observer(({channel, onPress, onLongPress, delayLongPress, selected}) => {
+    return <TouchableOpacity 
+    onPress={()=>onPress()} 
+    onLongPress={()=>onLongPress()}
+    delayLongPress={delayLongPress}
     key={channel._id} 
     style={
         selected ? 
         [styles.channelButton, styles.channelButtonSelected] : 
         styles.channelButton
     }>
-        {(channel.generateIconURL && channel.generateIconURL()) ? 
+        {channel.channel_type == "DirectMessage" ? 
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <MiniProfile user={channel.recipient} />
+        </View>
+        :
+        channel.channel_type == "Group" ?
+        <MiniProfile channel={channel} />
+        :
+        (channel.generateIconURL && channel.generateIconURL()) ? 
         <Image 
         source={{uri: channel.generateIconURL() + "?max_side=" + defaultMaxSide}} 
         style={{width: 20, height: 20}}/> 
         : 
+        <>
         <View style={{alignItems: 'center', justifyContent: 'center', width: 20}}>
-            {channel.channel_type == "DirectMessage" ? 
+            {channel == "Home" ? 
+            <FA5Icon name="house-user" size={16} color={currentTheme.textPrimary} /> : 
+            channel == "Friends" ?
+            <FA5Icon name="users" size={16} color={currentTheme.textPrimary} /> : 
+            channel == "Saved Notes" ? 
+            <MaterialIcon name="sticky-note-2" size={20} color={currentTheme.textPrimary} /> :
+            channel.channel_type == "DirectMessage" ? 
             <FontistoIcon name="at" size={16} color={currentTheme.textPrimary}/>
             :
             channel.channel_type == "VoiceChannel" ? 
@@ -385,8 +399,8 @@ export const ChannelButton = observer(({channel, onClick, selected}) => {
             <FontistoIcon name="hashtag" size={16} color={currentTheme.textPrimary} />
             }
         </View>
-        }
-        <Text style={{marginLeft: 5}}>{channel.name}</Text>
+        <Text style={{marginLeft: 5}}>{channel.name || channel}</Text>
+        </>}
     </TouchableOpacity>
 })
 
@@ -394,56 +408,30 @@ export const ChannelList = observer((props) => {
     return (
         <>
             {!props.currentServer ? <>
-            <TouchableOpacity onPress={
-                async ()=>{props.onChannelClick(null)}
-            } 
-            key={"home"} 
-            style={props.currentChannel?._id == null ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
-                <View style={styles.iconContainer}>
-                    <FA5Icon name="house-user" size={16} color={currentTheme.textPrimary} />
-                </View>
-                <Text>Home</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={
-                ()=>{props.onChannelClick("friends")}
-            } 
-            key={"friends"} 
-            style={props.currentChannel == "friends" ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
-                <View style={styles.iconContainer}>
-                    <FA5Icon name="users" size={16} color={currentTheme.textPrimary} />
-                </View>
-                <Text>Friends</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={
-                async ()=>{props.onChannelClick(await client.user.openDM())}
-            } 
-            key={"notes"} 
-            style={props.currentChannel?.channel_type == "SavedMessages" ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
-                <View style={styles.iconContainer}>
-                    <MaterialIcon name="sticky-note-2" size={20} color={currentTheme.textPrimary} />
-                </View>
-                <Text>Saved Notes</Text>
-            </TouchableOpacity>
-            {[...client.channels.values()].filter(c => c.channel_type == "DirectMessage" || c.channel_type == "Group").map(dm => {
-                if (dm.channel_type == "DirectMessage") return <TouchableOpacity onPress={
-                    ()=>{props.onChannelClick(dm)}
-                } onLongPress={
-                    ()=>{app.openProfile(dm.recipient)}
-                } delayLongPress={750}
-                key={dm._id} 
-                style={props.currentChannel?._id == dm._id ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <MiniProfile user={dm.recipient} />
-                    </View>
-                </TouchableOpacity>
-                if (dm.channel_type == "Group") return <TouchableOpacity onPress={
-                    ()=>{props.onChannelClick(dm)}
-                } 
-                key={dm._id} 
-                style={props.currentChannel?._id == dm._id ? [styles.channelButton, styles.channelButtonSelected] : styles.channelButton}>
-                    <MiniProfile channel={dm} />
-                </TouchableOpacity>
-            })}
+
+            <ChannelButton 
+            onPress={async ()=>{props.onChannelClick(null)}} 
+            key={"home"} channel={"Home"}
+            selected={props.currentChannel?._id == null} />
+
+            <ChannelButton 
+            onPress={()=>{props.onChannelClick("friends")}} 
+            key={"friends"} channel={"Friends"}
+            selected={props.currentChannel == "friends"} />
+
+            <ChannelButton 
+            onPress={async ()=>{props.onChannelClick(await client.user.openDM())}} 
+            key={"notes"} channel={"Saved Notes"}
+            selected={props.currentChannel?.channel_type == "SavedMessages"} />
+
+            {[...client.channels.values()].filter(c => c.channel_type == "DirectMessage" || c.channel_type == "Group").map(dm =>
+                <ChannelButton 
+                onPress={()=>{props.onChannelClick(dm)}} 
+                onLongPress={()=>{app.openProfile(dm.recipient)}} 
+                delayLongPress={750}
+                key={dm._id} channel={dm}
+                style={props.currentChannel?._id == dm._id} />
+            )}
             </>
             : null}
             {props.currentServer ? <>
@@ -457,7 +445,10 @@ export const ChannelList = observer((props) => {
                                 processedChannels.push(cid)
                                 let c = client.channels.get(cid)
                                 if (c) {
-                                    return <ChannelButton key={c._id} channel={c} onClick={()=>{props.onChannelClick(c)}} selected={props.currentChannel?._id == c._id} />
+                                    return <ChannelButton 
+                                    key={c._id} channel={c} 
+                                    onClick={()=>{props.onChannelClick(c)}} 
+                                    selected={props.currentChannel?._id == c._id} />
                                 }
                             })}
                         </View>
@@ -466,7 +457,10 @@ export const ChannelList = observer((props) => {
                         {props.currentServer.channels.map((c) => {
                             if (c) {
                                 if (!processedChannels.includes(c._id))
-                                return <ChannelButton key={c._id} channel={c} onClick={()=>{props.onChannelClick(c)}} selected={props.currentChannel?._id == c._id} />
+                                return <ChannelButton 
+                                key={c._id} channel={c} 
+                                onClick={()=>{props.onChannelClick(c)}} 
+                                selected={props.currentChannel?._id == c._id} />
                             }
                         })}
                         {res}
@@ -541,4 +535,31 @@ export function pushUnread(c, unread = null, mention = false) {
             if (!unreads[c]) unreads[c] = {mentions: 0};
         }
     }
+}
+
+
+export function Button({children, backgroundColor, onPress, onLongPress, delayLongPress, style, ...props}) {
+    return (
+        <TouchableOpacity onPress={onPress} 
+        onLongPress={onLongPress} 
+        delayLongPress={delayLongPress} 
+        style={[styles.button, backgroundColor ? {backgroundColor} : {}, style]} 
+        {...props}>
+            {children}
+        </TouchableOpacity>
+    )
+}
+
+
+
+export function ContextButton({children, backgroundColor, onPress, onLongPress, delayLongPress, style, ...props}) {
+    return (
+        <TouchableOpacity onPress={onPress} 
+        onLongPress={onLongPress} 
+        delayLongPress={delayLongPress} 
+        style={[styles.actionTile, backgroundColor ? {backgroundColor} : {}, style]} 
+        {...props}>
+            {children}
+        </TouchableOpacity>
+    )
 }

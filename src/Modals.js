@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, Pressable, Modal, ScrollView, Dimensions, TextInput } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import React from 'react';
-import { client, Text, MarkdownView, app, parseRevoltNodes, GeneralAvatar, ServerName, ServerList, openUrl, setFunction } from './Generic';
+import { client, Text, MarkdownView, app, parseRevoltNodes, GeneralAvatar, ServerName, ServerList, openUrl, setFunction, ContextButton, Button } from './Generic';
 import { styles, currentTheme, themes, setTheme, currentThemeName } from './Theme';
 import { ReplyMessage } from './MessageView';
 import { Avatar, Username, MiniProfile, RoleView } from './Profile';
@@ -70,17 +70,15 @@ export class Modals extends React.Component {
                 <View style={{width: "100%", height: "45%", top: "55%", backgroundColor: currentTheme.backgroundSecondary}}>
                     <ReplyMessage message={this.state.contextMenuMessage} style={{margin: 3, width: "100%"}} />
                     <ScrollView style={{flex: 1, padding: 3}}>
-                        <TouchableOpacity
-                            style={styles.actionTile}
+                        <ContextButton
                             onPress={() => this.setState({contextMenuMessage: null})}
                         >
                             <View style={styles.iconContainer}>
                                 <AntIcon name="closecircle" size={16} color={currentTheme.textPrimary} />
                             </View>
                             <Text>Close</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.actionTile}
+                        </ContextButton>
+                        <ContextButton
                             onPress={() => {
                                 let replyingMessages = [...app.getReplyingMessages()]
                                 if (replyingMessages.filter(m => m.message._id === this.state.contextMenuMessage._id).length > 0) return
@@ -99,9 +97,8 @@ export class Modals extends React.Component {
                                 <MaterialIcon name="reply" size={20} color={currentTheme.textPrimary} />
                             </View>
                             <Text>Reply</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.actionTile}
+                        </ContextButton>
+                        <ContextButton
                             onPress={() => {
                                 Clipboard.setString(this.state.contextMenuMessage.content);
                             }}
@@ -110,10 +107,9 @@ export class Modals extends React.Component {
                                 <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
                             </View>
                             <Text>Copy content</Text>
-                        </TouchableOpacity>
+                        </ContextButton>
                         {app.settings.get("Show developer tools") ?
-                        <TouchableOpacity
-                            style={styles.actionTile}
+                        <ContextButton
                             onPress={() => {
                                 Clipboard.setString(this.state.contextMenuMessage._id);
                             }}
@@ -122,11 +118,10 @@ export class Modals extends React.Component {
                                 <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
                             </View>
                             <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuMessage?._id})</Text></Text>
-                        </TouchableOpacity>
+                        </ContextButton>
                         : null}
                         {this.state.contextMenuMessage?.channel.permission & ChannelPermission.ManageMessages || this.state.contextMenuMessage?.author.relationship == RelationshipStatus.User ? (
-                            <TouchableOpacity
-                                style={styles.actionTile}
+                            <ContextButton
                                 onPress={() => {
                                     this.state.contextMenuMessage.delete()
                                     this.setState({contextMenuMessage: null})
@@ -136,11 +131,10 @@ export class Modals extends React.Component {
                                     <FA5Icon name="trash" size={18} color={currentTheme.textPrimary} />
                                 </View>
                                 <Text>Delete</Text>
-                            </TouchableOpacity>
+                            </ContextButton>
                         ) : null}
                         {this.state.contextMenuMessage?.author.relationship == RelationshipStatus.User ? (
-                            <TouchableOpacity
-                                style={styles.actionTile}
+                            <ContextButton
                                 onPress={() => {
                                     app.setMessageBoxInput(this.state.contextMenuMessage?.content)
                                     app.setEditingMessage(this.state.contextMenuMessage)
@@ -152,7 +146,7 @@ export class Modals extends React.Component {
                                     <FA5Icon name="edit" size={18} color={currentTheme.textPrimary} />
                                 </View>
                                 <Text>Edit</Text>
-                            </TouchableOpacity>
+                            </ContextButton>
                         ) : null}
                         <View style={{marginTop: 7}} />
                     </ScrollView>
@@ -224,63 +218,63 @@ export class Modals extends React.Component {
                             {this.state.contextMenuUser?.relationship != RelationshipStatus.User ? 
                                 !this.state.contextMenuUser?.bot ? 
                                 (this.state.contextMenuUser?.relationship == RelationshipStatus.Friend ? 
-                                    <TouchableOpacity style={styles.actionTile} onPress={async () => {app.openProfile(null); this.setState({currentChannel: (await this.state.contextMenuUser.openDM()), messages: []})}}>
+                                    <ContextButton onPress={async () => {app.openProfile(null); this.setState({currentChannel: (await this.state.contextMenuUser.openDM()), messages: []})}}>
                                         <View style={styles.iconContainer}>
                                             <MaterialIcon name="message" size={20} color={currentTheme.textPrimary} />
                                         </View>
                                         <Text>Message</Text>
-                                    </TouchableOpacity> 
+                                    </ContextButton> 
                                     :
                                     this.state.contextMenuUser?.relationship == RelationshipStatus.Incoming ? 
                                     <>
-                                    <TouchableOpacity style={styles.actionTile} onPress={() => {this.state.contextMenuUser?.addFriend(); this.setState({})}}>
+                                    <ContextButton onPress={() => {this.state.contextMenuUser?.addFriend(); this.setState({})}}>
                                         <View style={styles.iconContainer}>
                                             <FA5Icon name="user-plus" size={16} color={currentTheme.textPrimary} />
                                         </View>
                                         <Text>Accept Friend</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.actionTile} onPress={() => {this.state.contextMenuUser?.removeFriend(); this.setState({})}}>
+                                    </ContextButton>
+                                    <ContextButton onPress={() => {this.state.contextMenuUser?.removeFriend(); this.setState({})}}>
                                         <View style={styles.iconContainer}>
                                             <FA5Icon name="user-times" size={16} color={currentTheme.textPrimary} />
                                         </View>
                                         <Text>Reject Friend</Text>
-                                    </TouchableOpacity>
+                                    </ContextButton>
                                     </>
                                     :
                                     this.state.contextMenuUser?.relationship == RelationshipStatus.Outgoing ? 
-                                    <TouchableOpacity style={styles.actionTile} onPress={() => {this.state.contextMenuUser?.removeFriend(); this.setState({})}}>
+                                    <ContextButton onPress={() => {this.state.contextMenuUser?.removeFriend(); this.setState({})}}>
                                         <Text>Cancel Friend</Text>
-                                    </TouchableOpacity>
+                                    </ContextButton>
                                     :
-                                    <TouchableOpacity style={styles.actionTile} onPress={() => {this.state.contextMenuUser?.addFriend(); this.setState({})}}>
+                                    <ContextButton onPress={() => {this.state.contextMenuUser?.addFriend(); this.setState({})}}>
                                         <Text>Add Friend</Text>
-                                    </TouchableOpacity>
+                                    </ContextButton>
                                 ) 
                                 :
                                 <>
                                     <Text style={{fontWeight: 'bold'}}>BOT OWNER</Text>
                                     {client.users.get(this.state.contextMenuUser?.bot?.owner) ? 
-                                    <TouchableOpacity style={styles.actionTile} onPress={async () => {app.openProfile(client.users.get(this.state.contextMenuUser.bot.owner))}}>
+                                    <ContextButton onPress={async () => {app.openProfile(client.users.get(this.state.contextMenuUser.bot.owner))}}>
                                         <MiniProfile user={client.users.get(this.state.contextMenuUser.bot.owner)} />
-                                    </TouchableOpacity>
+                                    </ContextButton>
                                     :
                                     <Text style={{color: currentTheme.textSecondary}}>Unloaded user</Text>}
                                 </>
                                 : 
                                 <>
                                 <View style={{flexDirection: 'row'}}>
-                                    {["Online", "Idle", "Busy", "Invisible"].map((s) => <TouchableOpacity key={s} style={[styles.actionTile, {flex: 1, alignItems: 'center', justifyContent: 'center', marginRight: 3}]} onPress={() => {client.users.edit({status: {...client.user.status, presence: s}})}}><View style={{backgroundColor: currentTheme["status" + s], height: 16, width: 16, borderRadius: 10000}} /></TouchableOpacity>)}
+                                    {["Online", "Idle", "Busy", "Invisible"].map((s) => <ContextButton key={s} style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginRight: 3}} onPress={() => {client.users.edit({status: {...client.user.status, presence: s}})}}><View style={{backgroundColor: currentTheme["status" + s], height: 16, width: 16, borderRadius: 10000}} /></ContextButton>)}
                                 </View>
                                 {/* <TextInput onChangeText={(v) => this.setState({userStatusInput: v})} value={this.state.userStatusInput || client.user.status.text || ""} onSubmitEditing={() => client.users.edit({...client.user.status, text: this.state.userStatusInput})} /> */}
                                 </>
                             }
                             {app.settings.get("Show developer tools") ?
-                            <TouchableOpacity key={"Copy ID"} style={styles.actionTile} onPress={() => {Clipboard.setString(this.state.contextMenuUser._id)}}>
+                            <ContextButton key={"Copy ID"} onPress={() => {Clipboard.setString(this.state.contextMenuUser._id)}}>
                                 <View style={styles.iconContainer}>
                                     <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
                                 </View>
                                 <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuUser?._id})</Text></Text>
-                            </TouchableOpacity>
+                            </ContextButton>
                             : null}
                             <RoleView user={this.state.contextMenuUser} server={this.state.contextMenuUserServer}/>
                             <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>BIO</Text>
@@ -333,7 +327,7 @@ export class Modals extends React.Component {
                                 </View>
                             }
                         })}
-                        <TouchableOpacity style={{marginTop: 10, marginBottom: 10, backgroundColor: currentTheme.accentColor, borderRadius: 8, padding: 8, alignItems: 'center', justifyContent: 'center'}} onPress={() => {app.settings.clear(); rerender()}}><Text style={{color: currentTheme.accentColorForeground}}>Reset Settings</Text></TouchableOpacity>
+                        <ContextButton backgroundColor={currentTheme.accentColor} style={{justifyContent: 'center', marginTop: 10}} onPress={() => {app.settings.clear(); rerender()}}><Text style={{color: currentTheme.accentColorForeground}}>Reset Settings</Text></ContextButton>
                     </ScrollView>
                 </View>
             </Modal>
@@ -347,12 +341,12 @@ export class Modals extends React.Component {
                     </View>
                     <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 10}}>
                         {app.settings.get("Show developer tools") ?
-                        <TouchableOpacity key={"Copy ID"} style={styles.actionTile} onPress={() => {Clipboard.setString(this.state.contextMenuServer._id)}}>
+                        <ContextButton key={"Copy ID"} onPress={() => {Clipboard.setString(this.state.contextMenuServer._id)}}>
                             <View style={styles.iconContainer}>
                                 <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
                             </View>
                             <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuServer?._id})</Text></Text>
-                        </TouchableOpacity>
+                        </ContextButton>
                         : null}
                     </View>
                 </View>
@@ -371,7 +365,20 @@ export class Modals extends React.Component {
                                         <View style={{marginLeft: 10}} />
                                         <ServerName server={this.state.inviteServer} size={26} />
                                     </View>
-                                    <TouchableOpacity onPress={async () => {!client.servers.get(this.state.inviteServer?.server_id) && await client.joinInvite(this.state.inviteServerCode); app.openServer(client.servers.get(this.state.inviteServer?.server_id)); app.openLeftMenu(true); this.setState({inviteServer: null, inviteServerCode: null})}} style={styles.button}><Text>{client.servers.get(this.state.inviteServer?.server_id) ? "Go to Server" : "Join Server"}</Text></TouchableOpacity>
+                                    <Button onPress={async () => {
+                                        !client.servers.get(this.state.inviteServer?.server_id) && 
+                                        await client.joinInvite(this.state.inviteServerCode); 
+                                        app.openServer(client.servers.get(this.state.inviteServer?.server_id)); 
+                                        app.openLeftMenu(true); 
+                                        this.setState({inviteServer: null, inviteServerCode: null})
+                                    }}>
+                                        <Text>{
+                                        client.servers.get(this.state.inviteServer?.server_id) ? 
+                                        "Go to Server" 
+                                        : 
+                                        "Join Server"
+                                        }</Text>
+                                    </Button>
                                 </View>
                             </View>
                         </>
@@ -393,7 +400,7 @@ export class Modals extends React.Component {
                                 <ServerList onServerPress={s => this.setState({inviteBotDestination: s})} />
                             </ScrollView>
                         </View>
-                        <TouchableOpacity style={styles.button} onPress={() => {if (!this.state.inviteBotDestination) {return}; client.bots.invite(this.state.inviteBot._id, {server: this.state.inviteBotDestination._id}); this.setState({inviteBot: null, inviteBotDestination: null})}}><Text>Invite to {this.state.inviteBotDestination ? <Text style={{fontWeight: 'bold'}}>{this.state.inviteBotDestination?.name}</Text> : "which server?"}</Text></TouchableOpacity>
+                        <Button onPress={() => {if (!this.state.inviteBotDestination) {return}; client.bots.invite(this.state.inviteBot._id, {server: this.state.inviteBotDestination._id}); this.setState({inviteBot: null, inviteBotDestination: null})}}><Text>Invite to {this.state.inviteBotDestination ? <Text style={{fontWeight: 'bold'}}>{this.state.inviteBotDestination?.name}</Text> : "which server?"}</Text></Button>
                     </View>
                 </View>
                 : null}

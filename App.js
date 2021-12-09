@@ -7,7 +7,7 @@ import { RelationshipStatus } from "revolt-api/types/Users";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import { currentTheme, styles } from './src/Theme'
-import { Text, client, app, selectedRemark, randomizeRemark } from './src/Generic'
+import { Text, client, app, selectedRemark, randomizeRemark, Button } from './src/Generic'
 import { Messages, ReplyMessage } from './src/MessageView'
 import { MessageBox } from './src/MessageBox';
 import { MiniProfile, Avatar, Username } from './src/Profile'
@@ -57,6 +57,7 @@ class MainView extends React.Component {
         };
         console.log("construct app");
         setFunction("openChannel", async (c) => {
+            // if (!this.state.currentChannel || this.state.currentChannel?.server?._id != c.server?._id) c.server?.fetchMembers()
             this.setState({currentChannel: c})
         })
         setFunction("openLeftMenu", async (o) => {
@@ -69,6 +70,9 @@ class MainView extends React.Component {
     componentDidUpdate(_, prevState) {
         if (prevState.status != this.state.status && this.state.status == "tryingLogin")
         randomizeRemark();
+        if (prevState.rightMenuOpen != this.state.rightMenuOpen && this.state.rightMenuOpen && this.state.currentChannel?.server) {
+            this.state.currentChannel.server?.fetchMembers();
+        }
     }
     async componentDidMount() {
         console.log("mount app")
@@ -162,44 +166,42 @@ class MainView extends React.Component {
                                 {this.state.currentChannel ? 
                                     (this.state.currentChannel == "friends" ?
                                     <View style={{flex: 1}}>
-                                        <View style={styles.channelHeader}>
-                                            <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><View style={styles.iconContainer}><MaterialIcon name="menu" size={20} color={currentTheme.textPrimary} /></View></TouchableOpacity>
+                                        <ChannelHeader>
                                             <View style={styles.iconContainer}>
                                                 <FA5Icon name="users" size={16} color={currentTheme.textPrimary} />
                                             </View>
                                             <Text style={{flex: 1}}>Friends</Text>
-                                        </View>
+                                        </ChannelHeader>
                                         <ScrollView style={{flex: 1}}>
                                             <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10, marginTop: 10}}>INCOMING REQUESTS</Text>
                                             <View>
                                                 {[...client.users.values()].filter((x) => x.relationship === RelationshipStatus.Incoming).map(f => {
-                                                    return <TouchableOpacity key={f._id} onPress={() => app.openProfile(f)} style={{justifyContent: 'center', margin: 6, padding: 6, backgroundColor: currentTheme.backgroundSecondary, borderRadius: 8}}>
+                                                    return <Button key={f._id} onPress={() => app.openProfile(f)}>
                                                         <MiniProfile user={f} scale={1.15} />
-                                                    </TouchableOpacity>
+                                                    </Button>
                                                 })}
                                             </View>
                                             <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10, marginTop: 10}}>OUTGOING REQUESTS</Text>
                                             <View>
                                                 {[...client.users.values()].filter((x) => x.relationship === RelationshipStatus.Outgoing).map(f => {
-                                                    return <TouchableOpacity key={f._id} onPress={() => app.openProfile(f)} style={{justifyContent: 'center', margin: 6, padding: 6, backgroundColor: currentTheme.backgroundSecondary, borderRadius: 8}}>
+                                                    return <Button key={f._id} onPress={() => app.openProfile(f)}>
                                                         <MiniProfile user={f} scale={1.15} />
-                                                    </TouchableOpacity>
+                                                    </Button>
                                                 })}
                                             </View>
                                             <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10}}>FRIENDS</Text>
                                             <View>
                                                 {[...client.users.values()].filter((x) => x.relationship === RelationshipStatus.Friend).map(f => {
-                                                    return <TouchableOpacity key={f._id} onPress={() => app.openProfile(f)} style={{flexDirection: "row", alignItems: 'center', margin: 8, padding: 4, backgroundColor: currentTheme.backgroundSecondary, borderRadius: 8}}>
+                                                    return <Button key={f._id} onPress={() => app.openProfile(f)}>
                                                         <MiniProfile user={f} scale={1.15} />
-                                                    </TouchableOpacity>
+                                                    </Button>
                                                 })}
                                             </View>
                                         </ScrollView>
                                     </View>
                                     :
                                     <View style={{flex: 1}}>
-                                        <View style={styles.channelHeader}>
-                                            <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><View style={styles.iconContainer}><MaterialIcon name="menu" size={20} color={currentTheme.textPrimary} /></View></TouchableOpacity>
+                                        <ChannelHeader>
                                             <View style={styles.iconContainer}>
                                                 {this.state.currentChannel.channel_type == "DirectMessage" ? 
                                                 <FontistoIcon name="at" size={16} color={currentTheme.textPrimary}/>
@@ -223,7 +225,7 @@ class MainView extends React.Component {
                                                 "Saved Messages" :
                                                 this.state.currentChannel.name
                                             }</Text>
-                                        </View>
+                                        </ChannelHeader>
                                         {this.state.currentChannel?.channel_type == "VoiceChannel" ?
                                         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', padding: 30}}>
                                             <Text style={{fontSize: 20, textAlign: 'center'}}>Voice channels aren't supported in RVMob yet!</Text>
@@ -239,20 +241,19 @@ class MainView extends React.Component {
                                         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', padding: 25}}>
                                             <Text style={{fontWeight: 'bold', fontSize: 28}}>Hold it!</Text>
                                             <Text style={{textAlign: 'center', fontSize: 16}}>This is an NSFW channel. Are you sure you want to enter?{'\n'}(This can be reversed in Settings)</Text>
-                                            <TouchableOpacity style={styles.button} onPress={() => {app.settings.set("Consented to 18+ content", true); this.setState({})}}><Text style={{fontSize: 16}}>I am 18 or older and wish to enter</Text></TouchableOpacity>
+                                            <Button onPress={() => {app.settings.set("Consented to 18+ content", true); this.setState({})}}><Text style={{fontSize: 16}}>I am 18 or older and wish to enter</Text></Button>
                                         </View>
                                         }
                                     </View>
                                     )
                                     :
                                     <>
-                                        <View style={styles.channelHeader}>
-                                            <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><View style={styles.iconContainer}><MaterialIcon name="menu" size={20} color={currentTheme.textPrimary} /></View></TouchableOpacity>
+                                        <ChannelHeader>
                                             <View style={styles.iconContainer}>
                                                 <FA5Icon name="house-user" size={16} color={currentTheme.textPrimary} />
                                             </View>
                                             <Text style={{flex: 1}}>Home</Text>
-                                        </View>
+                                        </ChannelHeader>
                                         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20}}>
                                             <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}} onPress={() => app.openProfile(client.user)}>
                                                 <Avatar size={40} user={client.user} status />
@@ -261,15 +262,15 @@ class MainView extends React.Component {
                                             </TouchableOpacity>
                                             <Text key="app-name" style={{fontWeight: 'bold', fontSize: 48}}>RVMob</Text>
                                             <Text key="no-channel-selected" style={{textAlign: 'center', marginBottom: 10}}>Swipe from the left of the screen, or press the three lines icon to open the server selector!</Text>
-                                            <TouchableOpacity style={styles.button} onPress={() => app.openSettings(true)}>
+                                            <Button onPress={() => app.openSettings(true)}>
                                                 <Text style={{fontSize: 16}}>Settings</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={styles.button} onPress={() => app.openInvite("Testers")}>
+                                            </Button>
+                                            <Button onPress={() => app.openInvite("Testers")}>
                                                 <Text style={{fontSize: 16}}>Join Revolt Testers</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={styles.button} onPress={() => app.openInvite("ZFGGw6ry")}>
+                                            </Button>
+                                            <Button onPress={() => app.openInvite("ZFGGw6ry")}>
                                                 <Text style={{fontSize: 16}}>Join RVMob</Text>
-                                            </TouchableOpacity>
+                                            </Button>
                                         </View>
                                     </>
                                 }
@@ -316,7 +317,7 @@ class MainView extends React.Component {
                             this.setState({tokenInput: text})
                         }} value={this.state.tokenInput} />
                         {this.state.logInError ? <Text>{this.state.logInError.message}</Text> : null}
-                        <TouchableOpacity onPress={async () => {
+                        <Button onPress={async () => {
                                 this.setState({status: "tryingLogin"})
                             try {
                                 await client.useExistingSession({token: this.state.tokenInput})
@@ -325,7 +326,7 @@ class MainView extends React.Component {
                                 console.error(e)
                                 this.setState({logInError: e, status: "awaitingLogin"})
                             }
-                        }} style={{borderRadius: 8, padding: 5, paddingLeft: 10, paddingRight: 10, backgroundColor: currentTheme.backgroundSecondary}}><Text>Log in</Text></TouchableOpacity>
+                        }}><Text>Log in</Text></Button>
                     </View>
                 </View>
                 :
@@ -339,6 +340,13 @@ class MainView extends React.Component {
             )
         );
     }
+}
+
+export const ChannelHeader = ({children}) => {
+    return <View style={styles.channelHeader}>
+        <TouchableOpacity style={styles.headerIcon} onPress={() => {this.setState({leftMenuOpen: !this.state.leftMenuOpen})}}><View style={styles.iconContainer}><MaterialIcon name="menu" size={20} color={currentTheme.textPrimary} /></View></TouchableOpacity>
+        {children}
+    </View>
 }
 
 export const NetworkIndicator = observer(({client}) => {
