@@ -285,7 +285,18 @@ export class Modals extends React.Component {
                 </View>
             </Modal>
             <Modal visible={!!this.state.imageViewerImage} transparent={true} animationType="fade">
-                <ImageViewer imageUrls={this.state.imageViewerImage?.metadata ? [{url: client.generateFileURL(this.state.imageViewerImage), width: this.state.imageViewerImage.metadata.width, height: this.state.imageViewerImage.metadata.height}] : [{url: this.state.imageViewerImage}]} renderHeader={() => <View style={{height: 50, width: "100%", justifyContent: 'center', paddingLeft: 10, paddingRight: 10}}><Pressable onPress={() => openUrl(this.state.imageViewerImage?.metadata ? client.generateFileURL(this.state.imageViewerImage) : this.state.imageViewerImage)}><Text>Open URL</Text></Pressable><View style={{marginLeft: 20}}/><Pressable onPress={() => this.setState({imageViewerImage: null})}><Text>Close</Text></Pressable></View>} renderIndicator={(_1, _2) => null} enableSwipeDown={true} onCancel={() => this.setState({imageViewerImage: null})}/>
+                <ImageViewer 
+                imageUrls={this.state.imageViewerImage?.metadata ? 
+                    [{
+                        url: client.generateFileURL(this.state.imageViewerImage), 
+                        width: this.state.imageViewerImage.metadata.width, 
+                        height: this.state.imageViewerImage.metadata.height
+                    }] 
+                    : 
+                    [{url: this.state.imageViewerImage}]
+                } 
+                renderHeader={() => 
+                    <View style={{height: 50, width: "100%", justifyContent: 'center', paddingLeft: 10, paddingRight: 10, flexDirection: 'row'}}><Button onPress={() => openUrl(this.state.imageViewerImage?.metadata ? client.generateFileURL(this.state.imageViewerImage) : this.state.imageViewerImage)}><Text>Open URL</Text></Button><View style={{marginLeft: 20}}/><Button onPress={() => this.setState({imageViewerImage: null})}><Text>Close</Text></Button></View>} renderIndicator={(_1, _2) => null} enableSwipeDown={true} onCancel={() => this.setState({imageViewerImage: null})}/>
             </Modal>
             <Modal visible={this.state.settingsOpen} transparent={true} animationType="slide">
                 <View style={{flex: 1, backgroundColor: currentTheme.backgroundPrimary, padding: 15, borderTopLeftRadius: 15, borderTopRightRadius: 15}}>
