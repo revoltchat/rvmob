@@ -1,9 +1,9 @@
 import Markdown, { hasParents, MarkdownIt } from 'react-native-markdown-display';
-import ReactNative, { View, TouchableOpacity, Linking } from 'react-native';
+import ReactNative, { View, TouchableOpacity, Linking, TextInput } from 'react-native';
 import { Client } from 'revolt.js';
 import { currentTheme, setTheme, themes, styles } from './Theme';
 import { MiniProfile } from './Profile';
-import React from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -565,3 +565,32 @@ export function ContextButton({children, backgroundColor, onPress, onLongPress, 
         </TouchableOpacity>
     )
 }
+
+
+export function Input({value, onChangeText, placeholder, style, backgroundColor, ...props}) {
+    return (
+        <TextInput 
+        value={value} 
+        onChangeText={onChangeText} 
+        placeholder={placeholder} 
+        style={[{minWidth: "100%", borderRadius: 8, backgroundColor: currentTheme.backgroundSecondary, padding: 6, paddingLeft: 10, paddingRight: 10, color: currentTheme.textPrimary}, backgroundColor ? {backgroundColor} : {}, style]}
+        {...props} />
+    )
+}
+
+export function InputWithButton({defaultValue, placeholder, buttonLabel, style, backgroundColor, onPress, ...props}) {
+    let [value, setValue] = useState(defaultValue);
+    return ( //style.input and style.button are applied to the input and button respectively
+        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minWidth: "100%"}}>
+            <TextInput
+            value={value}
+            onChangeText={(v) => {setValue(v)}}
+            placeholder={placeholder}
+            style={{flex: 1, borderRadius: 8, backgroundColor: backgroundColor || currentTheme.backgroundSecondary, padding: 6, paddingLeft: 10, paddingRight: 10, color: currentTheme.textPrimary}}
+            {...props} />
+            <Button onPress={() => {onPress(value)}} style={[styles.button, backgroundColor ? {backgroundColor} : {}]}>
+                <Text style={{color: currentTheme.textPrimary}}>{buttonLabel}</Text>
+            </Button>
+        </View>
+    )
+}   

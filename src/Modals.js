@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, Pressable, Modal, ScrollView, Dimensions, TextInput } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import React from 'react';
-import { client, Text, MarkdownView, app, parseRevoltNodes, GeneralAvatar, ServerName, ServerList, openUrl, setFunction, ContextButton, Button } from './Generic';
+import { client, Text, MarkdownView, app, parseRevoltNodes, GeneralAvatar, ServerName, ServerList, openUrl, setFunction, ContextButton, Button, InputWithButton } from './Generic';
 import { styles, currentTheme, themes, setTheme, currentThemeName } from './Theme';
 import { ReplyMessage } from './MessageView';
 import { Avatar, Username, MiniProfile, RoleView } from './Profile';
@@ -290,7 +290,14 @@ export class Modals extends React.Component {
                                     <View style={{flexDirection: 'row'}}>
                                         {["Online", "Idle", "Busy", "Invisible"].map((s) => <ContextButton key={s} style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginRight: 3}} onPress={() => {client.users.edit({status: {...client.user.status, presence: s}})}}><View style={{backgroundColor: currentTheme["status" + s], height: 16, width: 16, borderRadius: 10000}} /></ContextButton>)}
                                     </View>
-                                    {/* <TextInput onChangeText={(v) => this.setState({userStatusInput: v})} value={this.state.userStatusInput || client.user.status.text || ""} onSubmitEditing={() => client.users.edit({...client.user.status, text: this.state.userStatusInput})} /> */}
+                                    <InputWithButton
+                                        placeholder="Custom status"
+                                        defaultValue={client.user.status.text}
+                                        onPress={(v) => {client.users.edit({status: {...client.user.status, text: v ? v : undefined}})}}
+                                        buttonLabel="Set"
+                                        backgroundColor={currentTheme.backgroundPrimary}
+                                    />
+                                    <View style={{marginBottom: -6}} />
                                     </>
                                 }
                                 {app.settings.get("Show developer tools") ?
