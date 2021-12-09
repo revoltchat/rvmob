@@ -165,7 +165,7 @@ export class Modals extends React.Component {
                 <View style={{width: "100%", height: Dimensions.get("window").height * 0.75, top: "25%", padding: 15, backgroundColor: currentTheme.backgroundSecondary}}>
                     <View>
                         <View style={{flexDirection: 'row'}}>
-                            <Pressable onPress={() => app.openImage(this.state.contextMenuUser?.avatar)}><Avatar size={100} user={this.state.contextMenuUser} server={this.state.contextMenuUserServer} backgroundColor={currentTheme.backgroundSecondary} status /></Pressable>
+                            <Avatar size={100} user={this.state.contextMenuUser} server={this.state.contextMenuUserServer} backgroundColor={currentTheme.backgroundSecondary} status pressable />
                             <View style={{justifyContent: 'center', marginLeft: 6}}>
                                 <Username user={this.state.contextMenuUser} server={this.state.contextMenuUserServer} size={24} />
                                 <View key={1} style={{flexDirection: 'row'}}>

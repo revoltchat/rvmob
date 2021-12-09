@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Text, client, defaultMaxSide, app } from './Generic';
 import { currentTheme, styles } from './Theme';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 const Image = FastImage;
 
@@ -43,16 +43,17 @@ export const Username = observer(({ server, user, noBadge, size, masquerade }) =
         </View>
     )
 })
-export const Avatar = observer(({ channel, user, server, status, size, backgroundColor, masquerade }) => {
+export const Avatar = observer(({ channel, user, server, status, size, backgroundColor, masquerade, pressable }) => {
     let memberObject = client.members.getKey({server: server?._id, user: user?._id});
     let statusColor
     let statusScale = 2.7
     if (status) {
         statusColor = currentTheme["status" + (user.online ? (user.status?.presence || "Online") : "Offline")]
     }
+    let Container = pressable ? ({children}) => <Pressable onPress={() => app.openImage(memberObject?.avatar || user.avatar)}>{children}</Pressable> : View;
     if (user)
     return ( 
-        <View>
+        <Container>
             <Image source={{uri: (
                 masquerade ? masquerade
                 :
@@ -66,7 +67,7 @@ export const Avatar = observer(({ channel, user, server, status, size, backgroun
                 memberObject?.generateAvatarURL() : 
                 user?.generateAvatarURL()
             }}/> : null}
-        </View>
+        </Container>
     )
     if (channel)
     return (
