@@ -311,7 +311,7 @@ export class Modals extends React.Component {
                                 <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>MUTUAL SERVERS</Text>
                                 {this.state.contextMenuUserMutual.servers.map((s) => {
                                     s = client.servers.get(s);
-                                    return <ContextButton key={s._id} onPress={() => {app.openServer(s); app.openProfile(null)}}>
+                                    return <ContextButton key={s._id} onPress={() => {app.openServer(s); app.openProfile(null); app.openLeftMenu(true)}}>
                                         <GeneralAvatar attachment={s.icon} size={32} />
                                         <Text>{s.name}</Text>
                                     </ContextButton>
