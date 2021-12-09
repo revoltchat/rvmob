@@ -358,7 +358,7 @@ export const ServerList = observer(({ onServerPress, onServerLongPress, showUnre
     })
 })
 
-export const ChannelButton = observer(({channel, onPress, onLongPress, delayLongPress, selected}) => {
+export const ChannelButton = observer(({channel, onPress=()=>{}, onLongPress=()=>{}, delayLongPress, selected}) => {
     return <TouchableOpacity 
     onPress={()=>onPress()} 
     onLongPress={()=>onLongPress()}
@@ -446,7 +446,7 @@ export const ChannelList = observer((props) => {
                                 if (c) {
                                     return <ChannelButton 
                                     key={c._id} channel={c} 
-                                    onClick={()=>{props.onChannelClick(c)}} 
+                                    onPress={()=>{props.onChannelClick(c)}} 
                                     selected={props.currentChannel?._id == c._id} />
                                 }
                             })}
@@ -458,7 +458,7 @@ export const ChannelList = observer((props) => {
                                 if (!processedChannels.includes(c._id))
                                 return <ChannelButton 
                                 key={c._id} channel={c} 
-                                onClick={()=>{props.onChannelClick(c)}} 
+                                onPress={()=>{props.onChannelClick(c)}} 
                                 selected={props.currentChannel?._id == c._id} />
                             }
                         })}
