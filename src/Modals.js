@@ -24,6 +24,8 @@ export class Modals extends React.Component {
             contextMenuUser: null,
             contextMenuUserProfile: null,
             contextMenuUserServer: null,
+            contextMenuUserMutual: null,
+            contextMenuUserSection: "Profile",
             imageViewerImage: null,
             settingsOpen: false,
             contextMenuServer: null,
@@ -32,7 +34,7 @@ export class Modals extends React.Component {
             inviteBot: null
         }
         setFunction("openProfile", async (u, s) => {
-            this.setState({contextMenuUser: u || null, contextMenuUserProfile: u ? (await u.fetchProfile()) : null, contextMenuUserServer: s || null})
+            this.setState({contextMenuUser: u || null, contextMenuUserProfile: u ? (await u.fetchProfile()) : null, contextMenuUserMutual: u ? (await u.fetchMutual()) : null, contextMenuUserServer: s || null, contextMenuUserSection: "Profile"});
         })
         setFunction("openInvite", async (i) => {
             this.setState({inviteServer: (await client.fetchInvite(i).catch(e => e)), inviteServerCode: i})
@@ -190,23 +192,24 @@ export class Modals extends React.Component {
                             {this.state.contextMenuUser?.badges ? <>
                                 {Object.keys(Badges).map(b => {
                                     if (this.state.contextMenuUser.badges & Badges[b]) {
+                                        let Badge = ({children, color}) => <Text style={{color, marginLeft: 8}}>{children}</Text>;
                                         switch (b) {
                                             case "Founder":
-                                                return <Text style={{color: 'red', marginLeft: 8}}>Revolt Founder</Text> 
+                                                return <Badge color={'red'}>Revolt Founder</Badge> 
                                             case "Developer":
-                                                return <Text style={{color: 'orange', marginLeft: 8}}>Revolt Developer</Text>
+                                                return <Badge color={'orange'}>Revolt Developer</Badge>
                                             case "Translator":
-                                                return <Text style={{color: 'green', marginLeft: 8}}>Revolt Translator</Text>
+                                                return <Badge color={'green'}>Revolt Translator</Badge>
                                             case "Supporter":
-                                                return <Text style={{color: 'yellow', marginLeft: 8}}>Revolt Supporter</Text>
+                                                return <Badge color={'yellow'}>Revolt Supporter</Badge>
                                             case "ResponsibleDisclosure":
-                                                return <Text style={{color: 'purple', marginLeft: 8}}>Bug Catcher</Text>
+                                                return <Badge color={'purple'}>Bug Catcher</Badge>
                                             case "EarlyAdopter":
-                                                return <Text style={{color: 'cyan', marginLeft: 8}}>Early Adopter</Text>
+                                                return <Badge color={'cyan'}>Early Adopter</Badge>
                                             case "PlatformModeration":
-                                                return <Text style={{color: 'darkcyan', marginLeft: 8}}>Platform Moderation</Text>
+                                                return <Badge color={'darkcyan'}>Platform Moderation</Badge>
                                             default:
-                                                return <Text style={{color: currentTheme.textSecondary, marginLeft: 8}}>[{b}]</Text>
+                                                return <Badge color={currentTheme.textSecondary}>[{b}]</Badge>
                                         }
                                     }
                                 })}
@@ -214,73 +217,119 @@ export class Modals extends React.Component {
                             {this.state.contextMenuUser?._id == "01FC1HP5H22F0M34MFFM9DZ099" ? 
                             <Text style={{color: currentTheme.accentColor, marginLeft: 8}}>RVMob Author (hi there!)</Text> : null}
                         </View>
-                        <ScrollView>
-                            {this.state.contextMenuUser?.relationship != RelationshipStatus.User ? 
-                                !this.state.contextMenuUser?.bot ? 
-                                (this.state.contextMenuUser?.relationship == RelationshipStatus.Friend ? 
-                                    <ContextButton onPress={async () => {app.openProfile(null); this.setState({currentChannel: (await this.state.contextMenuUser.openDM()), messages: []})}}>
-                                        <View style={styles.iconContainer}>
-                                            <MaterialIcon name="message" size={20} color={currentTheme.textPrimary} />
-                                        </View>
-                                        <Text>Message</Text>
-                                    </ContextButton> 
-                                    :
-                                    this.state.contextMenuUser?.relationship == RelationshipStatus.Incoming ? 
+                        {this.state.contextMenuUser?.relationship != RelationshipStatus.User ? 
+                            <View style={{flexDirection: 'row'}}>
+                                <Button backgroundColor={currentTheme.backgroundPrimary} 
+                                style={{padding: 5, paddingLeft: 8, paddingRight: 8, margin: 3, flex: 1}}
+                                onPress={() => this.setState({contextMenuUserSection: "Profile"})}>
+                                    <Text>Profile</Text>
+                                </Button>
+                                <Button backgroundColor={currentTheme.backgroundPrimary} 
+                                style={{padding: 5, paddingLeft: 8, paddingRight: 8, margin: 3, flex: 1}}
+                                onPress={() => this.setState({contextMenuUserSection: "Mutual Servers"})}>
+                                    <Text>Mut. Servers</Text>
+                                </Button>
+                                <Button backgroundColor={currentTheme.backgroundPrimary} 
+                                style={{padding: 5, paddingLeft: 8, paddingRight: 8, margin: 3, flex: 1}}
+                                onPress={() => this.setState({contextMenuUserSection: "Mutual Friends"})}>
+                                    <Text>Mut. Friends</Text>
+                                </Button>
+                            </View>
+                        : null}
+                        {this.state.contextMenuUserSection == "Profile" ? 
+                            <ScrollView>
+                                {this.state.contextMenuUser?.relationship != RelationshipStatus.User ? 
                                     <>
-                                    <ContextButton onPress={() => {this.state.contextMenuUser?.addFriend(); this.setState({})}}>
-                                        <View style={styles.iconContainer}>
-                                            <FA5Icon name="user-plus" size={16} color={currentTheme.textPrimary} />
-                                        </View>
-                                        <Text>Accept Friend</Text>
-                                    </ContextButton>
-                                    <ContextButton onPress={() => {this.state.contextMenuUser?.removeFriend(); this.setState({})}}>
-                                        <View style={styles.iconContainer}>
-                                            <FA5Icon name="user-times" size={16} color={currentTheme.textPrimary} />
-                                        </View>
-                                        <Text>Reject Friend</Text>
-                                    </ContextButton>
+                                        {!this.state.contextMenuUser?.bot ? 
+                                        (this.state.contextMenuUser?.relationship == RelationshipStatus.Friend ? 
+                                            <ContextButton onPress={async () => {app.openProfile(null); this.setState({currentChannel: (await this.state.contextMenuUser.openDM()), messages: []})}}>
+                                                <View style={styles.iconContainer}>
+                                                    <MaterialIcon name="message" size={20} color={currentTheme.textPrimary} />
+                                                </View>
+                                                <Text>Message</Text>
+                                            </ContextButton> 
+                                            :
+                                            this.state.contextMenuUser?.relationship == RelationshipStatus.Incoming ? 
+                                            <>
+                                            <ContextButton onPress={() => {this.state.contextMenuUser?.addFriend(); this.setState({})}}>
+                                                <View style={styles.iconContainer}>
+                                                    <FA5Icon name="user-plus" size={16} color={currentTheme.textPrimary} />
+                                                </View>
+                                                <Text>Accept Friend</Text>
+                                            </ContextButton>
+                                            <ContextButton onPress={() => {this.state.contextMenuUser?.removeFriend(); this.setState({})}}>
+                                                <View style={styles.iconContainer}>
+                                                    <FA5Icon name="user-times" size={16} color={currentTheme.textPrimary} />
+                                                </View>
+                                                <Text>Reject Friend</Text>
+                                            </ContextButton>
+                                            </>
+                                            :
+                                            this.state.contextMenuUser?.relationship == RelationshipStatus.Outgoing ? 
+                                            <ContextButton onPress={() => {this.state.contextMenuUser?.removeFriend(); this.setState({})}}>
+                                                <Text>Cancel Friend</Text>
+                                            </ContextButton>
+                                            :
+                                            <ContextButton onPress={() => {this.state.contextMenuUser?.addFriend(); this.setState({})}}>
+                                                <Text>Add Friend</Text>
+                                            </ContextButton>
+                                        ) 
+                                        :
+                                        <>
+                                            <Text style={{fontWeight: 'bold'}}>BOT OWNER</Text>
+                                            {client.users.get(this.state.contextMenuUser?.bot?.owner) ? 
+                                            <ContextButton onPress={async () => {app.openProfile(client.users.get(this.state.contextMenuUser.bot.owner))}}>
+                                                <MiniProfile user={client.users.get(this.state.contextMenuUser.bot.owner)} />
+                                            </ContextButton>
+                                            :
+                                            <Text style={{color: currentTheme.textSecondary}}>Unloaded user</Text>}
+                                        </>}
                                     </>
-                                    :
-                                    this.state.contextMenuUser?.relationship == RelationshipStatus.Outgoing ? 
-                                    <ContextButton onPress={() => {this.state.contextMenuUser?.removeFriend(); this.setState({})}}>
-                                        <Text>Cancel Friend</Text>
+                                    : 
+                                    <>
+                                    <View style={{flexDirection: 'row'}}>
+                                        {["Online", "Idle", "Busy", "Invisible"].map((s) => <ContextButton key={s} style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginRight: 3}} onPress={() => {client.users.edit({status: {...client.user.status, presence: s}})}}><View style={{backgroundColor: currentTheme["status" + s], height: 16, width: 16, borderRadius: 10000}} /></ContextButton>)}
+                                    </View>
+                                    {/* <TextInput onChangeText={(v) => this.setState({userStatusInput: v})} value={this.state.userStatusInput || client.user.status.text || ""} onSubmitEditing={() => client.users.edit({...client.user.status, text: this.state.userStatusInput})} /> */}
+                                    </>
+                                }
+                                {app.settings.get("Show developer tools") ?
+                                <ContextButton key={"Copy ID"} onPress={() => {Clipboard.setString(this.state.contextMenuUser._id)}}>
+                                    <View style={styles.iconContainer}>
+                                        <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
+                                    </View>
+                                    <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuUser?._id})</Text></Text>
+                                </ContextButton>
+                                : null}
+                                <RoleView user={this.state.contextMenuUser} server={this.state.contextMenuUserServer}/>
+                                <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>BIO</Text>
+                                {this.state.contextMenuUserProfile?.content ? <MarkdownView>{parseRevoltNodes(this.state.contextMenuUserProfile?.content)}</MarkdownView> : null}
+                                <View style={{marginTop: 200}} />
+                            </ScrollView> :
+                        this.state.contextMenuUserSection == "Mutual Servers" ?
+                            <ScrollView>
+                                <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>MUTUAL SERVERS</Text>
+                                {this.state.contextMenuUserMutual.servers.map((s) => {
+                                    s = client.servers.get(s);
+                                    return <ContextButton key={s._id} onPress={() => {app.openServer(s); app.openProfile(null)}}>
+                                        <GeneralAvatar attachment={s.icon} size={32} />
+                                        <Text>{s.name}</Text>
                                     </ContextButton>
-                                    :
-                                    <ContextButton onPress={() => {this.state.contextMenuUser?.addFriend(); this.setState({})}}>
-                                        <Text>Add Friend</Text>
+                                })} 
+                                <View style={{marginTop: 200}} />
+                            </ScrollView> :
+                        this.state.contextMenuUserSection == "Mutual Friends" ?
+                            <ScrollView>
+                                <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>MUTUAL FRIENDS</Text>
+                                {this.state.contextMenuUserMutual.users.map((u) => {
+                                    u = client.users.get(u);
+                                    return <ContextButton key={u._id} onPress={() => {app.openProfile(u)}}>
+                                        <MiniProfile user={u} />
                                     </ContextButton>
-                                ) 
-                                :
-                                <>
-                                    <Text style={{fontWeight: 'bold'}}>BOT OWNER</Text>
-                                    {client.users.get(this.state.contextMenuUser?.bot?.owner) ? 
-                                    <ContextButton onPress={async () => {app.openProfile(client.users.get(this.state.contextMenuUser.bot.owner))}}>
-                                        <MiniProfile user={client.users.get(this.state.contextMenuUser.bot.owner)} />
-                                    </ContextButton>
-                                    :
-                                    <Text style={{color: currentTheme.textSecondary}}>Unloaded user</Text>}
-                                </>
-                                : 
-                                <>
-                                <View style={{flexDirection: 'row'}}>
-                                    {["Online", "Idle", "Busy", "Invisible"].map((s) => <ContextButton key={s} style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginRight: 3}} onPress={() => {client.users.edit({status: {...client.user.status, presence: s}})}}><View style={{backgroundColor: currentTheme["status" + s], height: 16, width: 16, borderRadius: 10000}} /></ContextButton>)}
-                                </View>
-                                {/* <TextInput onChangeText={(v) => this.setState({userStatusInput: v})} value={this.state.userStatusInput || client.user.status.text || ""} onSubmitEditing={() => client.users.edit({...client.user.status, text: this.state.userStatusInput})} /> */}
-                                </>
-                            }
-                            {app.settings.get("Show developer tools") ?
-                            <ContextButton key={"Copy ID"} onPress={() => {Clipboard.setString(this.state.contextMenuUser._id)}}>
-                                <View style={styles.iconContainer}>
-                                    <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
-                                </View>
-                                <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuUser?._id})</Text></Text>
-                            </ContextButton>
-                            : null}
-                            <RoleView user={this.state.contextMenuUser} server={this.state.contextMenuUserServer}/>
-                            <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>BIO</Text>
-                            {this.state.contextMenuUserProfile?.content ? <MarkdownView>{parseRevoltNodes(this.state.contextMenuUserProfile?.content)}</MarkdownView> : null}
-                            <View style={{marginTop: 130}} />
-                        </ScrollView>
+                                })}
+                                <View style={{marginTop: 200}} />   
+                            </ScrollView> :
+                        null}
                     </View>
                 </View>
             </Modal>
