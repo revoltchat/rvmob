@@ -377,14 +377,13 @@ export const ChannelButton = observer(({channel, onPress, onLongPress, delayLong
         channel.channel_type == "Group" ?
         <MiniProfile channel={channel} />
         :
-        (channel.generateIconURL && channel.generateIconURL()) ? 
-        <Image 
-        source={{uri: channel.generateIconURL() + "?max_side=" + defaultMaxSide}} 
-        style={{width: 20, height: 20}}/> 
-        : 
         <>
-        <View style={{alignItems: 'center', justifyContent: 'center', width: 20}}>
-            {channel == "Home" ? 
+        <View style={styles.iconContainer}>
+            {(channel.generateIconURL && channel.generateIconURL()) ? 
+            <Image 
+            source={{uri: channel.generateIconURL() + "?max_side=" + defaultMaxSide}} 
+            style={{width: 20, height: 20}}/> :
+            channel == "Home" ?
             <FA5Icon name="house-user" size={16} color={currentTheme.textPrimary} /> : 
             channel == "Friends" ?
             <FA5Icon name="users" size={16} color={currentTheme.textPrimary} /> : 
@@ -399,7 +398,7 @@ export const ChannelButton = observer(({channel, onPress, onLongPress, delayLong
             <FontistoIcon name="hashtag" size={16} color={currentTheme.textPrimary} />
             }
         </View>
-        <Text style={{marginLeft: 5}}>{channel.name || channel}</Text>
+        <Text>{channel.name || channel}</Text>
         </>}
     </TouchableOpacity>
 })
