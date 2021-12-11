@@ -2525,6 +2525,11 @@
   "resolved" "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
   "version" "1.0.2"
 
+"base-64@^0.1.0":
+  "integrity" "sha1-eAqZyE59YAJgNhURxId2E78k9rs="
+  "resolved" "https://registry.npmjs.org/base-64/-/base-64-0.1.0.tgz"
+  "version" "0.1.0"
+
 "base@^0.11.1":
   "integrity" "sha512-5T6P4xPgpp0YDFvSWwEZ4NoE3aM4QBQXDzmVbraCkFj8zHM+mba8SyqB5DbZWyR7mYHo6Y7BdQo3MoA4m0TeQg=="
   "resolved" "https://registry.npmjs.org/base/-/base-0.11.2.tgz"
@@ -7418,6 +7423,13 @@
     "public-encrypt" "^4.0.0"
     "randomfill" "^1.0.3"
 
+"react-native-document-picker@^7.1.1":
+  "integrity" "sha512-lEgyfl+JbU/UCDu8UdagBrC5CC71WTfqCzWyGeALLZiXGHrCJo/5BMqWbAc9PSCeiqNMnFkjcybO/kws5gMkxA=="
+  "resolved" "https://registry.npmjs.org/react-native-document-picker/-/react-native-document-picker-7.1.1.tgz"
+  "version" "7.1.1"
+  dependencies:
+    "invariant" "^2.2.4"
+
 "react-native-elements@^3.4.2":
   "integrity" "sha512-m0eAWOn7JuR1wNTNY0WHuaqst4LI/gFE4N5Bbyfsc4DiryWsMST7aAg5w/Gos4IexWIzhLKCIkPxthND1m/8Xg=="
   "resolved" "https://registry.npmjs.org/react-native-elements/-/react-native-elements-3.4.2.tgz"
@@ -7443,6 +7455,14 @@
   "version" "1.5.5"
   dependencies:
     "prop-types" "^15.5.10"
+
+"react-native-fs@^2.18.0":
+  "integrity" "sha512-9iQhkUNnN2JNED0in06JwZy88YEVyIGKWz4KLlQYxa5Y2U0U2AZh9FUHtA04oWj+xt2LlHh0LFPCzhmNsAsUDg=="
+  "resolved" "https://registry.npmjs.org/react-native-fs/-/react-native-fs-2.18.0.tgz"
+  "version" "2.18.0"
+  dependencies:
+    "base-64" "^0.1.0"
+    "utf8" "^3.0.0"
 
 "react-native-gesture-handler@^1.8.0":
   "integrity" "sha512-cBGMi1IEsIVMgoox4RvMx7V2r6bNKw0uR1Mu1o7NbuHS6BRSVLq0dP34l2ecnPlC+jpWd3le6Yg1nrdCjby2Mw=="
@@ -7640,7 +7660,7 @@
     "escape-string-regexp" "2.0.0"
     "invariant" "2.2.4"
 
-"react-native-windows@^0.61.0-beta.58", "react-native-windows@0.65.3":
+"react-native-windows@*", "react-native-windows@^0.61.0-beta.58", "react-native-windows@0.65.3":
   "integrity" "sha512-Y5hIPu+ZxPbTW4f6CLVKYZHaEIJJWvbElIfRNRcNrc3R9VIWn/8iDTF14eVnEYwvloTgZenFj1romIMUD9FGYQ=="
   "resolved" "https://registry.npmjs.org/react-native-windows/-/react-native-windows-0.65.3.tgz"
   "version" "0.65.3"
@@ -9069,6 +9089,11 @@
   dependencies:
     "execa" "^1.0.0"
     "mem" "^4.3.0"
+
+"utf8@^3.0.0":
+  "integrity" "sha512-E8VjFIQ/TyQgp+TZfS6l8yp/xWppSAHzidGiRrqe4bK4XP9pTRyKFgGJpO3SN7zdX4DeomTrwaseCHovfpFcqQ=="
+  "resolved" "https://registry.npmjs.org/utf8/-/utf8-3.0.0.tgz"
+  "version" "3.0.0"
 
 "util-deprecate@^1.0.1", "util-deprecate@~1.0.1":
   "integrity" "sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8="
