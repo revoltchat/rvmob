@@ -188,35 +188,6 @@ export class Modals extends React.Component {
                             <Text style={{color: '#ff3333'}}>User is banned</Text> : 
                             null
                         : null}
-                        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-                            {this.state.contextMenuUser?.badges ? <>
-                                {Object.keys(Badges).map(b => {
-                                    if (this.state.contextMenuUser.badges & Badges[b]) {
-                                        let Badge = ({children, color}) => <Text style={{color, marginLeft: 8}}>{children}</Text>;
-                                        switch (b) {
-                                            case "Founder":
-                                                return <Badge color={'red'}>Revolt Founder</Badge> 
-                                            case "Developer":
-                                                return <Badge color={'orange'}>Revolt Developer</Badge>
-                                            case "Translator":
-                                                return <Badge color={'green'}>Revolt Translator</Badge>
-                                            case "Supporter":
-                                                return <Badge color={'yellow'}>Revolt Supporter</Badge>
-                                            case "ResponsibleDisclosure":
-                                                return <Badge color={'purple'}>Bug Catcher</Badge>
-                                            case "EarlyAdopter":
-                                                return <Badge color={'cyan'}>Early Adopter</Badge>
-                                            case "PlatformModeration":
-                                                return <Badge color={'darkcyan'}>Platform Moderation</Badge>
-                                            default:
-                                                return <Badge color={currentTheme.textSecondary}>[{b}]</Badge>
-                                        }
-                                    }
-                                })}
-                            </> : null}
-                            {this.state.contextMenuUser?._id == "01FC1HP5H22F0M34MFFM9DZ099" ? 
-                            <Text style={{color: currentTheme.accentColor, marginLeft: 8}}>RVMob Author (hi there!)</Text> : null}
-                        </View>
                         {this.state.contextMenuUser?.relationship != RelationshipStatus.User ? 
                             <View style={{flexDirection: 'row'}}>
                                 <Button backgroundColor={currentTheme.backgroundPrimary} 
@@ -309,6 +280,42 @@ export class Modals extends React.Component {
                                 </ContextButton>
                                 : null}
                                 <RoleView user={this.state.contextMenuUser} server={this.state.contextMenuUserServer}/>
+                                {this.state.contextMenuUser?.badges ? <>
+                                    <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>BADGES</Text>
+                                    <ScrollView style={{flexDirection: 'row', height: 38, marginTop: 2, marginBottom: 2}} contentContainerStyle={{alignItems: 'center'}} horizontal={true}>
+                                        <>
+                                            {Object.keys(Badges).map(b => {
+                                                if (this.state.contextMenuUser.badges & Badges[b]) {
+                                                    return <View style={{height: 32, width: 32, alignItems: 'center', justifyContent: 'center', marginRight: 8}} key={b}>
+                                                    {(() => {switch (b) {
+                                                        case "Founder":
+                                                            return <FA5Icon name="star" size={28} color={'red'} />
+                                                        case "Developer":
+                                                            return <FA5Icon name="wrench" size={28} color={'orange'} />
+                                                        case "Translator":
+                                                            return <MaterialIcon name="translate" size={28} color={'green'} />
+                                                        case "Supporter":
+                                                            return <FA5Icon name="money-bill" size={20} color={'yellow'} />
+                                                        case "ResponsibleDisclosure":
+                                                            return <FA5Icon name="shield-alt" size={28} color={'purple'} />
+                                                        case "EarlyAdopter":
+                                                            return <FA5Icon name="clock" size={28} color={'cyan'} />
+                                                        case "PlatformModeration":
+                                                            return <FA5Icon name="gavel" size={28} color={'brown'} />
+                                                        default:
+                                                            return <Text style={{color: currentTheme.textSecondary, fontSize: 8}}>[{b}]</Text>
+                                                    }})()}
+                                                    </View>
+                                                }
+                                            })}
+                                            {this.state.contextMenuUser?._id == "01FC1HP5H22F0M34MFFM9DZ099" ?
+                                            <View style={{borderRadius: 3, backgroundColor: currentTheme.accentColor, height: 21, padding: 4}}>
+                                                <Text style={{color: currentTheme.accentColorForeground, fontWeight: 'bold', fontSize: 16, marginTop: -5, marginLeft: -1}}>RV</Text>
+                                            </View>
+                                            : null}
+                                        </>
+                                    </ScrollView>
+                                </> : null}
                                 <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>BIO</Text>
                                 {this.state.contextMenuUserProfile?.content ? <MarkdownView>{parseRevoltNodes(this.state.contextMenuUserProfile?.content)}</MarkdownView> : null}
                                 <View style={{marginTop: 200}} />
@@ -356,45 +363,73 @@ export class Modals extends React.Component {
             </Modal>
             <Modal visible={this.state.settingsOpen} transparent={true} animationType="slide">
                 <View style={{flex: 1, backgroundColor: currentTheme.backgroundPrimary, padding: 15, borderTopLeftRadius: 15, borderTopRightRadius: 15}}>
-                    <Pressable onPress={() => {this.setState({settingsOpen: false})}}><Text style={{fontSize: 24}}>Close</Text></Pressable>
+                    <Pressable style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}} onPress={() => {this.setState({settingsOpen: false})}}>
+                        <AntIcon name="closecircle" size={24} color={currentTheme.textSecondary} />
+                        <Text style={{color: currentTheme.textSecondary, fontSize: 20, marginLeft: 5}}>Close</Text>
+                    </Pressable>
                     <ScrollView style={{flex: 1}}>
-                        {Object.entries(app.settings).map(([k, v]) => {
-                            if (v.experimental && !app.settings.get("Show experimental features")) return null;
-                            if (v.developer && !app.settings.get("Show developer tools")) return null;
-                            if (v.type == "boolean") {
-                                return <View key={k} style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
-                                    {v.experimental ? <View style={styles.iconContainer}><FA5Icon name="flask" size={16} color={currentTheme.accentColor} /></View> : null}
-                                    {v.developer ? <View style={styles.iconContainer}><FA5Icon name="bug" size={16} color={currentTheme.accentColor} /></View> : null}
-                                    <Text style={{flex: 1, fontWeight: 'bold'}}>{k}</Text>
-                                    <TouchableOpacity style={{
-                                        width: 40, height: 40, borderRadius: 8, 
-                                        backgroundColor: app.settings.get(k) ? currentTheme.accentColor : currentTheme.backgroundSecondary,
-                                        alignItems: 'center', justifyContent: 'center'
-                                    }} onPress={() => {app.settings.set(k, !app.settings.get(k)); rerender()}}><Text style={{color: app.settings.get(k) ? currentTheme.accentColorForeground : currentTheme.textPrimary}}>{app.settings.get(k) ? <FA5Icon name="check" color={currentTheme.accentColorForeground} size={24} /> : null}</Text></TouchableOpacity>
-                                </View>
-                            } else if (v.type == "string" || v.type == "number") {
-                                return <View key={k} style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
-                                    {v.options ? 
-                                    <View>
+                        {this.state.settingsSection == null ?
+                        <>
+                            <ContextButton style={{flex: 1}} backgroundColor={currentTheme.backgroundSecondary} onPress={() => {this.setState({settingsSection: "App"})}}>
+                                <Text>App</Text>
+                            </ContextButton>
+                            <ContextButton style={{flex: 1}} backgroundColor={currentTheme.backgroundSecondary} onPress={() => {this.setState({settingsSection: "Account"})}}>
+                                <Text>Account</Text>
+                            </ContextButton>
+                        </> :
+                        this.state.settingsSection == "App" ?
+                        <> 
+                            <Pressable style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}} onPress={() => {this.setState({settingsSection: null})}}>
+                                <AntIcon name="back" size={24} color={currentTheme.textSecondary} />
+                                <Text style={{color: currentTheme.textSecondary, fontSize: 20, marginLeft: 5}}>Back</Text>
+                            </Pressable>
+                            {Object.entries(app.settings).map(([k, v]) => {
+                                if (v.experimental && !app.settings.get("Show experimental features")) return null;
+                                if (v.developer && !app.settings.get("Show developer tools")) return null;
+                                if (v.type == "boolean") {
+                                    return <View key={k} style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
                                         {v.experimental ? <View style={styles.iconContainer}><FA5Icon name="flask" size={16} color={currentTheme.accentColor} /></View> : null}
                                         {v.developer ? <View style={styles.iconContainer}><FA5Icon name="bug" size={16} color={currentTheme.accentColor} /></View> : null}
                                         <Text style={{flex: 1, fontWeight: 'bold'}}>{k}</Text>
-                                        <ScrollView style={{borderRadius: 8, /*maxHeight: 160,*/ minWidth: "100%", backgroundColor: currentTheme.backgroundSecondary, padding: 8, paddingRight: 12}}>
-                                            {v.options.map((o) => <TouchableOpacity key={o} style={styles.actionTile} onPress={() => {app.settings.set(k, o); rerender()}}><Text>{o} {app.settings.getRaw(k) == o ? <Text>(active)</Text> : null}</Text></TouchableOpacity>)}
-                                            <View style={{marginTop: 2}} />
-                                        </ScrollView>
+                                        <TouchableOpacity style={{
+                                            width: 40, height: 40, borderRadius: 8, 
+                                            backgroundColor: app.settings.get(k) ? currentTheme.accentColor : currentTheme.backgroundSecondary,
+                                            alignItems: 'center', justifyContent: 'center'
+                                        }} onPress={() => {app.settings.set(k, !app.settings.get(k)); rerender()}}><Text style={{color: app.settings.get(k) ? currentTheme.accentColorForeground : currentTheme.textPrimary}}>{app.settings.get(k) ? <FA5Icon name="check" color={currentTheme.accentColorForeground} size={24} /> : null}</Text></TouchableOpacity>
                                     </View>
-                                    :
-                                    <View>
-                                        {v.experimental ? <FA5Icon name="flask" size={16} color={currentTheme.accentColor} /> : null}
-                                        {v.developer ? <FA5Icon name="bug" size={16} color={currentTheme.accentColor} /> : null}
-                                        <Text style={{flex: 1, fontWeight: 'bold'}}>{k}</Text>
-                                        <TextInput style={{minWidth: "100%", borderRadius: 8, backgroundColor: currentTheme.backgroundSecondary, padding: 6, paddingLeft: 10, paddingRight: 10, color: currentTheme.textPrimary}} value={app.settings.getRaw(k)} keyboardType={v.type == "number" ? 'decimal-pad' : 'default'} onChangeText={(v) => {app.settings.set(k, v); rerender()}} />
-                                    </View>}
-                                </View>
-                            }
-                        })}
-                        <ContextButton backgroundColor={currentTheme.accentColor} style={{justifyContent: 'center', marginTop: 10}} onPress={() => {app.settings.clear(); rerender()}}><Text style={{color: currentTheme.accentColorForeground}}>Reset Settings</Text></ContextButton>
+                                } else if (v.type == "string" || v.type == "number") {
+                                    return <View key={k} style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
+                                        {v.options ? 
+                                        <View>
+                                            {v.experimental ? <View style={styles.iconContainer}><FA5Icon name="flask" size={16} color={currentTheme.accentColor} /></View> : null}
+                                            {v.developer ? <View style={styles.iconContainer}><FA5Icon name="bug" size={16} color={currentTheme.accentColor} /></View> : null}
+                                            <Text style={{flex: 1, fontWeight: 'bold'}}>{k}</Text>
+                                            <ScrollView style={{borderRadius: 8, /*maxHeight: 160,*/ minWidth: "100%", backgroundColor: currentTheme.backgroundSecondary, padding: 8, paddingRight: 12}}>
+                                                {v.options.map((o) => <TouchableOpacity key={o} style={styles.actionTile} onPress={() => {app.settings.set(k, o); rerender()}}><Text>{o} {app.settings.getRaw(k) == o ? <Text>(active)</Text> : null}</Text></TouchableOpacity>)}
+                                                <View style={{marginTop: 2}} />
+                                            </ScrollView>
+                                        </View>
+                                        :
+                                        <View>
+                                            {v.experimental ? <FA5Icon name="flask" size={16} color={currentTheme.accentColor} /> : null}
+                                            {v.developer ? <FA5Icon name="bug" size={16} color={currentTheme.accentColor} /> : null}
+                                            <Text style={{flex: 1, fontWeight: 'bold'}}>{k}</Text>
+                                            <TextInput style={{minWidth: "100%", borderRadius: 8, backgroundColor: currentTheme.backgroundSecondary, padding: 6, paddingLeft: 10, paddingRight: 10, color: currentTheme.textPrimary}} value={app.settings.getRaw(k)} keyboardType={v.type == "number" ? 'decimal-pad' : 'default'} onChangeText={(v) => {app.settings.set(k, v); rerender()}} />
+                                        </View>}
+                                    </View>
+                                }
+                            })}
+                            <ContextButton backgroundColor={currentTheme.accentColor} style={{justifyContent: 'center', marginTop: 10}} onPress={() => {app.settings.clear(); rerender()}}><Text style={{color: currentTheme.accentColorForeground}}>Reset Settings</Text></ContextButton>
+                        </> :
+                        this.state.settingsSection == "Account" ?
+                        <View>
+                            <Pressable style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}} onPress={() => {this.setState({settingsSection: null})}}>
+                                <AntIcon name="back" size={24} color={currentTheme.textSecondary} />
+                                <Text style={{color: currentTheme.textSecondary, fontSize: 20, marginLeft: 5}}>Back</Text>
+                            </Pressable>
+                            <Text style={{fontSize: 24, fontWeight: 'bold'}}>Account</Text>
+                        </View> : null
+                        }
                     </ScrollView>
                 </View>
             </Modal>

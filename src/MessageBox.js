@@ -6,15 +6,18 @@ import { observer } from 'mobx-react-lite';
 import { Username, Avatar } from './Profile';
 import { ChannelPermission } from "revolt.js/dist/api/permissions";
 import { ulid } from 'ulid';
+import DocumentPicker from 'react-native-document-picker';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
+import fs from 'react-native-fs';
 let typing = false;
 
 export const MessageBox = observer((props) => {
     let [currentText, setCurrentText] = React.useState('');
     let [editingMessage, setEditingMessage] = React.useState(null);
     let [replyingMessages, setReplyingMessages] = React.useState([]);
+    let [attachments, setAttachments] = React.useState([]);
     
     setFunction('setMessageBoxInput', setCurrentText.bind(this))
     setFunction('setReplyingMessages', setReplyingMessages.bind(this))
@@ -60,6 +63,16 @@ export const MessageBox = observer((props) => {
             </View>
         ) : null}
         <View style={styles.messageBoxInner}>
+            <TouchableOpacity style={styles.sendButton} onPress={async() => {
+                let res = await DocumentPicker.pickSingle({
+                    type: [DocumentPicker.types.allFiles]
+                })
+                if (res.uri) {
+                    setAttachments([...attachments, res])
+                }
+            }}>
+                <AntIcon name="pluscircle" size={20} color={currentTheme.textPrimary}/>
+            </TouchableOpacity> 
             <TextInput multiline placeholderTextColor={currentTheme.textSecondary} style={styles.messageBox} placeholder={"Message " + (props.channel?.channel_type != "Group" ? (props.channel?.channel_type == "DirectMessage" ? "@" : "#") : "") + (props.channel?.name || props.channel.recipient?.username)} onChangeText={(text) => {
                 setCurrentText(text)
                 if (currentText.length == 0) {
@@ -72,7 +85,7 @@ export const MessageBox = observer((props) => {
                     }
                 }
             }} value={currentText} />
-            {currentText.trim().length > 0 ? <TouchableOpacity style={styles.sendButton} onPress={() => {
+            {currentText.trim().length > 0 ? <TouchableOpacity style={styles.sendButton} onPress={async () => {
                 let thisCurrentText = currentText;
                 setCurrentText('');
                 if (editingMessage) {
@@ -81,6 +94,23 @@ export const MessageBox = observer((props) => {
                 } else {
                     let nonce = ulid();
                     app.pushToQueue({content: thisCurrentText, channel: props.channel, nonce: nonce, reply_ids: replyingMessages?.map(m => m._id)});
+                    // let uploaded = [];
+                    // for (let a of attachments) {
+                    //     const formdata = new FormData();
+                    //     //multipart/form-data
+                    //     let content = await fs.readFile(a.uri, 'base64');
+                    //     formdata.append('file', content)
+                    //     console.log(formdata)
+                    //     let result = await fetch(`${client.configuration?.features.autumn.url}/attachments`, {
+                    //         method: 'POST',
+                    //         body: formdata,
+                    //         headers: {
+                    //             'Content-Type': 'multipart/form-data; '
+                    //         }
+                    //     })
+                    //     console.log("out: ", await result.text())
+                    //     uploaded.push(id);
+                    // }
                     props.channel.sendMessage({
                         content: thisCurrentText, 
                         replies: replyingMessages.map((m) => {
@@ -123,6 +153,6 @@ export const TypingIndicator = observer(({ channel }) => {
             );
         }
     }
-    
+
     return <View/>;
 });

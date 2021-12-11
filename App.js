@@ -7,7 +7,7 @@ import { RelationshipStatus } from "revolt-api/types/Users";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import { currentTheme, styles } from './src/Theme'
-import { Text, client, app, selectedRemark, randomizeRemark, Button, ChannelIcon } from './src/Generic'
+import { Text, client, app, selectedRemark, randomizeRemark, Button, ChannelIcon, Input } from './src/Generic'
 import { Messages, ReplyMessage } from './src/MessageView'
 import { MessageBox } from './src/MessageBox';
 import { MiniProfile, Avatar, Username } from './src/Profile'
@@ -308,7 +308,7 @@ class MainView extends React.Component {
                     }} /> */}
                     <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
                         <Text style={{fontWeight: 'bold', fontSize: 48}}>RVMob</Text>
-                        <TextInput placeholderTextColor={currentTheme.textSecondary} style={{borderRadius: 8, padding: 3, paddingLeft: 10, paddingRight: 10, margin: 8, width: "80%", backgroundColor: currentTheme.backgroundSecondary, color: currentTheme.textPrimary}} placeholder={"Token"} onChangeText={(text) => {
+                        <Input placeholderTextColor={currentTheme.textSecondary} style={{minWidth: "80%", width: "80%"}} placeholder={"Token"} onChangeText={(text) => {
                             this.setState({tokenInput: text})
                         }} value={this.state.tokenInput} />
                         {this.state.logInError ? <Text>{this.state.logInError.message}</Text> : null}

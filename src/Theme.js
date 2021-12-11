@@ -201,6 +201,8 @@ function refreshStyles() {
         },
         channelButton: {
             padding: 10 - currentTheme.generalBorderWidth,
+            paddingTop: 12 - currentTheme.generalBorderWidth,
+            paddingBottom: 12 - currentTheme.generalBorderWidth,
             margin: 3,
             marginRight: 5,
             borderRadius: 8,
