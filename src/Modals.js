@@ -499,7 +499,7 @@ export class Modals extends React.Component {
                         </View>
                         <View style={{height: 56}}>
                             <ScrollView horizontal={true}>
-                                <ServerList onServerPress={s => this.setState({inviteBotDestination: s})} />
+                                <ServerList onServerPress={s => this.setState({inviteBotDestination: s})} showUnread={false} />
                             </ScrollView>
                         </View>
                         <Button onPress={() => {if (!this.state.inviteBotDestination) {return}; client.bots.invite(this.state.inviteBot._id, {server: this.state.inviteBotDestination._id}); this.setState({inviteBot: null, inviteBotDestination: null})}}><Text>Invite to {this.state.inviteBotDestination ? <Text style={{fontWeight: 'bold'}}>{this.state.inviteBotDestination?.name}</Text> : "which server?"}</Text></Button>
