@@ -6,7 +6,7 @@ import { styles, currentTheme, themes, setTheme, currentThemeName } from './Them
 import { ReplyMessage } from './MessageView';
 import { Avatar, Username, MiniProfile, RoleView } from './Profile';
 import { RelationshipStatus, Badges } from "revolt-api/types/Users";
-import { ChannelPermission } from "revolt.js/dist/api/permissions";
+import { ChannelPermission, ServerPermission } from "revolt.js/dist/api/permissions";
 import Clipboard from '@react-native-community/clipboard';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -499,7 +499,7 @@ export class Modals extends React.Component {
                         </View>
                         <View style={{height: 56}}>
                             <ScrollView horizontal={true}>
-                                <ServerList onServerPress={s => this.setState({inviteBotDestination: s})} showUnread={false} />
+                                <ServerList onServerPress={s => this.setState({inviteBotDestination: s})} filter={s => s.permission & ServerPermission.ManageServer} showUnread={false} />
                             </ScrollView>
                         </View>
                         <Button onPress={() => {if (!this.state.inviteBotDestination) {return}; client.bots.invite(this.state.inviteBot._id, {server: this.state.inviteBotDestination._id}); this.setState({inviteBot: null, inviteBotDestination: null})}}><Text>Invite to {this.state.inviteBotDestination ? <Text style={{fontWeight: 'bold'}}>{this.state.inviteBotDestination?.name}</Text> : "which server?"}</Text></Button>

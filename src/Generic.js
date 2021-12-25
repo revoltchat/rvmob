@@ -344,8 +344,10 @@ export const GeneralAvatar = ({ attachment, size }) => {
 }
 
 
-export const ServerList = observer(({ onServerPress, onServerLongPress, showUnread=true }) => {
-    return [...client.servers.values()].map((s) => {
+export const ServerList = observer(({ onServerPress, onServerLongPress, filter, showUnread=true }) => {
+    let servers = [...client.servers.values()]
+    if (filter) servers = servers.filter(filter)
+    return servers.map((s) => {
         let iconURL = s.generateIconURL();
         let pings = s.getMentions().length;
         return <View>
