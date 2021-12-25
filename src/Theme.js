@@ -18,7 +18,9 @@ export const themes = {
         statusBusy: "#f84848",
         statusStreaming: "#977eff",
         statusOffline: "#a5a5a5",
-        statusInvisible: "#a5a5a5"
+        statusInvisible: "#a5a5a5",
+        pingColor: "#f84848",
+        pingColorForeground: "#ffffff"
     },
     "Dark": {
         backgroundPrimary: '#151515',
@@ -38,7 +40,9 @@ export const themes = {
         statusBusy: "#f84848",
         statusStreaming: "#977eff",
         statusOffline: "#a5a5a5",
-        statusInvisible: "#a5a5a5"
+        statusInvisible: "#a5a5a5",
+        pingColor: "#f84848",
+        pingColorForeground: "#ffffff"
     },
     "Solarized": {
         backgroundPrimary: '#001a20',
@@ -58,7 +62,9 @@ export const themes = {
         statusBusy: "#f84848",
         statusStreaming: "#977eff",
         statusOffline: "#a5a5a5",
-        statusInvisible: "#a5a5a5"
+        statusInvisible: "#a5a5a5",
+        pingColor: "#f84848",
+        pingColorForeground: "#ffffff"
     },
     "Vibrant Pink": {
         backgroundPrimary: '#f9bae9',
@@ -78,7 +84,9 @@ export const themes = {
         statusBusy: "#f84848",
         statusStreaming: "#977eff",
         statusOffline: "#a5a5a5",
-        statusInvisible: "#a5a5a5"
+        statusInvisible: "#a5a5a5",
+        pingColor: "#f84848",
+        pingColorForeground: "#ffffff"
     },
     "AMOLED": {
         backgroundPrimary: '#000000',
@@ -101,7 +109,9 @@ export const themes = {
         statusBusy: "#f84848",
         statusStreaming: "#977eff",
         statusOffline: "#a5a5a5",
-        statusInvisible: "#a5a5a5"
+        statusInvisible: "#a5a5a5",
+        pingColor: "#f84848",
+        pingColorForeground: "#ffffff"
     }
 }
 export var currentTheme = themes["Dark"]

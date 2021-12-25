@@ -6,19 +6,19 @@ import { Pressable, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 const Image = FastImage;
 
-export const Username = observer(({ server, user, noBadge, size, masquerade }) => { 
+export const Username = observer(({ server, user, noBadge, size, masquerade, color }) => { 
     if (typeof user != 'object') return <Text style={size ? {fontSize: size} : {}}>
         {"<Unknown User>"}
     </Text>
     let memberObject = client.members.getKey({server: server?._id, user: user?._id})
-    let color = styles.textDefault.color
+    let roleColor = color || styles.textDefault.color
     let name = server && memberObject?.nickname ? memberObject?.nickname : user.username;
     if (server && (memberObject?.roles && memberObject?.roles?.length > 0)) {
         let server = client.servers.get(memberObject._id.server);
         if (server?.roles) {
             for (let role of memberObject?.roles) {
                 if (server.roles[role].colour) {
-                    color = server.roles[role].colour
+                    roleColor = server.roles[role].colour
                 }
             }
         }
@@ -27,7 +27,7 @@ export const Username = observer(({ server, user, noBadge, size, masquerade }) =
     let badgeStyle = {color: currentTheme.accentColorForeground, backgroundColor: currentTheme.accentColor, marginLeft: badgeSize * 0.3, paddingLeft: badgeSize * 0.4, paddingRight: badgeSize * 0.4, borderRadius: 3, fontSize: badgeSize, height: badgeSize + (badgeSize * 0.45), top: badgeSize * 0.5}
     return (
         <View style={{flexDirection: 'row'}}>
-            <Text style={{color, fontWeight: 'bold', fontSize: (size || 14)}}>
+            <Text style={{color: roleColor, fontWeight: 'bold', fontSize: (size || 14)}}>
                 {masquerade ? masquerade : name}
             </Text>
             {!noBadge ?
@@ -76,13 +76,13 @@ export const Avatar = observer(({ channel, user, server, status, size, backgroun
         </View>
     )
 })
-export const MiniProfile = observer(({ user, scale, channel, server}) => {
+export const MiniProfile = observer(({ user, scale, channel, server, color }) => {
     if (user)
     return <View style={{flexDirection: 'row'}}>
         <Avatar user={user} server={server} size={35 * (scale || 1)} status />
         <View style={{marginLeft: 10 * (scale || 1)}}>
-            <Username user={user} server={server} size={14 * (scale || 1)} />
-            <Text style={{marginTop: -3 * (scale || 1), fontSize: 14 * (scale || 1)}}>{user.online ? (user.status?.text || (user.status?.presence || "Online")) : "Offline"}</Text>
+            <Username user={user} server={server} color={color || currentTheme.textPrimary} size={14 * (scale || 1)} />
+            <Text style={{color: color || currentTheme.textPrimary, marginTop: -3 * (scale || 1), fontSize: 14 * (scale || 1)}}>{user.online ? (user.status?.text || (user.status?.presence || "Online")) : "Offline"}</Text>
         </View>
     </View>
 
@@ -90,8 +90,8 @@ export const MiniProfile = observer(({ user, scale, channel, server}) => {
     return <View style={{flexDirection: 'row'}}>
         <Avatar channel={channel} size={35 * (scale || 1)} />
         <View style={{marginLeft: 10 * (scale || 1)}}>
-            <Text style={{fontSize: 14 * (scale || 1), fontWeight: 'bold'}}>{channel.name}</Text>
-            <Text style={{marginTop: -3 * (scale || 1), fontSize: 14 * (scale || 1)}}>{channel?.recipient_ids.length} members</Text>
+            <Text style={{color: color || currentTheme.textPrimary, fontSize: 14 * (scale || 1), fontWeight: 'bold'}}>{channel.name}</Text>
+            <Text style={{color: color || currentTheme.textPrimary, marginTop: -3 * (scale || 1), fontSize: 14 * (scale || 1)}}>{channel?.recipient_ids.length} members</Text>
         </View>
     </View>
 })

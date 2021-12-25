@@ -155,7 +155,7 @@ export function setFunction(name, func) {
 export const defaultMaxSide = "128";
 export const defaultMessageLoadCount = 50;
 
-export const client = new Client();
+export const client = new Client({ unreads: true });
 
 export const Text = (props) => {
     let newProps = {...props}
@@ -358,7 +358,8 @@ export const ServerList = observer(({ onServerPress, onServerLongPress, showUnre
     })
 })
 
-export const ChannelButton = observer(({channel, onPress=()=>{}, onLongPress=()=>{}, delayLongPress, selected}) => {
+export const ChannelButton = observer(({channel, onPress=()=>{}, onLongPress=()=>{}, delayLongPress, selected, showUnread=true}) => {
+    let color = showUnread && channel.unread ? currentTheme.textPrimary : currentTheme.textSecondary
     return <TouchableOpacity 
     onPress={()=>onPress()} 
     onLongPress={()=>onLongPress()}
@@ -371,39 +372,47 @@ export const ChannelButton = observer(({channel, onPress=()=>{}, onLongPress=()=
     }>
         {channel.channel_type == "DirectMessage" ? 
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <MiniProfile user={channel.recipient} />
+            <MiniProfile user={channel.recipient} color={color} />
         </View>
         :
         channel.channel_type == "Group" ?
-        <MiniProfile channel={channel} />
+        <MiniProfile channel={channel} color={color} />
         :
         <>
         <View style={styles.iconContainer}>
             <ChannelIcon channel={channel} />
         </View>
-        <Text>{channel.name || channel}</Text>
+        <Text style={{flex: 1, color}}>{channel.name || channel}</Text>
+        {showUnread && channel.mentions?.length > 0 ?
+            <View style={{width: 20, height: 20, marginLeft: 4, marginRight: 4, borderRadius: 10000, backgroundColor: currentTheme.pingColor, justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{color: currentTheme.pingColorForeground, marginRight: 1, marginBottom: 2}}>{channel.mentions?.length}</Text>
+            </View>
+        : showUnread && channel.unread ? 
+            <View style={{width: 12, height: 12, marginLeft: 8, marginRight: 8, borderRadius: 10000, backgroundColor: currentTheme.textPrimary}} /> 
+        : null}
         </>}
     </TouchableOpacity>
 })
 
-export const ChannelIcon = ({channel}) => {
+export const ChannelIcon = ({channel, showUnread=true}) => {
+    let color = showUnread && channel.unread ? currentTheme.textPrimary : currentTheme.textSecondary
     return (channel.generateIconURL && channel.generateIconURL()) ? 
     <Image 
     source={{uri: channel.generateIconURL() + "?max_side=" + defaultMaxSide}} 
     style={{width: 20, height: 20}}/> :
     channel == "Home" ?
-    <FA5Icon name="house-user" size={16} color={currentTheme.textPrimary} /> : 
+    <FA5Icon name="house-user" size={16} color={color} /> : 
     channel == "Friends" ?
-    <FA5Icon name="users" size={16} color={currentTheme.textPrimary} /> : 
+    <FA5Icon name="users" size={16} color={color} /> : 
     channel == "Saved Notes" ? 
-    <MaterialIcon name="sticky-note-2" size={20} color={currentTheme.textPrimary} /> :
+    <MaterialIcon name="sticky-note-2" size={20} color={color} /> :
     channel.channel_type == "DirectMessage" ? 
-    <FontistoIcon name="at" size={16} color={currentTheme.textPrimary}/>
+    <FontistoIcon name="at" size={16} color={color}/>
     :
     channel.channel_type == "VoiceChannel" ? 
-    <FA5Icon name="volume-up" size={16} color={currentTheme.textPrimary}/>
+    <FA5Icon name="volume-up" size={16} color={color}/>
     :
-    <FontistoIcon name="hashtag" size={16} color={currentTheme.textPrimary} />
+    <FontistoIcon name="hashtag" size={16} color={color} />
 }
 
 export const ChannelList = observer((props) => {
@@ -503,40 +512,6 @@ export const loadingScreenRemarks = [
 export var selectedRemark = loadingScreenRemarks[Math.floor(Math.random() * loadingScreenRemarks.length)];
 export function randomizeRemark() {
     selectedRemark = loadingScreenRemarks[Math.floor(Math.random() * loadingScreenRemarks.length)];
-}
-
-export var unreads = {servers: {}, channels: {}};
-export function fetchUnreads() {
-    unreads = {servers: {}, channels: {}};
-    client.syncFetchUnreads().then((u) => {
-        u.forEach(c => {
-            // if (c.last_id != client.channels.get(c._id)?.last_message_id) {
-            let server = client.channels.get(c._id)?.server_id;
-            if (server) {
-                if (!unreads.servers[server]) unreads.servers[server] = {};
-                
-            }
-            unreads[c.channel_id] = {mentions: c.mentions.length};
-            // }
-        })
-    })
-}
-export function getUnread(c) {
-    if (unreads[c]) {
-        return unreads[c].mentions ? unreads[c].mentions : true;
-    }
-    return false;
-}
-export function pushUnread(c, unread = null, mention = false) {
-    if (!unread) delete unreads[c];
-    else {
-        if (mention) {
-            if (!unreads[c]) unreads[c] = {mentions: 0};
-            unreads[c].mentions += 1;
-        } else {
-            if (!unreads[c]) unreads[c] = {mentions: 0};
-        }
-    }
 }
 
 

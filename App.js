@@ -7,7 +7,7 @@ import { RelationshipStatus } from "revolt-api/types/Users";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import { currentTheme, styles } from './src/Theme'
-import { Text, client, app, selectedRemark, randomizeRemark, Button, ChannelIcon, Input } from './src/Generic'
+import { Text, client, app, selectedRemark, randomizeRemark, Button, ChannelIcon, Input, openUrl } from './src/Generic'
 import { Messages, ReplyMessage } from './src/MessageView'
 import { MessageBox } from './src/MessageBox';
 import { MiniProfile, Avatar, Username } from './src/Profile'
@@ -19,6 +19,7 @@ import FontistoIcon from 'react-native-vector-icons/Fontisto';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import FastImage from 'react-native-fast-image';
 import { observer } from 'mobx-react-lite';
+import { decodeTime } from 'ulid'
 const Image = FastImage;
 import notifee from '@notifee/react-native';
 
@@ -311,17 +312,23 @@ class MainView extends React.Component {
                         <Input placeholderTextColor={currentTheme.textSecondary} style={{minWidth: "80%", width: "80%"}} placeholder={"Token"} onChangeText={(text) => {
                             this.setState({tokenInput: text})
                         }} value={this.state.tokenInput} />
-                        {this.state.logInError ? <Text>{this.state.logInError.message}</Text> : null}
+                        {this.state.logInError ? <Text>{this.state.logInError.message || this.state.logInError}</Text> : null}
                         <Button onPress={async () => {
-                                this.setState({status: "tryingLogin"})
+                            this.setState({status: "tryingLogin"})
                             try {
-                                await client.useExistingSession({token: this.state.tokenInput})
-                                this.setState({status: "loggedIn", tokenInput: "", passwordInput: "", emailInput: "", logInError: null})
+                                console.log(decodeTime(this.state.tokenInput))
+                                this.setState({logInError: "That is a user ID, not a token.", status: "awaitingLogin"})
                             } catch (e) {
-                                console.error(e)
-                                this.setState({logInError: e, status: "awaitingLogin"})
+                                try {
+                                    await client.useExistingSession({token: this.state.tokenInput})
+                                    this.setState({status: "loggedIn", tokenInput: "", passwordInput: "", emailInput: "", logInError: null})
+                                } catch (e) {
+                                    console.error(e)
+                                    this.setState({logInError: e, status: "awaitingLogin"})
+                                }
                             }
                         }}><Text>Log in</Text></Button>
+                        <TouchableOpacity onPress={() => openUrl("https://infi.sh/post/revolt-tokens")}><Text style={{color: currentTheme.accentColor, textDecorationLine: "underline"}}>How do I get my token?</Text></TouchableOpacity>
                     </View>
                 </View>
                 :

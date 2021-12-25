@@ -63,7 +63,7 @@
     "react-native-windows": "0.65.3",
     "readable-stream": "^1.0.33",
     "revolt-api": "^0.5.3-alpha.2",
-    "revolt.js": "^5.1.0-alpha.6",
+    "revolt.js": "^5.2.1",
     "stream-browserify": "^1.0.0",
     "timers-browserify": "^1.4.2",
     "tty-browserify": "^0.0.0",

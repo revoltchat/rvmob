@@ -5982,6 +5982,11 @@
   "resolved" "https://registry.npmjs.org/lodash.defaultsdeep/-/lodash.defaultsdeep-4.6.1.tgz"
   "version" "4.6.1"
 
+"lodash.flatten@^4.4.0":
+  "integrity" "sha1-8xwiIlqWMtK7+OSt2+8kCqdlph8="
+  "resolved" "https://registry.npmjs.org/lodash.flatten/-/lodash.flatten-4.4.0.tgz"
+  "version" "4.4.0"
+
 "lodash.frompairs@^4.0.1":
   "integrity" "sha1-vE5SB/onV8E25XNhTpZkUGsrG9I="
   "resolved" "https://registry.npmjs.org/lodash.frompairs/-/lodash.frompairs-4.0.1.tgz"
@@ -8028,16 +8033,17 @@
   "resolved" "https://registry.npmjs.org/revolt-api/-/revolt-api-0.5.3-alpha.10.tgz"
   "version" "0.5.3-alpha.10"
 
-"revolt.js@^5.1.0-alpha.6":
-  "integrity" "sha512-wEmBMJkZE/oWy6mzVZg1qw5QC9CE+Gb7sTFlJl+C4pbXfTJWAtY311Tjbd2tX8w3ohYDmN338bVfCW4cOQ8GXQ=="
-  "resolved" "https://registry.npmjs.org/revolt.js/-/revolt.js-5.1.0-alpha.10.tgz"
-  "version" "5.1.0-alpha.10"
+"revolt.js@^5.2.1":
+  "integrity" "sha512-IZQ6aFQBLsciZ0dMLz+RslHzwsXFLO283bzUSAK5vXjZe0UDkX3nXt6WL2p5ygCxXOGvrvf7hX1kTzZahNs75w=="
+  "resolved" "https://registry.npmjs.org/revolt.js/-/revolt.js-5.2.1.tgz"
+  "version" "5.2.1"
   dependencies:
     "axios" "^0.21.4"
     "eventemitter3" "^4.0.7"
     "exponential-backoff" "^3.1.0"
     "isomorphic-ws" "^4.0.1"
     "lodash.defaultsdeep" "^4.6.1"
+    "lodash.flatten" "^4.4.0"
     "lodash.isequal" "^4.5.0"
     "mobx" "^6.3.2"
     "revolt-api" "^0.5.3-alpha.9"
