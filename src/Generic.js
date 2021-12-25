@@ -344,22 +344,32 @@ export const GeneralAvatar = ({ attachment, size }) => {
 }
 
 
-export const ServerList = observer(({ onServerPress, onServerLongPress, showUnread }) => {
+export const ServerList = observer(({ onServerPress, onServerLongPress, showUnread=true }) => {
     return [...client.servers.values()].map((s) => {
         let iconURL = s.generateIconURL();
-        return <TouchableOpacity 
-        onPress={()=>{onServerPress(s)}} 
-        onLongPress={()=>{onServerLongPress(s)}} 
-        key={s._id} 
-        style={styles.serverButton}>
-            {/* {showUnread ? <View style={{borderRadius: 10000, backgroundColor: getUnread()}}></View> } */}
-            {iconURL ? <Image source={{uri: iconURL + "?max_side=" + defaultMaxSide}} style={styles.serverIcon}/> : <Text>{s.name}</Text>}
-        </TouchableOpacity>
+        let pings = s.getMentions().length;
+        return <View>
+            {showUnread && s.getMentions().length > 0 ?
+                <View style={{borderRadius: 10000, backgroundColor: currentTheme.pingColor, height: 20, width: 20, marginBottom: -20, left: 34, zIndex: 2, justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={{color: currentTheme.pingColorForeground, marginRight: 1, marginBottom: 2}}>{pings > 9 ? "9+" : pings}</Text>
+                </View>
+            : showUnread && s.isUnread() ? 
+                <View style={{borderRadius: 10000, backgroundColor: currentTheme.textPrimary, height: 20, width: 20, marginBottom: -20, left: 34, zIndex: 2}}/> 
+            : null}
+            <TouchableOpacity 
+            onPress={()=>{onServerPress(s)}} 
+            onLongPress={()=>{onServerLongPress(s)}} 
+            key={s._id} 
+            style={styles.serverButton}>
+                {iconURL ? <Image source={{uri: iconURL + "?max_side=" + defaultMaxSide}} style={styles.serverIcon}/> : <Text>{s.name}</Text>}
+            </TouchableOpacity>
+        </View>
     })
 })
 
 export const ChannelButton = observer(({channel, onPress=()=>{}, onLongPress=()=>{}, delayLongPress, selected, showUnread=true}) => {
     let color = showUnread && channel.unread ? currentTheme.textPrimary : currentTheme.textSecondary
+    let pings = channel.mentions?.length
     return <TouchableOpacity 
     onPress={()=>onPress()} 
     onLongPress={()=>onLongPress()}
@@ -385,7 +395,7 @@ export const ChannelButton = observer(({channel, onPress=()=>{}, onLongPress=()=
         <Text style={{flex: 1, color}}>{channel.name || channel}</Text>
         {showUnread && channel.mentions?.length > 0 ?
             <View style={{width: 20, height: 20, marginLeft: 4, marginRight: 4, borderRadius: 10000, backgroundColor: currentTheme.pingColor, justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{color: currentTheme.pingColorForeground, marginRight: 1, marginBottom: 2}}>{channel.mentions?.length}</Text>
+                <Text style={{color: currentTheme.pingColorForeground, marginRight: 1, marginBottom: 2}}>{pings > 9 ? "9+" : pings}</Text>
             </View>
         : showUnread && channel.unread ? 
             <View style={{width: 12, height: 12, marginLeft: 8, marginRight: 8, borderRadius: 10000, backgroundColor: currentTheme.textPrimary}} /> 

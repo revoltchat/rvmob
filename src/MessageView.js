@@ -208,6 +208,9 @@ export class Messages extends React.Component {
                     // if (!this.state.atLatestMessages && bottomOfPage) {
                     //     this.fetchMessages({type: "after", id: this.state.messages[this.state.messages.length - 1].message._id})
                     // }
+                    if (bottomOfPage && this.props.channel?.unread) {
+                        this.props.channel.ack()
+                    }
                     this.setState({
                         bottomOfPage, 
                         newMessageCount: bottomOfPage ? 0 : this.state.newMessageCount
