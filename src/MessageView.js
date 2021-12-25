@@ -20,7 +20,6 @@ export class Messages extends React.Component {
             queuedMessages: [],
             loading: true,
             forceUpdate: false,
-            newMessageCount: 0,
             error: null,
             atLatestMessages: true
         };
@@ -44,7 +43,6 @@ export class Messages extends React.Component {
     }
     shouldComponentUpdate(nextProps, nextState) {
         if (nextProps.rerender != this.props.rerender) return true
-        if (nextState.newMessageCount != this.state.newMessageCount) return true
         if (nextState.forceUpdate) {
             this.setState({forceUpdate: false})
             return true
@@ -67,7 +65,7 @@ export class Messages extends React.Component {
                         }
                         let grouped = newMessages.length > 0 && this.calculateGrouped(newMessages[newMessages.length - 1].message, message)
                         newMessages.push({message, grouped, rendered: this.renderMessage({grouped, message})})
-                        return {messages: newMessages, newMessageCount: !this.state.bottomOfPage ? (this.state.newMessageCount + 1) || 1 : 0, queuedMessages: this.state.queuedMessages.filter(m => m.nonce != message.nonce)}
+                        return {messages: newMessages, queuedMessages: this.state.queuedMessages.filter(m => m.nonce != message.nonce)}
                     })
     	    	}
     	    }
@@ -130,7 +128,6 @@ export class Messages extends React.Component {
             this.setState({
                 messages: result, 
                 loading: false, 
-                newMessageCount: 0,
                 atLatestMessages: true
                 // atLatestMessages: input.type != "before" && this.props.channel.last_message_id == result[result.length - 1]?._id
             })
@@ -172,7 +169,6 @@ export class Messages extends React.Component {
             </View> 
             :
             <View style={{flex: 1}}>
-                {this.state.newMessageCount > 0 ? <Text style={{height: 32, padding: 6, backgroundColor: currentTheme.accentColor, color: currentTheme.accentColorForeground}}>{this.state.newMessageCount} new messages...</Text> : null}
                 {/* <FlatList data={this.state.messages} 
                 removeClippedSubviews={false}
                 disableVirtualization={true}
@@ -186,12 +182,7 @@ export class Messages extends React.Component {
                 onScroll={e => {this.setState({
                     bottomOfPage: (e.nativeEvent.contentOffset.y >= 
                         (e.nativeEvent.contentSize.height - 
-                        e.nativeEvent.layoutMeasurement.height)), 
-                        newMessageCount: (e.nativeEvent.contentOffset.y >= 
-                        (e.nativeEvent.contentSize.height - 
-                        e.nativeEvent.layoutMeasurement.height)) 
-                        ? 0 : 
-                        this.state.newMessageCount}); 
+                        e.nativeEvent.layoutMeasurement.height))
                     }} 
                 onLayout={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToOffset({offset: 0, animated: false})}}}
                 onContentSizeChange={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToOffset({offset: 0, animated: true})}}} 
@@ -212,8 +203,7 @@ export class Messages extends React.Component {
                         this.props.channel.ack()
                     }
                     this.setState({
-                        bottomOfPage, 
-                        newMessageCount: bottomOfPage ? 0 : this.state.newMessageCount
+                        bottomOfPage
                     }); 
                 }}
                 onLayout={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToEnd({animated: false})}}}
