@@ -3,7 +3,7 @@ import './shim' // react native moment 2
 import React from 'react';
 import { View, TouchableOpacity, ScrollView, TextInput, StatusBar, Dimensions } from 'react-native';
 import SideMenu from 'react-native-side-menu-updated';
-import { RelationshipStatus } from "revolt-api/types/Users";
+import { RelationshipStatus } from "revolt-api";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import { currentTheme, styles } from './src/Theme'
@@ -251,7 +251,14 @@ class MainView extends React.Component {
                                             <Text style={{flex: 1}}>Home</Text>
                                         </ChannelHeader>
                                         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20}}>
-                                            <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}} onPress={() => app.openProfile(client.user)}>
+                                            <TouchableOpacity 
+                                             style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}} 
+                                             onPress={() => {
+                                                let user = client.users.get(client.user._id)
+                                                if (user) {
+                                                    app.openProfile(user)
+                                                }
+                                             }}>
                                                 <Avatar size={40} user={client.user} status />
                                                 <View style={{marginLeft: 4}} />
                                                 <Username size={20} user={client.user} />

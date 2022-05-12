@@ -114,7 +114,6 @@ app.settings.clear = async () => {
 
 // i gotta say github copilot is actually pretty good at this
 AsyncStorage.getItem('settings').then(s => {
-    console.log(s)
     if (s) {
         try {
             const settings = JSON.parse(s);
@@ -581,3 +580,16 @@ export function InputWithButton({defaultValue, placeholder, buttonLabel, style, 
         </View>
     )
 }   
+
+export const Badges = {
+    Developer: 1,
+    Translator: 2,
+    Supporter: 4,
+    ResponsibleDisclosure: 8,
+    Founder: 16,
+    PlatformModeration: 32,
+    ActiveSupporter: 64,
+    Paw: 128,
+    EarlyAdopter: 256,
+    ReservedRelevantJokeBadge1: 512,
+}

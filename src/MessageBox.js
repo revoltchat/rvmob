@@ -4,7 +4,6 @@ import { Text, app, client, setFunction } from './Generic';
 import { styles, currentTheme } from './Theme';
 import { observer } from 'mobx-react-lite';
 import { Username, Avatar } from './Profile';
-import { ChannelPermission } from "revolt.js/dist/api/permissions";
 import { ulid } from 'ulid';
 import DocumentPicker from 'react-native-document-picker';
 import AntIcon from 'react-native-vector-icons/AntDesign';
@@ -26,7 +25,7 @@ export const MessageBox = observer((props) => {
     setFunction('getEditingMessage', () => {return editingMessage})
     
     // let memberObject = client.members.getKey({server: this.props.channel?.server, user: client.user?._id})
-    if (!(props.channel.permission & ChannelPermission.SendMessage)) {
+    if (!(props.channel.havePermission("SendMessage"))) {
         return <View style={{backgroundColor: currentTheme.backgroundSecondary, height: 80, padding: 20, alignItems: 'center', justifyContent: 'center'}}>
             <Text style={{textAlign: 'center'}}>You do not have permission to send messages in this channel.</Text>
         </View>
@@ -63,7 +62,7 @@ export const MessageBox = observer((props) => {
             </View>
         ) : null}
         <View style={styles.messageBoxInner}>
-            <TouchableOpacity style={styles.sendButton} onPress={async() => {
+            /*<TouchableOpacity style={styles.sendButton} onPress={async() => {
                 let res = await DocumentPicker.pickSingle({
                     type: [DocumentPicker.types.allFiles]
                 })
@@ -72,7 +71,7 @@ export const MessageBox = observer((props) => {
                 }
             }}>
                 <AntIcon name="pluscircle" size={20} color={currentTheme.textPrimary}/>
-            </TouchableOpacity> 
+            </TouchableOpacity> */
             <TextInput multiline placeholderTextColor={currentTheme.textSecondary} style={styles.messageBox} placeholder={"Message " + (props.channel?.channel_type != "Group" ? (props.channel?.channel_type == "DirectMessage" ? "@" : "#") : "") + (props.channel?.name || props.channel.recipient?.username)} onChangeText={(text) => {
                 setCurrentText(text)
                 if (currentText.length == 0) {

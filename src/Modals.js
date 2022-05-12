@@ -1,12 +1,12 @@
 import { View, TouchableOpacity, Pressable, Modal, ScrollView, Dimensions, TextInput } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import React from 'react';
-import { client, Text, MarkdownView, app, parseRevoltNodes, GeneralAvatar, ServerName, ServerList, openUrl, setFunction, ContextButton, Button, InputWithButton } from './Generic';
+import { client, Text, MarkdownView, app, parseRevoltNodes, GeneralAvatar, ServerName, ServerList, openUrl, setFunction, ContextButton, Button, InputWithButton, Badges } from './Generic';
 import { styles, currentTheme, themes, setTheme, currentThemeName } from './Theme';
 import { ReplyMessage } from './MessageView';
 import { Avatar, Username, MiniProfile, RoleView } from './Profile';
-import { RelationshipStatus, Badges } from "revolt-api/types/Users";
-import { ChannelPermission, ServerPermission } from "revolt.js/dist/api/permissions";
+import { RelationshipStatus } from "revolt-api";
+import { ChannelPermission, ServerPermission } from "revolt.js";
 import Clipboard from '@react-native-community/clipboard';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -122,7 +122,7 @@ export class Modals extends React.Component {
                             <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuMessage?._id})</Text></Text>
                         </ContextButton>
                         : null}
-                        {this.state.contextMenuMessage?.channel.permission & ChannelPermission.ManageMessages || this.state.contextMenuMessage?.author.relationship == RelationshipStatus.User ? (
+                        {this.state.contextMenuMessage?.channel.havePermission("ManageMessages") || this.state.contextMenuMessage?.author.relationship == "User" ? (
                             <ContextButton
                                 onPress={() => {
                                     this.state.contextMenuMessage.delete()
@@ -135,7 +135,7 @@ export class Modals extends React.Component {
                                 <Text>Delete</Text>
                             </ContextButton>
                         ) : null}
-                        {this.state.contextMenuMessage?.author.relationship == RelationshipStatus.User ? (
+                        {this.state.contextMenuMessage?.author.relationship == "User" ? (
                             <ContextButton
                                 onPress={() => {
                                     app.setMessageBoxInput(this.state.contextMenuMessage?.content)
@@ -188,7 +188,7 @@ export class Modals extends React.Component {
                             <Text style={{color: '#ff3333'}}>User is banned</Text> : 
                             null
                         : null}
-                        {this.state.contextMenuUser?.relationship != RelationshipStatus.User ? 
+                        {this.state.contextMenuUser?.relationship != "User" ? 
                             <View style={{flexDirection: 'row'}}>
                                 <Button backgroundColor={currentTheme.backgroundPrimary} 
                                 style={{padding: 5, paddingLeft: 8, paddingRight: 8, margin: 3, flex: 1}}
@@ -209,10 +209,10 @@ export class Modals extends React.Component {
                         : null}
                         {this.state.contextMenuUserSection == "Profile" ? 
                             <ScrollView>
-                                {this.state.contextMenuUser?.relationship != RelationshipStatus.User ? 
+                                {this.state.contextMenuUser?.relationship != "User" ? 
                                     <>
                                         {!this.state.contextMenuUser?.bot ? 
-                                        (this.state.contextMenuUser?.relationship == RelationshipStatus.Friend ? 
+                                        (this.state.contextMenuUser?.relationship == "Friend" ? 
                                             <ContextButton onPress={async () => {app.openProfile(null); this.setState({currentChannel: (await this.state.contextMenuUser.openDM()), messages: []})}}>
                                                 <View style={styles.iconContainer}>
                                                     <MaterialIcon name="message" size={20} color={currentTheme.textPrimary} />
@@ -220,7 +220,7 @@ export class Modals extends React.Component {
                                                 <Text>Message</Text>
                                             </ContextButton> 
                                             :
-                                            this.state.contextMenuUser?.relationship == RelationshipStatus.Incoming ? 
+                                            this.state.contextMenuUser?.relationship == "Incoming" ? 
                                             <>
                                             <ContextButton onPress={() => {this.state.contextMenuUser?.addFriend(); this.setState({})}}>
                                                 <View style={styles.iconContainer}>
@@ -236,7 +236,7 @@ export class Modals extends React.Component {
                                             </ContextButton>
                                             </>
                                             :
-                                            this.state.contextMenuUser?.relationship == RelationshipStatus.Outgoing ? 
+                                            this.state.contextMenuUser?.relationship == "Outgoing" ? 
                                             <ContextButton onPress={() => {this.state.contextMenuUser?.removeFriend(); this.setState({})}}>
                                                 <Text>Cancel Friend</Text>
                                             </ContextButton>

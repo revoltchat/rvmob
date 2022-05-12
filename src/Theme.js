@@ -213,12 +213,11 @@ function refreshStyles() {
             padding: 10 - currentTheme.generalBorderWidth,
             paddingTop: 12 - currentTheme.generalBorderWidth,
             paddingBottom: 12 - currentTheme.generalBorderWidth,
-            margin: 3,
-            marginRight: 5,
+            marginLeft: 8,
+            marginRight: 8,
             borderRadius: 8,
             flexDirection: 'row',
             alignItems: 'center',
-            backgroundColor: currentTheme.backgroundPrimary,
             borderWidth: currentTheme.buttonBorderWidth,
             borderColor: currentTheme.buttonBorderColor
         },
@@ -249,8 +248,7 @@ function refreshStyles() {
             borderColor: currentTheme.buttonBorderColor
         },
         channelButtonSelected: {
-            borderColor: currentTheme.buttonBorderColorActive,
-            borderWidth: currentTheme.buttonBorderWidth > 0 ? currentTheme.buttonBorderWidth : 1
+            backgroundColor: currentTheme.backgroundPrimary
         },
         iconContainer: {
             alignItems: 'center', 
