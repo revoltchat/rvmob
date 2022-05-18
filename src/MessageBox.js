@@ -37,14 +37,14 @@ export const MessageBox = observer((props) => {
                 <Pressable style={{width: 30, height: 20, alignItems: 'center', justifyContent: 'center'}} onPress={() => 
                     setReplyingMessages(replyingMessages?.filter(m2 => m2.message._id != m.message._id))
                 }>
-                    <View style={styles.iconContainer}><AntIcon name="closecircle" size={16} color={currentTheme.textPrimary}/></View>
+                    <View style={styles.iconContainer}><AntIcon name="closecircle" size={16} color={currentTheme.foregroundPrimary}/></View>
                 </Pressable>
                 <Pressable style={{width: 45, height: 20, alignItems: 'center', justifyContent: 'center'}} onPress={() => {
                     let replacing = [...replyingMessages]
                     replacing[i].mentions = !replacing[i].mentions
                     setReplyingMessages(replacing)
                 }}>
-                    <Text style={{fontWeight: 'bold', color: m.mentions ? currentTheme.accentColor : currentTheme.textPrimary, marginTop: -3}}>@{m.mentions ? "ON" : "OFF"}</Text>
+                    <Text style={{fontWeight: 'bold', color: m.mentions ? currentTheme.accentColor : currentTheme.foregroundPrimary, marginTop: -3}}>@{m.mentions ? "ON" : "OFF"}</Text>
                 </Pressable>
                 <Text style={{marginTop: -1}}> Replying to </Text>
                 <View style={{marginTop: -1}}><Username user={m.message.author} server={props.channel.server}/></View>
@@ -56,13 +56,13 @@ export const MessageBox = observer((props) => {
                     setEditingMessage(null)
                     setCurrentText("")
                 }}>
-                    <View style={styles.iconContainer}><AntIcon name="closecircle" size={16} color={currentTheme.textPrimary}/></View>
+                    <View style={styles.iconContainer}><AntIcon name="closecircle" size={16} color={currentTheme.foregroundPrimary}/></View>
                 </Pressable>
                 <Text style={{marginTop: -1}}> Editing message</Text>
             </View>
         ) : null}
         <View style={styles.messageBoxInner}>
-            /*<TouchableOpacity style={styles.sendButton} onPress={async() => {
+            {/*<TouchableOpacity style={styles.sendButton} onPress={async() => {
                 let res = await DocumentPicker.pickSingle({
                     type: [DocumentPicker.types.allFiles]
                 })
@@ -70,9 +70,9 @@ export const MessageBox = observer((props) => {
                     setAttachments([...attachments, res])
                 }
             }}>
-                <AntIcon name="pluscircle" size={20} color={currentTheme.textPrimary}/>
-            </TouchableOpacity> */
-            <TextInput multiline placeholderTextColor={currentTheme.textSecondary} style={styles.messageBox} placeholder={"Message " + (props.channel?.channel_type != "Group" ? (props.channel?.channel_type == "DirectMessage" ? "@" : "#") : "") + (props.channel?.name || props.channel.recipient?.username)} onChangeText={(text) => {
+                <AntIcon name="pluscircle" size={20} color={currentTheme.foregroundPrimary}/>
+            </TouchableOpacity> */}
+            <TextInput multiline placeholderTextColor={currentTheme.foregroundSecondary} style={styles.messageBox} placeholder={"Message " + (props.channel?.channel_type != "Group" ? (props.channel?.channel_type == "DirectMessage" ? "@" : "#") : "") + (props.channel?.name || props.channel.recipient?.username)} onChangeText={(text) => {
                 setCurrentText(text)
                 if (currentText.length == 0) {
                     props.channel.stopTyping();
@@ -120,7 +120,7 @@ export const MessageBox = observer((props) => {
                     setReplyingMessages([]);
                 }
             }}>
-                {editingMessage ? <FA5Icon name="edit" size={24} color={currentTheme.textPrimary}/> : <MaterialIcon name="send" size={24} color={currentTheme.textPrimary}/>}
+                {editingMessage ? <FA5Icon name="edit" size={24} color={currentTheme.foregroundPrimary}/> : <MaterialIcon name="send" size={24} color={currentTheme.foregroundPrimary}/>}
             </TouchableOpacity> 
             : null}
         </View>

@@ -176,7 +176,7 @@ class MainView extends React.Component {
                                         <ScrollView style={{flex: 1}}>
                                             <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10, marginTop: 10}}>INCOMING REQUESTS</Text>
                                             <View>
-                                                {[...client.users.values()].filter((x) => x.relationship === RelationshipStatus.Incoming).map(f => {
+                                                {[...client.users.values()].filter((x) => x.relationship === "Incoming").map(f => {
                                                     return <Button style={{justifyContent: 'flex-start'}} key={f._id} onPress={() => app.openProfile(f)}>
                                                         <MiniProfile user={f} scale={1.15} />
                                                     </Button>
@@ -184,7 +184,7 @@ class MainView extends React.Component {
                                             </View>
                                             <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10, marginTop: 10}}>OUTGOING REQUESTS</Text>
                                             <View>
-                                                {[...client.users.values()].filter((x) => x.relationship === RelationshipStatus.Outgoing).map(f => {
+                                                {[...client.users.values()].filter((x) => x.relationship === "Outgoing").map(f => {
                                                     return <Button style={{justifyContent: 'flex-start'}} key={f._id} onPress={() => app.openProfile(f)}>
                                                         <MiniProfile user={f} scale={1.15} />
                                                     </Button>
@@ -192,7 +192,7 @@ class MainView extends React.Component {
                                             </View>
                                             <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10}}>FRIENDS</Text>
                                             <View>
-                                                {[...client.users.values()].filter((x) => x.relationship === RelationshipStatus.Friend).map(f => {
+                                                {[...client.users.values()].filter((x) => x.relationship === "Friend").map(f => {
                                                     return <Button style={{justifyContent: 'flex-start'}} key={f._id} onPress={() => app.openProfile(f)}>
                                                         <MiniProfile user={f} scale={1.15} />
                                                     </Button>
@@ -200,7 +200,7 @@ class MainView extends React.Component {
                                             </View>
                                             <Text style={{fontWeight: 'bold', margin: 5, marginLeft: 10}}>BLOCKED</Text>
                                             <View>
-                                                {[...client.users.values()].filter((x) => x.relationship === RelationshipStatus.Blocked).map(f => {
+                                                {[...client.users.values()].filter((x) => x.relationship === "Blocked").map(f => {
                                                     return <Button style={{justifyContent: 'flex-start'}} key={f._id} onPress={() => app.openProfile(f)}>
                                                         <MiniProfile user={f} scale={1.15} />
                                                     </Button>
@@ -214,7 +214,7 @@ class MainView extends React.Component {
                                             <View style={styles.iconContainer}>
                                                 <ChannelIcon channel={this.state.currentChannel} />
                                             </View>
-                                            <Text style={{flex: 1}}>{
+                                            <Text style={{flex: 1, fontWeight: "bold", fontSize: 16}}>{
                                                 this.state.currentChannel.channel_type == "DirectMessage" ? 
                                                 this.state.currentChannel.recipient?.username :
                                                 this.state.currentChannel.channel_type == "SavedMessages" ? 
@@ -288,10 +288,10 @@ class MainView extends React.Component {
                 <View style={styles.app}>
                     {/* <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
                         <Text style={{fontWeight: 'bold', fontSize: 48}}>RVMob</Text>
-                        <TextInput placeholderTextColor={currentTheme.textSecondary} style={{borderRadius: 8, padding: 3, paddingLeft: 10, paddingRight: 10, margin: 8, width: "80%", backgroundColor: currentTheme.backgroundSecondary, color: currentTheme.textPrimary}} placeholder={"Email"} onChangeText={(text) => {
+                        <TextInput placeholderTextColor={currentTheme.foregroundSecondary} style={{borderRadius: 8, padding: 3, paddingLeft: 10, paddingRight: 10, margin: 8, width: "80%", backgroundColor: currentTheme.backgroundSecondary, color: currentTheme.foregroundPrimary}} placeholder={"Email"} onChangeText={(text) => {
                             this.setState({emailInput: text})
                         }} value={this.state.emailInput} />
-                        <TextInput placeholderTextColor={currentTheme.textSecondary} style={{borderRadius: 8, padding: 3, paddingLeft: 10, paddingRight: 10, margin: 8, width: "80%", backgroundColor: currentTheme.backgroundSecondary, color: currentTheme.textPrimary}} placeholder={"Password"} onChangeText={(text) => {
+                        <TextInput placeholderTextColor={currentTheme.foregroundSecondary} style={{borderRadius: 8, padding: 3, paddingLeft: 10, paddingRight: 10, margin: 8, width: "80%", backgroundColor: currentTheme.backgroundSecondary, color: currentTheme.foregroundPrimary}} placeholder={"Password"} onChangeText={(text) => {
                             this.setState({passwordInput: text})
                         }} value={this.state.passwordInput} />
                         {this.state.logInError && <Text>{this.state.logInError.message}</Text>}
@@ -316,7 +316,7 @@ class MainView extends React.Component {
                     }} /> */}
                     <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
                         <Text style={{fontWeight: 'bold', fontSize: 48}}>RVMob</Text>
-                        <Input placeholderTextColor={currentTheme.textSecondary} style={{minWidth: "80%", width: "80%"}} placeholder={"Token"} onChangeText={(text) => {
+                        <Input placeholderTextColor={currentTheme.foregroundSecondary} style={{minWidth: "80%", width: "80%"}} placeholder={"Token"} onChangeText={(text) => {
                             this.setState({tokenInput: text})
                         }} value={this.state.tokenInput} />
                         {this.state.logInError ? <Text>{this.state.logInError.message || this.state.logInError}</Text> : null}
@@ -355,7 +355,7 @@ export const ChannelHeader = ({children}) => {
     return <View style={styles.channelHeader}>
         <TouchableOpacity style={styles.headerIcon} onPress={() => {app.openLeftMenu()}}>
             <View style={styles.iconContainer}>
-                <MaterialIcon name="menu" size={20} color={currentTheme.textPrimary} />
+                <MaterialIcon name="menu" size={20} color={currentTheme.foregroundPrimary} />
             </View>
         </TouchableOpacity>
         {children}

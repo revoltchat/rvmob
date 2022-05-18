@@ -268,8 +268,8 @@ export const Message = observer((props) => {
                 <View style={props.grouped ? styles.messageGrouped : styles.message}>
                     {(props.message.author && !props.grouped) ? <Pressable onPress={() => props.onUserPress()}><Avatar user={props.message.author} masquerade={props.message.generateMasqAvatarURL()} server={props.message.channel?.server} size={35} {...(app.settings.get("Show user status in chat avatars") ? {status: true} : {})} /></Pressable> : null}
                     <View style={styles.messageInner}>
-                        {(props.grouped && props.message.edited) ? <Text style={{fontSize: 12, color: currentTheme.textSecondary, position: 'relative', right: 47, marginBottom: -16}}> (edited)</Text> : null}
-                        {(props.message.author && !props.grouped) ? <View style={{flexDirection: 'row'}}><Pressable onPress={props.onUsernamePress}><Username user={props.message.author} server={props.message.channel?.server} masquerade={props.message.masquerade?.name} /></Pressable><Text style={styles.timestamp}> {formatRelative(decodeTime(props.message._id), new Date())}</Text>{props.message.edited && <Text style={{fontSize: 12, color: currentTheme.textSecondary, position: 'relative', top: 2, left: 2}}> (edited)</Text>}</View> : null}
+                        {(props.grouped && props.message.edited) ? <Text style={{fontSize: 11, color: currentTheme.foregroundTertiary, position: 'relative', right: 47, marginBottom: -16}}> (edited)</Text> : null}
+                        {(props.message.author && !props.grouped) ? <View style={{flexDirection: 'row'}}><Pressable onPress={props.onUsernamePress}><Username user={props.message.author} server={props.message.channel?.server} masquerade={props.message.masquerade?.name} /></Pressable><Text style={styles.timestamp}> {formatRelative(decodeTime(props.message._id), new Date())}</Text>{props.message.edited && <Text style={{fontSize: 12, color: currentTheme.foregroundTertiary, position: 'relative', top: 2, left: 2}}> (edited)</Text>}</View> : null}
                         <MarkdownView>{parseRevoltNodes(props.message.content)}</MarkdownView>
                         {props.message.attachments?.map((a) => {
                             if (a.metadata?.type == "Image") {
@@ -301,7 +301,7 @@ export const Message = observer((props) => {
 const MessageEmbed = observer(({embed: e}) => {
     if (e.type=="Website")
     return <View style={{backgroundColor: currentTheme.backgroundSecondary, padding: 8, borderRadius: 8}}>
-        {e.site_name ? <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>{e.site_name}</Text> : null}
+        {e.site_name ? <Text style={{fontSize: 12, color: currentTheme.foregroundSecondary}}>{e.site_name}</Text> : null}
         {e.title && 
             e.url ? <Pressable onPress={() => openUrl(e.url)}><Text style={{color: currentTheme.accentColor}}>{e.title}</Text></Pressable> : <Text>{e.title}</Text>}
         {e.description ? <Text>{e.description}</Text> : null}

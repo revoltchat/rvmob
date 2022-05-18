@@ -81,8 +81,8 @@ export const MiniProfile = observer(({ user, scale, channel, server, color }) =>
     return <View style={{flexDirection: 'row'}}>
         <Avatar user={user} server={server} size={35 * (scale || 1)} status />
         <View style={{marginLeft: 10 * (scale || 1)}}>
-            <Username user={user} server={server} color={color || currentTheme.textPrimary} size={14 * (scale || 1)} />
-            <Text style={{color: color || currentTheme.textPrimary, marginTop: -3 * (scale || 1), fontSize: 14 * (scale || 1)}}>{user.online ? (user.status?.text || (user.status?.presence || "Online")) : "Offline"}</Text>
+            <Username user={user} server={server} color={color || currentTheme.foregroundPrimary} size={14 * (scale || 1)} />
+            <Text style={{color: color || currentTheme.foregroundPrimary, marginTop: -3 * (scale || 1), fontSize: 14 * (scale || 1)}}>{user.online ? (user.status?.text || (user.status?.presence || "Online")) : "Offline"}</Text>
         </View>
     </View>
 
@@ -90,8 +90,8 @@ export const MiniProfile = observer(({ user, scale, channel, server, color }) =>
     return <View style={{flexDirection: 'row'}}>
         <Avatar channel={channel} size={35 * (scale || 1)} />
         <View style={{marginLeft: 10 * (scale || 1)}}>
-            <Text style={{color: color || currentTheme.textPrimary, fontSize: 14 * (scale || 1), fontWeight: 'bold'}}>{channel.name}</Text>
-            <Text style={{color: color || currentTheme.textPrimary, marginTop: -3 * (scale || 1), fontSize: 14 * (scale || 1)}}>{channel?.recipient_ids.length} members</Text>
+            <Text style={{color: color || currentTheme.foregroundPrimary, fontSize: 14 * (scale || 1), fontWeight: 'bold'}}>{channel.name}</Text>
+            <Text style={{color: color || currentTheme.foregroundPrimary, marginTop: -3 * (scale || 1), fontSize: 14 * (scale || 1)}}>{channel?.recipient_ids.length} members</Text>
         </View>
     </View>
 })
@@ -115,7 +115,7 @@ export const RoleView = observer(({ server, user }) => {
                     }}>
                         <View style={{
                             borderRadius: 10000, 
-                            backgroundColor: r.colour || currentTheme.textSecondary, 
+                            backgroundColor: r.colour || currentTheme.foregroundSecondary, 
                             height: 16, width: 16, 
                             margin: 2, 
                             marginRight: 6

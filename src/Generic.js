@@ -159,7 +159,7 @@ export const client = new Client({ unreads: true });
 export const Text = (props) => {
     let newProps = {...props}
     if (!props.style) newProps = Object.assign({style: {}}, newProps)
-    newProps.style = Object.assign({color: currentTheme.textPrimary, flexWrap: 'wrap', fontFamily: 'OpenSans'}, newProps.style)
+    newProps.style = Object.assign({color: currentTheme.foregroundPrimary, flexWrap: 'wrap', fontFamily: 'OpenSans'}, newProps.style)
     return (
         <ReactNative.Text {...newProps}>{newProps.children}</ReactNative.Text>
     )
@@ -222,7 +222,7 @@ const spoilerStyle = {
     },
     revealedSpoiler: {
         backgroundColor: currentTheme.backgroundSecondary,
-        color: currentTheme.textPrimary,
+        color: currentTheme.foregroundPrimary,
     },
 };
 
@@ -290,19 +290,19 @@ export const MarkdownView = (props) => {
     if (!newProps.rules) newProps = Object.assign({rules: spoilerRule}, newProps)
     if (!newProps.style) newProps = Object.assign({style: {}}, newProps)
     if (!newProps.style.body) newProps.style = Object.assign({body: {}}, newProps.style)
-    newProps.style.body = Object.assign({color: currentTheme.textPrimary}, newProps.style.body)
+    newProps.style.body = Object.assign({color: currentTheme.foregroundPrimary}, newProps.style.body)
     if (!newProps.style.paragraph) newProps.style = Object.assign({paragraph: {}}, newProps.style)
-    newProps.style.paragraph = Object.assign({color: currentTheme.textPrimary, marginTop: -3, marginBottom: 2}, newProps.style.paragraph)
+    newProps.style.paragraph = Object.assign({color: currentTheme.foregroundPrimary, marginTop: -3, marginBottom: 2}, newProps.style.paragraph)
     if (!newProps.style.link) newProps.style = Object.assign({link: {}}, newProps.style)
     newProps.style.link = Object.assign({color: currentTheme.accentColor}, newProps.style.link)
     if (!newProps.style.code_inline) newProps.style = Object.assign({ code_inline: {} }, newProps.style)
-    newProps.style.code_inline = Object.assign({ color: currentTheme.textPrimary, backgroundColor: currentTheme.backgroundSecondary }, newProps.style.code_inline);
+    newProps.style.code_inline = Object.assign({ color: currentTheme.foregroundPrimary, backgroundColor: currentTheme.backgroundSecondary }, newProps.style.code_inline);
     if (!newProps.style.fence) newProps.style = Object.assign({fence: {}}, newProps.style);
-    newProps.style.fence = Object.assign({ color: currentTheme.textPrimary, backgroundColor: currentTheme.backgroundSecondary, borderWidth: 0 }, newProps.style.fence);
+    newProps.style.fence = Object.assign({ color: currentTheme.foregroundPrimary, backgroundColor: currentTheme.backgroundSecondary, borderWidth: 0 }, newProps.style.fence);
     if (!newProps.style.code_block) newProps.style = Object.assign({code_block: {}}, newProps.style);
-    newProps.style.code_block = Object.assign({ borderColor: currentTheme.textPrimary, color: currentTheme.textPrimary, backgroundColor: currentTheme.backgroundSecondary }, newProps.style.code_block);
+    newProps.style.code_block = Object.assign({ borderColor: currentTheme.foregroundPrimary, color: currentTheme.foregroundPrimary, backgroundColor: currentTheme.backgroundSecondary }, newProps.style.code_block);
     if (!newProps.style.blockquote) newProps.style = Object.assign({ blockquote: {} }, newProps.style)
-    newProps.style.blockquote = Object.assign({ borderColor: currentTheme.textPrimary, color: currentTheme.textPrimary, backgroundColor: currentTheme.blockQuoteBackground }, newProps.style.block_quote);
+    newProps.style.blockquote = Object.assign({ borderColor: currentTheme.foregroundPrimary, color: currentTheme.foregroundPrimary, backgroundColor: currentTheme.blockQuoteBackground }, newProps.style.block_quote);
     try {
         return (
             <Markdown {...newProps}>{newProps.children}</Markdown>
@@ -351,11 +351,11 @@ export const ServerList = observer(({ onServerPress, onServerLongPress, filter, 
         let pings = s.getMentions().length;
         return <View>
             {showUnread && s.getMentions().length > 0 ?
-                <View style={{borderRadius: 10000, backgroundColor: currentTheme.pingColor, height: 20, width: 20, marginBottom: -20, left: 34, zIndex: 2, justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={{color: currentTheme.pingColorForeground, marginRight: 1, marginBottom: 2}}>{pings > 9 ? "9+" : pings}</Text>
+                <View style={{borderRadius: 10000, backgroundColor: currentTheme.error, height: 20, width: 20, marginBottom: -20, left: 34, zIndex: 2, justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={{color: "#FFFFFF", marginRight: 1, marginBottom: 2}}>{pings > 9 ? "9+" : pings}</Text>
                 </View>
             : showUnread && s.isUnread() ? 
-                <View style={{borderRadius: 10000, backgroundColor: currentTheme.textPrimary, height: 20, width: 20, marginBottom: -20, left: 34, zIndex: 2}}/> 
+                <View style={{borderRadius: 10000, backgroundColor: currentTheme.foregroundPrimary, height: 20, width: 20, marginBottom: -20, left: 34, zIndex: 2}}/> 
             : null}
             <TouchableOpacity 
             onPress={()=>{onServerPress(s)}} 
@@ -369,18 +369,23 @@ export const ServerList = observer(({ onServerPress, onServerLongPress, filter, 
 })
 
 export const ChannelButton = observer(({channel, onPress=()=>{}, onLongPress=()=>{}, delayLongPress, selected, showUnread=true}) => {
-    let color = showUnread && channel.unread ? currentTheme.textPrimary : currentTheme.textSecondary
+    let color = showUnread && channel.unread ? currentTheme.foregroundPrimary : currentTheme.foregroundTertiary
     let pings = channel.mentions?.length
+    let classes = [styles.channelButton]
+    if (selected) {
+        classes.push(styles.channelButtonSelected)
+    }
+    if (channel.channel_type == "DirectMessage" || channel.channel_type == "Group") {
+        classes.push({padding: 6})
+    } else {
+        classes.push({padding: 8})
+    }
     return <TouchableOpacity 
     onPress={()=>onPress()} 
     onLongPress={()=>onLongPress()}
     delayLongPress={delayLongPress}
     key={channel._id} 
-    style={
-        selected ? 
-        [styles.channelButton, styles.channelButtonSelected] : 
-        styles.channelButton
-    }>
+    style={classes}>
         {channel.channel_type == "DirectMessage" ? 
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <MiniProfile user={channel.recipient} color={color} />
@@ -393,43 +398,45 @@ export const ChannelButton = observer(({channel, onPress=()=>{}, onLongPress=()=
         <View style={styles.iconContainer}>
             <ChannelIcon channel={channel} />
         </View>
-        <Text style={{flex: 1, color}}>{channel.name || channel}</Text>
+        <Text style={{flex: 1, fontWeight: "bold", color, fontSize: 15}}>{channel.name || channel}</Text>
         {showUnread && channel.mentions?.length > 0 ?
-            <View style={{width: 20, height: 20, marginLeft: 4, marginRight: 4, borderRadius: 10000, backgroundColor: currentTheme.pingColor, justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{color: currentTheme.pingColorForeground, marginRight: 1, marginBottom: 2}}>{pings > 9 ? "9+" : pings}</Text>
+            <View style={{width: 20, height: 20, marginLeft: 4, marginRight: 4, borderRadius: 10000, backgroundColor: currentTheme.error, justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{color: "#FFFFFF", marginRight: 1, marginBottom: 2}}>{pings > 9 ? "9+" : pings}</Text>
             </View>
         : showUnread && channel.unread ? 
-            <View style={{width: 12, height: 12, marginLeft: 8, marginRight: 8, borderRadius: 10000, backgroundColor: currentTheme.textPrimary}} /> 
+            <View style={{width: 12, height: 12, marginLeft: 8, marginRight: 8, borderRadius: 10000, backgroundColor: currentTheme.foregroundPrimary}} /> 
         : null}
         </>}
     </TouchableOpacity>
 })
 
 export const ChannelIcon = ({channel, showUnread=true}) => {
-    let color = showUnread && channel.unread ? currentTheme.textPrimary : currentTheme.textSecondary
+    let color = showUnread && channel.unread ? currentTheme.foregroundPrimary : currentTheme.foregroundSecondary
     return (channel.generateIconURL && channel.generateIconURL()) ? 
     <Image 
     source={{uri: channel.generateIconURL() + "?max_side=" + defaultMaxSide}} 
-    style={{width: 20, height: 20}}/> :
+    style={{width: 24, height: 24}}/> :
     channel == "Home" ?
-    <FA5Icon name="house-user" size={16} color={color} /> : 
+    <FA5Icon name="house-user" size={20} color={color} /> : 
     channel == "Friends" ?
-    <FA5Icon name="users" size={16} color={color} /> : 
+    <FA5Icon name="users" size={20} color={color} /> : 
     channel == "Saved Notes" ? 
-    <MaterialIcon name="sticky-note-2" size={20} color={color} /> :
+    <MaterialIcon name="sticky-note-2" size={24} color={color} /> :
     channel.channel_type == "DirectMessage" ? 
-    <FontistoIcon name="at" size={16} color={color}/>
+    <FontistoIcon name="at" size={20} color={color}/>
     :
     channel.channel_type == "VoiceChannel" ? 
-    <FA5Icon name="volume-up" size={16} color={color}/>
+    <FA5Icon name="volume-up" size={20} color={color}/>
     :
-    <FontistoIcon name="hashtag" size={16} color={color} />
+    <FontistoIcon name="hashtag" size={20} color={color} />
 }
 
 export const ChannelList = observer((props) => {
     return (
         <>
             {!props.currentServer ? <>
+
+            <Text style={{marginLeft: 12, margin: 14, fontSize: 16, fontWeight: "bold"}}>Direct Messages</Text>
 
             <ChannelButton 
             onPress={async ()=>{props.onChannelClick(null)}} 
@@ -462,7 +469,7 @@ export const ChannelList = observer((props) => {
                     let processedChannels = [];
                     let res = props.currentServer.categories?.map(c => {
                         return <View key={c.id}>
-                            <Text style={{marginLeft: 5, marginTop: 10, fontSize: 12, fontWeight: 'bold'}}>{c.title?.toUpperCase()}</Text>
+                            <Text style={{marginLeft: 12, marginTop: 8, marginBottom: 2, fontWeight: 'bold'}}>{c.title?.toUpperCase()}</Text>
                             {c.channels.map((cid) => {
                                 processedChannels.push(cid)
                                 let c = client.channels.get(cid)
@@ -507,7 +514,7 @@ export const ServerName = observer(({ server, size }) => {
 
 
 export const remarkStyle = {
-    color: currentTheme.textSecondary, 
+    color: currentTheme.foregroundSecondary, 
     textAlign: 'center', 
     fontSize: 16, 
     marginTop: 5
@@ -559,7 +566,7 @@ export function Input({value, onChangeText, placeholder, style, backgroundColor,
         value={value} 
         onChangeText={onChangeText} 
         placeholder={placeholder} 
-        style={[{minWidth: "100%", borderRadius: 8, backgroundColor: currentTheme.backgroundSecondary, padding: 6, paddingLeft: 10, paddingRight: 10, color: currentTheme.textPrimary}, backgroundColor ? {backgroundColor} : {}, style]}
+        style={[{minWidth: "100%", borderRadius: 8, backgroundColor: currentTheme.backgroundSecondary, padding: 6, paddingLeft: 10, paddingRight: 10, color: currentTheme.foregroundPrimary}, backgroundColor ? {backgroundColor} : {}, style]}
         {...props} />
     )
 }
@@ -572,10 +579,10 @@ export function InputWithButton({defaultValue, placeholder, buttonLabel, style, 
             value={value}
             onChangeText={(v) => {setValue(v)}}
             placeholder={placeholder}
-            style={{flex: 1, borderRadius: 8, backgroundColor: backgroundColor || currentTheme.backgroundSecondary, padding: 6, paddingLeft: 10, paddingRight: 10, color: currentTheme.textPrimary}}
+            style={{flex: 1, borderRadius: 8, backgroundColor: backgroundColor || currentTheme.backgroundSecondary, padding: 6, paddingLeft: 10, paddingRight: 10, color: currentTheme.foregroundPrimary}}
             {...props} />
             <Button onPress={() => {onPress(value)}} style={[styles.button, backgroundColor ? {backgroundColor} : {}]}>
-                <Text style={{color: currentTheme.textPrimary}}>{buttonLabel}</Text>
+                <Text style={{color: currentTheme.foregroundPrimary}}>{buttonLabel}</Text>
             </Button>
         </View>
     )

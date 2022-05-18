@@ -34,7 +34,12 @@ export class Modals extends React.Component {
             inviteBot: null
         }
         setFunction("openProfile", async (u, s) => {
-            this.setState({contextMenuUser: u || null, contextMenuUserProfile: u ? (await u.fetchProfile()) : null, contextMenuUserMutual: u ? (await u.fetchMutual()) : null, contextMenuUserServer: s || null, contextMenuUserSection: "Profile"});
+            this.setState({
+                contextMenuUser: u || null, 
+                contextMenuUserProfile: u ? (await u.fetchProfile()) : null, 
+                contextMenuUserMutual: u && u.relationship != "User" ? (await u.fetchMutual()) : null, 
+                contextMenuUserServer: s || null, contextMenuUserSection: "Profile"
+            });
         })
         setFunction("openInvite", async (i) => {
             this.setState({inviteServer: (await client.fetchInvite(i).catch(e => e)), inviteServerCode: i})
@@ -76,7 +81,7 @@ export class Modals extends React.Component {
                             onPress={() => this.setState({contextMenuMessage: null})}
                         >
                             <View style={styles.iconContainer}>
-                                <AntIcon name="closecircle" size={16} color={currentTheme.textPrimary} />
+                                <AntIcon name="closecircle" size={16} color={currentTheme.foregroundPrimary} />
                             </View>
                             <Text>Close</Text>
                         </ContextButton>
@@ -96,7 +101,7 @@ export class Modals extends React.Component {
                             }}
                         >
                             <View style={styles.iconContainer}>
-                                <MaterialIcon name="reply" size={20} color={currentTheme.textPrimary} />
+                                <MaterialIcon name="reply" size={20} color={currentTheme.foregroundPrimary} />
                             </View>
                             <Text>Reply</Text>
                         </ContextButton>
@@ -106,7 +111,7 @@ export class Modals extends React.Component {
                             }}
                         >
                             <View style={styles.iconContainer}>
-                                <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
+                                <FA5Icon name="clipboard" size={18} color={currentTheme.foregroundPrimary} />
                             </View>
                             <Text>Copy content</Text>
                         </ContextButton>
@@ -117,9 +122,9 @@ export class Modals extends React.Component {
                             }}
                         >
                             <View style={styles.iconContainer}>
-                                <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
+                                <FA5Icon name="clipboard" size={18} color={currentTheme.foregroundPrimary} />
                             </View>
-                            <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuMessage?._id})</Text></Text>
+                            <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.foregroundSecondary}}>({this.state.contextMenuMessage?._id})</Text></Text>
                         </ContextButton>
                         : null}
                         {this.state.contextMenuMessage?.channel.havePermission("ManageMessages") || this.state.contextMenuMessage?.author.relationship == "User" ? (
@@ -130,7 +135,7 @@ export class Modals extends React.Component {
                                 }}
                             >
                                 <View style={styles.iconContainer}>
-                                    <FA5Icon name="trash" size={18} color={currentTheme.textPrimary} />
+                                    <FA5Icon name="trash" size={18} color={currentTheme.foregroundPrimary} />
                                 </View>
                                 <Text>Delete</Text>
                             </ContextButton>
@@ -145,7 +150,7 @@ export class Modals extends React.Component {
                                 }}
                             >
                                 <View style={styles.iconContainer}>
-                                    <FA5Icon name="edit" size={18} color={currentTheme.textPrimary} />
+                                    <FA5Icon name="edit" size={18} color={currentTheme.foregroundPrimary} />
                                 </View>
                                 <Text>Edit</Text>
                             </ContextButton>
@@ -215,7 +220,7 @@ export class Modals extends React.Component {
                                         (this.state.contextMenuUser?.relationship == "Friend" ? 
                                             <ContextButton onPress={async () => {app.openProfile(null); this.setState({currentChannel: (await this.state.contextMenuUser.openDM()), messages: []})}}>
                                                 <View style={styles.iconContainer}>
-                                                    <MaterialIcon name="message" size={20} color={currentTheme.textPrimary} />
+                                                    <MaterialIcon name="message" size={20} color={currentTheme.foregroundPrimary} />
                                                 </View>
                                                 <Text>Message</Text>
                                             </ContextButton> 
@@ -224,13 +229,13 @@ export class Modals extends React.Component {
                                             <>
                                             <ContextButton onPress={() => {this.state.contextMenuUser?.addFriend(); this.setState({})}}>
                                                 <View style={styles.iconContainer}>
-                                                    <FA5Icon name="user-plus" size={16} color={currentTheme.textPrimary} />
+                                                    <FA5Icon name="user-plus" size={16} color={currentTheme.foregroundPrimary} />
                                                 </View>
                                                 <Text>Accept Friend</Text>
                                             </ContextButton>
                                             <ContextButton onPress={() => {this.state.contextMenuUser?.removeFriend(); this.setState({})}}>
                                                 <View style={styles.iconContainer}>
-                                                    <FA5Icon name="user-times" size={16} color={currentTheme.textPrimary} />
+                                                    <FA5Icon name="user-times" size={16} color={currentTheme.foregroundPrimary} />
                                                 </View>
                                                 <Text>Reject Friend</Text>
                                             </ContextButton>
@@ -253,7 +258,7 @@ export class Modals extends React.Component {
                                                 <MiniProfile user={client.users.get(this.state.contextMenuUser.bot.owner)} />
                                             </ContextButton>
                                             :
-                                            <Text style={{color: currentTheme.textSecondary}}>Unloaded user</Text>}
+                                            <Text style={{color: currentTheme.foregroundSecondary}}>Unloaded user</Text>}
                                         </>}
                                     </>
                                     : 
@@ -274,14 +279,14 @@ export class Modals extends React.Component {
                                 {app.settings.get("Show developer tools") ?
                                 <ContextButton key={"Copy ID"} onPress={() => {Clipboard.setString(this.state.contextMenuUser._id)}}>
                                     <View style={styles.iconContainer}>
-                                        <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
+                                        <FA5Icon name="clipboard" size={18} color={currentTheme.foregroundPrimary} />
                                     </View>
-                                    <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuUser?._id})</Text></Text>
+                                    <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.foregroundSecondary}}>({this.state.contextMenuUser?._id})</Text></Text>
                                 </ContextButton>
                                 : null}
                                 <RoleView user={this.state.contextMenuUser} server={this.state.contextMenuUserServer}/>
                                 {this.state.contextMenuUser?.badges ? <>
-                                    <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>BADGES</Text>
+                                    <Text style={{color: currentTheme.foregroundSecondary, fontWeight: 'bold'}}>BADGES</Text>
                                     <ScrollView style={{flexDirection: 'row', height: 38, marginTop: 2, marginBottom: 2}} contentContainerStyle={{alignItems: 'center'}} horizontal={true}>
                                         <>
                                             {Object.keys(Badges).map(b => {
@@ -303,7 +308,7 @@ export class Modals extends React.Component {
                                                         case "PlatformModeration":
                                                             return <FA5Icon name="gavel" size={28} color={'brown'} />
                                                         default:
-                                                            return <Text style={{color: currentTheme.textSecondary, fontSize: 8}}>[{b}]</Text>
+                                                            return <Text style={{color: currentTheme.foregroundSecondary, fontSize: 8}}>[{b}]</Text>
                                                     }})()}
                                                     </View>
                                                 }
@@ -316,13 +321,13 @@ export class Modals extends React.Component {
                                         </>
                                     </ScrollView>
                                 </> : null}
-                                <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>BIO</Text>
+                                <Text style={{color: currentTheme.foregroundSecondary, fontWeight: 'bold'}}>BIO</Text>
                                 {this.state.contextMenuUserProfile?.content ? <MarkdownView>{parseRevoltNodes(this.state.contextMenuUserProfile?.content)}</MarkdownView> : null}
                                 <View style={{marginTop: 200}} />
                             </ScrollView> :
                         this.state.contextMenuUserSection == "Mutual Servers" ?
                             <ScrollView>
-                                <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>MUTUAL SERVERS</Text>
+                                <Text style={{color: currentTheme.foregroundSecondary, fontWeight: 'bold'}}>MUTUAL SERVERS</Text>
                                 {this.state.contextMenuUserMutual.servers.map((s) => {
                                     s = client.servers.get(s);
                                     return <ContextButton key={s._id} onPress={() => {app.openServer(s); app.openProfile(null); app.openLeftMenu(true)}}>
@@ -334,7 +339,7 @@ export class Modals extends React.Component {
                             </ScrollView> :
                         this.state.contextMenuUserSection == "Mutual Friends" ?
                             <ScrollView>
-                                <Text style={{color: currentTheme.textSecondary, fontWeight: 'bold'}}>MUTUAL FRIENDS</Text>
+                                <Text style={{color: currentTheme.foregroundSecondary, fontWeight: 'bold'}}>MUTUAL FRIENDS</Text>
                                 {this.state.contextMenuUserMutual.users.map((u) => {
                                     u = client.users.get(u);
                                     return <ContextButton key={u._id} onPress={() => {app.openProfile(u)}}>
@@ -364,8 +369,8 @@ export class Modals extends React.Component {
             <Modal visible={this.state.settingsOpen} transparent={true} animationType="slide">
                 <View style={{flex: 1, backgroundColor: currentTheme.backgroundPrimary, padding: 15, borderTopLeftRadius: 15, borderTopRightRadius: 15}}>
                     <Pressable style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}} onPress={() => {this.setState({settingsOpen: false})}}>
-                        <AntIcon name="closecircle" size={24} color={currentTheme.textSecondary} />
-                        <Text style={{color: currentTheme.textSecondary, fontSize: 20, marginLeft: 5}}>Close</Text>
+                        <AntIcon name="closecircle" size={24} color={currentTheme.foregroundSecondary} />
+                        <Text style={{color: currentTheme.foregroundSecondary, fontSize: 20, marginLeft: 5}}>Close</Text>
                     </Pressable>
                     <ScrollView style={{flex: 1}}>
                         {this.state.settingsSection == null ?
@@ -380,8 +385,8 @@ export class Modals extends React.Component {
                         this.state.settingsSection == "App" ?
                         <> 
                             <Pressable style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}} onPress={() => {this.setState({settingsSection: null})}}>
-                                <AntIcon name="back" size={24} color={currentTheme.textSecondary} />
-                                <Text style={{color: currentTheme.textSecondary, fontSize: 20, marginLeft: 5}}>Back</Text>
+                                <AntIcon name="back" size={24} color={currentTheme.foregroundSecondary} />
+                                <Text style={{color: currentTheme.foregroundSecondary, fontSize: 20, marginLeft: 5}}>Back</Text>
                             </Pressable>
                             {Object.entries(app.settings).map(([k, v]) => {
                                 if (v.experimental && !app.settings.get("Show experimental features")) return null;
@@ -395,7 +400,7 @@ export class Modals extends React.Component {
                                             width: 40, height: 40, borderRadius: 8, 
                                             backgroundColor: app.settings.get(k) ? currentTheme.accentColor : currentTheme.backgroundSecondary,
                                             alignItems: 'center', justifyContent: 'center'
-                                        }} onPress={() => {app.settings.set(k, !app.settings.get(k)); rerender()}}><Text style={{color: app.settings.get(k) ? currentTheme.accentColorForeground : currentTheme.textPrimary}}>{app.settings.get(k) ? <FA5Icon name="check" color={currentTheme.accentColorForeground} size={24} /> : null}</Text></TouchableOpacity>
+                                        }} onPress={() => {app.settings.set(k, !app.settings.get(k)); rerender()}}><Text style={{color: app.settings.get(k) ? currentTheme.accentColorForeground : currentTheme.foregroundPrimary}}>{app.settings.get(k) ? <FA5Icon name="check" color={currentTheme.accentColorForeground} size={24} /> : null}</Text></TouchableOpacity>
                                     </View>
                                 } else if (v.type == "string" || v.type == "number") {
                                     return <View key={k} style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
@@ -414,7 +419,7 @@ export class Modals extends React.Component {
                                             {v.experimental ? <FA5Icon name="flask" size={16} color={currentTheme.accentColor} /> : null}
                                             {v.developer ? <FA5Icon name="bug" size={16} color={currentTheme.accentColor} /> : null}
                                             <Text style={{flex: 1, fontWeight: 'bold'}}>{k}</Text>
-                                            <TextInput style={{minWidth: "100%", borderRadius: 8, backgroundColor: currentTheme.backgroundSecondary, padding: 6, paddingLeft: 10, paddingRight: 10, color: currentTheme.textPrimary}} value={app.settings.getRaw(k)} keyboardType={v.type == "number" ? 'decimal-pad' : 'default'} onChangeText={(v) => {app.settings.set(k, v); rerender()}} />
+                                            <TextInput style={{minWidth: "100%", borderRadius: 8, backgroundColor: currentTheme.backgroundSecondary, padding: 6, paddingLeft: 10, paddingRight: 10, color: currentTheme.foregroundPrimary}} value={app.settings.getRaw(k)} keyboardType={v.type == "number" ? 'decimal-pad' : 'default'} onChangeText={(v) => {app.settings.set(k, v); rerender()}} />
                                         </View>}
                                     </View>
                                 }
@@ -424,8 +429,8 @@ export class Modals extends React.Component {
                         this.state.settingsSection == "Account" ?
                         <View>
                             <Pressable style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}} onPress={() => {this.setState({settingsSection: null})}}>
-                                <AntIcon name="back" size={24} color={currentTheme.textSecondary} />
-                                <Text style={{color: currentTheme.textSecondary, fontSize: 20, marginLeft: 5}}>Back</Text>
+                                <AntIcon name="back" size={24} color={currentTheme.foregroundSecondary} />
+                                <Text style={{color: currentTheme.foregroundSecondary, fontSize: 20, marginLeft: 5}}>Back</Text>
                             </Pressable>
                             <Text style={{fontSize: 24, fontWeight: 'bold'}}>Account</Text>
                         </View> : null
@@ -438,16 +443,16 @@ export class Modals extends React.Component {
                 <View style={{width: "100%", height: Dimensions.get("window").height * 0.75, top: "25%", padding: 15, backgroundColor: currentTheme.backgroundSecondary}}>
                     <View style={{alignItems: 'center', justifyContent: 'center'}}>
                         {this.state.contextMenuServer?.icon ? <GeneralAvatar attachment={this.state.contextMenuServer?.icon} size={72} /> : null}
-                        <Text style={{color: currentTheme.textPrimary, fontWeight: 'bold', fontSize: 24, textAlign: 'center'}}>{this.state.contextMenuServer?.name}</Text>
-                        {this.state.contextMenuServer?.description ? <Text style={{color: currentTheme.textSecondary, fontSize: 16, textAlign: 'center'}}>{this.state.contextMenuServer?.description}</Text> : null}
+                        <Text style={{color: currentTheme.foregroundPrimary, fontWeight: 'bold', fontSize: 24, textAlign: 'center'}}>{this.state.contextMenuServer?.name}</Text>
+                        {this.state.contextMenuServer?.description ? <Text style={{color: currentTheme.foregroundSecondary, fontSize: 16, textAlign: 'center'}}>{this.state.contextMenuServer?.description}</Text> : null}
                     </View>
                     <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 10}}>
                         {app.settings.get("Show developer tools") ?
                         <ContextButton key={"Copy ID"} onPress={() => {Clipboard.setString(this.state.contextMenuServer._id)}}>
                             <View style={styles.iconContainer}>
-                                <FA5Icon name="clipboard" size={18} color={currentTheme.textPrimary} />
+                                <FA5Icon name="clipboard" size={18} color={currentTheme.foregroundPrimary} />
                             </View>
-                            <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.textSecondary}}>({this.state.contextMenuServer?._id})</Text></Text>
+                            <Text>Copy ID <Text style={{fontSize: 12, color: currentTheme.foregroundSecondary}}>({this.state.contextMenuServer?._id})</Text></Text>
                         </ContextButton>
                         : null}
                     </View>

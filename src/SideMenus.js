@@ -43,8 +43,8 @@ export class LeftMenu extends React.Component {
             borderTopWidth: currentTheme.generalBorderWidth,
             borderColor: currentTheme.generalBorderColor,
             flexDirection: 'row'}}>
-                <Button onPress={() => app.openSettings(true)} backgroundColor={currentTheme.backgroundPrimary}><FAIcon name="gear" size={20} color={currentTheme.textPrimary} /></Button>
-                <Button onPress={this.props.onLogOut} backgroundColor={currentTheme.backgroundPrimary}><MaterialIcon name="logout" size={20} color={currentTheme.textPrimary} /></Button>
+                <Button onPress={() => app.openSettings(true)} backgroundColor={currentTheme.backgroundPrimary}><FAIcon name="gear" size={20} color={currentTheme.foregroundPrimary} /></Button>
+                <Button onPress={this.props.onLogOut} backgroundColor={currentTheme.backgroundPrimary}><MaterialIcon name="logout" size={20} color={currentTheme.foregroundPrimary} /></Button>
             </View>
             </>
         );
