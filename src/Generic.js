@@ -154,7 +154,7 @@ export function setFunction(name, func) {
 export const defaultMaxSide = "128";
 export const defaultMessageLoadCount = 50;
 
-export const client = new Client({ unreads: true });
+export const client = new Client({ unreads: true, apiURL: "api.divolt.xyz" });
 
 export const Text = (props) => {
     let newProps = {...props}
@@ -168,10 +168,7 @@ export const Text = (props) => {
 export const defaultMarkdownIt = MarkdownIt({ typographer: true, linkify: true }).disable(['image']).use(spoilerPlugin);
 
 export const INVITE_PATHS = [
-    "app.revolt.chat/invite",
-    "nightly.revolt.chat/invite",
-    "local.revolt.chat/invite",
-    "rvlt.gg",
+    "divolt.xyz/invite",
 ];
 export const RE_INVITE = new RegExp(
     `(?:${INVITE_PATHS.map((x) => x.split(".").join("\\.")).join(
@@ -181,9 +178,7 @@ export const RE_INVITE = new RegExp(
 );
 
 export const BOT_INVITE_PATHS = [
-    "app.revolt.chat/bot",
-    "nightly.revolt.chat/bot",
-    "local.revolt.chat/bot"
+    "divolt.xyz/bot",
 ];
 export const RE_BOT_INVITE = new RegExp(
     `(?:${BOT_INVITE_PATHS.map((x) => x.split(".").join("\\.")).join(

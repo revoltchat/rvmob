@@ -25,8 +25,8 @@ import notifee from '@notifee/react-native';
 
 let defaultnotif; 
 notifee.createChannel({
-    id: 'rvmob',
-    name: 'RVMob'
+    id: 'dvmob',
+    name: 'DVMob'
 }).then(channel => {
     defaultnotif = channel;
 })
