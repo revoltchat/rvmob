@@ -6,7 +6,9 @@ RVMob is currently in beta stage and unoptimized. Use at your own discomfort.
 
 ## Building
 
-If you want to install, simply go to [releases](https://github.com/ggtylerr/dvmob/releases) and download the latest version. Please note that any release made by GitHub Actions is automated, and may include bugs.
+~~If you want to install, simply go to [releases](https://github.com/ggtylerr/dvmob/releases) and download the latest version. Please note that any release made by GitHub Actions is automated, and may include bugs.~~
+
+Right now if you want to install, you will have to build.
 
 To manually build, you'll need [Node.JS](https://nodejs.org/en/) and [npx.](https://www.npmjs.com/package/npx) Then run the following:
 
