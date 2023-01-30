@@ -1,0 +1,736 @@
+yarn run v1.22.19
+$ cd android && ./gradlew assembleDebug -PreactNativeArchitectures=arm64-v8a --stacktrace && cd ..
+> Task :react-native-gradle-plugin:compileKotlin UP-TO-DATE
+> Task :react-native-gradle-plugin:compileJava NO-SOURCE
+> Task :react-native-gradle-plugin:pluginDescriptors UP-TO-DATE
+> Task :react-native-gradle-plugin:processResources UP-TO-DATE
+> Task :react-native-gradle-plugin:classes UP-TO-DATE
+> Task :react-native-gradle-plugin:inspectClassesForKotlinIC UP-TO-DATE
+> Task :react-native-gradle-plugin:jar UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:preBuild UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:preDebugBuild UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:compileDebugAidl NO-SOURCE
+> Task :@react-native-async-storage_async-storage:mergeDebugJniLibFolders UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:mergeDebugNativeLibs NO-SOURCE
+> Task :@react-native-async-storage_async-storage:stripDebugDebugSymbols NO-SOURCE
+> Task :@react-native-async-storage_async-storage:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:compileDebugRenderscript NO-SOURCE
+> Task :@react-native-async-storage_async-storage:generateDebugBuildConfig UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:generateDebugResValues UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:generateDebugResources UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:packageDebugResources
+> Task :@react-native-async-storage_async-storage:parseDebugLocalResources UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:processDebugManifest UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:generateDebugRFile UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:extractDebugAnnotations UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:javaPreCompileDebug UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:compileDebugJavaWithJavac UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:mergeDebugShaders UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:compileDebugShaders NO-SOURCE
+> Task :@react-native-async-storage_async-storage:generateDebugAssets UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:packageDebugAssets UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:packageDebugRenderscript NO-SOURCE
+> Task :@react-native-async-storage_async-storage:prepareDebugArtProfile UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:prepareLintJarForPublish UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:processDebugJavaRes NO-SOURCE
+> Task :@react-native-async-storage_async-storage:mergeDebugJavaResource UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:syncDebugLibJars UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:writeDebugAarMetadata UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:bundleDebugAar UP-TO-DATE
+> Task :@react-native-async-storage_async-storage:assembleDebug UP-TO-DATE
+> Task :app:buildCodegenCLI SKIPPED
+> Task :app:generateCodegenSchemaFromJavaScript SKIPPED
+> Task :app:generateCodegenArtifactsFromSchema SKIPPED
+> Task :app:generateNewArchitectureFiles
+> Task :app:generatePackageList
+> Task :app:preBuild
+> Task :app:preDebugBuild
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :react-native-async-storage_async-storage:preBuild UP-TO-DATE
+> Task :react-native-async-storage_async-storage:preDebugBuild UP-TO-DATE
+> Task :react-native-async-storage_async-storage:compileDebugAidl NO-SOURCE
+> Task :react-native-clipboard_clipboard:preBuild UP-TO-DATE
+> Task :react-native-clipboard_clipboard:preDebugBuild UP-TO-DATE
+> Task :react-native-clipboard_clipboard:compileDebugAidl NO-SOURCE
+> Task :react-native-document-picker:preBuild UP-TO-DATE
+> Task :react-native-document-picker:preDebugBuild UP-TO-DATE
+> Task :react-native-document-picker:compileDebugAidl NO-SOURCE
+> Task :react-native-fast-image:preBuild UP-TO-DATE
+> Task :react-native-fast-image:preDebugBuild UP-TO-DATE
+> Task :react-native-fast-image:compileDebugAidl NO-SOURCE
+> Task :react-native-fs:preBuild UP-TO-DATE
+> Task :react-native-fs:preDebugBuild UP-TO-DATE
+> Task :react-native-fs:compileDebugAidl NO-SOURCE
+> Task :react-native-get-random-values:preBuild UP-TO-DATE
+> Task :react-native-get-random-values:preDebugBuild UP-TO-DATE
+> Task :react-native-get-random-values:compileDebugAidl NO-SOURCE
+> Task :react-native-os:preBuild UP-TO-DATE
+> Task :react-native-os:preDebugBuild UP-TO-DATE
+> Task :react-native-os:compileDebugAidl NO-SOURCE
+> Task :react-native-randombytes:preBuild UP-TO-DATE
+> Task :react-native-randombytes:preDebugBuild UP-TO-DATE
+> Task :react-native-randombytes:compileDebugAidl NO-SOURCE
+> Task :react-native-tcp-socket:preBuild UP-TO-DATE
+> Task :react-native-tcp-socket:preDebugBuild UP-TO-DATE
+> Task :react-native-tcp-socket:compileDebugAidl NO-SOURCE
+> Task :react-native-udp:preBuild UP-TO-DATE
+> Task :react-native-udp:preDebugBuild UP-TO-DATE
+> Task :react-native-udp:compileDebugAidl NO-SOURCE
+> Task :react-native-vector-icons:preBuild UP-TO-DATE
+> Task :react-native-vector-icons:preDebugBuild UP-TO-DATE
+> Task :react-native-vector-icons:compileDebugAidl NO-SOURCE
+> Task :react-native-webview:preBuild UP-TO-DATE
+> Task :react-native-webview:preDebugBuild UP-TO-DATE
+> Task :react-native-webview:compileDebugAidl NO-SOURCE
+> Task :app:compileDebugAidl NO-SOURCE
+> Task :react-native-async-storage_async-storage:packageDebugRenderscript NO-SOURCE
+> Task :react-native-clipboard_clipboard:packageDebugRenderscript NO-SOURCE
+> Task :react-native-document-picker:packageDebugRenderscript NO-SOURCE
+> Task :react-native-fast-image:packageDebugRenderscript NO-SOURCE
+> Task :react-native-fs:packageDebugRenderscript NO-SOURCE
+> Task :react-native-get-random-values:packageDebugRenderscript NO-SOURCE
+> Task :react-native-os:packageDebugRenderscript NO-SOURCE
+> Task :react-native-randombytes:packageDebugRenderscript NO-SOURCE
+> Task :react-native-tcp-socket:packageDebugRenderscript NO-SOURCE
+> Task :react-native-udp:packageDebugRenderscript NO-SOURCE
+> Task :react-native-vector-icons:packageDebugRenderscript NO-SOURCE
+> Task :react-native-webview:packageDebugRenderscript NO-SOURCE
+> Task :app:compileDebugRenderscript NO-SOURCE
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-async-storage_async-storage:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-clipboard_clipboard:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-document-picker:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-fast-image:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-fs:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-get-random-values:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-os:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-randombytes:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-tcp-socket:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-udp:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-vector-icons:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-webview:writeDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :react-native-async-storage_async-storage:compileDebugRenderscript NO-SOURCE
+> Task :react-native-async-storage_async-storage:generateDebugResValues UP-TO-DATE
+> Task :react-native-async-storage_async-storage:generateDebugResources UP-TO-DATE
+
+> Task :react-native-async-storage_async-storage:packageDebugResources
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:packageDebugResources' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\generated\res\resValues\debug'. Reason: Task ':react-native-async-storage_async-storage:packageDebugResources' uses this output of task ':@react-native-async-storage_async-storage:generateDebugResValues' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\generated\res\rs\debug'. Reason: Task ':react-native-async-storage_async-storage:packageDebugResources' uses this output of task ':@react-native-async-storage_async-storage:compileDebugRenderscript' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-clipboard_clipboard:compileDebugRenderscript NO-SOURCE
+> Task :react-native-clipboard_clipboard:generateDebugResValues UP-TO-DATE
+> Task :react-native-clipboard_clipboard:generateDebugResources UP-TO-DATE
+> Task :react-native-clipboard_clipboard:packageDebugResources UP-TO-DATE
+> Task :react-native-document-picker:compileDebugRenderscript NO-SOURCE
+> Task :react-native-document-picker:generateDebugResValues UP-TO-DATE
+> Task :react-native-document-picker:generateDebugResources UP-TO-DATE
+
+> Task :app:checkDebugAarMetadata
+Execution optimizations have been disabled for task ':app:checkDebugAarMetadata' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\aar_metadata\debug\aar-metadata.properties'. Reason: Task ':app:checkDebugAarMetadata' uses this output of task ':@react-native-async-storage_async-storage:writeDebugAarMetadata' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-document-picker:packageDebugResources UP-TO-DATE
+> Task :react-native-fast-image:compileDebugRenderscript NO-SOURCE
+> Task :react-native-fast-image:generateDebugResValues UP-TO-DATE
+> Task :react-native-fast-image:generateDebugResources UP-TO-DATE
+> Task :react-native-fast-image:packageDebugResources UP-TO-DATE
+> Task :react-native-fs:compileDebugRenderscript NO-SOURCE
+> Task :react-native-fs:generateDebugResValues UP-TO-DATE
+> Task :react-native-fs:generateDebugResources UP-TO-DATE
+> Task :react-native-fs:packageDebugResources UP-TO-DATE
+> Task :react-native-get-random-values:compileDebugRenderscript NO-SOURCE
+> Task :react-native-get-random-values:generateDebugResValues UP-TO-DATE
+> Task :react-native-get-random-values:generateDebugResources UP-TO-DATE
+> Task :react-native-get-random-values:packageDebugResources UP-TO-DATE
+> Task :react-native-os:compileDebugRenderscript NO-SOURCE
+> Task :react-native-os:generateDebugResValues UP-TO-DATE
+> Task :react-native-os:generateDebugResources UP-TO-DATE
+> Task :react-native-os:packageDebugResources UP-TO-DATE
+> Task :react-native-randombytes:compileDebugRenderscript NO-SOURCE
+> Task :react-native-randombytes:generateDebugResValues UP-TO-DATE
+> Task :react-native-randombytes:generateDebugResources UP-TO-DATE
+> Task :react-native-randombytes:packageDebugResources UP-TO-DATE
+> Task :react-native-tcp-socket:compileDebugRenderscript NO-SOURCE
+> Task :react-native-tcp-socket:generateDebugResValues UP-TO-DATE
+> Task :react-native-tcp-socket:generateDebugResources UP-TO-DATE
+> Task :react-native-tcp-socket:packageDebugResources UP-TO-DATE
+> Task :react-native-udp:compileDebugRenderscript NO-SOURCE
+> Task :react-native-udp:generateDebugResValues UP-TO-DATE
+> Task :react-native-udp:generateDebugResources UP-TO-DATE
+> Task :react-native-udp:packageDebugResources UP-TO-DATE
+> Task :react-native-vector-icons:compileDebugRenderscript NO-SOURCE
+> Task :react-native-vector-icons:generateDebugResValues UP-TO-DATE
+> Task :react-native-vector-icons:generateDebugResources UP-TO-DATE
+> Task :react-native-vector-icons:packageDebugResources UP-TO-DATE
+> Task :react-native-webview:compileDebugRenderscript NO-SOURCE
+> Task :react-native-webview:generateDebugResValues UP-TO-DATE
+> Task :react-native-webview:generateDebugResources UP-TO-DATE
+> Task :react-native-webview:packageDebugResources UP-TO-DATE
+
+> Task :app:mapDebugSourceSetPaths
+Execution optimizations have been disabled for task ':app:mapDebugSourceSetPaths' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\packaged_res\debug'. Reason: Task ':app:mapDebugSourceSetPaths' uses this output of task ':@react-native-async-storage_async-storage:packageDebugResources' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :app:generateDebugResources UP-TO-DATE
+
+> Task :app:mergeDebugResources
+Execution optimizations have been disabled for task ':app:mergeDebugResources' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\packaged_res\debug'. Reason: Task ':app:mergeDebugResources' uses this output of task ':@react-native-async-storage_async-storage:packageDebugResources' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+
+> Task :react-native-async-storage_async-storage:extractDeepLinksDebug
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:extractDeepLinksDebug' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\generated\res\resValues\debug\navigation'. Reason: Task ':react-native-async-storage_async-storage:extractDeepLinksDebug' uses this output of task ':@react-native-async-storage_async-storage:generateDebugResValues' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\generated\res\rs\debug\navigation'. Reason: Task ':react-native-async-storage_async-storage:extractDeepLinksDebug' uses this output of task ':@react-native-async-storage_async-storage:compileDebugRenderscript' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-async-storage_async-storage:processDebugManifest UP-TO-DATE
+> Task :react-native-clipboard_clipboard:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-clipboard_clipboard:processDebugManifest UP-TO-DATE
+> Task :react-native-document-picker:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-document-picker:processDebugManifest UP-TO-DATE
+> Task :react-native-fast-image:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-fast-image:processDebugManifest UP-TO-DATE
+> Task :react-native-fs:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-fs:processDebugManifest UP-TO-DATE
+> Task :react-native-get-random-values:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-get-random-values:processDebugManifest UP-TO-DATE
+> Task :react-native-os:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-os:processDebugManifest UP-TO-DATE
+> Task :react-native-randombytes:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-randombytes:processDebugManifest UP-TO-DATE
+> Task :react-native-tcp-socket:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-tcp-socket:processDebugManifest UP-TO-DATE
+> Task :react-native-udp:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-udp:processDebugManifest UP-TO-DATE
+> Task :react-native-vector-icons:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-vector-icons:processDebugManifest UP-TO-DATE
+> Task :react-native-webview:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-webview:processDebugManifest UP-TO-DATE
+
+> Task :app:processDebugMainManifest
+Execution optimizations have been disabled for task ':app:processDebugMainManifest' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml'. Reason: Task ':app:processDebugMainManifest' uses this output of task ':@react-native-async-storage_async-storage:processDebugManifest' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+package="site.endl.taiku.rvmob" found in source AndroidManifest.xml: C:\Users\Ed\Documents\Repos\rvmob\android\app\src\main\AndroidManifest.xml.
+Setting the namespace via a source AndroidManifest.xml's package attribute is deprecated.
+Please instead set the namespace (or testNamespace) in the module's build.gradle file, as described here: https://developer.android.com/studio/build/configure-app-module#set-namespace
+This migration can be done automatically using the AGP Upgrade Assistant, please refer to https://developer.android.com/studio/build/agp-upgrade-assistant for more information.
+
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+
+> Task :react-native-async-storage_async-storage:compileDebugLibraryResources
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:compileDebugLibraryResources' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\packaged_res\debug'. Reason: Task ':react-native-async-storage_async-storage:compileDebugLibraryResources' uses this output of task ':@react-native-async-storage_async-storage:packageDebugResources' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-clipboard_clipboard:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-clipboard_clipboard:parseDebugLocalResources UP-TO-DATE
+
+> Task :react-native-async-storage_async-storage:parseDebugLocalResources
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:parseDebugLocalResources' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\packaged_res\debug'. Reason: Task ':react-native-async-storage_async-storage:parseDebugLocalResources' uses this output of task ':@react-native-async-storage_async-storage:packageDebugResources' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-clipboard_clipboard:generateDebugRFile UP-TO-DATE
+> Task :react-native-document-picker:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-document-picker:parseDebugLocalResources UP-TO-DATE
+
+> Task :react-native-async-storage_async-storage:generateDebugRFile
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:generateDebugRFile' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\local_only_symbol_list\debug\R-def.txt'. Reason: Task ':react-native-async-storage_async-storage:generateDebugRFile' uses this output of task ':@react-native-async-storage_async-storage:parseDebugLocalResources' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\packaged_manifests\debug'. Reason: Task ':react-native-async-storage_async-storage:generateDebugRFile' uses this output of task ':@react-native-async-storage_async-storage:processDebugManifest' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-document-picker:generateDebugRFile UP-TO-DATE
+> Task :react-native-fast-image:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-fast-image:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-fast-image:generateDebugRFile UP-TO-DATE
+> Task :react-native-fs:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-fs:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-fs:generateDebugRFile UP-TO-DATE
+> Task :react-native-get-random-values:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-get-random-values:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-get-random-values:generateDebugRFile UP-TO-DATE
+> Task :react-native-os:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-os:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-os:generateDebugRFile UP-TO-DATE
+> Task :react-native-randombytes:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-randombytes:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-randombytes:generateDebugRFile UP-TO-DATE
+> Task :react-native-tcp-socket:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-tcp-socket:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-tcp-socket:generateDebugRFile UP-TO-DATE
+> Task :react-native-udp:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-udp:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-udp:generateDebugRFile UP-TO-DATE
+> Task :react-native-vector-icons:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-vector-icons:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-vector-icons:generateDebugRFile UP-TO-DATE
+> Task :react-native-webview:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-webview:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-webview:generateDebugRFile UP-TO-DATE
+> Task :react-native-async-storage_async-storage:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-async-storage_async-storage:javaPreCompileDebug UP-TO-DATE
+
+> Task :app:processDebugResources
+Execution optimizations have been disabled for task ':app:processDebugResources' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\symbol_list_with_package_name\debug\package-aware-r.txt'. Reason: Task ':app:processDebugResources' uses this output of task ':@react-native-async-storage_async-storage:generateDebugRFile' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-async-storage_async-storage:compileDebugJavaWithJavac
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:compileDebugJavaWithJavac' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\generated\aidl_source_output_dir\debug\out'. Reason: Task ':react-native-async-storage_async-storage:compileDebugJavaWithJavac' uses this output of task ':@react-native-async-storage_async-storage:compileDebugAidl' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\generated\renderscript_source_output_dir\debug\out'. Reason: Task ':react-native-async-storage_async-storage:compileDebugJavaWithJavac' uses this output of task ':@react-native-async-storage_async-storage:compileDebugRenderscript' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\generated\source\buildConfig\debug'. Reason: Task ':react-native-async-storage_async-storage:compileDebugJavaWithJavac' uses this output of task ':@react-native-async-storage_async-storage:generateDebugBuildConfig' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\annotation_processor_list\debug\annotationProcessors.json'. Reason: Task ':react-native-async-storage_async-storage:compileDebugJavaWithJavac' uses this output of task ':@react-native-async-storage_async-storage:javaPreCompileDebug' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\compile_r_class_jar\debug\R.jar'. Reason: Task ':react-native-async-storage_async-storage:compileDebugJavaWithJavac' uses this output of task ':@react-native-async-storage_async-storage:generateDebugRFile' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-clipboard_clipboard:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-clipboard_clipboard:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-clipboard_clipboard:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-clipboard_clipboard:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-document-picker:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-document-picker:javaPreCompileDebug UP-TO-DATE
+
+> Task :react-native-async-storage_async-storage:bundleLibCompileToJarDebug
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:bundleLibCompileToJarDebug' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\compile_r_class_jar\debug\R.jar'. Reason: Task ':react-native-async-storage_async-storage:bundleLibCompileToJarDebug' uses this output of task ':@react-native-async-storage_async-storage:generateDebugRFile' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\javac\debug\classes'. Reason: Task ':react-native-async-storage_async-storage:bundleLibCompileToJarDebug' uses this output of task ':@react-native-async-storage_async-storage:compileDebugJavaWithJavac' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-document-picker:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-document-picker:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-fast-image:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-fast-image:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-fast-image:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-fast-image:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-fs:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-fs:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-fs:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-fs:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-get-random-values:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-get-random-values:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-get-random-values:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-get-random-values:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-os:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-os:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-os:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-os:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-randombytes:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-randombytes:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-randombytes:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-randombytes:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-tcp-socket:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-tcp-socket:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-tcp-socket:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-tcp-socket:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-udp:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-udp:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-udp:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-udp:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-vector-icons:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-vector-icons:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-vector-icons:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-vector-icons:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-webview:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-webview:compileDebugKotlin UP-TO-DATE
+> Task :react-native-webview:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-webview:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-webview:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:copyReactNativeVectorIconFonts UP-TO-DATE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :react-native-async-storage_async-storage:mergeDebugShaders UP-TO-DATE
+> Task :react-native-async-storage_async-storage:compileDebugShaders NO-SOURCE
+> Task :react-native-async-storage_async-storage:generateDebugAssets UP-TO-DATE
+
+> Task :react-native-async-storage_async-storage:packageDebugAssets
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:packageDebugAssets' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\shader_assets\debug\out'. Reason: Task ':react-native-async-storage_async-storage:packageDebugAssets' uses this output of task ':@react-native-async-storage_async-storage:compileDebugShaders' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-clipboard_clipboard:mergeDebugShaders UP-TO-DATE
+> Task :react-native-clipboard_clipboard:compileDebugShaders NO-SOURCE
+> Task :react-native-clipboard_clipboard:generateDebugAssets UP-TO-DATE
+> Task :react-native-clipboard_clipboard:packageDebugAssets UP-TO-DATE
+> Task :react-native-document-picker:mergeDebugShaders UP-TO-DATE
+> Task :react-native-document-picker:compileDebugShaders NO-SOURCE
+> Task :react-native-document-picker:generateDebugAssets UP-TO-DATE
+> Task :react-native-document-picker:packageDebugAssets UP-TO-DATE
+> Task :react-native-fast-image:mergeDebugShaders UP-TO-DATE
+> Task :react-native-fast-image:compileDebugShaders NO-SOURCE
+> Task :react-native-fast-image:generateDebugAssets UP-TO-DATE
+> Task :react-native-fast-image:packageDebugAssets UP-TO-DATE
+> Task :react-native-fs:mergeDebugShaders UP-TO-DATE
+> Task :react-native-fs:compileDebugShaders NO-SOURCE
+> Task :react-native-fs:generateDebugAssets UP-TO-DATE
+> Task :react-native-fs:packageDebugAssets UP-TO-DATE
+> Task :react-native-get-random-values:mergeDebugShaders UP-TO-DATE
+> Task :react-native-get-random-values:compileDebugShaders NO-SOURCE
+> Task :react-native-get-random-values:generateDebugAssets UP-TO-DATE
+> Task :react-native-get-random-values:packageDebugAssets UP-TO-DATE
+> Task :react-native-os:mergeDebugShaders UP-TO-DATE
+> Task :react-native-os:compileDebugShaders NO-SOURCE
+> Task :react-native-os:generateDebugAssets UP-TO-DATE
+> Task :react-native-os:packageDebugAssets UP-TO-DATE
+> Task :react-native-randombytes:mergeDebugShaders UP-TO-DATE
+> Task :react-native-randombytes:compileDebugShaders NO-SOURCE
+> Task :react-native-randombytes:generateDebugAssets UP-TO-DATE
+> Task :react-native-randombytes:packageDebugAssets UP-TO-DATE
+> Task :react-native-tcp-socket:mergeDebugShaders UP-TO-DATE
+> Task :react-native-tcp-socket:compileDebugShaders NO-SOURCE
+> Task :react-native-tcp-socket:generateDebugAssets UP-TO-DATE
+> Task :react-native-tcp-socket:packageDebugAssets UP-TO-DATE
+> Task :react-native-udp:mergeDebugShaders UP-TO-DATE
+> Task :react-native-udp:compileDebugShaders NO-SOURCE
+> Task :react-native-udp:generateDebugAssets UP-TO-DATE
+> Task :react-native-udp:packageDebugAssets UP-TO-DATE
+> Task :react-native-vector-icons:mergeDebugShaders UP-TO-DATE
+> Task :react-native-vector-icons:compileDebugShaders NO-SOURCE
+> Task :react-native-vector-icons:generateDebugAssets UP-TO-DATE
+> Task :react-native-vector-icons:packageDebugAssets UP-TO-DATE
+> Task :react-native-webview:mergeDebugShaders UP-TO-DATE
+> Task :react-native-webview:compileDebugShaders NO-SOURCE
+> Task :react-native-webview:generateDebugAssets UP-TO-DATE
+> Task :react-native-webview:packageDebugAssets UP-TO-DATE
+
+> Task :app:mergeDebugAssets
+Execution optimizations have been disabled for task ':app:mergeDebugAssets' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\library_assets\debug\out'. Reason: Task ':app:mergeDebugAssets' uses this output of task ':@react-native-async-storage_async-storage:packageDebugAssets' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:processDebugJavaRes NO-SOURCE
+> Task :react-native-async-storage_async-storage:processDebugJavaRes NO-SOURCE
+> Task :react-native-async-storage_async-storage:bundleLibResDebug NO-SOURCE
+> Task :react-native-clipboard_clipboard:processDebugJavaRes NO-SOURCE
+> Task :react-native-clipboard_clipboard:bundleLibResDebug NO-SOURCE
+> Task :react-native-document-picker:processDebugJavaRes NO-SOURCE
+> Task :react-native-document-picker:bundleLibResDebug NO-SOURCE
+> Task :react-native-fast-image:processDebugJavaRes NO-SOURCE
+> Task :react-native-fast-image:bundleLibResDebug UP-TO-DATE
+> Task :react-native-fs:processDebugJavaRes NO-SOURCE
+> Task :react-native-fs:bundleLibResDebug NO-SOURCE
+> Task :react-native-get-random-values:processDebugJavaRes NO-SOURCE
+> Task :react-native-get-random-values:bundleLibResDebug NO-SOURCE
+> Task :react-native-os:processDebugJavaRes NO-SOURCE
+> Task :react-native-os:bundleLibResDebug NO-SOURCE
+> Task :react-native-randombytes:processDebugJavaRes NO-SOURCE
+> Task :react-native-randombytes:bundleLibResDebug NO-SOURCE
+> Task :react-native-tcp-socket:processDebugJavaRes NO-SOURCE
+> Task :react-native-tcp-socket:bundleLibResDebug NO-SOURCE
+> Task :react-native-udp:processDebugJavaRes NO-SOURCE
+> Task :react-native-udp:bundleLibResDebug NO-SOURCE
+> Task :react-native-vector-icons:processDebugJavaRes NO-SOURCE
+> Task :react-native-vector-icons:bundleLibResDebug NO-SOURCE
+> Task :react-native-webview:processDebugJavaRes NO-SOURCE
+> Task :react-native-webview:bundleLibResDebug UP-TO-DATE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :react-native-clipboard_clipboard:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-document-picker:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-fast-image:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-fs:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-get-random-values:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-os:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-randombytes:bundleLibRuntimeToJarDebug UP-TO-DATE
+
+> Task :react-native-async-storage_async-storage:bundleLibRuntimeToJarDebug
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:bundleLibRuntimeToJarDebug' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\javac\debug\classes'. Reason: Task ':react-native-async-storage_async-storage:bundleLibRuntimeToJarDebug' uses this output of task ':@react-native-async-storage_async-storage:compileDebugJavaWithJavac' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-tcp-socket:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-udp:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-vector-icons:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-webview:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :app:dexBuilderDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:mergeProjectDexDebug UP-TO-DATE
+
+> Task :app:configureCMakeDebug[arm64-v8a]
+C/C++: CMake Warning at C:/Users/Ed/AppData/Local/Android/Sdk/ndk/23.1.7779620/build/cmake/android-legacy.toolchain.cmake:416 (message):
+C/C++:   An old version of CMake is being used that cannot automatically detect
+C/C++:   compiler attributes.  Compiler identification is being bypassed.  Some
+C/C++:   values may be wrong or missing.  Update to CMake 3.19 or newer to use
+C/C++:   CMake's built-in compiler identification.
+C/C++: Call Stack (most recent call first):
+C/C++:   C:/Users/Ed/AppData/Local/Android/Sdk/ndk/23.1.7779620/build/cmake/android.toolchain.cmake:55 (include)
+C/C++:   C:/Users/Ed/AppData/Local/Android/Sdk/cmake/3.18.1/share/cmake-3.18/Modules/CMakeDetermineSystem.cmake:93 (include)
+C/C++:   CMakeLists.txt:28 (project)
+C/C++: CMake Warning at C:/Users/Ed/AppData/Local/Android/Sdk/ndk/23.1.7779620/build/cmake/android-legacy.toolchain.cmake:416 (message):
+C/C++:   An old version of CMake is being used that cannot automatically detect
+C/C++:   compiler attributes.  Compiler identification is being bypassed.  Some
+C/C++:   values may be wrong or missing.  Update to CMake 3.19 or newer to use
+C/C++:   CMake's built-in compiler identification.
+C/C++: Call Stack (most recent call first):
+C/C++:   C:/Users/Ed/AppData/Local/Android/Sdk/ndk/23.1.7779620/build/cmake/android.toolchain.cmake:55 (include)
+C/C++:   C:/Users/Ed/Documents/Repos/rvmob/android/app/.cxx/Debug/2s455b6c/arm64-v8a/CMakeFiles/3.18.1-g262b901-dirty/CMakeSystem.cmake:6 (include)
+C/C++:   C:/Users/Ed/Documents/Repos/rvmob/android/app/.cxx/Debug/2s455b6c/arm64-v8a/CMakeFiles/CMakeTmp/CMakeLists.txt:2 (project)
+C/C++: CMake Warning at C:/Users/Ed/AppData/Local/Android/Sdk/ndk/23.1.7779620/build/cmake/android-legacy.toolchain.cmake:416 (message):
+C/C++:   An old version of CMake is being used that cannot automatically detect
+C/C++:   compiler attributes.  Compiler identification is being bypassed.  Some
+C/C++:   values may be wrong or missing.  Update to CMake 3.19 or newer to use
+C/C++:   CMake's built-in compiler identification.
+C/C++: Call Stack (most recent call first):
+C/C++:   C:/Users/Ed/AppData/Local/Android/Sdk/ndk/23.1.7779620/build/cmake/android.toolchain.cmake:55 (include)
+C/C++:   C:/Users/Ed/Documents/Repos/rvmob/android/app/.cxx/Debug/2s455b6c/arm64-v8a/CMakeFiles/3.18.1-g262b901-dirty/CMakeSystem.cmake:6 (include)
+C/C++:   C:/Users/Ed/Documents/Repos/rvmob/android/app/.cxx/Debug/2s455b6c/arm64-v8a/CMakeFiles/CMakeTmp/CMakeLists.txt:2 (project)
+
+> Task :app:buildCMakeDebug[arm64-v8a]
+> Task :react-native-async-storage_async-storage:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-async-storage_async-storage:mergeDebugNativeLibs NO-SOURCE
+
+> Task :react-native-async-storage_async-storage:copyDebugJniLibsProjectOnly
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:copyDebugJniLibsProjectOnly' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\merged_native_libs\debug\out'. Reason: Task ':react-native-async-storage_async-storage:copyDebugJniLibsProjectOnly' uses this output of task ':@react-native-async-storage_async-storage:mergeDebugNativeLibs' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-clipboard_clipboard:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-clipboard_clipboard:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-clipboard_clipboard:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-document-picker:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-document-picker:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-document-picker:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-fast-image:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-fast-image:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-fast-image:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-fs:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-fs:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-fs:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-get-random-values:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-get-random-values:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-get-random-values:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-os:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-os:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-os:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-randombytes:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-randombytes:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-randombytes:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-tcp-socket:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-tcp-socket:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-tcp-socket:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-udp:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-udp:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-udp:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-vector-icons:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-vector-icons:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-vector-icons:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-webview:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-webview:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-webview:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :app:externalNativeBuildDebug
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :react-native-async-storage_async-storage:stripDebugDebugSymbols NO-SOURCE
+
+> Task :react-native-async-storage_async-storage:copyDebugJniLibsProjectAndLocalJars
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:copyDebugJniLibsProjectAndLocalJars' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\stripped_native_libs\debug\out'. Reason: Task ':react-native-async-storage_async-storage:copyDebugJniLibsProjectAndLocalJars' uses this output of task ':@react-native-async-storage_async-storage:stripDebugDebugSymbols' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-async-storage_async-storage:extractDebugAnnotations
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:extractDebugAnnotations' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\generated\aidl_source_output_dir\debug\out'. Reason: Task ':react-native-async-storage_async-storage:extractDebugAnnotations' uses this output of task ':@react-native-async-storage_async-storage:compileDebugAidl' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\generated\renderscript_source_output_dir\debug\out'. Reason: Task ':react-native-async-storage_async-storage:extractDebugAnnotations' uses this output of task ':@react-native-async-storage_async-storage:compileDebugRenderscript' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\generated\source\buildConfig\debug'. Reason: Task ':react-native-async-storage_async-storage:extractDebugAnnotations' uses this output of task ':@react-native-async-storage_async-storage:generateDebugBuildConfig' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\compile_r_class_jar\debug\R.jar'. Reason: Task ':react-native-async-storage_async-storage:extractDebugAnnotations' uses this output of task ':@react-native-async-storage_async-storage:generateDebugRFile' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-async-storage_async-storage:extractDeepLinksForAarDebug
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:extractDeepLinksForAarDebug' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\generated\res\resValues\debug\navigation'. Reason: Task ':react-native-async-storage_async-storage:extractDeepLinksForAarDebug' uses this output of task ':@react-native-async-storage_async-storage:generateDebugResValues' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\generated\res\rs\debug\navigation'. Reason: Task ':react-native-async-storage_async-storage:extractDeepLinksForAarDebug' uses this output of task ':@react-native-async-storage_async-storage:compileDebugRenderscript' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-async-storage_async-storage:mergeDebugGeneratedProguardFiles UP-TO-DATE
+
+> Task :react-native-async-storage_async-storage:mergeDebugConsumerProguardFiles
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:mergeDebugConsumerProguardFiles' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\generated_proguard_file\debug\proguard.txt'. Reason: Task ':react-native-async-storage_async-storage:mergeDebugConsumerProguardFiles' uses this output of task ':@react-native-async-storage_async-storage:mergeDebugGeneratedProguardFiles' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-async-storage_async-storage:prepareDebugArtProfile UP-TO-DATE
+> Task :react-native-async-storage_async-storage:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-clipboard_clipboard:stripDebugDebugSymbols NO-SOURCE
+> Task :react-native-clipboard_clipboard:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-clipboard_clipboard:extractDebugAnnotations UP-TO-DATE
+> Task :react-native-clipboard_clipboard:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :react-native-clipboard_clipboard:mergeDebugGeneratedProguardFiles UP-TO-DATE
+
+> Task :react-native-async-storage_async-storage:mergeDebugJavaResource
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:mergeDebugJavaResource' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\java_res\debug\out'. Reason: Task ':react-native-async-storage_async-storage:mergeDebugJavaResource' uses this output of task ':@react-native-async-storage_async-storage:processDebugJavaRes' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-clipboard_clipboard:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :react-native-clipboard_clipboard:prepareDebugArtProfile UP-TO-DATE
+> Task :react-native-clipboard_clipboard:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-clipboard_clipboard:mergeDebugJavaResource UP-TO-DATE
+> Task :react-native-clipboard_clipboard:syncDebugLibJars UP-TO-DATE
+> Task :react-native-clipboard_clipboard:bundleDebugAar UP-TO-DATE
+
+> Task :react-native-async-storage_async-storage:syncDebugLibJars
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:syncDebugLibJars' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\annotations_typedef_file\debug\typedefs.txt'. Reason: Task ':react-native-async-storage_async-storage:syncDebugLibJars' uses this output of task ':@react-native-async-storage_async-storage:extractDebugAnnotations' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\javac\debug\classes'. Reason: Task ':react-native-async-storage_async-storage:syncDebugLibJars' uses this output of task ':@react-native-async-storage_async-storage:compileDebugJavaWithJavac' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-async-storage_async-storage:bundleDebugAar
+Execution optimizations have been disabled for task ':react-native-async-storage_async-storage:bundleDebugAar' to ensure correctness due to the following reasons:
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\aar_libs_directory\debug\libs'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:syncDebugLibJars' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\aar_main_jar\debug\classes.jar'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:syncDebugLibJars' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\aar_metadata\debug\aar-metadata.properties'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:writeDebugAarMetadata' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\aidl_parcelable\debug\out'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:compileDebugAidl' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\annotations_zip\debug\annotations.zip'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:extractDebugAnnotations' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\compile_symbol_list\debug\R.txt'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:generateDebugRFile' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\library_and_local_jars_jni\debug\jni'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:copyDebugJniLibsProjectAndLocalJars' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\library_art_profile\debug\baseline-prof.txt'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:prepareDebugArtProfile' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\library_assets\debug\out'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:packageDebugAssets' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\lint_publish_jar\global\lint.jar'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:prepareLintJarForPublish' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\merged_consumer_proguard_file\debug\proguard.txt'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:mergeDebugConsumerProguardFiles' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:processDebugManifest' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\navigation_json_for_aar\debug\navigation.json'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:extractDeepLinksForAarDebug' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\packaged_res\debug'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:packageDebugResources' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\public_res\debug\public.txt'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:packageDebugResources' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+  - Gradle detected a problem with the following location: 'C:\Users\Ed\Documents\Repos\rvmob\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\renderscript_headers\debug\out'. Reason: Task ':react-native-async-storage_async-storage:bundleDebugAar' uses this output of task ':@react-native-async-storage_async-storage:packageDebugRenderscript' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed. Please refer to https://docs.gradle.org/7.5.1/userguide/validation_problems.html#implicit_dependency for more details about this problem.
+
+> Task :react-native-async-storage_async-storage:assembleDebug
+> Task :react-native-clipboard_clipboard:assembleDebug UP-TO-DATE
+> Task :react-native-document-picker:stripDebugDebugSymbols NO-SOURCE
+> Task :react-native-document-picker:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-document-picker:extractDebugAnnotations UP-TO-DATE
+> Task :react-native-document-picker:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :react-native-document-picker:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-document-picker:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :react-native-document-picker:prepareDebugArtProfile UP-TO-DATE
+> Task :react-native-document-picker:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-document-picker:mergeDebugJavaResource UP-TO-DATE
+> Task :react-native-document-picker:syncDebugLibJars UP-TO-DATE
+> Task :react-native-document-picker:bundleDebugAar UP-TO-DATE
+> Task :react-native-document-picker:assembleDebug UP-TO-DATE
+> Task :react-native-fast-image:stripDebugDebugSymbols NO-SOURCE
+> Task :react-native-fast-image:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-fast-image:extractDebugAnnotations UP-TO-DATE
+> Task :react-native-fast-image:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :react-native-fast-image:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-fast-image:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :react-native-fast-image:prepareDebugArtProfile UP-TO-DATE
+> Task :react-native-fast-image:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-fast-image:mergeDebugJavaResource UP-TO-DATE
+> Task :react-native-fast-image:syncDebugLibJars UP-TO-DATE
+> Task :react-native-fast-image:bundleDebugAar UP-TO-DATE
+> Task :react-native-fast-image:assembleDebug UP-TO-DATE
+> Task :react-native-fs:stripDebugDebugSymbols NO-SOURCE
+> Task :react-native-fs:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-fs:extractDebugAnnotations UP-TO-DATE
+> Task :react-native-fs:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :react-native-fs:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-fs:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :react-native-fs:prepareDebugArtProfile UP-TO-DATE
+> Task :react-native-fs:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-fs:mergeDebugJavaResource UP-TO-DATE
+> Task :react-native-fs:syncDebugLibJars UP-TO-DATE
+> Task :react-native-fs:bundleDebugAar UP-TO-DATE
+> Task :react-native-fs:assembleDebug UP-TO-DATE
+> Task :react-native-get-random-values:stripDebugDebugSymbols NO-SOURCE
+> Task :react-native-get-random-values:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-get-random-values:extractDebugAnnotations UP-TO-DATE
+> Task :react-native-get-random-values:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :react-native-get-random-values:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-get-random-values:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :react-native-get-random-values:prepareDebugArtProfile UP-TO-DATE
+> Task :react-native-get-random-values:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-get-random-values:mergeDebugJavaResource UP-TO-DATE
+> Task :react-native-get-random-values:syncDebugLibJars UP-TO-DATE
+> Task :react-native-get-random-values:bundleDebugAar UP-TO-DATE
+> Task :react-native-get-random-values:assembleDebug UP-TO-DATE
+> Task :react-native-os:stripDebugDebugSymbols NO-SOURCE
+> Task :react-native-os:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-os:extractDebugAnnotations UP-TO-DATE
+> Task :react-native-os:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :react-native-os:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-os:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :react-native-os:prepareDebugArtProfile UP-TO-DATE
+> Task :react-native-os:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-os:mergeDebugJavaResource UP-TO-DATE
+> Task :react-native-os:syncDebugLibJars UP-TO-DATE
+> Task :react-native-os:bundleDebugAar UP-TO-DATE
+> Task :react-native-os:assembleDebug UP-TO-DATE
+> Task :react-native-randombytes:stripDebugDebugSymbols NO-SOURCE
+> Task :react-native-randombytes:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-randombytes:extractDebugAnnotations UP-TO-DATE
+> Task :react-native-randombytes:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :react-native-randombytes:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-randombytes:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :react-native-randombytes:prepareDebugArtProfile UP-TO-DATE
+> Task :react-native-randombytes:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-randombytes:mergeDebugJavaResource UP-TO-DATE
+> Task :react-native-randombytes:syncDebugLibJars UP-TO-DATE
+> Task :react-native-randombytes:bundleDebugAar UP-TO-DATE
+> Task :react-native-randombytes:assembleDebug UP-TO-DATE
+> Task :react-native-tcp-socket:stripDebugDebugSymbols NO-SOURCE
+> Task :react-native-tcp-socket:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-tcp-socket:extractDebugAnnotations UP-TO-DATE
+> Task :react-native-tcp-socket:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :react-native-tcp-socket:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-tcp-socket:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :react-native-tcp-socket:prepareDebugArtProfile UP-TO-DATE
+> Task :react-native-tcp-socket:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-tcp-socket:mergeDebugJavaResource UP-TO-DATE
+> Task :react-native-tcp-socket:syncDebugLibJars UP-TO-DATE
+> Task :react-native-tcp-socket:bundleDebugAar UP-TO-DATE
+> Task :react-native-tcp-socket:assembleDebug UP-TO-DATE
+> Task :react-native-udp:stripDebugDebugSymbols NO-SOURCE
+> Task :react-native-udp:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-udp:extractDebugAnnotations UP-TO-DATE
+> Task :react-native-udp:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :react-native-udp:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-udp:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :react-native-udp:prepareDebugArtProfile UP-TO-DATE
+> Task :react-native-udp:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-udp:mergeDebugJavaResource UP-TO-DATE
+> Task :react-native-udp:syncDebugLibJars UP-TO-DATE
+> Task :react-native-udp:bundleDebugAar UP-TO-DATE
+> Task :react-native-udp:assembleDebug UP-TO-DATE
+> Task :react-native-vector-icons:stripDebugDebugSymbols NO-SOURCE
+> Task :react-native-vector-icons:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-vector-icons:extractDebugAnnotations UP-TO-DATE
+> Task :react-native-vector-icons:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :app:mergeDebugNativeLibs
+> Task :react-native-vector-icons:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-vector-icons:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :react-native-vector-icons:prepareDebugArtProfile UP-TO-DATE
+> Task :react-native-vector-icons:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-vector-icons:mergeDebugJavaResource UP-TO-DATE
+> Task :react-native-vector-icons:syncDebugLibJars UP-TO-DATE
+> Task :react-native-vector-icons:bundleDebugAar UP-TO-DATE
+> Task :react-native-vector-icons:assembleDebug UP-TO-DATE
+> Task :react-native-webview:stripDebugDebugSymbols NO-SOURCE
+> Task :react-native-webview:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-webview:extractDebugAnnotations UP-TO-DATE
+> Task :react-native-webview:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :react-native-webview:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-webview:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :react-native-webview:prepareDebugArtProfile UP-TO-DATE
+> Task :react-native-webview:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-webview:mergeDebugJavaResource UP-TO-DATE
+> Task :react-native-webview:syncDebugLibJars UP-TO-DATE
+> Task :react-native-webview:bundleDebugAar UP-TO-DATE
+> Task :react-native-webview:assembleDebug UP-TO-DATE
+> Task :app:stripDebugDebugSymbols
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebug
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+See https://docs.gradle.org/7.5.1/userguide/command_line_interface.html#sec:command_line_warnings
+
+Execution optimizations have been disabled for 23 invalid unit(s) of work during this build to ensure correctness.
+Please consult deprecation warnings for more details.
+
+BUILD SUCCESSFUL in 3m 41s
+391 actionable tasks: 32 executed, 359 up-to-date
+Done in 225.74s.

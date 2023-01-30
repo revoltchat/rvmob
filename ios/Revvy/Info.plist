@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -53,7 +53,6 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>OpenSans.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>
@@ -70,9 +69,19 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
-		<string>OpenSans_bold_italic.ttf</string>
-		<string>OpenSans_bold.ttf</string>
-		<string>OpenSans_italic.ttf</string>
+		<string>Inter.ttf</string>
+		<string>Inter_Black.ttf</string>
+		<string>Inter_Bold.ttf</string>
+		<string>Inter_ExtraBold.ttf</string>
+		<string>Inter_ExtraLight.ttf</string>
+		<string>Inter_Light.ttf</string>
+		<string>Inter_Medium.ttf</string>
+		<string>Inter_SemiBold.ttf</string>
+		<string>Inter_Thin.ttf</string>
+		<string>Open Sans.ttf</string>
+		<string>Open Sans_bold.ttf</string>
+		<string>Open Sans_bold_italic.ttf</string>
+		<string>Open Sans_italic.ttf</string>
 	</array>
 </dict>
 </plist>
