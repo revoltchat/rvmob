@@ -395,6 +395,8 @@ export const MarkdownView = (props: any) => {
     newProps.style = Object.assign({blockquote: {}}, newProps.style);
   newProps.style.blockquote = Object.assign(
     {
+      marginBottom: 2,
+      borderRadius: 2,
       borderColor: currentTheme.foregroundPrimary,
       color: currentTheme.foregroundPrimary,
       backgroundColor: currentTheme.blockQuoteBackground,
@@ -433,19 +435,37 @@ export function parseRevoltNodes(text: string) {
     }
     return ping;
   });
+  text = text.replace(/:[0-9A-Z]*:/g, ping => {
+    let id = ping.slice(1, -1);
+    let emoji = client.emojis.get(id);
+    if (emoji) {
+      return `!EMOJI ${emoji.name}!`;
+    }
+    return ping;
+  });
   return text;
 }
 
-export const GeneralAvatar = (attachment, size: number) => {
+export const GeneralAvatar = ({
+  attachment,
+  size,
+  directory,
+}: {
+  attachment: any;
+  size: number;
+  directory?: string;
+}) => {
+  console.log(directory, attachment);
+  const uri = directory
+    ? client.configuration?.features.autumn.url + directory + attachment
+    : client.generateFileURL(attachment) + '?max_side=' + defaultMaxSide;
+  console.log(uri);
   return (
     <View>
       {
         <Image
           source={{
-            uri:
-              client.generateFileURL(attachment) +
-              '?max_side=' +
-              defaultMaxSide,
+            uri: uri,
           }}
           style={{width: size || 35, height: size || 35, borderRadius: 10000}}
         />
@@ -488,6 +508,8 @@ export const ServerList = observer(
             <View
               style={{
                 borderRadius: 10000,
+                borderWidth: 3,
+                borderColor: currentTheme.background,
                 backgroundColor: currentTheme.foregroundPrimary,
                 height: 20,
                 width: 20,

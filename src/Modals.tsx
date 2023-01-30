@@ -74,12 +74,14 @@ export class Modals extends React.Component {
     });
     setFunction('openInvite', async (i: string) => {
       try {
-        let server = await client.fetchInvite(i);
-        console.log(server.type, server.channel_name);
-        this.setState({
-          inviteServer: server,
-          inviteServerCode: i,
-        });
+        let community = await client.fetchInvite(i);
+        if (community.type === 'Server') {
+          console.log(community.type, community.server_icon?._id);
+          this.setState({
+            inviteServer: community,
+            inviteServerCode: i,
+          });
+        }
       } catch (e) {
         console.log(e);
       }
@@ -1127,6 +1129,24 @@ export class Modals extends React.Component {
                   <Text style={{fontSize: 24, fontWeight: 'bold'}}>
                     Account
                   </Text>
+                  <ContextButton
+                    style={{flex: 1}}
+                    backgroundColor={currentTheme.backgroundSecondary}
+                    onPress={() => {
+                      Clipboard.setString(client.user?.username);
+                    }}>
+                    <Text>
+                      Username{'\n'}
+                      <Text
+                        style={{
+                          marginTop: 3,
+                          fontSize: 12,
+                          color: currentTheme.foregroundSecondary,
+                        }}>
+                        {client.user?.username}
+                      </Text>
+                    </Text>
+                  </ContextButton>
                 </View>
               ) : null}
             </ScrollView>
@@ -1267,14 +1287,21 @@ export class Modals extends React.Component {
                       <View
                         style={{alignItems: 'center', flexDirection: 'row'}}>
                         <GeneralAvatar
-                          attachment={this.state.inviteServer.server_icon}
+                          attachment={this.state.inviteServer.server_icon?._id}
                           size={60}
+                          directory={'/icons/'}
                         />
                         <View style={{marginLeft: 10}} />
-                        <ServerName
-                          server={this.state.inviteServer}
-                          size={26}
-                        />
+                        <View style={{flexDirection: 'row'}}>
+                          <Text
+                            style={{
+                              fontWeight: 'bold',
+                              fontSize: 26,
+                              flexWrap: 'wrap',
+                            }}>
+                            {this.state.inviteServer?.server_name}
+                          </Text>
+                        </View>
                       </View>
                       <Button
                         onPress={async () => {
