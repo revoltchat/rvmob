@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 export const themes = {
   Light: {
     background: '#F6F6F6',
@@ -160,6 +160,35 @@ function refreshStyles() {
       flex: 1,
     },
     header: {
+      fontWeight: 'bold',
+      fontSize: 16,
+    },
+    headerv2: {
+      fontWeight: 'bold',
+      fontSize: 17.5,
+      marginBottom: 10,
+    },
+    profileSubheader: {
+      fontWeight: 'bold',
+      color: currentTheme.foregroundSecondary,
+      marginVertical: 5,
+    },
+    loadingHeader: {
+      fontWeight: 'bold',
+      textAlign: 'center',
+      fontSize: 30,
+    },
+    remark: {
+      color: currentTheme.foregroundSecondary,
+      textAlign: 'center',
+      fontSize: 16,
+      marginTop: 5,
+      paddingLeft: 30,
+      paddingRight: 30,
+    },
+    channelName: {
+      flex: 1,
+      fontWeight: 'bold',
       fontSize: 16,
     },
     leftView: {
@@ -170,6 +199,13 @@ function refreshStyles() {
     },
     rightView: {
       flex: 1,
+      backgroundColor: currentTheme.backgroundSecondary,
+    },
+    sheetBackground: {
+      width: '100%',
+      height: Dimensions.get('window').height * 0.75,
+      top: '25%',
+      padding: 15,
       backgroundColor: currentTheme.backgroundSecondary,
     },
     textDefault: {
@@ -221,6 +257,11 @@ function refreshStyles() {
       margin: 4,
       backgroundColor: currentTheme.backgroundPrimary,
       overflow: 'hidden',
+    },
+    serverButtonInitials: {
+      fontWeight: 'bold',
+      textAlign: 'center',
+      marginTop: '30%',
     },
     serverIcon: {
       width: 48,

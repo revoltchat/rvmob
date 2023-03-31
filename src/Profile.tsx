@@ -5,6 +5,8 @@ import {currentTheme, styles} from './Theme';
 import {Pressable, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Server, User, Message, Channel} from 'revolt.js';
+import {getColour} from './lib/utils';
+
 const Image = FastImage;
 
 type UsernameProps = {
@@ -13,7 +15,7 @@ type UsernameProps = {
   noBadge?: boolean;
   size: number;
   masquerade?: string;
-  color: string;
+  color?: string;
 };
 
 export const Username = observer(
@@ -29,7 +31,7 @@ export const Username = observer(
           user: user?._id,
         })
       : undefined;
-    let roleColor = color || styles.textDefault.color;
+    let roleColor = color ? getColour(color) : styles.textDefault.color;
     let name =
       server && memberObject?.nickname ? memberObject?.nickname : user.username;
     if (server && memberObject?.roles && memberObject?.roles?.length > 0) {
@@ -37,12 +39,14 @@ export const Username = observer(
       if (srv?.roles) {
         for (let role of memberObject?.roles) {
           if (srv.roles[role].colour) {
-            roleColor = srv.roles[role].colour;
+            roleColor = getColour(srv.roles[role].colour!);
           }
         }
       }
     }
     let badgeSize = (size || 14) * 0.6;
+    let bridgedMessage =
+      user?._id === '01FHGJ3NPP7XANQQH8C2BE44ZY' && masquerade !== undefined;
     let badgeStyle = {
       color: currentTheme.accentColorForeground,
       backgroundColor: currentTheme.accentColor,
@@ -62,8 +66,17 @@ export const Username = observer(
         </Text>
         {!noBadge ? (
           <>
-            {user?.bot ? <Text style={badgeStyle}>BOT</Text> : null}
-            {masquerade ? <Text style={badgeStyle}>MASQ.</Text> : null}
+            {bridgedMessage ? (
+              <Text style={badgeStyle}>BRIDGE</Text>
+            ) : (
+              <>
+                {user?.bot ? <Text style={badgeStyle}>BOT</Text> : null}
+                {masquerade ? <Text style={badgeStyle}>MASQ.</Text> : null}
+                {user?._id === '01FC17E1WTM2BGE4F3ARN3FDAF' ? (
+                  <Text style={badgeStyle}>SYSTEM</Text>
+                ) : null}
+              </>
+            )}
           </>
         ) : null}
       </View>
@@ -76,7 +89,7 @@ type AvatarProps = {
   user?: User;
   server?: Server;
   status?: boolean;
-  size: number;
+  size?: number;
   backgroundColor?: string;
   masquerade?: Message['masquerade'];
   pressable?: boolean;
@@ -104,11 +117,8 @@ export const Avatar = observer(
     let statusColor;
     let statusScale = 2.7;
     if (status) {
-      statusColor =
-        currentTheme[
-          'status' +
-            (user.online ? user.status?.presence || 'Online' : 'Offline')
-        ];
+      const s = user?.online ? user.status?.presence || 'Online' : 'Offline';
+      statusColor = currentTheme[`status${s}`];
     }
     let Container = pressable
       ? ({children}) => (
@@ -150,8 +160,7 @@ export const Avatar = observer(
               }}
             />
           ) : null}
-          {masquerade &&
-          app.settings.get('Show masqueraded avatar in corner') ? (
+          {masquerade && app.settings.get('ui.messaging.showMasqAvatar') ? (
             <Image
               style={{
                 width: Math.round(size / statusScale),
@@ -209,9 +218,17 @@ export const MiniProfile = observer(
   ({user, scale, channel, server, color}: MiniProfileProps) => {
     if (user) {
       return (
-        <View style={{flexDirection: 'row'}}>
-          <Avatar user={user} server={server} size={35 * (scale || 1)} status />
-          <View style={{marginLeft: 10 * (scale || 1)}}>
+        <View style={{flexDirection: 'row'}} key={`mini-profile-${user._id}`}>
+          <Avatar
+            key={`mini-profile-${user._id}-avatar`}
+            user={user}
+            server={server}
+            size={35 * (scale || 1)}
+            status
+          />
+          <View
+            key={`mini-profile-${user._id}-text-wrapper`}
+            style={{marginLeft: 10 * (scale || 1)}}>
             <Username
               user={user}
               server={server}
@@ -252,7 +269,7 @@ export const MiniProfile = observer(
                 marginTop: -3 * (scale || 1),
                 fontSize: 14 * (scale || 1),
               }}>
-              {channel?.recipient_ids.length} members
+              {channel?.recipient_ids?.length} members
             </Text>
           </View>
         </View>
@@ -277,13 +294,7 @@ export const RoleView = observer(({server, user}: RoleViewProps) => {
   let roles = memberObject?.roles?.map(r => server.roles![r]) || null;
   return memberObject && roles ? (
     <>
-      <Text
-        style={{
-          color: currentTheme.foregroundSecondary,
-          fontWeight: 'bold',
-        }}>
-        ROLES
-      </Text>
+      <Text style={styles.profileSubheader}>ROLES</Text>
       <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         {roles.map(r => (
           <View

@@ -5,23 +5,44 @@ import {styles, currentTheme} from './Theme';
 import {observer} from 'mobx-react-lite';
 import {Username, Avatar} from './Profile';
 import {ulid} from 'ulid';
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker, {
+  DocumentPickerResponse,
+} from 'react-native-document-picker';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import fs from 'react-native-fs';
-import {Channel} from 'revolt.js';
+import {Channel, Message} from 'revolt.js';
+import {compareAsc} from 'date-fns';
 let typing = false;
 
 type MessageBoxProps = {
   channel: Channel;
 };
 
+function placeholderText(channel: Channel) {
+  switch (channel.channel_type) {
+    case 'SavedMessages':
+      return 'Save to your notes';
+    case 'DirectMessage':
+      return `@${channel.recipient?.username}`;
+    case 'TextChannel':
+    case 'Group':
+      return `${channel.channel_type === 'TextChannel' ? '#' : ''}${
+        channel.name
+      }`;
+    default:
+      return `${channel.channel_type}`;
+  }
+}
+
 export const MessageBox = observer((props: MessageBoxProps) => {
   let [currentText, setCurrentText] = React.useState('');
   let [editingMessage, setEditingMessage] = React.useState(null);
   let [replyingMessages, setReplyingMessages] = React.useState([]);
-  let [attachments, setAttachments] = React.useState([]);
+  let [attachments, setAttachments] = React.useState(
+    [] as DocumentPickerResponse[],
+  );
 
   setFunction('setMessageBoxInput', setCurrentText.bind(this));
   setFunction('setReplyingMessages', setReplyingMessages.bind(this));
@@ -45,7 +66,10 @@ export const MessageBox = observer((props: MessageBoxProps) => {
           justifyContent: 'center',
         }}>
         <Text style={{textAlign: 'center'}}>
-          You do not have permission to send messages in this channel.
+          {props.channel.channel_type === 'DirectMessage' &&
+          props.channel.recipient?._id === '01FC17E1WTM2BGE4F3ARN3FDAF'
+            ? 'You cannot reply to system messages.'
+            : 'You do not have permission to send messages in this channel.'}
         </Text>
       </View>
     );
@@ -136,44 +160,58 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         </View>
       ) : null}
       <View style={styles.messageBoxInner}>
-        <TouchableOpacity
-          style={styles.sendButton}
-          onPress={async () => {
-            let res = await DocumentPicker.pickSingle({
-              type: [DocumentPicker.types.allFiles],
-            });
-            if (res.uri) {
-              setAttachments([...attachments, res]);
-            }
-          }}>
-          <AntIcon
-            name="pluscircle"
-            size={20}
-            color={currentTheme.foregroundPrimary}
-          />
-        </TouchableOpacity>
+        {app.settings.get('ui.messaging.sendAttachments') ? (
+          <TouchableOpacity
+            style={Object.assign({}, styles.sendButton, {marginHorizontal: 6})}
+            onPress={async () => {
+              try {
+                let res = await DocumentPicker.pickSingle({
+                  type: [DocumentPicker.types.allFiles],
+                });
+                console.log(res);
+                let isDuplicate = false;
+                for (const a of attachments) {
+                  if (a.uri === res.uri) {
+                    console.log('sussy duplicate!');
+                    isDuplicate = true;
+                  }
+                }
+                console.log(isDuplicate);
+                if (res.uri) {
+                  console.log(`pushing attachment (${res.uri})`);
+                  let newAttachments = attachments;
+                  newAttachments.push(res);
+                  setAttachments(newAttachments);
+                  console.log(attachments);
+                }
+              } catch (error) {
+                console.log(`[MESSAGEBOX] Error: ${error}`);
+              }
+            }}>
+            <AntIcon
+              name="pluscircle"
+              size={20}
+              color={currentTheme.foregroundPrimary}
+            />
+          </TouchableOpacity>
+        ) : null}
         <TextInput
           multiline
           placeholderTextColor={currentTheme.foregroundSecondary}
           style={styles.messageBox}
           placeholder={
-            'Message ' +
-            (props.channel?.channel_type != 'Group'
-              ? props.channel?.channel_type == 'DirectMessage'
-                ? '@'
-                : '#'
-              : '') +
-            (props.channel?.name || props.channel.recipient?.username)
+            (props.channel.channel_type !== 'SavedMessages' ? 'Message ' : '') +
+            placeholderText(props.channel)
           }
           onChangeText={text => {
             setCurrentText(text);
-            if (currentText.length == 0) {
+            if (currentText.length === 0) {
               props.channel.stopTyping();
             } else {
               if (!typing) {
                 typing = true;
                 props.channel.startTyping();
-                setTimeout((() => (typing = false)).bind(this), 2500);
+                setTimeout(() => (typing = false), 3000);
               }
             }
           }}
@@ -194,7 +232,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                   content: thisCurrentText,
                   channel: props.channel,
                   nonce: nonce,
-                  reply_ids: replyingMessages?.map(m => m._id),
+                  reply_ids: replyingMessages?.map((m: Message) => m._id),
                 });
                 // let uploaded = [];
                 // for (let a of attachments) {
@@ -213,6 +251,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                 //     console.log("out: ", await result.text())
                 //     uploaded.push(id);
                 // }
+                console.log(replyingMessages);
                 props.channel.sendMessage({
                   content: thisCurrentText,
                   replies: replyingMessages.map(m => {
@@ -220,6 +259,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                   }),
                   nonce,
                 });
+                props.channel.ack(props.channel.last_message_id ?? undefined);
                 setReplyingMessages([]);
               }
             }}>
@@ -243,7 +283,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
   );
 });
 
-export const TypingIndicator = observer((channel: Channel) => {
+export const TypingIndicator = observer(({channel}: {channel: Channel}) => {
   if (channel) {
     let users = channel.typing?.filter(entry => !!entry) || undefined;
     !app.settings.get('ui.messaging.showSelfInTypingIndicator') &&

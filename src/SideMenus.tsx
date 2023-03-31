@@ -16,7 +16,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FastImage from 'react-native-fast-image';
 const Image = FastImage;
 import React from 'react';
-import { User } from 'revolt.js';
+import {User} from 'revolt.js';
 
 export class LeftMenu extends React.Component {
   constructor(props) {
@@ -33,10 +33,15 @@ export class LeftMenu extends React.Component {
     return (
       <>
         <View style={styles.leftView}>
-          <ScrollView style={styles.serverList}>
+          <ScrollView key={'server-list'} style={styles.serverList}>
             <TouchableOpacity
               onPress={() => {
-                this.setState({currentServer: null});
+                this.state.currentServer
+                  ? this.setState({
+                      currentServer: null,
+                      contextMenuUserServer: null,
+                    })
+                  : app.openStatusMenu(true);
               }}
               onLongPress={() => {
                 app.openProfile(client.user);
@@ -45,6 +50,7 @@ export class LeftMenu extends React.Component {
               key={client.user?._id}
               style={{margin: 4}}>
               <Avatar
+                key={`${client.user?._id}-avatar`}
                 user={client.user}
                 size={48}
                 backgroundColor={currentTheme.backgroundSecondary}
@@ -60,11 +66,11 @@ export class LeftMenu extends React.Component {
               }}
             />
             <ServerList
-              onServerPress={s => this.setState({currentServer: s})}
-              onServerLongPress={s => app.openServerContextMenu(s)}
+              onServerPress={(s: Server) => this.setState({currentServer: s})}
+              onServerLongPress={(s: Server) => app.openServerContextMenu(s)}
             />
           </ScrollView>
-          <ScrollView style={styles.channelList}>
+          <ScrollView key={'channel-list'} style={styles.channelList}>
             <ChannelList
               onChannelClick={this.props.onChannelClick}
               currentChannel={this.props.currentChannel}
@@ -82,6 +88,17 @@ export class LeftMenu extends React.Component {
             flexDirection: 'row',
           }}>
           <Button
+            key={'bottom-nav-friends'}
+            onPress={() => this.props.onChannelClick('friends')}
+            backgroundColor={currentTheme.backgroundPrimary}>
+            <MaterialIcon
+              name="group"
+              size={20}
+              color={currentTheme.foregroundPrimary}
+            />
+          </Button>
+          <Button
+            key={'bottom-nav-settings'}
             onPress={() => app.openSettings(true)}
             backgroundColor={currentTheme.backgroundPrimary}>
             <FAIcon
@@ -91,6 +108,7 @@ export class LeftMenu extends React.Component {
             />
           </Button>
           <Button
+            key={'bottom-nav-logout'}
             onPress={this.props.onLogOut}
             backgroundColor={currentTheme.backgroundPrimary}>
             <MaterialIcon
@@ -120,9 +138,15 @@ export class RightMenu extends React.Component {
           {this.props.currentChannel?.recipients?.map((u: User) => (
             <Button
               backgroundColor={currentTheme.backgroundPrimary}
-              style={{margin: 6}}
+              style={{
+                margin: 6,
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+              }}
               onPress={() => app.openProfile(u)}>
-              <MiniProfile user={u} />
+              <View style={{maxWidth: '90%'}}>
+                <MiniProfile user={u} />
+              </View>
             </Button>
           ))}
         </View>

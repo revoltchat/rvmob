@@ -9,6 +9,7 @@ import {
   selectedRemark,
   randomizeRemark,
   openUrl,
+  RE_INVITE,
 } from './Generic';
 import {
   View,
@@ -19,7 +20,7 @@ import {
 } from 'react-native';
 import {Avatar, Username} from './Profile';
 import React, {useCallback} from 'react';
-import {Channel, Message as RevoltMessage} from 'revolt.js';
+import {API, Channel, Message as RevoltMessage} from 'revolt.js';
 import {observer} from 'mobx-react-lite';
 import {autorun} from 'mobx';
 import {styles, currentTheme} from './Theme';
@@ -27,6 +28,7 @@ import {differenceInMinutes, formatRelative} from 'date-fns';
 import {enGB, enUS} from 'date-fns/locale';
 import {decodeTime} from 'ulid';
 import FastImage from 'react-native-fast-image';
+import {InviteEmbed} from './components/common/messaging/InviteEmbed';
 const Image = FastImage;
 let didUpdateFirstTime = false;
 
@@ -82,40 +84,48 @@ export class Messages extends React.Component {
   componentDidMount() {
     console.log('mount component');
     client.on('message', async message => {
-      console.log(`new message: ${message._id}`);
+      console.log(`[MESSAGERENDERER] New message: ${message._id}`);
       if (this.state.atLatestMessages && this.props.channel) {
         // !this.props.loading &&
         if (
-          this.props.channel._id == message.channel?._id &&
+          this.props.channel._id === message.channel?._id &&
           this.state.messages?.length > 0
         ) {
-          console.log(`message ${message._id}is in current channel`)
-          this.setState(prev => {
-            let newMessages = prev.messages;
-            if (newMessages.length >= (!this.state.bottomOfPage ? 150 : 50)) {
-              newMessages = newMessages.slice(
-                newMessages.length - 50,
-                newMessages.length,
-              );
-            }
-            let grouped =
-              newMessages.length > 0 &&
-              this.calculateGrouped(
-                newMessages[newMessages.length - 1].message,
+          console.log(
+            `[MESSAGERENDERER] Message ${message._id} is in current channel`,
+          );
+          try {
+            this.setState(prev => {
+              let newMessages = prev.messages;
+              if (newMessages.length >= (!this.state.bottomOfPage ? 150 : 50)) {
+                newMessages = newMessages.slice(
+                  newMessages.length - 50,
+                  newMessages.length,
+                );
+              }
+              let grouped =
+                newMessages.length > 0 &&
+                this.calculateGrouped(
+                  newMessages[newMessages.length - 1].message,
+                  message,
+                );
+              newMessages.push({
                 message,
-              );
-            newMessages.push({
-              message,
-              grouped,
-              rendered: this.renderMessage({grouped, message}),
+                grouped,
+                rendered: this.renderMessage({grouped, message}),
+              });
+              return {
+                messages: newMessages,
+                queuedMessages: this.state.queuedMessages.filter(
+                  m => m.nonce != message.nonce,
+                ),
+              };
             });
-            return {
-              messages: newMessages,
-              queuedMessages: this.state.queuedMessages.filter(
-                m => m.nonce != message.nonce,
-              ),
-            };
-          });
+          } catch (err) {
+            console.log(
+              `[MESSAGERENDERER] Failed to push message (${message._id}): ${err}`,
+            );
+          }
         }
       }
     });
@@ -136,7 +146,7 @@ export class Messages extends React.Component {
       if (
         client.user?.online &&
         this.props.channel &&
-        app.settings.get('Refetch messages on reconnect')
+        app.settings.get('app.refetchOnReconnect')
       ) {
         this.setState({loading: true, messages: []});
         await this.fetchMessages();
@@ -217,10 +227,10 @@ export class Messages extends React.Component {
       lastMessage.author?._id === message.author?._id && // the author is the same
       !(message.reply_ids && message.reply_ids.length > 0) && // the message is not a reply
       differenceInMinutes(
-        // the time difference is less than 5 minutes and
+        // the time difference is less than 7 minutes and
         decodeTime(message._id),
         decodeTime(lastMessage._id),
-      ) < 5 &&
+      ) < 7 &&
       (message.masquerade // the masquerade is the same
         ? message.masquerade.avatar === lastMessage.masquerade?.avatar &&
           message.masquerade.name === lastMessage.masquerade?.name
@@ -252,10 +262,8 @@ export class Messages extends React.Component {
     }
     return this.state.loading ? (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{fontSize: 30, fontWeight: 'bold'}}>Loading...</Text>
-        <View style={{paddingLeft: 30, paddingRight: 30}}>
-          {selectedRemark || null}
-        </View>
+        <Text style={styles.loadingHeader}>Loading...</Text>
+        <Text style={styles.remark}>{selectedRemark || null}</Text>
       </View>
     ) : (
       <View style={{flex: 1}}>
@@ -283,22 +291,38 @@ export class Messages extends React.Component {
             this.scrollView = ref;
           }}
           onScroll={e => {
+            // FIXME: let the user go forward too
             let bottomOfPage =
               e.nativeEvent.contentOffset.y >=
               e.nativeEvent.contentSize.height -
                 e.nativeEvent.layoutMeasurement.height;
-            // if (e.nativeEvent.contentOffset.y == 0) {
-            //     this.fetchMessages({type: "before", id: this.state.messages[0].message._id})
-            // }
-            // if (!this.state.atLatestMessages && bottomOfPage) {
-            //     this.fetchMessages({type: "after", id: this.state.messages[this.state.messages.length - 1].message._id})
-            // }
-            if (bottomOfPage && this.props.channel?.unread) {
-              this.props.channel.ack();
+            // console.log(
+            //   bottomOfPage,
+            //   e.nativeEvent.contentOffset.y,
+            //   e.nativeEvent.contentSize.height,
+            //   e.nativeEvent.layoutMeasurement.height,
+            // );
+            if (app.settings.get('ui.messaging.experimentalScrolling')) {
+              if (e.nativeEvent.contentOffset.y === 0) {
+                this.fetchMessages({
+                  type: 'before',
+                  id: this.state.messages[0].message._id,
+                });
+              }
+              if (!this.state.atLatestMessages && bottomOfPage) {
+                this.fetchMessages({
+                  type: 'after',
+                  id: this.state.messages[this.state.messages.length - 1]
+                    .message._id,
+                });
+              }
+              if (bottomOfPage && this.props.channel?.unread) {
+                this.props.channel.ack(this.props.channel.last_message_id);
+              }
+              this.setState({
+                bottomOfPage,
+              });
             }
-            this.setState({
-              bottomOfPage,
-            });
           }}
           onLayout={() => {
             if (this.state.bottomOfPage) {
@@ -342,10 +366,31 @@ type MessageProps = {
   onLongPress?: any;
 };
 
-/* @ts-expect-error there seemt to be a typing issue but i'm not sure what */
+type ReactionPile = {
+  emoji: string;
+  reactors: string[];
+};
+
 export const Message = observer((props: MessageProps) => {
   const locale = app.settings.get('ui.messaging.use24H') ? enGB : enUS;
-  let [error, setError] = React.useState(null);
+
+  // check for invite links, then take the code from each
+  const rawInvites = Array.from(
+    props.message.content?.matchAll(RE_INVITE) ?? [],
+  );
+  let invites: string[] = [];
+  for (const i of rawInvites) {
+    invites.push(i[1]);
+  }
+
+  // then do the same with reactions
+  const rawReactions = Array.from(props.message.reactions ?? []);
+  let reactions: ReactionPile[] = [];
+  for (const r of rawReactions) {
+    reactions.push({emoji: r[0], reactors: Array.from(r[1])});
+  }
+
+  let [error, setError] = React.useState(null as any);
   if (error) {
     return (
       <View key={props.message._id}>
@@ -360,7 +405,9 @@ export const Message = observer((props: MessageProps) => {
     if (!props.message.content && props.message.system) {
       return (
         <View key={props.message._id} style={styles.messsageInner}>
-          <View style={{marginTop: app.settings.get('Message spacing')}} />
+          <View
+            style={{marginTop: app.settings.get('ui.messaging.messageSpacing')}}
+          />
           <View style={{flexDirection: 'row'}}>
             <Username
               user={client.users.get(props.message.system.id)}
@@ -403,7 +450,9 @@ export const Message = observer((props: MessageProps) => {
           style={{opacity: 0.6}}
           delayLongPress={750}
           onLongPress={props.onLongPress}>
-          <View style={{marginTop: app.settings.get('Message spacing')}} />
+          <View
+            style={{marginTop: app.settings.get('ui.messaging.messageSpacing')}}
+          />
           {props.message.reply_ids !== null ? (
             <View style={styles.repliedMessagePreviews}>
               {props.message.reply_ids.map(id => (
@@ -418,7 +467,7 @@ export const Message = observer((props: MessageProps) => {
                 masquerade={props.message.masquerade?.avatar}
                 server={props.message.channel?.server}
                 size={35}
-                {...(app.settings.get('Show user status in chat avatars')
+                {...(app.settings.get('ui.messaging.statusInChatAvatars')
                   ? {status: true}
                   : {})}
               />
@@ -452,215 +501,307 @@ export const Message = observer((props: MessageProps) => {
         key={props.message._id}
         activeOpacity={0.8}
         delayLongPress={750}
-        onLongPress={props.onLongPress}>
-        <View style={{marginTop: app.settings.get('Message spacing')}} />
-        {props.message.reply_ids !== null ? (
-          <View style={styles.repliedMessagePreviews}>
-            {props.message.reply_ids.map(id => (
-              <ReplyMessage
-                key={id}
-                message={client.messages.get(id)}
-                mention={props.message?.mention_ids?.includes(
-                  props.message?.author_id,
-                )}
-              />
-            ))}
-          </View>
-        ) : null}
-        <View style={props.grouped ? styles.messageGrouped : styles.message}>
-          {props.message.author && !props.grouped ? (
-            <Pressable onPress={() => props.onUserPress()}>
-              <Avatar
-                user={props.message.author}
-                masquerade={props.message.generateMasqAvatarURL()}
-                server={props.message.channel?.server}
-                size={35}
-                {...(app.settings.get('Show user status in chat avatars')
-                  ? {status: true}
-                  : {})}
-              />
-            </Pressable>
-          ) : null}
-          <View style={styles.messageInner}>
-            {props.grouped && props.message.edited ? (
-              <Text
-                style={{
-                  fontSize: 11,
-                  color: currentTheme.foregroundTertiary,
-                  position: 'relative',
-                  right: 47,
-                  marginBottom: -16,
-                }}>
-                {' '}
-                (edited)
-              </Text>
+        onLongPress={
+          props.message.author?.relationship === 'Blocked'
+            ? null
+            : props.onLongPress
+        }>
+        <View
+          style={{
+            marginTop: app.settings.get(
+              'ui.messaging.messageSpacing',
+            ) as number,
+          }}
+        />
+        {props.message.author?.relationship === 'Blocked' ? (
+          <>
+            <View
+              key={`message-${props.message._id}-blocked-divider-top`}
+              style={{
+                marginBottom: 4,
+                height: 1,
+                backgroundColor: currentTheme.foregroundTertiary,
+              }}
+            />
+            <View
+              key={`message-${props.message._id}-blocked`}
+              style={{
+                backgroundColor: currentTheme.background,
+                borderRadius: 4,
+                padding: 6,
+              }}>
+              <Text style={{marginLeft: 40}}>Blocked message</Text>
+            </View>
+            <View
+              key={`message-${props.message._id}-blocked-divider-bottom`}
+              style={{
+                marginTop: 4,
+                height: 1,
+                backgroundColor: currentTheme.foregroundTertiary,
+              }}
+            />
+          </>
+        ) : (
+          <>
+            {props.message.reply_ids !== null ? (
+              <View style={styles.repliedMessagePreviews}>
+                {props.message.reply_ids.map(id => (
+                  <ReplyMessage
+                    key={id}
+                    message={client.messages.get(id)}
+                    mention={props.message?.mention_ids?.includes(
+                      props.message?.author_id,
+                    )}
+                  />
+                ))}
+              </View>
             ) : null}
-            {props.message.author && !props.grouped ? (
-              <View style={{flexDirection: 'row'}}>
-                <Pressable onPress={props.onUsernamePress}>
-                  <Username
+            <View
+              style={props.grouped ? styles.messageGrouped : styles.message}>
+              {props.message.author && !props.grouped ? (
+                <Pressable
+                  key={`${props.message._id}-avatar`}
+                  onPress={() => props.onUserPress()}>
+                  <Avatar
                     user={props.message.author}
+                    masquerade={props.message.generateMasqAvatarURL()}
                     server={props.message.channel?.server}
-                    masquerade={props.message.masquerade?.name}
+                    size={35}
+                    {...(app.settings.get('ui.messaging.statusInChatAvatars')
+                      ? {status: true}
+                      : {})}
                   />
                 </Pressable>
-                <Text style={styles.timestamp}>
-                  {' '}
-                  {formatRelative(decodeTime(props.message._id), new Date(), {
-                    locale: locale,
-                  })}
-                </Text>
-                {props.message.edited && (
+              ) : null}
+              <View style={styles.messageInner}>
+                {props.grouped && props.message.edited ? (
                   <Text
                     style={{
-                      fontSize: 12,
+                      fontSize: 11,
                       color: currentTheme.foregroundTertiary,
                       position: 'relative',
-                      top: 2,
-                      left: 2,
+                      right: 47,
+                      marginBottom: -16,
                     }}>
                     {' '}
                     (edited)
                   </Text>
-                )}
+                ) : null}
+                {props.message.author && !props.grouped ? (
+                  <View style={{flexDirection: 'row'}}>
+                    <Pressable onPress={props.onUsernamePress}>
+                      <Username
+                        user={props.message.author}
+                        server={props.message.channel?.server}
+                        masquerade={props.message.masquerade?.name}
+                      />
+                    </Pressable>
+                    <Text style={styles.timestamp}>
+                      {' '}
+                      {formatRelative(
+                        decodeTime(props.message._id),
+                        new Date(),
+                        {
+                          locale: locale,
+                        },
+                      )}
+                    </Text>
+                    {props.message.edited && (
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          color: currentTheme.foregroundTertiary,
+                          position: 'relative',
+                          top: 2,
+                          left: 2,
+                        }}>
+                        {' '}
+                        (edited)
+                      </Text>
+                    )}
+                  </View>
+                ) : null}
+                {props.message.content ? (
+                  <MarkdownView>
+                    {parseRevoltNodes(props.message.content)}
+                  </MarkdownView>
+                ) : null}
+                {props.message.attachments?.map(a => {
+                  if (a.metadata?.type === 'Image') {
+                    let width = a.metadata.width;
+                    let height = a.metadata.height;
+                    if (width > Dimensions.get('screen').width - 75) {
+                      let sizeFactor =
+                        (Dimensions.get('screen').width - 75) / width;
+                      width = width * sizeFactor;
+                      height = height * sizeFactor;
+                    }
+                    return (
+                      <Pressable onPress={() => app.openImage(a)}>
+                        <Image
+                          source={{uri: client.generateFileURL(a)}}
+                          resizeMode={FastImage.resizeMode.contain}
+                          style={{
+                            width: width,
+                            height: height,
+                            marginBottom: 4,
+                            borderRadius: 3,
+                          }}
+                        />
+                      </Pressable>
+                    );
+                  } else {
+                    return (
+                      <Pressable
+                        onPress={() => openUrl(client.generateFileURL(a))}>
+                        <View
+                          style={{
+                            padding: 15,
+                            borderRadius: 6,
+                            backgroundColor: currentTheme.backgroundSecondary,
+                            marginBottom: 15,
+                          }}>
+                          <Text>{a.filename}</Text>
+                          <Text>{a.size.toLocaleString()} bytes</Text>
+                        </View>
+                      </Pressable>
+                    );
+                  }
+                })}
+                {invites?.map(i => {
+                  return <InviteEmbed message={props.message} invite={i} />;
+                })}
+                {props.message.embeds?.map(e => {
+                  return <MessageEmbed embed={e} />;
+                })}
+                {app.settings.get('ui.messaging.showReactions')
+                  ? reactions?.map(r => {
+                      return (
+                        <Text>
+                          Reaction: {r.emoji} {r.reactors.length}
+                        </Text>
+                      );
+                    })
+                  : null}
               </View>
-            ) : null}
-            <MarkdownView>
-              {parseRevoltNodes(props.message.content)}
-            </MarkdownView>
-            {props.message.attachments?.map(a => {
-              if (a.metadata?.type == 'Image') {
-                let width = a.metadata.width;
-                let height = a.metadata.height;
-                if (width > Dimensions.get('screen').width - 75) {
-                  let sizeFactor =
-                    (Dimensions.get('screen').width - 75) / width;
-                  width = width * sizeFactor;
-                  height = height * sizeFactor;
-                }
-                return (
-                  <Pressable onPress={() => app.openImage(a)}>
-                    <Image
-                      source={{uri: client.generateFileURL(a)}}
-                      resizeMode={FastImage.resizeMode.contain}
-                      style={{
-                        width: width,
-                        height: height,
-                        marginBottom: 4,
-                        borderRadius: 3,
-                      }}
-                    />
-                  </Pressable>
-                );
-              } else {
-                return (
-                  <Pressable onPress={() => openUrl(client.generateFileURL(a))}>
-                    <View
-                      style={{
-                        padding: 15,
-                        borderRadius: 6,
-                        backgroundColor: currentTheme.backgroundSecondary,
-                        marginBottom: 15,
-                      }}>
-                      <Text>{a.filename}</Text>
-                      <Text>{a.size.toLocaleString()} bytes</Text>
-                    </View>
-                  </Pressable>
-                );
-              }
-            })}
-            {props.message.embeds?.map(e => {
-              return <MessageEmbed embed={e} />;
-            })}
-          </View>
-        </View>
+            </View>
+          </>
+        )}
       </TouchableOpacity>
     );
   } catch (e) {
     setError(e);
     console.error(e);
   }
+  return null;
 });
 
-const MessageEmbed = observer(({embed: e}) => {
-  if (e.type == 'Website') {
-    return (
-      <View
-        style={{
-          backgroundColor: currentTheme.backgroundSecondary,
-          padding: 8,
-          borderRadius: 8,
-        }}>
-        {e.site_name ? (
-          <Text style={{fontSize: 12, color: currentTheme.foregroundSecondary}}>
-            {e.site_name}
-          </Text>
-        ) : null}
-        {e.title && e.url ? (
-          <Pressable onPress={() => openUrl(e.url)}>
-            <Text style={{color: currentTheme.accentColor}}>{e.title}</Text>
-          </Pressable>
-        ) : (
-          <Text>{e.title}</Text>
-        )}
-        {e.description ? <Text>{e.description}</Text> : null}
-        {(() => {
-          if (e.image) {
-            let width = e.image.width;
-            let height = e.image.height;
-            if (width > Dimensions.get('screen').width - 82) {
-              let sizeFactor = (Dimensions.get('screen').width - 82) / width;
-              width = width * sizeFactor;
-              height = height * sizeFactor;
-            }
-            return (
-              <Pressable onPress={() => app.openImage(e.image.url)}>
-                <Image
-                  source={{uri: client.proxyFile(e.image.url)}}
-                  style={{
-                    width: width,
-                    height: height,
-                    marginTop: 4,
-                    borderRadius: 3,
-                  }}
-                />
-              </Pressable>
-            );
-          }
-        })()}
-      </View>
-    );
-  }
-  if (e.type == 'Image') {
-    // if (e.image?.size == "Large") {
-    let width = e.width;
-    let height = e.height;
-    if (width > Dimensions.get('screen').width - 75) {
-      let sizeFactor = (Dimensions.get('screen').width - 75) / width;
-      width = width * sizeFactor;
-      height = height * sizeFactor;
-    }
-    return (
-      <Pressable onPress={() => app.openImage(client.proxyFile(e.url))}>
-        <Image
-          source={{uri: client.proxyFile(e.url)}}
+const MessageEmbed = observer((eRaw: API.Embed) => {
+  // @ts-expect-error This seems to be necessary even though it clashses with the API types
+  const e = eRaw.embed;
+  switch (e.type) {
+    case 'Text':
+    case 'Website':
+      return (
+        <View
           style={{
-            width: width,
-            height: height,
-            marginBottom: 4,
-            borderRadius: 3,
-          }}
-        />
-      </Pressable>
-    );
-    // if (e.image?.size)
+            backgroundColor: currentTheme.backgroundSecondary,
+            padding: 8,
+            borderRadius: 8,
+          }}>
+          {e.type === 'Website' && e.site_name ? (
+            <Text
+              style={{fontSize: 12, color: currentTheme.foregroundSecondary}}>
+              {e.site_name}
+            </Text>
+          ) : null}
+          {e.title && e.url ? (
+            <Pressable onPress={() => openUrl(e.url!)}>
+              <Text style={{fontSize: 14, color: currentTheme.accentColor}}>
+                {e.title}
+              </Text>
+            </Pressable>
+          ) : (
+            <Text
+              style={{
+                fontSize: 14,
+                color: currentTheme.foregroundSecondary,
+              }}>
+              {e.title}
+            </Text>
+          )}
+          {e.description ? <MarkdownView>{e.description}</MarkdownView> : null}
+          {(() => {
+            if (e.type === 'Website' && e.image) {
+              let width = e.image.width;
+              let height = e.image.height;
+              if (width > Dimensions.get('screen').width - 82) {
+                let sizeFactor = (Dimensions.get('screen').width - 82) / width;
+                width = width * sizeFactor;
+                height = height * sizeFactor;
+              }
+              return (
+                <Pressable onPress={() => app.openImage(e.image?.url)}>
+                  <Image
+                    source={{uri: client.proxyFile(e.image.url)}}
+                    style={{
+                      width: width,
+                      height: height,
+                      marginTop: 4,
+                      borderRadius: 3,
+                    }}
+                  />
+                </Pressable>
+              );
+            }
+          })()}
+        </View>
+      );
+    case 'Image':
+      // if (e.image?.size == "Large") {}
+      let width = e.width;
+      let height = e.height;
+      if (width > Dimensions.get('screen').width - 75) {
+        let sizeFactor = (Dimensions.get('screen').width - 75) / width;
+        width = width * sizeFactor;
+        height = height * sizeFactor;
+      }
+      return (
+        <Pressable onPress={() => app.openImage(client.proxyFile(e.url))}>
+          <Image
+            source={{uri: client.proxyFile(e.url)}}
+            style={{
+              width: width,
+              height: height,
+              marginBottom: 4,
+              borderRadius: 3,
+            }}
+          />
+        </Pressable>
+      );
+    case 'Video':
+      return (
+        <Text style={{fontSize: 8, marginLeft: 3}}>
+          Video embeds are not currently supported
+        </Text>
+      );
+    case 'None':
+    default:
+      console.log(JSON.stringify(e));
+      return (
+        <Text>
+          embed - type: {e.type === 'None' ? 'none' : e.type ?? 'how'}, other
+          info:
+          {JSON.stringify(e)}
+        </Text>
+      );
   }
-  return <></>;
 });
 
 type ReplyProps = {
-  message: RevoltMessage;
-  mention: boolean;
+  message?: RevoltMessage;
+  mention?: boolean;
+  style?: any;
 };
 
 export const ReplyMessage = (props: ReplyProps) => {
@@ -677,7 +818,7 @@ export const ReplyMessage = (props: ReplyProps) => {
                 masquerade={props.message.generateMasqAvatarURL()}
                 size={16}
               />
-              {props.mention ? <Text>@</Text> : null}
+              <Text style={{marginLeft: 4}}>{props.mention ? '@' : ''}</Text>
               <Username
                 user={props.message.author}
                 server={props.message.channel?.server}
