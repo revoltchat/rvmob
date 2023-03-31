@@ -108,7 +108,6 @@ export const HomePage = observer(() => {
     </TouchableOpacity>
   ) : null;
 
-  console.log(date);
   return (
     <>
       <ChannelHeader>

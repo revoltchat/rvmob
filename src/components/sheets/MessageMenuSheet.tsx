@@ -2,12 +2,17 @@ import React from 'react';
 import {ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
+import Clipboard from '@react-native-clipboard/clipboard';
+import AntIcon from 'react-native-vector-icons/AntDesign';
+import FA5Icon from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
 import {Message} from 'revolt.js';
 
 import {ContextButton, app} from '../../Generic';
+import {ReplyMessage} from '../../MessageView';
 import {currentTheme, styles} from '../../Theme';
 import {Text} from '../common/atoms';
-import Clipboard from '@react-native-clipboard/clipboard';
 
 export const MessageMenuSheet = observer(
   ({state, message}: {state: any; message: Message}) => {
@@ -26,7 +31,7 @@ export const MessageMenuSheet = observer(
             </View>
             <Text>Close</Text>
           </ContextButton>
-          {message?.channel.havePermission('SendMessage') ? (
+          {message?.channel?.havePermission('SendMessage') ? (
             <ContextButton
               onPress={() => {
                 let replyingMessages = [...app.getReplyingMessages()];
@@ -62,7 +67,7 @@ export const MessageMenuSheet = observer(
           {message.content ? (
             <ContextButton
               onPress={() => {
-                Clipboard.setString(message.content);
+                Clipboard.setString(message.content!);
               }}>
               <View style={styles.iconContainer}>
                 <FA5Icon
@@ -98,8 +103,8 @@ export const MessageMenuSheet = observer(
               </Text>
             </ContextButton>
           ) : null}
-          {message?.channel.havePermission('ManageMessages') ||
-          message?.author.relationship == 'User' ? (
+          {message?.channel?.havePermission('ManageMessages') ||
+          message?.author?.relationship === 'User' ? (
             <ContextButton
               onPress={() => {
                 message.delete();
@@ -115,7 +120,7 @@ export const MessageMenuSheet = observer(
               <Text>Delete</Text>
             </ContextButton>
           ) : null}
-          {message?.author.relationship === 'User' ? (
+          {message?.author?.relationship === 'User' ? (
             <ContextButton
               onPress={() => {
                 app.setMessageBoxInput(message?.content);
@@ -133,7 +138,7 @@ export const MessageMenuSheet = observer(
               <Text>Edit</Text>
             </ContextButton>
           ) : null}
-          {message?.author.relationship !== 'User' ? (
+          {message?.author?.relationship !== 'User' ? (
             <ContextButton
               onPress={() => {
                 app.openReportMenu(message, 'Message');
