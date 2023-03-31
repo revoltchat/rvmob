@@ -10,6 +10,7 @@ import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 
 import {User, Server} from 'revolt.js';
 
+import {UserMenuSheet} from './UserMenuSheet';
 import {
   app,
   Badges,
@@ -36,6 +37,7 @@ export const ProfileSheet = observer(
     const [mutual, setMutual] = React.useState(
       {} as {users?: string[]; servers?: string[]},
     );
+    const [showMenu, setShowMenu] = React.useState(false);
 
     function showBadgeToast(badgeName: string) {
       ToastAndroid.show(badgeName, ToastAndroid.SHORT);
@@ -50,7 +52,9 @@ export const ProfileSheet = observer(
       }
       getInfo();
     }, [state, user]);
-    return (
+    return showMenu ? (
+      <UserMenuSheet state={setShowMenu} user={user} />
+    ) : (
       <ScrollView>
         <View style={{flexDirection: 'row', width: '80%'}}>
           <Avatar
@@ -67,7 +71,7 @@ export const ProfileSheet = observer(
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <TouchableOpacity onPress={() => console.log('tap!')}>
+            <TouchableOpacity onPress={() => setShowMenu(true)}>
               <MaterialIcon
                 name="more-vert"
                 size={30}
