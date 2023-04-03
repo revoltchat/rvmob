@@ -13,8 +13,6 @@ import {MiniProfile, Avatar} from './Profile';
 import {styles, currentTheme} from './Theme';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import FastImage from 'react-native-fast-image';
-const Image = FastImage;
 import React from 'react';
 import {User} from 'revolt.js';
 

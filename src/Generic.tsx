@@ -6,7 +6,7 @@ import ReactNative, {
   TextInput,
   ViewStyle,
 } from 'react-native';
-import {Channel, Client, Message, Server, User} from 'revolt.js';
+import {Channel, Client, Server} from 'revolt.js';
 import {currentTheme, setTheme, themes, styles} from './Theme';
 import {MiniProfile} from './Profile';
 import React, {useEffect, useState} from 'react';
@@ -16,7 +16,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import FontistoIcon from 'react-native-vector-icons/Fontisto';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 import spoilerPlugin from '@traptitech/markdown-it-spoiler';
 const Image = FastImage;

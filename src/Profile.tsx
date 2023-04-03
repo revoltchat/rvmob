@@ -95,7 +95,6 @@ type AvatarProps = {
   pressable?: boolean;
 };
 
-// FIXME: types are currently broken for some reason?
 export const Avatar = observer(
   ({
     channel,

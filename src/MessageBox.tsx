@@ -13,7 +13,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import fs from 'react-native-fs';
 import {Channel, Message} from 'revolt.js';
-import {compareAsc} from 'date-fns';
+
 let typing = false;
 
 type MessageBoxProps = {
@@ -135,6 +135,13 @@ export const MessageBox = observer((props: MessageBoxProps) => {
             </View>
           ))
         : null}
+      {/*attachments.length ? (
+        <View key={'message-box-attachments-bar'} style={styles.messageBoxBar}>
+          <Text style={{marginTop: -1}}>
+            {attachments.length} attachment(s)
+          </Text>
+        </View>
+      ) : null*/}
       {editingMessage ? (
         <View key={'editing'} style={styles.messageBoxBar}>
           <Pressable
