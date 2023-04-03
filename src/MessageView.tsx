@@ -63,7 +63,7 @@ export class Messages extends React.Component {
     console.error(error);
   }
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.rerender != this.props.rerender) {
+    if (nextProps.rerender !== this.props.rerender) {
       return true;
     }
     if (nextState.forceUpdate) {
@@ -74,7 +74,7 @@ export class Messages extends React.Component {
       let res =
         nextState.messages[nextState.messages.length - 1]?.message._id !=
           this.state.messages[this.state.messages?.length - 1]?.message._id ||
-        this.props.channel?._id != nextProps.channel?._id ||
+        this.props.channel?._id !== nextProps.channel?._id ||
         !didUpdateFirstTime ||
         this.state.forceUpdate;
       return res;
@@ -82,7 +82,7 @@ export class Messages extends React.Component {
     return true;
   }
   componentDidMount() {
-    console.log('mount component');
+    console.log('[MESSAGERENDERER] Mounted component');
     client.on('message', async message => {
       console.log(`[MESSAGERENDERER] New message: ${message._id}`);
       if (this.state.atLatestMessages && this.props.channel) {
@@ -159,7 +159,7 @@ export class Messages extends React.Component {
   async componentDidUpdate(prev) {
     if (
       this.props.channel &&
-      (!didUpdateFirstTime || prev.channel._id != this.props.channel._id)
+      (!didUpdateFirstTime || prev.channel._id !== this.props.channel._id)
     ) {
       didUpdateFirstTime = true;
       randomizeRemark();

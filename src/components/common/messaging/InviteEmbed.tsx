@@ -74,7 +74,6 @@ export const InviteEmbed = observer(
         </View>
         <Button
           onPress={() => {
-            console.log('tap!');
             !client.servers.get(invObject.server_id) &&
               app.joinInvite(invObject);
             app.openServer(client.servers.get(invObject.server_id));
