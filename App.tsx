@@ -22,7 +22,6 @@ import {
   randomizeRemark,
   Button,
   ChannelIcon,
-  Input,
   openUrl,
   defaultAPIURL,
 } from './src/Generic';
@@ -111,9 +110,10 @@ class MainView extends React.Component {
   async componentDidMount() {
     let defaultnotif = await createChannel();
     console.log(`[NOTIFEE] Created channel: ${defaultnotif}`);
-    console.log('[APP] Mounted component');
+    console.log(`[APP] Mounted component (${new Date().getTime()})`);
     client.on('ready', async () => {
       this.setState({status: 'loggedIn', network: 'ready'});
+      console.log(`[APP] Client is ready (${new Date().getTime()})`);
       if (this.state.tokenInput) {
         console.log(`[AUTH] Setting saved token to ${this.state.tokenInput}`);
         AsyncStorage.setItem('token', this.state.tokenInput);
@@ -136,6 +136,9 @@ class MainView extends React.Component {
           msg.channel?.channel_type === 'DirectMessage') &&
         app.settings.get('app.notifications.enabled')
       ) {
+        console.log(
+          `[NOTIFICATIONS] Pushing notification for message ${msg._id}`,
+        );
         let notifs = (await notifee.getDisplayedNotifications()).filter(
           n => n.id === msg.channel?._id,
         );
@@ -187,7 +190,6 @@ class MainView extends React.Component {
       }
     });
     // notifee.onBackgroundEvent(async ({type, detail}) => {});
-    console.log(await AsyncStorage.getItem('settings'));
     AsyncStorage.getItem('token', async (err, res) => {
       if (!err) {
         if (typeof res !== 'string') {
