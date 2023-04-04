@@ -621,21 +621,23 @@ function ErrorMessage({
 }) {
   console.error(`[APP] Uncaught error: ${error}`);
   return (
-    <Text
-      style={{
-        flex: 1,
-        padding: 15,
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-      }}>
-      <Text style={{fontSize: 30, fontWeight: 'bold'}}>
-        OOPSIE WOOPSIE!! {'UwU\n'}
-      </Text>
-      We made a fucky wucky!! A wittle fucko boingo! The code monkeys at our
-      headquarters are working VEWY HAWD to fix this! {'>w<\n\n'}
-      <Text style={{color: '#ff5555', fontWeight: 'regular'}}>
-        {error.toString()}
+    <>
+      <Text
+        style={{
+          flex: 1,
+          padding: 15,
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
+        }}>
+        <Text style={{fontSize: 30, fontWeight: 'bold'}}>
+          OOPSIE WOOPSIE!! {'UwU\n'}
+        </Text>
+        We made a fucky wucky!! A wittle fucko boingo! The code monkeys at our
+        headquarters are working VEWY HAWD to fix this! {'>w<\n\n'}
+        <Text style={{color: '#ff5555', fontWeight: 'regular'}}>
+          {error.toString()}
+        </Text>
       </Text>
       <Button
         onPress={() => {
@@ -643,7 +645,7 @@ function ErrorMessage({
         }}>
         <Text>Reload app</Text>
       </Button>
-    </Text>
+    </>
   );
 }
 
