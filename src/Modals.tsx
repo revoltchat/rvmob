@@ -293,7 +293,10 @@ export class Modals extends React.Component {
             }}
           />
           <View style={styles.sheetBackground}>
-            <ServerInfoSheet server={this.state.contextMenuServer} />
+            <ServerInfoSheet
+              state={this}
+              server={this.state.contextMenuServer}
+            />
           </View>
         </Modal>
         <Modal
