@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Pressable, View, TextInput, TouchableOpacity} from 'react-native';
 import {Text, app, client, setFunction} from './Generic';
 import {styles, currentTheme} from './Theme';
@@ -11,7 +11,6 @@ import DocumentPicker, {
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
-import fs from 'react-native-fs';
 import {Channel, Message} from 'revolt.js';
 
 let typing = false;
@@ -36,10 +35,30 @@ function placeholderText(channel: Channel) {
   }
 }
 
+const AttachmentsBar = observer(
+  ({attachments}: {attachments: DocumentPickerResponse[]}) => {
+    // TODO: add file names/potentially previews?
+    return (
+      <View key={'message-box-attachments-bar'} style={styles.messageBoxBar}>
+        <Text style={{marginTop: -1}}>{attachments.length} attachment(s)</Text>
+      </View>
+    );
+  },
+);
+
+type ReplyingMessage = {
+  mentions: boolean;
+  message: Message;
+};
+
 export const MessageBox = observer((props: MessageBoxProps) => {
   let [currentText, setCurrentText] = React.useState('');
-  let [editingMessage, setEditingMessage] = React.useState(null);
-  let [replyingMessages, setReplyingMessages] = React.useState([]);
+  let [editingMessage, setEditingMessage] = React.useState(
+    null as Message | null,
+  );
+  let [replyingMessages, setReplyingMessages] = React.useState(
+    [] as ReplyingMessage[],
+  );
   let [attachments, setAttachments] = React.useState(
     [] as DocumentPickerResponse[],
   );
@@ -135,13 +154,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
             </View>
           ))
         : null}
-      {/*attachments.length ? (
-        <View key={'message-box-attachments-bar'} style={styles.messageBoxBar}>
-          <Text style={{marginTop: -1}}>
-            {attachments.length} attachment(s)
-          </Text>
-        </View>
-      ) : null*/}
+      {attachments.length ? <AttachmentsBar attachments={attachments} /> : null}
       {editingMessage ? (
         <View key={'editing'} style={styles.messageBoxBar}>
           <Pressable
@@ -175,17 +188,20 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                 let res = await DocumentPicker.pickSingle({
                   type: [DocumentPicker.types.allFiles],
                 });
-                console.log(res);
                 let isDuplicate = false;
                 for (const a of attachments) {
                   if (a.uri === res.uri) {
-                    console.log('sussy duplicate!');
+                    console.log(
+                      `[MESSAGEBOX] Not pushing duplicate attachment ${res.name} (${res.uri})`,
+                    );
                     isDuplicate = true;
                   }
                 }
                 console.log(isDuplicate);
                 if (res.uri) {
-                  console.log(`pushing attachment (${res.uri})`);
+                  console.log(
+                    `[MESSAGEBOX] Pushing attachment ${res.name} (${res.uri})`,
+                  );
                   let newAttachments = attachments;
                   newAttachments.push(res);
                   setAttachments(newAttachments);
@@ -239,7 +255,9 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                   content: thisCurrentText,
                   channel: props.channel,
                   nonce: nonce,
-                  reply_ids: replyingMessages?.map((m: Message) => m._id),
+                  reply_ids: replyingMessages?.map(
+                    (m: ReplyingMessage) => m.message._id,
+                  ),
                 });
                 // let uploaded = [];
                 // for (let a of attachments) {
