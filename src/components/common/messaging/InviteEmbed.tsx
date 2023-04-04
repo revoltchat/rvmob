@@ -73,9 +73,9 @@ export const InviteEmbed = observer(
           </View>
         </View>
         <Button
-          onPress={() => {
+          onPress={async () => {
             !client.servers.get(invObject.server_id) &&
-              app.joinInvite(invObject);
+              (await app.joinInvite(invObject));
             app.openServer(client.servers.get(invObject.server_id));
             app.openLeftMenu(true);
           }}>
