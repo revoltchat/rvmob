@@ -44,3 +44,10 @@ export function getColour(c: string) {
   // at this point, c is probably just a regular HEX code so return it directly
   return c;
 }
+
+/**
+ * Sleep for the specified amount of milliseconds before continuing.
+ * @param ms The amount of time to sleep for in milliseconds
+ */
+export const sleep = (ms: number | undefined) =>
+  new Promise((r: any) => setTimeout(r, ms));
