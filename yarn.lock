@@ -6708,19 +6708,17 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "^1.2.6"
 
-mobx-react-lite@^4.0.0, mobx-react-lite@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-4.0.2.tgz#bf4df238d17491cddb1021a49f79f8af50ed4260"
-  integrity sha512-5o7for7/5QLpgzKvA3ZjrO8TmfkZgVcSjwYalGlW6OkK/fCxmVlwbFeoWJQzWbkWSxlcaatTO0j4riAUvWoqMg==
-  dependencies:
-    use-sync-external-store "^1.2.0"
+mobx-react-lite@^3.4.0, mobx-react-lite@^3.4.3:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-3.4.3.tgz#3a4c22c30bfaa8b1b2aa48d12b2ba811c0947ab7"
+  integrity sha512-NkJREyFTSUXR772Qaai51BnE1voWx56LOL80xG7qkZr6vo8vEaLF3sz1JNUVh+rxmUzxYaqOhfuxTfqUh0FXUg==
 
-mobx-react@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-8.0.0.tgz#ec3e13a19662f452f14d279c59168d94385c86f0"
-  integrity sha512-WKfYrxIDmI/ysmugybfWBFnKC0li4VvLHhfZqn1y5hXkOJ0selFFZ4rO8KHWZljWrzseNGRRqatYX9X4PaDD8A==
+mobx-react@^7.6.0:
+  version "7.6.0"
+  resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-7.6.0.tgz#ebf0456728a9bd2e5c24fdcf9b36e285a222a7d6"
+  integrity sha512-+HQUNuh7AoQ9ZnU6c4rvbiVVl+wEkb9WqYsVDzGLng+Dqj1XntHu79PvEWKtSMoMj67vFp/ZPXcElosuJO8ckA==
   dependencies:
-    mobx-react-lite "^4.0.0"
+    mobx-react-lite "^3.4.0"
 
 mobx@^6.3.2:
   version "6.9.0"
@@ -9041,7 +9039,7 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-sync-external-store@^1.0.0, use-sync-external-store@^1.2.0:
+use-sync-external-store@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
   integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
