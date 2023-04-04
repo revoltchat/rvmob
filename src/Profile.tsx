@@ -11,9 +11,9 @@ const Image = FastImage;
 
 type UsernameProps = {
   server?: Server;
-  user: User;
+  user?: User;
   noBadge?: boolean;
-  size: number;
+  size?: number;
   masquerade?: string;
   color?: string;
 };
