@@ -4,12 +4,11 @@ import {observer} from 'mobx-react-lite';
 
 import Clipboard from '@react-native-clipboard/clipboard';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Message} from 'revolt.js';
 
-import {ContextButton, app} from '../../Generic';
+import {app, ContextButton} from '../../Generic';
 import {ReplyMessage} from '../../MessageView';
 import {currentTheme, styles} from '../../Theme';
 import {Text} from '../common/atoms';
@@ -70,9 +69,9 @@ export const MessageMenuSheet = observer(
                 Clipboard.setString(message.content!);
               }}>
               <View style={styles.iconContainer}>
-                <FA5Icon
-                  name="clipboard"
-                  size={18}
+                <MaterialIcon
+                  name="content-copy"
+                  size={20}
                   color={currentTheme.foregroundPrimary}
                 />
               </View>
@@ -85,9 +84,9 @@ export const MessageMenuSheet = observer(
                 Clipboard.setString(message._id);
               }}>
               <View style={styles.iconContainer}>
-                <FA5Icon
-                  name="clipboard"
-                  size={18}
+                <MaterialIcon
+                  name="content-copy"
+                  size={20}
                   color={currentTheme.foregroundPrimary}
                 />
               </View>
@@ -95,7 +94,6 @@ export const MessageMenuSheet = observer(
                 Copy ID{' '}
                 <Text
                   style={{
-                    fontSize: 12,
                     color: currentTheme.foregroundSecondary,
                   }}>
                   ({message?._id})
@@ -111,9 +109,9 @@ export const MessageMenuSheet = observer(
                 state.setState({contextMenuMessage: null});
               }}>
               <View style={styles.iconContainer}>
-                <FA5Icon
-                  name="trash"
-                  size={18}
+                <MaterialIcon
+                  name="delete"
+                  size={20}
                   color={currentTheme.foregroundPrimary}
                 />
               </View>
@@ -129,9 +127,9 @@ export const MessageMenuSheet = observer(
                 state.setState({contextMenuMessage: null});
               }}>
               <View style={styles.iconContainer}>
-                <FA5Icon
+                <MaterialIcon
                   name="edit"
-                  size={18}
+                  size={20}
                   color={currentTheme.foregroundPrimary}
                 />
               </View>
@@ -145,9 +143,9 @@ export const MessageMenuSheet = observer(
                 state.setState({contextMenuMessage: null});
               }}>
               <View style={styles.iconContainer}>
-                <FA5Icon
+                <MaterialIcon
                   name="flag"
-                  size={18}
+                  size={20}
                   color={currentTheme.foregroundPrimary}
                 />
               </View>
