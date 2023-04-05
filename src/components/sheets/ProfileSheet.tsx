@@ -29,7 +29,7 @@ import {Text} from '../common/atoms';
 // const Image = FastImage;
 
 export const ProfileSheet = observer(
-  ({state, user, server}: {state: any; user: User; server?: Server}) => {
+  ({user, server}: {user: User; server?: Server}) => {
     const [section, setSection] = React.useState('Profile');
     const [profile, setProfile] = React.useState(
       {} as {content?: string | null | undefined},
@@ -51,7 +51,7 @@ export const ProfileSheet = observer(
         setMutual(m);
       }
       getInfo();
-    }, [state, user]);
+    }, [user]);
     return showMenu ? (
       <UserMenuSheet state={setShowMenu} user={user} />
     ) : (

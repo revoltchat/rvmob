@@ -122,7 +122,7 @@ export class Modals extends React.Component {
               backgroundColor: currentTheme.backgroundSecondary,
             }}>
             <MessageMenuSheet
-              state={this.state}
+              state={this}
               message={this.state.contextMenuMessage}
             />
           </View>
@@ -220,7 +220,6 @@ export class Modals extends React.Component {
             <ProfileSheet
               user={this.state.contextMenuUser}
               server={this.state.contextMenuUserServer}
-              state={this.state}
             />
           </View>
         </Modal>
