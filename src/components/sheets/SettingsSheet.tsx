@@ -11,8 +11,8 @@ import {observer} from 'mobx-react-lite';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {getApiLevel, getBrand, getDevice} from 'react-native-device-info';
-import AntIcon from 'react-native-vector-icons/AntDesign';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {ContextButton, app, client, Setting} from '../../Generic';
@@ -277,8 +277,8 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
           onPress={() => {
             state.setState({settingsOpen: false});
           }}>
-          <AntIcon
-            name="closecircle"
+          <MaterialCommunityIcon
+            name="close-circle"
             size={24}
             color={currentTheme.foregroundSecondary}
           />
@@ -382,8 +382,8 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
               onPress={() => {
                 setSection(null);
               }}>
-              <AntIcon
-                name="back"
+              <MaterialIcon
+                name="arrow-back"
                 size={24}
                 color={currentTheme.foregroundSecondary}
               />
@@ -412,8 +412,8 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
               onPress={() => {
                 setSection(null);
               }}>
-              <AntIcon
-                name="back"
+              <MaterialIcon
+                name="arrow-back"
                 size={24}
                 color={currentTheme.foregroundSecondary}
               />
@@ -442,8 +442,8 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
               onPress={() => {
                 setSection(null);
               }}>
-              <AntIcon
-                name="back"
+              <MaterialIcon
+                name="arrow-back"
                 size={24}
                 color={currentTheme.foregroundSecondary}
               />

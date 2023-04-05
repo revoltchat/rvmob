@@ -8,8 +8,8 @@ import {ulid} from 'ulid';
 import DocumentPicker, {
   DocumentPickerResponse,
 } from 'react-native-document-picker';
-import AntIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import {Channel, Message} from 'revolt.js';
 
@@ -103,8 +103,8 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                   )
                 }>
                 <View style={styles.iconContainer}>
-                  <AntIcon
-                    name="closecircle"
+                  <MaterialCommunityIcon
+                    name="close-circle"
                     size={16}
                     color={currentTheme.foregroundPrimary}
                   />
@@ -158,8 +158,8 @@ export const MessageBox = observer((props: MessageBoxProps) => {
               setCurrentText('');
             }}>
             <View style={styles.iconContainer}>
-              <AntIcon
-                name="closecircle"
+              <MaterialCommunityIcon
+                name="close-circle"
                 size={16}
                 color={currentTheme.foregroundPrimary}
               />
@@ -200,8 +200,8 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                 console.log(`[MESSAGEBOX] Error: ${error}`);
               }
             }}>
-            <AntIcon
-              name="pluscircle"
+            <MaterialIcon
+              name="add-circle"
               size={20}
               color={currentTheme.foregroundPrimary}
             />

@@ -3,7 +3,7 @@ import {ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import Clipboard from '@react-native-clipboard/clipboard';
-import AntIcon from 'react-native-vector-icons/AntDesign';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Message} from 'revolt.js';
@@ -22,8 +22,8 @@ export const MessageMenuSheet = observer(
           <ContextButton
             onPress={() => state.setState({contextMenuMessage: null})}>
             <View style={styles.iconContainer}>
-              <AntIcon
-                name="closecircle"
+              <MaterialCommunityIcon
+                name="close-circle"
                 size={16}
                 color={currentTheme.foregroundPrimary}
               />

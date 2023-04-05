@@ -22,7 +22,7 @@ import {
   SettingsSheet,
 } from './components/sheets/';
 import {Server, User, Message, Channel} from 'revolt.js';
-import AntIcon from 'react-native-vector-icons/AntDesign';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialIcons';
 import FastImage from 'react-native-fast-image';
 import {observer} from 'mobx-react';
 const Image = FastImage;
@@ -315,8 +315,8 @@ export class Modals extends React.Component {
               onPress={() => {
                 this.setState({inviteServer: null});
               }}>
-              <AntIcon
-                name="closecircle"
+              <MaterialCommunityIcon
+                name="close-circle"
                 size={24}
                 color={currentTheme.foregroundSecondary}
               />
