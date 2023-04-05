@@ -35,17 +35,6 @@ function placeholderText(channel: Channel) {
   }
 }
 
-const AttachmentsBar = observer(
-  ({attachments}: {attachments: DocumentPickerResponse[]}) => {
-    // TODO: add file names/potentially previews?
-    return (
-      <View key={'message-box-attachments-bar'} style={styles.messageBoxBar}>
-        <Text style={{marginTop: -1}}>{attachments.length} attachment(s)</Text>
-      </View>
-    );
-  },
-);
-
 type ReplyingMessage = {
   mentions: boolean;
   message: Message;
@@ -154,7 +143,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
             </View>
           ))
         : null}
-      {attachments.length ? <AttachmentsBar attachments={attachments} /> : null}
+      {/* <AttachmentsBar attachments={attachments} /> */}
       {editingMessage ? (
         <View key={'editing'} style={styles.messageBoxBar}>
           <Pressable
@@ -180,7 +169,8 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         </View>
       ) : null}
       <View style={styles.messageBoxInner}>
-        {app.settings.get('ui.messaging.sendAttachments') ? (
+        {app.settings.get('ui.messaging.sendAttachments') &&
+        attachments.length < 5 ? (
           <TouchableOpacity
             style={Object.assign({}, styles.sendButton, {marginHorizontal: 6})}
             onPress={async () => {
@@ -197,8 +187,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                     isDuplicate = true;
                   }
                 }
-                console.log(isDuplicate);
-                if (res.uri) {
+                if (res.uri && !isDuplicate) {
                   console.log(
                     `[MESSAGEBOX] Pushing attachment ${res.name} (${res.uri})`,
                   );
@@ -307,6 +296,29 @@ export const MessageBox = observer((props: MessageBoxProps) => {
     </View>
   );
 });
+
+export const AttachmentsBar = observer(
+  ({attachments}: {attachments: DocumentPickerResponse[]}) => {
+    if (attachments) {
+      console.log('ding');
+
+      // TODO: add file names/potentially previews?
+      if (attachments?.length > 0) {
+        return (
+          <View
+            key={'message-box-attachments-bar'}
+            style={styles.messageBoxBar}>
+            <Text style={{marginTop: -1}}>
+              {attachments.length} attachment(s)
+            </Text>
+          </View>
+        );
+      }
+    }
+
+    return <View />;
+  },
+);
 
 export const TypingIndicator = observer(({channel}: {channel: Channel}) => {
   if (channel) {
