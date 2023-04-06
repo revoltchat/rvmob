@@ -17,7 +17,7 @@ jobs:
       - name: Install and prepare dependencies
         run: yarn install && npx rn-nodeify -e
       - name: Build the app
-        run: react-native build-android --mode debug
+        run: npx react-native build-android --mode debug
   build-linux:
     runs-on: ubuntu-latest
     steps:
@@ -31,4 +31,4 @@ jobs:
       - name: Install and prepare dependencies
         run: yarn install && npx rn-nodeify -e
       - name: Build the app
-        run: react-native build-android --mode debug
+        run: npx react-native build-android --mode debug
