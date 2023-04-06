@@ -22,6 +22,7 @@ import {
   openUrl,
   parseRevoltNodes,
 } from '../../Generic';
+import {USER_IDS} from '../../lib/consts';
 import {Avatar, MiniProfile, RoleView, Username} from '../../Profile';
 import {currentTheme, styles} from '../../Theme';
 import {Text} from '../common/atoms';
@@ -539,8 +540,7 @@ export const ProfileSheet = observer(
                         );
                       }
                     })}
-                    {user._id === '01FC1HP5H22F0M34MFFM9DZ099' ||
-                    user._id === '01FEEFJCKY5C4DMMJYZ20ACWWC' ? (
+                    {USER_IDS.developers.includes(user._id) ? (
                       <TouchableOpacity
                         onPress={() => showBadgeToast('RVMob Developer')}>
                         <View
@@ -563,7 +563,7 @@ export const ProfileSheet = observer(
                         </View>
                       </TouchableOpacity>
                     ) : null}
-                    {user._id === '01EXAF3KX65608AJ4NG27YG1HM' ? (
+                    {user._id === USER_IDS.teamMembers.lea ? (
                       <TouchableOpacity
                         onPress={() => showBadgeToast("Lea's Paw")}>
                         <View
@@ -583,7 +583,7 @@ export const ProfileSheet = observer(
                         </View>
                       </TouchableOpacity>
                     ) : null}
-                    {user._id === '01EX2NCWQ0CHS3QJF0FEQS1GR4' ? (
+                    {user._id === USER_IDS.teamMembers.insert ? (
                       <TouchableOpacity
                         onPress={() => showBadgeToast('raccoon 🦝')}>
                         <View

@@ -2,108 +2,53 @@ import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {app, Button, ChannelIcon, client, openUrl} from '../../Generic';
 import {ChannelHeader} from '../../../App';
+import {app, Button, ChannelIcon, client, openUrl} from '../../Generic';
 import {Avatar, Username} from '../../Profile';
+import {
+  SPECIAL_DATES,
+  SPECIAL_DATE_OBJECTS,
+  SPECIAL_SERVERS,
+} from '../../lib/consts';
 import {styles} from '../../Theme';
 import {Text} from '../common/atoms';
 
 export const HomePage = observer(() => {
   // holiday emoji
   const rawDate = new Date();
-  const month = rawDate.getMonth() + 1;
-  const date = `${rawDate.getDate()}/${month}`;
-  const specialDates = [
-    '1/1',
-    '14/2',
-    '31/3',
-    '1/4',
-    '31/10',
-    '20/11',
-    '31/12',
-  ]; // NYD, Valentine's Day, TDOV, April Fool's, Halloween, TDOR and NYE
-  const specialDateObjects = {
-    '1/1': {
-      name: "New Year's Day",
-      key: 'app-home-holiday-nyd',
-      emoji: '🎉',
-      link: "https://en.wikipedia.org/wiki/New_Year's_Eve",
-    },
-    '14/2': {
-      name: "Valentine's Day",
-      key: 'app-home-holiday-valentines',
-      emoji: '💖',
-      link: "https://en.wikipedia.org/wiki/Valentine's_Day",
-    },
-    '31/3': {
-      name: 'International Trans Day of Visibility',
-      key: 'app-home-holiday-tdov',
-      emoji: '🏳️‍⚧️',
-      link: 'https://en.wikipedia.org/wiki/TDOV',
-    },
-    '1/4': {
-      name: "April Fools' Day",
-      key: 'app-home-holiday-april-fools',
-      emoji: '🤡',
-      link: 'https://en.wikipedia.org/wiki/April_Fools%27_Day',
-    },
-    '31/10': {
-      name: 'Halloween',
-      key: 'app-home-holiday-halloween',
-      emoji: '🎃',
-      link: 'https://en.wikipedia.org/wiki/Halloween',
-    },
-    '20/11': {
-      name: 'Trans Day of Remembrance',
-      key: 'app-home-holiday-tdor',
-      emoji: '🕯️',
-      link: 'https://en.wikipedia.org/wiki/TDoR',
-    },
-    '31/12': {
-      name: "New Year's Eve",
-      key: 'app-home-holiday-nye',
-      emoji: '⏰',
-      link: "https://en.wikipedia.org/wiki/New_Year's_Eve",
-    },
-    month6: {
-      name: 'Pride Month',
-      key: 'app-home-holiday-pride',
-      emoji: '🏳️‍🌈🏳️‍⚧️',
-      link: 'https://en.wikipedia.org/wiki/Pride_Month',
-    },
-    month12: {
-      name: 'Holiday Season',
-      key: 'app-home-holiday-dechols',
-      emoji: '🎄❄️',
-      link: 'https://en.wikipedia.org/wiki/Christmas_and_holiday_season',
-    },
-  };
+  const rawMonth = rawDate.getMonth() + 1;
+  const date = `${rawDate.getDate()}/${rawMonth}`;
+  const month = `month${rawMonth}`;
 
-  let holidayEmoji = specialDates.includes(date) ? (
+  let holidayEmoji = SPECIAL_DATES.includes(date) ? (
     <TouchableOpacity
       onPress={() => {
         // @ts-expect-error TODO: figure out types for this
-        openUrl(specialDateObjects[date].link);
+        openUrl(SPECIAL_DATE_OBJECTS[date].link);
       }}>
       <Text
         // @ts-expect-error as above
-        key={specialDateObjects[date].key}
+        key={SPECIAL_DATE_OBJECTS[date].key}
         style={{fontSize: 40}}>
         {
           // @ts-expect-error as above
-          specialDateObjects[date].emoji
+          SPECIAL_DATE_OBJECTS[date].emoji
         }
       </Text>
     </TouchableOpacity>
-  ) : month === 6 || month === 12 ? (
+  ) : SPECIAL_DATES.includes(month) ? (
     <TouchableOpacity
       onPress={() => {
-        openUrl(specialDateObjects[`month${month}`].link);
+        // @ts-expect-error as above
+        openUrl(SPECIAL_DATE_OBJECTS[month].link);
       }}>
-      <Text
-        key={specialDateObjects[`month${month}`].key}
+      <Text // @ts-expect-error as above
+        key={SPECIAL_DATE_OBJECTS[month].key}
         style={{fontSize: 40}}>
-        {specialDateObjects[`month${month}`].emoji}
+        {
+          // @ts-expect-error as above
+          SPECIAL_DATE_OBJECTS[month].emoji
+        }
       </Text>
     </TouchableOpacity>
   ) : null;
@@ -151,18 +96,20 @@ export const HomePage = observer(() => {
         <Button
           style={{width: '65%'}}
           key="home-revolt-lounge"
-          onPress={() => app.openInvite('Testers')}>
+          onPress={() => app.openInvite(SPECIAL_SERVERS.lounge.invite)}>
           <Text style={styles.header}>
-            {client.servers.get('01F7ZSBSFHQ8TA81725KQCSDDP') ? 'Open' : 'Join'}{' '}
+            {client.servers.get(SPECIAL_SERVERS.lounge.id) ? 'Open' : 'Join'}{' '}
             the Revolt Lounge
           </Text>
         </Button>
         <Button
           style={{width: '65%'}}
           key="home-rvmob-server"
-          onPress={() => app.openInvite('ZFGGw6ry')}>
+          onPress={() => app.openInvite(SPECIAL_SERVERS.supportServer.invite)}>
           <Text style={styles.header}>
-            {client.servers.get('01FKES1VJN27SVV4QJX82ZS3ME') ? 'Open' : 'Join'}{' '}
+            {client.servers.get(SPECIAL_SERVERS.supportServer.id)
+              ? 'Open'
+              : 'Join'}{' '}
             the RVMob server
           </Text>
         </Button>

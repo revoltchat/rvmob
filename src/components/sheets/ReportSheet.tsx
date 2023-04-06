@@ -5,6 +5,7 @@ import {observer} from 'mobx-react-lite';
 import {Message, User, Server} from 'revolt.js';
 
 import {Button, client, ContextButton, MarkdownView} from '../../Generic';
+import {USER_IDS} from '../../lib/consts';
 import {Avatar, Username} from '../../Profile';
 import {currentTheme} from '../../Theme';
 import {Text} from '../common/atoms';
@@ -230,8 +231,7 @@ export const ReportModal = observer((props: ReportedObject) => {
     case 'Message':
       let msg = object as Message;
       const isLikelyBridged =
-        msg.author?._id === '01FHGJ3NPP7XANQQH8C2BE44ZY' &&
-        msg.masquerade !== null; // TODO: replace hardcoded string?
+        msg.author?._id === USER_IDS.automod && msg.masquerade !== null;
       console.log(isLikelyBridged, msg.author?._id, msg.masquerade?.name);
       output = (
         <>

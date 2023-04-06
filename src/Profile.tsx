@@ -6,6 +6,7 @@ import {Pressable, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Server, User, Message, Channel} from 'revolt.js';
 import {getColour} from './lib/utils';
+import {USER_IDS} from './lib/consts';
 
 const Image = FastImage;
 
@@ -46,7 +47,7 @@ export const Username = observer(
     }
     let badgeSize = (size || 14) * 0.6;
     let bridgedMessage =
-      user?._id === '01FHGJ3NPP7XANQQH8C2BE44ZY' && masquerade !== undefined;
+      user?._id === USER_IDS.automod && masquerade !== undefined;
     let badgeStyle = {
       color: currentTheme.accentColorForeground,
       backgroundColor: currentTheme.accentColor,
@@ -72,7 +73,7 @@ export const Username = observer(
               <>
                 {user?.bot ? <Text style={badgeStyle}>BOT</Text> : null}
                 {masquerade ? <Text style={badgeStyle}>MASQ.</Text> : null}
-                {user?._id === '01FC17E1WTM2BGE4F3ARN3FDAF' ? (
+                {user?._id === USER_IDS.platformModeration ? (
                   <Text style={badgeStyle}>SYSTEM</Text>
                 ) : null}
               </>

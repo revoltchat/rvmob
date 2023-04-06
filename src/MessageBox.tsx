@@ -12,6 +12,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import {Channel, Message} from 'revolt.js';
+import {USER_IDS} from './lib/consts';
 
 let typing = false;
 
@@ -75,7 +76,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         }}>
         <Text style={{textAlign: 'center'}}>
           {props.channel.channel_type === 'DirectMessage' &&
-          props.channel.recipient?._id === '01FC17E1WTM2BGE4F3ARN3FDAF'
+          props.channel.recipient?._id === USER_IDS.platformModeration
             ? 'You cannot reply to system messages.'
             : 'You do not have permission to send messages in this channel.'}
         </Text>

@@ -15,6 +15,7 @@ import {
   app,
   client,
 } from '../../Generic';
+import {SPECIAL_SERVERS} from '../../lib/consts';
 import {currentTheme, styles} from '../../Theme';
 import {Text} from '../common/atoms';
 
@@ -28,7 +29,7 @@ export const ServerInfoSheet = observer(
 
     useEffect(() => {
       async function fetchMembers() {
-        if (server._id !== '01F7ZSBSFHQ8TA81725KQCSDDP') {
+        if (server._id !== SPECIAL_SERVERS.lounge.id) {
           const start = new Date().getTime();
           console.log(`[SERVERINFOSHEET] Fetching members... (${start})`);
           const m = await server.fetchMembers();
@@ -67,7 +68,7 @@ export const ServerInfoSheet = observer(
               marginVertical: 4,
               color: currentTheme.foregroundSecondary,
             }}>
-            {server._id === '01F7ZSBSFHQ8TA81725KQCSDDP'
+            {server._id === SPECIAL_SERVERS.lounge.id
               ? 'Member count disabled for this server'
               : members.members
               ? `${members.members.length} ${
