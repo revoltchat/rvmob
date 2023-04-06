@@ -9,6 +9,7 @@ import ReactNative, {
 import {Channel, Client, Server} from 'revolt.js';
 import {currentTheme, setTheme, themes, styles} from './Theme';
 import {MiniProfile} from './Profile';
+import {DEFAULT_API_URL, DEFAULT_MAX_SIDE} from './lib/consts';
 import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react-lite';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -317,13 +318,9 @@ export function setFunction(name: string, func: any) {
   app[name] = func;
 }
 
-export const defaultMaxSide = '128';
-export const defaultMessageLoadCount = 50;
-export const defaultAPIURL = 'https://api.revolt.chat';
-
 export const client = new Client({
   unreads: true,
-  apiURL: defaultAPIURL,
+  apiURL: DEFAULT_API_URL,
 });
 
 export const Text = (props: any) => {
@@ -614,7 +611,7 @@ export const GeneralAvatar = ({
 }) => {
   const uri = directory
     ? client.configuration?.features.autumn.url + directory + attachment
-    : client.generateFileURL(attachment) + '?max_side=' + defaultMaxSide;
+    : client.generateFileURL(attachment) + '?max_side=' + DEFAULT_MAX_SIDE;
   return (
     <View>
       {
@@ -700,7 +697,7 @@ export const ServerList = observer(
                 {iconURL ? (
                   <Image
                     key={`${s._id}-icon`}
-                    source={{uri: iconURL + '?max_side=' + defaultMaxSide}}
+                    source={{uri: iconURL + '?max_side=' + DEFAULT_MAX_SIDE}}
                     style={styles.serverIcon}
                   />
                 ) : (
@@ -878,7 +875,7 @@ export const ChannelIcon = ({
   ) : channel.channel.generateIconURL && channel.channel.generateIconURL() ? (
     <Image
       source={{
-        uri: channel.channel.generateIconURL() + '?max_side=' + defaultMaxSide,
+        uri: channel.channel.generateIconURL() + '?max_side=' + DEFAULT_MAX_SIDE,
       }}
       style={{
         width: 24,

@@ -4,7 +4,6 @@ import {
   MarkdownView,
   app,
   parseRevoltNodes,
-  defaultMessageLoadCount,
   setFunction,
   selectedRemark,
   randomizeRemark,
@@ -18,6 +17,7 @@ import {
   Pressable,
   Dimensions,
 } from 'react-native';
+import {DEFAULT_MESSAGE_LOAD_COUNT} from './lib/consts';
 import {Avatar, Username} from './Profile';
 import React, {useCallback} from 'react';
 import {API, Channel, Message as RevoltMessage} from 'revolt.js';
@@ -109,6 +109,9 @@ export class Messages extends React.Component {
                   newMessages[newMessages.length - 1].message,
                   message,
                 );
+              console.log(
+                `[MESSAGERENDERER] Pushing new message ${message._id}`,
+              );
               newMessages.push({
                 message,
                 grouped,
@@ -117,7 +120,7 @@ export class Messages extends React.Component {
               return {
                 messages: newMessages,
                 queuedMessages: this.state.queuedMessages.filter(
-                  m => m.nonce != message.nonce,
+                  m => m.nonce !== message.nonce,
                 ),
               };
             });
@@ -171,8 +174,8 @@ export class Messages extends React.Component {
     console.log('fetch messages');
     let params = {
       limit: input.before
-        ? defaultMessageLoadCount / 2
-        : defaultMessageLoadCount,
+        ? DEFAULT_MESSAGE_LOAD_COUNT / 2
+        : DEFAULT_MESSAGE_LOAD_COUNT,
     };
     params[input.type] = input.id;
     // if (input.type == "after") {
@@ -181,12 +184,12 @@ export class Messages extends React.Component {
     this.props.channel.fetchMessagesWithUsers(params).then(res => {
       console.log('done fetching');
       let oldMessages = this.state.messages;
-      if (input.type == 'before') {
-        oldMessages = oldMessages.slice(0, defaultMessageLoadCount / 2 - 1);
-      } else if (input.type == 'after') {
+      if (input.type === 'before') {
+        oldMessages = oldMessages.slice(0, DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1);
+      } else if (input.type === 'after') {
         oldMessages = oldMessages.slice(
-          defaultMessageLoadCount / 2 - 1,
-          defaultMessageLoadCount - 1,
+          DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1,
+          DEFAULT_MESSAGE_LOAD_COUNT - 1,
         );
       }
       let messages = res.messages.reverse().map((message, i) => {

@@ -1,12 +1,12 @@
 import {observer} from 'mobx-react-lite';
 import React from 'react';
-import {Text, client, defaultMaxSide, app} from './Generic';
+import {Text, client, app} from './Generic';
 import {currentTheme, styles} from './Theme';
 import {Pressable, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Server, User, Message, Channel} from 'revolt.js';
 import {getColour} from './lib/utils';
-import {USER_IDS} from './lib/consts';
+import {DEFAULT_MAX_SIDE, USER_IDS} from './lib/consts';
 
 const Image = FastImage;
 
@@ -142,7 +142,7 @@ export const Avatar = observer(
                   ? memberObject?.generateAvatarURL()
                   : user?.generateAvatarURL()) +
                 '?max_side=' +
-                defaultMaxSide,
+                DEFAULT_MAX_SIDE,
             }}
             style={{width: size || 35, height: size || 35, borderRadius: 10000}}
           />
@@ -190,7 +190,8 @@ export const Avatar = observer(
           {channel?.generateIconURL() ? (
             <Image
               source={{
-                uri: channel?.generateIconURL() + '?max_side=' + defaultMaxSide,
+                uri:
+                  channel?.generateIconURL() + '?max_side=' + DEFAULT_MAX_SIDE,
               }}
               style={{
                 width: size || 35,

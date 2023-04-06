@@ -30,6 +30,12 @@ export const SPECIAL_SERVERS = {
 // default API URL - when support for other instances is added, this will be the default one
 export const DEFAULT_API_URL = 'https://api.revolt.chat'; // TODO: switch to https://revolt.chat/api when it's available
 
+// default max side param - used to specify the size of images
+export const DEFAULT_MAX_SIDE = '128';
+
+// default amount of messages to load
+export const DEFAULT_MESSAGE_LOAD_COUNT = 50;
+
 export type SpecialDateObject = {
   name: string;
   key: string;
