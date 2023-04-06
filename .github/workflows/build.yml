@@ -48,8 +48,7 @@ jobs:
       - name: Build the app
         run: npx react-native build-android --mode debug
       - name: DEBUG - figure out the folder structure
-        run: ls ~/android/app
-        run: ls /home/runner/work/rvmob/rvmob/
+        run: ls ~/android/app && ls /home/runner/work/rvmob/rvmob/
       - name: Upload debug APK
         uses: actions/upload-artifact@v3
         with: 
