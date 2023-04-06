@@ -135,9 +135,9 @@ export class Messages extends React.Component {
     client.on('message/delete', async id => {
       if (this.props.channel) {
         this.setState(prev => {
-          if (prev.messages.filter(m => m.message._id == id).length > 0) {
+          if (prev.messages.filter(m => m.message._id === id).length > 0) {
             return {
-              messages: prev.messages.filter(m => m.message._id != id),
+              messages: prev.messages.filter(m => m.message._id !== id),
               forceUpdate: true,
             };
           }
@@ -197,7 +197,7 @@ export class Messages extends React.Component {
           let time = decodeTime(message._id);
           // let grouped = ((lastAuthor == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (lastTime && time.diff(lastTime, "minute") < 5))
           let grouped =
-            i != 0 && this.calculateGrouped(res.messages[i - 1], message);
+            i !== 0 && this.calculateGrouped(res.messages[i - 1], message);
           let out = {
             grouped,
             message: message,
@@ -211,9 +211,9 @@ export class Messages extends React.Component {
         }
       });
       let result =
-        input.type == 'before'
+        input.type === 'before'
           ? messages.concat(oldMessages)
-          : input.type == 'after'
+          : input.type === 'after'
           ? oldMessages.concat(messages)
           : messages;
       this.setState({
@@ -761,7 +761,7 @@ const MessageEmbed = observer((eRaw: API.Embed) => {
         </View>
       );
     case 'Image':
-      // if (e.image?.size == "Large") {}
+      // if (e.image?.size === "Large") {}
       let width = e.width;
       let height = e.height;
       if (width > Dimensions.get('screen').width - 75) {

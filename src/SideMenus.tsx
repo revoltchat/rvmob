@@ -180,7 +180,7 @@ export class RightMenu extends React.Component {
   }
   renderMember({item}) {
     let obj = JSON.parse(item);
-    if (obj.server == this.props.currentChannel?.server._id) {
+    if (obj.server === this.props.currentChannel?.server._id) {
       let u = client.users.get(obj.user);
       if (u) {
         return (
