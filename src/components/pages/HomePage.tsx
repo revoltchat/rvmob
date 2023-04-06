@@ -88,14 +88,14 @@ export const HomePage = observer(() => {
           RVMob
         </Text>
         <Text
-          key="no-channel-selected"
+          key={'no-channel-selected'}
           style={{textAlign: 'center', marginBottom: 10}}>
           Swipe from the left of the screen or press the three lines icon to see
           your servers and messages!
         </Text>
         <Button
           style={{width: '65%'}}
-          key="home-revolt-lounge"
+          key={'home-revolt-lounge'}
           onPress={() => app.openInvite(SPECIAL_SERVERS.lounge.invite)}>
           <Text style={styles.header}>
             {client.servers.get(SPECIAL_SERVERS.lounge.id) ? 'Open' : 'Join'}{' '}
@@ -104,7 +104,7 @@ export const HomePage = observer(() => {
         </Button>
         <Button
           style={{width: '65%'}}
-          key="home-rvmob-server"
+          key={'home-rvmob-server'}
           onPress={() => app.openInvite(SPECIAL_SERVERS.supportServer.invite)}>
           <Text style={styles.header}>
             {client.servers.get(SPECIAL_SERVERS.supportServer.id)
@@ -115,7 +115,7 @@ export const HomePage = observer(() => {
         </Button>
         <Button
           style={{width: '30%'}}
-          key="home-settings-button"
+          key={'home-settings-button'}
           onPress={() => app.openSettings(true)}>
           <Text style={styles.header}>Settings</Text>
         </Button>

@@ -100,7 +100,7 @@ export class Modals extends React.Component {
     return (
       <>
         <Modal
-          key="messageMenu"
+          key={'messageMenu'}
           animationType="slide"
           transparent={true}
           visible={!!this.state.contextMenuMessage}
@@ -128,7 +128,7 @@ export class Modals extends React.Component {
           </View>
         </Modal>
         <Modal
-          key="statusMenu"
+          key={'statusMenu'}
           animationType="slide"
           transparent={true}
           visible={!!this.state.showStatusMenu}
@@ -200,7 +200,7 @@ export class Modals extends React.Component {
           </View>
         </Modal>
         <Modal
-          key="profileMenu"
+          key={'profileMenu'}
           animationType="slide"
           transparent={true}
           visible={!!this.state.contextMenuUser}
@@ -503,7 +503,7 @@ export class Modals extends React.Component {
           ) : null}
         </Modal>
         <Modal
-          key="reportModal"
+          key={'reportModal'}
           animationType="slide"
           transparent={true}
           visible={!!this.state.reportObject}

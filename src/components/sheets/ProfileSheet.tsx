@@ -353,7 +353,7 @@ export const ProfileSheet = observer(
                     onPress={() => {
                       app.openStatusMenu(true);
                     }}>
-                    <Text key="profile-status-menu-button-label">
+                    <Text key={'profile-status-menu-button-label'}>
                       Open status menu
                     </Text>
                   </ContextButton>

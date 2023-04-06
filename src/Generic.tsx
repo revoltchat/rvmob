@@ -642,7 +642,7 @@ export const ServerList = observer(
       servers = servers.filter(filter);
     }
     return (
-      <>
+      <View key={'server-list-container'}>
         {servers.map(s => {
           let iconURL = s.generateIconURL();
           let pings = s.getMentions().length;
@@ -651,7 +651,7 @@ export const ServerList = observer(
             initials += word.charAt(0);
           }
           return (
-            <>
+            <View key={`${s._id}-indicator-container`}>
               {showUnread && s.getMentions().length > 0 ? (
                 <View
                   key={`${s._id}-mentions-indicator`}
@@ -711,7 +711,7 @@ export const ServerList = observer(
                   </Text>
                 )}
               </TouchableOpacity>
-            </>
+            </View>
           );
         })}
         {/* {showDiscover ? (
@@ -740,7 +740,7 @@ export const ServerList = observer(
             </TouchableOpacity>
           </>
         ) : null} */}
-      </>
+      </View>
     );
   },
 );
