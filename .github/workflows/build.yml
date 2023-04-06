@@ -45,12 +45,12 @@ jobs:
           distribution: 'microsoft'
       - name: Install and prepare dependencies
         run: yarn install && npx rn-nodeify -e
-      - name: DEBUG - figure out the folder structure
-        run: ls /home/runner/work/rvmob/rvmob/
       - name: Build the app
         run: npx react-native build-android --mode debug
+      - name: DEBUG - figure out the folder structure
+        run: ls /home/runner/work/rvmob/rvmob/
       - name: Upload debug APK
         uses: actions/upload-artifact@v3
         with: 
-          path: ~/android/app/build/outputs/apk/debug/app-debug.apk
+          path: /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/app-debug.apk
           name: RVMob-Debug-${{ github.sha }}.apk
