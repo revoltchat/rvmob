@@ -162,26 +162,48 @@ export const ProfileSheet = observer(
                       </View>
                     </Button>
                   ) : user.relationship === 'Incoming' ? (
-                    <Button
-                      backgroundColor={currentTheme.backgroundPrimary}
-                      onPress={() => {
-                        user.addFriend();
-                      }}>
-                      <View
-                        style={{
-                          alignItems: 'center',
-                          flexDirection: 'column',
+                    <>
+                      <Button
+                        backgroundColor={currentTheme.backgroundPrimary}
+                        onPress={() => {
+                          user.addFriend();
                         }}>
-                        <View>
-                          <FA5Icon
-                            name="user-add"
-                            size={25}
-                            color={currentTheme.foregroundPrimary}
-                          />
+                        <View
+                          style={{
+                            alignItems: 'center',
+                            flexDirection: 'column',
+                          }}>
+                          <View>
+                            <MaterialCommunityIcon
+                              name="account-plus"
+                              size={25}
+                              color={currentTheme.foregroundPrimary}
+                            />
+                          </View>
+                          <Text>Accept Friend Request</Text>
                         </View>
-                        <Text>Accept Friend Request</Text>
-                      </View>
-                    </Button>
+                      </Button>
+                      <Button
+                        backgroundColor={currentTheme.backgroundPrimary}
+                        onPress={() => {
+                          user.removeFriend();
+                        }}>
+                        <View
+                          style={{
+                            alignItems: 'center',
+                            flexDirection: 'column',
+                          }}>
+                          <View>
+                            <MaterialCommunityIcon
+                              name="account-remove"
+                              size={25}
+                              color={currentTheme.foregroundPrimary}
+                            />
+                          </View>
+                          <Text>Reject Friend Request</Text>
+                        </View>
+                      </Button>
+                    </>
                   ) : (
                     <></>
                   )
