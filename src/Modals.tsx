@@ -22,7 +22,7 @@ import {
   SettingsSheet,
 } from './components/sheets/';
 import {Server, User, Message, Channel} from 'revolt.js';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 import {observer} from 'mobx-react';
 const Image = FastImage;
