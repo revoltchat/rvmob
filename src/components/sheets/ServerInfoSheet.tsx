@@ -120,37 +120,39 @@ export const ServerInfoSheet = observer(
               </Text>
             </ContextButton>
           ) : null}
-          <ContextButton
-            key={'server-ctx-menu-report'}
-            onPress={() => {
-              app.openReportMenu(server, 'Server');
-            }}>
-            <View style={styles.iconContainer}>
-              <MaterialIcon
-                name="flag"
-                size={20}
-                color={currentTheme.foregroundPrimary}
-              />
-            </View>
-            <Text>Report Server</Text>
-          </ContextButton>
           {server.owner !== client.user?._id ? (
-            <ContextButton
-              key={'server-ctx-menu-leave'}
-              onPress={async () => {
-                await app.openServer();
-                state.setState({contextMenuServer: null});
-                server.delete();
-              }}>
-              <View style={styles.iconContainer}>
-                <MaterialIcon
-                  name="exit-to-app"
-                  size={20}
-                  color={currentTheme.error}
-                />
-              </View>
-              <Text colour={currentTheme.error}>Leave Server</Text>
-            </ContextButton>
+            <>
+              <ContextButton
+                key={'server-ctx-menu-leave'}
+                onPress={async () => {
+                  await app.openServer();
+                  state.setState({contextMenuServer: null});
+                  server.delete();
+                }}>
+                <View style={styles.iconContainer}>
+                  <MaterialIcon
+                    name="exit-to-app"
+                    size={20}
+                    color={currentTheme.error}
+                  />
+                </View>
+                <Text colour={currentTheme.error}>Leave Server</Text>
+              </ContextButton>
+              <ContextButton
+                key={'server-ctx-menu-report'}
+                onPress={() => {
+                  app.openReportMenu(server, 'Server');
+                }}>
+                <View style={styles.iconContainer}>
+                  <MaterialIcon
+                    name="flag"
+                    size={20}
+                    color={currentTheme.foregroundPrimary}
+                  />
+                </View>
+                <Text>Report Server</Text>
+              </ContextButton>
+            </>
           ) : null}
         </View>
       </ScrollView>
