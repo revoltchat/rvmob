@@ -9,11 +9,15 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Setup Node
+      - name: Set up Node
         uses: actions/setup-node@v2
         with:
-            node-version: 18
-            cache: "yarn"
+          node-version: 18
+          cache: "yarn"
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with: 
+          java-version: '11'
       - name: Install and prepare dependencies
         run: yarn install && npx rn-nodeify -e
       - name: Build the app
@@ -28,11 +32,15 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Setup Node
+      - name: Set up Node
         uses: actions/setup-node@v2
         with:
-            node-version: 18
-            cache: "yarn"
+          node-version: 18
+          cache: "yarn"
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with: 
+          java-version: '11'
       - name: Install and prepare dependencies
         run: yarn install && npx rn-nodeify -e
       - name: Build the app
