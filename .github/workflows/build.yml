@@ -42,7 +42,7 @@ jobs:
         uses: actions/setup-java@v3
         with: 
           java-version: '11'
-           distribution: 'microsoft'
+          distribution: 'microsoft'
       - name: Install and prepare dependencies
         run: yarn install && npx rn-nodeify -e
       - name: Build the app
