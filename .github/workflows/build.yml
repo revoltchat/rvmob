@@ -44,7 +44,9 @@ jobs:
           java-version: '11'
           distribution: 'microsoft'
       - name: Install and prepare dependencies
-        run: yarn install && npx rn-nodeify -e
+        run: yarn install && npx rn-nodeify -e && npx react-native-asset
+      - name: Bundle the JS
+        run: npx react-native bundle --platform android --entry-file ./index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
       - name: Build the app
         run: npx react-native build-android --mode debug
       - name: Prepare debug APK
