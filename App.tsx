@@ -23,7 +23,6 @@ import {
   Button,
   ChannelIcon,
   openUrl,
-  defaultAPIURL,
 } from './src/Generic';
 import {Messages} from './src/MessageView';
 import {MessageBox} from './src/MessageBox';
@@ -37,6 +36,7 @@ import {HomePage} from './src/components/pages/HomePage';
 import {FriendsPage} from './src/components/pages/FriendsPage';
 import {Text} from './src/components/common/atoms';
 import {ChannelHeader} from './src/components/navigation/ChannelHeader';
+import {DEFAULT_API_URL} from './src/lib/consts';
 
 async function createChannel() {
   const channel = await notifee.createChannel({
@@ -117,7 +117,7 @@ class MainView extends React.Component {
         AsyncStorage.setItem('token', this.state.tokenInput);
         AsyncStorage.multiSet([
           ['token', this.state.tokenInput],
-          ['instance', defaultAPIURL],
+          ['instance', DEFAULT_API_URL],
         ]);
         this.setState({tokenInput: ''});
       }
