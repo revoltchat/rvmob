@@ -36,6 +36,43 @@ export const DEFAULT_MAX_SIDE = '128';
 // default amount of messages to load
 export const DEFAULT_MESSAGE_LOAD_COUNT = 50;
 
+// server invite paths for the official instance
+export const INVITE_PATHS = [
+  'app.revolt.chat/invite',
+  'nightly.revolt.chat/invite',
+  'local.revolt.chat/invite',
+  'rvlt.gg',
+];
+
+// regex to find server invites
+export const RE_INVITE = new RegExp(
+  `(?:${INVITE_PATHS.map(x => x?.split('.').join('\\.')).join(
+    '|',
+  )})/([A-Za-z0-9]*)`,
+  'g',
+);
+
+// bot invite paths for the official instance
+export const BOT_INVITE_PATHS = [
+  'app.revolt.chat/bot',
+  'nightly.revolt.chat/bot',
+  'local.revolt.chat/bot',
+];
+
+// regex to find bot invites
+export const RE_BOT_INVITE = new RegExp(
+  `(?:${BOT_INVITE_PATHS.map(x => x.split('.').join('\\.')).join(
+    '|',
+  )})/([A-Za-z0-9]*)`,
+  'g',
+);
+
+// link to discover, used by the invite finder to ignore these links
+export const DISCOVER_URL = 'rvlt.gg/discover';
+
+// link to the revolt wiki, per above
+export const WIKI_URL = 'wiki.rvlt.gg';
+
 export type SpecialDateObject = {
   name: string;
   key: string;

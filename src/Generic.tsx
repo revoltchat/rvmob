@@ -19,10 +19,17 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import spoilerPlugin from '@traptitech/markdown-it-spoiler';
 import {Channel, Client, Server} from 'revolt.js';
 
-import {currentTheme, setTheme, themes, styles} from './Theme';
 import {MiniProfile} from './Profile';
+import {currentTheme, setTheme, themes, styles} from './Theme';
 import {Text} from './components/common/atoms';
-import {DEFAULT_API_URL, DEFAULT_MAX_SIDE} from './lib/consts';
+import {
+  DEFAULT_API_URL,
+  DEFAULT_MAX_SIDE,
+  DISCOVER_URL,
+  RE_INVITE,
+  RE_BOT_INVITE,
+  WIKI_URL,
+} from './lib/consts';
 const Image = FastImage;
 
 type StringSetting = {
@@ -342,33 +349,6 @@ export const defaultMarkdownIt = MarkdownIt({typographer: true, linkify: true})
   .disable(['image'])
   .use(spoilerPlugin);
 
-export const INVITE_PATHS = [
-  'app.revolt.chat/invite',
-  'nightly.revolt.chat/invite',
-  'local.revolt.chat/invite',
-  'rvlt.gg',
-];
-
-export const RE_INVITE = new RegExp(
-  `(?:${INVITE_PATHS.map(x => x?.split('.').join('\\.')).join(
-    '|',
-  )})/([A-Za-z0-9]*)`,
-  'g',
-);
-
-export const BOT_INVITE_PATHS = [
-  'app.revolt.chat/bot',
-  'nightly.revolt.chat/bot',
-  'local.revolt.chat/bot',
-];
-
-export const RE_BOT_INVITE = new RegExp(
-  `(?:${BOT_INVITE_PATHS.map(x => x.split('.').join('\\.')).join(
-    '|',
-  )})/([A-Za-z0-9]*)`,
-  'g',
-);
-
 export const openUrl = (url: string) => {
   console.log(`[FUNCTIONS] Handling URL: ${url}`);
   if (url.startsWith('/@')) {
@@ -380,8 +360,8 @@ export const openUrl = (url: string) => {
     return;
   }
   let match = url.match(RE_INVITE);
-  let isDiscover = url.match('rvlt.gg/discover');
-  let isWiki = url.match('wiki.rvlt.gg');
+  let isDiscover = url.match(DISCOVER_URL);
+  let isWiki = url.match(WIKI_URL);
   if (match && !isWiki && !isDiscover) {
     app.openInvite(match[0].split('/').pop());
     return;
@@ -473,6 +453,7 @@ const spoilerRule = {
     );
   },
 };
+
 export const MarkdownView = (props: any) => {
   let newProps = {...props};
   if (!newProps.onLinkPress) {
