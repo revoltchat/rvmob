@@ -1,24 +1,28 @@
-import Markdown, {hasParents, MarkdownIt} from 'react-native-markdown-display';
-import ReactNative, {
+import React from 'react';
+import {
   View,
   TouchableOpacity,
   Linking,
   TextInput,
   ViewStyle,
 } from 'react-native';
-import {Channel, Client, Server} from 'revolt.js';
-import {currentTheme, setTheme, themes, styles} from './Theme';
-import {MiniProfile} from './Profile';
-import {DEFAULT_API_URL, DEFAULT_MAX_SIDE} from './lib/consts';
-import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react-lite';
+
+import Markdown, {hasParents, MarkdownIt} from 'react-native-markdown-display';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import Icon from 'react-native-vector-icons/MaterialIcons';
+import FastImage from 'react-native-fast-image';
 import FontistoIcon from 'react-native-vector-icons/Fontisto';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import FastImage from 'react-native-fast-image';
+
 import spoilerPlugin from '@traptitech/markdown-it-spoiler';
+import {Channel, Client, Server} from 'revolt.js';
+
+import {currentTheme, setTheme, themes, styles} from './Theme';
+import {MiniProfile} from './Profile';
+import {Text} from './components/common/atoms';
+import {DEFAULT_API_URL, DEFAULT_MAX_SIDE} from './lib/consts';
 const Image = FastImage;
 
 type StringSetting = {
@@ -944,7 +948,7 @@ const ServerChannelList = observer((props: ChannelListProps) => {
   );
   const [res, setRes] = React.useState([] as JSX.Element[] | undefined);
 
-  useEffect(() => {
+  React.useEffect(() => {
     let categories = props.currentServer.categories?.map(c => {
       const element = (
         <ServerChannelListCategory
@@ -1215,7 +1219,7 @@ export function InputWithButton({
   backgroundColor: ViewStyle['backgroundColor'];
   onPress: any;
 }) {
-  let [value, setValue] = useState(defaultValue);
+  let [value, setValue] = React.useState(defaultValue);
   return (
     //style.input and style.button are applied to the input and button respectively
     <View
