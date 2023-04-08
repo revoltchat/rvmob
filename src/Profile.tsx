@@ -34,7 +34,9 @@ export const Username = observer(
       : undefined;
     let roleColor = color ? getColour(color) : styles.textDefault.color;
     let name =
-      server && memberObject?.nickname ? memberObject?.nickname : user.username;
+      server && memberObject?.nickname
+        ? memberObject?.nickname
+        : user?.username;
     if (server && memberObject?.roles && memberObject?.roles?.length > 0) {
       let srv = client.servers.get(memberObject._id.server);
       if (srv?.roles) {
