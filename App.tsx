@@ -191,7 +191,9 @@ class MainView extends React.Component {
     AsyncStorage.getItem('token', async (err, res) => {
       if (!err) {
         if (typeof res !== 'string') {
-          console.log(`token was not string: ${typeof res}, ${res}`);
+          console.log(
+            `[AUTH] Saved token was not a string: ${typeof res}, ${res}`,
+          );
           this.setState({status: 'awaitingLogin'});
           return;
         }
@@ -249,6 +251,7 @@ class MainView extends React.Component {
                     currentChannel={this.state.currentChannel}
                     onLogOut={() => {
                       AsyncStorage.setItem('token', '');
+                      client.logout();
                       this.setState({status: 'awaitingLogin'});
                     }}
                   />
@@ -433,8 +436,12 @@ class MainView extends React.Component {
                           },
                         );
 
-                        // Prompt for MFA verificaiton if necessary
-                        if (session.result === 'MFA') {
+                        // Check if account is disabled; if not, prompt for MFA verificaiton if necessary
+                        if (session.result === 'Disabled') {
+                          console.log(
+                            '[AUTH] Account is disabled; need to add a proper handler for this',
+                          );
+                        } else if (session.result === 'MFA') {
                           if (this.state.tfaTicket === '') {
                             console.log(
                               `[AUTH] MFA required; prompting for code... (ticket: ${session.ticket})`,
@@ -491,6 +498,13 @@ class MainView extends React.Component {
                             }
                           }
                         } else {
+                          const token = session.token;
+                          console.log('[AUTH] Logging in with a new token...');
+                          await client.useExistingSession({token: token});
+                          await AsyncStorage.setItem('token', token);
+                          console.log(
+                            '[AUTH] Successfuly logged in and saved the token!',
+                          );
                           this.setState({
                             status: 'loggedIn',
                             tokenInput: '',
