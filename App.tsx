@@ -31,12 +31,12 @@ import {setFunction} from './src/Generic';
 import {LeftMenu, RightMenu} from './src/SideMenus';
 import {Modals} from './src/Modals';
 import {NetworkIndicator} from './src/components/NetworkIndicator';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {decodeTime} from 'ulid';
 import notifee from '@notifee/react-native';
 import {HomePage} from './src/components/pages/HomePage';
 import {FriendsPage} from './src/components/pages/FriendsPage';
 import {Text} from './src/components/common/atoms';
+import {ChannelHeader} from './src/components/navigation/ChannelHeader';
 
 async function createChannel() {
   const channel = await notifee.createChannel({
@@ -215,7 +215,7 @@ class MainView extends React.Component {
   }
   render() {
     return (
-      <ErrorBoundary fallbackRender={ErrorMessage}>
+      <>
         {this.state.status === 'loggedIn' ? (
           <View style={styles.app}>
             <SideMenu
@@ -421,6 +421,9 @@ class MainView extends React.Component {
                     onPress={async () => {
                       this.setState({status: 'tryingLogin'});
                       try {
+                        console.log(
+                          '[AUTH] Attempting login with email and password...',
+                        );
                         let session = await client.api.post(
                           '/auth/session/login',
                           {
@@ -433,6 +436,9 @@ class MainView extends React.Component {
                         // Prompt for MFA verificaiton if necessary
                         if (session.result === 'MFA') {
                           if (this.state.tfaTicket === '') {
+                            console.log(
+                              `[AUTH] MFA required; prompting for code... (ticket: ${session.ticket})`,
+                            );
                             return this.setState({
                               status: 'awaitingLogin',
                               askForTFACode: true,
@@ -440,7 +446,13 @@ class MainView extends React.Component {
                             });
                           } else {
                             try {
+                              console.log(
+                                `[AUTH] Attempting to log in with MFA (code: ${this.state.tfaInput})`,
+                              );
                               const isRecovery = this.state.tfaInput.length > 7;
+                              console.log(
+                                `[AUTH] Using recovery code: ${isRecovery}`,
+                              );
                               session = await client.api.post(
                                 '/auth/session/login',
                                 {
@@ -451,13 +463,19 @@ class MainView extends React.Component {
                                   friendly_name: 'RVMob',
                                 },
                               );
-                              console.log(`result: ${session.result}`);
+                              console.log(`[AUTH] Result: ${session.result}`);
                               if (session.result !== 'Success') {
                                 throw Error;
                               }
                               const token = session.token;
+                              console.log(
+                                '[AUTH] Logging in with a new token...',
+                              );
                               await client.useExistingSession({token: token});
                               await AsyncStorage.setItem('token', token);
+                              console.log(
+                                '[AUTH] Successfuly logged in and saved the token!',
+                              );
                               this.setState({
                                 status: 'loggedIn',
                                 tokenInput: '',
@@ -586,31 +604,10 @@ class MainView extends React.Component {
             </View>
           </View>
         )}
-      </ErrorBoundary>
+      </>
     );
   }
 }
-
-export const ChannelHeader = ({children}) => {
-  return (
-    <View style={styles.channelHeader}>
-      <TouchableOpacity
-        style={styles.headerIcon}
-        onPress={() => {
-          app.openLeftMenu();
-        }}>
-        <View style={styles.iconContainer}>
-          <MaterialIcon
-            name="menu"
-            size={20}
-            color={currentTheme.foregroundPrimary}
-          />
-        </View>
-      </TouchableOpacity>
-      {children}
-    </View>
-  );
-};
 
 function ErrorMessage({
   error,
@@ -657,7 +654,9 @@ export const App = () => {
         backgroundColor={currentTheme.backgroundSecondary}
         barStyle={(currentTheme.contentType + '-content') as StatusBarStyle}
       />
-      <MainView />
+      <ErrorBoundary fallbackRender={ErrorMessage}>
+        <MainView />
+      </ErrorBoundary>
     </View>
   );
 };

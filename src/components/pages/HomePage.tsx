@@ -2,7 +2,6 @@ import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {ChannelHeader} from '../../../App';
 import {app, Button, ChannelIcon, client, openUrl} from '../../Generic';
 import {Avatar, Username} from '../../Profile';
 import {
@@ -11,6 +10,7 @@ import {
   SPECIAL_SERVERS,
 } from '../../lib/consts';
 import {styles} from '../../Theme';
+import {ChannelHeader} from '../navigation/ChannelHeader';
 import {Text} from '../common/atoms';
 
 export const HomePage = observer(() => {

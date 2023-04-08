@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {ChannelHeader} from '../../../App';
 import {Button, client, ChannelIcon, app} from '../../Generic';
 import {MiniProfile} from '../../Profile';
 import {styles} from '../../Theme';
+import {ChannelHeader} from '../navigation/ChannelHeader';
 import {Text} from '../common/atoms';
 
 type DisplayStates = {
