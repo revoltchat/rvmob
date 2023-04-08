@@ -265,6 +265,13 @@ export const app = {
         default: false,
         type: 'boolean',
       },
+      {
+        key: 'app.instance',
+        category: 'donotshow',
+        name: 'Instance URL',
+        default: DEFAULT_API_URL,
+        type: 'string',
+      },
     ] as Setting[],
   },
 };
@@ -318,9 +325,13 @@ export function setFunction(name: string, func: any) {
   app[name] = func;
 }
 
+const apiURL = (app.settings.get('app.instance') as string) ?? DEFAULT_API_URL;
+
+console.log(`[AUTH] Creating client... (instance: ${apiURL})`);
+
 export const client = new Client({
   unreads: true,
-  apiURL: DEFAULT_API_URL,
+  apiURL: apiURL,
 });
 
 export const Text = (props: any) => {

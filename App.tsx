@@ -13,6 +13,7 @@ import {
 import {ErrorBoundary} from 'react-error-boundary';
 import SideMenu from 'react-native-side-menu-updated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import {currentTheme, styles} from './src/Theme';
 import {
@@ -36,7 +37,7 @@ import {HomePage} from './src/components/pages/HomePage';
 import {FriendsPage} from './src/components/pages/FriendsPage';
 import {Text} from './src/components/common/atoms';
 import {ChannelHeader} from './src/components/navigation/ChannelHeader';
-import {DEFAULT_API_URL} from './src/lib/consts';
+import {LoginSettingsPage} from './src/components/pages/LoginSettingsPage';
 
 async function createChannel() {
   const channel = await notifee.createChannel({
@@ -115,10 +116,6 @@ class MainView extends React.Component {
       if (this.state.tokenInput) {
         console.log(`[AUTH] Setting saved token to ${this.state.tokenInput}`);
         AsyncStorage.setItem('token', this.state.tokenInput);
-        AsyncStorage.multiSet([
-          ['token', this.state.tokenInput],
-          ['instance', DEFAULT_API_URL],
-        ]);
         this.setState({tokenInput: ''});
       }
     });
@@ -187,6 +184,7 @@ class MainView extends React.Component {
         }
       }
     });
+    console.log(`[AUTH] Instance: ${app.settings.get('app.instance')}`);
     // notifee.onBackgroundEvent(async ({type, detail}) => {});
     AsyncStorage.getItem('token', async (err, res) => {
       if (!err) {
@@ -380,6 +378,22 @@ class MainView extends React.Component {
           </View>
         ) : this.state.status === 'awaitingLogin' ? (
           <View style={styles.app}>
+            {/* TODO: Uncomment when the client can actually get the setting value in time <View
+              style={{
+                marginTop: 8,
+                marginLeft: '90%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <TouchableOpacity
+                onPress={() => this.setState({status: 'loginSettings'})}>
+                <MaterialIcon
+                  name="more-vert"
+                  size={30}
+                  color={currentTheme.foregroundPrimary}
+                />
+              </TouchableOpacity>
+            </View> */}
             <View
               style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
               <Text
@@ -611,6 +625,8 @@ class MainView extends React.Component {
               )}
             </View>
           </View>
+        ) : this.state.status === 'loginSettings' ? (
+          <LoginSettingsPage state={this} />
         ) : (
           <View style={styles.app}>
             <View style={styles.loggingInScreen}>
