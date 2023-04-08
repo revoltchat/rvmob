@@ -171,7 +171,9 @@ export class Messages extends React.Component {
     }
   }
   async fetchMessages(input = {}) {
-    console.log('fetch messages');
+    console.log(
+      `[MESSAGEVIEW] Fetching messages for ${this.props.channel._id}...`,
+    );
     let params = {
       limit: input.before
         ? DEFAULT_MESSAGE_LOAD_COUNT / 2
@@ -182,7 +184,9 @@ export class Messages extends React.Component {
     //     params.sort = "Oldest"
     // }
     this.props.channel.fetchMessagesWithUsers(params).then(res => {
-      console.log('done fetching');
+      console.log(
+        `[MESSAGEVIEW] Finished fetching messages for ${this.props.channel._id}`,
+      );
       let oldMessages = this.state.messages;
       if (input.type === 'before') {
         oldMessages = oldMessages.slice(0, DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1);
@@ -259,7 +263,7 @@ export class Messages extends React.Component {
     if (this.state.error) {
       return (
         <Text style={{color: '#ff6666'}}>
-          Error rendering: {this.state.error.message}
+          Error rendering message: {this.state.error.message}
         </Text>
       );
     }

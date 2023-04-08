@@ -250,6 +250,9 @@ class MainView extends React.Component {
                     }}
                     currentChannel={this.state.currentChannel}
                     onLogOut={() => {
+                      console.log(
+                        `[AUTH] Logging out of current session... (user: ${client.user?._id})`,
+                      );
                       AsyncStorage.setItem('token', '');
                       client.logout();
                       this.setState({status: 'awaitingLogin'});
