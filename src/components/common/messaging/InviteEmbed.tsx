@@ -4,8 +4,9 @@ import {observer} from 'mobx-react-lite';
 
 import {API, Message} from 'revolt.js';
 
-import {Button, GeneralAvatar, Text, app, client} from '../../../Generic';
+import {Button, GeneralAvatar, app, client} from '../../../Generic';
 import {currentTheme} from '../../../Theme';
+import {Text} from '../atoms';
 
 export const InviteEmbed = observer(
   ({message, invite}: {message: Message; invite: string}) => {
@@ -40,10 +41,11 @@ export const InviteEmbed = observer(
           marginVertical: 2,
         }}>
         <Text
-          style={{color: currentTheme.foregroundSecondary, marginBottom: 4}}>
+          colour={currentTheme.foregroundSecondary}
+          style={{marginBottom: 4}}>
           <Text
+            colour={currentTheme.foregroundSecondary}
             style={{
-              color: currentTheme.foregroundSecondary,
               fontWeight: 'bold',
             }}>
             {message.author?.username}
@@ -66,7 +68,7 @@ export const InviteEmbed = observer(
             <Text style={{fontWeight: 'bold', fontSize: 18}}>
               {invObject.server_name}
             </Text>
-            <Text style={{color: currentTheme.foregroundSecondary}}>
+            <Text colour={currentTheme.foregroundSecondary}>
               {invObject?.member_count}{' '}
               {invObject?.member_count === 1 ? 'member' : 'members'}
             </Text>

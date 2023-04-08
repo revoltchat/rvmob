@@ -1,10 +1,11 @@
 import {observer} from 'mobx-react-lite';
 import React from 'react';
-import {Text, client, app} from './Generic';
+import {client, app} from './Generic';
 import {currentTheme, styles} from './Theme';
 import {Pressable, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Server, User, Message, Channel} from 'revolt.js';
+import {Text} from './components/common/atoms';
 import {getColour} from './lib/utils';
 import {DEFAULT_MAX_SIDE, USER_IDS} from './lib/consts';
 
@@ -64,7 +65,8 @@ export const Username = observer(
     return (
       <View style={{flexDirection: 'row'}}>
         <Text
-          style={{color: roleColor, fontWeight: 'bold', fontSize: size || 14}}>
+          colour={roleColor}
+          style={{fontWeight: 'bold', fontSize: size || 14}}>
           {masquerade ?? name}
         </Text>
         {!noBadge ? (
@@ -239,8 +241,8 @@ export const MiniProfile = observer(
               size={14 * (scale || 1)}
             />
             <Text
+              colour={color || currentTheme.foregroundPrimary}
               style={{
-                color: color || currentTheme.foregroundPrimary,
                 marginTop: -3 * (scale || 1),
                 fontSize: 14 * (scale || 1),
               }}>
@@ -259,16 +261,16 @@ export const MiniProfile = observer(
           <Avatar channel={channel} size={35 * (scale || 1)} />
           <View style={{marginLeft: 10 * (scale || 1)}}>
             <Text
+              colour={color || currentTheme.foregroundPrimary}
               style={{
-                color: color || currentTheme.foregroundPrimary,
                 fontSize: 14 * (scale || 1),
                 fontWeight: 'bold',
               }}>
               {channel.name}
             </Text>
             <Text
+              colour={color || currentTheme.foregroundPrimary}
               style={{
-                color: color || currentTheme.foregroundPrimary,
                 marginTop: -3 * (scale || 1),
                 fontSize: 14 * (scale || 1),
               }}>

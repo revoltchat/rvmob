@@ -1,6 +1,5 @@
 import {
   client,
-  Text,
   MarkdownView,
   app,
   parseRevoltNodes,
@@ -29,6 +28,7 @@ import {enGB, enUS} from 'date-fns/locale';
 import {decodeTime} from 'ulid';
 import FastImage from 'react-native-fast-image';
 import {InviteEmbed} from './components/common/messaging/InviteEmbed';
+import {Text} from './components/common/atoms';
 const Image = FastImage;
 let didUpdateFirstTime = false;
 
@@ -262,7 +262,7 @@ export class Messages extends React.Component {
   render() {
     if (this.state.error) {
       return (
-        <Text style={{color: '#ff6666'}}>
+        <Text color={'#ff6666'}>
           Error rendering message: {this.state.error.message}
         </Text>
       );
@@ -354,7 +354,7 @@ export class Messages extends React.Component {
               backgroundColor: currentTheme.accentColor,
             }}
             onPress={() => this.fetchMessages()}>
-            <Text style={{color: currentTheme.accentColorForeground}}>
+            <Text colour={currentTheme.accentColorForeground}>
               Go to latest messages
             </Text>
           </TouchableOpacity>
@@ -401,7 +401,7 @@ export const Message = observer((props: MessageProps) => {
   if (error) {
     return (
       <View key={props.message._id}>
-        <Text style={{color: '#ff4444'}}>
+        <Text colour={'#ff4444'}>
           Failed to render message:{'\n'}
           {error?.message}
         </Text>
@@ -583,9 +583,9 @@ export const Message = observer((props: MessageProps) => {
               <View style={styles.messageInner}>
                 {props.grouped && props.message.edited ? (
                   <Text
+                    colour={currentTheme.foregroundTertiary}
                     style={{
                       fontSize: 11,
-                      color: currentTheme.foregroundTertiary,
                       position: 'relative',
                       right: 47,
                       marginBottom: -16,
@@ -615,9 +615,9 @@ export const Message = observer((props: MessageProps) => {
                     </Text>
                     {props.message.edited && (
                       <Text
+                        colour={currentTheme.foregroundTertiary}
                         style={{
                           fontSize: 12,
-                          color: currentTheme.foregroundTertiary,
                           position: 'relative',
                           top: 2,
                           left: 2,
@@ -718,21 +718,22 @@ const MessageEmbed = observer((eRaw: API.Embed) => {
           }}>
           {e.type === 'Website' && e.site_name ? (
             <Text
-              style={{fontSize: 12, color: currentTheme.foregroundSecondary}}>
+              colour={currentTheme.foregroundSecondary}
+              style={{fontSize: 12}}>
               {e.site_name}
             </Text>
           ) : null}
           {e.title && e.url ? (
             <Pressable onPress={() => openUrl(e.url!)}>
-              <Text style={{fontSize: 14, color: currentTheme.accentColor}}>
+              <Text colour={currentTheme.accentColor} style={{fontSize: 14}}>
                 {e.title}
               </Text>
             </Pressable>
           ) : (
             <Text
+              colour={currentTheme.foregroundSecondary}
               style={{
                 fontSize: 14,
-                color: currentTheme.foregroundSecondary,
               }}>
               {e.title}
             </Text>

@@ -4,8 +4,8 @@ import {observer} from 'mobx-react-lite';
 
 import {Client} from 'revolt.js';
 
-import {Text} from '../Generic';
 import {currentTheme} from '../Theme';
+import {Text} from './common/atoms';
 
 export const NetworkIndicator = observer(({client}: {client: Client}) => {
   if (!client.user?.online) {
@@ -22,10 +22,10 @@ export const NetworkIndicator = observer(({client}: {client: Client}) => {
           backgroundColor: currentTheme.accentColor,
         }}>
         <Text
+          colour={currentTheme.accentColorForeground}
           style={{
             fontSize: 16,
             fontWeight: 'bold',
-            color: currentTheme.accentColorForeground,
           }}>
           Connection lost
         </Text>

@@ -3,7 +3,6 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import React from 'react';
 import {
   client,
-  Text,
   app,
   GeneralAvatar,
   ServerList,
@@ -25,6 +24,8 @@ import {Server, User, Message, Channel} from 'revolt.js';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 import {observer} from 'mobx-react';
+import {Text} from './components/common/atoms';
+
 const Image = FastImage;
 
 @observer
@@ -320,8 +321,8 @@ export class Modals extends React.Component {
                 color={currentTheme.foregroundSecondary}
               />
               <Text
+                colour={currentTheme.foregroundSecondary}
                 style={{
-                  color: currentTheme.foregroundSecondary,
                   fontSize: 20,
                   marginLeft: 5,
                 }}>
@@ -385,9 +386,9 @@ export class Modals extends React.Component {
                         </View>
                       </View>
                       <Text
+                        colour={currentTheme.foregroundSecondary}
                         style={{
                           marginVertical: 4,
-                          color: currentTheme.foregroundSecondary,
                         }}>
                         {this.state.inviteServer?.member_count}{' '}
                         {this.state.inviteServer?.member_count === 1

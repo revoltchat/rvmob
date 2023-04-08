@@ -1,17 +1,21 @@
 import React from 'react';
 import {Pressable, View, TextInput, TouchableOpacity} from 'react-native';
-import {Text, app, client, setFunction} from './Generic';
-import {styles, currentTheme} from './Theme';
 import {observer} from 'mobx-react-lite';
-import {Username, Avatar} from './Profile';
-import {ulid} from 'ulid';
+
 import DocumentPicker, {
   DocumentPickerResponse,
 } from 'react-native-document-picker';
+import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import FA5Icon from 'react-native-vector-icons/FontAwesome5';
+
 import {Channel, Message} from 'revolt.js';
+import {ulid} from 'ulid';
+
+import {app, client, setFunction} from './Generic';
+import {Username, Avatar} from './Profile';
+import {styles, currentTheme} from './Theme';
+import {Text} from './components/common/atoms';
 import {USER_IDS} from './lib/consts';
 
 let typing = false;
@@ -124,11 +128,13 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                   setReplyingMessages(replacing);
                 }}>
                 <Text
+                  colour={
+                    m.mentions
+                      ? currentTheme.accentColor
+                      : currentTheme.foregroundPrimary
+                  }
                   style={{
                     fontWeight: 'bold',
-                    color: m.mentions
-                      ? currentTheme.accentColor
-                      : currentTheme.foregroundPrimary,
                     marginTop: -3,
                   }}>
                   @{m.mentions ? 'ON' : 'OFF'}

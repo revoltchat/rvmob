@@ -1,20 +1,23 @@
+import React from 'react';
 import {View, TouchableOpacity, ScrollView, FlatList} from 'react-native';
+
+import FAIcon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
+import {User} from 'revolt.js';
+
 import {
   ChannelList,
   ServerList,
   app,
   setFunction,
   client,
-  Text,
   MarkdownView,
   Button,
 } from './Generic';
 import {MiniProfile, Avatar} from './Profile';
 import {styles, currentTheme} from './Theme';
-import FAIcon from 'react-native-vector-icons/FontAwesome';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import React from 'react';
-import {User} from 'revolt.js';
+import {Text} from './components/common/atoms';
 
 export class LeftMenu extends React.Component {
   constructor(props) {
@@ -160,9 +163,7 @@ export class RightMenu extends React.Component {
               backgroundColor: currentTheme.backgroundPrimary,
               borderRadius: 8,
             }}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-              #{this.props.currentChannel?.name}
-            </Text>
+            <Text type={'header'}>#{this.props.currentChannel?.name}</Text>
             {this.props.currentChannel?.description ? (
               <MarkdownView>
                 {this.props.currentChannel?.description}
