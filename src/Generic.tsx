@@ -334,24 +334,6 @@ export const client = new Client({
   apiURL: apiURL,
 });
 
-export const Text = (props: any) => {
-  let newProps = {...props};
-  if (!props.style) {
-    newProps = Object.assign({style: {}}, newProps);
-  }
-  const font =
-    newProps.useInter && newProps.useInter === true ? 'Inter' : 'Open Sans';
-  newProps.style = Object.assign(
-    {
-      color: currentTheme.foregroundPrimary,
-      flexWrap: 'wrap',
-      fontFamily: font,
-    },
-    newProps.style,
-  );
-  return <ReactNative.Text {...newProps}>{newProps.children}</ReactNative.Text>;
-};
-
 export const defaultMarkdownIt = MarkdownIt({typographer: true, linkify: true})
   .disable(['image'])
   .use(spoilerPlugin);
