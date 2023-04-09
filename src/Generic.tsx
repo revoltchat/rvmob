@@ -8,15 +8,12 @@ import {
 } from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import Markdown, {hasParents, MarkdownIt} from 'react-native-markdown-display';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image';
 import FontistoIcon from 'react-native-vector-icons/Fontisto';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import spoilerPlugin from '@traptitech/markdown-it-spoiler';
 import {Channel, Client, Server} from 'revolt.js';
 
 import {MiniProfile} from './Profile';
@@ -345,10 +342,6 @@ export const client = new Client({
   apiURL: apiURL,
 });
 
-export const defaultMarkdownIt = MarkdownIt({typographer: true, linkify: true})
-  .disable(['image'])
-  .use(spoilerPlugin);
-
 export const openUrl = (url: string) => {
   console.log(`[FUNCTIONS] Handling URL: ${url}`);
   if (url.startsWith('/@')) {
@@ -374,209 +367,6 @@ export const openUrl = (url: string) => {
 
   Linking.openURL(url);
 };
-
-const spoilerStyle = {
-  hiddenSpoiler: {
-    backgroundColor: '#000',
-    color: 'transparent',
-  },
-  revealedSpoiler: {
-    backgroundColor: currentTheme.backgroundSecondary,
-    color: currentTheme.foregroundPrimary,
-  },
-};
-
-const SpoilerContext = React.createContext();
-const Spoiler = ({content}) => {
-  const [revealed, setRevealed] = React.useState(false);
-  return (
-    <SpoilerContext.Provider value={revealed}>
-      <Text onPress={() => setRevealed(!revealed)}>{content}</Text>
-    </SpoilerContext.Provider>
-  );
-};
-
-// the text and code_inline rules are the same as the built-in ones,
-// except with spoiler support
-const spoilerRule = {
-  spoiler: (node, children) => <Spoiler key={node.key} content={children} />,
-  text: (node, children, parent, styles, inheritedStyles = {}) => {
-    if (hasParents(parent, 'spoiler')) {
-      return (
-        <SpoilerContext.Consumer key={node.key}>
-          {isRevealed => (
-            <Text
-              style={{
-                ...inheritedStyles,
-                ...styles.text,
-                ...(isRevealed
-                  ? spoilerStyle.revealedSpoiler
-                  : spoilerStyle.hiddenSpoiler),
-              }}>
-              {node.content}
-            </Text>
-          )}
-        </SpoilerContext.Consumer>
-      );
-    }
-
-    return (
-      <Text key={node.key} style={{...inheritedStyles, ...styles.text}}>
-        {node.content}
-      </Text>
-    );
-  },
-  code_inline: (node, children, parent, styles, inheritedStyles = {}) => {
-    if (hasParents(parent, 'spoiler')) {
-      return (
-        <SpoilerContext.Consumer key={node.key}>
-          {isRevealed => (
-            <Text
-              style={{
-                ...inheritedStyles,
-                ...styles.code_inline,
-                ...(isRevealed
-                  ? spoilerStyle.revealedSpoiler
-                  : spoilerStyle.hiddenSpoiler),
-              }}>
-              {node.content}
-            </Text>
-          )}
-        </SpoilerContext.Consumer>
-      );
-    }
-
-    return (
-      <Text key={node.key} style={{...inheritedStyles, ...styles.code_inline}}>
-        {node.content}
-      </Text>
-    );
-  },
-};
-
-export const MarkdownView = (props: any) => {
-  let newProps = {...props};
-  if (!newProps.onLinkPress) {
-    newProps = Object.assign({onLinkPress: openUrl}, newProps);
-  }
-  if (!newProps.markdownit) {
-    newProps = Object.assign({markdownit: defaultMarkdownIt}, newProps);
-  }
-  if (!newProps.rules) {
-    newProps = Object.assign({rules: spoilerRule}, newProps);
-  }
-  if (!newProps.style) {
-    newProps = Object.assign({style: {}}, newProps);
-  }
-  if (!newProps.style.body) {
-    newProps.style = Object.assign({body: {}}, newProps.style);
-  }
-  newProps.style.body = Object.assign(
-    {color: currentTheme.foregroundPrimary},
-    newProps.style.body,
-  );
-  if (!newProps.style.paragraph) {
-    newProps.style = Object.assign({paragraph: {}}, newProps.style);
-  }
-  newProps.style.paragraph = Object.assign(
-    {color: currentTheme.foregroundPrimary, marginTop: -3, marginBottom: 2},
-    newProps.style.paragraph,
-  );
-  if (!newProps.style.link) {
-    newProps.style = Object.assign({link: {}}, newProps.style);
-  }
-  newProps.style.link = Object.assign(
-    {color: currentTheme.accentColor},
-    newProps.style.link,
-  );
-  if (!newProps.style.code_inline) {
-    newProps.style = Object.assign({code_inline: {}}, newProps.style);
-  }
-  newProps.style.code_inline = Object.assign(
-    {
-      color: currentTheme.foregroundPrimary,
-      backgroundColor: currentTheme.backgroundSecondary,
-    },
-    newProps.style.code_inline,
-  );
-  if (!newProps.style.fence) {
-    newProps.style = Object.assign({fence: {}}, newProps.style);
-  }
-  newProps.style.fence = Object.assign(
-    {
-      color: currentTheme.foregroundPrimary,
-      backgroundColor: currentTheme.backgroundSecondary,
-      borderWidth: 0,
-    },
-    newProps.style.fence,
-  );
-  if (!newProps.style.code_block) {
-    newProps.style = Object.assign({code_block: {}}, newProps.style);
-  }
-  newProps.style.code_block = Object.assign(
-    {
-      borderColor: currentTheme.foregroundPrimary,
-      color: currentTheme.foregroundPrimary,
-      backgroundColor: currentTheme.backgroundSecondary,
-    },
-    newProps.style.code_block,
-  );
-  if (!newProps.style.blockquote) {
-    newProps.style = Object.assign({blockquote: {}}, newProps.style);
-  }
-  newProps.style.blockquote = Object.assign(
-    {
-      marginBottom: 2,
-      paddingVertical: 6,
-      borderRadius: 4,
-      borderColor: currentTheme.foregroundPrimary,
-      color: currentTheme.foregroundPrimary,
-      backgroundColor: currentTheme.blockQuoteBackground,
-    },
-    newProps.style.block_quote,
-  );
-  try {
-    return <Markdown {...newProps}>{newProps.children}</Markdown>;
-  } catch (e) {
-    return <Text>Error rendering markdown</Text>;
-  }
-};
-
-export function parseRevoltNodes(text: string) {
-  text = text.replace(/<@[0-9A-Z]*>/g, ping => {
-    let id = ping.slice(2, -1);
-    let user = client.users.get(id);
-    if (user) {
-      return `[@${user.username}](/@${user._id})`;
-    }
-    return ping;
-  });
-  text = text.replace(/<#[0-9A-Z]*>/g, ping => {
-    let id = ping.slice(2, -1);
-    let channel = client.channels.get(id);
-    if (channel) {
-      return `[#${channel.name
-        ?.split(']')
-        .join('\\]')
-        .split('[')
-        .join('\\[')
-        .split('*')
-        .join('\\*')
-        .split('`')
-        .join('\\`')}](/server/${channel.server?._id}/channel/${channel._id})`;
-    }
-    return ping;
-  });
-  text = text.replace(/:[0-9A-Z]*:/g, ping => {
-    let id = ping.slice(1, -1);
-    let emoji = client.emojis.get(id);
-    if (emoji) {
-      return `!EMOJI - [${emoji.name}](${emoji.imageURL}) - EMOJI!`;
-    }
-    return ping;
-  });
-  return text;
-}
 
 export const GeneralAvatar = ({
   attachment,

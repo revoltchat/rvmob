@@ -1,13 +1,10 @@
 import {
   client,
-  MarkdownView,
   app,
-  parseRevoltNodes,
   setFunction,
   selectedRemark,
   randomizeRemark,
   openUrl,
-  RE_INVITE,
 } from './Generic';
 import {
   View,
@@ -16,10 +13,11 @@ import {
   Pressable,
   Dimensions,
 } from 'react-native';
-import {DEFAULT_MESSAGE_LOAD_COUNT} from './lib/consts';
+import {DEFAULT_MESSAGE_LOAD_COUNT, RE_INVITE} from './lib/consts';
+import {parseRevoltNodes} from './lib/utils';
 import {Avatar, Username} from './Profile';
-import React, {useCallback} from 'react';
-import {API, Channel, Message as RevoltMessage} from 'revolt.js';
+import React from 'react';
+import {API, Message as RevoltMessage} from 'revolt.js';
 import {observer} from 'mobx-react-lite';
 import {autorun} from 'mobx';
 import {styles, currentTheme} from './Theme';
@@ -29,6 +27,8 @@ import {decodeTime} from 'ulid';
 import FastImage from 'react-native-fast-image';
 import {InviteEmbed} from './components/common/messaging/InviteEmbed';
 import {Text} from './components/common/atoms';
+import {MarkdownView} from './components/common/MarkdownView';
+
 const Image = FastImage;
 let didUpdateFirstTime = false;
 

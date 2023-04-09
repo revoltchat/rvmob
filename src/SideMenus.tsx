@@ -12,12 +12,12 @@ import {
   app,
   setFunction,
   client,
-  MarkdownView,
   Button,
 } from './Generic';
 import {MiniProfile, Avatar} from './Profile';
 import {styles, currentTheme} from './Theme';
 import {Text} from './components/common/atoms';
+import {MarkdownView} from './components/common/MarkdownView';
 
 export class LeftMenu extends React.Component {
   constructor(props) {

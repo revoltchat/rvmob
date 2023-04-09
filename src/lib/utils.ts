@@ -1,3 +1,4 @@
+import {client} from '../Generic';
 import {currentTheme} from '../Theme';
 
 /**
@@ -51,3 +52,44 @@ export function getColour(c: string) {
  */
 export const sleep = (ms: number | undefined) =>
   new Promise((r: any) => setTimeout(r, ms));
+
+/**
+ * Parses the given string for pings, channel links and custom emoji
+ * @param text The text to parse
+ * @returns The parsed text
+ */
+export function parseRevoltNodes(text: string) {
+  text = text.replace(/<@[0-9A-Z]*>/g, ping => {
+    let id = ping.slice(2, -1);
+    let user = client.users.get(id);
+    if (user) {
+      return `[@${user.username}](/@${user._id})`;
+    }
+    return ping;
+  });
+  text = text.replace(/<#[0-9A-Z]*>/g, ping => {
+    let id = ping.slice(2, -1);
+    let channel = client.channels.get(id);
+    if (channel) {
+      return `[#${channel.name
+        ?.split(']')
+        .join('\\]')
+        .split('[')
+        .join('\\[')
+        .split('*')
+        .join('\\*')
+        .split('`')
+        .join('\\`')}](/server/${channel.server?._id}/channel/${channel._id})`;
+    }
+    return ping;
+  });
+  text = text.replace(/:[0-9A-Z]*:/g, ping => {
+    let id = ping.slice(1, -1);
+    let emoji = client.emojis.get(id);
+    if (emoji) {
+      return `!EMOJI - [${emoji.name}](${emoji.imageURL}) - EMOJI!`;
+    }
+    return ping;
+  });
+  return text;
+}

@@ -18,14 +18,14 @@ import {
   client,
   ContextButton,
   GeneralAvatar,
-  MarkdownView,
   openUrl,
-  parseRevoltNodes,
 } from '../../Generic';
 import {USER_IDS} from '../../lib/consts';
+import {parseRevoltNodes} from '../../lib/utils';
 import {Avatar, MiniProfile, RoleView, Username} from '../../Profile';
 import {currentTheme, styles} from '../../Theme';
 import {Text} from '../common/atoms';
+import {MarkdownView} from '../common/MarkdownView';
 
 // const Image = FastImage;
 
