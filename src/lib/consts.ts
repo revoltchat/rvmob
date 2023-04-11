@@ -150,3 +150,17 @@ export const SPECIAL_DATE_OBJECTS = {
     link: 'https://en.wikipedia.org/wiki/Christmas_and_holiday_season',
   } as SpecialDateObject,
 };
+
+export const BADGES = {
+  Developer: 1,
+  Translator: 2,
+  Supporter: 4,
+  ResponsibleDisclosure: 8,
+  Founder: 16,
+  PlatformModeration: 32,
+  ActiveSupporter: 64,
+  Paw: 128,
+  EarlyAdopter: 256,
+  ReservedRelevantJokeBadge1: 512,
+  ReservedRelevantJokeBadge2: 1024,
+};

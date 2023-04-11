@@ -8,9 +8,9 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {User} from 'revolt.js';
 
-import {ContextButton, app} from '../../Generic';
+import {app} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
-import {Text} from '../common/atoms';
+import {ContextButton, Text} from '../common/atoms';
 
 export const UserMenuSheet = observer(
   ({state, user}: {state: any; user: User}) => {

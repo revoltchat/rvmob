@@ -8,16 +8,11 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Member, Server, User} from 'revolt.js';
 
-import {
-  ContextButton,
-  GeneralAvatar,
-  MarkdownView,
-  app,
-  client,
-} from '../../Generic';
+import {GeneralAvatar, app, client} from '../../Generic';
 import {SPECIAL_SERVERS} from '../../lib/consts';
 import {currentTheme, styles} from '../../Theme';
-import {Text} from '../common/atoms';
+import {ContextButton, Text} from '../common/atoms';
+import {MarkdownView} from '../common/MarkdownView';
 
 const Image = FastImage;
 

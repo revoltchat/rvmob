@@ -4,9 +4,9 @@ import {observer} from 'mobx-react-lite';
 
 import {API, Message} from 'revolt.js';
 
-import {Button, GeneralAvatar, app, client} from '../../../Generic';
+import {GeneralAvatar, app, client} from '../../../Generic';
 import {currentTheme} from '../../../Theme';
-import {Text} from '../atoms';
+import {Button, Text} from '../atoms';
 
 export const InviteEmbed = observer(
   ({message, invite}: {message: Message; invite: string}) => {

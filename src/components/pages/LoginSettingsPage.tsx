@@ -1,9 +1,9 @@
 import React from 'react';
 import {TextInput, View} from 'react-native';
 
-import {Button, app} from '../../Generic';
+import {app} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
-import {Text} from '../common/atoms';
+import {Button, Text} from '../common/atoms';
 
 export const LoginSettingsPage = ({state}: {state: any}) => {
   const [instanceURL, setInstanceURL] = React.useState(

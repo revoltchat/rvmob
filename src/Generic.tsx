@@ -18,7 +18,7 @@ import {Channel, Client, Server} from 'revolt.js';
 
 import {MiniProfile} from './Profile';
 import {currentTheme, setTheme, themes, styles} from './Theme';
-import {Text} from './components/common/atoms';
+import {Button, Text} from './components/common/atoms';
 import {
   DEFAULT_API_URL,
   DEFAULT_MAX_SIDE,
@@ -284,6 +284,8 @@ export const app = {
   },
 };
 
+let apiURL: string = '';
+
 AsyncStorage.getItem('settings').then(s => {
   if (s) {
     try {
@@ -305,6 +307,10 @@ AsyncStorage.getItem('settings').then(s => {
               `[SETTINGS] Unknown setting in AsyncStorage settings: ${key}`,
             );
           }
+        }
+        if (key.key === 'app.instance') {
+          console.log(`[SETTINGS] Setting apiURL to ${key.value}`);
+          apiURL = key.value;
         }
       });
     } catch (e) {
@@ -333,7 +339,10 @@ export function setFunction(name: string, func: any) {
   app[name] = func;
 }
 
-const apiURL = (app.settings.get('app.instance') as string) ?? DEFAULT_API_URL;
+if (apiURL === '') {
+  console.log('[AUTH] Unable to fetch app.instance; setting apiURL to default');
+  apiURL = DEFAULT_API_URL;
+}
 
 console.log(`[AUTH] Creating client... (instance: ${apiURL})`);
 
@@ -345,6 +354,7 @@ export const client = new Client({
 export const openUrl = (url: string) => {
   console.log(`[FUNCTIONS] Handling URL: ${url}`);
   if (url.startsWith('/@')) {
+    console.log(`[FUNCTIONS] Opening user profile from URL: ${url}`);
     let id = url.slice(2);
     let user = client.users.get(id);
     if (user) {
@@ -356,11 +366,13 @@ export const openUrl = (url: string) => {
   let isDiscover = url.match(DISCOVER_URL);
   let isWiki = url.match(WIKI_URL);
   if (match && !isWiki && !isDiscover) {
+    console.log(`[FUNCTIONS] Opening server invite from URL: ${url}`);
     app.openInvite(match[0].split('/').pop());
     return;
   }
   let botmatch = url.match(RE_BOT_INVITE);
   if (botmatch) {
+    console.log(`[FUNCTIONS] Opening bot invite from URL: ${url}`);
     app.openBotInvite(botmatch[0].split('/').pop());
     return;
   }
@@ -401,6 +413,12 @@ export const ServerList = observer(
     filter,
     showUnread = true,
     showDiscover = true,
+  }: {
+    onServerPress: any;
+    onServerLongPress: any;
+    filter?: any;
+    showUnread?: boolean;
+    showDiscover?: boolean;
   }) => {
     let servers = [...client.servers.values()];
     if (filter) {
@@ -643,7 +661,8 @@ export const ChannelIcon = ({
   ) : channel.channel.generateIconURL && channel.channel.generateIconURL() ? (
     <Image
       source={{
-        uri: channel.channel.generateIconURL() + '?max_side=' + DEFAULT_MAX_SIDE,
+        uri:
+          channel.channel.generateIconURL() + '?max_side=' + DEFAULT_MAX_SIDE,
       }}
       style={{
         width: 24,
@@ -659,201 +678,6 @@ export const ChannelIcon = ({
     <FontistoIcon name="hashtag" size={20} color={color} />
   );
 };
-
-type ChannelListProps = {
-  onChannelClick: any;
-  currentChannel: Channel;
-  currentServer: Server;
-};
-
-// thanks a lot, revolt.js 🙄
-type Category = {
-  id: string;
-  title: string;
-  channels: string[];
-};
-
-const ServerChannelListCategory = observer(
-  ({category, props}: {category: Category; props: ChannelListProps}) => {
-    const [isVisible, setIsVisible] = React.useState(true);
-    return (
-      <View key={category.id} style={{marginVertical: 8}}>
-        <TouchableOpacity
-          key={`${category.id}-title`}
-          onPress={() => {
-            setIsVisible(!isVisible);
-          }}>
-          <Text
-            style={{
-              marginLeft: 12,
-              marginBottom: 2,
-              fontWeight: 'bold',
-            }}>
-            {category.title?.toUpperCase()}
-          </Text>
-        </TouchableOpacity>
-        {isVisible &&
-          category.channels.map((cid: string) => {
-            let c = client.channels.get(cid);
-            if (c) {
-              return (
-                <ChannelButton
-                  key={c._id}
-                  channel={c}
-                  onPress={() => {
-                    props.onChannelClick(c);
-                  }}
-                  selected={props.currentChannel?._id === c._id}
-                />
-              );
-            }
-          })}
-      </View>
-    );
-  },
-);
-
-const ServerChannelList = observer((props: ChannelListProps) => {
-  const [processedChannels, setProcessedChannels] = React.useState(
-    [] as string[],
-  );
-  const [res, setRes] = React.useState([] as JSX.Element[] | undefined);
-
-  React.useEffect(() => {
-    let categories = props.currentServer.categories?.map(c => {
-      const element = (
-        <ServerChannelListCategory
-          key={`wrapper-${c.id}`}
-          category={c}
-          props={props}
-        />
-      );
-      for (const cnl of c.channels) {
-        if (!processedChannels.includes(cnl)) {
-          let newProcessedChannels = processedChannels;
-          newProcessedChannels.push(cnl);
-          setProcessedChannels(newProcessedChannels);
-        }
-      }
-      return element;
-    });
-    setRes(categories);
-  }, [props, processedChannels]);
-
-  return (
-    <>
-      {props.currentServer.banner ? (
-        <Image
-          source={{uri: props.currentServer.generateBannerURL()}}
-          style={{width: '100%', height: 110, justifyContent: 'flex-end'}}>
-          <TouchableOpacity
-            onPress={() => app.openServerContextMenu(props.currentServer)}>
-            <Text style={styles.serverName}>{props.currentServer.name}</Text>
-          </TouchableOpacity>
-        </Image>
-      ) : (
-        <TouchableOpacity
-          onPress={() => app.openServerContextMenu(props.currentServer)}>
-          <Text style={styles.serverName}>{props.currentServer.name}</Text>
-        </TouchableOpacity>
-      )}
-
-      {props.currentServer.channels.map(c => {
-        if (c) {
-          if (!processedChannels.includes(c._id)) {
-            return (
-              <ChannelButton
-                key={c._id}
-                channel={c}
-                onPress={() => {
-                  props.onChannelClick(c);
-                }}
-                selected={props.currentChannel?._id === c._id}
-              />
-            );
-          }
-        }
-      })}
-      {res}
-    </>
-  );
-});
-
-export const ChannelList = observer((props: ChannelListProps) => {
-  return (
-    <>
-      {!props.currentServer ? (
-        <>
-          <Text
-            style={{
-              marginLeft: 12,
-              margin: 14,
-              fontSize: 16,
-              fontWeight: 'bold',
-            }}>
-            Direct Messages
-          </Text>
-
-          <ChannelButton
-            onPress={async () => {
-              props.onChannelClick(null);
-            }}
-            key={'home'}
-            channel={'Home'}
-            selected={props.currentChannel === null}
-          />
-
-          <ChannelButton
-            onPress={() => {
-              props.onChannelClick('friends');
-            }}
-            key={'friends'}
-            channel={'Friends'}
-            selected={props.currentChannel === 'friends'}
-          />
-
-          <ChannelButton
-            onPress={async () => {
-              props.onChannelClick(await client.user?.openDM());
-            }}
-            key={'notes'}
-            channel={'Saved Notes'}
-            selected={props.currentChannel?.channel_type === 'SavedMessages'}
-          />
-
-          {[...client.channels.values()]
-            .filter(
-              c =>
-                c.channel_type === 'DirectMessage' ||
-                c.channel_type === 'Group',
-            )
-            .sort((c1, c2) => c2.updatedAt - c1.updatedAt)
-            .map(dm => (
-              <ChannelButton
-                onPress={() => {
-                  props.onChannelClick(dm);
-                }}
-                onLongPress={() => {
-                  app.openProfile(dm.recipient);
-                }}
-                delayLongPress={750}
-                key={dm._id}
-                channel={dm}
-                style={props.currentChannel?._id === dm._id}
-              />
-            ))}
-        </>
-      ) : null}
-      {props.currentServer ? (
-        <ServerChannelList
-          onChannelClick={props.onChannelClick}
-          currentChannel={props.currentChannel}
-          currentServer={props.currentServer}
-        />
-      ) : null}
-    </>
-  );
-});
 
 export const ServerName = observer(
   ({server, size}: {server: Server; size?: number}) => {
@@ -885,61 +709,6 @@ export function randomizeRemark() {
     loadingScreenRemarks[
       Math.floor(Math.random() * loadingScreenRemarks.length)
     ];
-}
-
-type ButtonProps = {
-  children?: any;
-  backgroundColor?: string;
-  onPress?: any;
-  onLongPress?: any;
-  delayLongPress?: number;
-  style?: any;
-};
-
-export function Button({
-  children,
-  backgroundColor,
-  onPress,
-  onLongPress,
-  delayLongPress,
-  style,
-  ...props
-}: ButtonProps) {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      onLongPress={onLongPress}
-      delayLongPress={delayLongPress}
-      style={[styles.button, backgroundColor ? {backgroundColor} : {}, style]}
-      {...props}>
-      {children}
-    </TouchableOpacity>
-  );
-}
-
-export function ContextButton({
-  children,
-  backgroundColor,
-  onPress,
-  onLongPress,
-  delayLongPress,
-  style,
-  ...props
-}: ButtonProps) {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      onLongPress={onLongPress}
-      delayLongPress={delayLongPress}
-      style={[
-        styles.actionTile,
-        backgroundColor ? {backgroundColor} : {},
-        style,
-      ]}
-      {...props}>
-      {children}
-    </TouchableOpacity>
-  );
 }
 
 export function Input({
@@ -1034,17 +803,3 @@ export function InputWithButton({
     </View>
   );
 }
-
-export const Badges = {
-  Developer: 1,
-  Translator: 2,
-  Supporter: 4,
-  ResponsibleDisclosure: 8,
-  Founder: 16,
-  PlatformModeration: 32,
-  ActiveSupporter: 64,
-  Paw: 128,
-  EarlyAdopter: 256,
-  ReservedRelevantJokeBadge1: 512,
-  ReservedRelevantJokeBadge2: 1024,
-};

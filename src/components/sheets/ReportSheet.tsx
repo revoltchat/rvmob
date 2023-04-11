@@ -4,11 +4,12 @@ import {observer} from 'mobx-react-lite';
 
 import {Message, User, Server} from 'revolt.js';
 
-import {Button, client, ContextButton, MarkdownView} from '../../Generic';
+import {client} from '../../Generic';
 import {USER_IDS} from '../../lib/consts';
 import {Avatar, Username} from '../../Profile';
 import {currentTheme} from '../../Theme';
-import {Text} from '../common/atoms';
+import {Button, ContextButton, Text} from '../common/atoms';
+import {MarkdownView} from '../common/MarkdownView';
 
 interface ReportedMessage {
   type: 'Message';

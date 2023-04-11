@@ -21,7 +21,6 @@ import {
   app,
   selectedRemark,
   randomizeRemark,
-  Button,
   ChannelIcon,
   openUrl,
 } from './src/Generic';
@@ -35,7 +34,7 @@ import {decodeTime} from 'ulid';
 import notifee from '@notifee/react-native';
 import {HomePage} from './src/components/pages/HomePage';
 import {FriendsPage} from './src/components/pages/FriendsPage';
-import {Text} from './src/components/common/atoms';
+import {Button, Text} from './src/components/common/atoms';
 import {ChannelHeader} from './src/components/navigation/ChannelHeader';
 import {LoginSettingsPage} from './src/components/pages/LoginSettingsPage';
 

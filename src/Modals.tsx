@@ -8,8 +8,6 @@ import {
   ServerList,
   openUrl,
   setFunction,
-  ContextButton,
-  Button,
   InputWithButton,
 } from './Generic';
 import {styles, currentTheme} from './Theme';
@@ -24,7 +22,7 @@ import {Server, User, Message, Channel} from 'revolt.js';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 import {observer} from 'mobx-react';
-import {Text} from './components/common/atoms';
+import {Button, ContextButton, Text} from './components/common/atoms';
 
 const Image = FastImage;
 
