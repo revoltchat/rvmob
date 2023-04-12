@@ -23,6 +23,7 @@ import {
   DEFAULT_API_URL,
   DEFAULT_MAX_SIDE,
   DISCOVER_URL,
+  LOADING_SCREEN_REMARKS,
   RE_INVITE,
   RE_BOT_INVITE,
   WIKI_URL,
@@ -692,24 +693,24 @@ export const ServerName = observer(
   },
 );
 
-export const loadingScreenRemarks = [
-  "I'm writing a complaint to the Head of Loading Screens.",
-  "I don't think we can load any longer!",
-  'Fun fact: RVMob is built with React Native.',
-  'Better grab a book or something.',
-  'When will the madness end?',
-  'You know, what does RVMob even stand for?',
-  'Why do they call it a "building" if it\'s already built?',
-];
-
 export var selectedRemark =
-  loadingScreenRemarks[Math.floor(Math.random() * loadingScreenRemarks.length)];
+  LOADING_SCREEN_REMARKS[
+    Math.floor(Math.random() * LOADING_SCREEN_REMARKS.length)
+  ];
 export function randomizeRemark() {
   selectedRemark =
-    loadingScreenRemarks[
-      Math.floor(Math.random() * loadingScreenRemarks.length)
+    LOADING_SCREEN_REMARKS[
+      Math.floor(Math.random() * LOADING_SCREEN_REMARKS.length)
     ];
 }
+
+type InputProps = {
+  value?: string;
+  onChangeText?: any;
+  placeholder?: string;
+  style?: any;
+  backgroundColor: ViewStyle['backgroundColor'];
+};
 
 export function Input({
   value,
@@ -718,7 +719,7 @@ export function Input({
   style,
   backgroundColor,
   ...props
-}) {
+}: InputProps) {
   return (
     <TextInput
       value={value}
@@ -752,8 +753,8 @@ export function InputWithButton({
   onPress,
   ...props
 }: {
-  defaultValue: string;
-  placeholder: string;
+  defaultValue?: string;
+  placeholder?: string;
   buttonLabel: string;
   style: any;
   backgroundColor: ViewStyle['backgroundColor'];

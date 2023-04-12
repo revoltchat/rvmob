@@ -164,3 +164,13 @@ export const BADGES = {
   ReservedRelevantJokeBadge1: 512,
   ReservedRelevantJokeBadge2: 1024,
 };
+
+export const LOADING_SCREEN_REMARKS = [
+  "I'm writing a complaint to the Head of Loading Screens.",
+  "I don't think we can load any longer!",
+  'Fun fact: RVMob is built with React Native.',
+  'Better grab a book or something.',
+  'When will the madness end?',
+  'You know, what does RVMob even stand for?',
+  'Why do they call it a "building" if it\'s already built?',
+];
