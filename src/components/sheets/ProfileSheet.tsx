@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 import React, {useEffect} from 'react';
 import {ScrollView, ToastAndroid, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
@@ -16,7 +17,7 @@ import {BADGES, USER_IDS} from '../../lib/consts';
 import {parseRevoltNodes} from '../../lib/utils';
 import {Avatar, MiniProfile, RoleView, Username} from '../../Profile';
 import {currentTheme, styles} from '../../Theme';
-import {Button, ContextButton, Text} from '../common/atoms';
+import {Button, ContextButton, Link, Text} from '../common/atoms';
 import {MarkdownView} from '../common/MarkdownView';
 
 // const Image = FastImage;
@@ -379,26 +380,18 @@ export const ProfileSheet = observer(
               <>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={styles.profileSubheader}>BADGES {'('}</Text>
-                  <TouchableOpacity
-                    onPress={() => {
-                      openUrl('https://support.revolt.chat/kb/account/badges');
-                    }}>
-                    <Text
-                      style={Object.assign({}, styles.profileSubheader, {
-                        color: currentTheme.accentColor,
-                        textDecorationLine: 'underline',
-                      })}>
-                      learn more
-                    </Text>
-                  </TouchableOpacity>
+                  <Link
+                    link={'https://support.revolt.chat/kb/account/badges'}
+                    label={'learn more'}
+                    style={{marginVertical: 5, fontWeight: 'bold'}}
+                  />
                   <Text style={styles.profileSubheader}>{')'}</Text>
                 </View>
                 <ScrollView
                   style={{
                     flexDirection: 'row',
                     height: 38,
-                    marginTop: 2,
-                    marginBottom: 2,
+                    marginVertical: 2,
                   }}
                   contentContainerStyle={{alignItems: 'center'}}
                   horizontal={true}>

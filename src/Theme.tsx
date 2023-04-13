@@ -183,13 +183,17 @@ function refreshStyles() {
       textAlign: 'center',
       fontSize: 16,
       marginTop: 5,
-      paddingLeft: 30,
-      paddingRight: 30,
+      paddingHorizontal: 30,
     },
     channelName: {
       flex: 1,
       fontWeight: 'bold',
       fontSize: 16,
+    },
+    link: {
+      color: currentTheme.accentColor,
+      textDecorationLine: 'underline',
+      // fontWeight: 'bold',
     },
     leftView: {
       flex: 1,
@@ -235,8 +239,7 @@ function refreshStyles() {
       borderRadius: 100000,
     },
     messageUsernameReply: {
-      marginLeft: 3,
-      marginRight: 3,
+      marginHorizontal: 3,
     },
     typingBar: {
       height: 26,
@@ -271,24 +274,21 @@ function refreshStyles() {
       width: 60,
       flexShrink: 1,
       backgroundColor: currentTheme.background,
-      paddingTop: 4,
-      paddingBottom: 4,
+      paddingVertical: 4,
     },
     channelList: {
       flexGrow: 1000,
       flex: 1000,
     },
     channelButton: {
-      marginLeft: 8,
-      marginRight: 8,
+      marginHorizontal: 8,
       borderRadius: 8,
       flexDirection: 'row',
       alignItems: 'center',
     },
     button: {
       padding: 10,
-      paddingLeft: 16,
-      paddingRight: 16,
+      paddingHorizontal: 16,
       borderRadius: 8,
       backgroundColor: currentTheme.headerSecondary,
       margin: 5,
@@ -298,8 +298,7 @@ function refreshStyles() {
     },
     buttonSecondary: {
       padding: 10,
-      paddingLeft: 16,
-      paddingRight: 16,
+      paddingHorizontal: 16,
       borderRadius: 8,
       backgroundColor: currentTheme.backgroundPrimary,
       margin: 5,
@@ -325,8 +324,7 @@ function refreshStyles() {
       flexDirection: 'row',
       alignItems: 'center',
       minHeight: 50,
-      paddingLeft: 8,
-      paddingRight: 8,
+      paddingHorizontal: 8,
     },
     messageBoxOuter: {
       backgroundColor: currentTheme.messageBox,

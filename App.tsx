@@ -34,7 +34,7 @@ import {decodeTime} from 'ulid';
 import notifee from '@notifee/react-native';
 import {HomePage} from './src/components/pages/HomePage';
 import {FriendsPage} from './src/components/pages/FriendsPage';
-import {Button, Text} from './src/components/common/atoms';
+import {Button, Link, Text} from './src/components/common/atoms';
 import {ChannelHeader} from './src/components/navigation/ChannelHeader';
 import {LoginSettingsPage} from './src/components/pages/LoginSettingsPage';
 
@@ -563,20 +563,13 @@ class MainView extends React.Component {
                     }}
                     value={this.state.tokenInput}
                   />
-                  <TouchableOpacity
-                    onPress={() =>
-                      openUrl('https://infi.sh/posts/revolt-tokens')
-                    }>
-                    <Text
-                      style={{
-                        fontFamily: 'Inter',
-                        color: currentTheme.accentColor,
-                        fontWeight: 'bold',
-                        textDecorationLine: 'underline',
-                      }}>
-                      How do I get my token?
-                    </Text>
-                  </TouchableOpacity>
+                  <Link
+                    link={
+                      'https://infi.sh/posts/revolt-tokens?utm_source=rvmob'
+                    }
+                    label={'How do I get my token?'}
+                    style={{fontFamily: 'Inter', fontWeight: 'bold'}}
+                  />
                   <Button
                     onPress={async () => {
                       this.setState({status: 'tryingLogin'});

@@ -26,7 +26,7 @@ import {enGB, enUS} from 'date-fns/locale';
 import {decodeTime} from 'ulid';
 import FastImage from 'react-native-fast-image';
 import {InviteEmbed} from './components/common/messaging/InviteEmbed';
-import {Text} from './components/common/atoms';
+import {Link, Text} from './components/common/atoms';
 import {MarkdownView} from './components/common/MarkdownView';
 
 const Image = FastImage;
@@ -724,11 +724,11 @@ const MessageEmbed = observer((eRaw: API.Embed) => {
             </Text>
           ) : null}
           {e.title && e.url ? (
-            <Pressable onPress={() => openUrl(e.url!)}>
-              <Text colour={currentTheme.accentColor} style={{fontSize: 14}}>
-                {e.title}
-              </Text>
-            </Pressable>
+            <Link
+              link={e.url}
+              label={e.title}
+              style={{textDecorationLine: 'none', fontSize: 14}}
+            />
           ) : (
             <Text
               colour={currentTheme.foregroundSecondary}
