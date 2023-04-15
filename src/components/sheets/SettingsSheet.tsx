@@ -17,7 +17,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {app, client, Setting} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
-import {ContextButton, Text} from '../common/atoms';
+import {Checkbox, ContextButton, Text} from '../common/atoms';
 
 type Section = string | null;
 
@@ -53,18 +53,10 @@ const BoolSetting = observer(
           </View>
         ) : null}
         <Text style={{flex: 1, fontWeight: 'bold'}}>{sRaw.name}</Text>
-        <TouchableOpacity
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: 8,
-            backgroundColor: value
-              ? currentTheme.accentColor
-              : currentTheme.backgroundSecondary,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          onPress={() => {
+        <Checkbox
+          key={`checkbox-${sRaw.name}`}
+          value={value}
+          callback={() => {
             const newValue = !value;
             app.settings.set(sRaw.key, newValue);
             setValue(newValue);
@@ -74,22 +66,8 @@ const BoolSetting = observer(
             sRaw.key === 'ui.showDeveloperFeatures'
               ? devFunction(newValue)
               : null;
-          }}>
-          <Text
-            style={{
-              color: value
-                ? currentTheme.accentColorForeground
-                : currentTheme.foregroundPrimary,
-            }}>
-            {value ? (
-              <FA5Icon
-                name="check"
-                color={currentTheme.accentColorForeground}
-                size={24}
-              />
-            ) : null}
-          </Text>
-        </TouchableOpacity>
+          }}
+        />
       </View>
     );
   },
