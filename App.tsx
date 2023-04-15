@@ -37,6 +37,7 @@ import {FriendsPage} from './src/components/pages/FriendsPage';
 import {Button, Link, Text} from './src/components/common/atoms';
 import {ChannelHeader} from './src/components/navigation/ChannelHeader';
 import {LoginSettingsPage} from './src/components/pages/LoginSettingsPage';
+import {ChannelView} from './src/components/views/ChannelView';
 
 async function createChannel() {
   const channel = await notifee.createChannel({
@@ -258,118 +259,7 @@ class MainView extends React.Component {
                 }
                 style={styles.app}
                 bounceBackOnOverdraw={false}>
-                <View style={styles.mainView}>
-                  {this.state.currentChannel ? (
-                    this.state.currentChannel === 'friends' ? (
-                      <FriendsPage />
-                    ) : (
-                      <View style={styles.flex}>
-                        <ChannelHeader>
-                          <View style={styles.iconContainer}>
-                            <ChannelIcon
-                              channel={
-                                this.state.currentChannel.channel_type ===
-                                'SavedMessages'
-                                  ? {type: 'special', channel: 'Saved Notes'}
-                                  : {
-                                      type: 'channel',
-                                      channel: this.state.currentChannel,
-                                    }
-                              }
-                            />
-                          </View>
-                          <Text style={styles.channelName}>
-                            {this.state.currentChannel.channel_type ===
-                            'DirectMessage'
-                              ? this.state.currentChannel.recipient?.username
-                              : this.state.currentChannel.channel_type ===
-                                'SavedMessages'
-                              ? 'Saved Notes'
-                              : this.state.currentChannel.name}
-                          </Text>
-                        </ChannelHeader>
-                        {this.state.currentChannel?.channel_type ===
-                        'VoiceChannel' ? (
-                          <View
-                            style={{
-                              flex: 1,
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              padding: 30,
-                            }}>
-                            <Text style={styles.loadingHeader}>
-                              Voice channels aren't supported in RVMob yet!
-                            </Text>
-                            <Text style={styles.remark}>
-                              In the meantime, you can join them via the web app
-                              or Revolt Desktop.
-                            </Text>
-                          </View>
-                        ) : !this.state.currentChannel?.nsfw ||
-                          app.settings.get('ui.messaging.showNSFWContent') ? (
-                          <>
-                            <Messages
-                              channel={this.state.currentChannel}
-                              onLongPress={async m => {
-                                app.openMessage(m);
-                              }}
-                              onUserPress={m => {
-                                app.openProfile(
-                                  m.author,
-                                  this.state.currentChannel.server,
-                                );
-                              }}
-                              onImagePress={a => {
-                                this.setState({imageViewerImage: a});
-                              }}
-                              rerender={this.state.rerender}
-                              onUsernamePress={m =>
-                                this.setState({
-                                  currentText:
-                                    this.state.currentText +
-                                    '<@' +
-                                    m.author?._id +
-                                    '>',
-                                })
-                              }
-                            />
-                            <MessageBox channel={this.state.currentChannel} />
-                          </>
-                        ) : (
-                          <View
-                            style={{
-                              flex: 1,
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              padding: 25,
-                            }}>
-                            <Text style={{fontWeight: 'bold', fontSize: 28}}>
-                              Hold it!
-                            </Text>
-                            <Text style={{textAlign: 'center', fontSize: 16}}>
-                              This is an NSFW channel. Are you sure you want to
-                              enter?{'\n'}(This can be reversed in Settings.)
-                            </Text>
-                            <Button
-                              onPress={() => {
-                                app.settings.set(
-                                  'ui.messaging.showNSFWContent',
-                                  true,
-                                );
-                                this.setState({});
-                              }}>
-                              <Text style={styles.header}>
-                                I am 18 or older and wish to enter
-                              </Text>
-                            </Button>
-                          </View>
-                        )}
-                      </View>
-                    )
-                  ) : (
-                    <HomePage />
-                  )}
-                </View>
+                <ChannelView state={this} channel={this.state.currentChannel} />
               </SideMenu>
             </SideMenu>
             <Modals state={this.state} setState={this.setState.bind(this)} />
@@ -417,6 +307,7 @@ class MainView extends React.Component {
                     placeholderTextColor={currentTheme.foregroundSecondary}
                     style={styles.loginInput}
                     secureTextEntry={true}
+                    autoComplete={'password'}
                     placeholder={'Password'}
                     onChangeText={text => {
                       this.setState({passwordInput: text});
