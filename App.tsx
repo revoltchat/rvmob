@@ -4,7 +4,6 @@ import React from 'react';
 import {
   View,
   TouchableOpacity,
-  ScrollView,
   TextInput,
   StatusBar,
   Dimensions,
@@ -16,26 +15,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import {currentTheme, styles} from './src/Theme';
-import {
-  client,
-  app,
-  selectedRemark,
-  randomizeRemark,
-  ChannelIcon,
-  Setting,
-} from './src/Generic';
-import {Messages} from './src/MessageView';
-import {MessageBox} from './src/MessageBox';
+import {client, app, selectedRemark, randomizeRemark} from './src/Generic';
 import {setFunction} from './src/Generic';
 import {LeftMenu, RightMenu} from './src/SideMenus';
 import {Modals} from './src/Modals';
 import {NetworkIndicator} from './src/components/NetworkIndicator';
 import {decodeTime} from 'ulid';
 import notifee from '@notifee/react-native';
-import {HomePage} from './src/components/pages/HomePage';
-import {FriendsPage} from './src/components/pages/FriendsPage';
 import {Button, Link, Text} from './src/components/common/atoms';
-import {ChannelHeader} from './src/components/navigation/ChannelHeader';
 import {LoginSettingsPage} from './src/components/pages/LoginSettingsPage';
 import {ChannelView} from './src/components/views/ChannelView';
 
@@ -73,17 +60,17 @@ class MainView extends React.Component {
       // if (!this.state.currentChannel || this.state.currentChannel?.server?._id != c.server?._id) c.server?.fetchMembers()
       this.setState({currentChannel: c, leftMenuOpen: false});
     });
-    setFunction('joinInvite', async i => {
+    setFunction('joinInvite', async (i: string) => {
       await client.joinInvite(i);
     });
-    setFunction('openLeftMenu', async o => {
+    setFunction('openLeftMenu', async (o: any) => {
       this.setState(
         typeof o === 'boolean'
           ? {leftMenuOpen: o}
           : {leftMenuOpen: !this.state.leftMenuOpen},
       );
     });
-    setFunction('openRightMenu', async o => {
+    setFunction('openRightMenu', async (o: any) => {
       this.setState(
         typeof o === 'boolean'
           ? {rightMenuOpen: o}
