@@ -16,20 +16,20 @@ Right now, if you want to install RVMob you will have to build it yourself. You'
 yarn install
 npx rn-nodeify -e
 npx react-native-asset
-yarn start
+yarn android # for the android app
 ```
 
 CLI commands:
 
-| Command          | Description                            |
-| -----------------| -------------------------------------- |
-| `yarn start`     | Starts the application.                |
-| `yarn test`      | Tests to see if everything is working. |
-| `yarn android`   | Runs an Android version.               |
-| `yarn ios`       | Runs an iOS version (requires a Mac).  |
-| `yarn lint`      | Checks the code syntax using ESLint.   |
+| Command          | Description                                 |
+| -----------------| --------------------------------------      |
+| `yarn start`     | Starts Metro (the dev server).              |
+| `yarn test`      | Tests to see if everything is working.      |
+| `yarn android`   | Runs the Android app.                       |
+| `yarn ios`       | Runs the iOS app (broken, requires a Mac).  |
+| `yarn lint`      | Checks the code syntax using ESLint.        |
 
-For more information, see a list of `react-native`'s commands [here](https://github.com/react-native-community/cli/blob/master/docs/commands.md). You can access them by running `npx react-native`.
+For more information, see a list of `react-native`'s commands [here](https://github.com/react-native-community/cli/blob/master/docs/commands.md). You can access them by running `yarn react-native`.
 
 ## Troubleshooting
 
