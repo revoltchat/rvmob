@@ -22,7 +22,7 @@ import {
   selectedRemark,
   randomizeRemark,
   ChannelIcon,
-  openUrl,
+  Setting,
 } from './src/Generic';
 import {Messages} from './src/MessageView';
 import {MessageBox} from './src/MessageBox';
@@ -107,9 +107,9 @@ class MainView extends React.Component {
     }
   }
   async componentDidMount() {
+    console.log(`[APP] Mounted component (${new Date().getTime()})`);
     let defaultnotif = await createChannel();
     console.log(`[NOTIFEE] Created channel: ${defaultnotif}`);
-    console.log(`[APP] Mounted component (${new Date().getTime()})`);
     client.on('ready', async () => {
       this.setState({status: 'loggedIn', network: 'ready'});
       console.log(`[APP] Client is ready (${new Date().getTime()})`);
@@ -184,7 +184,6 @@ class MainView extends React.Component {
         }
       }
     });
-    console.log(`[AUTH] Instance: ${app.settings.get('app.instance')}`);
     // notifee.onBackgroundEvent(async ({type, detail}) => {});
     AsyncStorage.getItem('token', async (err, res) => {
       if (!err) {

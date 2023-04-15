@@ -285,9 +285,28 @@ export const app = {
   },
 };
 
-let apiURL: string = '';
+app.openProfile = u => {};
+app.openLeftMenu = o => {};
+app.openRightMenu = o => {};
+app.openInvite = i => {};
+app.openBotInvite = i => {};
+app.openServer = s => {};
+app.openChannel = c => {};
+app.openImage = a => {};
+app.openMessage = m => {};
+app.openServerContextMenu = s => {};
+app.openSettings = o => {};
+app.setMessageBoxInput = t => {};
+app.setReplyingMessages = (m, a) => {};
+app.getReplyingMessages = () => {};
+app.pushToQueue = m => {};
 
-AsyncStorage.getItem('settings').then(s => {
+export function setFunction(name: string, func: any) {
+  app[name] = func;
+}
+
+async function initialiseSettings() {
+  const s = await AsyncStorage.getItem('settings');
   if (s) {
     try {
       const settings = JSON.parse(s) as {key: string; value: any}[];
@@ -309,47 +328,45 @@ AsyncStorage.getItem('settings').then(s => {
             );
           }
         }
-        if (key.key === 'app.instance') {
-          console.log(`[SETTINGS] Setting apiURL to ${key.value}`);
-          apiURL = key.value;
-        }
       });
     } catch (e) {
       console.error(e);
     }
   }
-});
-
-app.openProfile = u => {};
-app.openLeftMenu = o => {};
-app.openRightMenu = o => {};
-app.openInvite = i => {};
-app.openBotInvite = i => {};
-app.openServer = s => {};
-app.openChannel = c => {};
-app.openImage = a => {};
-app.openMessage = m => {};
-app.openServerContextMenu = s => {};
-app.openSettings = o => {};
-app.setMessageBoxInput = t => {};
-app.setReplyingMessages = (m, a) => {};
-app.getReplyingMessages = () => {};
-app.pushToQueue = m => {};
-
-export function setFunction(name: string, func: any) {
-  app[name] = func;
 }
 
-if (apiURL === '') {
-  console.log('[AUTH] Unable to fetch app.instance; setting apiURL to default');
-  apiURL = DEFAULT_API_URL;
+// initialiseSettings(); // we'd await this if we could
+
+async function getAPIURL() {
+  await initialiseSettings();
+  console.log(`[APP] Initialised settings (${new Date().getTime()})`);
+  let url: string = '';
+  console.log('[AUTH] Getting API URL...');
+  const instance = app.settings.get('app.instance') as
+    | string
+    | null
+    | undefined;
+  if (!instance) {
+    console.log(
+      '[AUTH] Unable to fetch app.instance; setting apiURL to default',
+    );
+    url = DEFAULT_API_URL;
+  } else {
+    console.log(`[AUTH] Fetched app.instance; setting apiURL to ${instance}`);
+    url = instance;
+  }
+  return url;
 }
 
-console.log(`[AUTH] Creating client... (instance: ${apiURL})`);
+export let client = undefined as unknown as Client;
 
-export const client = new Client({
-  unreads: true,
-  apiURL: apiURL,
+getAPIURL().then(url => {
+  const apiURL = url;
+  console.log(`[AUTH] Creating client... (instance: ${apiURL})`);
+  client = new Client({
+    unreads: true,
+    apiURL: apiURL,
+  });
 });
 
 export const openUrl = (url: string) => {
