@@ -266,7 +266,7 @@ class MainView extends React.Component {
           </View>
         ) : this.state.status === 'awaitingLogin' ? (
           <View style={styles.app}>
-            {/* TODO: Uncomment when the client can actually get the setting value in time <View
+            <View
               style={{
                 marginTop: 8,
                 marginLeft: '90%',
@@ -281,7 +281,7 @@ class MainView extends React.Component {
                   color={currentTheme.foregroundPrimary}
                 />
               </TouchableOpacity>
-            </View> */}
+            </View>
             <View
               style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
               <Text
