@@ -59,9 +59,9 @@ export const ServerInfoSheet = observer(
             {server.name}
           </Text>
           <Text
+            colour={currentTheme.foregroundSecondary}
             style={{
               marginVertical: 4,
-              color: currentTheme.foregroundSecondary,
             }}>
             {server._id === SPECIAL_SERVERS.lounge.id
               ? 'Member count disabled for this server'
