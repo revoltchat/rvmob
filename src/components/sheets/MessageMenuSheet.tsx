@@ -9,9 +9,9 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {Message} from 'revolt.js';
 
 import {app} from '../../Generic';
-import {ReplyMessage} from '../../MessageView';
 import {currentTheme, styles} from '../../Theme';
 import {ContextButton, Text} from '../common/atoms';
+import {ReplyMessage} from '../common/messaging';
 
 export const MessageMenuSheet = observer(
   ({state, message}: {state: any; message: Message}) => {

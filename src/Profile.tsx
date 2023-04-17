@@ -16,7 +16,7 @@ type UsernameProps = {
   user?: User;
   noBadge?: boolean;
   size?: number;
-  masquerade?: string;
+  masquerade?: string | null;
   color?: string;
 };
 
@@ -96,7 +96,7 @@ type AvatarProps = {
   status?: boolean;
   size?: number;
   backgroundColor?: string;
-  masquerade?: Message['masquerade'];
+  masquerade?: string;
   pressable?: boolean;
 };
 
