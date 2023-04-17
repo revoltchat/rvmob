@@ -53,25 +53,39 @@ export class Messages extends React.Component {
   //   this.setState({error});
   //   console.error(error);
   // }
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.rerender !== this.props.rerender) {
-      return true;
-    }
-    if (nextState.forceUpdate) {
-      this.setState({forceUpdate: false});
-      return true;
-    }
-    if (nextState?.messages) {
-      let res =
-        nextState.messages[nextState.messages.length - 1]?.message._id !=
-          this.state.messages[this.state.messages?.length - 1]?.message._id ||
-        this.props.channel?._id !== nextProps.channel?._id ||
-        !didUpdateFirstTime ||
-        this.state.forceUpdate;
-      return res;
-    }
-    return true;
-  }
+  // TODO: should we try and fix this or just remove it? (relevant context: removing it doesn't seem to break anything? and i want to move to functional components, so this would need tweaking anwyay)
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (nextProps.rerender !== this.props.rerender) {
+  //     console.log('rerender type 1');
+  //     return true;
+  //   }
+  //   if (nextState.forceUpdate) {
+  //     this.setState({forceUpdate: false});
+  //     console.log('rerender type 2');
+  //     return true;
+  //   }
+  //   if (nextState?.messages) {
+  //     let res1 =
+  //       nextState.messages[nextState.messages.length - 1]?.message._id !==
+  //       this.state.messages[this.state.messages?.length - 1]?.message._id;
+  //     let res2 = this.props.channel?._id !== nextProps.channel?._id;
+  //     let res3 = !didUpdateFirstTime;
+  //     let res4 = this.state.forceUpdate;
+  //     console.log(
+  //       res1,
+  //       nextState.messages[nextState.messages.length - 1]?.message._id,
+  //       this.state.messages[this.state.messages?.length - 1]?.message._id,
+  //       res2,
+  //       res3,
+  //       res4,
+  //     );
+  //     let res = res1 || res2 || res3 || res4;
+  //     console.log(`rerender type 3: ${res}`);
+  //     return res;
+  //   }
+  //   console.log('rerender type 4');
+  //   return true;
+  // }
   componentDidMount() {
     console.log('[MESSAGERENDERER] Mounted component');
     client.on('message', async message => {
