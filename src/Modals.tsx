@@ -5,7 +5,6 @@ import {
   client,
   app,
   GeneralAvatar,
-  ServerList,
   openUrl,
   setFunction,
   InputWithButton,
@@ -18,6 +17,7 @@ import {
   ServerInfoSheet,
   SettingsSheet,
 } from './components/sheets/';
+import {ServerList} from './components/navigation/ServerList';
 import {Server, User, Message, Channel} from 'revolt.js';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';

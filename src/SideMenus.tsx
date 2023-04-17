@@ -6,12 +6,13 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {User} from 'revolt.js';
 
-import {ServerList, app, setFunction, client} from './Generic';
+import {app, setFunction, client} from './Generic';
 import {MiniProfile, Avatar} from './Profile';
 import {styles, currentTheme} from './Theme';
 import {Button, Text} from './components/common/atoms';
 import {MarkdownView} from './components/common/MarkdownView';
 import {ChannelList} from './components/navigation/ChannelList';
+import {ServerList} from './components/navigation/ServerList';
 
 export class LeftMenu extends React.Component {
   constructor(props) {
