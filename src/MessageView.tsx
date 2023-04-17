@@ -58,10 +58,10 @@ export class Messages extends React.Component {
       });
     });
   }
-  componentDidCatch(error, errorInfo) {
-    this.setState({error});
-    console.error(error);
-  }
+  // componentDidCatch(error, errorInfo) {
+  //   this.setState({error});
+  //   console.error(error);
+  // }
   shouldComponentUpdate(nextProps, nextState) {
     if (nextProps.rerender !== this.props.rerender) {
       return true;
@@ -274,7 +274,7 @@ export class Messages extends React.Component {
       </View>
     ) : (
       <View style={{flex: 1}}>
-        {/* <FlatList data={this.state.messages} 
+        {/* <FlatList data={this.state.messages}
                 removeClippedSubviews={false}
                 disableVirtualization={true}
                 maxToRenderPerBatch={12}
@@ -282,15 +282,15 @@ export class Messages extends React.Component {
                 inverted={true}
                 windowSize={17}
                 keyExtractor={this.keyExtractor}
-                renderItem={this.renderItem} 
-                ref={ref => {this.scrollView = ref}} 
+                renderItem={this.renderItem}
+                ref={ref => {this.scrollView = ref}}
                 onScroll={e => {this.setState({
-                    bottomOfPage: (e.nativeEvent.contentOffset.y >= 
-                        (e.nativeEvent.contentSize.height - 
+                    bottomOfPage: (e.nativeEvent.contentOffset.y >=
+                        (e.nativeEvent.contentSize.height -
                         e.nativeEvent.layoutMeasurement.height))
-                    }} 
+                    }}
                 onLayout={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToOffset({offset: 0, animated: false})}}}
-                onContentSizeChange={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToOffset({offset: 0, animated: true})}}} 
+                onContentSizeChange={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToOffset({offset: 0, animated: true})}}}
                 style={styles.messagesView} /> */}
         <ScrollView
           style={styles.messagesView}
@@ -413,39 +413,66 @@ export const Message = observer((props: MessageProps) => {
       return (
         <View key={props.message._id} style={styles.messsageInner}>
           <View
-            style={{marginTop: app.settings.get('ui.messaging.messageSpacing')}}
+            style={{
+              marginTop: app.settings.get(
+                'ui.messaging.messageSpacing',
+              ) as number,
+            }}
           />
           <View style={{flexDirection: 'row'}}>
-            <Username
-              user={client.users.get(props.message.system.id)}
-              server={props.message.channel?.server}
-            />
-            {props.message.system.type === 'user_joined' ? (
-              <Text> joined</Text>
-            ) : props.message.system.type === 'user_left' ? (
-              <Text> left</Text>
-            ) : props.message.system.type === 'user_banned' ? (
-              <Text> was banned</Text>
-            ) : props.message.system.type === 'user_kicked' ? (
-              <Text> was kicked</Text>
-            ) : props.message.system.type === 'user_added' ? (
-              <Text> was added to the group.</Text>
-            ) : props.message.system.type === 'user_remove' ? (
-              <Text> was removed from the group.</Text>
-            ) : props.message.system.type === 'channel_renamed' ? (
+            {props.message.system.type === 'text' ? (
               <Text>
-                {' '}
-                renamed the channel to{' '}
-                <Text style={{fontWeight: 'bold'}}>
-                  {props.message.system.name}
-                </Text>
-                .
+                <Text style={{fontWeight: 'bold'}}>System message: </Text>
+                {props.message.system.content}
               </Text>
-            ) : props.message.system.type === 'channel_description_changed' ? (
-              <Text> changed the channel description.</Text>
-            ) : props.message.system.type === 'channel_icon_changed' ? (
-              <Text> changed the channel icon.</Text>
-            ) : null}
+            ) : (
+              <>
+                <Username
+                  user={client.users.get(
+                    props.message.system.type === 'channel_ownership_changed'
+                      ? props.message.system.from
+                      : props.message.system.id ?? props.message.system.by,
+                  )}
+                  server={props.message.channel?.server}
+                />
+                {props.message.system.type === 'user_joined' ? (
+                  <Text> joined</Text>
+                ) : props.message.system.type === 'user_left' ? (
+                  <Text> left</Text>
+                ) : props.message.system.type === 'user_banned' ? (
+                  <Text> was banned</Text>
+                ) : props.message.system.type === 'user_kicked' ? (
+                  <Text> was kicked</Text>
+                ) : props.message.system.type === 'user_added' ? (
+                  <Text> was added to the group.</Text>
+                ) : props.message.system.type === 'user_remove' ? (
+                  <Text> was removed from the group.</Text>
+                ) : props.message.system.type === 'channel_renamed' ? (
+                  <Text>
+                    {' '}
+                    renamed the channel to{' '}
+                    <Text style={{fontWeight: 'bold'}}>
+                      {props.message.system.name}
+                    </Text>
+                    .
+                  </Text>
+                ) : props.message.system.type ===
+                  'channel_description_changed' ? (
+                  <Text> changed the channel description.</Text>
+                ) : props.message.system.type === 'channel_icon_changed' ? (
+                  <Text> changed the channel icon.</Text>
+                ) : props.message.system.type ===
+                  'channel_ownership_changed' ? (
+                  <>
+                    <Text> gave ownership of the group to </Text>
+                    <Username
+                      user={client.users.get(props.message.system.to)}
+                      server={props.message.channel?.server}
+                    />
+                  </>
+                ) : null}
+              </>
+            )}
           </View>
         </View>
       );

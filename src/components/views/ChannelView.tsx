@@ -2,6 +2,8 @@ import React from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
+import {ErrorBoundary} from 'react-error-boundary';
+
 import {Channel} from 'revolt.js';
 
 import {app, ChannelIcon} from '../../Generic';
@@ -12,6 +14,27 @@ import {FriendsPage} from '../pages/FriendsPage';
 import {HomePage} from '../pages/HomePage';
 import {ChannelHeader} from '../navigation/ChannelHeader';
 import {Button, Text} from '../common/atoms';
+
+function MessageViewErrorMessage({
+  error,
+  resetErrorBoundary,
+}: {
+  error: any;
+  resetErrorBoundary: Function;
+}) {
+  console.error(`[MESSAGEVIEW] Uncaught error: ${error}`);
+  return (
+    <>
+      <Text color={'#ff6666'}>Error rendering messages: {error}</Text>
+      <Button
+        onPress={() => {
+          resetErrorBoundary();
+        }}>
+        <Text>Retry</Text>
+      </Button>
+    </>
+  );
+}
 
 type CVChannel = Channel | 'friends' | null;
 
@@ -63,7 +86,7 @@ export const ChannelView = observer(
                 </View>
               ) : !channel?.nsfw ||
                 app.settings.get('ui.messaging.showNSFWContent') ? (
-                <>
+                <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
                   <Messages
                     channel={channel}
                     onLongPress={async m => {
@@ -84,7 +107,7 @@ export const ChannelView = observer(
                     }
                   />
                   <MessageBox channel={channel} />
-                </>
+                </ErrorBoundary>
               ) : (
                 <View
                   style={{
