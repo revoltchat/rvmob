@@ -125,7 +125,7 @@ export const themes = {
 export var currentTheme = themes['Dark'];
 export var currentThemeName = 'Dark';
 
-export var styles;
+export var styles: any;
 function refreshStyles() {
   styles = StyleSheet.create({
     outer: {
