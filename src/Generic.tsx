@@ -10,9 +10,8 @@ import {observer} from 'mobx-react-lite';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image';
-import FontistoIcon from 'react-native-vector-icons/Fontisto';
-import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Channel, Client, Server} from 'revolt.js';
 
@@ -283,23 +282,22 @@ export const app = {
       },
     ] as Setting[],
   },
+  openProfile: u => {},
+  openLeftMenu: o => {},
+  openRightMenu: o => {},
+  openInvite: i => {},
+  openBotInvite: i => {},
+  openServer: s => {},
+  openChannel: c => {},
+  openImage: a => {},
+  openMessage: m => {},
+  openServerContextMenu: s => {},
+  openSettings: o => {},
+  setMessageBoxInput: t => {},
+  setReplyingMessages: (m, a) => {},
+  getReplyingMessages: () => {},
+  pushToQueue: m => {},
 };
-
-app.openProfile = u => {};
-app.openLeftMenu = o => {};
-app.openRightMenu = o => {};
-app.openInvite = i => {};
-app.openBotInvite = i => {};
-app.openServer = s => {};
-app.openChannel = c => {};
-app.openImage = a => {};
-app.openMessage = m => {};
-app.openServerContextMenu = s => {};
-app.openSettings = o => {};
-app.setMessageBoxInput = t => {};
-app.setReplyingMessages = (m, a) => {};
-app.getReplyingMessages = () => {};
-app.pushToQueue = m => {};
 
 export function setFunction(name: string, func: any) {
   app[name] = func;
@@ -423,128 +421,6 @@ export const GeneralAvatar = ({
     </View>
   );
 };
-
-export const ServerList = observer(
-  ({
-    onServerPress,
-    onServerLongPress,
-    filter,
-    showUnread = true,
-    showDiscover = true,
-  }: {
-    onServerPress: any;
-    onServerLongPress: any;
-    filter?: any;
-    showUnread?: boolean;
-    showDiscover?: boolean;
-  }) => {
-    let servers = [...client.servers.values()];
-    if (filter) {
-      servers = servers.filter(filter);
-    }
-    return (
-      <View key={'server-list-container'}>
-        {servers.map(s => {
-          let iconURL = s.generateIconURL();
-          let pings = s.getMentions().length;
-          let initials = '';
-          for (const word of s.name.split(' ')) {
-            initials += word.charAt(0);
-          }
-          return (
-            <View key={`${s._id}-indicator-container`}>
-              {showUnread && s.getMentions().length > 0 ? (
-                <View
-                  key={`${s._id}-mentions-indicator`}
-                  style={{
-                    borderRadius: 10000,
-                    backgroundColor: currentTheme.error,
-                    height: 20,
-                    width: 20,
-                    marginBottom: -20,
-                    left: 34,
-                    zIndex: 2,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    key={`${s._id}-mentions-indicator-count`}
-                    style={{color: '#FFFFFF', marginRight: 1, marginBottom: 2}}>
-                    {pings > 9 ? '9+' : pings}
-                  </Text>
-                </View>
-              ) : showUnread && s.isUnread() ? (
-                <View
-                  key={`${s._id}-unreads-indicator`}
-                  style={{
-                    borderRadius: 10000,
-                    borderWidth: 3,
-                    borderColor: currentTheme.background,
-                    backgroundColor: currentTheme.foregroundPrimary,
-                    height: 20,
-                    width: 20,
-                    marginBottom: -20,
-                    left: 34,
-                    zIndex: 2,
-                  }}
-                />
-              ) : null}
-              <TouchableOpacity
-                onPress={() => {
-                  onServerPress(s);
-                }}
-                onLongPress={() => {
-                  onServerLongPress(s);
-                }}
-                key={s._id}
-                style={styles.serverButton}>
-                {iconURL ? (
-                  <Image
-                    key={`${s._id}-icon`}
-                    source={{uri: iconURL + '?max_side=' + DEFAULT_MAX_SIDE}}
-                    style={styles.serverIcon}
-                  />
-                ) : (
-                  <Text
-                    key={`${s._id}-initials`}
-                    style={styles.serverButtonInitials}>
-                    {initials}
-                  </Text>
-                )}
-              </TouchableOpacity>
-            </View>
-          );
-        })}
-        {/* {showDiscover ? (
-          <>
-            <View
-              style={{
-                margin: 6,
-                height: 2,
-                width: '80%',
-                backgroundColor: currentTheme.backgroundPrimary,
-              }}
-            />
-            <TouchableOpacity
-              onPress={() => {
-                openUrl('https://rvlt.gg/discover');
-              }}
-              key={'serverlist-discover'}
-              style={styles.serverButton}>
-              <View style={{alignItems: 'center'}}>
-                <MaterialCommunityIcon
-                  name={'compass'}
-                  size={25}
-                  color={currentTheme.foregroundPrimary}
-                />
-              </View>
-            </TouchableOpacity>
-          </>
-        ) : null} */}
-      </View>
-    );
-  },
-);
 
 type ChannelButtonProps = {
   channel: Channel;
@@ -671,9 +547,9 @@ export const ChannelIcon = ({
       ? 10000
       : 0;
   return channel.channel === 'Home' ? (
-    <FA5Icon name="house-user" size={20} color={color} />
+    <MaterialIcon name="home" size={24} color={color} />
   ) : channel.channel === 'Friends' ? (
-    <FA5Icon name="users" size={20} color={color} />
+    <MaterialIcon name="group" size={24} color={color} />
   ) : channel.channel === 'Saved Notes' ? (
     <MaterialIcon name="sticky-note-2" size={24} color={color} />
   ) : channel.channel.generateIconURL && channel.channel.generateIconURL() ? (
@@ -689,11 +565,11 @@ export const ChannelIcon = ({
       }}
     />
   ) : channel.channel.channel_type === 'DirectMessage' ? (
-    <FontistoIcon name="at" size={20} color={color} />
+    <MaterialCommunityIcon name="at" size={24} color={color} />
   ) : channel.channel.channel_type === 'VoiceChannel' ? (
-    <FA5Icon name="volume-up" size={20} color={color} />
+    <MaterialIcon name="volume-up" size={24} color={color} />
   ) : (
-    <FontistoIcon name="hashtag" size={20} color={color} />
+    <MaterialIcon name="tag" size={24} color={color} />
   );
 };
 
