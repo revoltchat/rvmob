@@ -172,6 +172,18 @@ export const ChannelList = observer((props: ChannelListProps) => {
             selected={props.currentChannel?.channel_type === 'SavedMessages'}
           />
 
+          {__DEV__ ? (
+            <ChannelButton
+              onPress={async () => {
+                await client.user?.openDM();
+                props.onChannelClick('debug');
+              }}
+              key={'debugChannel'}
+              channel={'Debug'}
+              selected={props.currentChannel === 'debug'}
+            />
+          ) : null}
+
           {[...client.channels.values()]
             .filter(
               c =>

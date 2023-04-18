@@ -20,7 +20,6 @@ import {parseRevoltNodes} from '../../../lib/utils';
 const Image = FastImage;
 
 type MessageProps = {
-  key: React.Key | null | undefined;
   message: RevoltMessage;
   grouped: boolean;
   queued: boolean;

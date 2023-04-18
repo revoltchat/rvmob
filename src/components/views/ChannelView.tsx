@@ -6,7 +6,7 @@ import {ErrorBoundary} from 'react-error-boundary';
 
 import {Channel} from 'revolt.js';
 
-import {app, ChannelIcon} from '../../Generic';
+import {app, ChannelIcon, client} from '../../Generic';
 import {Messages} from '../../MessageView';
 import {MessageBox} from '../../MessageBox';
 import {styles} from '../../Theme';
@@ -36,15 +36,58 @@ function MessageViewErrorMessage({
   );
 }
 
-type CVChannel = Channel | 'friends' | null;
+type CVChannel = Channel | 'friends' | 'debug' | null;
 
 export const ChannelView = observer(
   ({state, channel}: {state: any; channel: CVChannel}) => {
+    const [replacementChannel, setReplacementChannel] = React.useState(
+      undefined as Channel | undefined,
+    );
+    React.useEffect(() => {
+      async function getChannel() {
+        const c = await client.user?.openDM();
+        setReplacementChannel(c);
+      }
+      getChannel();
+    });
     return (
       <View style={styles.mainView}>
         {channel ? (
           channel === 'friends' ? (
             <FriendsPage />
+          ) : channel === 'debug' ? (
+            <View style={styles.flex}>
+              <ChannelHeader>
+                <View style={styles.iconContainer}>
+                  <ChannelIcon channel={{type: 'special', channel: 'Debug'}} />
+                </View>
+                <Text style={styles.channelName}>
+                  Debug Menu (New MessageView)
+                </Text>
+              </ChannelHeader>
+              <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
+                <Messages
+                  channel={replacementChannel!}
+                  onLongPress={async m => {
+                    app.openMessage(m);
+                  }}
+                  onUserPress={m => {
+                    app.openProfile(m.author);
+                  }}
+                  onImagePress={a => {
+                    state.setState({imageViewerImage: a});
+                  }}
+                  rerender={state.state.rerender}
+                  onUsernamePress={m =>
+                    state.setState({
+                      currentText:
+                        state.state.currentText + '<@' + m.author?._id + '>',
+                    })
+                  }
+                />
+                <MessageBox channel={replacementChannel!} />
+              </ErrorBoundary>
+            </View>
           ) : (
             <View style={styles.flex}>
               <ChannelHeader>

@@ -282,7 +282,7 @@ export const app = {
       },
     ] as Setting[],
   },
-  openProfile: u => {},
+  openProfile: (u, s: Server | undefined = undefined) => {},
   openLeftMenu: o => {},
   openRightMenu: o => {},
   openInvite: i => {},
@@ -526,7 +526,7 @@ interface CIChannel {
 
 interface SpecialCIChannel {
   type: 'special';
-  channel: 'Home' | 'Friends' | 'Saved Notes';
+  channel: 'Home' | 'Friends' | 'Saved Notes' | 'Debug';
 }
 
 export const ChannelIcon = ({
@@ -552,6 +552,8 @@ export const ChannelIcon = ({
     <MaterialIcon name="group" size={24} color={color} />
   ) : channel.channel === 'Saved Notes' ? (
     <MaterialIcon name="sticky-note-2" size={24} color={color} />
+  ) : channel.channel === 'Debug' ? (
+    <MaterialIcon name="bug-report" size={24} color={color} />
   ) : channel.channel.generateIconURL && channel.channel.generateIconURL() ? (
     <Image
       source={{
