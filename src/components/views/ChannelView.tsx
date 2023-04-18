@@ -7,7 +7,7 @@ import {ErrorBoundary} from 'react-error-boundary';
 import {Channel} from 'revolt.js';
 
 import {app, ChannelIcon, client} from '../../Generic';
-import {Messages} from '../../MessageView';
+import {Messages, NewMessageView} from '../../MessageView';
 import {MessageBox} from '../../MessageBox';
 import {styles} from '../../Theme';
 import {FriendsPage} from '../pages/FriendsPage';
@@ -65,28 +65,7 @@ export const ChannelView = observer(
                   Debug Menu (New MessageView)
                 </Text>
               </ChannelHeader>
-              <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
-                <Messages
-                  channel={replacementChannel!}
-                  onLongPress={async m => {
-                    app.openMessage(m);
-                  }}
-                  onUserPress={m => {
-                    app.openProfile(m.author);
-                  }}
-                  onImagePress={a => {
-                    state.setState({imageViewerImage: a});
-                  }}
-                  rerender={state.state.rerender}
-                  onUsernamePress={m =>
-                    state.setState({
-                      currentText:
-                        state.state.currentText + '<@' + m.author?._id + '>',
-                    })
-                  }
-                />
-                <MessageBox channel={replacementChannel!} />
-              </ErrorBoundary>
+              <NewMessageView channel={replacementChannel!} />
             </View>
           ) : (
             <View style={styles.flex}>

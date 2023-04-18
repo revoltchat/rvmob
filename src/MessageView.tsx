@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {View, ScrollView, TouchableOpacity} from 'react-native';
 import {autorun} from 'mobx';
+import {observer} from 'mobx-react-lite';
 
+import {ErrorBoundary} from 'react-error-boundary';
+
+import {Channel, Message as RevoltMessage} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
 import {
@@ -11,13 +15,20 @@ import {
   selectedRemark,
   randomizeRemark,
 } from './Generic';
+import {MessageBox} from './MessageBox';
 import {styles, currentTheme} from './Theme';
-import {Text} from './components/common/atoms';
+import {Button, Text} from './components/common/atoms';
 import {Message} from './components/common/messaging';
 import {DEFAULT_MESSAGE_LOAD_COUNT} from './lib/consts';
 import {calculateGrouped} from './lib/utils';
 
 let didUpdateFirstTime = false;
+
+type RenderableMessage = {
+  grouped: boolean;
+  message: RevoltMessage;
+  rendered: any;
+};
 
 export class Messages extends React.Component {
   constructor(props) {
@@ -357,3 +368,144 @@ export class Messages extends React.Component {
     );
   }
 }
+
+type FetchInput = {
+  id?: string;
+  type?: 'before' | 'after';
+};
+
+async function fetchMessages(
+  channel: Channel,
+  input: FetchInput,
+  existingMessages: RenderableMessage[],
+  // setLatest: Function,
+) {
+  const type = input.type ?? 'before';
+  let params = {
+    // input.before ? DEFAULT_MESSAGE_LOAD_COUNT / 2 :
+    limit: DEFAULT_MESSAGE_LOAD_COUNT,
+  };
+  params[type] = input.id;
+  // if (type == "after") {
+  //     params.sort = "Oldest"
+  // }
+  const res = await channel.fetchMessagesWithUsers(params);
+
+  console.log(`[NEWMESSAGEVIEW] Finished fetching messages for ${channel._id}`);
+  let oldMessages = existingMessages;
+  if (input.type === 'before') {
+    oldMessages = oldMessages.slice(0, DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1);
+  } else if (input.type === 'after') {
+    oldMessages = oldMessages.slice(
+      DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1,
+      DEFAULT_MESSAGE_LOAD_COUNT - 1,
+    );
+  }
+  let messages = res.messages.reverse().map((message, i) => {
+    try {
+      // let time = decodeTime(message._id);
+      // let grouped = ((lastAuthor == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (lastTime && time.diff(lastTime, "minute") < 5))
+      let grouped = i !== 0 && calculateGrouped(res.messages[i - 1], message);
+      let out = {
+        grouped,
+        message: message,
+        rendered: (
+          <Message
+            key={message._id}
+            message={message}
+            grouped={grouped}
+            queued={false}
+          />
+        ), // this.renderMessage({grouped, message}),
+      };
+      // lastAuthor = (message.author ? message.author._id : lastAuthor)
+      // lastTime = time
+      return out;
+    } catch (e) {
+      console.error(e);
+    }
+  }) as RenderableMessage[];
+  let result =
+    input.type === 'before'
+      ? messages.concat(oldMessages)
+      : input.type === 'after'
+      ? oldMessages.concat(messages)
+      : messages;
+  return result;
+}
+
+function MessageViewErrorMessage({
+  error,
+  resetErrorBoundary,
+}: {
+  error: any;
+  resetErrorBoundary: Function;
+}) {
+  // console.error(`[MESSAGEVIEW] Uncaught error: ${error}`);
+  return (
+    <>
+      <Text color={'#ff6666'}>Error rendering messages: {error}</Text>
+      <Button
+        onPress={() => {
+          resetErrorBoundary();
+        }}>
+        <Text>Retry</Text>
+      </Button>
+    </>
+  );
+}
+
+export const NewMessageView = observer(({channel}: {channel: Channel}) => {
+  const [messages, setMessages] = React.useState([] as RenderableMessage[]);
+  const renderedMessages = [] as ReactNode[];
+  const [loading, setLoading] = React.useState(true);
+  // const [atLatestMessages, setAtLatestMessages] = React.useState(false);
+  const [error, setError] = React.useState(null as any);
+  let scrollView: any;
+  React.useEffect(() => {
+    console.log(`[NEWMESSAGEVIEW] Fetching messages for ${channel._id}...`);
+    async function getMessages() {
+      const msgs = await fetchMessages(
+        channel,
+        {},
+        [],
+        // setAtLatestMessages,
+      );
+      setMessages(msgs);
+      setLoading(false);
+    }
+    getMessages();
+  }, [channel, loading]);
+
+  for (const msg of messages) {
+    renderedMessages.push(msg.rendered);
+  }
+
+  return (
+    <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
+      {error ? (
+        <Text color={'#ff6666'}>
+          Error rendering messages: {error.message ?? error}
+        </Text>
+      ) : loading ? (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={styles.loadingHeader}>Loading...</Text>
+          <Text style={styles.remark}>{selectedRemark || null}</Text>
+        </View>
+      ) : (
+        <View key={'messageview-outer-container'} style={{flex: 1}}>
+          <ScrollView
+            style={styles.messagesView}
+            ref={ref => {
+              scrollView = ref;
+            }}>
+            <Text>messages: {messages.length}</Text>
+            {renderedMessages}
+            <View style={{marginTop: 15}} />
+          </ScrollView>
+        </View>
+      )}
+      <MessageBox channel={channel} />
+    </ErrorBoundary>
+  );
+});
