@@ -1,3 +1,7 @@
+import {differenceInMinutes} from 'date-fns';
+import {Message} from 'revolt.js';
+import {decodeTime} from 'ulid';
+
 import {client} from '../Generic';
 import {currentTheme} from '../Theme';
 
@@ -92,4 +96,21 @@ export function parseRevoltNodes(text: string) {
     return ping;
   });
   return text;
+}
+
+export function calculateGrouped(msg1: Message, msg2: Message) {
+  return (
+    // a message is grouped with the previous message if all of the following is true:
+    msg1.author?._id === msg2.author?._id && // the author is the same
+    !(msg2.reply_ids && msg2.reply_ids.length > 0) && // the message is not a reply
+    differenceInMinutes(
+      // the time difference is less than 7 minutes and
+      decodeTime(msg2._id),
+      decodeTime(msg1._id),
+    ) < 7 &&
+    (msg2.masquerade // the masquerade is the same
+      ? msg2.masquerade.avatar === msg1.masquerade?.avatar &&
+        msg2.masquerade.name === msg1.masquerade?.name
+      : true)
+  );
 }

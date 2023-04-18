@@ -2,8 +2,6 @@ import React from 'react';
 import {View, ScrollView, TouchableOpacity} from 'react-native';
 import {autorun} from 'mobx';
 
-import {differenceInMinutes} from 'date-fns';
-import {Message as RevoltMessage} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
 import {
@@ -17,6 +15,7 @@ import {styles, currentTheme} from './Theme';
 import {Text} from './components/common/atoms';
 import {Message} from './components/common/messaging';
 import {DEFAULT_MESSAGE_LOAD_COUNT} from './lib/consts';
+import {calculateGrouped} from './lib/utils';
 
 let didUpdateFirstTime = false;
 
@@ -110,7 +109,7 @@ export class Messages extends React.Component {
               }
               let grouped =
                 newMessages.length > 0 &&
-                this.calculateGrouped(
+                calculateGrouped(
                   newMessages[newMessages.length - 1].message,
                   message,
                 );
@@ -212,7 +211,7 @@ export class Messages extends React.Component {
           let time = decodeTime(message._id);
           // let grouped = ((lastAuthor == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (lastTime && time.diff(lastTime, "minute") < 5))
           let grouped =
-            i !== 0 && this.calculateGrouped(res.messages[i - 1], message);
+            i !== 0 && calculateGrouped(res.messages[i - 1], message);
           let out = {
             grouped,
             message: message,
@@ -238,22 +237,6 @@ export class Messages extends React.Component {
         // atLatestMessages: input.type != "before" && this.props.channel.last_message_id == result[result.length - 1]?._id
       });
     });
-  }
-  calculateGrouped(lastMessage: RevoltMessage, message: RevoltMessage) {
-    return (
-      // a message is grouped with the previous message if all of the following is true:
-      lastMessage.author?._id === message.author?._id && // the author is the same
-      !(message.reply_ids && message.reply_ids.length > 0) && // the message is not a reply
-      differenceInMinutes(
-        // the time difference is less than 7 minutes and
-        decodeTime(message._id),
-        decodeTime(lastMessage._id),
-      ) < 7 &&
-      (message.masquerade // the masquerade is the same
-        ? message.masquerade.avatar === lastMessage.masquerade?.avatar &&
-          message.masquerade.name === lastMessage.masquerade?.name
-        : true)
-    );
   }
   renderMessage(m) {
     return (
