@@ -378,7 +378,7 @@ async function fetchMessages(
   channel: Channel,
   input: FetchInput,
   existingMessages: RenderableMessage[],
-  // setLatest: Function,
+  sliceMessages?: false,
 ) {
   const type = input.type ?? 'before';
   let params = {
@@ -393,13 +393,15 @@ async function fetchMessages(
 
   console.log(`[NEWMESSAGEVIEW] Finished fetching messages for ${channel._id}`);
   let oldMessages = existingMessages;
-  if (input.type === 'before') {
-    oldMessages = oldMessages.slice(0, DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1);
-  } else if (input.type === 'after') {
-    oldMessages = oldMessages.slice(
-      DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1,
-      DEFAULT_MESSAGE_LOAD_COUNT - 1,
-    );
+  if (sliceMessages) {
+    if (input.type === 'before') {
+      oldMessages = oldMessages.slice(0, DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1);
+    } else if (input.type === 'after') {
+      oldMessages = oldMessages.slice(
+        DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1,
+        DEFAULT_MESSAGE_LOAD_COUNT - 1,
+      );
+    }
   }
   let messages = res.messages.reverse().map((message, i) => {
     try {
@@ -459,18 +461,13 @@ export const NewMessageView = observer(({channel}: {channel: Channel}) => {
   const [messages, setMessages] = React.useState([] as RenderableMessage[]);
   const renderedMessages = [] as ReactNode[];
   const [loading, setLoading] = React.useState(true);
-  // const [atLatestMessages, setAtLatestMessages] = React.useState(false);
+  const [atEndOfPage, setAtEndOfPage] = React.useState(true);
   const [error, setError] = React.useState(null as any);
   let scrollView: any;
   React.useEffect(() => {
     console.log(`[NEWMESSAGEVIEW] Fetching messages for ${channel._id}...`);
     async function getMessages() {
-      const msgs = await fetchMessages(
-        channel,
-        {},
-        [],
-        // setAtLatestMessages,
-      );
+      const msgs = await fetchMessages(channel, {}, []);
       setMessages(msgs);
       setLoading(false);
     }
@@ -498,10 +495,29 @@ export const NewMessageView = observer(({channel}: {channel: Channel}) => {
             style={styles.messagesView}
             ref={ref => {
               scrollView = ref;
+            }}
+            onScroll={e => {
+              if (
+                e.nativeEvent.contentOffset.y >=
+                e.nativeEvent.contentSize.height -
+                  e.nativeEvent.layoutMeasurement.height
+              ) {
+                console.log('bonk!');
+              }
+              if (e.nativeEvent.contentOffset.y <= 0) {
+                console.log('bonk2!');
+              }
+              console.log(
+                e.nativeEvent.contentOffset.y,
+                e.nativeEvent.contentSize.height -
+                  e.nativeEvent.layoutMeasurement.height,
+              );
             }}>
-            <Text>messages: {messages.length}</Text>
+            <Text>
+              messages: {messages.length}; {messages.length % 50 === 0 ? 'may or may not be the end' : 'almost certainly the end'}
+            </Text>
             {renderedMessages}
-            <View style={{marginTop: 15}} />
+            <View style={{marginVertical: 10}} />
           </ScrollView>
         </View>
       )}
