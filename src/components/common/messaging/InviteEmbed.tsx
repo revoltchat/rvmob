@@ -19,20 +19,35 @@ export const InviteEmbed = observer(
           const i = await client.fetchInvite(invite);
           setInvObject(i);
         } catch (e) {
-          console.log(`error: ${e}`);
-          setError(
-            (e as string).match('404')
-              ? 'notFound'
-              : (e as string).match('429')
-              ? 'rateLimited'
-              : 'otherError',
-          );
+          const errorType = (e as string).match('404')
+            ? 'notFound'
+            : (e as string).match('429')
+            ? 'rateLimited'
+            : 'otherError';
+          if (errorType === 'otherError') {
+            console.warn(
+              `[INVITEEMBED] Unrecognised error fetching invite: ${e}`,
+            );
+          } else {
+            console.log(`[INVITEEMBED] Error fetching invite: ${e}`);
+          }
+          setError(errorType);
         }
       }
       getInv();
     }, [invite]);
 
-    return invObject.type === 'Server' ? (
+    return error ? (
+      <View
+        style={{
+          backgroundColor: currentTheme.backgroundSecondary,
+          padding: 8,
+          borderRadius: 8,
+          marginVertical: 2,
+        }}>
+        <Text>error: {error}</Text>
+      </View>
+    ) : invObject.type === 'Server' ? (
       <View
         style={{
           backgroundColor: currentTheme.backgroundSecondary,

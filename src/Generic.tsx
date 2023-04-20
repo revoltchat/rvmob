@@ -13,7 +13,7 @@ import FastImage from 'react-native-fast-image';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {Channel, Client, Server} from 'revolt.js';
+import {API, Channel, Client, Server} from 'revolt.js';
 
 import {MiniProfile} from './Profile';
 import {currentTheme, setTheme, themes, styles} from './Theme';
@@ -282,12 +282,12 @@ export const app = {
       },
     ] as Setting[],
   },
-  openProfile: (u, s: Server | undefined = undefined) => {},
+  openProfile: (u, s: Server | undefined) => {},
   openLeftMenu: o => {},
   openRightMenu: o => {},
   openInvite: i => {},
   openBotInvite: i => {},
-  openServer: s => {},
+  openServer: (s: Server | undefined) => {},
   openChannel: c => {},
   openImage: a => {},
   openMessage: m => {},
@@ -297,6 +297,7 @@ export const app = {
   setReplyingMessages: (m, a) => {},
   getReplyingMessages: () => {},
   pushToQueue: m => {},
+  joinInvite: async (i: API.InviteResponse) => {},
 };
 
 export function setFunction(name: string, func: any) {
