@@ -374,6 +374,12 @@ type FetchInput = {
   type?: 'before' | 'after';
 };
 
+function renderMessage(msg: RevoltMessage, grouped: boolean) {
+  return (
+    <Message key={msg._id} message={msg} grouped={grouped} queued={false} />
+  );
+}
+
 async function fetchMessages(
   channel: Channel,
   input: FetchInput,
@@ -411,14 +417,7 @@ async function fetchMessages(
       let out = {
         grouped,
         message: message,
-        rendered: (
-          <Message
-            key={message._id}
-            message={message}
-            grouped={grouped}
-            queued={false}
-          />
-        ), // this.renderMessage({grouped, message}),
+        rendered: renderMessage(message, grouped), // this.renderMessage({grouped, message}),
       };
       // lastAuthor = (message.author ? message.author._id : lastAuthor)
       // lastTime = time
@@ -461,9 +460,9 @@ export const NewMessageView = observer(({channel}: {channel: Channel}) => {
   const [messages, setMessages] = React.useState([] as RenderableMessage[]);
   const renderedMessages = [] as ReactNode[];
   const [loading, setLoading] = React.useState(true);
-  const [atEndOfPage, setAtEndOfPage] = React.useState(true);
+  const [atEndOfPage, setAtEndOfPage] = React.useState(false);
   const [error, setError] = React.useState(null as any);
-  let scrollView: any;
+  let scrollView: ScrollView | null;
   React.useEffect(() => {
     console.log(`[NEWMESSAGEVIEW] Fetching messages for ${channel._id}...`);
     async function getMessages() {
@@ -477,6 +476,29 @@ export const NewMessageView = observer(({channel}: {channel: Channel}) => {
   for (const msg of messages) {
     renderedMessages.push(msg.rendered);
   }
+  client.on('message', async msg => {
+    if (msg.channel === channel) {
+      console.log(
+        `[NEWMESSAGEVIEW] New message ${msg._id} is in current channel`,
+      );
+      // for some reason the message array is empty here? so until this is fixed we don't group the message
+      const grouped = false; // calculateGrouped(
+      //   msg,
+      //   messages[messages.length - 1].message,
+      // );
+      const pushableMsg = {
+        grouped,
+        message: msg,
+        rendered: renderMessage(msg, grouped),
+      };
+      const newMessages = messages;
+      newMessages.push(pushableMsg);
+      setMessages(newMessages);
+      if (atEndOfPage) {
+        scrollView?.scrollToEnd();
+      }
+    }
+  });
 
   return (
     <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
@@ -497,15 +519,31 @@ export const NewMessageView = observer(({channel}: {channel: Channel}) => {
               scrollView = ref;
             }}
             onScroll={e => {
-              if (
-                e.nativeEvent.contentOffset.y >=
+              const position = e.nativeEvent.contentOffset.y;
+              const viewHeight =
                 e.nativeEvent.contentSize.height -
-                  e.nativeEvent.layoutMeasurement.height
-              ) {
+                e.nativeEvent.layoutMeasurement.height;
+              // account for decimal weirdness by assuming that if the position is this close to the height that the user it at the bottom
+              if (viewHeight - position <= 1) {
                 console.log('bonk!');
               }
               if (e.nativeEvent.contentOffset.y <= 0) {
                 console.log('bonk2!');
+                setAtEndOfPage(true);
+                fetchMessages(
+                  channel,
+                  {
+                    type: 'before',
+                    id: messages[0].message._id,
+                  },
+                  messages,
+                ).then(newMsgs => {
+                  setMessages(newMsgs);
+                });
+              } else {
+                if (atEndOfPage) {
+                  setAtEndOfPage(false);
+                }
               }
               console.log(
                 e.nativeEvent.contentOffset.y,
@@ -514,7 +552,10 @@ export const NewMessageView = observer(({channel}: {channel: Channel}) => {
               );
             }}>
             <Text>
-              messages: {messages.length}; {messages.length % 50 === 0 ? 'may or may not be the end' : 'almost certainly the end'}
+              messages: {messages.length};{' '}
+              {messages.length % 50 === 0
+                ? 'may or may not be the end'
+                : 'almost certainly the end'}
             </Text>
             {renderedMessages}
             <View style={{marginVertical: 10}} />
