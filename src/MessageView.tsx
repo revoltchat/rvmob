@@ -376,7 +376,12 @@ type FetchInput = {
 
 function renderMessage(msg: RevoltMessage, grouped: boolean) {
   return (
-    <Message key={msg._id} message={msg} grouped={grouped} queued={false} />
+    <Message
+      key={`message-${msg._id}`}
+      message={msg}
+      grouped={grouped}
+      queued={false}
+    />
   );
 }
 
@@ -396,8 +401,8 @@ async function fetchMessages(
   //     params.sort = "Oldest"
   // }
   const res = await channel.fetchMessagesWithUsers(params);
-
   console.log(`[NEWMESSAGEVIEW] Finished fetching messages for ${channel._id}`);
+
   let oldMessages = existingMessages;
   if (sliceMessages) {
     if (input.type === 'before') {
@@ -432,6 +437,10 @@ async function fetchMessages(
       : input.type === 'after'
       ? oldMessages.concat(messages)
       : messages;
+  console.log(
+    `[NEWMESSAGEVIEW] Finished preparing fetched messages for ${channel._id}`,
+  );
+
   return result;
 }
 
@@ -462,6 +471,9 @@ export const NewMessageView = observer(({channel}: {channel: Channel}) => {
   const [loading, setLoading] = React.useState(true);
   const [atEndOfPage, setAtEndOfPage] = React.useState(false);
   const [error, setError] = React.useState(null as any);
+  const [queuedMessages, setQueuedMessages] = React.useState(
+    [] as RevoltMessage[],
+  );
   let scrollView: ScrollView | null;
   React.useEffect(() => {
     console.log(`[NEWMESSAGEVIEW] Fetching messages for ${channel._id}...`);
@@ -476,8 +488,14 @@ export const NewMessageView = observer(({channel}: {channel: Channel}) => {
   for (const msg of messages) {
     renderedMessages.push(msg.rendered);
   }
+
   client.on('message', async msg => {
-    if (msg.channel === channel) {
+    if (msg.channel === channel && !queuedMessages.includes(msg)) {
+      // push message to queue to prevent rerendering
+      const newQueue = queuedMessages;
+      newQueue.push(msg);
+      setQueuedMessages(newQueue);
+
       console.log(
         `[NEWMESSAGEVIEW] New message ${msg._id} is in current channel`,
       );
@@ -497,6 +515,11 @@ export const NewMessageView = observer(({channel}: {channel: Channel}) => {
       if (atEndOfPage) {
         scrollView?.scrollToEnd();
       }
+
+      // ...then remove it from the queue once we're done
+      let newQueue2 = queuedMessages;
+      newQueue2 = newQueue2.filter(message => message !== msg);
+      setQueuedMessages(newQueue2);
     }
   });
 
@@ -514,6 +537,7 @@ export const NewMessageView = observer(({channel}: {channel: Channel}) => {
       ) : (
         <View key={'messageview-outer-container'} style={{flex: 1}}>
           <ScrollView
+            key={'messageview-scrollview'}
             style={styles.messagesView}
             ref={ref => {
               scrollView = ref;
@@ -523,13 +547,17 @@ export const NewMessageView = observer(({channel}: {channel: Channel}) => {
               const viewHeight =
                 e.nativeEvent.contentSize.height -
                 e.nativeEvent.layoutMeasurement.height;
-              // account for decimal weirdness by assuming that if the position is this close to the height that the user it at the bottom
+              // account for decimal weirdness by assuming that if the position is this close to the height that the user is at the bottom
               if (viewHeight - position <= 1) {
                 console.log('bonk!');
+                setAtEndOfPage(true);
+              } else {
+                if (atEndOfPage) {
+                  setAtEndOfPage(false);
+                }
               }
               if (e.nativeEvent.contentOffset.y <= 0) {
                 console.log('bonk2!');
-                setAtEndOfPage(true);
                 fetchMessages(
                   channel,
                   {
@@ -540,25 +568,21 @@ export const NewMessageView = observer(({channel}: {channel: Channel}) => {
                 ).then(newMsgs => {
                   setMessages(newMsgs);
                 });
-              } else {
-                if (atEndOfPage) {
-                  setAtEndOfPage(false);
-                }
               }
-              console.log(
-                e.nativeEvent.contentOffset.y,
-                e.nativeEvent.contentSize.height -
-                  e.nativeEvent.layoutMeasurement.height,
-              );
+              // console.log(
+              //   e.nativeEvent.contentOffset.y,
+              //   e.nativeEvent.contentSize.height -
+              //     e.nativeEvent.layoutMeasurement.height,
+              // );
             }}>
-            <Text>
+            <Text key={'testing-text'}>
               messages: {messages.length};{' '}
               {messages.length % 50 === 0
                 ? 'may or may not be the end'
                 : 'almost certainly the end'}
             </Text>
             {renderedMessages}
-            <View style={{marginVertical: 10}} />
+            <View key={'margin-fix'} style={{marginVertical: 10}} />
           </ScrollView>
         </View>
       )}

@@ -45,7 +45,13 @@ export const ChannelView = observer(
     );
     React.useEffect(() => {
       async function getChannel() {
-        const c = await client.user?.openDM();
+        const type = 'spam';
+        const c =
+          type === 'spam'
+            ? client.channels.get('01FBCT2PXQC0SSH6GD3V1BEHRP')
+            : type === 'lounge'
+            ? client.channels.get('01F7ZSBSFHCAAJQ92ZGTY67HMN')
+            : await client.user?.openDM();
         setReplacementChannel(c);
       }
       getChannel();

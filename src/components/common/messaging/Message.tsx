@@ -135,7 +135,7 @@ export const Message = observer((props: MessageProps) => {
     if (props.message.queued) {
       return (
         <Pressable
-          key={props.message._id}
+          key={`message-${props.message._id}-outer-pressable`}
           style={{opacity: 0.6}}
           delayLongPress={750}
           onLongPress={props.onLongPress}>
@@ -147,15 +147,21 @@ export const Message = observer((props: MessageProps) => {
             }}
           />
           {props.message.reply_ids !== null ? (
-            <View style={styles.repliedMessagePreviews}>
+            <View
+              key={`message-${props.message._id}-replies`}
+              style={styles.repliedMessagePreviews}>
               {props.message.reply_ids.map(id => (
-                <ReplyMessage key={id} message={client.messages.get(id)} />
+                <ReplyMessage
+                  key={`message-${props.message._id}-reply-${id}`}
+                  message={client.messages.get(id)}
+                />
               ))}
             </View>
           ) : null}
           <View style={props.grouped ? styles.messageGrouped : styles.message}>
             {!props.grouped ? (
               <Avatar
+                key={`message-${props.message._id}-avatar-nongrouped`}
                 user={client.user}
                 masquerade={props.message.masquerade?.avatar}
                 server={props.message.channel?.server}
@@ -253,7 +259,7 @@ export const Message = observer((props: MessageProps) => {
               style={props.grouped ? styles.messageGrouped : styles.message}>
               {props.message.author && !props.grouped ? (
                 <Pressable
-                  key={`${props.message._id}-avatar`}
+                  key={`message-${props.message._id}-avatar`}
                   onPress={() => props.onUserPress()}>
                   <Avatar
                     user={props.message.author}
@@ -266,9 +272,12 @@ export const Message = observer((props: MessageProps) => {
                   />
                 </Pressable>
               ) : null}
-              <View style={styles.messageInner}>
+              <View
+                key={`message-${props.message._id}-inner`}
+                style={styles.messageInner}>
                 {props.grouped && props.message.edited ? (
                   <Text
+                    key={`message-${props.message._id}-edited`}
                     colour={currentTheme.foregroundTertiary}
                     style={{
                       fontSize: 11,
@@ -281,15 +290,22 @@ export const Message = observer((props: MessageProps) => {
                   </Text>
                 ) : null}
                 {props.message.author && !props.grouped ? (
-                  <View style={{flexDirection: 'row'}}>
-                    <Pressable onPress={props.onUsernamePress}>
+                  <View
+                    key={`message-${props.message._id}-info-row`}
+                    style={{flexDirection: 'row'}}>
+                    <Pressable
+                      key={`message-${props.message._id}-username-pressable`}
+                      onPress={props.onUsernamePress}>
                       <Username
+                        key={`message-${props.message._id}-username`}
                         user={props.message.author}
                         server={props.message.channel?.server}
                         masquerade={props.message.masquerade?.name}
                       />
                     </Pressable>
-                    <Text style={styles.timestamp}>
+                    <Text
+                      key={`message-${props.message._id}-timestamp`}
+                      style={styles.timestamp}>
                       {' '}
                       {formatRelative(
                         decodeTime(props.message._id),
@@ -301,6 +317,7 @@ export const Message = observer((props: MessageProps) => {
                     </Text>
                     {props.message.edited && (
                       <Text
+                        key={`message-${props.message._id}-edited`}
                         colour={currentTheme.foregroundTertiary}
                         style={{
                           fontSize: 12,
@@ -315,7 +332,8 @@ export const Message = observer((props: MessageProps) => {
                   </View>
                 ) : null}
                 {props.message.content ? (
-                  <MarkdownView>
+                  <MarkdownView
+                    key={`message-${props.message._id}-rendered-content`}>
                     {parseRevoltNodes(props.message.content)}
                   </MarkdownView>
                 ) : null}
@@ -330,7 +348,9 @@ export const Message = observer((props: MessageProps) => {
                       height = height * sizeFactor;
                     }
                     return (
-                      <Pressable onPress={() => app.openImage(a)}>
+                      <Pressable
+                        key={`message-${props.message._id}-image-${a._id}`}
+                        onPress={() => app.openImage(a)}>
                         <Image
                           source={{uri: client.generateFileURL(a)}}
                           resizeMode={FastImage.resizeMode.contain}
@@ -346,6 +366,7 @@ export const Message = observer((props: MessageProps) => {
                   } else {
                     return (
                       <Pressable
+                        key={`message-${props.message._id}-attachment-${a._id}`}
                         onPress={() => openUrl(client.generateFileURL(a)!)}>
                         <View
                           style={{
@@ -362,15 +383,28 @@ export const Message = observer((props: MessageProps) => {
                   }
                 })}
                 {invites?.map(i => {
-                  return <InviteEmbed message={props.message} invite={i} />;
+                  return (
+                    <InviteEmbed
+                      key={`message-${props.message._id}-invite-${i}`}
+                      message={props.message}
+                      invite={i}
+                    />
+                  );
                 })}
                 {props.message.embeds?.map(e => {
-                  return <MessageEmbed embed={e} />;
+                  return (
+                    <MessageEmbed
+                      key={`message-${
+                        props.message._id
+                      }-embed-${Math.random()}`}
+                      embed={e}
+                    />
+                  );
                 })}
                 {app.settings.get('ui.messaging.showReactions')
                   ? reactions?.map(r => {
                       return (
-                        <Text>
+                        <Text key={`message-${props.message._id}-reaction-${r.emoji}`}>
                           Reaction: {r.emoji} {r.reactors.length}
                         </Text>
                       );
