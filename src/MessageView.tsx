@@ -380,6 +380,8 @@ function renderMessage(msg: RevoltMessage, grouped: boolean) {
       key={`message-${msg._id}`}
       message={msg}
       grouped={grouped}
+      onUserPress={() => app.openProfile(msg.author, msg.channel?.server)}
+      onLongPress={async () => app.openMessage(msg)}
       queued={false}
     />
   );

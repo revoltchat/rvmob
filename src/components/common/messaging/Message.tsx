@@ -404,7 +404,8 @@ export const Message = observer((props: MessageProps) => {
                 {app.settings.get('ui.messaging.showReactions')
                   ? reactions?.map(r => {
                       return (
-                        <Text key={`message-${props.message._id}-reaction-${r.emoji}`}>
+                        <Text
+                          key={`message-${props.message._id}-reaction-${r.emoji}`}>
                           Reaction: {r.emoji} {r.reactors.length}
                         </Text>
                       );
