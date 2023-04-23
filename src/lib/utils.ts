@@ -36,13 +36,22 @@ export function getColour(c: string) {
 
   const isGradient = c.match(gradientRegex);
   if (isGradient) {
+    const filteredC = c
+      .replace(gradientRegex, '')
+      .replace(bracketRegex, '')
+      .replace(degRegex, '')
+      .replace(percentRegex, '');
+
+    const filteredAsArray = filteredC.split(',');
+
     console.log(
-      `[UTILS] getColour detected a gradient role: ${c}, filtered: ${c
-        .replace(gradientRegex, '')
-        .replace(bracketRegex, '')
-        .replace(degRegex, '')
-        .replace(percentRegex, '')}`,
+      `[UTILS] getColour detected a gradient role: ${c}, filtered: ${filteredC}, to array: ${filteredAsArray}, ${filteredAsArray[0]}`,
     );
+
+    if (c.match('linear')) {
+      return filteredAsArray[0];
+    }
+
     return c;
   }
 
