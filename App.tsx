@@ -97,6 +97,12 @@ class MainView extends React.Component {
     console.log(`[APP] Mounted component (${new Date().getTime()})`);
     let defaultnotif = await createChannel();
     console.log(`[NOTIFEE] Created channel: ${defaultnotif}`);
+    client.on('connecting', () => {
+      console.log(`[APP] Connecting to instance... (${new Date().getTime()})`);
+    });
+    client.on('connected', () => {
+      console.log(`[APP] Connected to instance (${new Date().getTime()})`);
+    });
     client.on('ready', async () => {
       this.setState({status: 'loggedIn', network: 'ready'});
       console.log(`[APP] Client is ready (${new Date().getTime()})`);
@@ -110,6 +116,7 @@ class MainView extends React.Component {
       this.setState({network: 'dropped'});
     });
     client.on('message', async msg => {
+      console.log(`[APP] Handling message ${msg._id}`);
       if (
         (app.settings.get('app.notifications.notifyOnSelfPing')
           ? true

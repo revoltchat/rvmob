@@ -1,5 +1,5 @@
-import React, {ReactNode} from 'react';
-import {View, ScrollView, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {View, ScrollView, TouchableOpacity, FlatList} from 'react-native';
 import {autorun} from 'mobx';
 import {observer} from 'mobx-react-lite';
 
@@ -27,7 +27,7 @@ let didUpdateFirstTime = false;
 type RenderableMessage = {
   grouped: boolean;
   message: RevoltMessage;
-  rendered: any;
+  rendered: JSX.Element;
 };
 
 export class Messages extends React.Component {
@@ -374,7 +374,7 @@ type FetchInput = {
   type?: 'before' | 'after';
 };
 
-function renderMessage(msg: RevoltMessage, grouped: boolean) {
+function renderMessage(msg: RevoltMessage, grouped: boolean = true) {
   return (
     <Message
       key={`message-${msg._id}`}
@@ -467,128 +467,114 @@ function MessageViewErrorMessage({
   );
 }
 
-export const NewMessageView = observer(({channel}: {channel: Channel}) => {
-  const [messages, setMessages] = React.useState([] as RenderableMessage[]);
-  const renderedMessages = [] as ReactNode[];
-  const [loading, setLoading] = React.useState(true);
-  const [atEndOfPage, setAtEndOfPage] = React.useState(false);
-  const [error, setError] = React.useState(null as any);
-  const [queuedMessages, setQueuedMessages] = React.useState(
-    [] as RevoltMessage[],
-  );
-  let scrollView: ScrollView | null;
-  React.useEffect(() => {
-    console.log(`[NEWMESSAGEVIEW] Fetching messages for ${channel._id}...`);
-    async function getMessages() {
-      const msgs = await fetchMessages(channel, {}, []);
-      setMessages(msgs);
-      setLoading(false);
-    }
-    getMessages();
-  }, [channel, loading]);
-
-  for (const msg of messages) {
-    renderedMessages.push(msg.rendered);
-  }
-
-  client.on('message', async msg => {
-    if (msg.channel === channel && !queuedMessages.includes(msg)) {
-      // push message to queue to prevent rerendering
-      const newQueue = queuedMessages;
-      newQueue.push(msg);
-      setQueuedMessages(newQueue);
-
-      console.log(
-        `[NEWMESSAGEVIEW] New message ${msg._id} is in current channel`,
-      );
-      // for some reason the message array is empty here? so until this is fixed we don't group the message
-      const grouped = false; // calculateGrouped(
-      //   msg,
-      //   messages[messages.length - 1].message,
-      // );
-      const pushableMsg = {
-        grouped,
-        message: msg,
-        rendered: renderMessage(msg, grouped),
-      };
-      const newMessages = messages;
-      newMessages.push(pushableMsg);
-      setMessages(newMessages);
-      if (atEndOfPage) {
-        scrollView?.scrollToEnd();
+export const NewMessageView = observer(
+  ({
+    channel,
+    handledMessages,
+  }: {
+    channel: Channel;
+    handledMessages: RevoltMessage[];
+  }) => {
+    console.log(`[NEWMESSAGEVIEW] Creating message view for ${channel._id}...`);
+    const [messages, setMessages] = React.useState([] as RenderableMessage[]);
+    const [loading, setLoading] = React.useState(true);
+    const [atEndOfPage, setAtEndOfPage] = React.useState(false);
+    const [error, setError] = React.useState(null as any);
+    let scrollView: FlatList | null;
+    React.useEffect(() => {
+      console.log(`[NEWMESSAGEVIEW] Fetching messages for ${channel._id}...`);
+      async function getMessages() {
+        const msgs = await fetchMessages(channel, {}, []);
+        setMessages(msgs);
+        setLoading(false);
       }
+      getMessages();
+    });
 
-      // ...then remove it from the queue once we're done
-      let newQueue2 = queuedMessages;
-      newQueue2 = newQueue2.filter(message => message !== msg);
-      setQueuedMessages(newQueue2);
-    }
-  });
+    client.on('message', async msg => {
+      if (msg.channel === channel && !handledMessages.includes(msg)) {
+        handledMessages.push(msg);
+        console.log(
+          `[NEWMESSAGEVIEW] New message ${msg._id} is in current channel`,
+        );
+        const grouped = messages[messages.length - 1].message
+          ? calculateGrouped(msg, messages[messages.length - 1].message)
+          : false;
 
-  return (
-    <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
-      {error ? (
-        <Text color={'#ff6666'}>
-          Error rendering messages: {error.message ?? error}
-        </Text>
-      ) : loading ? (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={styles.loadingHeader}>Loading...</Text>
-          <Text style={styles.remark}>{selectedRemark || null}</Text>
-        </View>
-      ) : (
-        <View key={'messageview-outer-container'} style={{flex: 1}}>
-          <ScrollView
-            key={'messageview-scrollview'}
-            style={styles.messagesView}
-            ref={ref => {
-              scrollView = ref;
-            }}
-            onScroll={e => {
-              const position = e.nativeEvent.contentOffset.y;
-              const viewHeight =
-                e.nativeEvent.contentSize.height -
-                e.nativeEvent.layoutMeasurement.height;
-              // account for decimal weirdness by assuming that if the position is this close to the height that the user is at the bottom
-              if (viewHeight - position <= 1) {
-                console.log('bonk!');
-                setAtEndOfPage(true);
-              } else {
-                if (atEndOfPage) {
-                  setAtEndOfPage(false);
+        const pushableMsg = {
+          grouped,
+          message: msg,
+          rendered: renderMessage(msg, grouped),
+        };
+        setMessages(messages.concat([pushableMsg]));
+        if (atEndOfPage) {
+          scrollView?.scrollToEnd();
+        }
+      }
+    });
+
+    return (
+      <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
+        {error ? (
+          <Text color={'#ff6666'}>
+            Error rendering messages: {error.message ?? error}
+          </Text>
+        ) : loading ? (
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={styles.loadingHeader}>Loading...</Text>
+            <Text style={styles.remark}>{selectedRemark || null}</Text>
+          </View>
+        ) : (
+          <View key={'messageview-outer-container'} style={{flex: 1}}>
+            <FlatList
+              key={'messageview-scrollview'}
+              data={messages}
+              style={styles.messagesView}
+              contentContainerStyle={{paddingBottom: 20}}
+              ref={ref => {
+                scrollView = ref;
+              }}
+              renderItem={msg => {
+                return msg.item.rendered;
+              }}
+              onScroll={e => {
+                const position = e.nativeEvent.contentOffset.y;
+                const viewHeight =
+                  e.nativeEvent.contentSize.height -
+                  e.nativeEvent.layoutMeasurement.height;
+                // account for decimal weirdness by assuming that if the position is this close to the height that the user is at the bottom
+                if (viewHeight - position <= 1) {
+                  console.log('bonk!');
+                  setAtEndOfPage(true);
+                } else {
+                  if (atEndOfPage) {
+                    setAtEndOfPage(false);
+                  }
                 }
-              }
-              if (e.nativeEvent.contentOffset.y <= 0) {
-                console.log('bonk2!');
-                fetchMessages(
-                  channel,
-                  {
-                    type: 'before',
-                    id: messages[0].message._id,
-                  },
-                  messages,
-                ).then(newMsgs => {
-                  setMessages(newMsgs);
-                });
-              }
-              // console.log(
-              //   e.nativeEvent.contentOffset.y,
-              //   e.nativeEvent.contentSize.height -
-              //     e.nativeEvent.layoutMeasurement.height,
-              // );
-            }}>
-            <Text key={'testing-text'}>
-              messages: {messages.length};{' '}
-              {messages.length % 50 === 0
-                ? 'may or may not be the end'
-                : 'almost certainly the end'}
-            </Text>
-            {renderedMessages}
-            <View key={'margin-fix'} style={{marginVertical: 10}} />
-          </ScrollView>
-        </View>
-      )}
-      <MessageBox channel={channel} />
-    </ErrorBoundary>
-  );
-});
+                if (e.nativeEvent.contentOffset.y <= 0) {
+                  console.log('bonk2!');
+                  fetchMessages(
+                    channel,
+                    {
+                      type: 'before',
+                      id: messages[0].message._id,
+                    },
+                    messages,
+                  ).then(newMsgs => {
+                    setMessages(newMsgs);
+                  });
+                }
+                // console.log(
+                //   e.nativeEvent.contentOffset.y,
+                //   e.nativeEvent.contentSize.height -
+                //     e.nativeEvent.layoutMeasurement.height,
+                // );
+              }} />
+          </View>
+        )}
+        <MessageBox channel={channel} />
+      </ErrorBoundary>
+    );
+  },
+);

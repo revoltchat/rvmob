@@ -4,7 +4,7 @@ import {observer} from 'mobx-react-lite';
 
 import {ErrorBoundary} from 'react-error-boundary';
 
-import {Channel} from 'revolt.js';
+import {Channel, Message} from 'revolt.js';
 
 import {app, ChannelIcon, client} from '../../Generic';
 import {Messages, NewMessageView} from '../../MessageView';
@@ -43,6 +43,7 @@ export const ChannelView = observer(
     const [replacementChannel, setReplacementChannel] = React.useState(
       undefined as Channel | undefined,
     );
+    const handledMessages = [] as Message[];
     React.useEffect(() => {
       async function getChannel() {
         const type = 'spam';
@@ -56,6 +57,11 @@ export const ChannelView = observer(
       }
       getChannel();
     });
+    console.log(
+      `[CHANNELVIEW] Rendering channel view for ${
+        channel instanceof Channel ? channel._id : channel
+      }...`,
+    );
     return (
       <View style={styles.mainView}>
         {channel ? (
@@ -71,7 +77,10 @@ export const ChannelView = observer(
                   Debug Menu (New MessageView)
                 </Text>
               </ChannelHeader>
-              <NewMessageView channel={replacementChannel!} />
+              <NewMessageView
+                channel={replacementChannel!}
+                handledMessages={handledMessages}
+              />
             </View>
           ) : (
             <View style={styles.flex}>
