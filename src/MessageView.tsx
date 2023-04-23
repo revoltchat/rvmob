@@ -489,7 +489,7 @@ export const NewMessageView = observer(
         setLoading(false);
       }
       getMessages();
-    });
+    }, [channel]);
 
     client.on('message', async msg => {
       if (msg.channel === channel && !handledMessages.includes(msg)) {
@@ -497,16 +497,22 @@ export const NewMessageView = observer(
         console.log(
           `[NEWMESSAGEVIEW] New message ${msg._id} is in current channel`,
         );
-        const grouped = messages[messages.length - 1].message
-          ? calculateGrouped(msg, messages[messages.length - 1].message)
-          : false;
+        const grouped = false; // messages[messages.length - 1].message
+        //   ? calculateGrouped(msg, messages[messages.length - 1].message)
+        //   : false;
 
         const pushableMsg = {
           grouped,
           message: msg,
           rendered: renderMessage(msg, grouped),
         };
-        setMessages(messages.concat([pushableMsg]));
+
+        console.log(
+          `[NEWMESSAGEVIEW] ${msg._id} rendered; pushing it to the message list...`,
+        );
+        const newMessages = messages;
+        newMessages.push(pushableMsg);
+        setMessages(newMessages);
         if (atEndOfPage) {
           scrollView?.scrollToEnd();
         }
