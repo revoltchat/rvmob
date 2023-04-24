@@ -43,7 +43,7 @@ export const ChannelView = observer(
     const [replacementChannel, setReplacementChannel] = React.useState(
       undefined as Channel | undefined,
     );
-    const handledMessages = [] as Message[];
+    const handledMessages = [] as string[];
     React.useEffect(() => {
       async function getChannel() {
         const type = 'spam';

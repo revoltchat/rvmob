@@ -472,7 +472,7 @@ export const NewMessageView = observer(
     handledMessages,
   }: {
     channel: Channel;
-    handledMessages: RevoltMessage[];
+    handledMessages: string[];
   }) => {
     console.log(`[NEWMESSAGEVIEW] Creating message view for ${channel._id}...`);
     const [messages, setMessages] = React.useState([] as RevoltMessage[]);
@@ -501,9 +501,9 @@ export const NewMessageView = observer(
     }, [channel]);
 
     client.on('message', async msg => {
-      if (msg.channel === channel && !handledMessages.includes(msg)) {
+      if (msg.channel === channel && !handledMessages.includes(msg._id)) {
         try {
-          handledMessages.push(msg);
+          handledMessages.push(msg._id);
           console.log(
             `[NEWMESSAGEVIEW] New message ${msg._id} is in current channel; pushing it to the message list...`,
           );
