@@ -118,8 +118,8 @@ export function calculateGrouped(msg1: Message, msg2: Message) {
     !(msg2.reply_ids && msg2.reply_ids.length > 0) && // the message is not a reply
     differenceInMinutes(
       // the time difference is less than 7 minutes and
-      decodeTime(msg2._id),
       decodeTime(msg1._id),
+      decodeTime(msg2._id),
     ) < 7 &&
     (msg2.masquerade // the masquerade is the same
       ? msg2.masquerade.avatar === msg1.masquerade?.avatar &&
