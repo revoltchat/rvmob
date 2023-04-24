@@ -374,7 +374,20 @@ type FetchInput = {
   type?: 'before' | 'after';
 };
 
-function renderMessage(msg: RevoltMessage, grouped: boolean = true) {
+function renderMessage(msg: RevoltMessage, messages?: RevoltMessage[]) {
+  let grouped: boolean;
+  try {
+    grouped = messages
+      ? messages.indexOf(msg) !== -1
+        ? calculateGrouped(msg, messages[messages.indexOf(msg) - 1])
+        : false
+      : false;
+  } catch (err) {
+    grouped = false;
+    console.log(
+      `[NEWMESSAGEVIEW] Error calculating grouped status for ${msg}: ${err}`,
+    );
+  }
   return (
     <Message
       key={`message-${msg._id}`}
@@ -390,7 +403,7 @@ function renderMessage(msg: RevoltMessage, grouped: boolean = true) {
 async function fetchMessages(
   channel: Channel,
   input: FetchInput,
-  existingMessages: RenderableMessage[],
+  existingMessages: RevoltMessage[],
   sliceMessages?: false,
 ) {
   const type = input.type ?? 'before';
@@ -403,7 +416,9 @@ async function fetchMessages(
   //     params.sort = "Oldest"
   // }
   const res = await channel.fetchMessagesWithUsers(params);
-  console.log(`[NEWMESSAGEVIEW] Finished fetching messages for ${channel._id}`);
+  console.log(
+    `[NEWMESSAGEVIEW] Finished fetching ${res.messages.length} message(s) for ${channel._id}`,
+  );
 
   let oldMessages = existingMessages;
   if (sliceMessages) {
@@ -416,23 +431,7 @@ async function fetchMessages(
       );
     }
   }
-  let messages = res.messages.reverse().map((message, i) => {
-    try {
-      // let time = decodeTime(message._id);
-      // let grouped = ((lastAuthor == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (lastTime && time.diff(lastTime, "minute") < 5))
-      let grouped = i !== 0 && calculateGrouped(res.messages[i - 1], message);
-      let out = {
-        grouped,
-        message: message,
-        rendered: renderMessage(message, grouped), // this.renderMessage({grouped, message}),
-      };
-      // lastAuthor = (message.author ? message.author._id : lastAuthor)
-      // lastTime = time
-      return out;
-    } catch (e) {
-      console.error(e);
-    }
-  }) as RenderableMessage[];
+  let messages = res.messages.reverse();
   let result =
     input.type === 'before'
       ? messages.concat(oldMessages)
@@ -476,7 +475,7 @@ export const NewMessageView = observer(
     handledMessages: RevoltMessage[];
   }) => {
     console.log(`[NEWMESSAGEVIEW] Creating message view for ${channel._id}...`);
-    const [messages, setMessages] = React.useState([] as RenderableMessage[]);
+    const [messages, setMessages] = React.useState([] as RevoltMessage[]);
     const [loading, setLoading] = React.useState(true);
     const [atEndOfPage, setAtEndOfPage] = React.useState(false);
     const [error, setError] = React.useState(null as any);
@@ -485,36 +484,40 @@ export const NewMessageView = observer(
       console.log(`[NEWMESSAGEVIEW] Fetching messages for ${channel._id}...`);
       async function getMessages() {
         const msgs = await fetchMessages(channel, {}, []);
+        console.log(
+          `[NEWMESSAGEVIEW] Pushing ${msgs.length} initial message(s) for ${channel._id}...`,
+        );
         setMessages(msgs);
         setLoading(false);
       }
-      getMessages();
+      try {
+        getMessages();
+      } catch (err) {
+        console.log(
+          `[NEWMESSAGEVIEW] Error fetching initial messages for ${channel._id}: ${err}`,
+        );
+        setError(err);
+      }
     }, [channel]);
 
     client.on('message', async msg => {
       if (msg.channel === channel && !handledMessages.includes(msg)) {
-        handledMessages.push(msg);
-        console.log(
-          `[NEWMESSAGEVIEW] New message ${msg._id} is in current channel`,
-        );
-        const grouped = false; // messages[messages.length - 1].message
-        //   ? calculateGrouped(msg, messages[messages.length - 1].message)
-        //   : false;
-
-        const pushableMsg = {
-          grouped,
-          message: msg,
-          rendered: renderMessage(msg, grouped),
-        };
-
-        console.log(
-          `[NEWMESSAGEVIEW] ${msg._id} rendered; pushing it to the message list...`,
-        );
-        const newMessages = messages;
-        newMessages.push(pushableMsg);
-        setMessages(newMessages);
-        if (atEndOfPage) {
-          scrollView?.scrollToEnd();
+        try {
+          handledMessages.push(msg);
+          console.log(
+            `[NEWMESSAGEVIEW] New message ${msg._id} is in current channel; pushing it to the message list...`,
+          );
+          const newMessages = messages;
+          newMessages.push(msg);
+          setMessages(newMessages);
+          if (atEndOfPage) {
+            scrollView?.scrollToEnd();
+          }
+        } catch (err) {
+          console.log(
+            `[NEWMESSAGEVIEW] Error pusshing new message (${msg._id}): ${err}`,
+          );
+          setError(err);
         }
       }
     });
@@ -542,7 +545,7 @@ export const NewMessageView = observer(
                 scrollView = ref;
               }}
               renderItem={msg => {
-                return msg.item.rendered;
+                return renderMessage(msg.item, messages, setError);
               }}
               onScroll={e => {
                 const position = e.nativeEvent.contentOffset.y;
@@ -564,7 +567,7 @@ export const NewMessageView = observer(
                     channel,
                     {
                       type: 'before',
-                      id: messages[0].message._id,
+                      id: messages[0]._id,
                     },
                     messages,
                   ).then(newMsgs => {
@@ -576,7 +579,8 @@ export const NewMessageView = observer(
                 //   e.nativeEvent.contentSize.height -
                 //     e.nativeEvent.layoutMeasurement.height,
                 // );
-              }} />
+              }}
+            />
           </View>
         )}
         <MessageBox channel={channel} />

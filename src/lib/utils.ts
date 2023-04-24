@@ -108,9 +108,13 @@ export function parseRevoltNodes(text: string) {
 }
 
 export function calculateGrouped(msg1: Message, msg2: Message) {
+  // if the author is somehow null don't group the message
+  if (!msg1.author || !msg2.author) {
+    return false;
+  }
   return (
     // a message is grouped with the previous message if all of the following is true:
-    msg1.author?._id === msg2.author?._id && // the author is the same
+    msg1.author._id === msg2.author._id && // the author is the same
     !(msg2.reply_ids && msg2.reply_ids.length > 0) && // the message is not a reply
     differenceInMinutes(
       // the time difference is less than 7 minutes and
