@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, ScrollView, TouchableOpacity, FlatList} from 'react-native';
+import {View, ScrollView, TouchableOpacity, FlatList, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import {autorun} from 'mobx';
 import {observer} from 'mobx-react-lite';
 
@@ -522,6 +522,53 @@ export const NewMessageView = observer(
       }
     });
 
+    // set functions here so they don't get recreated
+    const renderItem = ({item}: {item: RevoltMessage}) => {
+      return renderMessage(item, messages);
+    };
+
+    const keyExtractor = (item: RevoltMessage) => {
+      return `message-${item._id}`;
+    };
+
+    const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const position = e.nativeEvent.contentOffset.y;
+      const viewHeight =
+        e.nativeEvent.contentSize.height -
+        e.nativeEvent.layoutMeasurement.height;
+      // account for decimal weirdness by assuming that if the position is this close to the height that the user is at the bottom
+      if (viewHeight - position <= 1) {
+        console.log('bonk!');
+        setAtEndOfPage(true);
+      } else {
+        if (atEndOfPage) {
+          setAtEndOfPage(false);
+        }
+      }
+      if (e.nativeEvent.contentOffset.y <= 0) {
+        console.log('bonk2!');
+        fetchMessages(
+          channel,
+          {
+            type: 'before',
+            id: messages[0]._id,
+          },
+          messages,
+        ).then(newMsgs => {
+          setMessages(newMsgs);
+        });
+      }
+      // console.log(
+      //   e.nativeEvent.contentOffset.y,
+      //   e.nativeEvent.contentSize.height -
+      //     e.nativeEvent.layoutMeasurement.height,
+      // );
+    };
+
+    const ref = (view: FlatList) => {
+      scrollView = view;
+    };
+
     return (
       <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
         {error ? (
@@ -538,48 +585,13 @@ export const NewMessageView = observer(
           <View key={'messageview-outer-container'} style={{flex: 1}}>
             <FlatList
               key={'messageview-scrollview'}
+              keyExtractor={keyExtractor}
               data={messages}
               style={styles.messagesView}
               contentContainerStyle={{paddingBottom: 20}}
-              ref={ref => {
-                scrollView = ref;
-              }}
-              renderItem={msg => {
-                return renderMessage(msg.item, messages, setError);
-              }}
-              onScroll={e => {
-                const position = e.nativeEvent.contentOffset.y;
-                const viewHeight =
-                  e.nativeEvent.contentSize.height -
-                  e.nativeEvent.layoutMeasurement.height;
-                // account for decimal weirdness by assuming that if the position is this close to the height that the user is at the bottom
-                if (viewHeight - position <= 1) {
-                  console.log('bonk!');
-                  setAtEndOfPage(true);
-                } else {
-                  if (atEndOfPage) {
-                    setAtEndOfPage(false);
-                  }
-                }
-                if (e.nativeEvent.contentOffset.y <= 0) {
-                  console.log('bonk2!');
-                  fetchMessages(
-                    channel,
-                    {
-                      type: 'before',
-                      id: messages[0]._id,
-                    },
-                    messages,
-                  ).then(newMsgs => {
-                    setMessages(newMsgs);
-                  });
-                }
-                // console.log(
-                //   e.nativeEvent.contentOffset.y,
-                //   e.nativeEvent.contentSize.height -
-                //     e.nativeEvent.layoutMeasurement.height,
-                // );
-              }}
+              ref={ref}
+              renderItem={renderItem}
+              onScroll={onScroll}
             />
           </View>
         )}
