@@ -20,15 +20,9 @@ import {styles, currentTheme} from './Theme';
 import {Button, Text} from './components/common/atoms';
 import {Message} from './components/common/messaging';
 import {DEFAULT_MESSAGE_LOAD_COUNT} from './lib/consts';
-import {calculateGrouped} from './lib/utils';
+import {calculateGrouped, fetchMessages} from './lib/utils';
 
 let didUpdateFirstTime = false;
-
-type RenderableMessage = {
-  grouped: boolean;
-  message: RevoltMessage;
-  rendered: JSX.Element;
-};
 
 export class Messages extends React.Component {
   constructor(props) {
@@ -369,11 +363,6 @@ export class Messages extends React.Component {
   }
 }
 
-type FetchInput = {
-  id?: string;
-  type?: 'before' | 'after';
-};
-
 function renderMessage(msg: RevoltMessage, messages?: RevoltMessage[]) {
   let grouped: boolean;
   try {
@@ -398,51 +387,6 @@ function renderMessage(msg: RevoltMessage, messages?: RevoltMessage[]) {
       queued={false}
     />
   );
-}
-
-async function fetchMessages(
-  channel: Channel,
-  input: FetchInput,
-  existingMessages: RevoltMessage[],
-  sliceMessages?: false,
-) {
-  const type = input.type ?? 'before';
-  let params = {
-    // input.before ? DEFAULT_MESSAGE_LOAD_COUNT / 2 :
-    limit: DEFAULT_MESSAGE_LOAD_COUNT,
-  };
-  params[type] = input.id;
-  // if (type == "after") {
-  //     params.sort = "Oldest"
-  // }
-  const res = await channel.fetchMessagesWithUsers(params);
-  console.log(
-    `[NEWMESSAGEVIEW] Finished fetching ${res.messages.length} message(s) for ${channel._id}`,
-  );
-
-  let oldMessages = existingMessages;
-  if (sliceMessages) {
-    if (input.type === 'before') {
-      oldMessages = oldMessages.slice(0, DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1);
-    } else if (input.type === 'after') {
-      oldMessages = oldMessages.slice(
-        DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1,
-        DEFAULT_MESSAGE_LOAD_COUNT - 1,
-      );
-    }
-  }
-  let messages = res.messages.reverse();
-  let result =
-    input.type === 'before'
-      ? messages.concat(oldMessages)
-      : input.type === 'after'
-      ? oldMessages.concat(messages)
-      : messages;
-  console.log(
-    `[NEWMESSAGEVIEW] Finished preparing fetched messages for ${channel._id}`,
-  );
-
-  return result;
 }
 
 function MessageViewErrorMessage({

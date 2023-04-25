@@ -4,7 +4,7 @@ import {observer} from 'mobx-react-lite';
 
 import {ErrorBoundary} from 'react-error-boundary';
 
-import {Channel, Message} from 'revolt.js';
+import {Channel} from 'revolt.js';
 
 import {app, ChannelIcon, client} from '../../Generic';
 import {Messages, NewMessageView} from '../../MessageView';

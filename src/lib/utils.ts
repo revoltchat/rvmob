@@ -1,9 +1,10 @@
 import {differenceInMinutes} from 'date-fns';
-import {Message} from 'revolt.js';
+import {Channel, Message} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
 import {client} from '../Generic';
 import {currentTheme} from '../Theme';
+import {DEFAULT_MESSAGE_LOAD_COUNT} from './consts';
 
 /**
  * Returns the correct colour as a HEX string/theme variable. Supports regular HEX colours, client variables (e.g. `var(--accent)`)
@@ -126,4 +127,54 @@ export function calculateGrouped(msg1: Message, msg2: Message) {
         msg2.masquerade.name === msg1.masquerade?.name
       : true)
   );
+}
+
+type FetchInput = {
+  id?: string;
+  type?: 'before' | 'after';
+};
+
+export async function fetchMessages(
+  channel: Channel,
+  input: FetchInput,
+  existingMessages: Message[],
+  sliceMessages?: false,
+) {
+  const type = input.type ?? 'before';
+  let params = {
+    // input.before ? DEFAULT_MESSAGE_LOAD_COUNT / 2 :
+    limit: DEFAULT_MESSAGE_LOAD_COUNT,
+  } as {limit: number; before?: string; after?: string};
+  params[type] = input.id;
+  // if (type == "after") {
+  //     params.sort = "Oldest"
+  // }
+  const res = await channel.fetchMessagesWithUsers(params);
+  console.log(
+    `[FETCHMESSAGES] Finished fetching ${res.messages.length} message(s) for ${channel._id}`,
+  );
+
+  let oldMessages = existingMessages;
+  if (sliceMessages) {
+    if (input.type === 'before') {
+      oldMessages = oldMessages.slice(0, DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1);
+    } else if (input.type === 'after') {
+      oldMessages = oldMessages.slice(
+        DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1,
+        DEFAULT_MESSAGE_LOAD_COUNT - 1,
+      );
+    }
+  }
+  let messages = res.messages.reverse();
+  let result =
+    input.type === 'before'
+      ? messages.concat(oldMessages)
+      : input.type === 'after'
+      ? oldMessages.concat(messages)
+      : messages;
+  console.log(
+    `[FETCHEDMESSAGES] Finished preparing fetched messages for ${channel._id}`,
+  );
+
+  return result;
 }
