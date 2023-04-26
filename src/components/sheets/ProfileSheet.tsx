@@ -11,7 +11,6 @@ import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 
 import {User, Server} from 'revolt.js';
 
-import {UserMenuSheet} from './UserMenuSheet';
 import {app, client, GeneralAvatar, openUrl} from '../../Generic';
 import {BADGES, USER_IDS} from '../../lib/consts';
 import {parseRevoltNodes} from '../../lib/utils';
@@ -19,6 +18,7 @@ import {Avatar, MiniProfile, RoleView, Username} from '../../Profile';
 import {currentTheme, styles} from '../../Theme';
 import {Button, ContextButton, Link, Text} from '../common/atoms';
 import {MarkdownView} from '../common/MarkdownView';
+import {UserMenuSheet} from './index';
 
 // const Image = FastImage;
 
