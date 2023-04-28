@@ -201,7 +201,9 @@ const SettingsCategory = observer(
 
     return (
       <View key={`settings-category-${category}`}>
-        <Text type={'header'}>{friendlyName}</Text>
+        <Text key={`settings-category-${category}-header`} type={'header'}>
+          {friendlyName}
+        </Text>
         {app.settings.list.map(sRaw => {
           try {
             if (sRaw.experimental && !showExperimental) {
@@ -216,13 +218,19 @@ const SettingsCategory = observer(
             if (sRaw.type === 'boolean') {
               return (
                 <BoolSetting
+                  key={`settings-${sRaw.key}-outer`}
                   sRaw={sRaw}
                   experimentalFunction={setShowExperimental}
                   devFunction={setShowDev}
                 />
               );
             } else if (sRaw.type === 'string' || sRaw.type === 'number') {
-              return <StringNumberSetting sRaw={sRaw} />;
+              return (
+                <StringNumberSetting
+                  key={`settings-${sRaw.key}-outer`}
+                  sRaw={sRaw}
+                />
+              );
             }
           } catch (err) {
             console.log(err);
