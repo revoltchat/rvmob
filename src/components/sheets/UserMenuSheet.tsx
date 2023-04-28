@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, View} from 'react-native';
+import {Pressable, ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -17,16 +17,29 @@ export const UserMenuSheet = observer(
     return (
       <>
         <ScrollView style={{flex: 1, padding: 3}}>
-          <ContextButton onPress={() => state(false)}>
-            <View style={styles.iconContainer}>
-              <MaterialCommunityIcon
-                name="close-circle"
-                size={16}
-                color={currentTheme.foregroundPrimary}
-              />
-            </View>
-            <Text>Close</Text>
-          </ContextButton>
+          <Pressable
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: 10,
+            }}
+            onPress={() => {
+              state(false);
+            }}>
+            <MaterialCommunityIcon
+              name="close-circle"
+              size={20}
+              color={currentTheme.foregroundSecondary}
+            />
+            <Text
+              style={{
+                color: currentTheme.foregroundSecondary,
+                fontSize: 16,
+                marginLeft: 5,
+              }}>
+              Close
+            </Text>
+          </Pressable>
           {app.settings.get('ui.showDeveloperFeatures') ? (
             <ContextButton
               onPress={() => {

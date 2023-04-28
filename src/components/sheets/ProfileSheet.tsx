@@ -326,32 +326,6 @@ export const ProfileSheet = observer(
               </>
             ) : (
               <>
-                {app.settings.get('ui.showDeveloperFeatures') ? (
-                  <ContextButton
-                    key={'Copy ID'}
-                    onPress={() => {
-                      Clipboard.setString(user._id);
-                    }}>
-                    <View style={styles.iconContainer}>
-                      <FA5Icon
-                        name="clipboard"
-                        size={18}
-                        color={currentTheme.foregroundPrimary}
-                      />
-                    </View>
-                    <Text>
-                      Copy ID{' '}
-                      <Text
-                        style={{
-                          marginTop: 3,
-                          fontSize: 12,
-                          color: currentTheme.foregroundSecondary,
-                        }}>
-                        ({user._id})
-                      </Text>
-                    </Text>
-                  </ContextButton>
-                ) : null}
                 <Text style={styles.profileSubheader}>STATUS</Text>
                 <Text key={'profile-status-menu-notice'}>
                   Status settings have moved.
