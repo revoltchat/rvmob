@@ -10,7 +10,7 @@ import {Message} from 'revolt.js';
 
 import {app} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
-import {ContextButton, Text} from '../common/atoms';
+import {ContextButton, CopyIDButton, Text} from '../common/atoms';
 import {ReplyMessage} from '../common/messaging';
 
 export const MessageMenuSheet = observer(
@@ -79,27 +79,7 @@ export const MessageMenuSheet = observer(
             </ContextButton>
           ) : null}
           {app.settings.get('ui.showDeveloperFeatures') ? (
-            <ContextButton
-              onPress={() => {
-                Clipboard.setString(message._id);
-              }}>
-              <View style={styles.iconContainer}>
-                <MaterialIcon
-                  name="content-copy"
-                  size={20}
-                  color={currentTheme.foregroundPrimary}
-                />
-              </View>
-              <Text>
-                Copy ID{' '}
-                <Text
-                  style={{
-                    color: currentTheme.foregroundSecondary,
-                  }}>
-                  ({message?._id})
-                </Text>
-              </Text>
-            </ContextButton>
+            <CopyIDButton id={message._id} />
           ) : null}
           {message?.channel?.havePermission('ManageMessages') ||
           message?.author?.relationship === 'User' ? (

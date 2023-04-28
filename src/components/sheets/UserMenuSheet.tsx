@@ -10,7 +10,7 @@ import {User} from 'revolt.js';
 
 import {app} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
-import {ContextButton, Text} from '../common/atoms';
+import {ContextButton, CopyIDButton, Text} from '../common/atoms';
 
 export const UserMenuSheet = observer(
   ({state, user}: {state: any; user: User}) => {
@@ -41,24 +41,7 @@ export const UserMenuSheet = observer(
             </Text>
           </Pressable>
           {app.settings.get('ui.showDeveloperFeatures') ? (
-            <ContextButton
-              onPress={() => {
-                Clipboard.setString(user._id);
-              }}>
-              <View style={styles.iconContainer}>
-                <MaterialIcon
-                  name="content-copy"
-                  size={20}
-                  color={currentTheme.foregroundPrimary}
-                />
-              </View>
-              <Text>
-                Copy ID{' '}
-                <Text colour={currentTheme.foregroundSecondary}>
-                  ({user._id})
-                </Text>
-              </Text>
-            </ContextButton>
+            <CopyIDButton id={user._id} />
           ) : null}
           {user.relationship !== 'User' ? (
             <ContextButton

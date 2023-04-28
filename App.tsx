@@ -25,7 +25,7 @@ import notifee from '@notifee/react-native';
 import {Button, Link, Text} from './src/components/common/atoms';
 import {LoginSettingsPage} from './src/components/pages/LoginSettingsPage';
 import {ChannelView} from './src/components/views/ChannelView';
-import { Notification } from './src/components/Notification';
+import {Notification} from './src/components/Notification';
 
 async function createChannel() {
   const channel = await notifee.createChannel({
