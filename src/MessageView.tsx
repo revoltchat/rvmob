@@ -445,16 +445,17 @@ export const NewMessageView = observer(
     }, [channel]);
 
     client.on('message', async msg => {
+      // set this before anything happens that might change it
+      const shouldScroll = atEndOfPage;
       if (msg.channel === channel && !handledMessages.includes(msg._id)) {
         try {
+          console.log(atEndOfPage);
           handledMessages.push(msg._id);
           console.log(
-            `[NEWMESSAGEVIEW] New message ${msg._id} is in current channel; pushing it to the message list...`,
+            `[NEWMESSAGEVIEW] New message ${msg._id} is in current channel; pushing it to the message list... (debug: will scroll = ${atEndOfPage})`,
           );
-          const newMessages = messages;
-          newMessages.push(msg);
-          setMessages(newMessages);
-          if (atEndOfPage) {
+          setMessages(oldMessages => [...oldMessages, msg]);
+          if (shouldScroll) {
             scrollView?.scrollToEnd();
           }
         } catch (err) {
