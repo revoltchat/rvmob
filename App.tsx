@@ -25,6 +25,7 @@ import notifee from '@notifee/react-native';
 import {Button, Link, Text} from './src/components/common/atoms';
 import {LoginSettingsPage} from './src/components/pages/LoginSettingsPage';
 import {ChannelView} from './src/components/views/ChannelView';
+import { Notification } from './src/components/Notification';
 
 async function createChannel() {
   const channel = await notifee.createChannel({
@@ -54,6 +55,7 @@ class MainView extends React.Component {
       rightMenuOpen: false,
       imageViewerImage: null,
       nsfwConsented: false,
+      notificationMessage: null,
       rerender: 0,
     };
     setFunction('openChannel', async c => {
@@ -128,6 +130,7 @@ class MainView extends React.Component {
         console.log(
           `[NOTIFICATIONS] Pushing notification for message ${msg._id}`,
         );
+        this.setState({notificationMessage: msg});
         let notifs = (await notifee.getDisplayedNotifications()).filter(
           n => n.id === msg.channel?._id,
         );
@@ -257,6 +260,10 @@ class MainView extends React.Component {
             </SideMenu>
             <Modals state={this.state} setState={this.setState.bind(this)} />
             <NetworkIndicator client={client} />
+            {/* <Notification
+              message={this.state.notificationMessage}
+              setState={this.setState}
+            /> */}
           </View>
         ) : this.state.status === 'awaitingLogin' ? (
           <View style={styles.app}>
