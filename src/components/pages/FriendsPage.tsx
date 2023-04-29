@@ -111,7 +111,15 @@ export const FriendsPage = observer(() => {
             INCOMING REQUESTS - {incoming.length}
           </Text>
         </TouchableOpacity>
-        {displayState.incoming && <View>{incoming}</View>}
+        {displayState.incoming && (
+          <View>
+            {incoming.length > 0 ? (
+              incoming
+            ) : (
+              <Text style={{marginHorizontal: 10}}>No incoming requests</Text>
+            )}
+          </View>
+        )}
 
         {/* outgoing requests */}
         <TouchableOpacity
@@ -125,7 +133,15 @@ export const FriendsPage = observer(() => {
             OUTGOING REQUESTS - {outgoing.length}
           </Text>
         </TouchableOpacity>
-        {displayState.outgoing && <View>{outgoing}</View>}
+        {displayState.outgoing && (
+          <View>
+            {outgoing.length > 0 ? (
+              outgoing
+            ) : (
+              <Text style={{marginHorizontal: 10}}>No outgoing requests</Text>
+            )}
+          </View>
+        )}
 
         {/* online friends */}
         <TouchableOpacity
@@ -139,7 +155,15 @@ export const FriendsPage = observer(() => {
             ONLINE FRIENDS - {onlineFriends.length}
           </Text>
         </TouchableOpacity>
-        {displayState.onlineFriends && <View>{onlineFriends}</View>}
+        {displayState.onlineFriends && (
+          <View>
+            {onlineFriends.length > 0 ? (
+              onlineFriends
+            ) : (
+              <Text style={{marginHorizontal: 10}}>No online friends</Text>
+            )}
+          </View>
+        )}
 
         {/* offline friends */}
         <TouchableOpacity
@@ -153,7 +177,15 @@ export const FriendsPage = observer(() => {
             OFFLINE FRIENDS - {offlineFriends.length}
           </Text>
         </TouchableOpacity>
-        {displayState.offlineFriends && <View>{offlineFriends}</View>}
+        {displayState.offlineFriends && (
+          <View>
+            {offlineFriends.length > 0 ? (
+              offlineFriends
+            ) : (
+              <Text style={{marginHorizontal: 10}}>No offline friends</Text>
+            )}
+          </View>
+        )}
 
         {/* blocked users */}
         <TouchableOpacity
@@ -165,7 +197,15 @@ export const FriendsPage = observer(() => {
           }>
           <Text style={sectionHeaderStyles}>BLOCKED - {blocked.length}</Text>
         </TouchableOpacity>
-        {displayState.blocked && <View>{blocked}</View>}
+        {displayState.blocked && (
+          <View>
+            {blocked.length > 0 ? (
+              blocked
+            ) : (
+              <Text style={{marginHorizontal: 10}}>No blocked users</Text>
+            )}
+          </View>
+        )}
       </ScrollView>
     </View>
   );
