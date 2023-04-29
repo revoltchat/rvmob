@@ -101,7 +101,7 @@ export function parseRevoltNodes(text: string) {
     let id = ping.slice(1, -1);
     let emoji = client.emojis.get(id);
     if (emoji) {
-      return `!EMOJI - [${emoji.name}](${emoji.imageURL}) - EMOJI!`;
+      return `%EMOJI - [${emoji.name}](${emoji.imageURL}) - EMOJI%`;
     }
     return ping;
   });
