@@ -19,7 +19,6 @@ export class LeftMenu extends React.Component {
     super(props);
     this.state = {
       currentServer: null,
-      rerender: 0,
     };
     setFunction('openServer', s => {
       this.setState({currentServer: s});

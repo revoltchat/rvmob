@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, ScrollView, TouchableOpacity, FlatList, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  FlatList,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from 'react-native';
 import {autorun} from 'mobx';
 import {observer} from 'mobx-react-lite';
 
@@ -57,7 +64,7 @@ export class Messages extends React.Component {
   //   this.setState({error});
   //   console.error(error);
   // }
-  // TODO: should we try and fix this or just remove it? (relevant context: removing it doesn't seem to break anything? and i want to move to functional components, so this would need tweaking anwyay)
+  // TODO: should we try and fix this or just remove it? (relevant context: removing it doesn't seem to break anything? and we're currently moving to functional components, so this would need tweaking anyway)
   // shouldComponentUpdate(nextProps, nextState) {
   //   if (nextProps.rerender !== this.props.rerender) {
   //     console.log('rerender type 1');

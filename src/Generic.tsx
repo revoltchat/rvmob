@@ -282,12 +282,12 @@ export const app = {
       },
     ] as Setting[],
   },
-  openProfile: (u, s: Server | undefined) => {},
+  openProfile: (u, s?: Server) => {},
   openLeftMenu: o => {},
   openRightMenu: o => {},
   openInvite: i => {},
   openBotInvite: i => {},
-  openServer: (s: Server | undefined) => {},
+  openServer: (s?: Server) => {},
   openChannel: c => {},
   openImage: a => {},
   openMessage: m => {},
@@ -333,8 +333,6 @@ async function initialiseSettings() {
     }
   }
 }
-
-// initialiseSettings(); // we'd await this if we could
 
 async function getAPIURL() {
   await initialiseSettings();

@@ -135,7 +135,6 @@ export const ChannelView = observer(
                     onImagePress={a => {
                       state.setState({imageViewerImage: a});
                     }}
-                    rerender={state.state.rerender}
                     onUsernamePress={m =>
                       state.setState({
                         currentText:

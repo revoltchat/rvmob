@@ -56,7 +56,6 @@ class MainView extends React.Component {
       imageViewerImage: null,
       nsfwConsented: false,
       notificationMessage: null,
-      rerender: 0,
     };
     setFunction('openChannel', async c => {
       // if (!this.state.currentChannel || this.state.currentChannel?.server?._id != c.server?._id) c.server?.fetchMembers()
@@ -234,7 +233,6 @@ class MainView extends React.Component {
                 onChange={open => this.setState({leftMenuOpen: open})}
                 menu={
                   <LeftMenu
-                    rerender={this.state.rerender}
                     onChannelClick={s => {
                       this.setState({
                         currentChannel: s,
