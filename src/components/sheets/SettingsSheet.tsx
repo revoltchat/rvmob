@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Image,
   Pressable,
   ScrollView,
   TextInput,
@@ -10,7 +11,13 @@ import {observer} from 'mobx-react-lite';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-clipboard/clipboard';
-import {getApiLevel, getBrand, getDevice} from 'react-native-device-info';
+import {
+  getApiLevel,
+  getBrand,
+  getBundleId,
+  getDevice,
+} from 'react-native-device-info';
+// import FastImage from 'react-native-fast-image';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -18,6 +25,12 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {app, client, Setting} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
 import {Checkbox, ContextButton, Link, Text} from '../common/atoms';
+
+// const Image = FastImage;
+
+const icon = getBundleId().match('debug')
+  ? require('../../../assets/images/icon_debug.png')
+  : require('../../../assets/images/icon_release.png');
 
 type Section = string | null;
 
@@ -493,7 +506,13 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
               </Text>
             </Pressable>
             <Text type={'header'}>About</Text>
-            <Text style={{fontWeight: 'bold'}}>RVMob {app.version}</Text>
+            <View style={{alignItems: 'center'}}>
+              <Image
+                source={icon}
+                style={{height: 150, width: 150, marginVertical: 4}}
+              />
+              <Text type={'header'}>RVMob {app.version}</Text>
+            </View>
             <View style={{flexDirection: 'row'}}>
               <Text>Made by </Text>
               <Link link={'https://github.com/TaiAurori'} label={'TaiAurori'} />
@@ -505,11 +524,13 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
                 label={'other contributors'}
               />
             </View>
-            <Text>Licensed under the </Text>
-            <Link
-              link={'https://github.com/revoltchat/rvmob/blob/master/LICENSE'}
-              label={'GNU Affero General Public License v3.0'}
-            />
+            <View style={{flexDirection: 'row'}}>
+              <Text>Licensed under the </Text>
+              <Link
+                link={'https://github.com/revoltchat/rvmob/blob/master/LICENSE'}
+                label={'GNU GPL v3.0'}
+              />
+            </View>
             <ContextButton
               backgroundColor={currentTheme.error}
               style={{justifyContent: 'center', marginTop: 10}}
