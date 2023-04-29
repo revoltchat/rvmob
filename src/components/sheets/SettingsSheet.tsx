@@ -17,7 +17,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {app, client, Setting} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
-import {Checkbox, ContextButton, Text} from '../common/atoms';
+import {Checkbox, ContextButton, Link, Text} from '../common/atoms';
 
 type Section = string | null;
 
@@ -283,6 +283,22 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
       <ScrollView style={{flex: 1}}>
         {section == null ? (
           <>
+            <Text type={'header'}>Account</Text>
+            <ContextButton
+              style={{flex: 1, marginBottom: 10}}
+              backgroundColor={currentTheme.backgroundSecondary}
+              onPress={() => {
+                setSection('account');
+              }}>
+              <View style={styles.iconContainer}>
+                <MaterialIcon
+                  name={'person'}
+                  color={currentTheme.foregroundPrimary}
+                  size={25}
+                />
+              </View>
+              <Text>Account</Text>
+            </ContextButton>
             <Text type={'header'}>App</Text>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
@@ -314,22 +330,6 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
               </View>
               <Text>Features</Text>
             </ContextButton>
-            <Text type={'header'}>Account</Text>
-            <ContextButton
-              style={{flex: 1, marginBottom: 10}}
-              backgroundColor={currentTheme.backgroundSecondary}
-              onPress={() => {
-                setSection('account');
-              }}>
-              <View style={styles.iconContainer}>
-                <MaterialIcon
-                  name={'person'}
-                  color={currentTheme.foregroundPrimary}
-                  size={25}
-                />
-              </View>
-              <Text>Account</Text>
-            </ContextButton>
             <Text type={'header'}>Advanced</Text>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
@@ -347,14 +347,19 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
               <Text>Copy Debug Info</Text>
             </ContextButton>
             <ContextButton
-              backgroundColor={currentTheme.error}
-              style={{justifyContent: 'center', marginTop: 10}}
+              style={{flex: 1, marginTop: 10}}
+              backgroundColor={currentTheme.backgroundSecondary}
               onPress={() => {
-                app.settings.clear();
+                setSection('info');
               }}>
-              <Text style={{color: currentTheme.accentColorForeground}}>
-                Reset Settings
-              </Text>
+              <View style={styles.iconContainer}>
+                <MaterialIcon
+                  name={'info'}
+                  color={currentTheme.foregroundPrimary}
+                  size={20}
+                />
+              </View>
+              <Text>About RVMob</Text>
             </ContextButton>
           </>
         ) : section === 'appearance' ? (
@@ -459,6 +464,60 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
                   }}>
                   {client.user?.username}
                 </Text>
+              </Text>
+            </ContextButton>
+          </View>
+        ) : section === 'info' ? (
+          <View>
+            <Pressable
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 10,
+              }}
+              onPress={() => {
+                setSection(null);
+              }}>
+              <MaterialIcon
+                name="arrow-back"
+                size={24}
+                color={currentTheme.foregroundSecondary}
+              />
+              <Text
+                style={{
+                  color: currentTheme.foregroundSecondary,
+                  fontSize: 20,
+                  marginLeft: 5,
+                }}>
+                Back
+              </Text>
+            </Pressable>
+            <Text type={'header'}>About</Text>
+            <Text style={{fontWeight: 'bold'}}>RVMob {app.version}</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text>Made by </Text>
+              <Link link={'https://github.com/TaiAurori'} label={'TaiAurori'} />
+              <Text>, </Text>
+              <Link link={'https://github.com/Rexogamer'} label={'Rexogamer'} />
+              <Text> and </Text>
+              <Link
+                link={'https://github.com/revoltchat/rvmob/graphs/contributors'}
+                label={'other contributors'}
+              />
+            </View>
+            <Text>Licensed under the </Text>
+            <Link
+              link={'https://github.com/revoltchat/rvmob/blob/master/LICENSE'}
+              label={'GNU Affero General Public License v3.0'}
+            />
+            <ContextButton
+              backgroundColor={currentTheme.error}
+              style={{justifyContent: 'center', marginTop: 10}}
+              onPress={() => {
+                app.settings.clear();
+              }}>
+              <Text style={{color: currentTheme.accentColorForeground}}>
+                Reset Settings
               </Text>
             </ContextButton>
           </View>
