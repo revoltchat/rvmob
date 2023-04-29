@@ -383,6 +383,12 @@ function refreshStyles() {
       borderBottomWidth: 1,
       flexDirection: 'row',
     },
+    attachmentsBar: {
+      padding: 8,
+      borderBottomColor: currentTheme.backgroundPrimary,
+      borderBottomWidth: 1,
+      flexDirection: 'column',
+    },
     repliedMessagePreviews: {
       paddingTop: 4,
     },

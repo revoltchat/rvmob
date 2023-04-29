@@ -150,7 +150,10 @@ export const MessageBox = observer((props: MessageBoxProps) => {
             </View>
           ))
         : null}
-      {/* <AttachmentsBar attachments={attachments} /> */}
+      <AttachmentsBar
+        attachments={attachments}
+        setAttachments={setAttachments}
+      />
       {editingMessage ? (
         <View key={'editing'} style={styles.messageBoxBar}>
           <Pressable
@@ -198,9 +201,10 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                   console.log(
                     `[MESSAGEBOX] Pushing attachment ${res.name} (${res.uri})`,
                   );
-                  let newAttachments = attachments;
-                  newAttachments.push(res);
-                  setAttachments(newAttachments);
+                  setAttachments(existingAttachments => [
+                    ...existingAttachments,
+                    res,
+                  ]);
                   console.log(attachments);
                 }
               } catch (error) {
@@ -305,7 +309,13 @@ export const MessageBox = observer((props: MessageBoxProps) => {
 });
 
 export const AttachmentsBar = observer(
-  ({attachments}: {attachments: DocumentPickerResponse[]}) => {
+  ({
+    attachments,
+    setAttachments,
+  }: {
+    attachments: DocumentPickerResponse[];
+    setAttachments: Function;
+  }) => {
     if (attachments) {
       console.log('ding');
 
@@ -314,10 +324,51 @@ export const AttachmentsBar = observer(
         return (
           <View
             key={'message-box-attachments-bar'}
-            style={styles.messageBoxBar}>
-            <Text style={{marginTop: -1}}>
-              {attachments.length} attachment(s)
+            style={styles.attachmentsBar}>
+            <Text
+              key={'message-box-attachments-bar-header'}
+              style={{fontWeight: 'bold'}}>
+              {attachments.length}{' '}
+              {attachments.length === 1 ? 'attachment' : 'attachments'}
             </Text>
+            {attachments.map(a => {
+              return (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    padding: 8,
+                    margin: 4,
+                    backgroundColor: currentTheme.backgroundPrimary,
+                    borderRadius: 4,
+                  }}
+                  key={`message-box-attachments-bar-attachment-${a.name}`}>
+                  <Pressable
+                    style={{
+                      width: 30,
+                      height: 20,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                    onPress={() =>
+                      setAttachments(
+                        attachments?.filter(a2 => a2.uri !== a.uri),
+                      )
+                    }>
+                    <View style={styles.iconContainer}>
+                      <MaterialCommunityIcon
+                        name="close-circle"
+                        size={16}
+                        color={currentTheme.foregroundPrimary}
+                      />
+                    </View>
+                  </Pressable>
+                  <Text
+                    key={`message-box-attachments-bar-attachment-${a.name}-name`}>
+                    {a.name}
+                  </Text>
+                </View>
+              );
+            })}
           </View>
         );
       }
