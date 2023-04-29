@@ -22,6 +22,7 @@ import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
+import AppInfo from '../../../package.json';
 import {app, client, Setting} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
 import {Checkbox, ContextButton, Link, Text} from '../common/atoms';
@@ -511,7 +512,26 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
                 source={icon}
                 style={{height: 150, width: 150, marginVertical: 4}}
               />
-              <Text type={'header'}>RVMob {app.version}</Text>
+              <Text type={'header'}>RVMob v{app.version}</Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text>Powered by </Text>
+              <Link link={'https://reactnative.dev'} label={'React Native'} />
+              <Text>
+                {' '}
+                v{AppInfo.dependencies['react-native'].replace(
+                  '^',
+                  '',
+                )} and{' '}
+              </Text>
+              <Link
+                link={'https://github.com/revoltchat/revolt.js'}
+                label={'revolt.js'}
+              />
+              <Text>
+                {' '}
+                v{AppInfo.dependencies['revolt.js'].replace('^', '')}
+              </Text>
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text>Made by </Text>
