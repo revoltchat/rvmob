@@ -18,10 +18,12 @@ export const LeftMenu = ({
   currentChannel,
   onChannelClick,
   onLogOut,
+  orderedServers,
 }: {
   currentChannel: any;
   onChannelClick: Function;
   onLogOut: Function;
+  orderedServers: string[];
 }) => {
   const [currentServer, setCurrentServer] = React.useState(
     null as Server | null,
@@ -62,6 +64,7 @@ export const LeftMenu = ({
           <ServerList
             onServerPress={(s: Server) => setCurrentServer(s)}
             onServerLongPress={(s: Server) => app.openServerContextMenu(s)}
+            ordered={orderedServers}
           />
         </ScrollView>
         <ScrollView key={'channel-list'} style={styles.channelList}>

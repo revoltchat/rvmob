@@ -391,6 +391,12 @@ export const openUrl = (url: string) => {
     app.openBotInvite(botmatch[0].split('/').pop());
     return;
   }
+  if (url.startsWith('/bot/')) {
+    console.log(`[FUNCTIONS] Opening bot invite from URL: ${url}`);
+    const id = url.split('/');
+    app.openBotInvite(id[2]);
+    return;
+  }
 
   Linking.openURL(url);
 };

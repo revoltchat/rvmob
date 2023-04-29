@@ -56,6 +56,7 @@ class MainView extends React.Component {
       imageViewerImage: null,
       nsfwConsented: false,
       notificationMessage: null,
+      orderedServers: [],
     };
     setFunction('openChannel', async c => {
       // if (!this.state.currentChannel || this.state.currentChannel?.server?._id != c.server?._id) c.server?.fetchMembers()
@@ -105,7 +106,13 @@ class MainView extends React.Component {
       console.log(`[APP] Connected to instance (${new Date().getTime()})`);
     });
     client.on('ready', async () => {
-      this.setState({status: 'loggedIn', network: 'ready'});
+      const rawOrderedServers = await client.syncFetchSettings(['ordering']);
+      const orderedServers = JSON.parse(rawOrderedServers.ordering[1]).servers;
+      this.setState({
+        status: 'loggedIn',
+        network: 'ready',
+        orderedServers: orderedServers,
+      });
       console.log(`[APP] Client is ready (${new Date().getTime()})`);
       if (this.state.tokenInput) {
         console.log(`[AUTH] Setting saved token to ${this.state.tokenInput}`);
@@ -249,6 +256,7 @@ class MainView extends React.Component {
                       client.logout();
                       this.setState({status: 'awaitingLogin'});
                     }}
+                    orderedServers={this.state.orderedServers}
                   />
                 }
                 style={styles.app}

@@ -16,11 +16,13 @@ export const ServerList = observer(
     onServerPress,
     onServerLongPress,
     filter,
+    ordered,
     showUnread = true,
     showDiscover = true,
   }: {
     onServerPress: any;
     onServerLongPress: any;
+    ordered?: string[];
     filter?: any;
     showUnread?: boolean;
     showDiscover?: boolean;
@@ -28,6 +30,11 @@ export const ServerList = observer(
     let servers = [...client.servers.values()];
     if (filter) {
       servers = servers.filter(filter);
+    }
+    if (ordered) {
+      servers.sort((server1, server2) => {
+        return ordered.indexOf(server1._id) - ordered.indexOf(server2._id);
+      });
     }
     return (
       <View key={'server-list-container'}>
