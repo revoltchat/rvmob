@@ -136,7 +136,9 @@ class MainView extends React.Component {
         console.log(
           `[NOTIFICATIONS] Pushing notification for message ${msg._id}`,
         );
-        this.setState({notificationMessage: msg});
+        if (this.state.currentChannel !== msg.channel) {
+          this.setState({notificationMessage: msg});
+        }
         let notifs = (await notifee.getDisplayedNotifications()).filter(
           n => n.id === msg.channel?._id,
         );
