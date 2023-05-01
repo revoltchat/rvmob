@@ -266,10 +266,18 @@ class MainView extends React.Component {
             </SideMenu>
             <Modals state={this.state} setState={this.setState.bind(this)} />
             <NetworkIndicator client={client} />
-            {/* <Notification
-              message={this.state.notificationMessage}
-              setState={this.setState}
-            /> */}
+            <View
+              style={{position: 'absolute', top: 20, left: 0, width: '100%'}}>
+              <Notification
+                message={this.state.notificationMessage}
+                setState={() =>
+                  this.setState({
+                    notificationMessage: null,
+                    currentChannel: this.state.notificationMessage.channel,
+                  })
+                }
+              />
+            </View>
           </View>
         ) : this.state.status === 'awaitingLogin' ? (
           <View style={styles.app}>

@@ -9,22 +9,11 @@ import {Text} from './common/atoms';
 
 export const Notification = observer(
   ({message, setState}: {message: Message | null; setState: any}) => {
-    console.log('ding!')
     if (message) {
       return (
-        <TouchableOpacity
-          onPress={() =>
-            setState({
-              notificationMessage: null,
-              currentChannel: message.channel,
-            })
-          }>
+        <TouchableOpacity onPress={() => setState()}>
           <View
             style={{
-              position: 'absolute',
-              top: 20,
-              left: 0,
-              width: '100%',
               alignItems: 'center',
               justifyContent: 'center',
             }}>
