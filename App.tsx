@@ -210,7 +210,7 @@ class MainView extends React.Component {
         } catch (e: any) {
           console.log(e);
           !(
-            e.message.startsWith('Read error') || e.message === 'Network Error'
+            e.message?.startsWith('Read error') || e.message === 'Network Error'
           ) && client.user
             ? this.setState({logInError: e, status: 'awaitingLogin'})
             : this.state.status === 'loggedIn'
