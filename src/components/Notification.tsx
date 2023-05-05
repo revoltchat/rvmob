@@ -42,7 +42,11 @@ export const Notification = observer(
                 </View>
                 {message.content ? (
                   <MarkdownView>
-                    {parseRevoltNodes(message.content)}
+                    {parseRevoltNodes(
+                      message.content.length > 200
+                        ? message.content.slice(0, 200) + '...'
+                        : message.content,
+                    )}
                   </MarkdownView>
                 ) : (
                   <Text colour={currentTheme.foregroundSecondary}>
