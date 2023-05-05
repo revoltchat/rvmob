@@ -99,6 +99,9 @@ export const themes = {
   // "AMOLED": {
   //     backgroundPrimary: '#000000',
   //     backgroundSecondary: '#000000',
+  //     foregroundPrimary: '#F6F6F6',
+  //     foregroundSecondary: '#C8C8C8',
+  //     foregroundTertiary: '#848484',
   //     blockQuoteBackground: '#111111',
   //     textPrimary: '#dddddd',
   //     textSecondary: '#888888',
@@ -403,7 +406,7 @@ function refreshStyles() {
 }
 export function setTheme(themeName: any) {
   currentThemeName = themeName;
-  currentTheme = themes[themeName];
+  currentTheme = themes[themeName] ?? themes.Dark;
   refreshStyles();
 }
 setTheme('Dark');
