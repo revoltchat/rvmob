@@ -14,20 +14,19 @@ export const Notification = observer(
   ({message, setState}: {message: Message | null; setState: any}) => {
     if (message) {
       return (
-        <TouchableOpacity onPress={() => setState()}>
-          <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
+        <TouchableOpacity
+          style={{alignItems: 'center'}}
+          onPress={() => setState()}>
+          <View style={{maxWidth: '90%'}}>
             <View
               style={{
                 flexDirection: 'row',
-                justifyContent: 'center',
                 borderRadius: 4,
                 minHeight: 40,
                 backgroundColor: currentTheme.background,
-                padding: 8,
+                paddingVertical: 8,
+                paddingHorizontal: 32,
+                justifyContent: 'center',
               }}>
               <Avatar user={message.author} />
               <View style={{marginHorizontal: 8}}>
