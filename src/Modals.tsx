@@ -149,9 +149,7 @@ export class Modals extends React.Component {
           />
           <View style={styles.sheetBackground}>
             <View>
-              <Text
-                key={'custom-status-selector-label'}
-                style={styles.headerv2}>
+              <Text key={'custom-status-selector-label'} type={'header'}>
                 Status
               </Text>
               <View style={{marginBottom: 10}}>
@@ -178,7 +176,7 @@ export class Modals extends React.Component {
                   </ContextButton>
                 ))}
               </View>
-              <Text key={'custom-status-input-label'} style={styles.headerv2}>
+              <Text key={'custom-status-input-label'} type={'header'}>
                 Status text
               </Text>
               <InputWithButton
