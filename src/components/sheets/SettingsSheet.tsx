@@ -188,7 +188,7 @@ async function copyDebugInfo() {
     },
 
     appInfo: {
-      userID: client.user?._id,
+      userID: client.user?._id ?? 'ERR_ID_UNDEFINED',
       settings: await AsyncStorage.getItem('settings'),
       version: app.version,
     },
