@@ -13,6 +13,7 @@ import {Button, Text} from './components/common/atoms';
 import {MarkdownView} from './components/common/MarkdownView';
 import {ChannelList} from './components/navigation/ChannelList';
 import {ServerList} from './components/navigation/ServerList';
+import {DEFAULT_API_URL} from './lib/consts';
 
 export const LeftMenu = ({
   currentChannel,
@@ -65,6 +66,7 @@ export const LeftMenu = ({
             onServerPress={(s: Server) => setCurrentServer(s)}
             onServerLongPress={(s: Server) => app.openServerContextMenu(s)}
             ordered={orderedServers}
+            showDiscover={app.settings.get('app.instance') === DEFAULT_API_URL}
           />
         </ScrollView>
         <ScrollView key={'channel-list'} style={styles.channelList}>

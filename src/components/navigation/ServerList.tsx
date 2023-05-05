@@ -3,8 +3,9 @@ import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import FastImage from 'react-native-fast-image';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {client} from '../../Generic';
+import {client, openUrl} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
 import {Text} from '../common/atoms';
 import {DEFAULT_MAX_SIDE} from '../../lib/consts';
@@ -21,7 +22,7 @@ export const ServerList = observer(
     showDiscover = true,
   }: {
     onServerPress: any;
-    onServerLongPress: any;
+    onServerLongPress?: any;
     ordered?: string[];
     filter?: any;
     showUnread?: boolean;
@@ -109,32 +110,32 @@ export const ServerList = observer(
             </View>
           );
         })}
-        {/* {showDiscover ? (
-            <>
-              <View
-                style={{
-                  margin: 6,
-                  height: 2,
-                  width: '80%',
-                  backgroundColor: currentTheme.backgroundPrimary,
-                }}
-              />
-              <TouchableOpacity
-                onPress={() => {
-                  openUrl('https://rvlt.gg/discover');
-                }}
-                key={'serverlist-discover'}
-                style={styles.serverButton}>
-                <View style={{alignItems: 'center'}}>
-                  <MaterialCommunityIcon
-                    name={'compass'}
-                    size={25}
-                    color={currentTheme.foregroundPrimary}
-                  />
-                </View>
-              </TouchableOpacity>
-            </>
-          ) : null} */}
+        {showDiscover ? (
+          <>
+            <View
+              style={{
+                margin: 6,
+                height: 2,
+                width: '80%',
+                backgroundColor: currentTheme.backgroundPrimary,
+              }}
+            />
+            <TouchableOpacity
+              onPress={() => {
+                openUrl('https://rvlt.gg/discover');
+              }}
+              key={'serverlist-discover'}
+              style={styles.serverButton}>
+              <View style={{alignItems: 'center', marginVertical: '22.5%'}}>
+                <MaterialCommunityIcon
+                  name={'compass'}
+                  size={25}
+                  color={currentTheme.foregroundPrimary}
+                />
+              </View>
+            </TouchableOpacity>
+          </>
+        ) : null}
       </View>
     );
   },
