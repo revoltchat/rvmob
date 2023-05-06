@@ -276,7 +276,9 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                 //     console.log("out: ", await result.text())
                 //     uploaded.push(id);
                 // }
-                console.log(replyingMessages);
+                if (replyingMessages.length > 0) {
+                  console.log(replyingMessages);
+                }
                 props.channel.sendMessage({
                   content: thisCurrentText,
                   replies: replyingMessages.map(m => {
@@ -316,62 +318,74 @@ export const AttachmentsBar = observer(
     attachments: DocumentPickerResponse[];
     setAttachments: Function;
   }) => {
-    if (attachments) {
-      console.log('ding');
-
-      // TODO: add file names/potentially previews?
-      if (attachments?.length > 0) {
-        return (
-          <View
-            key={'message-box-attachments-bar'}
-            style={styles.attachmentsBar}>
-            <Text
-              key={'message-box-attachments-bar-header'}
-              style={{fontWeight: 'bold'}}>
-              {attachments.length}{' '}
-              {attachments.length === 1 ? 'attachment' : 'attachments'}
-            </Text>
-            {attachments.map(a => {
-              return (
-                <View
+    // TODO: add file previews?
+    if (attachments?.length > 0) {
+      return (
+        <View key={'message-box-attachments-bar'} style={styles.attachmentsBar}>
+          <Text
+            key={'message-box-attachments-bar-header'}
+            style={{fontWeight: 'bold'}}>
+            {attachments.length}{' '}
+            {attachments.length === 1 ? 'attachment' : 'attachments'}
+          </Text>
+          {attachments.map(a => {
+            const fileNameStrings = a.name?.split('.');
+            const fileType = fileNameStrings
+              ? fileNameStrings[fileNameStrings?.length - 1].toLocaleUpperCase()
+              : 'Unknown';
+            const fileSize =
+              a.size !== null
+                ? a.size / 1000000 >= 0.01
+                  ? `${(a.size / 1000000).toFixed(2)} MB`
+                  : a.size / 10000 >= 0.01
+                  ? `${(a.size / 1000).toFixed(2)} KB`
+                  : `${a.size} bytes`
+                : 'Unknown';
+            return (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  padding: 8,
+                  margin: 4,
+                  backgroundColor: currentTheme.backgroundPrimary,
+                  borderRadius: 4,
+                  alignItems: 'center',
+                }}
+                key={`message-box-attachments-bar-attachment-${a.name}`}>
+                <Pressable
                   style={{
-                    flexDirection: 'row',
-                    padding: 8,
-                    margin: 4,
-                    backgroundColor: currentTheme.backgroundPrimary,
-                    borderRadius: 4,
+                    width: 30,
+                    height: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
-                  key={`message-box-attachments-bar-attachment-${a.name}`}>
-                  <Pressable
-                    style={{
-                      width: 30,
-                      height: 20,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                    onPress={() =>
-                      setAttachments(
-                        attachments?.filter(a2 => a2.uri !== a.uri),
-                      )
-                    }>
-                    <View style={styles.iconContainer}>
-                      <MaterialCommunityIcon
-                        name="close-circle"
-                        size={16}
-                        color={currentTheme.foregroundPrimary}
-                      />
-                    </View>
-                  </Pressable>
+                  onPress={() =>
+                    setAttachments(attachments?.filter(a2 => a2.uri !== a.uri))
+                  }>
+                  <View style={styles.iconContainer}>
+                    <MaterialCommunityIcon
+                      name="close-circle"
+                      size={16}
+                      color={currentTheme.foregroundPrimary}
+                    />
+                  </View>
+                </Pressable>
+                <View style={{flexDirection: 'column'}}>
                   <Text
-                    key={`message-box-attachments-bar-attachment-${a.name}-name`}>
+                    key={`message-box-attachments-bar-attachment-${a.name}-name`}
+                    style={{fontWeight: 'bold'}}>
                     {a.name}
                   </Text>
+                  <Text
+                    key={`message-box-attachments-bar-attachment-${a.name}-details`}>
+                    {fileType} file ({fileSize})
+                  </Text>
                 </View>
-              );
-            })}
-          </View>
-        );
-      }
+              </View>
+            );
+          })}
+        </View>
+      );
     }
 
     return <View />;
