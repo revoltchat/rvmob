@@ -283,7 +283,7 @@ export const app = {
     ] as Setting[],
   },
   openProfile: (u, s?: Server) => {},
-  openLeftMenu: o => {},
+  openLeftMenu: (o?: any) => {},
   openRightMenu: o => {},
   openInvite: i => {},
   openBotInvite: i => {},
