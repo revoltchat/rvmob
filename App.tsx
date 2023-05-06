@@ -79,6 +79,14 @@ class MainView extends React.Component {
           : {rightMenuOpen: !this.state.rightMenuOpen},
       );
     });
+    setFunction('logOut', async () => {
+      console.log(
+        `[AUTH] Logging out of current session... (user: ${client.user?._id})`,
+      );
+      AsyncStorage.setItem('token', '');
+      client.logout();
+      this.setState({status: 'awaitingLogin'});
+    });
   }
   componentDidUpdate(_, prevState) {
     if (

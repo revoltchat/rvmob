@@ -375,6 +375,22 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
               </View>
               <Text>About RVMob</Text>
             </ContextButton>
+            <ContextButton
+              style={{flex: 1, marginTop: 10}}
+              backgroundColor={currentTheme.error}
+              onPress={() => {
+                state.setState({settingsOpen: false});
+                app.logOut();
+              }}>
+              <View style={styles.iconContainer}>
+                <MaterialIcon
+                  name={'logout'}
+                  color={currentTheme.foregroundPrimary}
+                  size={20}
+                />
+              </View>
+              <Text>Log Out</Text>
+            </ContextButton>
           </>
         ) : section === 'appearance' ? (
           <>
