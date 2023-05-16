@@ -17,6 +17,7 @@ import {Username, Avatar} from './Profile';
 import {styles, currentTheme} from './Theme';
 import {Text} from './components/common/atoms';
 import {USER_IDS} from './lib/consts';
+import {getReadableFileSize} from './lib/utils';
 
 let typing = false;
 
@@ -333,14 +334,6 @@ export const AttachmentsBar = observer(
             const fileType = fileNameStrings
               ? fileNameStrings[fileNameStrings?.length - 1].toLocaleUpperCase()
               : 'Unknown';
-            const fileSize =
-              a.size !== null
-                ? a.size / 1000000 >= 0.01
-                  ? `${(a.size / 1000000).toFixed(2)} MB`
-                  : a.size / 10000 >= 0.01
-                  ? `${(a.size / 1000).toFixed(2)} KB`
-                  : `${a.size} bytes`
-                : 'Unknown';
             return (
               <View
                 style={{
@@ -378,7 +371,7 @@ export const AttachmentsBar = observer(
                   </Text>
                   <Text
                     key={`message-box-attachments-bar-attachment-${a.name}-details`}>
-                    {fileType} file ({fileSize})
+                    {fileType} file ({getReadableFileSize(a.size)})
                   </Text>
                 </View>
               </View>

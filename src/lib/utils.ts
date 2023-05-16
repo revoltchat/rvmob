@@ -108,6 +108,16 @@ export function parseRevoltNodes(text: string) {
   return text;
 }
 
+export function getReadableFileSize(size: number | null) {
+  return size !== null
+    ? size / 1000000 >= 0.01
+      ? `${(size / 1000000).toFixed(2)} MB`
+      : size / 10000 >= 0.01
+      ? `${(size / 1000).toFixed(2)} KB`
+      : `${size} bytes`
+    : 'Unknown';
+}
+
 export function calculateGrouped(msg1: Message, msg2: Message) {
   // if the author is somehow null don't group the message
   if (!msg1.author || !msg2.author) {

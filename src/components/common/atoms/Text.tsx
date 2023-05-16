@@ -8,7 +8,7 @@ export const Text = (props: any) => {
   if (!props.style) {
     newProps = Object.assign({style: {}}, newProps);
   }
-  const font = newProps.useInter ? 'Inter' : 'Open Sans';
+  const font = props.useInter ? 'Inter' : 'Open Sans';
   if (props.type) {
     switch (props.type) {
       case 'header':

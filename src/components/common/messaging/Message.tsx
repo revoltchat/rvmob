@@ -16,7 +16,7 @@ import {currentTheme, styles} from '../../../Theme';
 import {Text} from '../atoms';
 import {MarkdownView} from '../MarkdownView';
 import {RE_INVITE} from '../../../lib/consts';
-import {parseRevoltNodes} from '../../../lib/utils';
+import {getReadableFileSize, parseRevoltNodes} from '../../../lib/utils';
 const Image = FastImage;
 
 type MessageProps = {
@@ -370,13 +370,13 @@ export const Message = observer((props: MessageProps) => {
                         onPress={() => openUrl(client.generateFileURL(a)!)}>
                         <View
                           style={{
-                            padding: 15,
-                            borderRadius: 6,
+                            padding: 12,
+                            borderRadius: 4,
                             backgroundColor: currentTheme.backgroundSecondary,
                             marginBottom: 15,
                           }}>
-                          <Text>{a.filename}</Text>
-                          <Text>{a.size.toLocaleString()} bytes</Text>
+                          <Text style={{fontWeight: 'bold'}}>{a.filename}</Text>
+                          <Text>{getReadableFileSize(a.size)}</Text>
                         </View>
                       </Pressable>
                     );
