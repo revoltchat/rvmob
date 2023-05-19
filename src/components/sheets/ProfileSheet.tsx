@@ -3,7 +3,6 @@ import React, {useEffect} from 'react';
 import {ScrollView, ToastAndroid, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import Clipboard from '@react-native-clipboard/clipboard';
 // import FastImage from 'react-native-fast-image';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -19,6 +18,7 @@ import {currentTheme, styles} from '../../Theme';
 import {Button, ContextButton, Link, Text} from '../common/atoms';
 import {MarkdownView} from '../common/MarkdownView';
 import {UserMenuSheet} from './index';
+import { UserList } from '../navigation/UserList';
 
 // const Image = FastImage;
 
@@ -29,7 +29,7 @@ export const ProfileSheet = observer(
       {} as {content?: string | null | undefined},
     );
     const [mutual, setMutual] = React.useState(
-      {} as {users?: string[]; servers?: string[]},
+      {} as {users: User[]; servers: Server[]},
     );
     const [showMenu, setShowMenu] = React.useState(false);
 
@@ -40,7 +40,23 @@ export const ProfileSheet = observer(
     useEffect(() => {
       async function getInfo() {
         const p = await user.fetchProfile();
-        const m = user.relationship !== 'User' ? await user.fetchMutual() : {};
+        const rawMutuals =
+          user.relationship !== 'User'
+            ? await user.fetchMutual()
+            : {users: [] as string[], servers: [] as string[]};
+
+        const fetchedMutualUsers: User[] = [];
+        for (const u of rawMutuals.users) {
+          fetchedMutualUsers.push(await client.users.fetch(u));
+        }
+
+        const fetchedMutualServers: Server[] = [];
+        for (const s of rawMutuals.servers) {
+          fetchedMutualServers.push(await client.servers.fetch(s));
+        }
+
+        const m = {servers: fetchedMutualServers, users: fetchedMutualUsers};
+
         setProfile(p);
         setMutual(m);
       }
@@ -599,8 +615,7 @@ export const ProfileSheet = observer(
         ) : section === 'Mutual Servers' ? (
           <ScrollView>
             <Text style={styles.profileSubheader}>MUTUAL SERVERS</Text>
-            {mutual.servers?.map(s => {
-              let srv = client.servers.get(s);
+            {mutual.servers?.map(srv => {
               return (
                 <ContextButton
                   key={srv!._id}
@@ -621,24 +636,7 @@ export const ProfileSheet = observer(
         ) : section === 'Mutual Friends' ? (
           <ScrollView>
             <Text style={styles.profileSubheader}>MUTUAL FRIENDS</Text>
-            {mutual.users?.map(u => {
-              let usr = client.users.get(u);
-              return (
-                <Button
-                  key={usr!._id}
-                  style={{
-                    marginHorizontal: 0,
-                    justifyContent: 'flex-start',
-                    alignItems: 'flex-start',
-                    backgroundColor: currentTheme.backgroundPrimary,
-                  }}
-                  onPress={() => {
-                    app.openProfile(usr);
-                  }}>
-                  <MiniProfile user={usr} />
-                </Button>
-              );
-            })}
+            <UserList users={mutual.users} />
             <View style={{marginTop: 10}} />
           </ScrollView>
         ) : null}
