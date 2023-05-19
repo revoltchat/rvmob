@@ -11,6 +11,7 @@ import {
 } from './Generic';
 import {styles, currentTheme} from './Theme';
 import {
+  ChannelInfoSheet,
   MemberListSheet,
   MessageMenuSheet,
   ProfileSheet,
@@ -44,6 +45,7 @@ export class Modals extends React.Component {
       showStatusMenu: null,
       memberListContext: null,
       memberListUsers: null,
+      contextMenuChannel: null,
     };
     setFunction('openProfile', async (u: User, s: Server) => {
       this.setState({
@@ -103,6 +105,9 @@ export class Modals extends React.Component {
         this.setState({memberListContext: context, memberListUsers: users});
       },
     );
+    setFunction('openChannelContextMenu', async (channel: Channel | null) => {
+      this.setState({contextMenuChannel: channel});
+    });
   }
   render() {
     return (
@@ -553,12 +558,29 @@ export class Modals extends React.Component {
               backgroundColor: '#00000000',
             }}
           />
-          <View
-            style={styles.sheetBackground}>
+          <View style={styles.sheetBackground}>
             <MemberListSheet
               context={this.state.memberListContext}
               users={this.state.memberListUsers}
             />
+          </View>
+        </Modal>
+        <Modal
+          visible={!!this.state.contextMenuChannel}
+          transparent={true}
+          animationType="slide"
+          onRequestClose={() => app.openChannelContextMenu(null)}>
+          <Pressable
+            onPress={() => app.openChannelContextMenu(null)}
+            style={{
+              width: Dimensions.get('window').width,
+              height: Dimensions.get('window').height,
+              position: 'absolute',
+              backgroundColor: '#00000000',
+            }}
+          />
+          <View style={styles.sheetBackground}>
+            <ChannelInfoSheet channel={this.state.contextMenuChannel} />
           </View>
         </Modal>
       </>

@@ -105,6 +105,18 @@ export const ChannelView = observer(
                     ? 'Saved Notes'
                     : channel.name}
                 </Text>
+                {channel.channel_type === 'Group' || channel.server ? (
+                  <View style={{marginEnd: '5%'}}>
+                    <TouchableOpacity
+                      onPress={async () => app.openChannelContextMenu(channel)}>
+                      <MaterialIcon
+                        name="info"
+                        size={24}
+                        color={currentTheme.foregroundPrimary}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
                 {channel.channel_type === 'Group' ? (
                   <View style={{marginEnd: '5%'}}>
                     <TouchableOpacity
@@ -116,7 +128,7 @@ export const ChannelView = observer(
                       }>
                       <MaterialIcon
                         name="group"
-                        size={30}
+                        size={24}
                         color={currentTheme.foregroundPrimary}
                       />
                     </TouchableOpacity>

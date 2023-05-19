@@ -300,6 +300,7 @@ export const app = {
   joinInvite: async (i: API.InviteResponse) => {},
   logOut: () => {},
   openMemberList: (c: Channel | Server | null, u: User[] | null) => {},
+  openChannelContextMenu: (c: Channel | null) => {},
 };
 
 export function setFunction(name: string, func: any) {
