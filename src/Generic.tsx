@@ -284,7 +284,6 @@ export const app = {
   },
   openProfile: (u, s?: Server) => {},
   openLeftMenu: (o?: any) => {},
-  openRightMenu: o => {},
   openInvite: i => {},
   openBotInvite: i => {},
   openServer: (s?: Server) => {},

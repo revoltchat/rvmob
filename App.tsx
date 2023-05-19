@@ -17,7 +17,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {currentTheme, styles} from './src/Theme';
 import {client, app, selectedRemark, randomizeRemark} from './src/Generic';
 import {setFunction} from './src/Generic';
-import {LeftMenu, RightMenu} from './src/SideMenus';
+import {LeftMenu} from './src/SideMenus';
 import {Modals} from './src/Modals';
 import {NetworkIndicator} from './src/components/NetworkIndicator';
 import {decodeTime} from 'ulid';
@@ -52,7 +52,6 @@ class MainView extends React.Component {
       userStatusInput: '',
       tfaTicket: '',
       leftMenuOpen: false,
-      rightMenuOpen: false,
       imageViewerImage: null,
       nsfwConsented: false,
       notificationMessage: null,
@@ -72,13 +71,6 @@ class MainView extends React.Component {
           : {leftMenuOpen: !this.state.leftMenuOpen},
       );
     });
-    setFunction('openRightMenu', async (o: any) => {
-      this.setState(
-        typeof o === 'boolean'
-          ? {rightMenuOpen: o}
-          : {rightMenuOpen: !this.state.rightMenuOpen},
-      );
-    });
     setFunction('logOut', async () => {
       console.log(
         `[AUTH] Logging out of current session... (user: ${client.user?._id})`,
@@ -94,13 +86,6 @@ class MainView extends React.Component {
       this.state.status === 'tryingLogin'
     ) {
       randomizeRemark();
-    }
-    if (
-      prevState.rightMenuOpen !== this.state.rightMenuOpen &&
-      this.state.rightMenuOpen &&
-      this.state.currentChannel?.server
-    ) {
-      this.state.currentChannel.server?.fetchMembers();
     }
   }
   async componentDidMount() {
@@ -238,47 +223,34 @@ class MainView extends React.Component {
           <View style={styles.app}>
             <SideMenu
               openMenuOffset={Dimensions.get('window').width - 50}
-              menuPosition="right"
-              disableGestures={this.state.leftMenuOpen}
               overlayColor={'#00000040'}
-              edgeHitWidth={120}
-              isOpen={this.state.rightMenuOpen}
-              onChange={open => this.setState({rightMenuOpen: open})}
-              menu={<RightMenu currentChannel={this.state.currentChannel} />}
+              edgeHitWidth={150}
+              isOpen={this.state.leftMenuOpen}
+              onChange={open => this.setState({leftMenuOpen: open})}
+              menu={
+                <LeftMenu
+                  onChannelClick={s => {
+                    this.setState({
+                      currentChannel: s,
+                      leftMenuOpen: false,
+                      messages: [],
+                    });
+                  }}
+                  currentChannel={this.state.currentChannel}
+                  onLogOut={() => {
+                    console.log(
+                      `[AUTH] Logging out of current session... (user: ${client.user?._id})`,
+                    );
+                    AsyncStorage.setItem('token', '');
+                    client.logout();
+                    this.setState({status: 'awaitingLogin'});
+                  }}
+                  orderedServers={this.state.orderedServers}
+                />
+              }
               style={styles.app}
               bounceBackOnOverdraw={false}>
-              <SideMenu
-                openMenuOffset={Dimensions.get('window').width - 50}
-                disableGestures={this.state.rightMenuOpen}
-                overlayColor={'#00000040'}
-                edgeHitWidth={120}
-                isOpen={this.state.leftMenuOpen}
-                onChange={open => this.setState({leftMenuOpen: open})}
-                menu={
-                  <LeftMenu
-                    onChannelClick={s => {
-                      this.setState({
-                        currentChannel: s,
-                        leftMenuOpen: false,
-                        messages: [],
-                      });
-                    }}
-                    currentChannel={this.state.currentChannel}
-                    onLogOut={() => {
-                      console.log(
-                        `[AUTH] Logging out of current session... (user: ${client.user?._id})`,
-                      );
-                      AsyncStorage.setItem('token', '');
-                      client.logout();
-                      this.setState({status: 'awaitingLogin'});
-                    }}
-                    orderedServers={this.state.orderedServers}
-                  />
-                }
-                style={styles.app}
-                bounceBackOnOverdraw={false}>
-                <ChannelView state={this} channel={this.state.currentChannel} />
-              </SideMenu>
+              <ChannelView state={this} channel={this.state.currentChannel} />
             </SideMenu>
             <Modals state={this.state} setState={this.setState.bind(this)} />
             <NetworkIndicator client={client} />
