@@ -1,15 +1,16 @@
 import React from 'react';
-import {View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {ErrorBoundary} from 'react-error-boundary';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Channel} from 'revolt.js';
 
 import {app, ChannelIcon, client} from '../../Generic';
 import {Messages, NewMessageView} from '../../MessageView';
 import {MessageBox} from '../../MessageBox';
-import {styles} from '../../Theme';
+import {currentTheme, styles} from '../../Theme';
 import {FriendsPage} from '../pages/FriendsPage';
 import {HomePage} from '../pages/HomePage';
 import {ChannelHeader} from '../navigation/ChannelHeader';
@@ -104,6 +105,23 @@ export const ChannelView = observer(
                     ? 'Saved Notes'
                     : channel.name}
                 </Text>
+                {channel.channel_type === 'Group' ? (
+                  <View style={{marginEnd: '5%'}}>
+                    <TouchableOpacity
+                      onPress={async () =>
+                        app.openMemberList(
+                          channel,
+                          await channel.fetchMembers(),
+                        )
+                      }>
+                      <MaterialIcon
+                        name="group"
+                        size={30}
+                        color={currentTheme.foregroundPrimary}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
               </ChannelHeader>
               {channel?.channel_type === 'VoiceChannel' ? (
                 <View

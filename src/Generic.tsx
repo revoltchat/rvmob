@@ -299,6 +299,7 @@ export const app = {
   pushToQueue: m => {},
   joinInvite: async (i: API.InviteResponse) => {},
   logOut: () => {},
+  openMemberList: (c: Channel | Server | null, u: User[] | null) => {},
 };
 
 export function setFunction(name: string, func: any) {

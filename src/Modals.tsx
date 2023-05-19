@@ -11,6 +11,7 @@ import {
 } from './Generic';
 import {styles, currentTheme} from './Theme';
 import {
+  MemberListSheet,
   MessageMenuSheet,
   ProfileSheet,
   ReportSheet,
@@ -41,6 +42,8 @@ export class Modals extends React.Component {
       inviteServerCode: '',
       inviteBot: null,
       showStatusMenu: null,
+      memberListContext: null,
+      memberListUsers: null,
     };
     setFunction('openProfile', async (u: User, s: Server) => {
       this.setState({
@@ -92,6 +95,12 @@ export class Modals extends React.Component {
       'openReportMenu',
       async (object: User | Server | Message | null, type: string | null) => {
         this.setState({reportObject: object, reportType: type});
+      },
+    );
+    setFunction(
+      'openMemberList',
+      async (context: Channel | Server | null, users: User[] | null) => {
+        this.setState({memberListContext: context, memberListUsers: users});
       },
     );
   }
@@ -520,6 +529,35 @@ export class Modals extends React.Component {
             <ReportSheet
               object={this.state.reportObject}
               type={this.state.reportType}
+            />
+          </View>
+        </Modal>
+        <Modal
+          key={'memberList'}
+          animationType="slide"
+          transparent={true}
+          visible={
+            !!this.state.memberListContext && !!this.state.memberListUsers
+          }
+          onRequestClose={() =>
+            this.setState({memberListContext: null, memberListUsers: null})
+          }>
+          <Pressable
+            onPress={() =>
+              this.setState({memberListContext: null, memberListUsers: null})
+            }
+            style={{
+              width: Dimensions.get('window').width,
+              height: Dimensions.get('window').height,
+              position: 'absolute',
+              backgroundColor: '#00000000',
+            }}
+          />
+          <View
+            style={styles.sheetBackground}>
+            <MemberListSheet
+              context={this.state.memberListContext}
+              users={this.state.memberListUsers}
             />
           </View>
         </Modal>

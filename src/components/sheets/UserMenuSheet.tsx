@@ -2,7 +2,6 @@ import React from 'react';
 import {Pressable, ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import Clipboard from '@react-native-clipboard/clipboard';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 

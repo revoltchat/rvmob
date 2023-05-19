@@ -128,29 +128,6 @@ export class RightMenu extends React.Component {
     this.renderMember = this.renderMember.bind(this);
   }
   render() {
-    if (
-      this.props.currentChannel?.channel_type === 'Group' ||
-      this.props.currentChannel?.channel_type === 'DirectMessage'
-    ) {
-      return (
-        <View style={styles.rightView}>
-          {this.props.currentChannel?.recipients?.map((u: User) => (
-            <Button
-              backgroundColor={currentTheme.backgroundPrimary}
-              style={{
-                margin: 6,
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-              }}
-              onPress={() => app.openProfile(u)}>
-              <View style={{maxWidth: '90%'}}>
-                <MiniProfile user={u} />
-              </View>
-            </Button>
-          ))}
-        </View>
-      );
-    }
     if (this.props.currentChannel?.server) {
       return (
         <View style={styles.rightView}>
@@ -168,11 +145,6 @@ export class RightMenu extends React.Component {
               </MarkdownView>
             ) : null}
           </View>
-          {/* <FlatList style={{flex: 1}}
-                data={[...client.members.keys()]}
-                renderItem={this.renderMember}
-                keyExtractor={(item) => item}
-                /> */}
         </View>
       );
     }
