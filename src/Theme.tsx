@@ -339,8 +339,6 @@ function refreshStyles() {
       alignItems: 'center',
     },
     headerIcon: {
-      margin: 5,
-      marginRight: 10,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -362,7 +360,7 @@ function refreshStyles() {
       height: 50,
       backgroundColor: currentTheme.headerPrimary,
       alignItems: 'center',
-      paddingLeft: 20,
+      paddingLeft: 16,
       flexDirection: 'row',
     },
     messageContentReply: {
@@ -404,7 +402,7 @@ function refreshStyles() {
     },
   });
 }
-export function setTheme(themeName: any) {
+export function setTheme(themeName: string) {
   currentThemeName = themeName;
   currentTheme = themes[themeName] ?? themes.Dark;
   refreshStyles();

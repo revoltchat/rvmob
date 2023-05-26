@@ -288,6 +288,7 @@ export const app = {
   openBotInvite: i => {},
   openServer: (s?: Server) => {},
   openChannel: c => {},
+  openDirectMessage: (c: Channel) => {},
   openImage: a => {},
   openMessage: m => {},
   openServerContextMenu: s => {},

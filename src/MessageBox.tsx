@@ -74,8 +74,9 @@ export const MessageBox = observer((props: MessageBoxProps) => {
       <View
         style={{
           backgroundColor: currentTheme.backgroundSecondary,
-          height: 80,
-          padding: 20,
+          minHeight: 50,
+          paddingVertical: 20,
+          paddingHorizontal: 8,
           alignItems: 'center',
           justifyContent: 'center',
         }}>

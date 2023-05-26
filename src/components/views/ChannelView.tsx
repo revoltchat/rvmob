@@ -106,7 +106,7 @@ export const ChannelView = observer(
                     : channel.name}
                 </Text>
                 {channel.channel_type === 'Group' || channel.server ? (
-                  <View style={{marginEnd: '5%'}}>
+                  <View style={{marginEnd: 16}}>
                     <TouchableOpacity
                       onPress={async () => app.openChannelContextMenu(channel)}>
                       <MaterialIcon
@@ -118,7 +118,7 @@ export const ChannelView = observer(
                   </View>
                 ) : null}
                 {channel.channel_type === 'Group' ? (
-                  <View style={{marginEnd: '5%'}}>
+                  <View style={{marginEnd: 16}}>
                     <TouchableOpacity
                       onPress={async () =>
                         app.openMemberList(
