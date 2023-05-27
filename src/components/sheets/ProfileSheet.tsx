@@ -18,7 +18,7 @@ import {currentTheme, styles} from '../../Theme';
 import {Button, ContextButton, Link, Text} from '../common/atoms';
 import {MarkdownView} from '../common/MarkdownView';
 import {UserMenuSheet} from './index';
-import { UserList } from '../navigation/UserList';
+import {UserList} from '../navigation/UserList';
 
 // const Image = FastImage;
 
@@ -102,12 +102,7 @@ export const ProfileSheet = observer(
                   })?.avatar?._id !== user.avatar?._id ? (
                     <>
                       <Avatar size={24} user={user} />
-                      <Text
-                        style={Object.assign({}, styles.header, {
-                          marginLeft: 4,
-                        })}>
-                        @
-                      </Text>
+                      <Text style={{...styles.header, marginLeft: 4}}>@</Text>
                     </>
                   ) : (
                     <Text style={styles.header}>@</Text>

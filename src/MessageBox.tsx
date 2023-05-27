@@ -184,7 +184,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         {app.settings.get('ui.messaging.sendAttachments') &&
         attachments.length < 5 ? (
           <TouchableOpacity
-            style={Object.assign({}, styles.sendButton, {marginHorizontal: 6})}
+            style={{...styles.sendButton, marginHorizontal: 6}}
             onPress={async () => {
               try {
                 let res = await DocumentPicker.pickSingle({

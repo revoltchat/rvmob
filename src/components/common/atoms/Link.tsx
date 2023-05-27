@@ -14,7 +14,7 @@ type LinkProps = {
 export const Link = ({link, label, style}: LinkProps) => {
   let finalStyle = styles.link;
   if (style) {
-    finalStyle = Object.assign({}, finalStyle, style);
+    finalStyle = {...finalStyle, ...style};
   }
 
   return (
