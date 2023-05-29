@@ -1,15 +1,16 @@
 import React from 'react';
 import {
-  View,
-  TouchableOpacity,
+  Image,
   Linking,
   TextInput,
+  TouchableOpacity,
+  View,
   ViewStyle,
 } from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import FastImage from 'react-native-fast-image';
+// import FastImage from 'react-native-fast-image';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -27,7 +28,7 @@ import {
   RE_BOT_INVITE,
   WIKI_URL,
 } from './lib/consts';
-const Image = FastImage;
+// const Image = FastImage;
 
 type StringSetting = {
   default: string;
