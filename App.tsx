@@ -17,7 +17,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {currentTheme, styles} from './src/Theme';
 import {client, app, selectedRemark, randomizeRemark} from './src/Generic';
 import {setFunction} from './src/Generic';
-import {LeftMenu, RightMenu} from './src/SideMenus';
+import {LeftMenu} from './src/SideMenus';
 import {Modals} from './src/Modals';
 import {NetworkIndicator} from './src/components/NetworkIndicator';
 import {decodeTime} from 'ulid';
@@ -25,6 +25,7 @@ import notifee from '@notifee/react-native';
 import {Button, Link, Text} from './src/components/common/atoms';
 import {LoginSettingsPage} from './src/components/pages/LoginSettingsPage';
 import {ChannelView} from './src/components/views/ChannelView';
+import {Notification} from './src/components/Notification';
 
 async function createChannel() {
   const channel = await notifee.createChannel({
@@ -51,10 +52,10 @@ class MainView extends React.Component {
       userStatusInput: '',
       tfaTicket: '',
       leftMenuOpen: false,
-      rightMenuOpen: false,
       imageViewerImage: null,
       nsfwConsented: false,
-      rerender: 0,
+      notificationMessage: null,
+      orderedServers: [],
     };
     setFunction('openChannel', async c => {
       // if (!this.state.currentChannel || this.state.currentChannel?.server?._id != c.server?._id) c.server?.fetchMembers()
@@ -70,12 +71,13 @@ class MainView extends React.Component {
           : {leftMenuOpen: !this.state.leftMenuOpen},
       );
     });
-    setFunction('openRightMenu', async (o: any) => {
-      this.setState(
-        typeof o === 'boolean'
-          ? {rightMenuOpen: o}
-          : {rightMenuOpen: !this.state.rightMenuOpen},
+    setFunction('logOut', async () => {
+      console.log(
+        `[AUTH] Logging out of current session... (user: ${client.user?._id})`,
       );
+      AsyncStorage.setItem('token', '');
+      client.logout();
+      this.setState({status: 'awaitingLogin'});
     });
   }
   componentDidUpdate(_, prevState) {
@@ -85,20 +87,31 @@ class MainView extends React.Component {
     ) {
       randomizeRemark();
     }
-    if (
-      prevState.rightMenuOpen !== this.state.rightMenuOpen &&
-      this.state.rightMenuOpen &&
-      this.state.currentChannel?.server
-    ) {
-      this.state.currentChannel.server?.fetchMembers();
-    }
   }
   async componentDidMount() {
     console.log(`[APP] Mounted component (${new Date().getTime()})`);
     let defaultnotif = await createChannel();
     console.log(`[NOTIFEE] Created channel: ${defaultnotif}`);
+    client.on('connecting', () => {
+      console.log(`[APP] Connecting to instance... (${new Date().getTime()})`);
+    });
+    client.on('connected', () => {
+      console.log(`[APP] Connected to instance (${new Date().getTime()})`);
+    });
     client.on('ready', async () => {
-      this.setState({status: 'loggedIn', network: 'ready'});
+      let orderedServers;
+      try {
+        const rawOrderedServers = await client.syncFetchSettings(['ordering']);
+        orderedServers = JSON.parse(rawOrderedServers.ordering[1]).servers;
+      } catch (err) {
+        console.log(`[APP] Error fetching ordered servers: ${err}`);
+        orderedServers === null;
+      }
+      this.setState({
+        status: 'loggedIn',
+        network: 'ready',
+        orderedServers: orderedServers,
+      });
       console.log(`[APP] Client is ready (${new Date().getTime()})`);
       if (this.state.tokenInput) {
         console.log(`[AUTH] Setting saved token to ${this.state.tokenInput}`);
@@ -110,6 +123,7 @@ class MainView extends React.Component {
       this.setState({network: 'dropped'});
     });
     client.on('message', async msg => {
+      console.log(`[APP] Handling message ${msg._id}`);
       if (
         (app.settings.get('app.notifications.notifyOnSelfPing')
           ? true
@@ -121,6 +135,9 @@ class MainView extends React.Component {
         console.log(
           `[NOTIFICATIONS] Pushing notification for message ${msg._id}`,
         );
+        if (this.state.currentChannel !== msg.channel) {
+          this.setState({notificationMessage: msg});
+        }
         let notifs = (await notifee.getDisplayedNotifications()).filter(
           n => n.id === msg.channel?._id,
         );
@@ -186,7 +203,7 @@ class MainView extends React.Component {
         } catch (e: any) {
           console.log(e);
           !(
-            e.message.startsWith('Read error') || e.message === 'Network Error'
+            e.message?.startsWith('Read error') || e.message === 'Network Error'
           ) && client.user
             ? this.setState({logInError: e, status: 'awaitingLogin'})
             : this.state.status === 'loggedIn'
@@ -206,50 +223,49 @@ class MainView extends React.Component {
           <View style={styles.app}>
             <SideMenu
               openMenuOffset={Dimensions.get('window').width - 50}
-              menuPosition="right"
-              disableGestures={this.state.leftMenuOpen}
               overlayColor={'#00000040'}
-              edgeHitWidth={120}
-              isOpen={this.state.rightMenuOpen}
-              onChange={open => this.setState({rightMenuOpen: open})}
-              menu={<RightMenu currentChannel={this.state.currentChannel} />}
+              edgeHitWidth={150}
+              isOpen={this.state.leftMenuOpen}
+              onChange={open => this.setState({leftMenuOpen: open})}
+              menu={
+                <LeftMenu
+                  onChannelClick={s => {
+                    this.setState({
+                      currentChannel: s,
+                      leftMenuOpen: false,
+                      messages: [],
+                    });
+                  }}
+                  currentChannel={this.state.currentChannel}
+                  onLogOut={() => {
+                    console.log(
+                      `[AUTH] Logging out of current session... (user: ${client.user?._id})`,
+                    );
+                    AsyncStorage.setItem('token', '');
+                    client.logout();
+                    this.setState({status: 'awaitingLogin'});
+                  }}
+                  orderedServers={this.state.orderedServers}
+                />
+              }
               style={styles.app}
               bounceBackOnOverdraw={false}>
-              <SideMenu
-                openMenuOffset={Dimensions.get('window').width - 50}
-                disableGestures={this.state.rightMenuOpen}
-                overlayColor={'#00000040'}
-                edgeHitWidth={120}
-                isOpen={this.state.leftMenuOpen}
-                onChange={open => this.setState({leftMenuOpen: open})}
-                menu={
-                  <LeftMenu
-                    rerender={this.state.rerender}
-                    onChannelClick={s => {
-                      this.setState({
-                        currentChannel: s,
-                        leftMenuOpen: false,
-                        messages: [],
-                      });
-                    }}
-                    currentChannel={this.state.currentChannel}
-                    onLogOut={() => {
-                      console.log(
-                        `[AUTH] Logging out of current session... (user: ${client.user?._id})`,
-                      );
-                      AsyncStorage.setItem('token', '');
-                      client.logout();
-                      this.setState({status: 'awaitingLogin'});
-                    }}
-                  />
-                }
-                style={styles.app}
-                bounceBackOnOverdraw={false}>
-                <ChannelView state={this} channel={this.state.currentChannel} />
-              </SideMenu>
+              <ChannelView state={this} channel={this.state.currentChannel} />
             </SideMenu>
             <Modals state={this.state} setState={this.setState.bind(this)} />
             <NetworkIndicator client={client} />
+            <View
+              style={{position: 'absolute', top: 20, left: 0, width: '100%'}}>
+              <Notification
+                message={this.state.notificationMessage}
+                setState={() =>
+                  this.setState({
+                    notificationMessage: null,
+                    currentChannel: this.state.notificationMessage.channel,
+                  })
+                }
+              />
+            </View>
           </View>
         ) : this.state.status === 'awaitingLogin' ? (
           <View style={styles.app}>

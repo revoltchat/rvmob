@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Image,
   Pressable,
   ScrollView,
   TextInput,
@@ -10,14 +11,27 @@ import {observer} from 'mobx-react-lite';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-clipboard/clipboard';
-import {getApiLevel, getBrand, getDevice} from 'react-native-device-info';
+import {
+  getApiLevel,
+  getBrand,
+  getBundleId,
+  getDevice,
+} from 'react-native-device-info';
+// import FastImage from 'react-native-fast-image';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
+import AppInfo from '../../../package.json';
 import {app, client, Setting} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
-import {Checkbox, ContextButton, Text} from '../common/atoms';
+import {Checkbox, ContextButton, Link, Text} from '../common/atoms';
+
+// const Image = FastImage;
+
+const icon = getBundleId().match('debug')
+  ? require('../../../assets/images/icon_debug.png')
+  : require('../../../assets/images/icon_release.png');
 
 type Section = string | null;
 
@@ -174,7 +188,7 @@ async function copyDebugInfo() {
     },
 
     appInfo: {
-      userID: client.user?._id,
+      userID: client.user?._id ?? 'ERR_ID_UNDEFINED',
       settings: await AsyncStorage.getItem('settings'),
       version: app.version,
     },
@@ -201,7 +215,9 @@ const SettingsCategory = observer(
 
     return (
       <View key={`settings-category-${category}`}>
-        <Text type={'header'}>{friendlyName}</Text>
+        <Text key={`settings-category-${category}-header`} type={'header'}>
+          {friendlyName}
+        </Text>
         {app.settings.list.map(sRaw => {
           try {
             if (sRaw.experimental && !showExperimental) {
@@ -216,13 +232,19 @@ const SettingsCategory = observer(
             if (sRaw.type === 'boolean') {
               return (
                 <BoolSetting
+                  key={`settings-${sRaw.key}-outer`}
                   sRaw={sRaw}
                   experimentalFunction={setShowExperimental}
                   devFunction={setShowDev}
                 />
               );
             } else if (sRaw.type === 'string' || sRaw.type === 'number') {
-              return <StringNumberSetting sRaw={sRaw} />;
+              return (
+                <StringNumberSetting
+                  key={`settings-${sRaw.key}-outer`}
+                  sRaw={sRaw}
+                />
+              );
             }
           } catch (err) {
             console.log(err);
@@ -275,6 +297,22 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
       <ScrollView style={{flex: 1}}>
         {section == null ? (
           <>
+            <Text type={'header'}>Account</Text>
+            <ContextButton
+              style={{flex: 1, marginBottom: 10}}
+              backgroundColor={currentTheme.backgroundSecondary}
+              onPress={() => {
+                setSection('account');
+              }}>
+              <View style={styles.iconContainer}>
+                <MaterialIcon
+                  name={'person'}
+                  color={currentTheme.foregroundPrimary}
+                  size={25}
+                />
+              </View>
+              <Text>Account</Text>
+            </ContextButton>
             <Text type={'header'}>App</Text>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
@@ -306,22 +344,6 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
               </View>
               <Text>Features</Text>
             </ContextButton>
-            <Text type={'header'}>Account</Text>
-            <ContextButton
-              style={{flex: 1, marginBottom: 10}}
-              backgroundColor={currentTheme.backgroundSecondary}
-              onPress={() => {
-                setSection('account');
-              }}>
-              <View style={styles.iconContainer}>
-                <MaterialIcon
-                  name={'person'}
-                  color={currentTheme.foregroundPrimary}
-                  size={25}
-                />
-              </View>
-              <Text>Account</Text>
-            </ContextButton>
             <Text type={'header'}>Advanced</Text>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
@@ -339,14 +361,35 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
               <Text>Copy Debug Info</Text>
             </ContextButton>
             <ContextButton
-              backgroundColor={currentTheme.error}
-              style={{justifyContent: 'center', marginTop: 10}}
+              style={{flex: 1, marginTop: 10}}
+              backgroundColor={currentTheme.backgroundSecondary}
               onPress={() => {
-                app.settings.clear();
+                setSection('info');
               }}>
-              <Text style={{color: currentTheme.accentColorForeground}}>
-                Reset Settings
-              </Text>
+              <View style={styles.iconContainer}>
+                <MaterialIcon
+                  name={'info'}
+                  color={currentTheme.foregroundPrimary}
+                  size={20}
+                />
+              </View>
+              <Text>About RVMob</Text>
+            </ContextButton>
+            <ContextButton
+              style={{flex: 1, marginTop: 10}}
+              backgroundColor={currentTheme.error}
+              onPress={() => {
+                state.setState({settingsOpen: false});
+                app.logOut();
+              }}>
+              <View style={styles.iconContainer}>
+                <MaterialIcon
+                  name={'logout'}
+                  color={currentTheme.foregroundPrimary}
+                  size={20}
+                />
+              </View>
+              <Text>Log Out</Text>
             </ContextButton>
           </>
         ) : section === 'appearance' ? (
@@ -453,6 +496,102 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
                 </Text>
               </Text>
             </ContextButton>
+          </View>
+        ) : section === 'info' ? (
+          <View>
+            <Pressable
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 10,
+              }}
+              onPress={() => {
+                setSection(null);
+              }}>
+              <MaterialIcon
+                name="arrow-back"
+                size={24}
+                color={currentTheme.foregroundSecondary}
+              />
+              <Text
+                style={{
+                  color: currentTheme.foregroundSecondary,
+                  fontSize: 20,
+                  marginLeft: 5,
+                }}>
+                Back
+              </Text>
+            </Pressable>
+            <Text type={'header'}>About</Text>
+            <View
+              style={{
+                alignItems: 'center',
+              }}>
+              <View style={{alignItems: 'center'}}>
+                <Image
+                  source={icon}
+                  style={{height: 150, width: 150, marginVertical: 4}}
+                />
+                <Text type={'header'}>RVMob v{app.version}</Text>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text>Powered by </Text>
+                <Link link={'https://reactnative.dev'} label={'React Native'} />
+                <Text>
+                  {' '}
+                  v{AppInfo.dependencies['react-native'].replace(
+                    '^',
+                    '',
+                  )} and{' '}
+                </Text>
+                <Link
+                  link={'https://github.com/revoltchat/revolt.js'}
+                  label={'revolt.js'}
+                />
+                <Text>
+                  {' '}
+                  v{AppInfo.dependencies['revolt.js'].replace('^', '')}
+                </Text>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text>Made by </Text>
+                <Link
+                  link={'https://github.com/TaiAurori'}
+                  label={'TaiAurori'}
+                />
+                <Text>, </Text>
+                <Link
+                  link={'https://github.com/Rexogamer'}
+                  label={'Rexogamer'}
+                />
+                <Text> and </Text>
+                <Link
+                  link={
+                    'https://github.com/revoltchat/rvmob/graphs/contributors'
+                  }
+                  label={'other contributors'}
+                />
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text>Licensed under the </Text>
+                <Link
+                  link={
+                    'https://github.com/revoltchat/rvmob/blob/master/LICENSE'
+                  }
+                  label={'GNU GPL v3.0'}
+                />
+              </View>
+              <ContextButton
+                backgroundColor={currentTheme.error}
+                style={{justifyContent: 'center', marginTop: 10}}
+                onPress={() => {
+                  app.settings.clear();
+                }}>
+                <Text style={{color: currentTheme.accentColorForeground}}>
+                  Reset Settings
+                </Text>
+              </ContextButton>
+            </View>
           </View>
         ) : null}
       </ScrollView>

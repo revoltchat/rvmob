@@ -300,9 +300,12 @@ export const RoleView = observer(({server, user}: RoleViewProps) => {
   return memberObject && roles ? (
     <>
       <Text style={styles.profileSubheader}>ROLES</Text>
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+      <View
+        key={`roleview-${server._id}-container`}
+        style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         {roles.map(r => (
           <View
+            key={`roleview-${server._id}-${r.name}-${Math.random()}`}
             style={{
               flexDirection: 'row',
               padding: 6,
@@ -313,6 +316,7 @@ export const RoleView = observer(({server, user}: RoleViewProps) => {
               borderRadius: 8,
             }}>
             <View
+              key={`roleview-${server._id}-${r.name}-colour`}
               style={{
                 borderRadius: 10000,
                 backgroundColor: r.colour || currentTheme.foregroundSecondary,

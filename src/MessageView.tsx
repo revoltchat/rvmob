@@ -1,5 +1,12 @@
-import React, {ReactNode} from 'react';
-import {View, ScrollView, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  FlatList,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from 'react-native';
 import {autorun} from 'mobx';
 import {observer} from 'mobx-react-lite';
 
@@ -20,15 +27,9 @@ import {styles, currentTheme} from './Theme';
 import {Button, Text} from './components/common/atoms';
 import {Message} from './components/common/messaging';
 import {DEFAULT_MESSAGE_LOAD_COUNT} from './lib/consts';
-import {calculateGrouped} from './lib/utils';
+import {calculateGrouped, fetchMessages} from './lib/utils';
 
 let didUpdateFirstTime = false;
-
-type RenderableMessage = {
-  grouped: boolean;
-  message: RevoltMessage;
-  rendered: any;
-};
 
 export class Messages extends React.Component {
   constructor(props) {
@@ -63,7 +64,7 @@ export class Messages extends React.Component {
   //   this.setState({error});
   //   console.error(error);
   // }
-  // TODO: should we try and fix this or just remove it? (relevant context: removing it doesn't seem to break anything? and i want to move to functional components, so this would need tweaking anwyay)
+  // TODO: should we try and fix this or just remove it? (relevant context: removing it doesn't seem to break anything? and we're currently moving to functional components, so this would need tweaking anyway)
   // shouldComponentUpdate(nextProps, nextState) {
   //   if (nextProps.rerender !== this.props.rerender) {
   //     console.log('rerender type 1');
@@ -369,12 +370,20 @@ export class Messages extends React.Component {
   }
 }
 
-type FetchInput = {
-  id?: string;
-  type?: 'before' | 'after';
-};
-
-function renderMessage(msg: RevoltMessage, grouped: boolean) {
+function renderMessage(msg: RevoltMessage, messages?: RevoltMessage[]) {
+  let grouped: boolean;
+  try {
+    grouped = messages
+      ? messages.indexOf(msg) !== -1
+        ? calculateGrouped(msg, messages[messages.indexOf(msg) - 1])
+        : false
+      : false;
+  } catch (err) {
+    grouped = false;
+    console.log(
+      `[NEWMESSAGEVIEW] Error calculating grouped status for ${msg}: ${err}`,
+    );
+  }
   return (
     <Message
       key={`message-${msg._id}`}
@@ -385,65 +394,6 @@ function renderMessage(msg: RevoltMessage, grouped: boolean) {
       queued={false}
     />
   );
-}
-
-async function fetchMessages(
-  channel: Channel,
-  input: FetchInput,
-  existingMessages: RenderableMessage[],
-  sliceMessages?: false,
-) {
-  const type = input.type ?? 'before';
-  let params = {
-    // input.before ? DEFAULT_MESSAGE_LOAD_COUNT / 2 :
-    limit: DEFAULT_MESSAGE_LOAD_COUNT,
-  };
-  params[type] = input.id;
-  // if (type == "after") {
-  //     params.sort = "Oldest"
-  // }
-  const res = await channel.fetchMessagesWithUsers(params);
-  console.log(`[NEWMESSAGEVIEW] Finished fetching messages for ${channel._id}`);
-
-  let oldMessages = existingMessages;
-  if (sliceMessages) {
-    if (input.type === 'before') {
-      oldMessages = oldMessages.slice(0, DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1);
-    } else if (input.type === 'after') {
-      oldMessages = oldMessages.slice(
-        DEFAULT_MESSAGE_LOAD_COUNT / 2 - 1,
-        DEFAULT_MESSAGE_LOAD_COUNT - 1,
-      );
-    }
-  }
-  let messages = res.messages.reverse().map((message, i) => {
-    try {
-      // let time = decodeTime(message._id);
-      // let grouped = ((lastAuthor == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (lastTime && time.diff(lastTime, "minute") < 5))
-      let grouped = i !== 0 && calculateGrouped(res.messages[i - 1], message);
-      let out = {
-        grouped,
-        message: message,
-        rendered: renderMessage(message, grouped), // this.renderMessage({grouped, message}),
-      };
-      // lastAuthor = (message.author ? message.author._id : lastAuthor)
-      // lastTime = time
-      return out;
-    } catch (e) {
-      console.error(e);
-    }
-  }) as RenderableMessage[];
-  let result =
-    input.type === 'before'
-      ? messages.concat(oldMessages)
-      : input.type === 'after'
-      ? oldMessages.concat(messages)
-      : messages;
-  console.log(
-    `[NEWMESSAGEVIEW] Finished preparing fetched messages for ${channel._id}`,
-  );
-
-  return result;
 }
 
 function MessageViewErrorMessage({
@@ -467,128 +417,138 @@ function MessageViewErrorMessage({
   );
 }
 
-export const NewMessageView = observer(({channel}: {channel: Channel}) => {
-  const [messages, setMessages] = React.useState([] as RenderableMessage[]);
-  const renderedMessages = [] as ReactNode[];
-  const [loading, setLoading] = React.useState(true);
-  const [atEndOfPage, setAtEndOfPage] = React.useState(false);
-  const [error, setError] = React.useState(null as any);
-  const [queuedMessages, setQueuedMessages] = React.useState(
-    [] as RevoltMessage[],
-  );
-  let scrollView: ScrollView | null;
-  React.useEffect(() => {
-    console.log(`[NEWMESSAGEVIEW] Fetching messages for ${channel._id}...`);
-    async function getMessages() {
-      const msgs = await fetchMessages(channel, {}, []);
-      setMessages(msgs);
-      setLoading(false);
-    }
-    getMessages();
-  }, [channel, loading]);
-
-  for (const msg of messages) {
-    renderedMessages.push(msg.rendered);
-  }
-
-  client.on('message', async msg => {
-    if (msg.channel === channel && !queuedMessages.includes(msg)) {
-      // push message to queue to prevent rerendering
-      const newQueue = queuedMessages;
-      newQueue.push(msg);
-      setQueuedMessages(newQueue);
-
-      console.log(
-        `[NEWMESSAGEVIEW] New message ${msg._id} is in current channel`,
-      );
-      // for some reason the message array is empty here? so until this is fixed we don't group the message
-      const grouped = false; // calculateGrouped(
-      //   msg,
-      //   messages[messages.length - 1].message,
-      // );
-      const pushableMsg = {
-        grouped,
-        message: msg,
-        rendered: renderMessage(msg, grouped),
-      };
-      const newMessages = messages;
-      newMessages.push(pushableMsg);
-      setMessages(newMessages);
-      if (atEndOfPage) {
-        scrollView?.scrollToEnd();
+export const NewMessageView = observer(
+  ({
+    channel,
+    handledMessages,
+  }: {
+    channel: Channel;
+    handledMessages: string[];
+  }) => {
+    console.log(`[NEWMESSAGEVIEW] Creating message view for ${channel._id}...`);
+    const [messages, setMessages] = React.useState([] as RevoltMessage[]);
+    const [loading, setLoading] = React.useState(true);
+    const [atEndOfPage, setAtEndOfPage] = React.useState(false);
+    const [error, setError] = React.useState(null as any);
+    let scrollView: FlatList | null;
+    React.useEffect(() => {
+      console.log(`[NEWMESSAGEVIEW] Fetching messages for ${channel._id}...`);
+      async function getMessages() {
+        const msgs = await fetchMessages(channel, {}, []);
+        console.log(
+          `[NEWMESSAGEVIEW] Pushing ${msgs.length} initial message(s) for ${channel._id}...`,
+        );
+        setMessages(msgs);
+        setLoading(false);
       }
+      try {
+        getMessages();
+      } catch (err) {
+        console.log(
+          `[NEWMESSAGEVIEW] Error fetching initial messages for ${channel._id}: ${err}`,
+        );
+        setError(err);
+      }
+    }, [channel]);
 
-      // ...then remove it from the queue once we're done
-      let newQueue2 = queuedMessages;
-      newQueue2 = newQueue2.filter(message => message !== msg);
-      setQueuedMessages(newQueue2);
-    }
-  });
+    client.on('message', async msg => {
+      // set this before anything happens that might change it
+      const shouldScroll = atEndOfPage;
+      if (msg.channel === channel && !handledMessages.includes(msg._id)) {
+        try {
+          console.log(atEndOfPage);
+          handledMessages.push(msg._id);
+          console.log(
+            `[NEWMESSAGEVIEW] New message ${msg._id} is in current channel; pushing it to the message list... (debug: will scroll = ${atEndOfPage})`,
+          );
+          setMessages(oldMessages => [...oldMessages, msg]);
+          if (shouldScroll) {
+            scrollView?.scrollToEnd();
+          }
+        } catch (err) {
+          console.log(
+            `[NEWMESSAGEVIEW] Error pusshing new message (${msg._id}): ${err}`,
+          );
+          setError(err);
+        }
+      }
+    });
 
-  return (
-    <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
-      {error ? (
-        <Text color={'#ff6666'}>
-          Error rendering messages: {error.message ?? error}
-        </Text>
-      ) : loading ? (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={styles.loadingHeader}>Loading...</Text>
-          <Text style={styles.remark}>{selectedRemark || null}</Text>
-        </View>
-      ) : (
-        <View key={'messageview-outer-container'} style={{flex: 1}}>
-          <ScrollView
-            key={'messageview-scrollview'}
-            style={styles.messagesView}
-            ref={ref => {
-              scrollView = ref;
-            }}
-            onScroll={e => {
-              const position = e.nativeEvent.contentOffset.y;
-              const viewHeight =
-                e.nativeEvent.contentSize.height -
-                e.nativeEvent.layoutMeasurement.height;
-              // account for decimal weirdness by assuming that if the position is this close to the height that the user is at the bottom
-              if (viewHeight - position <= 1) {
-                console.log('bonk!');
-                setAtEndOfPage(true);
-              } else {
-                if (atEndOfPage) {
-                  setAtEndOfPage(false);
-                }
-              }
-              if (e.nativeEvent.contentOffset.y <= 0) {
-                console.log('bonk2!');
-                fetchMessages(
-                  channel,
-                  {
-                    type: 'before',
-                    id: messages[0].message._id,
-                  },
-                  messages,
-                ).then(newMsgs => {
-                  setMessages(newMsgs);
-                });
-              }
-              // console.log(
-              //   e.nativeEvent.contentOffset.y,
-              //   e.nativeEvent.contentSize.height -
-              //     e.nativeEvent.layoutMeasurement.height,
-              // );
-            }}>
-            <Text key={'testing-text'}>
-              messages: {messages.length};{' '}
-              {messages.length % 50 === 0
-                ? 'may or may not be the end'
-                : 'almost certainly the end'}
-            </Text>
-            {renderedMessages}
-            <View key={'margin-fix'} style={{marginVertical: 10}} />
-          </ScrollView>
-        </View>
-      )}
-      <MessageBox channel={channel} />
-    </ErrorBoundary>
-  );
-});
+    // set functions here so they don't get recreated
+    const renderItem = ({item}: {item: RevoltMessage}) => {
+      return renderMessage(item, messages);
+    };
+
+    const keyExtractor = (item: RevoltMessage) => {
+      return `message-${item._id}`;
+    };
+
+    const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const position = e.nativeEvent.contentOffset.y;
+      const viewHeight =
+        e.nativeEvent.contentSize.height -
+        e.nativeEvent.layoutMeasurement.height;
+      // account for decimal weirdness by assuming that if the position is this close to the height that the user is at the bottom
+      if (viewHeight - position <= 1) {
+        console.log('bonk!');
+        setAtEndOfPage(true);
+      } else {
+        if (atEndOfPage) {
+          setAtEndOfPage(false);
+        }
+      }
+      if (e.nativeEvent.contentOffset.y <= 0) {
+        console.log('bonk2!');
+        fetchMessages(
+          channel,
+          {
+            type: 'before',
+            id: messages[0]._id,
+          },
+          messages,
+        ).then(newMsgs => {
+          setMessages(newMsgs);
+        });
+      }
+      // console.log(
+      //   e.nativeEvent.contentOffset.y,
+      //   e.nativeEvent.contentSize.height -
+      //     e.nativeEvent.layoutMeasurement.height,
+      // );
+    };
+
+    const ref = (view: FlatList) => {
+      scrollView = view;
+    };
+
+    return (
+      <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
+        {error ? (
+          <Text color={'#ff6666'}>
+            Error rendering messages: {error.message ?? error}
+          </Text>
+        ) : loading ? (
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={styles.loadingHeader}>Loading...</Text>
+            <Text style={styles.remark}>{selectedRemark || null}</Text>
+          </View>
+        ) : (
+          <View key={'messageview-outer-container'} style={{flex: 1}}>
+            <FlatList
+              key={'messageview-scrollview'}
+              keyExtractor={keyExtractor}
+              data={messages}
+              style={styles.messagesView}
+              contentContainerStyle={{paddingBottom: 20}}
+              ref={ref}
+              renderItem={renderItem}
+              onScroll={onScroll}
+            />
+          </View>
+        )}
+        <MessageBox channel={channel} />
+      </ErrorBoundary>
+    );
+  },
+);

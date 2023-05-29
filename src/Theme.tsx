@@ -99,6 +99,9 @@ export const themes = {
   // "AMOLED": {
   //     backgroundPrimary: '#000000',
   //     backgroundSecondary: '#000000',
+  //     foregroundPrimary: '#F6F6F6',
+  //     foregroundSecondary: '#C8C8C8',
+  //     foregroundTertiary: '#848484',
   //     blockQuoteBackground: '#111111',
   //     textPrimary: '#dddddd',
   //     textSecondary: '#888888',
@@ -336,8 +339,6 @@ function refreshStyles() {
       alignItems: 'center',
     },
     headerIcon: {
-      margin: 5,
-      marginRight: 10,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -359,7 +360,7 @@ function refreshStyles() {
       height: 50,
       backgroundColor: currentTheme.headerPrimary,
       alignItems: 'center',
-      paddingLeft: 20,
+      paddingLeft: 16,
       flexDirection: 'row',
     },
     messageContentReply: {
@@ -383,6 +384,12 @@ function refreshStyles() {
       borderBottomWidth: 1,
       flexDirection: 'row',
     },
+    attachmentsBar: {
+      padding: 8,
+      borderBottomColor: currentTheme.backgroundPrimary,
+      borderBottomWidth: 1,
+      flexDirection: 'column',
+    },
     repliedMessagePreviews: {
       paddingTop: 4,
     },
@@ -395,9 +402,9 @@ function refreshStyles() {
     },
   });
 }
-export function setTheme(themeName: any) {
+export function setTheme(themeName: string) {
   currentThemeName = themeName;
-  currentTheme = themes[themeName];
+  currentTheme = themes[themeName] ?? themes.Dark;
   refreshStyles();
 }
 setTheme('Dark');

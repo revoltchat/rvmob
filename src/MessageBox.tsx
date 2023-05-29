@@ -17,6 +17,7 @@ import {Username, Avatar} from './Profile';
 import {styles, currentTheme} from './Theme';
 import {Text} from './components/common/atoms';
 import {USER_IDS} from './lib/consts';
+import {getReadableFileSize} from './lib/utils';
 
 let typing = false;
 
@@ -73,8 +74,9 @@ export const MessageBox = observer((props: MessageBoxProps) => {
       <View
         style={{
           backgroundColor: currentTheme.backgroundSecondary,
-          height: 80,
-          padding: 20,
+          minHeight: 50,
+          paddingVertical: 20,
+          paddingHorizontal: 8,
           alignItems: 'center',
           justifyContent: 'center',
         }}>
@@ -150,7 +152,10 @@ export const MessageBox = observer((props: MessageBoxProps) => {
             </View>
           ))
         : null}
-      {/* <AttachmentsBar attachments={attachments} /> */}
+      <AttachmentsBar
+        attachments={attachments}
+        setAttachments={setAttachments}
+      />
       {editingMessage ? (
         <View key={'editing'} style={styles.messageBoxBar}>
           <Pressable
@@ -179,7 +184,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         {app.settings.get('ui.messaging.sendAttachments') &&
         attachments.length < 5 ? (
           <TouchableOpacity
-            style={Object.assign({}, styles.sendButton, {marginHorizontal: 6})}
+            style={{...styles.sendButton, marginHorizontal: 6}}
             onPress={async () => {
               try {
                 let res = await DocumentPicker.pickSingle({
@@ -198,9 +203,10 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                   console.log(
                     `[MESSAGEBOX] Pushing attachment ${res.name} (${res.uri})`,
                   );
-                  let newAttachments = attachments;
-                  newAttachments.push(res);
-                  setAttachments(newAttachments);
+                  setAttachments(existingAttachments => [
+                    ...existingAttachments,
+                    res,
+                  ]);
                   console.log(attachments);
                 }
               } catch (error) {
@@ -272,7 +278,9 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                 //     console.log("out: ", await result.text())
                 //     uploaded.push(id);
                 // }
-                console.log(replyingMessages);
+                if (replyingMessages.length > 0) {
+                  console.log(replyingMessages);
+                }
                 props.channel.sendMessage({
                   content: thisCurrentText,
                   replies: replyingMessages.map(m => {
@@ -305,22 +313,73 @@ export const MessageBox = observer((props: MessageBoxProps) => {
 });
 
 export const AttachmentsBar = observer(
-  ({attachments}: {attachments: DocumentPickerResponse[]}) => {
-    if (attachments) {
-      console.log('ding');
-
-      // TODO: add file names/potentially previews?
-      if (attachments?.length > 0) {
-        return (
-          <View
-            key={'message-box-attachments-bar'}
-            style={styles.messageBoxBar}>
-            <Text style={{marginTop: -1}}>
-              {attachments.length} attachment(s)
-            </Text>
-          </View>
-        );
-      }
+  ({
+    attachments,
+    setAttachments,
+  }: {
+    attachments: DocumentPickerResponse[];
+    setAttachments: Function;
+  }) => {
+    // TODO: add file previews?
+    if (attachments?.length > 0) {
+      return (
+        <View key={'message-box-attachments-bar'} style={styles.attachmentsBar}>
+          <Text
+            key={'message-box-attachments-bar-header'}
+            style={{fontWeight: 'bold'}}>
+            {attachments.length}{' '}
+            {attachments.length === 1 ? 'attachment' : 'attachments'}
+          </Text>
+          {attachments.map(a => {
+            const fileNameStrings = a.name?.split('.');
+            const fileType = fileNameStrings
+              ? fileNameStrings[fileNameStrings?.length - 1].toLocaleUpperCase()
+              : 'Unknown';
+            return (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  padding: 8,
+                  margin: 4,
+                  backgroundColor: currentTheme.backgroundPrimary,
+                  borderRadius: 4,
+                  alignItems: 'center',
+                }}
+                key={`message-box-attachments-bar-attachment-${a.name}`}>
+                <Pressable
+                  style={{
+                    width: 30,
+                    height: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  onPress={() =>
+                    setAttachments(attachments?.filter(a2 => a2.uri !== a.uri))
+                  }>
+                  <View style={styles.iconContainer}>
+                    <MaterialCommunityIcon
+                      name="close-circle"
+                      size={16}
+                      color={currentTheme.foregroundPrimary}
+                    />
+                  </View>
+                </Pressable>
+                <View style={{flexDirection: 'column'}}>
+                  <Text
+                    key={`message-box-attachments-bar-attachment-${a.name}-name`}
+                    style={{fontWeight: 'bold'}}>
+                    {a.name}
+                  </Text>
+                  <Text
+                    key={`message-box-attachments-bar-attachment-${a.name}-details`}>
+                    {fileType} file ({getReadableFileSize(a.size)})
+                  </Text>
+                </View>
+              </View>
+            );
+          })}
+        </View>
+      );
     }
 
     return <View />;

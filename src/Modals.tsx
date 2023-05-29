@@ -18,6 +18,8 @@ import {
 } from './Generic';
 import {styles, currentTheme} from './Theme';
 import {
+  ChannelInfoSheet,
+  MemberListSheet,
   MessageMenuSheet,
   ProfileSheet,
   ReportSheet,
@@ -48,6 +50,9 @@ export class Modals extends React.Component {
       inviteServerCode: '',
       inviteBot: null,
       showStatusMenu: null,
+      memberListContext: null,
+      memberListUsers: null,
+      contextMenuChannel: null,
     };
     setFunction('openProfile', async (u: User, s: Server) => {
       this.setState({
@@ -101,6 +106,15 @@ export class Modals extends React.Component {
         this.setState({reportObject: object, reportType: type});
       },
     );
+    setFunction(
+      'openMemberList',
+      async (context: Channel | Server | null, users: User[] | null) => {
+        this.setState({memberListContext: context, memberListUsers: users});
+      },
+    );
+    setFunction('openChannelContextMenu', async (channel: Channel | null) => {
+      this.setState({contextMenuChannel: channel});
+    });
   }
   render() {
     return (
@@ -156,9 +170,7 @@ export class Modals extends React.Component {
           />
           <View style={styles.sheetBackground}>
             <View>
-              <Text
-                key={'custom-status-selector-label'}
-                style={styles.headerv2}>
+              <Text key={'custom-status-selector-label'} type={'header'}>
                 Status
               </Text>
               <View style={{marginBottom: 10}}>
@@ -185,7 +197,7 @@ export class Modals extends React.Component {
                   </ContextButton>
                 ))}
               </View>
-              <Text key={'custom-status-input-label'} style={styles.headerv2}>
+              <Text key={'custom-status-input-label'} type={'header'}>
                 Status text
               </Text>
               <InputWithButton
@@ -530,6 +542,52 @@ export class Modals extends React.Component {
               object={this.state.reportObject}
               type={this.state.reportType}
             />
+          </View>
+        </Modal>
+        <Modal
+          key={'memberList'}
+          animationType="slide"
+          transparent={true}
+          visible={
+            !!this.state.memberListContext && !!this.state.memberListUsers
+          }
+          onRequestClose={() =>
+            this.setState({memberListContext: null, memberListUsers: null})
+          }>
+          <Pressable
+            onPress={() =>
+              this.setState({memberListContext: null, memberListUsers: null})
+            }
+            style={{
+              width: Dimensions.get('window').width,
+              height: Dimensions.get('window').height,
+              position: 'absolute',
+              backgroundColor: '#00000000',
+            }}
+          />
+          <View style={styles.sheetBackground}>
+            <MemberListSheet
+              context={this.state.memberListContext}
+              users={this.state.memberListUsers}
+            />
+          </View>
+        </Modal>
+        <Modal
+          visible={!!this.state.contextMenuChannel}
+          transparent={true}
+          animationType="slide"
+          onRequestClose={() => app.openChannelContextMenu(null)}>
+          <Pressable
+            onPress={() => app.openChannelContextMenu(null)}
+            style={{
+              width: Dimensions.get('window').width,
+              height: Dimensions.get('window').height,
+              position: 'absolute',
+              backgroundColor: '#00000000',
+            }}
+          />
+          <View style={styles.sheetBackground}>
+            <ChannelInfoSheet channel={this.state.contextMenuChannel} />
           </View>
         </Modal>
       </>

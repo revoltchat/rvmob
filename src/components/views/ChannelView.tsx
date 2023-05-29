@@ -1,15 +1,16 @@
 import React from 'react';
-import {View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {ErrorBoundary} from 'react-error-boundary';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Channel} from 'revolt.js';
 
 import {app, ChannelIcon, client} from '../../Generic';
 import {Messages, NewMessageView} from '../../MessageView';
 import {MessageBox} from '../../MessageBox';
-import {styles} from '../../Theme';
+import {currentTheme, styles} from '../../Theme';
 import {FriendsPage} from '../pages/FriendsPage';
 import {HomePage} from '../pages/HomePage';
 import {ChannelHeader} from '../navigation/ChannelHeader';
@@ -43,6 +44,7 @@ export const ChannelView = observer(
     const [replacementChannel, setReplacementChannel] = React.useState(
       undefined as Channel | undefined,
     );
+    const handledMessages = [] as string[];
     React.useEffect(() => {
       async function getChannel() {
         const type = 'spam';
@@ -56,6 +58,11 @@ export const ChannelView = observer(
       }
       getChannel();
     });
+    console.log(
+      `[CHANNELVIEW] Rendering channel view for ${
+        channel instanceof Channel ? channel._id : channel
+      }...`,
+    );
     return (
       <View style={styles.mainView}>
         {channel ? (
@@ -71,7 +78,10 @@ export const ChannelView = observer(
                   Debug Menu (New MessageView)
                 </Text>
               </ChannelHeader>
-              <NewMessageView channel={replacementChannel!} />
+              <NewMessageView
+                channel={replacementChannel!}
+                handledMessages={handledMessages}
+              />
             </View>
           ) : (
             <View style={styles.flex}>
@@ -95,6 +105,35 @@ export const ChannelView = observer(
                     ? 'Saved Notes'
                     : channel.name}
                 </Text>
+                {channel.channel_type === 'Group' || channel.server ? (
+                  <View style={{marginEnd: 16}}>
+                    <TouchableOpacity
+                      onPress={async () => app.openChannelContextMenu(channel)}>
+                      <MaterialIcon
+                        name="info"
+                        size={24}
+                        color={currentTheme.foregroundPrimary}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
+                {channel.channel_type === 'Group' ? (
+                  <View style={{marginEnd: 16}}>
+                    <TouchableOpacity
+                      onPress={async () =>
+                        app.openMemberList(
+                          channel,
+                          await channel.fetchMembers(),
+                        )
+                      }>
+                      <MaterialIcon
+                        name="group"
+                        size={24}
+                        color={currentTheme.foregroundPrimary}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
               </ChannelHeader>
               {channel?.channel_type === 'VoiceChannel' ? (
                 <View
@@ -126,7 +165,6 @@ export const ChannelView = observer(
                     onImagePress={a => {
                       state.setState({imageViewerImage: a});
                     }}
-                    rerender={state.state.rerender}
                     onUsernamePress={m =>
                       state.setState({
                         currentText:

@@ -283,13 +283,13 @@ export const app = {
       },
     ] as Setting[],
   },
-  openProfile: (u, s: Server | undefined) => {},
-  openLeftMenu: o => {},
-  openRightMenu: o => {},
+  openProfile: (u, s?: Server) => {},
+  openLeftMenu: (o?: any) => {},
   openInvite: i => {},
   openBotInvite: i => {},
-  openServer: (s: Server | undefined) => {},
+  openServer: (s?: Server) => {},
   openChannel: c => {},
+  openDirectMessage: (c: Channel) => {},
   openImage: a => {},
   openMessage: m => {},
   openServerContextMenu: s => {},
@@ -299,6 +299,9 @@ export const app = {
   getReplyingMessages: () => {},
   pushToQueue: m => {},
   joinInvite: async (i: API.InviteResponse) => {},
+  logOut: () => {},
+  openMemberList: (c: Channel | Server | null, u: User[] | null) => {},
+  openChannelContextMenu: (c: Channel | null) => {},
 };
 
 export function setFunction(name: string, func: any) {
@@ -334,8 +337,6 @@ async function initialiseSettings() {
     }
   }
 }
-
-// initialiseSettings(); // we'd await this if we could
 
 async function getAPIURL() {
   await initialiseSettings();
@@ -392,6 +393,12 @@ export const openUrl = (url: string) => {
   if (botmatch) {
     console.log(`[FUNCTIONS] Opening bot invite from URL: ${url}`);
     app.openBotInvite(botmatch[0].split('/').pop());
+    return;
+  }
+  if (url.startsWith('/bot/')) {
+    console.log(`[FUNCTIONS] Opening bot invite from URL: ${url}`);
+    const id = url.split('/');
+    app.openBotInvite(id[2]);
     return;
   }
 
