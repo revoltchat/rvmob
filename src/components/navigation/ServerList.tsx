@@ -1,8 +1,8 @@
 import React from 'react';
-import {Image, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-// import FastImage from 'react-native-fast-image';
+import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {client, openUrl} from '../../Generic';
@@ -10,7 +10,7 @@ import {currentTheme, styles} from '../../Theme';
 import {Text} from '../common/atoms';
 import {DEFAULT_MAX_SIDE} from '../../lib/consts';
 
-// const Image = FastImage;
+const Image = FastImage;
 
 export const ServerList = observer(
   ({
@@ -48,42 +48,6 @@ export const ServerList = observer(
           }
           return (
             <View key={`${s._id}-indicator-container`}>
-              {showUnread && s.getMentions().length > 0 ? (
-                <View
-                  key={`${s._id}-mentions-indicator`}
-                  style={{
-                    borderRadius: 10000,
-                    backgroundColor: currentTheme.error,
-                    height: 20,
-                    width: 20,
-                    marginBottom: -20,
-                    left: 34,
-                    zIndex: 2,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    key={`${s._id}-mentions-indicator-count`}
-                    style={{color: '#FFFFFF', marginRight: 1, marginBottom: 2}}>
-                    {pings > 9 ? '9+' : pings}
-                  </Text>
-                </View>
-              ) : showUnread && s.isUnread() ? (
-                <View
-                  key={`${s._id}-unreads-indicator`}
-                  style={{
-                    borderRadius: 10000,
-                    borderWidth: 3,
-                    borderColor: currentTheme.background,
-                    backgroundColor: currentTheme.foregroundPrimary,
-                    height: 20,
-                    width: 20,
-                    marginBottom: -20,
-                    left: 34,
-                    zIndex: 2,
-                  }}
-                />
-              ) : null}
               <TouchableOpacity
                 onPress={() => {
                   onServerPress(s);
@@ -107,6 +71,42 @@ export const ServerList = observer(
                   </Text>
                 )}
               </TouchableOpacity>
+              {showUnread && s.getMentions().length > 0 ? (
+                <View
+                  key={`${s._id}-mentions-indicator`}
+                  style={{
+                    borderRadius: 10000,
+                    backgroundColor: currentTheme.error,
+                    height: 20,
+                    width: 20,
+                    marginBottom: -20,
+                    left: 36,
+                    position: 'absolute',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    key={`${s._id}-mentions-indicator-count`}
+                    style={{color: '#FFFFFF', marginRight: 1, marginBottom: 2}}>
+                    {pings > 9 ? '9+' : pings}
+                  </Text>
+                </View>
+              ) : showUnread && s.isUnread() ? (
+                <View
+                  key={`${s._id}-unreads-indicator`}
+                  style={{
+                    borderRadius: 10000,
+                    borderWidth: 3,
+                    borderColor: currentTheme.background,
+                    backgroundColor: currentTheme.foregroundPrimary,
+                    height: 20,
+                    width: 20,
+                    marginBottom: -20,
+                    left: 36,
+                    position: 'absolute',
+                  }}
+                />
+              ) : null}
             </View>
           );
         })}

@@ -28,7 +28,7 @@ export const Notification = observer(
                 paddingHorizontal: 32,
                 justifyContent: 'center',
               }}>
-              <Avatar user={message.author} />
+              <Avatar user={message.author} size={35} />
               <View style={{marginHorizontal: 8}}>
                 <View style={{flexDirection: 'row'}}>
                   <Username

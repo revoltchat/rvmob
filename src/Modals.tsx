@@ -1,11 +1,4 @@
-import {
-  View,
-  Image,
-  Pressable,
-  Modal,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
+import {View, Pressable, Modal, ScrollView, Dimensions} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import React from 'react';
 import {
@@ -29,11 +22,11 @@ import {
 import {ServerList} from './components/navigation/ServerList';
 import {Server, User, Message, Channel} from 'revolt.js';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-// import FastImage from 'react-native-fast-image';
+import FastImage from 'react-native-fast-image';
 import {observer} from 'mobx-react';
 import {Button, ContextButton, Text} from './components/common/atoms';
 
-// const Image = FastImage;
+const Image = FastImage;
 
 @observer
 export class Modals extends React.Component {

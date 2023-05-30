@@ -8645,10 +8645,9 @@ react-native-elements@^3.4.3:
     react-native-ratings "8.0.4"
     react-native-size-matters "^0.3.1"
 
-react-native-fast-image@^8.6.3:
+"react-native-fast-image@https://github.com/WoLewicki/react-native-fast-image#@wolewicki/fabric-with-committed-dist":
   version "8.6.3"
-  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.6.3.tgz#6edc3f9190092a909d636d93eecbcc54a8822255"
-  integrity sha512-Sdw4ESidXCXOmQ9EcYguNY2swyoWmx53kym2zRsvi+VeFCHEdkO+WG1DK+6W81juot40bbfLNhkc63QnWtesNg==
+  resolved "https://github.com/WoLewicki/react-native-fast-image#09c56cec63d2951ba8692b3878151ee9423a6638"
 
 react-native-fit-image@^1.5.5:
   version "1.5.5"

@@ -1,15 +1,15 @@
 import React from 'react';
-import {ImageBackground, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-// import FastImage from 'react-native-fast-image';
+import FastImage from 'react-native-fast-image';
 
 import {Channel, Server} from 'revolt.js';
 
 import {ChannelButton, app, client} from '../../Generic';
 import {styles} from '../../Theme';
 import {Text} from '../common/atoms';
-// const Image = FastImage;
+const Image = FastImage;
 
 type ChannelListProps = {
   onChannelClick: any;
@@ -94,14 +94,14 @@ const ServerChannelList = observer((props: ChannelListProps) => {
   return (
     <>
       {props.currentServer.banner ? (
-        <ImageBackground
+        <Image
           source={{uri: props.currentServer.generateBannerURL()}}
           style={{width: '100%', height: 110, justifyContent: 'flex-end'}}>
           <TouchableOpacity
             onPress={() => app.openServerContextMenu(props.currentServer)}>
             <Text style={styles.serverName}>{props.currentServer.name}</Text>
           </TouchableOpacity>
-        </ImageBackground>
+        </Image>
       ) : (
         <TouchableOpacity
           onPress={() => app.openServerContextMenu(props.currentServer)}>

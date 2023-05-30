@@ -51,7 +51,7 @@
     "react-native-device-info": "^10.6.0",
     "react-native-document-picker": "^9.0.1",
     "react-native-elements": "^3.4.3",
-    "react-native-fast-image": "^8.6.3",
+    "react-native-fast-image": "https://github.com/WoLewicki/react-native-fast-image#@wolewicki/fabric-with-committed-dist",
     "react-native-fs": "^2.18.0",
     "react-native-get-random-values": "^1.9.0",
     "react-native-image-viewing": "^0.2.0",

@@ -2,14 +2,14 @@ import {observer} from 'mobx-react-lite';
 import React from 'react';
 import {client, app} from './Generic';
 import {currentTheme, styles} from './Theme';
-import {Image, Pressable, View} from 'react-native';
-// import FastImage from 'react-native-fast-image';
+import {Pressable, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {Server, User, Message, Channel} from 'revolt.js';
 import {Text} from './components/common/atoms';
 import {getColour} from './lib/utils';
 import {DEFAULT_MAX_SIDE, USER_IDS} from './lib/consts';
 
-// const Image = FastImage;
+const Image = FastImage;
 
 type UsernameProps = {
   server?: Server;

@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Dimensions, Pressable, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import FastImage from 'react-native-fast-image';
@@ -23,7 +17,7 @@ import {Text} from '../atoms';
 import {MarkdownView} from '../MarkdownView';
 import {RE_INVITE} from '../../../lib/consts';
 import {getReadableFileSize, parseRevoltNodes} from '../../../lib/utils';
-// const Image = FastImage;
+const Image = FastImage;
 
 type MessageProps = {
   message: RevoltMessage;

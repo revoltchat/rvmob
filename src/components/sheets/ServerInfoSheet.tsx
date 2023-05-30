@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
-import {Image, ScrollView, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-// import FastImage from 'react-native-fast-image';
+import FastImage from 'react-native-fast-image';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Member, Server, User} from 'revolt.js';
@@ -13,7 +13,7 @@ import {currentTheme, styles} from '../../Theme';
 import {ContextButton, CopyIDButton, Text} from '../common/atoms';
 import {MarkdownView} from '../common/MarkdownView';
 
-// const Image = FastImage;
+const Image = FastImage;
 
 export const ServerInfoSheet = observer(
   ({state, server}: {state: any; server: Server}) => {
