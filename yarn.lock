@@ -8542,10 +8542,10 @@ react-dom@^18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
-react-error-boundary@^4.0.7:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-4.0.7.tgz#dd65b16d1939894d59ab084af1d371fb10a16ebb"
-  integrity sha512-XyDSL7Uhv3PMs0e1k29cMSnZPSlUCsF7Ci0dtdcpkaWDi9bM2hw6ru2l+PgBhiqilE1ne2XIlsllcaHsn0B6Dw==
+react-error-boundary@^4.0.9:
+  version "4.0.9"
+  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-4.0.9.tgz#602f560e397ee25d7604cb5cb216351afc4be752"
+  integrity sha512-f6DcHVdTDZmc9ixmRmuLDZpkdghYR/HKZdUzMLHD58s4cR2C4R6y4ktYztCosM6pyeK4/C8IofwqxgID25W6kw==
   dependencies:
     "@babel/runtime" "^7.12.5"
 
@@ -9174,6 +9174,15 @@ revolt-api@0.5.7, revolt-api@^0.5.19:
   version "0.5.19"
   resolved "https://registry.yarnpkg.com/revolt-api/-/revolt-api-0.5.19.tgz#85749cf7d8ecd52495c21d35c785597d56cd0681"
   integrity sha512-RJzArPUlu6XOUGQl/z8Sg7aFyN8rizYBICor/3REvyzjaVjeIQr9P0gICyQ5HztT+mNoM9wgZIw4mA2dWdVuYQ==
+  dependencies:
+    "@insertish/oapi" "0.1.18"
+    axios "^0.26.1"
+    lodash.defaultsdeep "^4.6.1"
+
+revolt-api@^0.5.20:
+  version "0.5.20"
+  resolved "https://registry.yarnpkg.com/revolt-api/-/revolt-api-0.5.20.tgz#c1b05c406c7c1e7bbe206d3b8eca5739c9d3e36d"
+  integrity sha512-0tg6oxONhsWS+XPNGO48aAvjudoQg2IFfGUTCQkpZfrScGkZoKwD3A7AKo3F6IMOzpWs1U5cqy2P+QamE5oCPQ==
   dependencies:
     "@insertish/oapi" "0.1.18"
     axios "^0.26.1"

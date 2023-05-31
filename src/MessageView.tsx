@@ -330,7 +330,10 @@ export class Messages extends React.Component {
                 });
               }
               if (bottomOfPage && this.props.channel?.unread) {
-                this.props.channel.ack(this.props.channel.last_message_id);
+                this.props.channel.ack(
+                  this.props.channel.last_message_id,
+                  true,
+                );
               }
               this.setState({
                 bottomOfPage,

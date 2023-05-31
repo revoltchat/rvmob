@@ -288,7 +288,10 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                   }),
                   nonce,
                 });
-                props.channel.ack(props.channel.last_message_id ?? undefined);
+                props.channel.ack(
+                  props.channel.last_message_id ?? undefined,
+                  true,
+                );
                 setReplyingMessages([]);
               }
             }}>
