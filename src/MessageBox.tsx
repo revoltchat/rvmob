@@ -13,9 +13,9 @@ import {Channel, Message} from 'revolt.js';
 import {ulid} from 'ulid';
 
 import {app, client, setFunction} from './Generic';
-import {Username, Avatar} from './Profile';
+import {Avatar} from './Profile';
 import {styles, currentTheme} from './Theme';
-import {Text} from './components/common/atoms';
+import {Text, Username} from './components/common/atoms';
 import {USER_IDS} from './lib/consts';
 import {getReadableFileSize} from './lib/utils';
 

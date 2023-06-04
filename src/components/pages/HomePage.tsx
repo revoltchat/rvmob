@@ -3,7 +3,7 @@ import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {app, ChannelIcon, client, openUrl} from '../../Generic';
-import {Avatar, Username} from '../../Profile';
+import {Avatar} from '../../Profile';
 import {
   SPECIAL_DATES,
   SPECIAL_DATE_OBJECTS,
@@ -11,7 +11,7 @@ import {
 } from '../../lib/consts';
 import {styles} from '../../Theme';
 import {ChannelHeader} from '../navigation/ChannelHeader';
-import {Button, Text} from '../common/atoms';
+import {Button, Text, Username} from '../common/atoms';
 
 export const HomePage = observer(() => {
   // holiday emoji

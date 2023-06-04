@@ -6,9 +6,9 @@ import {Message, User, Server} from 'revolt.js';
 
 import {client} from '../../Generic';
 import {USER_IDS} from '../../lib/consts';
-import {Avatar, Username} from '../../Profile';
+import {Avatar} from '../../Profile';
 import {currentTheme} from '../../Theme';
-import {Button, ContextButton, Text} from '../common/atoms';
+import {Button, ContextButton, Text, Username} from '../common/atoms';
 import {MarkdownView} from '../common/MarkdownView';
 
 interface ReportedMessage {

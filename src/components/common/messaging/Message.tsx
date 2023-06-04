@@ -11,9 +11,9 @@ import {decodeTime} from 'ulid';
 
 import {InviteEmbed, MessageEmbed, ReplyMessage} from './';
 import {app, client, openUrl} from '../../../Generic';
-import {Avatar, Username} from '../../../Profile';
+import {Avatar} from '../../../Profile';
 import {currentTheme, styles} from '../../../Theme';
-import {Text} from '../atoms';
+import {Text, Username} from '../atoms';
 import {MarkdownView} from '../MarkdownView';
 import {RE_INVITE} from '../../../lib/consts';
 import {getReadableFileSize, parseRevoltNodes} from '../../../lib/utils';
@@ -132,69 +132,69 @@ export const Message = observer((props: MessageProps) => {
         </View>
       );
     }
-    if (props.message.queued) {
-      return (
-        <Pressable
-          key={`message-${props.message._id}-outer-pressable`}
-          style={{opacity: 0.6}}
-          delayLongPress={750}
-          onLongPress={props.onLongPress}>
-          <View
-            style={{
-              marginTop: app.settings.get(
-                'ui.messaging.messageSpacing',
-              ) as number,
-            }}
-          />
-          {props.message.reply_ids !== null ? (
-            <View
-              key={`message-${props.message._id}-replies`}
-              style={styles.repliedMessagePreviews}>
-              {props.message.reply_ids.map(id => (
-                <ReplyMessage
-                  key={`message-${props.message._id}-reply-${id}`}
-                  message={client.messages.get(id)}
-                />
-              ))}
-            </View>
-          ) : null}
-          <View style={props.grouped ? styles.messageGrouped : styles.message}>
-            {!props.grouped ? (
-              <Avatar
-                key={`message-${props.message._id}-avatar-nongrouped`}
-                user={client.user}
-                masquerade={props.message.masquerade?.avatar}
-                server={props.message.channel?.server}
-                size={35}
-                {...(app.settings.get('ui.messaging.statusInChatAvatars')
-                  ? {status: true}
-                  : {})}
-              />
-            ) : null}
-            <View style={styles.messageInner}>
-              {!props.grouped ? (
-                <View style={{flexDirection: 'row'}}>
-                  <Username
-                    user={client.user}
-                    server={props.message.channel?.server}
-                    masquerade={props.message.masquerade?.name}
-                  />
-                  <Text style={styles.timestamp}>
-                    {' '}
-                    {formatRelative(
-                      decodeTime(props.message.nonce!),
-                      new Date(),
-                      {locale: locale},
-                    )}
-                  </Text>
-                </View>
-              ) : null}
-              <MarkdownView>{props.message.content}</MarkdownView>
-            </View>
-          </View>
-        </Pressable>
-      );
-    }
+    // if (props.queued) {
+    //   return (
+    //     <Pressable
+    //       key={`message-${props.message._id}-outer-pressable`}
+    //       style={{opacity: 0.6}}
+    //       delayLongPress={750}
+    //       onLongPress={props.onLongPress}>
+    //       <View
+    //         style={{
+    //           marginTop: app.settings.get(
+    //             'ui.messaging.messageSpacing',
+    //           ) as number,
+    //         }}
+    //       />
+    //       {props.message.reply_ids !== null ? (
+    //         <View
+    //           key={`message-${props.message._id}-replies`}
+    //           style={styles.repliedMessagePreviews}>
+    //           {props.message.reply_ids.map(id => (
+    //             <ReplyMessage
+    //               key={`message-${props.message._id}-reply-${id}`}
+    //               message={client.messages.get(id)}
+    //             />
+    //           ))}
+    //         </View>
+    //       ) : null}
+    //       <View style={props.grouped ? styles.messageGrouped : styles.message}>
+    //         {!props.grouped ? (
+    //           <Avatar
+    //             key={`message-${props.message._id}-avatar-nongrouped`}
+    //             user={client.user}
+    //             masquerade={props.message.masquerade?.avatar}
+    //             server={props.message.channel?.server}
+    //             size={35}
+    //             {...(app.settings.get('ui.messaging.statusInChatAvatars')
+    //               ? {status: true}
+    //               : {})}
+    //           />
+    //         ) : null}
+    //         <View style={styles.messageInner}>
+    //           {!props.grouped ? (
+    //             <View style={{flexDirection: 'row'}}>
+    //               <Username
+    //                 user={client.user}
+    //                 server={props.message.channel?.server}
+    //                 masquerade={props.message.masquerade?.name}
+    //               />
+    //               <Text style={styles.timestamp}>
+    //                 {' '}
+    //                 {formatRelative(
+    //                   decodeTime(props.message.nonce!),
+    //                   new Date(),
+    //                   {locale: locale},
+    //                 )}
+    //               </Text>
+    //             </View>
+    //           ) : null}
+    //           <MarkdownView>{props.message.content}</MarkdownView>
+    //         </View>
+    //       </View>
+    //     </Pressable>
+    //   );
+    // }
     return (
       <TouchableOpacity
         key={props.message._id}
