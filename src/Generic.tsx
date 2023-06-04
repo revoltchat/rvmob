@@ -283,7 +283,11 @@ export const app = {
     ] as Setting[],
   },
   openProfile: (u, s?: Server) => {},
-  openLeftMenu: (o?: any) => {},
+  openLeftMenu: (o?: any) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function openLeftMenu (args: ${o})`,
+    );
+  },
   openInvite: i => {},
   openBotInvite: i => {},
   openServer: (s?: Server) => {},
@@ -304,6 +308,7 @@ export const app = {
 };
 
 export function setFunction(name: string, func: any) {
+  console.info(`[APP] Setting function ${name}`);
   app[name] = func;
 }
 
