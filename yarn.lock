@@ -2710,10 +2710,10 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@^18.2.7":
-  version "18.2.7"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.7.tgz#dfb4518042a3117a045b8c222316f83414a783b3"
-  integrity sha512-ojrXpSH2XFCmHm7Jy3q44nXDyN54+EYKP2lBhJ2bqfyPj6cIUW/FZW/Csdia34NQgq7KYcAlHi5184m4X88+yw==
+"@types/react@^18.2.8":
+  version "18.2.8"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.8.tgz#a77dcffe4e9af148ca4aa8000c51a1e8ed99e2c8"
+  integrity sha512-lTyWUNrd8ntVkqycEEplasWy2OxNlShj3zqS0LuB1ENUGis5HodmhM7DtCoUGbxj3VW/WsGA0DUhpG6XrM7gPA==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -4066,7 +4066,12 @@ date-fns@^2.30.0:
   dependencies:
     "@babel/runtime" "^7.21.0"
 
-dayjs@^1.10.7, dayjs@^1.8.15:
+dayjs@^1.11.8:
+  version "1.11.8"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.8.tgz#4282f139c8c19dd6d0c7bd571e30c2d0ba7698ea"
+  integrity sha512-LcgxzFoWMEPO7ggRv1Y2N31hUf2R0Vj7fuy/m+Bg1K8rr+KAs1AEy4y9jd5DXe8pbHgX+srkHNS7TH6Q6ZhYeQ==
+
+dayjs@^1.8.15:
   version "1.11.7"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.7.tgz#4b296922642f70999544d1144a2c25730fce63e2"
   integrity sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==
@@ -9179,10 +9184,10 @@ revolt-api@0.5.7, revolt-api@^0.5.19:
     axios "^0.26.1"
     lodash.defaultsdeep "^4.6.1"
 
-revolt-api@^0.5.20:
-  version "0.5.20"
-  resolved "https://registry.yarnpkg.com/revolt-api/-/revolt-api-0.5.20.tgz#c1b05c406c7c1e7bbe206d3b8eca5739c9d3e36d"
-  integrity sha512-0tg6oxONhsWS+XPNGO48aAvjudoQg2IFfGUTCQkpZfrScGkZoKwD3A7AKo3F6IMOzpWs1U5cqy2P+QamE5oCPQ==
+revolt-api@^0.5.21:
+  version "0.5.21"
+  resolved "https://registry.yarnpkg.com/revolt-api/-/revolt-api-0.5.21.tgz#dee8abda82e06d89a3ef98d1b904bc485124432c"
+  integrity sha512-/t3yRv5ru6FrX6fC3Brf/FemZouwj5yBOvOpl8iH84LkLYLmpNjqHXrEuV7Z7KHeeEKGLp+DVlmHI8oFYAvdpA==
   dependencies:
     "@insertish/oapi" "0.1.18"
     axios "^0.26.1"
@@ -9987,10 +9992,10 @@ typescript@^4.6.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
 
-typescript@^5.0.4:
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.4.tgz#b217fd20119bd61a94d4011274e0ab369058da3b"
-  integrity sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==
+typescript@^5.1.3:
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.3.tgz#8d84219244a6b40b6fb2b33cc1c062f715b9e826"
+  integrity sha512-XH627E9vkeqhlZFQuL+UsyAXEnibT0kWR2FWONlr4sTjvxyJYnyefgrkyECLzM5NenmKzRAy2rR/OlYLA1HkZw==
 
 ua-parser-js@^0.7.30:
   version "0.7.35"
