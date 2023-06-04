@@ -1497,6 +1497,12 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@chakrahq/react-native-side-menu@https://github.com/chakrahq/react-native-side-menu":
+  version "1.3.4"
+  resolved "https://github.com/chakrahq/react-native-side-menu#2ed840eb36d1665a244a20711c46eac1c10225cc"
+  dependencies:
+    prop-types "^15.8.1"
+
 "@eslint-community/eslint-utils@^4.2.0":
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/@eslint-community/eslint-utils/-/eslint-utils-4.4.0.tgz#a23514e8fb9af1269d5f7788aa556798d61c6b59"
@@ -2380,12 +2386,12 @@
   integrity sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ==
 
 "@react-native/codegen@^0.72.4":
-  version "0.72.4"
-  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.72.4.tgz#b2a6aef870bb8f5bb7eed521aa0cda10eb15cf40"
-  integrity sha512-Yg18PSRrA7rtnucMNl1gQEpbydxJ9cNR+OghLHMBimwYWZYqHTBmnvfwB7Gg0CxPLBJivFA/MKyJSd9aagNfWA==
+  version "0.72.5"
+  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.72.5.tgz#fa30cfcd89032e1281f706ff077dcca0706270ec"
+  integrity sha512-UHqkGRkjfoWhTek9A9Vg5OjpOxp5Vro+NdfoC/itEu1D7nkNAm0/yyf1vTdaCAVsPSzgrfl3f45nrkFOhBU8ag==
   dependencies:
     "@babel/parser" "^7.20.0"
-    flow-parser "^0.185.0"
+    flow-parser "^0.206.0"
     jscodeshift "^0.14.0"
     nullthrows "^1.1.1"
 
@@ -2414,9 +2420,9 @@
   integrity sha512-xqEDfJ/3sWXzH8vTZt7OC0aBAV8y8fbX/uDTr8sbsoktiTW5yUY2dVCVVe+pBiPZMqnvDc6AJ+owie9Rl90pOA==
 
 "@react-native/gradle-plugin@^0.72.6":
-  version "0.72.6"
-  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.72.6.tgz#14571c9ed8faa49189be01d406504a866069a4af"
-  integrity sha512-XBIAxwogpd3zlH3YwnFCkeEMAQvS/efYmW9YIKBtqzmiNGhxESlj4pHf7ds44VOufU+HVL4UvLLVfvMYVkb1fQ==
+  version "0.72.10"
+  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.72.10.tgz#cd7ad2203039dc1f97fb849898d689442776b004"
+  integrity sha512-/3KZSdFOWpTCHlp468NOgNfSIhENEH44O3Xq+dmgp4kJ/WhTvCmI+7glJ0Io6T7AizcWlIuW5VKA2+Pb3GHXmg==
 
 "@react-native/js-polyfills@^0.72.1":
   version "0.72.1"
@@ -2429,14 +2435,14 @@
   integrity sha512-3/+q+l86xvV8xjx29On9/Dn0eWjo5MHYuuALHqyOlQIs3vLk/rQB4rn4izObiurhH3utXxqVnbOk+TB9yJo4ng==
 
 "@react-native/metro-config@^0.72.1":
-  version "0.72.1"
-  resolved "https://registry.yarnpkg.com/@react-native/metro-config/-/metro-config-0.72.1.tgz#57f212700db2d160e8beff6163558310c2c82220"
-  integrity sha512-BxGfuMK/cXwJxChE4/T6nE4qOdwGLM9iUFFKpcyh9Nks0702qTTvwpjkFbJvlkpe4yulAZh8CKLJrRDVzGGbfQ==
+  version "0.72.6"
+  resolved "https://registry.yarnpkg.com/@react-native/metro-config/-/metro-config-0.72.6.tgz#77efdcdc51ff0df0269031dc4442b7dbb50ef9eb"
+  integrity sha512-hkV0okTi/N/ui1PF4ZgxPV9zajHkxuu+arpQwk8rY+QPZgGM8SIAN5tf68DWJTbPCfAiZLFoW1TgMNbvKrSY1A==
   dependencies:
     "@react-native/js-polyfills" "^0.72.1"
-    metro-config "0.76.0"
-    metro-react-native-babel-transformer "0.76.0"
-    metro-runtime "0.76.0"
+    metro-config "0.76.5"
+    metro-react-native-babel-transformer "0.76.5"
+    metro-runtime "0.76.5"
 
 "@react-native/metro-config@^0.73.0":
   version "0.73.0"
@@ -2469,9 +2475,9 @@
   integrity sha512-K0aGNn1TjalKj+65D7ycc1//H9roAQ51GJVk5ZJQFb2teECGmzd86bYDC0aYdbRf7gtovescq4Zt6FR0tgXiHQ==
 
 "@react-native/virtualized-lists@^0.72.4":
-  version "0.72.4"
-  resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.72.4.tgz#926ddb5eced27dc3975dad0915cb96d1f9c01c62"
-  integrity sha512-2t8WBVACkKEadtsiGYJaYTix575J/5VQJyqnyL7iDIsd3iG7ODjfMDsTGsVyAA2Av/xeVIuVQRUX0ZzV3cucug==
+  version "0.72.5"
+  resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.72.5.tgz#a7b261357ec7e0e5aa97a24d4acab1d903811e09"
+  integrity sha512-AtKE3dez3lf89O87wC2ZglV5aPsifopQgn/UmFhXAwi18Yp1BJfEGh3sUqOPNgZNByYPAGxFANeZq44VATXeJA==
   dependencies:
     invariant "^2.2.4"
     nullthrows "^1.1.1"
@@ -4173,9 +4179,9 @@ deprecated-react-native-prop-types@^3.0.1:
     prop-types "*"
 
 deprecated-react-native-prop-types@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/deprecated-react-native-prop-types/-/deprecated-react-native-prop-types-4.0.0.tgz#544845e32f3220bc676f18c0b846d673399c45cb"
-  integrity sha512-q0kk77qFPC4adlnZH7cv9lfbHALeaTkl7wT1uNERc+e0Os3KcBKKy1rVliTE8sfey6TP6OPzoIXpr9OPidvvHw==
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/deprecated-react-native-prop-types/-/deprecated-react-native-prop-types-4.1.0.tgz#8ed03a64c21b7fbdd2d000957b6838d4f38d2c66"
+  integrity sha512-WfepZHmRbbdTvhcolb8aOKEvQdcmTMn5tKLbqbXmkBvjFjRVWAYqsXk/DBsV8TZxws8SdGHLuHaJrHSQUPRdfw==
   dependencies:
     "@react-native/normalize-colors" "*"
     invariant "*"
@@ -4952,6 +4958,11 @@ flow-parser@^0.185.0:
   version "0.185.2"
   resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.185.2.tgz#cb7ee57f77377d6c5d69a469e980f6332a15e492"
   integrity sha512-2hJ5ACYeJCzNtiVULov6pljKOLygy0zddoqSI1fFetM+XRPpRshFdGEijtqlamA1XwyZ+7rhryI6FQFzvtLWUQ==
+
+flow-parser@^0.206.0:
+  version "0.206.0"
+  resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.206.0.tgz#f4f794f8026535278393308e01ea72f31000bfef"
+  integrity sha512-HVzoK3r6Vsg+lKvlIZzaWNBVai+FXTX1wdYhz/wVlH13tb/gOdLXmlTqy6odmTBhT5UoWUbq0k8263Qhr9d88w==
 
 follow-redirects@^1.14.0, follow-redirects@^1.14.8:
   version "1.15.2"
@@ -7229,6 +7240,19 @@ metro-react-native-babel-transformer@0.76.0:
     metro-source-map "0.76.0"
     nullthrows "^1.1.1"
 
+metro-react-native-babel-transformer@0.76.5:
+  version "0.76.5"
+  resolved "https://registry.yarnpkg.com/metro-react-native-babel-transformer/-/metro-react-native-babel-transformer-0.76.5.tgz#08b7d4a0240ebdafc1f2ff0691a70a7f507a0de0"
+  integrity sha512-7m2u7jQ1I2mwGm48Vrki5cNNSv4d2HegHMGmE5G2AAa6Pr2O3ajaX2yNoAKF8TCLO38/8pa9fZd0VWAlO/YMcA==
+  dependencies:
+    "@babel/core" "^7.20.0"
+    babel-preset-fbjs "^3.4.0"
+    hermes-parser "0.8.0"
+    metro-babel-transformer "0.76.5"
+    metro-react-native-babel-preset "0.76.5"
+    metro-source-map "0.76.5"
+    nullthrows "^1.1.1"
+
 metro-resolver@0.73.9:
   version "0.73.9"
   resolved "https://registry.yarnpkg.com/metro-resolver/-/metro-resolver-0.73.9.tgz#f3cf77e6c7606a34aa81bad40edb856aad671cf3"
@@ -8486,10 +8510,18 @@ range-parser@~1.2.1:
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
 
-react-devtools-core@^4.26.1, react-devtools-core@^4.27.2:
+react-devtools-core@^4.26.1:
   version "4.27.4"
   resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.27.4.tgz#987f678a0e6658fd6f8fa0b8b2be191cf6984b68"
   integrity sha512-dvZjrAJjahd6NNl7dDwEk5TyHsWJxDpYL7VnD9jdEr98EEEsVhw9G8JDX54Nrb3XIIOBlJDpjo3AuBuychX9zg==
+  dependencies:
+    shell-quote "^1.6.1"
+    ws "^7"
+
+react-devtools-core@^4.27.2:
+  version "4.27.8"
+  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.27.8.tgz#b7b387b079c14ae9a214d4846a402da2b6efd164"
+  integrity sha512-KwoH8/wN/+m5wTItLnsgVraGNmFrcTWR3k1VimP1HjtMMw4CNF+F5vg4S/0tzTEKIdpCi2R7mPNTC+/dswZMgw==
   dependencies:
     shell-quote "^1.6.1"
     ws "^7"
@@ -10273,9 +10305,9 @@ yallist@^4.0.0:
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
 yaml@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.2.1.tgz#3014bf0482dcd15147aa8e56109ce8632cd60ce4"
-  integrity sha512-e0WHiYql7+9wr4cWMx3TVQrNwejKaEe7/rHNmQmqRjazfOP5W8PB6Jpebb5o6fIapbz9o9+2ipcaTM2ZwDI6lw==
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.3.1.tgz#02fe0975d23cd441242aa7204e09fc28ac2ac33b"
+  integrity sha512-2eHWfjaoXgTBC2jNM1LRef62VQa0umtvRiDSk6HSzW7RvS5YtkabJrwYLLEKWBc8a5U2PTSCs+dJjUTJdlHsWQ==
 
 yargs-parser@^18.1.2:
   version "18.1.3"
