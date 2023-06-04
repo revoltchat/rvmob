@@ -222,7 +222,7 @@ class MainView extends React.Component {
             <SideMenu
               openMenuOffset={Dimensions.get('window').width - 50}
               overlayColor={'#00000040'}
-              edgeHitWidth={150}
+              edgeHitWidth={200}
               isOpen={this.state.leftMenuOpen}
               onChange={open => this.setState({leftMenuOpen: open})}
               menu={

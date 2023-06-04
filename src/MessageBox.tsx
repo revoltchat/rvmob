@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, View, TextInput, TouchableOpacity} from 'react-native';
+import {Pressable, View, TextInput} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import DocumentPicker, {
@@ -183,7 +183,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
       <View style={styles.messageBoxInner}>
         {app.settings.get('ui.messaging.sendAttachments') &&
         attachments.length < 5 ? (
-          <TouchableOpacity
+          <Pressable
             style={{...styles.sendButton, marginHorizontal: 6}}
             onPress={async () => {
               try {
@@ -218,7 +218,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
               size={20}
               color={currentTheme.foregroundPrimary}
             />
-          </TouchableOpacity>
+          </Pressable>
         ) : null}
         <TextInput
           multiline
@@ -243,7 +243,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
           value={currentText}
         />
         {currentText.trim().length > 0 ? (
-          <TouchableOpacity
+          <Pressable
             style={styles.sendButton}
             onPress={async () => {
               let thisCurrentText = currentText;
@@ -308,7 +308,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                 color={currentTheme.foregroundPrimary}
               />
             )}
-          </TouchableOpacity>
+          </Pressable>
         ) : null}
       </View>
     </View>

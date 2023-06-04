@@ -1,16 +1,15 @@
 import React from 'react';
-import {View, TouchableOpacity, ScrollView, FlatList} from 'react-native';
+import {Pressable, ScrollView, View} from 'react-native';
 
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {Server, User} from 'revolt.js';
+import {Server} from 'revolt.js';
 
 import {app, setFunction, client} from './Generic';
-import {MiniProfile, Avatar} from './Profile';
+import {Avatar} from './Profile';
 import {styles, currentTheme} from './Theme';
-import {Button, Text} from './components/common/atoms';
-import {MarkdownView} from './components/common/MarkdownView';
+import {Button} from './components/common/atoms';
 import {ChannelList} from './components/navigation/ChannelList';
 import {ServerList} from './components/navigation/ServerList';
 import {DEFAULT_API_URL} from './lib/consts';
@@ -36,7 +35,7 @@ export const LeftMenu = ({
     <>
       <View style={styles.leftView}>
         <ScrollView key={'server-list'} style={styles.serverList}>
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               currentServer ? setCurrentServer(null) : app.openStatusMenu(true);
             }}
@@ -53,7 +52,7 @@ export const LeftMenu = ({
               backgroundColor={currentTheme.backgroundSecondary}
               status
             />
-          </TouchableOpacity>
+          </Pressable>
           <View
             style={{
               margin: 6,
