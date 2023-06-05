@@ -1,5 +1,7 @@
 import React from 'react';
-import {TextInput, View} from 'react-native';
+import {Pressable, TextInput, View} from 'react-native';
+
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {app} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
@@ -49,6 +51,29 @@ export const LoginSettingsPage = ({state}: {state: any}) => {
 
   return (
     <View style={styles.app}>
+      <Pressable
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          padding: 10,
+        }}
+        onPress={() => {
+          state.setState({status: 'awaitingLogin'});
+        }}>
+        <MaterialCommunityIcon
+          name="close-circle"
+          size={24}
+          color={currentTheme.foregroundSecondary}
+        />
+        <Text
+          style={{
+            color: currentTheme.foregroundSecondary,
+            fontSize: 20,
+            marginLeft: 5,
+          }}>
+          Close
+        </Text>
+      </Pressable>
       <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
         {saved ? (
           <>
