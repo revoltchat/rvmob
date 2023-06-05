@@ -1,5 +1,5 @@
 import 'react-native-get-random-values'; // react native moment
-import './shim'; // react native moment 2
+import './shim'; // react native moment 2: the thrilling sequel
 import React from 'react';
 import {
   View,
@@ -10,7 +10,7 @@ import {
   StatusBarStyle,
 } from 'react-native';
 import {ErrorBoundary} from 'react-error-boundary';
-import SideMenu from 'react-native-side-menu-updated';
+import SideMenu from '@chakrahq/react-native-side-menu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
@@ -39,7 +39,6 @@ class MainView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: null,
       status: 'tryingLogin',
       loginWithEmail: true,
       askForTFACode: false,
@@ -52,8 +51,6 @@ class MainView extends React.Component {
       userStatusInput: '',
       tfaTicket: '',
       leftMenuOpen: false,
-      imageViewerImage: null,
-      nsfwConsented: false,
       notificationMessage: null,
       orderedServers: [],
     };
