@@ -302,7 +302,6 @@ export const app = {
 };
 
 export function setFunction(name: string, func: any) {
-  console.info(`[APP] Setting function ${name}`);
   app[name] = func;
 }
 
