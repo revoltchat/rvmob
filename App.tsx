@@ -181,6 +181,7 @@ class MainView extends React.Component {
                 : ''),
             android: {
               color: '#1AD4B2',
+              smallIcon: 'ic_launcher_monochrome',
               largeIcon:
                 msg.channel?.server?.generateIconURL() ||
                 msg.author?.generateAvatarURL(),
