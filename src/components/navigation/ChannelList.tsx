@@ -202,7 +202,7 @@ export const ChannelList = observer((props: ChannelListProps) => {
                 delayLongPress={750}
                 key={dm._id}
                 channel={dm}
-                style={props.currentChannel?._id === dm._id}
+                selected={props.currentChannel?._id === dm._id}
               />
             ))}
         </>
