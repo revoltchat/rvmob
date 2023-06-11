@@ -119,12 +119,20 @@ class MainView extends React.Component {
     });
     client.on('message', async msg => {
       console.log(`[APP] Handling message ${msg._id}`);
+
+      const shouldShowNotif = app.settings.get(
+        'app.notifications.notifyOnSelfPing',
+      )
+        ? true
+        : msg.author?._id !== client.user?._id;
+
+      const mentionsUser =
+        msg.mention_ids?.includes(client.user?._id!) ||
+        msg.channel?.channel_type === 'DirectMessage';
+
       if (
-        (app.settings.get('app.notifications.notifyOnSelfPing')
-          ? true
-          : msg.author?._id !== client.user?._id) &&
-        (msg.mention_ids?.includes(client.user?._id!) ||
-          msg.channel?.channel_type === 'DirectMessage') &&
+        shouldShowNotif &&
+        mentionsUser &&
         app.settings.get('app.notifications.enabled')
       ) {
         console.log(
@@ -138,9 +146,11 @@ class MainView extends React.Component {
         );
         const title = `${
           msg.channel?.server?.name
-            ? `${msg.channel.server.name}, #`
-            : 'Direct Message'
-        }${msg.channel?.name} (RVMob)`;
+            ? `#${msg.channel.name} (${msg.channel.server.name})`
+            : msg.channel?.channel_type === 'Group'
+            ? `${msg.channel.name}`
+            : `@${msg.channel?.recipient?.username}`
+        }`;
 
         try {
           notifee.displayNotification({
