@@ -401,16 +401,24 @@ export const Message = observer((props: MessageProps) => {
                     />
                   );
                 })}
-                {app.settings.get('ui.messaging.showReactions')
-                  ? reactions?.map(r => {
+                {app.settings.get('ui.messaging.showReactions') ? (
+                  <>
+                    <Text
+                      style={{fontWeight: 'bold'}}
+                      key={`message-${props.message._id}-reactions-header`}>
+                      Reactions
+                    </Text>
+                    {reactions?.map(r => {
                       return (
                         <Text
                           key={`message-${props.message._id}-reaction-${r.emoji}`}>
-                          Reaction: {r.emoji} {r.reactors.length}
+                          Reaction: {r.emoji} ({r.reactors.length}{' '}
+                          {r.reactors.length === 1 ? 'reaction' : 'reactions'})
                         </Text>
                       );
-                    })
-                  : null}
+                    })}
+                  </>
+                ) : null}
               </View>
             </View>
           </>
