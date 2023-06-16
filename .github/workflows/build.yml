@@ -48,7 +48,7 @@ jobs:
       - name: Bundle the JS
         run: npx react-native bundle --platform android --entry-file ./index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
       - name: Build the app
-        run: npx react-native build-android --mode debug
+        run: npx react-native build-android --mode debug && ls android/app/build/ && ls android/app/build/outputs/apk/
       - name: Prepare debug APK
         run: mv app-debug.apk RVMob-Debug-${{ github.sha }}.apk
         working-directory: /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/
