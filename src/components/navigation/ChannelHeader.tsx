@@ -12,7 +12,7 @@ export const ChannelHeader = ({children}: {children: any}) => {
       <TouchableOpacity
         style={styles.headerIcon}
         onPress={() => {
-          app.openLeftMenu();
+          app.openLeftMenu(true);
         }}>
         <View style={styles.iconContainer}>
           <MaterialIcon

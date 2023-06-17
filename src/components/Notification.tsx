@@ -4,9 +4,9 @@ import {observer} from 'mobx-react-lite';
 
 import {Message} from 'revolt.js';
 
-import {Avatar, Username} from '../Profile';
+import {Avatar} from '../Profile';
 import {currentTheme} from '../Theme';
-import {Text} from './common/atoms';
+import {Text, Username} from './common/atoms';
 import {MarkdownView} from './common/MarkdownView';
 import {parseRevoltNodes} from '../lib/utils';
 
@@ -28,7 +28,7 @@ export const Notification = observer(
                 paddingHorizontal: 32,
                 justifyContent: 'center',
               }}>
-              <Avatar user={message.author} />
+              <Avatar user={message.author} size={35} />
               <View style={{marginHorizontal: 8}}>
                 <View style={{flexDirection: 'row'}}>
                   <Username

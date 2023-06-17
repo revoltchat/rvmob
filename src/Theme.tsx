@@ -168,7 +168,7 @@ function refreshStyles() {
     },
     headerv2: {
       fontWeight: 'bold',
-      fontSize: 17.5,
+      fontSize: 18,
       marginBottom: 10,
     },
     profileSubheader: {

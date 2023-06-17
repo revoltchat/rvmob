@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Image,
   Pressable,
   ScrollView,
   TextInput,
@@ -17,7 +16,7 @@ import {
   getBundleId,
   getDevice,
 } from 'react-native-device-info';
-// import FastImage from 'react-native-fast-image';
+import FastImage from 'react-native-fast-image';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -27,7 +26,7 @@ import {app, client, Setting} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
 import {Checkbox, ContextButton, Link, Text} from '../common/atoms';
 
-// const Image = FastImage;
+const Image = FastImage;
 
 const icon = getBundleId().match('debug')
   ? require('../../../assets/images/icon_debug.png')

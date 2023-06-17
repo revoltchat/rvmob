@@ -163,7 +163,7 @@ export const ChannelView = observer(
                       app.openProfile(m.author, channel.server);
                     }}
                     onImagePress={a => {
-                      state.setState({imageViewerImage: a});
+                      app.openImage(a);
                     }}
                     onUsernamePress={m =>
                       state.setState({

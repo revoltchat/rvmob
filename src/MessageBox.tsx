@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, View, TextInput, TouchableOpacity} from 'react-native';
+import {Pressable, View, TextInput} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import DocumentPicker, {
@@ -13,9 +13,9 @@ import {Channel, Message} from 'revolt.js';
 import {ulid} from 'ulid';
 
 import {app, client, setFunction} from './Generic';
-import {Username, Avatar} from './Profile';
+import {Avatar} from './Profile';
 import {styles, currentTheme} from './Theme';
-import {Text} from './components/common/atoms';
+import {Text, Username} from './components/common/atoms';
 import {USER_IDS} from './lib/consts';
 import {getReadableFileSize} from './lib/utils';
 
@@ -183,7 +183,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
       <View style={styles.messageBoxInner}>
         {app.settings.get('ui.messaging.sendAttachments') &&
         attachments.length < 5 ? (
-          <TouchableOpacity
+          <Pressable
             style={{...styles.sendButton, marginHorizontal: 6}}
             onPress={async () => {
               try {
@@ -218,7 +218,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
               size={20}
               color={currentTheme.foregroundPrimary}
             />
-          </TouchableOpacity>
+          </Pressable>
         ) : null}
         <TextInput
           multiline
@@ -243,7 +243,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
           value={currentText}
         />
         {currentText.trim().length > 0 ? (
-          <TouchableOpacity
+          <Pressable
             style={styles.sendButton}
             onPress={async () => {
               let thisCurrentText = currentText;
@@ -288,7 +288,10 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                   }),
                   nonce,
                 });
-                props.channel.ack(props.channel.last_message_id ?? undefined);
+                props.channel.ack(
+                  props.channel.last_message_id ?? undefined,
+                  true,
+                );
                 setReplyingMessages([]);
               }
             }}>
@@ -305,7 +308,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                 color={currentTheme.foregroundPrimary}
               />
             )}
-          </TouchableOpacity>
+          </Pressable>
         ) : null}
       </View>
     </View>

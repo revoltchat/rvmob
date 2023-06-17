@@ -1,5 +1,5 @@
 import 'react-native-get-random-values'; // react native moment
-import './shim'; // react native moment 2
+import './shim'; // react native moment 2: the thrilling sequel
 import React from 'react';
 import {
   View,
@@ -10,7 +10,7 @@ import {
   StatusBarStyle,
 } from 'react-native';
 import {ErrorBoundary} from 'react-error-boundary';
-import SideMenu from 'react-native-side-menu-updated';
+import SideMenu from '@chakrahq/react-native-side-menu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
@@ -26,6 +26,7 @@ import {Button, Link, Text} from './src/components/common/atoms';
 import {LoginSettingsPage} from './src/components/pages/LoginSettingsPage';
 import {ChannelView} from './src/components/views/ChannelView';
 import {Notification} from './src/components/Notification';
+import { DEFAULT_API_URL } from './src/lib/consts';
 
 async function createChannel() {
   const channel = await notifee.createChannel({
@@ -39,7 +40,6 @@ class MainView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: null,
       status: 'tryingLogin',
       loginWithEmail: true,
       askForTFACode: false,
@@ -52,8 +52,6 @@ class MainView extends React.Component {
       userStatusInput: '',
       tfaTicket: '',
       leftMenuOpen: false,
-      imageViewerImage: null,
-      nsfwConsented: false,
       notificationMessage: null,
       orderedServers: [],
     };
@@ -65,11 +63,9 @@ class MainView extends React.Component {
       await client.joinInvite(i);
     });
     setFunction('openLeftMenu', async (o: any) => {
-      this.setState(
-        typeof o === 'boolean'
-          ? {leftMenuOpen: o}
-          : {leftMenuOpen: !this.state.leftMenuOpen},
-      );
+      const newState = typeof o === 'boolean' ? o : !this.state.leftMenuOpen;
+      console.log(`[APP] Setting left menu open state to ${newState}`);
+      this.setState({leftMenuOpen: newState});
     });
     setFunction('logOut', async () => {
       console.log(
@@ -124,12 +120,20 @@ class MainView extends React.Component {
     });
     client.on('message', async msg => {
       console.log(`[APP] Handling message ${msg._id}`);
+
+      const shouldShowNotif = app.settings.get(
+        'app.notifications.notifyOnSelfPing',
+      )
+        ? true
+        : msg.author?._id !== client.user?._id;
+
+      const mentionsUser =
+        msg.mention_ids?.includes(client.user?._id!) ||
+        msg.channel?.channel_type === 'DirectMessage';
+
       if (
-        (app.settings.get('app.notifications.notifyOnSelfPing')
-          ? true
-          : msg.author?._id !== client.user?._id) &&
-        (msg.mention_ids?.includes(client.user?._id!) ||
-          msg.channel?.channel_type === 'DirectMessage') &&
+        shouldShowNotif &&
+        mentionsUser &&
         app.settings.get('app.notifications.enabled')
       ) {
         console.log(
@@ -143,9 +147,11 @@ class MainView extends React.Component {
         );
         const title = `${
           msg.channel?.server?.name
-            ? `${msg.channel.server.name}, #`
-            : 'Direct Message'
-        }${msg.channel?.name} (RVMob)`;
+            ? `#${msg.channel.name} (${msg.channel.server.name})`
+            : msg.channel?.channel_type === 'Group'
+            ? `${msg.channel.name}`
+            : `@${msg.channel?.recipient?.username}`
+        }`;
 
         try {
           notifee.displayNotification({
@@ -176,6 +182,7 @@ class MainView extends React.Component {
                 : ''),
             android: {
               color: '#1AD4B2',
+              smallIcon: 'ic_launcher_monochrome',
               largeIcon:
                 msg.channel?.server?.generateIconURL() ||
                 msg.author?.generateAvatarURL(),
@@ -224,7 +231,7 @@ class MainView extends React.Component {
             <SideMenu
               openMenuOffset={Dimensions.get('window').width - 50}
               overlayColor={'#00000040'}
-              edgeHitWidth={150}
+              edgeHitWidth={200}
               isOpen={this.state.leftMenuOpen}
               onChange={open => this.setState({leftMenuOpen: open})}
               menu={
@@ -267,122 +274,163 @@ class MainView extends React.Component {
               />
             </View>
           </View>
-        ) : this.state.status === 'awaitingLogin' ? (
+        ) : this.state.status === 'awaitingLogin' ||
+          this.state.status === 'tryingLogin' ? (
           <View style={styles.app}>
-            <View
-              style={{
-                marginTop: 8,
-                marginLeft: '90%',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <TouchableOpacity
-                onPress={() => this.setState({status: 'loginSettings'})}>
-                <MaterialIcon
-                  name="more-vert"
-                  size={30}
-                  color={currentTheme.foregroundPrimary}
-                />
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-              <Text
-                style={{fontFamily: 'Inter', fontWeight: 'bold', fontSize: 48}}>
-                RVMob
-              </Text>
-              {/* trans rights uwu */}
-              {this.state.loginWithEmail === true ? (
-                <>
-                  <TextInput
-                    placeholderTextColor={currentTheme.foregroundSecondary}
-                    style={styles.loginInput}
-                    placeholder={'Email'}
-                    keyboardType={'email-address'}
-                    autoComplete={'email'}
-                    onChangeText={(text: string) => {
-                      this.setState({emailInput: text});
-                    }}
-                    value={this.state.emailInput}
-                  />
-                  <TextInput
-                    placeholderTextColor={currentTheme.foregroundSecondary}
-                    style={styles.loginInput}
-                    secureTextEntry={true}
-                    autoComplete={'password'}
-                    placeholder={'Password'}
-                    onChangeText={text => {
-                      this.setState({passwordInput: text});
-                    }}
-                    value={this.state.passwordInput}
-                  />
-                  {this.state.askForTFACode === true ? (
+            {this.state.status === 'awaitingLogin' ? (
+              <>
+                <View
+                  style={{
+                    marginTop: 8,
+                    marginLeft: '90%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => this.setState({status: 'loginSettings'})}>
+                    <MaterialIcon
+                      name="more-vert"
+                      size={30}
+                      color={currentTheme.foregroundPrimary}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flex: 1,
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'Inter',
+                      fontWeight: 'bold',
+                      fontSize: 48,
+                    }}>
+                    RVMob
+                  </Text>
+                  {this.state.loginWithEmail === true ? (
                     <>
                       <TextInput
                         placeholderTextColor={currentTheme.foregroundSecondary}
                         style={styles.loginInput}
-                        placeholder={'One-time code'} // /recovery code
-                        onChangeText={text => {
-                          this.setState({tfaInput: text});
+                        placeholder={'Email'}
+                        keyboardType={'email-address'}
+                        autoComplete={'email'}
+                        onChangeText={(text: string) => {
+                          this.setState({emailInput: text});
                         }}
-                        value={this.state.tfaInput}
+                        value={this.state.emailInput}
                       />
-                    </>
-                  ) : null}
-                  <Button
-                    onPress={async () => {
-                      this.setState({status: 'tryingLogin'});
-                      try {
-                        console.log(
-                          '[AUTH] Attempting login with email and password...',
-                        );
-                        let session = await client.api.post(
-                          '/auth/session/login',
-                          {
-                            email: this.state.emailInput,
-                            password: this.state.passwordInput,
-                            friendly_name: 'RVMob',
-                          },
-                        );
-
-                        // Check if account is disabled; if not, prompt for MFA verificaiton if necessary
-                        if (session.result === 'Disabled') {
-                          console.log(
-                            '[AUTH] Account is disabled; need to add a proper handler for this',
-                          );
-                        } else if (session.result === 'MFA') {
-                          if (this.state.tfaTicket === '') {
+                      <TextInput
+                        placeholderTextColor={currentTheme.foregroundSecondary}
+                        style={styles.loginInput}
+                        secureTextEntry={true}
+                        autoComplete={'password'}
+                        placeholder={'Password'}
+                        onChangeText={text => {
+                          this.setState({passwordInput: text});
+                        }}
+                        value={this.state.passwordInput}
+                      />
+                      {this.state.askForTFACode === true ? (
+                        <>
+                          <TextInput
+                            placeholderTextColor={
+                              currentTheme.foregroundSecondary
+                            }
+                            style={styles.loginInput}
+                            placeholder={'One-time code'} // /recovery code
+                            onChangeText={text => {
+                              this.setState({tfaInput: text});
+                            }}
+                            value={this.state.tfaInput}
+                          />
+                        </>
+                      ) : null}
+                      <Button
+                        onPress={async () => {
+                          this.setState({status: 'tryingLogin'});
+                          try {
                             console.log(
-                              `[AUTH] MFA required; prompting for code... (ticket: ${session.ticket})`,
+                              '[AUTH] Attempting login with email and password...',
                             );
-                            return this.setState({
-                              status: 'awaitingLogin',
-                              askForTFACode: true,
-                              tfaTicket: session.ticket,
-                            });
-                          } else {
-                            try {
+                            let session = await client.api.post(
+                              '/auth/session/login',
+                              {
+                                email: this.state.emailInput,
+                                password: this.state.passwordInput,
+                                friendly_name: 'RVMob',
+                              },
+                            );
+
+                            // Check if account is disabled; if not, prompt for MFA verificaiton if necessary
+                            if (session.result === 'Disabled') {
                               console.log(
-                                `[AUTH] Attempting to log in with MFA (code: ${this.state.tfaInput})`,
+                                '[AUTH] Account is disabled; need to add a proper handler for this',
                               );
-                              const isRecovery = this.state.tfaInput.length > 7;
-                              console.log(
-                                `[AUTH] Using recovery code: ${isRecovery}`,
-                              );
-                              session = await client.api.post(
-                                '/auth/session/login',
-                                {
-                                  mfa_response: isRecovery
-                                    ? {recovery_code: this.state.tfaInput}
-                                    : {totp_code: this.state.tfaInput},
-                                  mfa_ticket: this.state.tfaTicket,
-                                  friendly_name: 'RVMob',
-                                },
-                              );
-                              console.log(`[AUTH] Result: ${session.result}`);
-                              if (session.result !== 'Success') {
-                                throw Error;
+                            } else if (session.result === 'MFA') {
+                              if (this.state.tfaTicket === '') {
+                                console.log(
+                                  `[AUTH] MFA required; prompting for code... (ticket: ${session.ticket})`,
+                                );
+                                return this.setState({
+                                  status: 'awaitingLogin',
+                                  askForTFACode: true,
+                                  tfaTicket: session.ticket,
+                                });
+                              } else {
+                                try {
+                                  console.log(
+                                    `[AUTH] Attempting to log in with MFA (code: ${this.state.tfaInput})`,
+                                  );
+                                  const isRecovery =
+                                    this.state.tfaInput.length > 7;
+                                  console.log(
+                                    `[AUTH] Using recovery code: ${isRecovery}`,
+                                  );
+                                  session = await client.api.post(
+                                    '/auth/session/login',
+                                    {
+                                      mfa_response: isRecovery
+                                        ? {recovery_code: this.state.tfaInput}
+                                        : {totp_code: this.state.tfaInput},
+                                      mfa_ticket: this.state.tfaTicket,
+                                      friendly_name: 'RVMob',
+                                    },
+                                  );
+                                  console.log(
+                                    `[AUTH] Result: ${session.result}`,
+                                  );
+                                  if (session.result !== 'Success') {
+                                    throw Error;
+                                  }
+                                  const token = session.token;
+                                  console.log(
+                                    '[AUTH] Logging in with a new token...',
+                                  );
+                                  await client.useExistingSession({
+                                    token: token,
+                                  });
+                                  await AsyncStorage.setItem('token', token);
+                                  console.log(
+                                    '[AUTH] Successfuly logged in and saved the token!',
+                                  );
+                                  this.setState({
+                                    status: 'loggedIn',
+                                    tokenInput: '',
+                                    passwordInput: '',
+                                    emailInput: '',
+                                    tfaInput: '',
+                                    logInError: null,
+                                    tfaTicket: '',
+                                    askForTFACode: false,
+                                  });
+                                } catch (err) {
+                                  this.setState({logInError: err});
+                                }
                               }
+                            } else {
                               const token = session.token;
                               console.log(
                                 '[AUTH] Logging in with a new token...',
@@ -402,123 +450,115 @@ class MainView extends React.Component {
                                 tfaTicket: '',
                                 askForTFACode: false,
                               });
-                            } catch (err) {
-                              this.setState({logInError: err});
+                            }
+                          } catch (e) {
+                            console.error(e);
+                            this.setState({
+                              logInError: e,
+                              status: 'awaitingLogin',
+                            });
+                          }
+                        }}>
+                        <Text useInter={true}>Log in</Text>
+                      </Button>
+                      {this.state.logInError ? (
+                        <Text>
+                          {this.state.logInError.message ||
+                            this.state.logInError.toString()}
+                        </Text>
+                      ) : null}
+                      <Button
+                        onPress={() => {
+                          this.setState({loginWithEmail: false});
+                        }}>
+                        <Text useInter={true}>Log in with token</Text>
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <TextInput
+                        placeholderTextColor={currentTheme.foregroundSecondary}
+                        style={styles.loginInput}
+                        placeholder={'Token'}
+                        onChangeText={text => {
+                          this.setState({tokenInput: text});
+                        }}
+                        value={this.state.tokenInput}
+                      />
+                      <Link
+                        link={
+                          'https://infi.sh/posts/revolt-tokens?utm_source=rvmob'
+                        }
+                        label={'How do I get my token?'}
+                        style={{fontFamily: 'Inter', fontWeight: 'bold'}}
+                      />
+                      <Button
+                        onPress={async () => {
+                          this.setState({status: 'tryingLogin'});
+                          try {
+                            console.log(decodeTime(this.state.tokenInput));
+                            this.setState({
+                              logInError: 'That is a user ID, not a token.',
+                              status: 'awaitingLogin',
+                            });
+                          } catch (e) {
+                            try {
+                              await client.useExistingSession({
+                                token: this.state.tokenInput,
+                              });
+                              this.setState({
+                                status: 'loggedIn',
+                                tokenInput: '',
+                                passwordInput: '',
+                                emailInput: '',
+                                logInError: null,
+                              });
+                            } catch (e) {
+                              console.error(e);
+                              this.setState({
+                                logInError: e,
+                                status: 'awaitingLogin',
+                              });
                             }
                           }
-                        } else {
-                          const token = session.token;
-                          console.log('[AUTH] Logging in with a new token...');
-                          await client.useExistingSession({token: token});
-                          await AsyncStorage.setItem('token', token);
-                          console.log(
-                            '[AUTH] Successfuly logged in and saved the token!',
-                          );
-                          this.setState({
-                            status: 'loggedIn',
-                            tokenInput: '',
-                            passwordInput: '',
-                            emailInput: '',
-                            tfaInput: '',
-                            logInError: null,
-                            tfaTicket: '',
-                            askForTFACode: false,
-                          });
-                        }
-                      } catch (e) {
-                        console.error(e);
-                        this.setState({logInError: e, status: 'awaitingLogin'});
-                      }
-                    }}>
-                    <Text useInter={true}>Log in</Text>
-                  </Button>
-                  {this.state.logInError ? (
-                    <Text>
-                      {this.state.logInError.message ||
-                        this.state.logInError.toString()}
-                    </Text>
-                  ) : null}
-                  <Button
-                    onPress={() => {
-                      this.setState({loginWithEmail: false});
-                    }}>
-                    <Text useInter={true}>Log in with token</Text>
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <TextInput
-                    placeholderTextColor={currentTheme.foregroundSecondary}
-                    style={styles.loginInput}
-                    placeholder={'Token'}
-                    onChangeText={text => {
-                      this.setState({tokenInput: text});
-                    }}
-                    value={this.state.tokenInput}
-                  />
-                  <Link
-                    link={
-                      'https://infi.sh/posts/revolt-tokens?utm_source=rvmob'
-                    }
-                    label={'How do I get my token?'}
-                    style={{fontFamily: 'Inter', fontWeight: 'bold'}}
-                  />
-                  <Button
-                    onPress={async () => {
-                      this.setState({status: 'tryingLogin'});
-                      try {
-                        console.log(decodeTime(this.state.tokenInput));
-                        this.setState({
-                          logInError: 'That is a user ID, not a token.',
-                          status: 'awaitingLogin',
-                        });
-                      } catch (e) {
-                        try {
-                          await client.useExistingSession({
-                            token: this.state.tokenInput,
-                          });
-                          this.setState({
-                            status: 'loggedIn',
-                            tokenInput: '',
-                            passwordInput: '',
-                            emailInput: '',
-                            logInError: null,
-                          });
-                        } catch (e) {
-                          console.error(e);
-                          this.setState({
-                            logInError: e,
-                            status: 'awaitingLogin',
-                          });
-                        }
-                      }
-                    }}>
-                    <Text useInter={true}>Log in</Text>
-                  </Button>
-                  {this.state.logInError ? (
-                    <Text>
-                      {this.state.logInError.message ?? this.state.logInError}
-                    </Text>
-                  ) : null}
-                  <Button
-                    onPress={() => {
-                      this.setState({loginWithEmail: true});
-                    }}>
-                    <Text useInter={true}>Log in with email</Text>
-                  </Button>
-                </>
-              )}
-            </View>
+                        }}>
+                        <Text useInter={true}>Log in</Text>
+                      </Button>
+                      {this.state.logInError ? (
+                        <Text>
+                          {this.state.logInError.message ??
+                            this.state.logInError}
+                        </Text>
+                      ) : null}
+                      <Button
+                        onPress={() => {
+                          this.setState({loginWithEmail: true});
+                        }}>
+                        <Text useInter={true}>Log in with email</Text>
+                      </Button>
+                    </>
+                  )}
+                </View>
+              </>
+            ) : (
+              <View style={styles.loggingInScreen}>
+                <Text style={{fontSize: 30, fontWeight: 'bold'}}>
+                  Logging in...
+                </Text>
+                <Text style={styles.remark}>{selectedRemark || null}</Text>
+              </View>
+            )}
           </View>
         ) : this.state.status === 'loginSettings' ? (
           <LoginSettingsPage state={this} />
         ) : (
           <View style={styles.app}>
             <View style={styles.loggingInScreen}>
-              <Text style={{fontSize: 30, fontWeight: 'bold'}}>
-                Logging in...
+              <Text style={{fontSize: 30, fontWeight: 'bold'}}>Uh oh...</Text>
+              <Text style={styles.remark}>
+                Please let the developers know that you saw this (value:{' '}
+                {this.state.status})
               </Text>
-              <Text style={styles.remark}>{selectedRemark || null}</Text>
             </View>
           </View>
         )}

@@ -6,9 +6,9 @@ import FastImage from 'react-native-fast-image';
 
 import {Channel, Server} from 'revolt.js';
 
-import {ChannelButton, app, client} from '../../Generic';
+import {app, client} from '../../Generic';
 import {styles} from '../../Theme';
-import {Text} from '../common/atoms';
+import {ChannelButton, Text} from '../common/atoms';
 const Image = FastImage;
 
 type ChannelListProps = {
@@ -202,7 +202,7 @@ export const ChannelList = observer((props: ChannelListProps) => {
                 delayLongPress={750}
                 key={dm._id}
                 channel={dm}
-                style={props.currentChannel?._id === dm._id}
+                selected={props.currentChannel?._id === dm._id}
               />
             ))}
         </>
