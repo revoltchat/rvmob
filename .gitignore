@@ -35,6 +35,7 @@ local.properties
 index.android.bundle
 .cxx
 link-assets-manifest.json
+drawable-mdpi
 android/app/src/main/assets/fonts
 
 # node.js
