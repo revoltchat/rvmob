@@ -467,8 +467,8 @@ export const ProfileSheet = observer(
                                       onPress={() =>
                                         showBadgeToast('Early Adopter')
                                       }>
-                                      <FA5Icon
-                                        name="clock"
+                                      <MaterialCommunityIcon
+                                        name="beta"
                                         size={28}
                                         color={'cyan'}
                                       />
