@@ -9,7 +9,7 @@ import {enGB, enUS} from 'date-fns/locale';
 import {Message as RevoltMessage} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
-import {InviteEmbed, MessageEmbed, ReplyMessage} from './';
+import {InviteEmbed, MessageEmbed, MessageReactions, ReplyMessage} from './';
 import {app, client, openUrl} from '../../../Generic';
 import {Avatar} from '../../../Profile';
 import {currentTheme, styles} from '../../../Theme';
@@ -401,52 +401,8 @@ export const Message = observer((props: MessageProps) => {
                     />
                   );
                 })}
-                {app.settings.get('ui.messaging.showReactions') &&
-                reactions.length > 0 ? (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      marginVertical: 4,
-                      flexWrap: 'wrap',
-                    }}>
-                    {reactions.map(r => {
-                      return (
-                        <Pressable
-                          key={`message-${props.message._id}-reaction-${r.emoji}`}
-                          onPress={() => {
-                            props.message.channel?.havePermission('React')
-                              ? console.log('sus')
-                              : console.log('amogus');
-                          }}
-                          style={{
-                            padding: 4,
-                            borderRadius: 4,
-                            borderColor: r.reactors.includes(client.user?._id!)
-                              ? currentTheme.accentColor
-                              : currentTheme.backgroundTertiary,
-                            backgroundColor: currentTheme.backgroundSecondary,
-                            borderWidth: 2,
-                            marginRight: 4, // TODO: adapt this for future RTL support
-                            marginVertical: 2,
-                          }}>
-                          <Text
-                            key={`message-${props.message._id}-reaction-${r.emoji}-label`}>
-                            {r.emoji.length > 6 ? (
-                              <Image
-                                style={{minHeight: 15, minWidth: 15}}
-                                source={{
-                                  uri: `${client.configuration?.features.autumn.url}/emojis/${r.emoji}`,
-                                }}
-                              />
-                            ) : (
-                              r.emoji
-                            )}{' '}
-                            {r.reactors.length}
-                          </Text>
-                        </Pressable>
-                      );
-                    })}
-                  </View>
+                {app.settings.get('ui.messaging.showReactions') ? (
+                  <MessageReactions msg={props.message} reactions={reactions} />
                 ) : null}
               </View>
             </View>
