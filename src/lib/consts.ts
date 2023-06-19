@@ -9,6 +9,7 @@ export const USER_IDS = {
   teamMembers: {
     insert: '01EX2NCWQ0CHS3QJF0FEQS1GR4',
     lea: '01EXAF3KX65608AJ4NG27YG1HM',
+    infi: '01F1WKM5TK2V6KCZWR6DGBJDTZ',
   },
 };
 

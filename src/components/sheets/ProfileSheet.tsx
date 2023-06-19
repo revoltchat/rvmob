@@ -597,6 +597,22 @@ export const ProfileSheet = observer(
                         </View>
                       </TouchableOpacity>
                     ) : null}
+                    {user._id === USER_IDS.teamMembers.infi ? (
+                      <TouchableOpacity
+                        onPress={() => showBadgeToast('ink-fi')}>
+                        <View
+                          style={{
+                            height: 32,
+                            width: 32,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginRight: 8,
+                          }}
+                          key={'infi-octopus'}>
+                          <Text style={{fontSize: 24}}>🐙</Text>
+                        </View>
+                      </TouchableOpacity>
+                    ) : null}
                   </>
                 </ScrollView>
               </>
