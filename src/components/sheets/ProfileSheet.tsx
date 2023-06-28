@@ -1,6 +1,6 @@
 /* eslint-disable no-bitwise */
 import React, {useEffect} from 'react';
-import {ScrollView, ToastAndroid, TouchableOpacity, View} from 'react-native';
+import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 // import FastImage from 'react-native-fast-image';
@@ -12,7 +12,7 @@ import {User, Server} from 'revolt.js';
 
 import {app, client, GeneralAvatar, openUrl} from '../../Generic';
 import {BADGES, USER_IDS} from '../../lib/consts';
-import {parseRevoltNodes} from '../../lib/utils';
+import {parseRevoltNodes, showToast} from '../../lib/utils';
 import {Avatar, MiniProfile, RoleView} from '../../Profile';
 import {currentTheme, styles} from '../../Theme';
 import {Button, ContextButton, Link, Text, Username} from '../common/atoms';
@@ -32,10 +32,6 @@ export const ProfileSheet = observer(
       {} as {users: User[]; servers: Server[]},
     );
     const [showMenu, setShowMenu] = React.useState(false);
-
-    function showBadgeToast(badgeName: string) {
-      ToastAndroid.show(badgeName, ToastAndroid.SHORT);
-    }
 
     useEffect(() => {
       async function getInfo() {
@@ -398,7 +394,7 @@ export const ProfileSheet = observer(
                                 case 'Founder':
                                   return (
                                     <TouchableOpacity
-                                      onPress={() => showBadgeToast('Founder')}>
+                                      onPress={() => showToast('Founder')}>
                                       <FA5Icon
                                         name="star"
                                         size={28}
@@ -410,7 +406,7 @@ export const ProfileSheet = observer(
                                   return (
                                     <TouchableOpacity
                                       onPress={() =>
-                                        showBadgeToast('Revolt Developer')
+                                        showToast('Revolt Developer')
                                       }>
                                       <FA5Icon
                                         name="wrench"
@@ -422,9 +418,7 @@ export const ProfileSheet = observer(
                                 case 'Translator':
                                   return (
                                     <TouchableOpacity
-                                      onPress={() =>
-                                        showBadgeToast('Translator')
-                                      }>
+                                      onPress={() => showToast('Translator')}>
                                       <MaterialIcon
                                         name="translate"
                                         size={28}
@@ -435,7 +429,7 @@ export const ProfileSheet = observer(
                                 case 'Supporter':
                                   return (
                                     <TouchableOpacity
-                                      onPress={() => showBadgeToast('Donator')}
+                                      onPress={() => showToast('Donator')}
                                       onLongPress={() =>
                                         openUrl('https://insrt.uk/donate')
                                       }>
@@ -450,7 +444,7 @@ export const ProfileSheet = observer(
                                   return (
                                     <TouchableOpacity
                                       onPress={() =>
-                                        showBadgeToast(
+                                        showToast(
                                           'Responisbly disclosed a security issue',
                                         )
                                       }>
@@ -465,7 +459,7 @@ export const ProfileSheet = observer(
                                   return (
                                     <TouchableOpacity
                                       onPress={() =>
-                                        showBadgeToast('Early Adopter')
+                                        showToast('Early Adopter')
                                       }>
                                       <MaterialCommunityIcon
                                         name="beta"
@@ -478,7 +472,7 @@ export const ProfileSheet = observer(
                                   return (
                                     <TouchableOpacity
                                       onPress={() =>
-                                        showBadgeToast('Platform Moderator')
+                                        showToast('Platform Moderator')
                                       }>
                                       <FA5Icon
                                         name="gavel"
@@ -490,16 +484,14 @@ export const ProfileSheet = observer(
                                 case 'Paw':
                                   return (
                                     <TouchableOpacity
-                                      onPress={() =>
-                                        showBadgeToast("Insert's Paw")
-                                      }>
+                                      onPress={() => showToast("Insert's Paw")}>
                                       <Text style={{fontSize: 24}}>✌️</Text>
                                     </TouchableOpacity>
                                   );
                                 case 'ReservedRelevantJokeBadge1':
                                   return (
                                     <TouchableOpacity
-                                      onPress={() => showBadgeToast('amogus')}>
+                                      onPress={() => showToast('amogus')}>
                                       <Text style={{fontSize: 24}}>📮</Text>
                                     </TouchableOpacity>
                                   );
@@ -507,7 +499,7 @@ export const ProfileSheet = observer(
                                   return (
                                     <TouchableOpacity
                                       onPress={() =>
-                                        showBadgeToast("It's Morbin Time")
+                                        showToast("It's Morbin Time")
                                       }>
                                       <Text style={{fontSize: 24}}>🦇</Text>
                                     </TouchableOpacity>
@@ -515,7 +507,7 @@ export const ProfileSheet = observer(
                                 default:
                                   return (
                                     <TouchableOpacity
-                                      onPress={() => showBadgeToast(b)}>
+                                      onPress={() => showToast(b)}>
                                       <Text
                                         style={{
                                           color:
@@ -534,7 +526,7 @@ export const ProfileSheet = observer(
                     })}
                     {USER_IDS.developers.includes(user._id) ? (
                       <TouchableOpacity
-                        onPress={() => showBadgeToast('RVMob Developer')}>
+                        onPress={() => showToast('RVMob Developer')}>
                         <View
                           style={{
                             borderRadius: 3,
@@ -556,8 +548,7 @@ export const ProfileSheet = observer(
                       </TouchableOpacity>
                     ) : null}
                     {user._id === USER_IDS.teamMembers.lea ? (
-                      <TouchableOpacity
-                        onPress={() => showBadgeToast("Lea's Paw")}>
+                      <TouchableOpacity onPress={() => showToast("Lea's Paw")}>
                         <View
                           style={{
                             height: 32,
@@ -576,8 +567,7 @@ export const ProfileSheet = observer(
                       </TouchableOpacity>
                     ) : null}
                     {user._id === USER_IDS.teamMembers.insert ? (
-                      <TouchableOpacity
-                        onPress={() => showBadgeToast('raccoon 🦝')}>
+                      <TouchableOpacity onPress={() => showToast('raccoon 🦝')}>
                         <View
                           style={{
                             height: 32,
@@ -598,8 +588,7 @@ export const ProfileSheet = observer(
                       </TouchableOpacity>
                     ) : null}
                     {user._id === USER_IDS.teamMembers.infi ? (
-                      <TouchableOpacity
-                        onPress={() => showBadgeToast('ink-fi')}>
+                      <TouchableOpacity onPress={() => showToast('ink-fi')}>
                         <View
                           style={{
                             height: 32,

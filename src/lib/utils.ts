@@ -1,3 +1,5 @@
+import {ToastAndroid} from 'react-native';
+
 import {differenceInMinutes} from 'date-fns';
 import {Channel, Message} from 'revolt.js';
 import {decodeTime} from 'ulid';
@@ -187,4 +189,8 @@ export async function fetchMessages(
   );
 
   return result;
+}
+
+export function showToast(badgeName: string) {
+  ToastAndroid.show(badgeName, ToastAndroid.SHORT);
 }

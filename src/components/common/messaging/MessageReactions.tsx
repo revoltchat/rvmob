@@ -1,5 +1,6 @@
 import React from 'react';
 import {Pressable, View} from 'react-native';
+import {action} from 'mobx';
 import {observer} from 'mobx-react-lite';
 
 import FastImage from 'react-native-fast-image';
@@ -7,6 +8,7 @@ import FastImage from 'react-native-fast-image';
 import {Message} from 'revolt.js';
 
 import {client} from '../../../Generic';
+import {showToast} from '../../../lib/utils';
 import {currentTheme} from '../../../Theme';
 import {Text} from '../atoms';
 const Image = FastImage;
@@ -30,11 +32,13 @@ export const MessageReactions = observer(
             return (
               <Pressable
                 key={`message-${msg._id}-reaction-${r.emoji}`}
-                onPress={() => {
+                onPress={action(() => {
                   msg.channel?.havePermission('React')
-                    ? console.log('sus')
-                    : console.log('amogus');
-                }}
+                    ? !r.reactors.includes(client.user?._id!)
+                      ? msg.react(r.emoji)
+                      : msg.unreact(r.emoji)
+                    : showToast('You cannot react to this message.');
+                })}
                 style={{
                   padding: 4,
                   borderRadius: 4,
