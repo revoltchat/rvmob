@@ -8,7 +8,7 @@ import {client} from '../../../Generic';
 import {currentTheme, styles} from '../../../Theme';
 import {Text} from './Text';
 import {USER_IDS} from '../../../lib/consts';
-import {getColour} from '../../../lib/utils';
+import {getColour, getHighestRole} from '../../../lib/utils';
 
 type UsernameProps = {
   server?: Server;
@@ -40,11 +40,9 @@ export const Username = observer(
     if (server && memberObject?.roles && memberObject?.roles?.length > 0) {
       let srv = client.servers.get(memberObject._id.server);
       if (srv?.roles) {
-        for (let role of memberObject?.roles) {
-          if (srv.roles[role].colour) {
-            roleColor = getColour(srv.roles[role].colour!);
-          }
-        }
+        roleColor = getColour(
+          memberObject.roleColour ?? currentTheme.foregroundPrimary,
+        );
       }
     }
     let badgeSize = (size || 14) * 0.6;
