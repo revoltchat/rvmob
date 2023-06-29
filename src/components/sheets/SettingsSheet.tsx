@@ -254,7 +254,7 @@ const SettingsCategory = observer(
   },
 );
 
-export const SettingsSheet = observer(({state}: {state: any}) => {
+export const SettingsSheet = observer(({setState}: {setState: Function}) => {
   const [section, setSection] = React.useState(null as Section);
 
   return (
@@ -274,7 +274,7 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
             marginBottom: 10,
           }}
           onPress={() => {
-            state.setState({settingsOpen: false});
+            setState();
           }}>
           <MaterialCommunityIcon
             name="close-circle"
@@ -378,7 +378,7 @@ export const SettingsSheet = observer(({state}: {state: any}) => {
               style={{flex: 1, marginTop: 10}}
               backgroundColor={currentTheme.error}
               onPress={() => {
-                state.setState({settingsOpen: false});
+                setState();
                 app.logOut();
               }}>
               <View style={styles.iconContainer}>

@@ -16,7 +16,7 @@ import {MarkdownView} from '../common/MarkdownView';
 const Image = FastImage;
 
 export const ServerInfoSheet = observer(
-  ({state, server}: {state: any; server: Server}) => {
+  ({setState, server}: {setState: Function; server: Server}) => {
     const [members, setMembers] = React.useState(
       {} as {members: Member[]; users: User[]},
     );
@@ -102,7 +102,7 @@ export const ServerInfoSheet = observer(
                 key={'server-ctx-menu-leave'}
                 onPress={async () => {
                   await app.openServer();
-                  state.setState({contextMenuServer: null});
+                  setState();
                   server.delete();
                 }}>
                 <View style={styles.iconContainer}>

@@ -135,7 +135,9 @@ export class Modals extends React.Component {
               backgroundColor: currentTheme.backgroundSecondary,
             }}>
             <MessageMenuSheet
-              state={this}
+              setState={() => {
+                this.setState({contextMenuMessage: null});
+              }}
               message={this.state.contextMenuMessage}
             />
           </View>
@@ -286,7 +288,9 @@ export class Modals extends React.Component {
           transparent={true}
           animationType="slide"
           onRequestClose={() => this.setState({settingsOpen: false})}>
-          <SettingsSheet state={this} />
+          <SettingsSheet
+            setState={() => this.setState({settingsOpen: false})}
+          />
         </Modal>
         <Modal
           visible={!!this.state.contextMenuServer}
@@ -304,7 +308,9 @@ export class Modals extends React.Component {
           />
           <View style={styles.sheetBackground}>
             <ServerInfoSheet
-              state={this}
+              setState={() => {
+                this.setState({contextMenuServer: null});
+              }}
               server={this.state.contextMenuServer}
             />
           </View>

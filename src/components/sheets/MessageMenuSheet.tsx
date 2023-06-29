@@ -14,13 +14,12 @@ import {ContextButton, CopyIDButton, Text} from '../common/atoms';
 import {ReplyMessage} from '../common/messaging';
 
 export const MessageMenuSheet = observer(
-  ({state, message}: {state: any; message: Message}) => {
+  ({setState, message}: {setState: Function; message: Message}) => {
     return (
       <>
         <ReplyMessage message={message} style={{margin: 3, width: '100%'}} />
         <ScrollView style={{flex: 1, padding: 3}}>
-          <ContextButton
-            onPress={() => state.setState({contextMenuMessage: null})}>
+          <ContextButton onPress={() => setState()}>
             <View style={styles.iconContainer}>
               <MaterialCommunityIcon
                 name="close-circle"
@@ -51,7 +50,7 @@ export const MessageMenuSheet = observer(
                   mentions: false,
                 });
                 app.setReplyingMessages(replyingMessages);
-                state.setState({contextMenuMessage: null});
+                setState();
               }}>
               <View style={styles.iconContainer}>
                 <MaterialIcon
@@ -86,7 +85,7 @@ export const MessageMenuSheet = observer(
             <ContextButton
               onPress={() => {
                 message.delete();
-                state.setState({contextMenuMessage: null});
+                setState();
               }}>
               <View style={styles.iconContainer}>
                 <MaterialIcon
@@ -104,7 +103,7 @@ export const MessageMenuSheet = observer(
                 app.setMessageBoxInput(message?.content);
                 app.setEditingMessage(message);
                 app.setReplyingMessages([]);
-                state.setState({contextMenuMessage: null});
+                setState();
               }}>
               <View style={styles.iconContainer}>
                 <MaterialIcon
@@ -120,7 +119,7 @@ export const MessageMenuSheet = observer(
             <ContextButton
               onPress={() => {
                 app.openReportMenu(message, 'Message');
-                state.setState({contextMenuMessage: null});
+                setState();
               }}>
               <View style={styles.iconContainer}>
                 <MaterialIcon
