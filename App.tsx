@@ -505,6 +505,13 @@ class MainView extends React.Component {
                               await client.useExistingSession({
                                 token: this.state.tokenInput,
                               });
+                              console.log(
+                                `[AUTH] Setting saved token to ${this.state.tokenInput}`,
+                              );
+                              AsyncStorage.setItem(
+                                'token',
+                                this.state.tokenInput,
+                              );
                               this.setState({
                                 status: 'loggedIn',
                                 tokenInput: '',
