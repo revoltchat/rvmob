@@ -17,7 +17,6 @@ import {
   getDevice,
 } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -35,59 +34,81 @@ const icon = getBundleId().match('debug')
 
 type Section = string | null;
 
-const BoolSetting = observer(
-  ({
-    sRaw,
-    experimentalFunction,
-    devFunction,
-  }: {
-    sRaw: Setting;
-    experimentalFunction: any;
-    devFunction: any;
-  }) => {
-    const [value, setValue] = React.useState(
-      app.settings.get(sRaw.key) as boolean,
-    );
-    return (
-      <View
-        key={`settings_${sRaw.key}`}
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginTop: 10,
-        }}>
-        {sRaw.experimental ? (
-          <View style={styles.iconContainer}>
-            <FA5Icon name="flask" size={16} color={currentTheme.accentColor} />
-          </View>
-        ) : null}
-        {sRaw.developer ? (
-          <View style={styles.iconContainer}>
-            <FA5Icon name="bug" size={16} color={currentTheme.accentColor} />
-          </View>
-        ) : null}
-        <Text style={{flex: 1, fontWeight: 'bold'}}>{sRaw.name}</Text>
-        <Checkbox
-          key={`checkbox-${sRaw.name}`}
-          value={value}
-          callback={() => {
-            const newValue = !value;
-            app.settings.set(sRaw.key, newValue);
-            setValue(newValue);
-            sRaw.key === 'ui.settings.showExperimental'
-              ? experimentalFunction(newValue)
-              : null;
-            sRaw.key === 'ui.showDeveloperFeatures'
-              ? devFunction(newValue)
-              : null;
-          }}
-        />
-      </View>
-    );
-  },
-);
+const IndicatorIcons = ({s}: {s: Setting}) => {
+  return (
+    <>
+      {s.experimental ? (
+        <View style={styles.iconContainer}>
+          <MaterialCommunityIcon
+            name="flask"
+            size={28}
+            color={currentTheme.accentColor}
+          />
+        </View>
+      ) : null}
+      {s.developer ? (
+        <View style={styles.iconContainer}>
+          <MaterialIcon
+            name="bug-report"
+            size={28}
+            color={currentTheme.accentColor}
+          />
+        </View>
+      ) : null}
+    </>
+  );
+};
 
-const StringNumberSetting = observer(({sRaw}: {sRaw: Setting}) => {
+const BoolSetting = ({
+  sRaw,
+  experimentalFunction,
+  devFunction,
+}: {
+  sRaw: Setting;
+  experimentalFunction: any;
+  devFunction: any;
+}) => {
+  const [value, setValue] = React.useState(
+    app.settings.get(sRaw.key) as boolean,
+  );
+  return (
+    <View
+      key={`settings_${sRaw.key}`}
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10,
+      }}>
+      <IndicatorIcons s={sRaw} />
+      <Text style={{flex: 1, fontWeight: 'bold'}}>{sRaw.name}</Text>
+      <Checkbox
+        key={`checkbox-${sRaw.name}`}
+        value={value}
+        callback={() => {
+          const newValue = !value;
+          app.settings.set(sRaw.key, newValue);
+          setValue(newValue);
+          sRaw.key === 'ui.settings.showExperimental'
+            ? experimentalFunction(newValue)
+            : null;
+          sRaw.key === 'ui.showDeveloperFeatures'
+            ? devFunction(newValue)
+            : null;
+        }}
+      />
+    </View>
+  );
+};
+
+const StringNumberSetting = ({
+  sRaw,
+  renderCount,
+  rerender,
+}: {
+  sRaw: Setting;
+  renderCount: number;
+  rerender: Function;
+}) => {
   const [value, setValue] = React.useState(app.settings.getRaw(sRaw.key));
   return (
     <View
@@ -99,21 +120,10 @@ const StringNumberSetting = observer(({sRaw}: {sRaw: Setting}) => {
       }}>
       {sRaw.options ? (
         <View>
-          {sRaw.experimental ? (
-            <View style={styles.iconContainer}>
-              <FA5Icon
-                name="flask"
-                size={16}
-                color={currentTheme.accentColor}
-              />
-            </View>
-          ) : null}
-          {sRaw.developer ? (
-            <View style={styles.iconContainer}>
-              <FA5Icon name="bug" size={16} color={currentTheme.accentColor} />
-            </View>
-          ) : null}
-          <Text style={{flex: 1, fontWeight: 'bold'}}>{sRaw.name}</Text>
+          <IndicatorIcons s={sRaw} />
+          <Text style={{flex: 1, fontWeight: 'bold', marginBottom: 4}}>
+            {sRaw.name}
+          </Text>
           <ScrollView
             style={{
               borderRadius: 8,
@@ -130,10 +140,20 @@ const StringNumberSetting = observer(({sRaw}: {sRaw: Setting}) => {
                 onPress={() => {
                   app.settings.set(sRaw.key, o);
                   setValue(o);
+
+                  // if this is the theme toggle, re-render the category
+                  if (sRaw.key === 'ui.theme') {
+                    rerender(renderCount + 1);
+                  }
                 }}>
-                <Text>
-                  {o} {value === o ? <Text>(active)</Text> : null}
-                </Text>
+                <Text style={{flex: 1}}>{o}</Text>
+                <View style={{...styles.iconContainer, marginRight: 0}}>
+                  <MaterialIcon
+                    name={`radio-button-${value === o ? 'on' : 'off'}`}
+                    size={28}
+                    color={currentTheme.accentColor}
+                  />
+                </View>
               </TouchableOpacity>
             ))}
             <View style={{marginTop: 2}} />
@@ -141,23 +161,13 @@ const StringNumberSetting = observer(({sRaw}: {sRaw: Setting}) => {
         </View>
       ) : (
         <View>
-          {sRaw.experimental ? (
-            <View style={styles.iconContainer}>
-              <FA5Icon
-                name="flask"
-                size={16}
-                color={currentTheme.accentColor}
-              />
-            </View>
-          ) : null}
-          {sRaw.developer ? (
-            <View style={styles.iconContainer}>
-              <FA5Icon name="bug" size={16} color={currentTheme.accentColor} />
-            </View>
-          ) : null}
-          <Text style={{flex: 1, fontWeight: 'bold'}}>{sRaw.name}</Text>
+          <IndicatorIcons s={sRaw} />
+          <Text style={{flex: 1, fontWeight: 'bold', marginBottom: 4}}>
+            {sRaw.name}
+          </Text>
           <TextInput
             style={{
+              fontFamily: 'Open Sans',
               minWidth: '100%',
               borderRadius: 8,
               backgroundColor: currentTheme.backgroundSecondary,
@@ -177,7 +187,7 @@ const StringNumberSetting = observer(({sRaw}: {sRaw: Setting}) => {
       )}
     </View>
   );
-});
+};
 
 async function copyDebugInfo() {
   const obj = {
@@ -204,7 +214,17 @@ function copyDebugInfoWrapper() {
 }
 
 const SettingsCategory = observer(
-  ({category, friendlyName}: {category: string; friendlyName: string}) => {
+  ({
+    category,
+    friendlyName,
+    renderCount,
+    rerender,
+  }: {
+    category: string;
+    friendlyName: string;
+    renderCount: number;
+    rerender: Function;
+  }) => {
     const [showExperimental, setShowExperimental] = React.useState(
       app.settings.get('ui.settings.showExperimental') as boolean,
     );
@@ -220,13 +240,11 @@ const SettingsCategory = observer(
         </Text>
         {app.settings.list.map(sRaw => {
           try {
-            if (sRaw.experimental && !showExperimental) {
-              return null;
-            }
-            if (sRaw.developer && !showDev) {
-              return null;
-            }
-            if (sRaw.category !== category) {
+            if (
+              (sRaw.experimental && !showExperimental) ||
+              (sRaw.developer && !showDev) ||
+              sRaw.category !== category
+            ) {
               return null;
             }
             if (sRaw.type === 'boolean') {
@@ -243,6 +261,8 @@ const SettingsCategory = observer(
                 <StringNumberSetting
                   key={`settings-${sRaw.key}-outer`}
                   sRaw={sRaw}
+                  renderCount={renderCount}
+                  rerender={rerender}
                 />
               );
             }
@@ -256,6 +276,7 @@ const SettingsCategory = observer(
 );
 
 export const SettingsSheet = observer(({setState}: {setState: Function}) => {
+  const [renderCount, rerender] = React.useState(0);
   const [section, setSection] = React.useState(null as Section);
 
   return (
@@ -420,6 +441,8 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
             <SettingsCategory
               category={'appearance'}
               friendlyName={'Appearance'}
+              renderCount={renderCount}
+              rerender={rerender}
             />
           </>
         ) : section === 'functionality' ? (
@@ -450,6 +473,8 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
             <SettingsCategory
               category={'functionality'}
               friendlyName={'Features'}
+              renderCount={renderCount}
+              rerender={rerender}
             />
           </>
         ) : section === 'account' ? (
