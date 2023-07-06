@@ -20,30 +20,8 @@ import {
   RE_BOT_INVITE,
   WIKI_URL,
 } from './lib/consts';
+import {ReplyingMessage, Setting} from './lib/types';
 const Image = FastImage;
-
-type StringSetting = {
-  default: string;
-  type: 'string' | 'number';
-  value?: string;
-};
-
-type BoolSetting = {
-  default: boolean;
-  type: 'boolean';
-  value?: boolean;
-};
-
-export type Setting = (StringSetting | BoolSetting) & {
-  key: string;
-  name: string;
-  category: string;
-  experimental?: boolean;
-  developer?: boolean;
-  options?: string[];
-  onChange?: any;
-  onInitialize?: any;
-};
 
 export const app = {
   version: '0.6.0',
@@ -276,7 +254,7 @@ export const app = {
     ] as Setting[],
   },
   openProfile: (u, s?: Server) => {},
-  openLeftMenu: (o?: any) => {
+  openLeftMenu: (o: boolean) => {
     console.log(
       `[FUNCTIONS] Tried to run uninitialised function openLeftMenu (args: ${o})`,
     );
@@ -288,17 +266,27 @@ export const app = {
   openDirectMessage: (c: Channel) => {},
   openImage: a => {},
   openMessage: m => {},
-  openServerContextMenu: s => {},
+  openServerContextMenu: (s: Server) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function openServerContextMenu (args: ${s})`,
+    );
+  },
   openSettings: o => {},
   setMessageBoxInput: t => {},
-  setReplyingMessages: (m) => {},
-  getReplyingMessages: () => {},
+  setReplyingMessages: (m: ReplyingMessage[]) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function setReplyingMessages (args: ${m})`,
+    );
+  },
+  getReplyingMessages: () => {
+    return undefined as unknown as ReplyingMessage[];
+  },
   pushToQueue: m => {},
   joinInvite: async (i: API.InviteResponse) => {},
   logOut: () => {},
   openMemberList: (c: Channel | Server | null, u: User[] | null) => {},
   openChannelContextMenu: (c: Channel | null) => {},
-  openStatusMenu: (state: boolean | null) => {}
+  openStatusMenu: (state: boolean | null) => {},
 };
 
 export function setFunction(name: string, func: any) {
@@ -566,7 +554,7 @@ export function InputWithButton({
 }) {
   let [value, setValue] = React.useState(defaultValue);
   return (
-    //style.input and style.button are applied to the input and button respectively
+    // style.input and style.button are applied to the input and button respectively
     <View
       style={{
         flexDirection: 'row',

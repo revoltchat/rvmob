@@ -2,7 +2,7 @@ import React from 'react';
 import {ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {Channel, Member, Server, User} from 'revolt.js';
+import {Channel, Server, User} from 'revolt.js'; // TODO: add Member support
 
 import {Text} from '../common/atoms';
 import {UserList} from '../navigation/UserList';

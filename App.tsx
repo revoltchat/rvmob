@@ -61,10 +61,9 @@ class MainView extends React.Component {
     setFunction('joinInvite', async (i: string) => {
       await client.joinInvite(i);
     });
-    setFunction('openLeftMenu', async (o: any) => {
-      const newState = typeof o === 'boolean' ? o : !this.state.leftMenuOpen;
-      console.log(`[APP] Setting left menu open state to ${newState}`);
-      this.setState({leftMenuOpen: newState});
+    setFunction('openLeftMenu', async (o: boolean) => {
+      console.log(`[APP] Setting left menu open state to ${o}`);
+      this.setState({leftMenuOpen: o});
     });
     setFunction('logOut', async () => {
       console.log(

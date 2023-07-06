@@ -17,6 +17,7 @@ import {Avatar} from './Profile';
 import {styles, currentTheme} from './Theme';
 import {Text, Username} from './components/common/atoms';
 import {USER_IDS} from './lib/consts';
+import {ReplyingMessage} from './lib/types';
 import {getReadableFileSize} from './lib/utils';
 
 let typing = false;
@@ -40,11 +41,6 @@ function placeholderText(channel: Channel) {
       return `${channel.channel_type}`;
   }
 }
-
-type ReplyingMessage = {
-  mentions: boolean;
-  message: Message;
-};
 
 export const MessageBox = observer((props: MessageBoxProps) => {
   let [currentText, setCurrentText] = React.useState('');

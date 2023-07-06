@@ -22,7 +22,8 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import AppInfo from '../../../package.json';
-import {app, client, Setting} from '../../Generic';
+import {app, client} from '../../Generic';
+import {Setting} from '../../lib/types';
 import {currentTheme, styles} from '../../Theme';
 import {Checkbox, ContextButton, Link, Text} from '../common/atoms';
 
