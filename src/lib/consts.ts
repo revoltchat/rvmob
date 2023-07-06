@@ -166,6 +166,7 @@ export const BADGES = {
   ReservedRelevantJokeBadge2: 1024,
 };
 
+// Splash text seen on loading screens
 export const LOADING_SCREEN_REMARKS = [
   "I'm writing a complaint to the Head of Loading Screens.",
   "I don't think we can load any longer!",
@@ -175,3 +176,15 @@ export const LOADING_SCREEN_REMARKS = [
   'You know, what does RVMob even stand for?',
   'Why do they call it a "building" if it\'s already built?',
 ];
+
+// Local type used to make the array below more specific
+type Statuses = ['Online', 'Idle', 'Focus', 'Busy', 'Invisible'];
+
+// Supported user statuses
+export const STATUSES = [
+  'Online',
+  'Idle',
+  'Focus',
+  'Busy',
+  'Invisible',
+] as Statuses;

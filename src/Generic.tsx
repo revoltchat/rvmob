@@ -68,7 +68,7 @@ export const app = {
           ? setting.value
           : setting.default;
       const toreturn =
-        setting.type === 'number' ? parseInt(raw as string) || 0 : raw;
+        setting.type === 'number' ? parseInt(raw as string, 10) || 0 : raw;
       return toreturn;
     },
     set: (k: string, v: string | boolean | undefined) => {
@@ -548,7 +548,7 @@ export function InputWithButton({
   defaultValue?: string;
   placeholder?: string;
   buttonLabel: string;
-  style: any;
+  style?: any;
   backgroundColor: ViewStyle['backgroundColor'];
   onPress: any;
 }) {

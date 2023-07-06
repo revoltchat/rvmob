@@ -1,14 +1,7 @@
 import {View, Pressable, Modal, ScrollView, Dimensions} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import React from 'react';
-import {
-  client,
-  app,
-  GeneralAvatar,
-  openUrl,
-  setFunction,
-  InputWithButton,
-} from './Generic';
+import {app, client, GeneralAvatar, openUrl, setFunction} from './Generic';
 import {styles, currentTheme} from './Theme';
 import {
   ChannelInfoSheet,
@@ -18,13 +11,14 @@ import {
   ReportSheet,
   ServerInfoSheet,
   SettingsSheet,
+  StatusSheet,
 } from './components/sheets/';
 import {ServerList} from './components/navigation/ServerList';
 import {Server, User, Message, Channel} from 'revolt.js';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 import {observer} from 'mobx-react';
-import {Button, ContextButton, Text} from './components/common/atoms';
+import {Button, Text} from './components/common/atoms';
 
 const Image = FastImage;
 
@@ -164,52 +158,7 @@ export class Modals extends React.Component {
             }}
           />
           <View style={styles.sheetBackground}>
-            <View>
-              <Text key={'custom-status-selector-label'} type={'header'}>
-                Status
-              </Text>
-              <View style={{marginBottom: 10}}>
-                {['Online', 'Idle', 'Focus', 'Busy', 'Invisible'].map(s => (
-                  <ContextButton
-                    key={s}
-                    onPress={() => {
-                      client.users.edit({
-                        status: {...client.user.status, presence: s},
-                      });
-                    }}>
-                    <View
-                      style={{
-                        backgroundColor: currentTheme['status' + s],
-                        height: 16,
-                        width: 16,
-                        borderRadius: 10000,
-                        marginRight: 10,
-                      }}
-                    />
-                    <Text style={{fontSize: 15}} key={`${s}-button-label`}>
-                      {s}
-                    </Text>
-                  </ContextButton>
-                ))}
-              </View>
-              <Text key={'custom-status-input-label'} type={'header'}>
-                Status text
-              </Text>
-              <InputWithButton
-                placeholder="Custom status"
-                defaultValue={client.user?.status?.text}
-                onPress={(v: string) => {
-                  client.users.edit({
-                    status: {
-                      ...client.user?.status,
-                      text: v ? v : undefined,
-                    },
-                  });
-                }}
-                buttonLabel="Set text"
-                backgroundColor={currentTheme.backgroundPrimary}
-              />
-            </View>
+            <StatusSheet />
           </View>
         </Modal>
         <Modal
