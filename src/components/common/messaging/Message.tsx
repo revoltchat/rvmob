@@ -251,6 +251,7 @@ export const Message = observer((props: MessageProps) => {
                     mention={props.message?.mention_ids?.includes(
                       props.message?.author_id,
                     )}
+                    showSymbol={true}
                   />
                 ))}
               </View>

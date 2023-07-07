@@ -1,9 +1,16 @@
-import {View, Pressable, Modal, Dimensions} from 'react-native';
-import ImageViewer from 'react-native-image-zoom-viewer';
 import React from 'react';
+import {View, Pressable, Modal, Dimensions} from 'react-native';
+import {observer} from 'mobx-react';
+
+import ImageViewer from 'react-native-image-zoom-viewer';
+
+import {Server, User, Message, Channel} from 'revolt.js';
+
 import {app, client, openUrl, setFunction} from './Generic';
 import {styles, currentTheme} from './Theme';
+import {Button, Text} from './components/common/atoms';
 import {
+  BotInviteSheet,
   ChannelInfoSheet,
   MemberListSheet,
   MessageMenuSheet,
@@ -14,10 +21,6 @@ import {
   SettingsSheet,
   StatusSheet,
 } from './components/sheets/';
-import {Server, User, Message, Channel} from 'revolt.js';
-import {observer} from 'mobx-react';
-import {Button, Text} from './components/common/atoms';
-import {BotInviteSheet} from './components/sheets/BotInviteSheet';
 
 @observer
 export class Modals extends React.Component {
@@ -121,8 +124,8 @@ export class Modals extends React.Component {
           <View
             style={{
               width: '100%',
-              height: '45%',
-              top: '55%',
+              height: '50%',
+              top: '50%',
               backgroundColor: currentTheme.backgroundSecondary,
             }}>
             <MessageMenuSheet

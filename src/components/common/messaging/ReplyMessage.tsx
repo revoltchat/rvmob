@@ -10,14 +10,23 @@ import {Text, Username} from '../atoms';
 type ReplyProps = {
   message?: Message;
   mention?: boolean;
-  style?: any;
+  showSymbol?: boolean;
+  symbolMargin?: number;
 };
 
 export const ReplyMessage = (props: ReplyProps) => {
   if (!props.message?.system) {
     return (
       <View style={{alignItems: 'center', flexDirection: 'row'}}>
-        <Text style={{marginLeft: 15, marginRight: 15}}>↱</Text>
+        {props.showSymbol ? (
+          <Text
+            style={{
+              fontWeight: 'bold',
+              marginHorizontal: props.symbolMargin ?? 15,
+            }}>
+            ↱
+          </Text>
+        ) : null}
         {props.message ? (
           props.message.author ? (
             <>

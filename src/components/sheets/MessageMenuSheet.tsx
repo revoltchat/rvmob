@@ -3,7 +3,6 @@ import {ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import Clipboard from '@react-native-clipboard/clipboard';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Message} from 'revolt.js';
@@ -17,18 +16,13 @@ export const MessageMenuSheet = observer(
   ({setState, message}: {setState: Function; message: Message}) => {
     return (
       <>
-        <ReplyMessage message={message} style={{margin: 3, width: '100%'}} />
-        <ScrollView style={{flex: 1, padding: 3}}>
-          <ContextButton onPress={() => setState()}>
-            <View style={styles.iconContainer}>
-              <MaterialCommunityIcon
-                name="close-circle"
-                size={16}
-                color={currentTheme.foregroundPrimary}
-              />
-            </View>
-            <Text>Close</Text>
-          </ContextButton>
+        <ScrollView style={{flex: 1, paddingHorizontal: 15}}>
+          <View
+            style={{
+              paddingVertical: 12,
+            }}>
+            <ReplyMessage message={message} showSymbol={false} />
+          </View>
           {message?.channel?.havePermission('SendMessage') ? (
             <ContextButton
               onPress={() => {
@@ -80,23 +74,19 @@ export const MessageMenuSheet = observer(
           {app.settings.get('ui.showDeveloperFeatures') ? (
             <CopyIDButton id={message._id} />
           ) : null}
-          {message?.channel?.havePermission('ManageMessages') ||
-          message?.author?.relationship === 'User' ? (
-            <ContextButton
+          <ContextButton
               onPress={() => {
-                message.delete();
-                setState();
+                Clipboard.setString(message.url);
               }}>
               <View style={styles.iconContainer}>
                 <MaterialIcon
-                  name="delete"
+                  name="link"
                   size={20}
                   color={currentTheme.foregroundPrimary}
                 />
               </View>
-              <Text>Delete</Text>
+              <Text>Copy message link</Text>
             </ContextButton>
-          ) : null}
           {message?.author?.relationship === 'User' ? (
             <ContextButton
               onPress={() => {
@@ -115,6 +105,23 @@ export const MessageMenuSheet = observer(
               <Text>Edit</Text>
             </ContextButton>
           ) : null}
+          {message?.channel?.havePermission('ManageMessages') ||
+          message?.author?.relationship === 'User' ? (
+            <ContextButton
+              onPress={() => {
+                message.delete();
+                setState();
+              }}>
+              <View style={styles.iconContainer}>
+                <MaterialIcon
+                  name="delete"
+                  size={20}
+                  color={currentTheme.error}
+                />
+              </View>
+              <Text colour={currentTheme.error}>Delete</Text>
+            </ContextButton>
+          ) : null}
           {message?.author?.relationship !== 'User' ? (
             <ContextButton
               onPress={() => {
@@ -125,10 +132,10 @@ export const MessageMenuSheet = observer(
                 <MaterialIcon
                   name="flag"
                   size={20}
-                  color={currentTheme.foregroundPrimary}
+                  color={currentTheme.error}
                 />
               </View>
-              <Text>Report Message</Text>
+              <Text colour={currentTheme.error}>Report Message</Text>
             </ContextButton>
           ) : null}
           <View style={{marginTop: 7}} />
