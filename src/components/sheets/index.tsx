@@ -4,6 +4,7 @@ export {MessageMenuSheet} from './MessageMenuSheet';
 export {ProfileSheet} from './ProfileSheet';
 export {ReportModal as ReportSheet} from './ReportSheet';
 export {ServerInfoSheet} from './ServerInfoSheet';
+export {ServerInviteSheet} from './ServerInviteSheet';
 export {SettingsSheet} from './SettingsSheet';
 export {StatusSheet} from './StatusSheet';
 export {UserMenuSheet} from './UserMenuSheet';

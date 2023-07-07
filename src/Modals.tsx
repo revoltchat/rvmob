@@ -1,7 +1,7 @@
-import {View, Pressable, Modal, ScrollView, Dimensions} from 'react-native';
+import {View, Pressable, Modal, Dimensions} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import React from 'react';
-import {app, client, GeneralAvatar, openUrl, setFunction} from './Generic';
+import {app, client, openUrl, setFunction} from './Generic';
 import {styles, currentTheme} from './Theme';
 import {
   ChannelInfoSheet,
@@ -10,17 +10,14 @@ import {
   ProfileSheet,
   ReportSheet,
   ServerInfoSheet,
+  ServerInviteSheet,
   SettingsSheet,
   StatusSheet,
 } from './components/sheets/';
-import {ServerList} from './components/navigation/ServerList';
 import {Server, User, Message, Channel} from 'revolt.js';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import FastImage from 'react-native-fast-image';
 import {observer} from 'mobx-react';
 import {Button, Text} from './components/common/atoms';
-
-const Image = FastImage;
+import {BotInviteSheet} from './components/sheets/BotInviteSheet';
 
 @observer
 export class Modals extends React.Component {
@@ -269,204 +266,29 @@ export class Modals extends React.Component {
           transparent={true}
           animationType="fade"
           onRequestClose={() => this.setState({inviteServer: null})}>
-          <View
-            style={{flex: 1, backgroundColor: currentTheme.backgroundPrimary}}>
-            <Pressable
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                margin: 15,
-              }}
-              onPress={() => {
-                this.setState({inviteServer: null});
-              }}>
-              <MaterialCommunityIcon
-                name="close-circle"
-                size={24}
-                color={currentTheme.foregroundSecondary}
-              />
-              <Text
-                colour={currentTheme.foregroundSecondary}
-                style={{
-                  fontSize: 20,
-                  marginLeft: 5,
-                }}>
-                Close
-              </Text>
-            </Pressable>
-            <View
-              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              {this.state.inviteServer?.type === 'Server' ? (
-                <>
-                  {this.state.inviteServer.server_banner ? (
-                    <Image
-                      source={
-                        this.state.inviteServer.server_banner
-                          ? {
-                              uri: client.generateFileURL(
-                                this.state.inviteServer.server_banner,
-                              ),
-                            }
-                          : {}
-                      }
-                      style={{width: '100%', height: '100%'}}
-                    />
-                  ) : null}
-                  <View
-                    style={{
-                      height: '100%',
-                      width: '100%',
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <View
-                      style={{
-                        padding: 10,
-                        borderRadius: 8,
-                        maxWidth: '80%',
-                        backgroundColor: currentTheme.backgroundPrimary + 'dd',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <View
-                        style={{alignItems: 'center', flexDirection: 'row'}}>
-                        <GeneralAvatar
-                          attachment={this.state.inviteServer.server_icon?._id}
-                          size={60}
-                          directory={'/icons/'}
-                        />
-                        <View style={{marginLeft: 10}} />
-                        <View style={{flexDirection: 'row'}}>
-                          <Text
-                            style={{
-                              fontWeight: 'bold',
-                              fontSize: 26,
-                              flexWrap: 'wrap',
-                            }}>
-                            {this.state.inviteServer?.server_name}
-                          </Text>
-                        </View>
-                      </View>
-                      <Text
-                        colour={currentTheme.foregroundSecondary}
-                        style={{
-                          marginVertical: 4,
-                        }}>
-                        {this.state.inviteServer?.member_count}{' '}
-                        {this.state.inviteServer?.member_count === 1
-                          ? 'member'
-                          : 'members'}
-                      </Text>
-                      <Button
-                        onPress={async () => {
-                          !client.servers.get(
-                            this.state.inviteServer?.server_id,
-                          ) &&
-                            (await client.joinInvite(
-                              this.state.inviteServerCode,
-                            ));
-                          app.openServer(
-                            client.servers.get(
-                              this.state.inviteServer?.server_id,
-                            ),
-                          );
-                          app.openLeftMenu(true);
-                          this.setState({
-                            inviteServer: null,
-                            inviteServerCode: null,
-                          });
-                        }}>
-                        <Text>
-                          {client.servers.get(
-                            this.state.inviteServer?.server_id,
-                          )
-                            ? 'Go to Server'
-                            : 'Join Server'}
-                        </Text>
-                      </Button>
-                    </View>
-                  </View>
-                </>
-              ) : (
-                <Text>{this.state.inviteServer?.toString()}</Text>
-              )}
-            </View>
-          </View>
+          <ServerInviteSheet
+            setState={() => {
+              this.setState({
+                inviteServer: null,
+                inviteServerCode: null,
+              });
+            }}
+            server={this.state.inviteServer}
+            inviteCode={this.state.inviteServerCode}
+          />
         </Modal>
         <Modal
           visible={!!this.state.inviteBot}
           transparent={true}
           animationType="fade">
-          {this.state.inviteBot ? (
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: currentTheme.backgroundPrimary,
-              }}>
-              <Pressable
-                onPress={() => {
-                  this.setState({inviteBot: null});
-                }}>
-                <Text style={{fontSize: 24}}>Cancel</Text>
-              </Pressable>
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <GeneralAvatar
-                    attachment={this.state.inviteBot.avatar}
-                    size={48}
-                  />
-                  <Text
-                    style={{paddingLeft: 10, fontSize: 24, fontWeight: 'bold'}}>
-                    {this.state.inviteBot.username}
-                  </Text>
-                </View>
-                <View style={{height: 56}}>
-                  <ScrollView horizontal={true}>
-                    <ServerList
-                      onServerPress={(s: Server) =>
-                        this.setState({inviteBotDestination: s})
-                      }
-                      filter={(s: Server) => s.havePermission('ManageServer')}
-                      showUnread={false}
-                      showDiscover={false}
-                    />
-                  </ScrollView>
-                </View>
-                <Button
-                  onPress={() => {
-                    if (!this.state.inviteBotDestination) {
-                      return;
-                    }
-                    client.bots.invite(this.state.inviteBot._id, {
-                      server: this.state.inviteBotDestination._id,
-                    });
-                    this.setState({
-                      inviteBot: null,
-                      inviteBotDestination: null,
-                    });
-                  }}>
-                  <Text>
-                    Invite to{' '}
-                    {this.state.inviteBotDestination ? (
-                      <Text style={{fontWeight: 'bold'}}>
-                        {this.state.inviteBotDestination?.name}
-                      </Text>
-                    ) : (
-                      'which server?'
-                    )}
-                  </Text>
-                </Button>
-              </View>
-            </View>
-          ) : null}
+          <BotInviteSheet
+            setState={() => {
+              this.setState({
+                inviteBot: null,
+              });
+            }}
+            bot={this.state.inviteBot}
+          />
         </Modal>
         <Modal
           key={'reportModal'}
