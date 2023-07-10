@@ -75,18 +75,18 @@ export const MessageMenuSheet = observer(
             <CopyIDButton id={message._id} />
           ) : null}
           <ContextButton
-              onPress={() => {
-                Clipboard.setString(message.url);
-              }}>
-              <View style={styles.iconContainer}>
-                <MaterialIcon
-                  name="link"
-                  size={20}
-                  color={currentTheme.foregroundPrimary}
-                />
-              </View>
-              <Text>Copy message link</Text>
-            </ContextButton>
+            onPress={() => {
+              Clipboard.setString(message.url);
+            }}>
+            <View style={styles.iconContainer}>
+              <MaterialIcon
+                name="link"
+                size={20}
+                color={currentTheme.foregroundPrimary}
+              />
+            </View>
+            <Text>Copy message link</Text>
+          </ContextButton>
           {message?.author?.relationship === 'User' ? (
             <ContextButton
               onPress={() => {
