@@ -80,15 +80,16 @@ export const LeftMenu = ({
         style={{
           height: 50,
           width: '100%',
-          backgroundColor: currentTheme.backgroundSecondary,
+          backgroundColor: currentTheme.background,
           borderTopWidth: currentTheme.generalBorderWidth,
           borderColor: currentTheme.generalBorderColor,
           flexDirection: 'row',
+          justifyContent: 'space-evenly',
         }}>
         <Button
           key={'bottom-nav-friends'}
           onPress={() => onChannelClick('friends')}
-          backgroundColor={currentTheme.backgroundPrimary}>
+          backgroundColor={currentTheme.background}>
           <MaterialIcon
             name="group"
             size={20}
@@ -98,9 +99,9 @@ export const LeftMenu = ({
         <Button
           key={'bottom-nav-settings'}
           onPress={() => app.openSettings(true)}
-          backgroundColor={currentTheme.backgroundPrimary}>
-          <FAIcon
-            name="gear"
+          backgroundColor={currentTheme.background}>
+          <MaterialIcon
+            name="settings"
             size={20}
             color={currentTheme.foregroundPrimary}
           />
@@ -108,7 +109,7 @@ export const LeftMenu = ({
         <Button
           key={'bottom-nav-logout'}
           onPress={onLogOut}
-          backgroundColor={currentTheme.backgroundPrimary}>
+          backgroundColor={currentTheme.background}>
           <MaterialIcon
             name="logout"
             size={20}

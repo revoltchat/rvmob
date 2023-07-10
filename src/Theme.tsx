@@ -204,10 +204,6 @@ function refreshStyles() {
       flexDirection: 'row',
       justifyContent: 'flex-start',
     },
-    rightView: {
-      flex: 1,
-      backgroundColor: currentTheme.backgroundSecondary,
-    },
     sheetBackground: {
       width: '100%',
       height: Dimensions.get('window').height * 0.75,
