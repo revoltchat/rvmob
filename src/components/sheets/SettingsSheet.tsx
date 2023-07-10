@@ -25,6 +25,7 @@ import {app, client} from '../../Generic';
 import {Setting} from '../../lib/types';
 import {currentTheme, styles} from '../../Theme';
 import {Checkbox, ContextButton, Link, Text} from '../common/atoms';
+import {GapView} from '../layout';
 
 const Image = FastImage;
 
@@ -279,6 +280,23 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
   const [renderCount, rerender] = React.useState(0);
   const [section, setSection] = React.useState(null as Section);
 
+  const [authInfo, setAuthInfo] = React.useState({
+    email: '',
+    mfaEnabled: false,
+  });
+
+  React.useEffect(() => {
+    async function getAuthInfo() {
+      const e = await client.api.get('/auth/account/');
+      const m = await client.api.get('/auth/mfa/');
+      setAuthInfo({
+        email: e.email,
+        mfaEnabled: m.totp_mfa ?? m.security_key_mfa ?? false,
+      });
+    }
+    getAuthInfo();
+  }, []);
+
   return (
     <View
       style={{
@@ -313,7 +331,29 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
           </Text>
         </Pressable>
       ) : (
-        <></>
+        <Pressable
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: 10,
+          }}
+          onPress={() => {
+            setSection(null);
+          }}>
+          <MaterialIcon
+            name="arrow-back"
+            size={24}
+            color={currentTheme.foregroundSecondary}
+          />
+          <Text
+            style={{
+              color: currentTheme.foregroundSecondary,
+              fontSize: 20,
+              marginLeft: 5,
+            }}>
+            Back
+          </Text>
+        </Pressable>
       )}
       <ScrollView style={{flex: 1}}>
         {section == null ? (
@@ -414,94 +454,21 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
             </ContextButton>
           </>
         ) : section === 'appearance' ? (
-          <>
-            <Pressable
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 10,
-              }}
-              onPress={() => {
-                setSection(null);
-              }}>
-              <MaterialIcon
-                name="arrow-back"
-                size={24}
-                color={currentTheme.foregroundSecondary}
-              />
-              <Text
-                style={{
-                  color: currentTheme.foregroundSecondary,
-                  fontSize: 20,
-                  marginLeft: 5,
-                }}>
-                Back
-              </Text>
-            </Pressable>
-            <SettingsCategory
-              category={'appearance'}
-              friendlyName={'Appearance'}
-              renderCount={renderCount}
-              rerender={rerender}
-            />
-          </>
+          <SettingsCategory
+            category={'appearance'}
+            friendlyName={'Appearance'}
+            renderCount={renderCount}
+            rerender={rerender}
+          />
         ) : section === 'functionality' ? (
-          <>
-            <Pressable
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 10,
-              }}
-              onPress={() => {
-                setSection(null);
-              }}>
-              <MaterialIcon
-                name="arrow-back"
-                size={24}
-                color={currentTheme.foregroundSecondary}
-              />
-              <Text
-                style={{
-                  color: currentTheme.foregroundSecondary,
-                  fontSize: 20,
-                  marginLeft: 5,
-                }}>
-                Back
-              </Text>
-            </Pressable>
-            <SettingsCategory
-              category={'functionality'}
-              friendlyName={'Features'}
-              renderCount={renderCount}
-              rerender={rerender}
-            />
-          </>
+          <SettingsCategory
+            category={'functionality'}
+            friendlyName={'Features'}
+            renderCount={renderCount}
+            rerender={rerender}
+          />
         ) : section === 'account' ? (
           <View>
-            <Pressable
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 10,
-              }}
-              onPress={() => {
-                setSection(null);
-              }}>
-              <MaterialIcon
-                name="arrow-back"
-                size={24}
-                color={currentTheme.foregroundSecondary}
-              />
-              <Text
-                style={{
-                  color: currentTheme.foregroundSecondary,
-                  fontSize: 20,
-                  marginLeft: 5,
-                }}>
-                Back
-              </Text>
-            </Pressable>
             <Text type={'header'}>Account</Text>
             <ContextButton
               style={{flex: 1}}
@@ -513,7 +480,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                 Username{'\n'}
                 <Text
                   style={{
-                    marginTop: 3,
+                    marginTop: 4,
                     fontSize: 12,
                     color: currentTheme.foregroundSecondary,
                   }}>
@@ -521,32 +488,40 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                 </Text>
               </Text>
             </ContextButton>
+            <ContextButton
+              style={{flex: 1}}
+              backgroundColor={currentTheme.backgroundSecondary}
+              onPress={() => {
+                Clipboard.setString(authInfo.email);
+              }}>
+              <Text>
+                Email{'\n'}
+                <Text
+                  style={{
+                    marginTop: 4,
+                    fontSize: 12,
+                    color: currentTheme.foregroundSecondary,
+                  }}>
+                  {authInfo.email}
+                </Text>
+              </Text>
+            </ContextButton>
+            <GapView size={4} />
+            <Text type={'h1'}>Multi-factor authentication</Text>
+            <Text
+              style={{
+                color: currentTheme.foregroundSecondary,
+              }}>
+              Make your account more secure by enabling multi-factor
+              authentication (MFA).
+            </Text>
+            <Text type={'h2'}>Status</Text>
+            <Text>
+              MFA is currently {authInfo.mfaEnabled ? 'enabled' : 'disabled'}.
+            </Text>
           </View>
         ) : section === 'info' ? (
           <View>
-            <Pressable
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 10,
-              }}
-              onPress={() => {
-                setSection(null);
-              }}>
-              <MaterialIcon
-                name="arrow-back"
-                size={24}
-                color={currentTheme.foregroundSecondary}
-              />
-              <Text
-                style={{
-                  color: currentTheme.foregroundSecondary,
-                  fontSize: 20,
-                  marginLeft: 5,
-                }}>
-                Back
-              </Text>
-            </Pressable>
             <Text type={'header'}>About</Text>
             <View
               style={{
