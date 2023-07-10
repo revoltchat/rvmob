@@ -283,15 +283,18 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
   const [authInfo, setAuthInfo] = React.useState({
     email: '',
     mfaEnabled: false,
+    sessions: [] as {_id: string; name: string}[],
   });
 
   React.useEffect(() => {
     async function getAuthInfo() {
       const e = await client.api.get('/auth/account/');
       const m = await client.api.get('/auth/mfa/');
+      const s = await client.api.get('/auth/session/all');
       setAuthInfo({
         email: e.email,
         mfaEnabled: m.totp_mfa ?? m.security_key_mfa ?? false,
+        sessions: s,
       });
     }
     getAuthInfo();
@@ -519,6 +522,59 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
             <Text>
               MFA is currently {authInfo.mfaEnabled ? 'enabled' : 'disabled'}.
             </Text>
+            <GapView size={4} />
+            <Text type={'h1'}>Sessions</Text>
+            <Text
+              style={{
+                color: currentTheme.foregroundSecondary,
+              }}>
+              Review your logged-in sessions.
+            </Text>
+            {authInfo.sessions.map(s => (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  padding: 8,
+                  marginVertical: 4,
+                  backgroundColor: currentTheme.background,
+                  borderRadius: 4,
+                  alignItems: 'center',
+                }}
+                key={`sessions-${s._id}`}>
+                <View style={{flex: 1, flexDirection: 'column'}}>
+                  <Text
+                    key={`sessions-${s._id}-name`}
+                    style={{fontWeight: 'bold'}}>
+                    {s.name} {s.name.match(/RVMob/) ? '✨' : ''}
+                  </Text>
+                  <Text key={`sessions-${s._id}-id`}>{s._id}</Text>
+                </View>
+                <Pressable
+                  style={{
+                    width: 30,
+                    height: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  onPress={async () => {
+                    await client.api.delete(`/auth/session/${s._id}`);
+                    setAuthInfo({
+                      ...authInfo,
+                      sessions: authInfo.sessions.filter(
+                        ses => ses._id !== s._id,
+                      ),
+                    });
+                  }}>
+                  <View style={styles.iconContainer}>
+                    <MaterialIcon
+                      name="logout"
+                      size={20}
+                      color={currentTheme.foregroundPrimary}
+                    />
+                  </View>
+                </Pressable>
+              </View>
+            ))}
           </View>
         ) : section === 'info' ? (
           <View>
