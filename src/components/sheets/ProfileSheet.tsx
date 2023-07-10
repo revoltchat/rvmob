@@ -98,10 +98,14 @@ export const ProfileSheet = observer(
                   })?.avatar?._id !== user.avatar?._id ? (
                     <>
                       <Avatar size={24} user={user} />
-                      <Text style={{...styles.header, marginLeft: 4}}>@</Text>
+                      <Text
+                        type={'header'}
+                        style={{marginLeft: 4, marginBottom: 0}}>
+                        @
+                      </Text>
                     </>
                   ) : (
-                    <Text style={styles.header}>@</Text>
+                    <Text type={'header'}>@</Text>
                   )}
                   <Username user={user} size={16} noBadge />
                 </>

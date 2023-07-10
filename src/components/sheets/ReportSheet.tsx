@@ -149,14 +149,17 @@ export const ReportModal = observer((props: ReportedObject) => {
         </Text>
         {reasons.map(r => {
           return (
-            <ContextButton
+            <Button
               key={`reason_${r.reason}`}
-              style={{padding: 10}}
+              style={{
+                backgroundColor: currentTheme.backgroundPrimary,
+                justifyContent: 'flex-start',
+              }}
               onPress={() => {
                 setReason(r);
               }}>
               <Text style={{fontWeight: 'bold'}}>{r.label}</Text>
-            </ContextButton>
+            </Button>
           );
         })}
       </>

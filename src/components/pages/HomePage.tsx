@@ -97,7 +97,7 @@ export const HomePage = observer(() => {
           style={{width: '65%'}}
           key={'home-revolt-lounge'}
           onPress={() => app.openInvite(SPECIAL_SERVERS.lounge.invite)}>
-          <Text style={styles.header}>
+          <Text style={{fontWeight: 'bold', fontSize: 16}}>
             {client.servers.get(SPECIAL_SERVERS.lounge.id) ? 'Open' : 'Join'}{' '}
             the Revolt Lounge
           </Text>
