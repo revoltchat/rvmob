@@ -12,7 +12,18 @@ export const Text = (props: any) => {
   if (props.type) {
     switch (props.type) {
       case 'header':
+      case 'h1':
         newProps.style = Object.assign({}, styles.headerv2, newProps.style);
+        break;
+      case 'h2':
+        newProps.style = Object.assign({}, styles.h2, newProps.style);
+        break;
+      case 'profile':
+        newProps.style = Object.assign(
+          {},
+          styles.profileSubheader,
+          newProps.style,
+        );
         break;
       default:
         break;

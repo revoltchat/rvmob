@@ -195,7 +195,7 @@ export const ChannelView = observer(
                       app.settings.set('ui.messaging.showNSFWContent', true);
                       state.setState({});
                     }}>
-                    <Text style={styles.header}>
+                    <Text style={styles.buttonText}>
                       I am 18 or older and wish to enter
                     </Text>
                   </Button>

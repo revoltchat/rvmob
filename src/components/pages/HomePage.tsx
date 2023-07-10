@@ -97,7 +97,7 @@ export const HomePage = observer(() => {
           style={{width: '65%'}}
           key={'home-revolt-lounge'}
           onPress={() => app.openInvite(SPECIAL_SERVERS.lounge.invite)}>
-          <Text style={{fontWeight: 'bold', fontSize: 16}}>
+          <Text style={styles.buttonText}>
             {client.servers.get(SPECIAL_SERVERS.lounge.id) ? 'Open' : 'Join'}{' '}
             the Revolt Lounge
           </Text>
@@ -106,7 +106,7 @@ export const HomePage = observer(() => {
           style={{width: '65%'}}
           key={'home-rvmob-server'}
           onPress={() => app.openInvite(SPECIAL_SERVERS.supportServer.invite)}>
-          <Text style={styles.header}>
+          <Text style={styles.buttonText}>
             {client.servers.get(SPECIAL_SERVERS.supportServer.id)
               ? 'Open'
               : 'Join'}{' '}
@@ -117,7 +117,7 @@ export const HomePage = observer(() => {
           style={{width: '30%'}}
           key={'home-settings-button'}
           onPress={() => app.openSettings(true)}>
-          <Text style={styles.header}>Settings</Text>
+          <Text style={styles.buttonText}>Settings</Text>
         </Button>
         {app.settings.get('ui.home.holidays') ? holidayEmoji : null}
       </View>

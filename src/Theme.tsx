@@ -162,14 +162,19 @@ function refreshStyles() {
     flex: {
       flex: 1,
     },
-    header: {
+    buttonText: {
       fontWeight: 'bold',
       fontSize: 16,
     },
     headerv2: {
       fontWeight: 'bold',
       fontSize: 18,
-      marginBottom: 10,
+      marginBottom: 4,
+    },
+    h2: {
+      fontWeight: 'bold',
+      fontSize: 16,
+      marginBottom: 4,
     },
     profileSubheader: {
       fontWeight: 'bold',

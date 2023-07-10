@@ -98,9 +98,7 @@ export const ProfileSheet = observer(
                   })?.avatar?._id !== user.avatar?._id ? (
                     <>
                       <Avatar size={24} user={user} />
-                      <Text
-                        type={'header'}
-                        style={{marginLeft: 4, marginBottom: 0}}>
+                      <Text type={'header'} style={{marginLeft: 4}}>
                         @
                       </Text>
                     </>
@@ -313,7 +311,7 @@ export const ProfileSheet = observer(
                   ) : null
                 ) : (
                   <>
-                    <Text style={styles.profileSubheader}>BOT OWNER</Text>
+                    <Text type={'profile'}>BOT OWNER</Text>
                     {user.bot.owner && client.users.get(user.bot.owner) ? (
                       <Button
                         style={{
@@ -337,7 +335,7 @@ export const ProfileSheet = observer(
               </>
             ) : (
               <>
-                <Text style={styles.profileSubheader}>STATUS</Text>
+                <Text type={'profile'}>STATUS</Text>
                 <Text key={'profile-status-menu-notice'}>
                   Status settings have moved.
                 </Text>
@@ -364,13 +362,13 @@ export const ProfileSheet = observer(
             {user.badges ? (
               <>
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={styles.profileSubheader}>BADGES {'('}</Text>
+                  <Text type={'profile'}>BADGES {'('}</Text>
                   <Link
                     link={'https://support.revolt.chat/kb/account/badges'}
                     label={'learn more'}
                     style={{marginVertical: 5, fontWeight: 'bold'}}
                   />
-                  <Text style={styles.profileSubheader}>{')'}</Text>
+                  <Text type={'profile'}>{')'}</Text>
                 </View>
                 <ScrollView
                   style={{
@@ -610,7 +608,7 @@ export const ProfileSheet = observer(
                 </ScrollView>
               </>
             ) : null}
-            <Text style={styles.profileSubheader}>BIO</Text>
+            <Text type={'profile'}>BIO</Text>
             {profile.content ? (
               <MarkdownView>{parseRevoltNodes(profile.content)}</MarkdownView>
             ) : null}
@@ -618,7 +616,7 @@ export const ProfileSheet = observer(
           </ScrollView>
         ) : section === 'Mutual Servers' ? (
           <ScrollView>
-            <Text style={styles.profileSubheader}>MUTUAL SERVERS</Text>
+            <Text type={'profile'}>MUTUAL SERVERS</Text>
             {mutual.servers?.map(srv => {
               return (
                 <ContextButton
@@ -639,7 +637,7 @@ export const ProfileSheet = observer(
           </ScrollView>
         ) : section === 'Mutual Friends' ? (
           <ScrollView>
-            <Text style={styles.profileSubheader}>MUTUAL FRIENDS</Text>
+            <Text type={'profile'}>MUTUAL FRIENDS</Text>
             <UserList users={mutual.users} />
             <View style={{marginTop: 10}} />
           </ScrollView>

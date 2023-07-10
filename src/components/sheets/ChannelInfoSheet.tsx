@@ -22,14 +22,7 @@ export const ChannelInfoSheet = observer(({channel}: {channel: Channel}) => {
   return (
     <ScrollView>
       <View style={{justifyContent: 'center'}}>
-        <Text
-          type={'header'}
-          style={{
-            marginBottom: 0,
-            fontSize: 24,
-          }}>
-          {channel.name}
-        </Text>
+        <Text type={'header'}>{channel.name}</Text>
         <Text
           colour={currentTheme.foregroundSecondary}
           style={{

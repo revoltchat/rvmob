@@ -220,7 +220,7 @@ export const RoleView = observer(({server, user}: RoleViewProps) => {
   let roles = memberObject?.roles?.map(r => server.roles![r]) || null;
   return memberObject && roles ? (
     <>
-      <Text style={styles.profileSubheader}>ROLES</Text>
+      <Text type={'profile'}>ROLES</Text>
       <View
         key={`roleview-${server._id}-container`}
         style={{flexDirection: 'row', flexWrap: 'wrap'}}>
