@@ -154,6 +154,10 @@ class MainView extends React.Component {
         try {
           notifee.displayNotification({
             title: title,
+            data: {
+              channel: msg.channel?._id ?? 'UNKNOWN',
+              messageID: msg._id,
+            },
             body:
               msg.author?.username +
               ': ' +
