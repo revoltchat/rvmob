@@ -3,12 +3,13 @@ import {View, Pressable, Modal, Dimensions} from 'react-native';
 import {observer} from 'mobx-react';
 
 import ImageViewer from 'react-native-image-zoom-viewer';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Server, User, Message, Channel} from 'revolt.js';
 
 import {app, client, openUrl, setFunction} from './Generic';
 import {styles, currentTheme} from './Theme';
-import {Button, Text} from './components/common/atoms';
+import {GapView} from './components/layout';
 import {
   BotInviteSheet,
   ChannelInfoSheet,
@@ -194,7 +195,7 @@ export class Modals extends React.Component {
               this.state.imageViewerImage?.metadata
                 ? [
                     {
-                      url: client.generateFileURL(this.state.imageViewerImage),
+                      url: client.generateFileURL(this.state.imageViewerImage)!,
                       width: this.state.imageViewerImage.metadata.width,
                       height: this.state.imageViewerImage.metadata.height,
                     },
@@ -206,12 +207,12 @@ export class Modals extends React.Component {
                 style={{
                   height: 50,
                   width: '100%',
-                  justifyContent: 'center',
-                  paddingLeft: 10,
-                  paddingRight: 10,
+                  paddingHorizontal: 10,
+                  justifyContent: 'space-between',
+                  paddingVertical: 9,
                   flexDirection: 'row',
                 }}>
-                <Button
+                <Pressable
                   onPress={() =>
                     openUrl(
                       this.state.imageViewerImage?.metadata
@@ -219,15 +220,24 @@ export class Modals extends React.Component {
                         : this.state.imageViewerImage,
                     )
                   }>
-                  <Text>Open in Browser</Text>
-                </Button>
-                <View style={{marginLeft: 10}} />
-                <Button onPress={() => this.setState({imageViewerImage: null})}>
-                  <Text>Close</Text>
-                </Button>
+                  <MaterialCommunityIcon
+                    name="web"
+                    size={32}
+                    color={currentTheme.foregroundSecondary}
+                  />
+                </Pressable>
+                <GapView size={5} type={'horizontal'} />
+                <Pressable
+                  onPress={() => this.setState({imageViewerImage: null})}>
+                  <MaterialCommunityIcon
+                    name="close-circle"
+                    size={32}
+                    color={currentTheme.foregroundSecondary}
+                  />
+                </Pressable>
               </View>
             )}
-            renderIndicator={(_1, _2) => null}
+            renderIndicator={(_1, _2) => <></>}
             enableSwipeDown={true}
             onCancel={() => this.setState({imageViewerImage: null})}
           />
