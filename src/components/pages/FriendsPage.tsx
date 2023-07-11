@@ -51,7 +51,9 @@ export const FriendsPage = observer(() => {
             style={{justifyContent: 'flex-start'}}
             key={u._id}
             onPress={() => app.openProfile(u)}>
-            <MiniProfile user={u} scale={1.15} />
+            <View style={{maxWidth: '90%'}}>
+              <MiniProfile user={u} scale={1.15} />
+            </View>
           </Button>,
         );
         break;
@@ -61,7 +63,9 @@ export const FriendsPage = observer(() => {
             style={{justifyContent: 'flex-start'}}
             key={u._id}
             onPress={() => app.openProfile(u)}>
-            <MiniProfile user={u} scale={1.15} />
+            <View style={{maxWidth: '90%'}}>
+              <MiniProfile user={u} scale={1.15} />
+            </View>
           </Button>,
         );
         break;
@@ -71,7 +75,9 @@ export const FriendsPage = observer(() => {
             style={{justifyContent: 'flex-start'}}
             key={u._id}
             onPress={() => app.openProfile(u)}>
-            <MiniProfile user={u} scale={1.15} />
+            <View style={{maxWidth: '90%'}}>
+              <MiniProfile user={u} scale={1.15} />
+            </View>
           </Button>,
         );
         break;
@@ -81,7 +87,9 @@ export const FriendsPage = observer(() => {
             style={{justifyContent: 'flex-start'}}
             key={u._id}
             onPress={() => app.openProfile(u)}>
-            <MiniProfile user={u} scale={1.15} />
+            <View style={{maxWidth: '90%'}}>
+              <MiniProfile user={u} scale={1.15} />
+            </View>
           </Button>,
         );
         break;
