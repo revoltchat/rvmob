@@ -14,7 +14,7 @@ import {app, client, GeneralAvatar, openUrl} from '../../Generic';
 import {BADGES, USER_IDS} from '../../lib/consts';
 import {parseRevoltNodes, showToast} from '../../lib/utils';
 import {Avatar, MiniProfile, RoleView} from '../../Profile';
-import {currentTheme, styles} from '../../Theme';
+import {currentTheme} from '../../Theme';
 import {Button, ContextButton, Link, Text, Username} from '../common/atoms';
 import {MarkdownView} from '../common/MarkdownView';
 import {UserMenuSheet} from './index';
@@ -126,8 +126,6 @@ export const ProfileSheet = observer(
             <View style={{flexDirection: 'row'}}>
               <View
                 style={{
-                  padding: 5,
-                  paddingHorizontal: 8,
                   margin: 3,
                   flex: 1,
                 }}>
@@ -135,6 +133,7 @@ export const ProfileSheet = observer(
                   user.relationship === 'Friend' ? (
                     <Button
                       backgroundColor={currentTheme.backgroundPrimary}
+                      style={{marginHorizontal: 0}}
                       onPress={async () => {
                         const c = await user.openDM();
                         try {
@@ -206,9 +205,52 @@ export const ProfileSheet = observer(
                         </View>
                       </Button>
                     </>
-                  ) : (
-                    <></>
-                  )
+                  ) : user.relationship === 'Outgoing' ? (
+                    <Button
+                      backgroundColor={currentTheme.backgroundPrimary}
+                      style={{marginHorizontal: 0}}
+                      onPress={() => {
+                        user.removeFriend();
+                      }}>
+                      <View
+                        style={{
+                          alignItems: 'center',
+                          flexDirection: 'column',
+                        }}>
+                        <View>
+                          <MaterialCommunityIcon
+                            name="account-cancel"
+                            size={25}
+                            color={currentTheme.foregroundPrimary}
+                          />
+                        </View>
+                        <Text>Cancel Friend Request</Text>
+                      </View>
+                    </Button>
+                  ) : user.relationship !== 'Blocked' &&
+                    user.relationship !== 'BlockedOther' ? (
+                    <Button
+                      backgroundColor={currentTheme.backgroundPrimary}
+                      style={{marginHorizontal: 0}}
+                      onPress={() => {
+                        user.addFriend();
+                      }}>
+                      <View
+                        style={{
+                          alignItems: 'center',
+                          flexDirection: 'column',
+                        }}>
+                        <View>
+                          <MaterialCommunityIcon
+                            name="account-plus"
+                            size={25}
+                            color={currentTheme.foregroundPrimary}
+                          />
+                        </View>
+                        <Text>Send Friend Request</Text>
+                      </View>
+                    </Button>
+                  ) : null
                 ) : (
                   <></>
                 )}
@@ -218,8 +260,7 @@ export const ProfileSheet = observer(
               <Button
                 backgroundColor={currentTheme.backgroundPrimary}
                 style={{
-                  padding: 5,
-                  paddingHorizontal: 8,
+                  padding: 8,
                   margin: 3,
                   flex: 1,
                 }}
@@ -229,8 +270,7 @@ export const ProfileSheet = observer(
               <Button
                 backgroundColor={currentTheme.backgroundPrimary}
                 style={{
-                  padding: 5,
-                  paddingHorizontal: 8,
+                  padding: 8,
                   margin: 3,
                   flex: 1,
                 }}
@@ -242,8 +282,7 @@ export const ProfileSheet = observer(
               <Button
                 backgroundColor={currentTheme.backgroundPrimary}
                 style={{
-                  padding: 5,
-                  paddingHorizontal: 8,
+                  padding: 8,
                   margin: 3,
                   flex: 1,
                 }}
@@ -255,85 +294,7 @@ export const ProfileSheet = observer(
         ) : null}
         {section === 'Profile' ? (
           <ScrollView>
-            {user.relationship !== 'User' ? (
-              <>
-                {!user.bot ? (
-                  user.relationship === 'Incoming' ? (
-                    <>
-                      <ContextButton
-                        onPress={() => {
-                          user.addFriend();
-                        }}>
-                        <View style={styles.iconContainer}>
-                          <FA5Icon
-                            name="user-plus"
-                            size={16}
-                            color={currentTheme.foregroundPrimary}
-                          />
-                        </View>
-                        <Text>Accept Friend Request</Text>
-                      </ContextButton>
-                      <ContextButton
-                        onPress={() => {
-                          user.removeFriend();
-                        }}>
-                        <View style={styles.iconContainer}>
-                          <FA5Icon
-                            name="user-times"
-                            size={16}
-                            color={currentTheme.foregroundPrimary}
-                          />
-                        </View>
-                        <Text>Reject Friend</Text>
-                      </ContextButton>
-                    </>
-                  ) : user.relationship === 'Outgoing' ? (
-                    <ContextButton
-                      onPress={() => {
-                        user.removeFriend();
-                      }}>
-                      <Text>Cancel Friend</Text>
-                    </ContextButton>
-                  ) : user.relationship !== 'Friend' ? (
-                    <ContextButton
-                      onPress={() => {
-                        user.addFriend();
-                      }}>
-                      <View style={styles.iconContainer}>
-                        <FA5Icon
-                          name="user-plus"
-                          size={16}
-                          color={currentTheme.foregroundPrimary}
-                        />
-                      </View>
-                      <Text>Add Friend</Text>
-                    </ContextButton>
-                  ) : null
-                ) : (
-                  <>
-                    <Text type={'profile'}>BOT OWNER</Text>
-                    {user.bot.owner && client.users.get(user.bot.owner) ? (
-                      <Button
-                        style={{
-                          marginHorizontal: 0,
-                          justifyContent: 'flex-start',
-                          alignItems: 'flex-start',
-                          backgroundColor: currentTheme.backgroundPrimary,
-                        }}
-                        onPress={async () => {
-                          app.openProfile(client.users.get(user.bot!.owner));
-                        }}>
-                        <MiniProfile user={client.users.get(user.bot.owner)} />
-                      </Button>
-                    ) : (
-                      <Text style={{color: currentTheme.foregroundSecondary}}>
-                        Unloaded user
-                      </Text>
-                    )}
-                  </>
-                )}
-              </>
-            ) : (
+            {user.relationship === 'User' ? (
               <>
                 <Text type={'profile'}>STATUS</Text>
                 <Text key={'profile-status-menu-notice'}>
@@ -357,7 +318,31 @@ export const ProfileSheet = observer(
                   </ContextButton>
                 </View>
               </>
-            )}
+            ) : user.bot ? (
+              <>
+                <Text type={'profile'}>BOT OWNER</Text>
+                {user.bot.owner && client.users.get(user.bot.owner) ? (
+                  <Button
+                    style={{
+                      marginHorizontal: 0,
+                      justifyContent: 'flex-start',
+                      alignItems: 'flex-start',
+                      backgroundColor: currentTheme.backgroundPrimary,
+                    }}
+                    onPress={async () => {
+                      app.openProfile(client.users.get(user.bot!.owner));
+                    }}>
+                    <View style={{maxWidth: '90%'}}>
+                      <MiniProfile user={client.users.get(user.bot.owner)} />
+                    </View>
+                  </Button>
+                ) : (
+                  <Text style={{color: currentTheme.foregroundSecondary}}>
+                    Unloaded user
+                  </Text>
+                )}
+              </>
+            ) : null}
             {server && <RoleView user={user} server={server} />}
             {user.badges ? (
               <>
