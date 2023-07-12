@@ -210,7 +210,7 @@ export const app = {
       {
         key: 'ui.messaging.showReactions',
         category: 'functionality',
-        name: 'Show a list of reactions under messages (text only)',
+        name: 'Show reactions under messages',
         default: false,
         type: 'boolean',
         experimental: true,
