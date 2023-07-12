@@ -5,11 +5,13 @@
   "scripts": {
     "clean": "react-native-clean-project",
     "android": "react-native run-android",
+    "android-release": "react-native build-android --mode=release",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "windows": "react-native run-windows"
+    "windows": "react-native run-windows",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.22.7",
@@ -39,7 +41,9 @@
     "mobx": "^6.9.0",
     "mobx-react": "^7.6.0",
     "mobx-react-lite": "^3.4.3",
+    "patch-package": "^7.0.1",
     "path-browserify": "^1.0.1",
+    "postinstall-postinstall": "^2.1.0",
     "process": "^0.11.10",
     "punycode": "^2.3.0",
     "querystring-es3": "^0.2.1",
