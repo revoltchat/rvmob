@@ -15,7 +15,7 @@ If you want to install RVMob, simply go to [the releases tab](https://github.com
 If you want to build RVMob, you'll need:
 - [Node](https://nodejs.org/en/) (18+),
 - [Yarn Classic](https://classic.yarnpkg.com),
-- JDK 17,
+- JDK 17 ([Microsoft's build](https://learn.microsoft.com/en-gb/java/openjdk/download) works well),
 - the latest Android SDK (preferably via [Android Studio](https://developer.android.com/studio)'s SDK Manager), and 
 - [npx](https://www.npmjs.com/package/npx).
 
