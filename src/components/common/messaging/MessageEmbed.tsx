@@ -104,13 +104,15 @@ export const MessageEmbed = observer((eRaw: API.Embed) => {
       );
     case 'None':
     default:
-      console.log(JSON.stringify(e));
-      return (
+      console.log(`[MESSAGEEMBED] Unknown embed type: ${JSON.stringify(e)}`);
+      return (app.settings.get('ui.showDeveloperFeatures') as boolean) ? (
         <Text>
           embed - type: {e.type === 'None' ? 'none' : e.type ?? 'how'}, other
           info:
           {JSON.stringify(e)}
         </Text>
+      ) : (
+        <></>
       );
   }
 });
