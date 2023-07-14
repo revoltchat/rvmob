@@ -5,6 +5,8 @@ import {observer} from 'mobx-react-lite';
 import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import {decodeTime} from 'ulid';
+
 import {client, openUrl} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
 import {Text} from '../common/atoms';
@@ -34,7 +36,27 @@ export const ServerList = observer(
     }
     if (ordered) {
       servers.sort((server1, server2) => {
-        return ordered.indexOf(server1._id) - ordered.indexOf(server2._id);
+        // get the positions of both servers in the synced list
+        const s1index = ordered.indexOf(server1._id);
+        const s2index = ordered.indexOf(server2._id);
+
+        // if they're both in the list, subtract server 2's position from server 1's
+        if (s1index > -1 && s2index > -1) {
+          return ordered.indexOf(server1._id) - ordered.indexOf(server2._id);
+        }
+
+        // if server 1 isn't in the list and server 2 is, return 1 (server 2 then 1)
+        if (s1index === -1 && s2index > -1) {
+          return 1;
+        }
+
+        // if server 2 isn't in the list and server 1 is, return -1 (server 1 then 2)
+        if (s2index === -1 && s1index > -1) {
+          return -1;
+        }
+
+        // if both aren't in the list, convert the server IDs to timestamps then order the by which came first
+        return decodeTime(server2._id) > decodeTime(server1._id) ? -1 : 1;
       });
     }
     return (
