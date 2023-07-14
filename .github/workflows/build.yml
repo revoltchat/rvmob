@@ -1,4 +1,4 @@
-name: Build RVMob (non-release)
+name: Build RVMob (debug)
 
 on:
   push:
