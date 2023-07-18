@@ -309,6 +309,12 @@ export class Messages extends React.Component {
               e.nativeEvent.contentOffset.y >=
               e.nativeEvent.contentSize.height -
                 e.nativeEvent.layoutMeasurement.height;
+            // console.log(
+            //   bottomOfPage,
+            //   e.nativeEvent.contentOffset.y,
+            //   e.nativeEvent.contentSize.height,
+            //   e.nativeEvent.layoutMeasurement.height,
+            // );
             if (app.settings.get('ui.messaging.experimentalScrolling')) {
               if (e.nativeEvent.contentOffset.y === 0) {
                 this.fetchMessages({
@@ -335,7 +341,7 @@ export class Messages extends React.Component {
             }
           }}
           onLayout={() => {
-            if(!this.state.bottomOfPage) {
+            if (this.state.bottomOfPage) {
               this.scrollView.scrollToEnd({animated: false});
             }
           }}
