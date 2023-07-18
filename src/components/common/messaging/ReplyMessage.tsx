@@ -43,7 +43,7 @@ export const ReplyMessage = (props: ReplyProps) => {
                 masquerade={props.message.masquerade?.name}
               />
               <Text style={styles.messageContentReply}>
-                {props.message.content?.split('\n').join(' ')}
+                {(s=props.message.content.split('\n').join(' ')).length > 42?s.slice(0,42)+'...':s}
               </Text>
             </>
           ) : null
