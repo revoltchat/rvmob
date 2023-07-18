@@ -21,7 +21,7 @@ import {LeftMenu} from './src/SideMenus';
 import {Modals} from './src/Modals';
 import {NetworkIndicator} from './src/components/NetworkIndicator';
 import {decodeTime} from 'ulid';
-import notifee from '@notifee/react-native';
+import notifee, {EventType} from '@notifee/react-native';
 import {Button, Link, Text} from './src/components/common/atoms';
 import {LoginSettingsPage} from './src/components/pages/LoginSettingsPage';
 import {ChannelView} from './src/components/views/ChannelView';
@@ -112,6 +112,17 @@ class MainView extends React.Component {
         AsyncStorage.setItem('token', this.state.tokenInput);
         this.setState({tokenInput: ''});
       }
+      notifee.onBackgroundEvent(async ({ type, detail }) => {
+        const { notification, pressAction } = detail;
+          if(type == EventType.PRESS){
+            console.log("[NOTIFEE] User pressed on " + notification.data.channel + "/" + notification.data.messageID)
+            this.setState({
+              notificationMessage: null,
+              currentChannel: this.state.notificationMessage.channel,
+            })
+          await notifee.cancelNotification(notification.id);
+        }
+      });
     });
     client.on('dropped', async () => {
       this.setState({network: 'dropped'});
@@ -188,6 +199,10 @@ class MainView extends React.Component {
               largeIcon:
                 msg.channel?.server?.generateIconURL() ||
                 msg.author?.generateAvatarURL(),
+              pressAction: {
+                id: 'default',
+                launchActivity: 'site.endl.taiku.rvmob.MainActivity'
+              },
               channelId: defaultnotif,
             },
             id: msg.channel?._id,
@@ -197,7 +212,6 @@ class MainView extends React.Component {
         }
       }
     });
-    // notifee.onBackgroundEvent(async ({type, detail}) => {});
     AsyncStorage.getItem('token', async (err, res) => {
       if (!err) {
         if (typeof res !== 'string') {
