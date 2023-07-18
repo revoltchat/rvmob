@@ -185,6 +185,14 @@ export const app = {
         type: 'number',
       },
       {
+        key: 'ui.messaging.roleGradients',
+        category: 'appearance',
+        name: 'Linear gradient in roles',
+        default: false,
+        type: 'boolean',
+        experimental: true
+      },
+      {
         key: 'ui.home.holidays',
         category: 'appearance',
         name: 'Show holidays on home page',

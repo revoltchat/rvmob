@@ -20,6 +20,7 @@
     "@notifee/react-native": "^7.8.0",
     "@react-native-async-storage/async-storage": "^1.19.0",
     "@react-native-clipboard/clipboard": "^1.11.2",
+    "@react-native-masked-view/masked-view": "^0.2.9",
     "@react-native/eslint-config": "^0.73.0",
     "@react-native/metro-config": "^0.73.0",
     "@tradle/react-native-http": "^2.0.1",
@@ -60,6 +61,7 @@
     "react-native-get-random-values": "^1.9.0",
     "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-level-fs": "^3.0.1",
+    "react-native-linear-gradient": "^2.7.3",
     "react-native-markdown-display": "^7.0.0-alpha.2",
     "react-native-modal": "^13.0.1",
     "react-native-os": "https://github.com/aprock/react-native-os",
@@ -103,9 +105,6 @@
     "react-test-renderer": "^18.2.0",
     "rn-nodeify": "^10.3.0",
     "typescript": "^5.1.6"
-  },
-  "jest": {
-    "preset": "react-native"
   },
   "react-native": {
     "zlib": "browserify-zlib",

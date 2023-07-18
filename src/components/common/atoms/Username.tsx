@@ -9,6 +9,8 @@ import {currentTheme, styles} from '../../../Theme';
 import {Text} from './Text';
 import {USER_IDS} from '../../../lib/consts';
 import {getColour, getHighestRole} from '../../../lib/utils';
+import LinearGradient from 'react-native-linear-gradient';
+import MaskedView from '@react-native-masked-view/masked-view';
 
 type UsernameProps = {
   server?: Server;
@@ -45,9 +47,12 @@ export const Username = observer(
         );
       }
     }
-    let badgeSize = (size || 14) * 0.6;
+    size = size || 14
+    typeof roleColor == 'object'&&console.log("[USER] roleColor=" + JSON.stringify(roleColor))
+    let badgeSize = size * 0.6;
     let bridgedMessage =
       user?._id === USER_IDS.automod && masquerade !== undefined;
+    const displayName = masquerade ?? name
     let badgeStyle = {
       color: currentTheme.accentColorForeground,
       backgroundColor: currentTheme.accentColor,
@@ -61,11 +66,20 @@ export const Username = observer(
     };
     return (
       <View style={{flexDirection: 'row'}}>
+      {typeof roleColor == 'string' ? (
         <Text
           colour={roleColor}
-          style={{fontWeight: 'bold', fontSize: size || 14}}>
-          {masquerade ?? name}
-        </Text>
+          style={{fontWeight: 'bold', fontSize: size}}>
+          {displayName}
+        </Text>) : (
+          <MaskedView maskElement={
+            <View style={{backgroundColor: 'transparent'}}>
+            <Text style={{fontSize: size, fontWeight: 'bold'}}>{displayName}</Text>
+            </View>
+          }>
+            <LinearGradient {...roleColor} style={{flex: 1,minWidth: (size - 6) * displayName.length, height: size}} />
+          </MaskedView>
+          )}
         {!noBadge ? (
           <>
             {bridgedMessage ? (
