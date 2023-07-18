@@ -4,10 +4,9 @@ import {differenceInMinutes} from 'date-fns';
 import {Channel, Message} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
-import {client, app} from '../Generic';
+import {client} from '../Generic';
 import {currentTheme} from '../Theme';
 import {DEFAULT_MESSAGE_LOAD_COUNT} from './consts';
-
 
 /**
  * Returns the correct colour as a HEX string/theme variable. Supports regular HEX colours, client variables (e.g. `var(--accent)`)
@@ -33,56 +32,34 @@ export function getColour(c: string) {
   }
 
   // ...then check for gradients
-  const gradientRegex = /linear-gradient\s*\(/;
-  const otherGradientRegex=/(conical|radial)-gradient\s*\(/
+  const gradientRegex = /(linear|conical|radial)-gradient\s*\(/;
   const degRegex = /[0-9]{0,3}deg,\s*/;
   const bracketRegex = /\)\s*(text)?$/;
   const percentRegex = /[0-9]{0,3}%(,|\))?\s*/;
 
   const isGradient = c.match(gradientRegex);
   if (isGradient) {
-    const filteredC = c.replace(gradientRegex, '').replace(bracketRegex, '')
+    const filteredC = c
+      .replace(gradientRegex, '')
+      .replace(bracketRegex, '')
+      .replace(degRegex, '')
+      .replace(percentRegex, '');
+
     const filteredAsArray = filteredC.split(',');
+
     console.log(
-      `[UTILS] getColour detected a gradient role: ${c}, filtered: ${filteredC}, to array: ${filteredAsArray}`,
+      `[UTILS] getColour detected a gradient role: ${c}, filtered: ${filteredC}, to array: ${filteredAsArray}, ${filteredAsArray[0]}`,
     );
-    return getLinearGradient(filteredAsArray)
+
+    if (c.match('linear')) {
+      return filteredAsArray[0];
+    }
+
+    return c;
   }
-  if(c.match(otherGradientRegex)) return 0;
+
   // at this point, c is probably just a regular HEX code so return it directly
   return c;
-}
-function getLinearGradient(s){
-  console.log("[LINEAR GRADIENT] input: " + s)
-  const degRegex = /([0-9]{0,3})deg\s*/,radRegex=/([0-9.]+)rad\s*/,gradRegex=/([0-9]{0,3})rad\s*/,turnRegex = /([0-9.]+)turn\s*/,angleCenter={x:.5,y:.5},percentRegex = /([0-9]{0,3})%\s*/
-  const fromRad=r=>r*(180/Math.PI);
-  const fromGrad=g=>g*(180/200);
-  const fromTurn=t=>t*360
-  let useAngle=!1,angle=0,start={x:0,y:0},end={x:1,y:0}
-  const colors: string[] = [], locations: number[] = []
-  const first = s.shift()
-  switch(first){
-      case 'to right': start = {x:0,y:0}; end = {x:1,y:0}; break;
-      case 'to left': start = {x:1,y:0}; end = {x: 0,y:0}; break;
-      case 'to top': start = {x:0,y:1}; end = {x:0,y:0}; break;
-      case 'to bottom': start = {x:0,y:0}; end = {x: 0,y:1};break;
-      default:
-        let e = degRegex.exec(first);
-        Array.isArray(e)&&e.length>0&&(angle=+e[1],!isNaN(angle))&&(useAngle=true)||(e=radRegex.exec(first),Array.isArray(e))&&e.length>1&&(angle=fromRad(isNaN(+e[1])?0:+e[1]),useAngle=true)||(e=gradRegex.exec(first),Array.isArray(e))&&e.length>1&&(angle=fromGrad(isNaN(+e[1])?0:+e[1]),useAngle=true)||(e=turnRegex.exec(first),Array.isArray(e))&&e.length>1&&(angle=fromTurn(isNaN(+e[1])?0:+e[1]),useAngle=true)||colors.push(first)&&locations.push(0);
-  }
-  if(!app.settings.get('ui.messaging.roleGradients')){
-    return colors.length>0?colors[0]:s[0].trim().split(' ')[0]
-  }
-  for(let slice of s){
-    slice=slice.trim().split(' ')
-    colors.push(slice[0]);
-    if(slice.length==0){locations.push(NaN);continue;}
-    const p = percentRegex.exec(slice[1]);
-    Array.isArray(p)&&p.length>1&&locations.push(+p[1]/100)||locations.push(NaN)
-  }
-  for(let i=0;i<locations.length;i++)if(isNaN(locations[i]))locations[i]=i/locations.length;
-  if(useAngle) return {useAngle, angle, angleCenter, colors, locations}
-  else return {start, end, colors, locations}
 }
 
 /**
