@@ -247,7 +247,7 @@ export const Message = observer((props: MessageProps) => {
                 {props.message.reply_ids.map(id => (
                   <ReplyMessage
                     key={id}
-                    message={client.messages.get(id) || props.message.channel.fetchMessage(id)}
+                    message={client.messages.get(id)}
                     mention={props.message?.mention_ids?.includes(
                       props.message?.author_id,
                     )}
