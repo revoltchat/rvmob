@@ -220,6 +220,7 @@ function refreshStyles() {
       color: currentTheme.foregroundPrimary,
     },
     message: {
+      paddingTop: 10,
       width: '100%',
       flex: 1,
       flexDirection: 'row',
@@ -259,23 +260,23 @@ function refreshStyles() {
     },
     serverButton: {
       borderRadius: 5000,
-      width: 48,
-      height: 48,
+      width: 42,
+      height: 42,
       margin: 4,
       backgroundColor: currentTheme.backgroundPrimary,
       overflow: 'hidden',
+    },
+    serverIcon: {
+      width: 42,
+      height: 42
     },
     serverButtonInitials: {
       fontWeight: 'bold',
       textAlign: 'center',
       marginTop: '30%',
     },
-    serverIcon: {
-      width: 48,
-      height: 48,
-    },
     serverList: {
-      width: 60,
+      width: 52,
       flexShrink: 1,
       backgroundColor: currentTheme.background,
       paddingVertical: 4,

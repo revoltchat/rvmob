@@ -101,8 +101,7 @@ export const ServerList = observer(
                     backgroundColor: currentTheme.error,
                     height: 20,
                     width: 20,
-                    marginBottom: -20,
-                    left: 36,
+                    left: 28,
                     position: 'absolute',
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -123,8 +122,8 @@ export const ServerList = observer(
                     backgroundColor: currentTheme.foregroundPrimary,
                     height: 20,
                     width: 20,
-                    marginBottom: -20,
-                    left: 36,
+                    left: 28,
+                    bottom: 0,
                     position: 'absolute',
                   }}
                 />
