@@ -201,9 +201,10 @@ export const app = {
       {
         key: 'ui.messaging.sendAttachments',
         category: 'functionality',
-        name: 'Enable attachment sending',
-        default: true,
+        name: 'Enable attachment sending (broken)',
+        default: false,
         type: 'boolean',
+        developer: true,
       },
       {
         key: 'ui.messaging.showReactions',
