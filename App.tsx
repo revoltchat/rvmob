@@ -53,6 +53,8 @@ class MainView extends React.Component {
       leftMenuOpen: false,
       notificationMessage: null,
       orderedServers: [],
+      serverNotifications: null,
+      channelNotifications: null
     };
     setFunction('openChannel', async c => {
       // if (!this.state.currentChannel || this.state.currentChannel?.server?._id != c.server?._id) c.server?.fetchMembers()
@@ -93,18 +95,21 @@ class MainView extends React.Component {
       console.log(`[APP] Connected to instance (${new Date().getTime()})`);
     });
     client.on('ready', async () => {
-      let orderedServers;
+      let orderedServers, server, channel;
       try {
-        const rawOrderedServers = await client.syncFetchSettings(['ordering']);
-        orderedServers = JSON.parse(rawOrderedServers.ordering[1]).servers;
+        const rawSettings = await client.syncFetchSettings(['ordering', 'notifications']);
+        orderedServers = JSON.parse(rawSettings.ordering[1]).servers;
+        ({server, channel} = JSON.parse(rawSettings.notifications[1]))
       } catch (err) {
-        console.log(`[APP] Error fetching ordered servers: ${err}`);
-        orderedServers === null;
+        console.log(`[APP] Error fetching settings: ${err}`);
+        orderedServers = server = channel = null
       }
       this.setState({
         status: 'loggedIn',
         network: 'ready',
-        orderedServers: orderedServers,
+        orderedServers,
+        serverNotifications: server,
+        channelNotifications: channel
       });
       console.log(`[APP] Client is ready (${new Date().getTime()})`);
       if (this.state.tokenInput) {
@@ -129,22 +134,17 @@ class MainView extends React.Component {
     });
     client.on('message', async msg => {
       console.log(`[APP] Handling message ${msg._id}`);
-
-      const shouldShowNotif = app.settings.get(
-        'app.notifications.notifyOnSelfPing',
-      )
-        ? true
-        : msg.author?._id !== client.user?._id;
-
-      const mentionsUser =
-        msg.mention_ids?.includes(client.user?._id!) ||
-        msg.channel?.channel_type === 'DirectMessage';
-
-      if (
-        shouldShowNotif &&
-        mentionsUser &&
-        app.settings.get('app.notifications.enabled')
-      ) {
+      let channelNotif = this.state.channelNotifications[msg.channel?._id]
+      let serverNotif = this.state.serverNotifications[msg.channel.server?._id]
+      const isMuted = channelNotif&&channelNotif=='none'||channelNotif=='muted'||serverNotif&&serverNotif=='none'||serverNotif=='muted'
+      const alwaysNotif = channelNotif=='all'||!isMuted&&serverNotif=='all'
+      const mentionsUser = msg.mention_ids?.includes(client.user?._id!)&&(app.settings.get('app.notifications.notifyOnSelfPing')||msg.author?._id != client.user?._id)|| msg.channel?.channel_type == 'DirectMessage'
+      const shouldNotif = alwaysNotif&&(app.settings.get('app.notifications.notifyOnSelfPing')||msg.author?._id!=client.user?._id)||!isMuted&&mentionsUser
+      console.log("[APP] Show notification?")
+      console.log("[APP] Config for channel:", channelNotif)
+      console.log("[APP] Config for server:", serverNotif)
+      console.log(`MUTE? ${isMuted} | ALL? ${alwaysNotif} | MENTIONS? ${mentionsUser}`)
+      if (app.settings.get('app.notifications.enabled')&&shouldNotif){
         console.log(
           `[NOTIFICATIONS] Pushing notification for message ${msg._id}`,
         );
@@ -170,8 +170,7 @@ class MainView extends React.Component {
               messageID: msg._id,
             },
             body:
-              msg.author?.username +
-              ': ' +
+              `<b>${msg.author?.username}</b>: ` +
               msg.content
                 ?.replaceAll(
                   '<@' + client.user?._id + '>',
@@ -192,7 +191,7 @@ class MainView extends React.Component {
                       1) +
                     ' more messages)</i>'
                   : ' <i><br>(and 1 more message)</i>'
-                : ''),
+                : msg.embeds.length > 0 ? '[Embedded message]': msg.attachments.length > 0 ? '🖼️ Image': ''),
             android: {
               color: '#1AD4B2',
               smallIcon: 'ic_launcher_monochrome',
@@ -209,6 +208,23 @@ class MainView extends React.Component {
           });
         } catch (notifErr) {
           console.log(`[NOTIFEE] Error sending notification: ${notifErr}`);
+        }
+      }
+    });
+    client.on('packet', async p=>{
+      if(p.type=='UserSettingsUpdate'){
+        console.log("[WEBSOCKET] Settings updated")
+        try {
+          if('ordering' in p.update){
+            const orderedServers = JSON.parse(p.update.ordering[1]).servers
+            this.setState({orderedServers})
+          }
+          if('notifications' in p.update){
+            const {server, channel} = JSON.parse(p.update.notifications[1])
+            this.setState({serverNotifications: server,channelNotifications: channel})
+          }
+        } catch (err) {
+          console.log(`[APP] Error fetching settings: ${err}`);
         }
       }
     });
