@@ -191,7 +191,7 @@ class MainView extends React.Component {
                       1) +
                     ' more messages)</i>'
                   : ' <i><br>(and 1 more message)</i>'
-                : msg.embeds.length > 0 ? '[Embedded message]': msg.attachments.length > 0 ? '🖼️ Image': ''),
+                : msg.embeds&&msg.embeds.length > 0 ? '[Embedded message]': msg.attachments&&msg.attachments.length > 0 ? '🖼️ Image': ''),
             android: {
               color: '#1AD4B2',
               smallIcon: 'ic_launcher_monochrome',
