@@ -8,7 +8,9 @@ For development updates and other news, join [RVMob's support server](https://rv
 
 ## Installing
 
-If you want to install RVMob, simply go to [the releases tab](https://github.com/revoltchat/rvmob/releases) and download the latest version. We plan on publishing RVMob to an app store in the future.
+If you want to install RVMob, simply go to [the releases tab](https://github.com/revoltchat/rvmob/releases) and download the latest version. We plan on publishing RVMob to app stores in the future.
+
+Debug builds are also produced for every commit. These are unoptimised - they're much larger and noticeably slower than the release builds, but you can try out new features early. Also bear in mind that they are produced as Android App Bundles (AABs), not APKs - to install them, you'll have to convert the bundles using something like [`bundletool`](https://developer.android.com/tools/bundletool).
 
 ## Building
 

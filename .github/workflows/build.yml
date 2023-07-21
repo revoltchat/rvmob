@@ -49,10 +49,10 @@ jobs:
         run: npx react-native bundle --platform android --entry-file ./index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
       - name: Build the app
         run: npx react-native build-android --mode debug
-      - name: Prepare debug APK
-        run: mv app-debug.apk RVMob-Debug-${{ github.sha }}.apk
-        working-directory: /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/
-      - name: Upload debug APK
+      - name: Rename debug AAB
+        run: mv app-debug.aab RVMob-Debug-${{ github.sha }}.aab
+        working-directory: /home/runner/work/rvmob/rvmob/android/app/build/outputs/bundle/debug/
+      - name: Upload debug AAB
         uses: actions/upload-artifact@v3
         with: 
-          path: /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/RVMob-Debug-${{ github.sha }}.apk
+          path: /home/runner/work/rvmob/rvmob/android/app/build/outputs/bundle/debug/RVMob-Debug-${{ github.sha }}.aab
