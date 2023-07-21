@@ -166,8 +166,9 @@ export const app = {
         key: 'app.notifications.enabled',
         category: 'functionality',
         name: 'Enable push notifications',
-        default: true,
-        type: 'boolean'
+        default: false,
+        type: 'boolean',
+        experimental: true,
       },
       {
         key: 'app.notifications.notifyOnSelfPing',
