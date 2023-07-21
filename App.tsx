@@ -215,7 +215,6 @@ class MainView extends React.Component {
         }
       }
     });
-<<<<<<< HEAD
     client.on('packet', async p=>{
       if(p.type=='UserSettingsUpdate'){
         console.log("[WEBSOCKET] Settings updated")
@@ -233,8 +232,6 @@ class MainView extends React.Component {
         }
       }
     });
-=======
->>>>>>> upstream/master
     AsyncStorage.getItem('token', async (err, res) => {
       if (!err) {
         if (typeof res !== 'string') {
