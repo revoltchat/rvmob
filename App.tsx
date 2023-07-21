@@ -112,15 +112,19 @@ class MainView extends React.Component {
         AsyncStorage.setItem('token', this.state.tokenInput);
         this.setState({tokenInput: ''});
       }
-      notifee.onBackgroundEvent(async ({ type, detail }) => {
-        const { notification, pressAction } = detail;
-          if(type == EventType.PRESS){
-            console.log("[NOTIFEE] User pressed on " + notification.data.channel + "/" + notification.data.messageID)
-            this.setState({
-              notificationMessage: null,
-              currentChannel: this.state.notificationMessage.channel,
-            })
-          await notifee.cancelNotification(notification.id);
+      notifee.onBackgroundEvent(async ({type, detail}) => {
+        const {notification, pressAction} = detail;
+        if (type === EventType.PRESS) {
+          console.log(
+            `[NOTIFEE] User pressed on ${notification?.data?.channel}/${notification?.data?.messageID}`,
+          );
+          this.setState({
+            notificationMessage: null,
+            currentChannel: client.channels.get(
+              notification?.data?.channel as string,
+            ),
+          });
+          await notifee.cancelNotification(notification!.id!);
         }
       });
     });
@@ -201,7 +205,7 @@ class MainView extends React.Component {
                 msg.author?.generateAvatarURL(),
               pressAction: {
                 id: 'default',
-                launchActivity: 'site.endl.taiku.rvmob.MainActivity'
+                launchActivity: 'site.endl.taiku.rvmob.MainActivity',
               },
               channelId: defaultnotif,
             },

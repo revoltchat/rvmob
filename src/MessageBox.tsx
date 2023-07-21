@@ -253,32 +253,36 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                   content: thisCurrentText,
                   channel: props.channel,
                   nonce: nonce,
-                  reply_ids: replyingMessages?.map((m: ReplyingMessage) => m.message._id),
+                  reply_ids: replyingMessages?.map(
+                    (m: ReplyingMessage) => m.message._id,
+                  ),
                 });
                 let uploaded = [];
                 for (let a of attachments) {
                   const formdata = new FormData();
                   formdata.append('file', a);
-                  console.log(formdata)
-                  const result = await fetch(`${client.configuration?.features.autumn.url}/attachments`, {
-                    method: 'POST',
-                    body: formdata
-                  }).then(res=>res.json())
-                  if(result.type) console.error("Error uploading file to autumn: " + result.type)
-                  else uploaded.push(result.id)
+                  console.log(`[MESSAGEBOX] formdata: ${formdata}`);
+                  const result = await fetch(
+                    `${client.configuration?.features.autumn.url}/attachments`,
+                    {
+                      method: 'POST',
+                      body: formdata,
+                    },
+                  ).then(res => res.json());
+                  if (result.type) {
+                    console.error(
+                      `[MESSAGEBOX] Error uploading attachment: ${result.type}`,
+                    );
+                  } else {
+                    uploaded.push(result.id);
+                  }
                 }
                 if (replyingMessages.length > 0) {
                   console.log(replyingMessages);
                 }
-                uploaded.length > 0 ? props.channel.sendMessage({
+                props.channel.sendMessage({
                   content: thisCurrentText,
-                  attachments: uploaded,
-                  replies: replyingMessages.map(m => {
-                    return {id: m.message._id, mention: m.mentions};
-                  }),
-                  nonce,
-                }) : props.channel.sendMessage({
-                  content: thisCurrentText,
+                  attachments: uploaded.length > 0 ? uploaded : undefined,
                   replies: replyingMessages.map(m => {
                     return {id: m.message._id, mention: m.mentions};
                   }),
@@ -288,7 +292,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                   props.channel.last_message_id ?? undefined,
                   true,
                 );
-                setAttachments([])
+                setAttachments([]);
                 setReplyingMessages([]);
               }
             }}>
