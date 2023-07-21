@@ -238,7 +238,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
           }}
           value={currentText}
         />
-        {currentText.trim().length > 0 ? (
+        {currentText.trim().length > 0 || attachments.length > 0 ? (
           <Pressable
             style={styles.sendButton}
             onPress={async () => {
@@ -257,28 +257,32 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                     (m: ReplyingMessage) => m.message._id,
                   ),
                 });
-                // let uploaded = [];
-                // for (let a of attachments) {
-                //     const formdata = new FormData();
-                //     //multipart/form-data
-                //     let content = await fs.readFile(a.uri, 'base64');
-                //     formdata.append('file', content)
-                //     console.log(formdata)
-                //     let result = await fetch(`${client.configuration?.features.autumn.url}/attachments`, {
-                //         method: 'POST',
-                //         body: formdata,
-                //         headers: {
-                //             'Content-Type': 'multipart/form-data; '
-                //         }
-                //     })
-                //     console.log("out: ", await result.text())
-                //     uploaded.push(id);
-                // }
+                let uploaded = [];
+                for (let a of attachments) {
+                  const formdata = new FormData();
+                  formdata.append('file', a);
+                  console.log(`[MESSAGEBOX] formdata: ${formdata}`);
+                  const result = await fetch(
+                    `${client.configuration?.features.autumn.url}/attachments`,
+                    {
+                      method: 'POST',
+                      body: formdata,
+                    },
+                  ).then(res => res.json());
+                  if (result.type) {
+                    console.error(
+                      `[MESSAGEBOX] Error uploading attachment: ${result.type}`,
+                    );
+                  } else {
+                    uploaded.push(result.id);
+                  }
+                }
                 if (replyingMessages.length > 0) {
                   console.log(replyingMessages);
                 }
                 props.channel.sendMessage({
                   content: thisCurrentText,
+                  attachments: uploaded.length > 0 ? uploaded : undefined,
                   replies: replyingMessages.map(m => {
                     return {id: m.message._id, mention: m.mentions};
                   }),
@@ -288,6 +292,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                   props.channel.last_message_id ?? undefined,
                   true,
                 );
+                setAttachments([]);
                 setReplyingMessages([]);
               }
             }}>
