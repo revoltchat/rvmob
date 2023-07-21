@@ -118,11 +118,11 @@ class MainView extends React.Component {
           console.log(
             `[NOTIFEE] User pressed on ${notification?.data?.channel}/${notification?.data?.messageID}`,
           );
+          const channel = client.channels.get(
+            notification?.data?.channel as string,
+          );
           this.setState({
-            notificationMessage: null,
-            currentChannel: client.channels.get(
-              notification?.data?.channel as string,
-            ),
+            currentChannel: channel ?? null,
           });
           await notifee.cancelNotification(notification!.id!);
         }
