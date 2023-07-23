@@ -182,7 +182,9 @@ class MainView extends React.Component {
                 )
                 .replaceAll('\\', '\\\\')
                 .replaceAll('<', '\\<')
-                .replaceAll('>', '\\>') +
+                .replaceAll('>', '\\>') + '<br>' +
+                (msg.embeds?msg.embeds.map(e=>'[Embed]').join('<br>') + '<br>':'') +
+                (msg.attachments?msg.attachments.map(a=>a.metadata.type).join('<br>')+'<br>':'') +
               (notifs.length > 0 && notifs[0]?.notification.body
                 ? notifs[0].notification.body.split('<br>')?.length > 1
                   ? ' <i><br>(and ' +
@@ -195,7 +197,7 @@ class MainView extends React.Component {
                       1) +
                     ' more messages)</i>'
                   : ' <i><br>(and 1 more message)</i>'
-                : msg.embeds&&msg.embeds.length > 0 ? '[Embedded message]': msg.attachments&&msg.attachments.length > 0 ? '🖼️ Image': ''),
+                : ''),
             android: {
               color: '#1AD4B2',
               smallIcon: 'ic_launcher_monochrome',
