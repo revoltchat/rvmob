@@ -54,7 +54,7 @@ class MainView extends React.Component {
       notificationMessage: null,
       orderedServers: [],
       serverNotifications: null,
-      channelNotifications: null
+      channelNotifications: null,
     };
     setFunction('openChannel', async c => {
       // if (!this.state.currentChannel || this.state.currentChannel?.server?._id != c.server?._id) c.server?.fetchMembers()
@@ -95,11 +95,14 @@ class MainView extends React.Component {
       console.log(`[APP] Connected to instance (${new Date().getTime()})`);
     });
     client.on('ready', async () => {
-      let orderedServers = server = channel = null
+      let orderedServers = (server = channel = null);
       try {
-        const rawSettings = await client.syncFetchSettings(['ordering', 'notifications']);
+        const rawSettings = await client.syncFetchSettings([
+          'ordering',
+          'notifications',
+        ]);
         orderedServers = JSON.parse(rawSettings.ordering[1]).servers;
-        ({server, channel} = JSON.parse(rawSettings.notifications[1]))
+        ({server, channel} = JSON.parse(rawSettings.notifications[1]));
       } catch (err) {
         console.log(`[APP] Error fetching settings: ${err}`);
       }
@@ -108,7 +111,7 @@ class MainView extends React.Component {
         network: 'ready',
         orderedServers,
         serverNotifications: server,
-        channelNotifications: channel
+        channelNotifications: channel,
       });
       console.log(`[APP] Client is ready (${new Date().getTime()})`);
       if (this.state.tokenInput) {
@@ -137,17 +140,32 @@ class MainView extends React.Component {
     });
     client.on('message', async msg => {
       console.log(`[APP] Handling message ${msg._id}`);
-      let channelNotif = this.state.channelNotifications[msg.channel?._id]
-      let serverNotif = this.state.serverNotifications[msg.channel.server?._id]
-      const isMuted = channelNotif&&channelNotif=='none'||channelNotif=='muted'||serverNotif&&serverNotif=='none'||serverNotif=='muted'
-      const alwaysNotif = channelNotif=='all'||!isMuted&&serverNotif=='all'
-      const mentionsUser = msg.mention_ids?.includes(client.user?._id!)&&(app.settings.get('app.notifications.notifyOnSelfPing')||msg.author?._id != client.user?._id)|| msg.channel?.channel_type == 'DirectMessage'
-      const shouldNotif = alwaysNotif&&(app.settings.get('app.notifications.notifyOnSelfPing')||msg.author?._id!=client.user?._id)||!isMuted&&mentionsUser
-      console.log("[APP] Show notification?")
-      console.log("[APP] Config for channel:", channelNotif)
-      console.log("[APP] Config for server:", serverNotif)
-      console.log(`MUTE? ${isMuted} | ALL? ${alwaysNotif} | MENTIONS? ${mentionsUser}`)
-      if (app.settings.get('app.notifications.enabled')&&shouldNotif){
+      let channelNotif = this.state.channelNotifications[msg.channel?._id];
+      let serverNotif = this.state.serverNotifications[msg.channel.server?._id];
+      const isMuted =
+        (channelNotif && channelNotif == 'none') ||
+        channelNotif == 'muted' ||
+        (serverNotif && serverNotif == 'none') ||
+        serverNotif == 'muted';
+      const alwaysNotif =
+        channelNotif == 'all' || (!isMuted && serverNotif == 'all');
+      const mentionsUser =
+        (msg.mention_ids?.includes(client.user?._id!) &&
+          (app.settings.get('app.notifications.notifyOnSelfPing') ||
+            msg.author?._id != client.user?._id)) ||
+        msg.channel?.channel_type == 'DirectMessage';
+      const shouldNotif =
+        (alwaysNotif &&
+          (app.settings.get('app.notifications.notifyOnSelfPing') ||
+            msg.author?._id != client.user?._id)) ||
+        (!isMuted && mentionsUser);
+      console.log('[APP] Show notification?');
+      console.log('[APP] Config for channel:', channelNotif);
+      console.log('[APP] Config for server:', serverNotif);
+      console.log(
+        `MUTE? ${isMuted} | ALL? ${alwaysNotif} | MENTIONS? ${mentionsUser}`,
+      );
+      if (app.settings.get('app.notifications.enabled') && shouldNotif) {
         console.log(
           `[NOTIFICATIONS] Pushing notification for message ${msg._id}`,
         );
@@ -181,9 +199,15 @@ class MainView extends React.Component {
                 )
                 .replaceAll('\\', '\\\\')
                 .replaceAll('<', '\\<')
-                .replaceAll('>', '\\>') + '<br>' +
-                (msg.embeds?msg.embeds.map(e=>'[Embed]').join('<br>') + '<br>':'') +
-                (msg.attachments?msg.attachments.map(a=>a.metadata.type).join('<br>')+'<br>':'') +
+                .replaceAll('>', '\\>') +
+              '<br>' +
+              (msg.embeds
+                ? msg.embeds.map(e => '[Embed]').join('<br>') + '<br>'
+                : '') +
+              (msg.attachments
+                ? msg.attachments.map(a => a.metadata.type).join('<br>') +
+                  '<br>'
+                : '') +
               (notifs.length > 0 && notifs[0]?.notification.body
                 ? notifs[0].notification.body.split('<br>')?.length > 1
                   ? ' <i><br>(and ' +
@@ -216,17 +240,20 @@ class MainView extends React.Component {
         }
       }
     });
-    client.on('packet', async p=>{
-      if(p.type=='UserSettingsUpdate'){
-        console.log("[WEBSOCKET] Settings updated")
+    client.on('packet', async p => {
+      if (p.type == 'UserSettingsUpdate') {
+        console.log('[WEBSOCKET] Settings updated');
         try {
-          if('ordering' in p.update){
-            const orderedServers = JSON.parse(p.update.ordering[1]).servers
-            this.setState({orderedServers})
+          if ('ordering' in p.update) {
+            const orderedServers = JSON.parse(p.update.ordering[1]).servers;
+            this.setState({orderedServers});
           }
-          if('notifications' in p.update){
-            const {server, channel} = JSON.parse(p.update.notifications[1])
-            this.setState({serverNotifications: server,channelNotifications: channel})
+          if ('notifications' in p.update) {
+            const {server, channel} = JSON.parse(p.update.notifications[1]);
+            this.setState({
+              serverNotifications: server,
+              channelNotifications: channel,
+            });
           }
         } catch (err) {
           console.log(`[APP] Error fetching settings: ${err}`);
@@ -293,13 +320,15 @@ class MainView extends React.Component {
                 />
               }
               style={styles.app}
-              bounceBackOnOverdraw={false}>
+              bounceBackOnOverdraw={false}
+            >
               <ChannelView state={this} channel={this.state.currentChannel} />
             </SideMenu>
             <Modals state={this.state} setState={this.setState.bind(this)} />
             <NetworkIndicator client={client} />
             <View
-              style={{position: 'absolute', top: 20, left: 0, width: '100%'}}>
+              style={{position: 'absolute', top: 20, left: 0, width: '100%'}}
+            >
               <Notification
                 message={this.state.notificationMessage}
                 setState={() =>
@@ -322,9 +351,11 @@ class MainView extends React.Component {
                     marginLeft: '90%',
                     justifyContent: 'center',
                     alignItems: 'center',
-                  }}>
+                  }}
+                >
                   <TouchableOpacity
-                    onPress={() => this.setState({status: 'loginSettings'})}>
+                    onPress={() => this.setState({status: 'loginSettings'})}
+                  >
                     <MaterialIcon
                       name="more-vert"
                       size={30}
@@ -337,13 +368,15 @@ class MainView extends React.Component {
                     alignItems: 'center',
                     justifyContent: 'center',
                     flex: 1,
-                  }}>
+                  }}
+                >
                   <Text
                     style={{
                       fontFamily: 'Inter',
                       fontWeight: 'bold',
                       fontSize: 48,
-                    }}>
+                    }}
+                  >
                     RVMob
                   </Text>
                   {this.state.loginWithEmail === true ? (
@@ -495,7 +528,8 @@ class MainView extends React.Component {
                               status: 'awaitingLogin',
                             });
                           }
-                        }}>
+                        }}
+                      >
                         <Text useInter={true}>Log in</Text>
                       </Button>
                       {this.state.logInError ? (
@@ -507,7 +541,8 @@ class MainView extends React.Component {
                       <Button
                         onPress={() => {
                           this.setState({loginWithEmail: false});
-                        }}>
+                        }}
+                      >
                         <Text useInter={true}>Log in with token</Text>
                       </Button>
                     </>
@@ -565,7 +600,8 @@ class MainView extends React.Component {
                               });
                             }
                           }
-                        }}>
+                        }}
+                      >
                         <Text useInter={true}>Log in</Text>
                       </Button>
                       {this.state.logInError ? (
@@ -577,7 +613,8 @@ class MainView extends React.Component {
                       <Button
                         onPress={() => {
                           this.setState({loginWithEmail: true});
-                        }}>
+                        }}
+                      >
                         <Text useInter={true}>Log in with email</Text>
                       </Button>
                     </>
@@ -628,7 +665,8 @@ function ErrorMessage({
           alignItems: 'center',
           justifyContent: 'center',
           textAlign: 'center',
-        }}>
+        }}
+      >
         <Text style={{fontSize: 30, fontWeight: 'bold'}}>
           OOPSIE WOOPSIE!! {'UwU\n'}
         </Text>
@@ -641,7 +679,8 @@ function ErrorMessage({
       <Button
         onPress={() => {
           resetErrorBoundary();
-        }}>
+        }}
+      >
         <Text>Reload app</Text>
       </Button>
     </>
