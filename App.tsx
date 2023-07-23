@@ -95,14 +95,13 @@ class MainView extends React.Component {
       console.log(`[APP] Connected to instance (${new Date().getTime()})`);
     });
     client.on('ready', async () => {
-      let orderedServers, server, channel;
+      let orderedServers = server = channel = null
       try {
         const rawSettings = await client.syncFetchSettings(['ordering', 'notifications']);
         orderedServers = JSON.parse(rawSettings.ordering[1]).servers;
         ({server, channel} = JSON.parse(rawSettings.notifications[1]))
       } catch (err) {
         console.log(`[APP] Error fetching settings: ${err}`);
-        orderedServers = server = channel = null
       }
       this.setState({
         status: 'loggedIn',
