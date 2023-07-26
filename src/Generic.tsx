@@ -125,6 +125,8 @@ export const app = {
         onInitialize: (v: any) => {
           setTheme(v);
         },
+        remark:
+          "You'll have to restart the app after selecting a new theme for it to take effect.",
       },
       {
         key: 'ui.messaging.showSelfInTypingIndicator',
@@ -182,7 +184,14 @@ export const app = {
         key: 'ui.messaging.messageSpacing',
         category: 'appearance',
         name: 'Message spacing',
-        default: '3',
+        default: '15',
+        type: 'number',
+      },
+      {
+        key: 'ui.messaging.fontSize',
+        category: 'appearance',
+        name: 'Message font size',
+        default: '16',
         type: 'number',
       },
       {

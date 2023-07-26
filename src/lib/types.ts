@@ -21,6 +21,7 @@ export type Setting = (StringSetting | BoolSetting) & {
   options?: string[];
   onChange?: any;
   onInitialize?: any;
+  remark?: string;
 };
 
 export type ReplyingMessage = {

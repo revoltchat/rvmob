@@ -127,6 +127,22 @@ class MainView extends React.Component {
           await notifee.cancelNotification(notification!.id!);
         }
       });
+
+      AsyncStorage.getItem('lastServer', async (err, lastServer) => {
+        if (lastServer) {
+          app.openServer(client.servers.get(lastServer));
+          await AsyncStorage.getItem('serverLastChannels', (err, data) => {
+            let serverLastChannels = JSON.parse(data || '{}') || {};
+            let lastChannel = serverLastChannels[lastServer];
+            if (lastChannel) {
+              let channel = client.channels.get(lastChannel);
+              if (channel) {
+                app.openChannel(channel);
+              }
+            }
+          });
+        }
+      });
     });
     client.on('dropped', async () => {
       this.setState({network: 'dropped'});
@@ -243,6 +259,25 @@ class MainView extends React.Component {
       }
     });
   }
+
+  async setChannel(channel: string | Channel, server?: Server) {
+    this.setState({
+      currentChannel: channel,
+      leftMenuOpen: false,
+      messages: [],
+    });
+    await AsyncStorage.getItem('serverLastChannels', async (err, data) => {
+      let parsedData = JSON.parse(data || '{}') || {};
+      parsedData[server?._id || 'DirectMessage'] =
+        typeof channel == 'string' ? channel : channel._id;
+      console.log(parsedData);
+      await AsyncStorage.setItem(
+        'serverLastChannels',
+        JSON.stringify(parsedData),
+      );
+    });
+  }
+
   render() {
     return (
       <>
@@ -251,18 +286,12 @@ class MainView extends React.Component {
             <SideMenu
               openMenuOffset={Dimensions.get('window').width - 50}
               overlayColor={'#00000040'}
-              edgeHitWidth={200}
+              edgeHitWidth={Dimensions.get('window').width}
               isOpen={this.state.leftMenuOpen}
               onChange={open => this.setState({leftMenuOpen: open})}
               menu={
                 <LeftMenu
-                  onChannelClick={s => {
-                    this.setState({
-                      currentChannel: s,
-                      leftMenuOpen: false,
-                      messages: [],
-                    });
-                  }}
+                  onChannelClick={this.setChannel.bind(this)}
                   currentChannel={this.state.currentChannel}
                   onLogOut={() => {
                     console.log(

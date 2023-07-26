@@ -4,7 +4,7 @@ import {observer} from 'mobx-react-lite';
 
 import {Server, User} from 'revolt.js';
 
-import {client} from '../../../Generic';
+import {app, client} from '../../../Generic';
 import {currentTheme, styles} from '../../../Theme';
 import {Text} from './Text';
 import {USER_IDS} from '../../../lib/consts';
@@ -63,7 +63,10 @@ export const Username = observer(
       <View style={{flexDirection: 'row'}}>
         <Text
           colour={roleColor}
-          style={{fontWeight: 'bold', fontSize: size || 14}}>
+          style={{
+            fontWeight: 'bold',
+            fontSize: size || app.settings.get('ui.messaging.fontSize'),
+          }}>
           {masquerade ?? name}
         </Text>
         {!noBadge ? (

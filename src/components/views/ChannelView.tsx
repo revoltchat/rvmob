@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {KeyboardAvoidingView, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {ErrorBoundary} from 'react-error-boundary';
@@ -98,7 +98,11 @@ export const ChannelView = observer(
                     }
                   />
                 </View>
-                <Text style={styles.channelName}>
+                <Text
+                  style={{
+                    fontSize: app.settings.get('ui.messaging.fontSize'),
+                    ...styles.channelName,
+                  }}>
                   {channel.channel_type === 'DirectMessage'
                     ? channel.recipient?.username
                     : channel.channel_type === 'SavedMessages'

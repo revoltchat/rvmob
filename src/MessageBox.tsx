@@ -219,7 +219,15 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         <TextInput
           multiline
           placeholderTextColor={currentTheme.foregroundSecondary}
-          style={styles.messageBox}
+          style={{
+            // if it's AMOLED, a little extra hint to where it is is nice visually
+            backgroundColor:
+              currentTheme.backgroundSecondary == '#000000'
+                ? '#111111'
+                : currentTheme.backgroundSecondary,
+            fontSize: app.settings.get('ui.messaging.fontSize'),
+            ...styles.messageBox,
+          }}
           placeholder={
             (props.channel.channel_type !== 'SavedMessages' ? 'Message ' : '') +
             placeholderText(props.channel)
@@ -240,7 +248,12 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         />
         {currentText.trim().length > 0 || attachments.length > 0 ? (
           <Pressable
-            style={styles.sendButton}
+            style={{
+              padding: 5,
+              borderRadius: 8,
+              backgroundColor: currentTheme.accentColor,
+              ...styles.sendButton,
+            }}
             onPress={async () => {
               let thisCurrentText = currentText;
               setCurrentText('');

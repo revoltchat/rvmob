@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Dimensions, Pressable, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -207,9 +207,9 @@ export const Message = observer((props: MessageProps) => {
         }>
         <View
           style={{
-            marginTop: app.settings.get(
-              'ui.messaging.messageSpacing',
-            ) as number,
+            marginTop: props.grouped
+              ? 0
+              : (app.settings.get('ui.messaging.messageSpacing') as number),
           }}
         />
         {props.message.author?.relationship === 'Blocked' ? (
@@ -257,7 +257,17 @@ export const Message = observer((props: MessageProps) => {
               </View>
             ) : null}
             <View
-              style={props.grouped ? styles.messageGrouped : styles.message}>
+              style={{
+                ...(props.grouped ? styles.messageGrouped : styles.message),
+                ...(props.message.mention_ids?.includes(client.user?._id)
+                  ? {
+                      borderLeftWidth: 3,
+                      borderStyle: 'solid',
+                      borderColor: '#beaf41',
+                      backgroundColor: '#383827',
+                    }
+                  : null),
+              }}>
               {props.message.author && !props.grouped ? (
                 <Pressable
                   key={`message-${props.message._id}-avatar`}

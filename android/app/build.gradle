@@ -77,9 +77,19 @@ android {
         applicationId "site.endl.taiku.rvmob"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "0.6.0"
+        versionCode 8
+        versionName "0.7.0-alpha"
     }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            universalApk false
+            include "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+    }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')

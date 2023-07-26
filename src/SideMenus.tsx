@@ -13,6 +13,7 @@ import {Button} from './components/common/atoms';
 import {ChannelList} from './components/navigation/ChannelList';
 import {ServerList} from './components/navigation/ServerList';
 import {DEFAULT_API_URL} from './lib/consts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const LeftMenu = ({
   currentChannel,
@@ -25,9 +26,13 @@ export const LeftMenu = ({
   onLogOut: Function;
   orderedServers: string[];
 }) => {
-  const [currentServer, setCurrentServer] = React.useState(
+  const [currentServer, setCurrentServerInner] = React.useState(
     null as Server | null,
   );
+  function setCurrentServer(s: Server | null) {
+    setCurrentServerInner(s);
+    AsyncStorage.setItem('lastServer', s?._id || 'DirectMessage');
+  }
   setFunction('openServer', (s: Server | null) => {
     setCurrentServer(s);
   });
@@ -68,9 +73,13 @@ export const LeftMenu = ({
             showDiscover={app.settings.get('app.instance') === DEFAULT_API_URL}
           />
         </ScrollView>
-        <ScrollView key={'channel-list'} style={styles.channelList}>
+        <ScrollView
+          key={'channel-list'}
+          style={styles.channelList}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}>
           <ChannelList
-            onChannelClick={onChannelClick}
+            onChannelClick={channel => onChannelClick(channel, currentServer)}
             currentChannel={currentChannel}
             currentServer={currentServer}
           />
@@ -88,7 +97,7 @@ export const LeftMenu = ({
         }}>
         <Button
           key={'bottom-nav-friends'}
-          onPress={() => onChannelClick('friends')}
+          onPress={() => onChannelClick('friends', currentServer)}
           backgroundColor={currentTheme.background}>
           <MaterialIcon
             name="group"
