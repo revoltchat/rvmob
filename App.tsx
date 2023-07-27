@@ -53,6 +53,8 @@ class MainView extends React.Component {
       leftMenuOpen: false,
       notificationMessage: null,
       orderedServers: [],
+      serverNotifications: null,
+      channelNotifications: null,
     };
     setFunction('openChannel', async c => {
       // if (!this.state.currentChannel || this.state.currentChannel?.server?._id != c.server?._id) c.server?.fetchMembers()
@@ -93,18 +95,25 @@ class MainView extends React.Component {
       console.log(`[APP] Connected to instance (${new Date().getTime()})`);
     });
     client.on('ready', async () => {
-      let orderedServers;
+      let orderedServers,
+        server,
+        channel = null;
       try {
-        const rawOrderedServers = await client.syncFetchSettings(['ordering']);
-        orderedServers = JSON.parse(rawOrderedServers.ordering[1]).servers;
+        const rawSettings = await client.syncFetchSettings([
+          'ordering',
+          'notifications',
+        ]);
+        orderedServers = JSON.parse(rawSettings.ordering[1]).servers;
+        ({server, channel} = JSON.parse(rawSettings.notifications[1]));
       } catch (err) {
-        console.log(`[APP] Error fetching ordered servers: ${err}`);
-        orderedServers === null;
+        console.log(`[APP] Error fetching settings: ${err}`);
       }
       this.setState({
         status: 'loggedIn',
         network: 'ready',
-        orderedServers: orderedServers,
+        orderedServers,
+        serverNotifications: server,
+        channelNotifications: channel,
       });
       console.log(`[APP] Client is ready (${new Date().getTime()})`);
       if (this.state.tokenInput) {
@@ -118,11 +127,11 @@ class MainView extends React.Component {
           console.log(
             `[NOTIFEE] User pressed on ${notification?.data?.channel}/${notification?.data?.messageID}`,
           );
-          const channel = client.channels.get(
+          const notifChannel = client.channels.get(
             notification?.data?.channel as string,
           );
           this.setState({
-            currentChannel: channel ?? null,
+            currentChannel: notifChannel ?? null,
           });
           await notifee.cancelNotification(notification!.id!);
         }
@@ -134,21 +143,35 @@ class MainView extends React.Component {
     client.on('message', async msg => {
       console.log(`[APP] Handling message ${msg._id}`);
 
-      const shouldShowNotif = app.settings.get(
-        'app.notifications.notifyOnSelfPing',
-      )
-        ? true
-        : msg.author?._id !== client.user?._id;
+      let channelNotif = this.state.channelNotifications[msg.channel?._id];
+      let serverNotif =
+        this.state.serverNotifications[msg.channel?.server?._id];
+
+      const isMuted =
+        (channelNotif && channelNotif === 'none') ||
+        channelNotif === 'muted' ||
+        (serverNotif && serverNotif === 'none') ||
+        serverNotif === 'muted';
+
+      const alwaysNotif =
+        channelNotif === 'all' || (!isMuted && serverNotif === 'all');
 
       const mentionsUser =
-        msg.mention_ids?.includes(client.user?._id!) ||
+        (msg.mention_ids?.includes(client.user?._id!) &&
+          (app.settings.get('app.notifications.notifyOnSelfPing') ||
+            msg.author?._id !== client.user?._id)) ||
         msg.channel?.channel_type === 'DirectMessage';
 
-      if (
-        shouldShowNotif &&
-        mentionsUser &&
-        app.settings.get('app.notifications.enabled')
-      ) {
+      const shouldNotif =
+        (alwaysNotif &&
+          (app.settings.get('app.notifications.notifyOnSelfPing') ||
+            msg.author?._id !== client.user?._id)) ||
+        (!isMuted && mentionsUser);
+
+      console.log(
+        `[NOTIFICATIONS] Should notify for ${msg._id}: ${shouldNotif} (channel/server muted? ${isMuted}, notifications for all messages enabled? ${alwaysNotif}, message mentions the user? ${mentionsUser})`,
+      );
+      if (app.settings.get('app.notifications.enabled') && shouldNotif) {
         console.log(
           `[NOTIFICATIONS] Pushing notification for message ${msg._id}`,
         );
@@ -174,8 +197,7 @@ class MainView extends React.Component {
               messageID: msg._id,
             },
             body:
-              msg.author?.username +
-              ': ' +
+              `<b>${msg.author?.username}</b>: ` +
               msg.content
                 ?.replaceAll(
                   '<@' + client.user?._id + '>',
@@ -184,6 +206,14 @@ class MainView extends React.Component {
                 .replaceAll('\\', '\\\\')
                 .replaceAll('<', '\\<')
                 .replaceAll('>', '\\>') +
+              '<br>' +
+              (msg.embeds
+                ? msg.embeds.map(_e => '[Embed]').join('<br>') + '<br>'
+                : '') +
+              (msg.attachments
+                ? msg.attachments.map(a => a.metadata.type).join('<br>') +
+                  '<br>'
+                : '') +
               (notifs.length > 0 && notifs[0]?.notification.body
                 ? notifs[0].notification.body.split('<br>')?.length > 1
                   ? ' <i><br>(and ' +
@@ -213,6 +243,26 @@ class MainView extends React.Component {
           });
         } catch (notifErr) {
           console.log(`[NOTIFEE] Error sending notification: ${notifErr}`);
+        }
+      }
+    });
+    client.on('packet', async p => {
+      if (p.type === 'UserSettingsUpdate') {
+        console.log('[WEBSOCKET] Synced settings updated');
+        try {
+          if ('ordering' in p.update) {
+            const orderedServers = JSON.parse(p.update.ordering[1]).servers;
+            this.setState({orderedServers});
+          }
+          if ('notifications' in p.update) {
+            const {server, channel} = JSON.parse(p.update.notifications[1]);
+            this.setState({
+              serverNotifications: server,
+              channelNotifications: channel,
+            });
+          }
+        } catch (err) {
+          console.log(`[APP] Error fetching settings: ${err}`);
         }
       }
     });
