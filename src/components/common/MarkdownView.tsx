@@ -2,14 +2,14 @@ import React from 'react';
 
 import spoilerPlugin from '@traptitech/markdown-it-spoiler';
 import Markdown, {hasParents, MarkdownIt} from 'react-native-markdown-display';
-
-import {openUrl} from '../../Generic';
-import {currentTheme} from '../../Theme';
+import { SvgUri } from 'react-native-svg';
+import FastImage from 'react-native-fast-image'
+import {emojiDictionary, RE_UNICODE_EMOJI, RE_DEFAULT_EMOJI, RE_CUSTOM_EMOJI, parseEmoji} from '../../lib/emojis'
+import {openUrl, client} from '../../Generic';
+import {currentTheme, styles} from '../../Theme';
 import {Text} from './atoms';
 
-const defaultMarkdownIt = MarkdownIt({typographer: true, linkify: true})
-  .disable(['image'])
-  .use(spoilerPlugin);
+const defaultMarkdownIt = MarkdownIt({typographer: true, linkify: true}).disable(['image']).use(spoilerPlugin)
 
 const spoilerStyle = {
   hiddenSpoiler: {
@@ -31,6 +31,16 @@ const Spoiler = ({content}) => {
     </SpoilerContext.Provider>
   );
 };
+const SvgEmoji = (props)=>{
+    const [fail, setFail] = React.useState(false);
+    if(fail) return RE_UNICODE_EMOJI.test(id) ? <span>{id}</span> : <span>{`:${props.id}:`}</span>
+    return <SvgUri width={styles.emoji.width} height={styles.emoji.height} uri={parseEmoji(props.id in emojiDictionary ? emojiDictionary[props.id] : props.id)} onError={()=>setFail(true)} />
+};
+const CustomEmoji = (props)=>{
+    const [fail, setFail] = React.useState(false);
+    if(fail) return <span>{`:${props.id}:`}</span>
+    return <FastImage style={styles.emoji} source={{uri: `${client.configuration.features.autumn.url}/emojis/${props.id}`}} fallback={true} />
+}
 
 // the text and code_inline rules are the same as the built-in ones,
 // except with spoiler support
@@ -49,7 +59,7 @@ const spoilerRule = {
                   ? spoilerStyle.revealedSpoiler
                   : spoilerStyle.hiddenSpoiler),
               }}>
-              {node.content}
+              {renderEmojis(node.content)}
             </Text>
           )}
         </SpoilerContext.Consumer>
@@ -58,7 +68,7 @@ const spoilerRule = {
 
     return (
       <Text key={node.key} style={{...inheritedStyles, ...styles.text}}>
-        {node.content}
+        {renderEmojis(node.content)}
       </Text>
     );
   },
@@ -75,7 +85,7 @@ const spoilerRule = {
                   ? spoilerStyle.revealedSpoiler
                   : spoilerStyle.hiddenSpoiler),
               }}>
-              {node.content}
+              {renderEmojis(node.content)}
             </Text>
           )}
         </SpoilerContext.Consumer>
@@ -84,11 +94,36 @@ const spoilerRule = {
 
     return (
       <Text key={node.key} style={{...inheritedStyles, ...styles.code_inline}}>
-        {node.content}
+       {renderEmojis(node.content)}
       </Text>
     );
   },
 };
+function renderEmojis(content: string): Array<SvgEmoji|CustomEmoji|Text>{
+    const tokens = content.split(RE_CUSTOM_EMOJI).flatMap(s=>s.split(RE_DEFAULT_EMOJI))
+    const elements = tokens.flatMap((part, index) => {
+        if (index % 2 == 1) {
+            /* It works when I duplicate */
+            if(RE_CUSTOM_EMOJI.test(`:${part}:`)) return <CustomEmoji key={index} id={part} />
+            if(RE_CUSTOM_EMOJI.test(`:${part}:`)) return <CustomEmoji key={index} id={part} />
+            if(RE_DEFAULT_EMOJI.test(`:${part}:`)) return <SvgEmoji key={index} id={part} />
+            if(RE_DEFAULT_EMOJI.test(`:${part}:`)) return <SvgEmoji key={index} id={part} />
+            console.log('[MARKDOWN] No match for', part)
+        }else{
+            let unicode = part.match(RE_UNICODE_EMOJI)
+            const text = part.split(RE_UNICODE_EMOJI)
+            if(unicode){
+                unicode = unicode.map((u,i)=><SvgEmoji key={`emoji-${i}`} id={u} />)
+                for(let i = 0;i < text.length; i++) {
+                    if(text[i]) unicode.splice(2*i,0,<Text key={`text-${i}`}>{text[i]}</Text>)
+                }
+                return unicode
+           }
+        }
+        return <Text key={index}>{part}</Text>;
+    });
+    return elements
+}
 
 export const MarkdownView = (props: any) => {
   let newProps = {...props};
@@ -99,7 +134,7 @@ export const MarkdownView = (props: any) => {
     newProps = Object.assign({markdownit: defaultMarkdownIt}, newProps);
   }
   if (!newProps.rules) {
-    newProps = Object.assign({rules: spoilerRule}, newProps);
+    newProps = Object.assign({rules:{...spoilerRule}}, newProps);
   }
   if (!newProps.style) {
     newProps = Object.assign({style: {}}, newProps);

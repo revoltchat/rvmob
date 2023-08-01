@@ -401,6 +401,14 @@ function refreshStyles() {
       top: 2,
       left: 2,
     },
+    emoji: {
+       objectFit: 'contain',
+       height: 14,
+       width: 14,
+       marginRight: 5,
+       marginLeft: 1,
+       display: 'block',
+    }
   });
 }
 export function setTheme(themeName: string) {
