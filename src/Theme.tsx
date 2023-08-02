@@ -408,6 +408,7 @@ function refreshStyles() {
        marginRight: 5,
        marginLeft: 1,
        display: 'block',
+       position: 'absolute'
     }
   });
 }
