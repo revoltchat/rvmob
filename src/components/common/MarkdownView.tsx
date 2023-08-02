@@ -2,14 +2,22 @@ import React from 'react';
 
 import spoilerPlugin from '@traptitech/markdown-it-spoiler';
 import Markdown, {hasParents, MarkdownIt} from 'react-native-markdown-display';
-import { SvgUri } from 'react-native-svg';
-import FastImage from 'react-native-fast-image'
-import {emojiDictionary, RE_UNICODE_EMOJI, RE_DEFAULT_EMOJI, RE_CUSTOM_EMOJI, parseEmoji} from '../../lib/emojis'
+import {SvgUri} from 'react-native-svg';
+import FastImage from 'react-native-fast-image';
+import {
+  emojiDictionary,
+  RE_UNICODE_EMOJI,
+  RE_DEFAULT_EMOJI,
+  RE_CUSTOM_EMOJI,
+  parseEmoji,
+} from '../../lib/emojis';
 import {openUrl, client} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
 import {Text} from './atoms';
 
-const defaultMarkdownIt = MarkdownIt({typographer: true, linkify: true}).disable(['image']).use(spoilerPlugin)
+const defaultMarkdownIt = MarkdownIt({typographer: true, linkify: true})
+  .disable(['image'])
+  .use(spoilerPlugin);
 
 const spoilerStyle = {
   hiddenSpoiler: {
@@ -31,17 +39,31 @@ const Spoiler = ({content}) => {
     </SpoilerContext.Provider>
   );
 };
-const SvgEmoji = ({id})=>{
-    const [fail, setFail] = React.useState(false);
-    if(fail) return <span>{`:${id}:`}</span>
-    if(Object.hasOwn(emojiDictionary, id)) id=emojiDictionary[id]
-    return <SvgUri width={styles.emoji.width} height={styles.emoji.height} style={styles.emoji} uri={parseEmoji(id)} onError={()=>setFail(true)} fallback={<span>`:${id}:`</span>} />
+const SvgEmoji = ({id}) => {
+  const [fail, setFail] = React.useState(false);
+  if (fail) return <span>{`:${id}:`}</span>;
+  if (Object.hasOwn(emojiDictionary, id)) id = emojiDictionary[id];
+  return (
+    <SvgUri
+      width={styles.emoji.width}
+      height={styles.emoji.height}
+      style={styles.emoji}
+      uri={parseEmoji(id)}
+      onError={() => setFail(true)}
+      fallback={<span>`:${id}:`</span>}
+    />
+  );
 };
-const CustomEmoji = ({id})=>{
-    const [fail, setFail] = React.useState(false);
-    if(fail) return <span>{`:${id}:`}</span>
-    return <FastImage style={styles.emoji} source={{uri: `${client.configuration.features.autumn.url}/emojis/${id}`}} fallback={true} />
-}
+const CustomEmoji = ({id}) => {
+  const [fail, setFail] = React.useState(false);
+  if (fail) return <span>{`:${id}:`}</span>;
+  return (
+    <FastImage
+      style={styles.emoji}
+      source={{uri: `${client.configuration.features.autumn.url}/emojis/${id}`}}
+    />
+  );
+};
 
 // the text and code_inline rules are the same as the built-in ones,
 // except with spoiler support
@@ -50,7 +72,7 @@ const spoilerRule = {
   text: (node, children, parent, styles, inheritedStyles = {}) => {
     if (hasParents(parent, 'spoiler')) {
       return (
-        <SpoilerContext.Consumer key={node.key} >
+        <SpoilerContext.Consumer key={node.key}>
           {isRevealed => (
             <Text
               style={{
@@ -59,11 +81,13 @@ const spoilerRule = {
                 ...(isRevealed
                   ? spoilerStyle.revealedSpoiler
                   : spoilerStyle.hiddenSpoiler),
-              }}>
+              }}
+            >
               {
-              /* FIXME: Rendering emojis reveals spoiler markdown
+                /* FIXME: Rendering emojis reveals spoiler markdown
                 renderEmojis(node.content)*/
-              node.content}
+                node.content
+              }
             </Text>
           )}
         </SpoilerContext.Consumer>
@@ -88,7 +112,8 @@ const spoilerRule = {
                 ...(isRevealed
                   ? spoilerStyle.revealedSpoiler
                   : spoilerStyle.hiddenSpoiler),
-              }}>
+              }}
+            >
               {node.content}
             </Text>
           )}
@@ -98,33 +123,41 @@ const spoilerRule = {
 
     return (
       <Text key={node.key} style={{...inheritedStyles, ...styles.code_inline}}>
-       {node.content}
+        {node.content}
       </Text>
     );
   },
 };
 /* Can this function be more efficient? */
-function renderEmojis(content: string): Array<SvgEmoji|CustomEmoji|Text>{
-    const tokens = content.split(RE_CUSTOM_EMOJI)
-    const elements = tokens.flatMap((part, index) => {
-        if(index % 2 == 1) return <CustomEmoji key={index} id={part} />
-        let subparts = part.split(RE_DEFAULT_EMOJI).map((id,i)=>i%2==1 ? <SvgEmoji key={`default-emoji-${i}`} id={id} /> : id).filter(t=>t)
-        subparts = subparts.flatMap(s=>{
-            if(typeof s != 'string') return s
-            let emojis = s.match(RE_UNICODE_EMOJI)
-            if(emojis){
-                let text = s.split(RE_UNICODE_EMOJI)
-                emojis = emojis.map((u,i)=><SvgEmoji key={`unicode-emoji-${i}`} id={u} />)
-                for(let i = 0;i < text.length; i++) {
-                    if(text[i]) emojis.splice(2*i,0,<Text key={`text-${i}`}>{text[i]}</Text>)
-                }
-                return emojis
-            }
-            return s
-        });
-        return subparts
+function renderEmojis(content: string): Array<SvgEmoji | CustomEmoji | Text> {
+  const tokens = content.split(RE_CUSTOM_EMOJI);
+  const elements = tokens.flatMap((part, index) => {
+    if (index % 2 == 1) return <CustomEmoji key={index} id={part} />;
+    let subparts = part
+      .split(RE_DEFAULT_EMOJI)
+      .map((id, i) =>
+        i % 2 == 1 ? <SvgEmoji key={`default-emoji-${i}`} id={id} /> : id,
+      )
+      .filter(t => t);
+    subparts = subparts.flatMap(s => {
+      if (typeof s != 'string') return s;
+      let emojis = s.match(RE_UNICODE_EMOJI);
+      if (emojis) {
+        let text = s.split(RE_UNICODE_EMOJI);
+        emojis = emojis.map((u, i) => (
+          <SvgEmoji key={`unicode-emoji-${i}`} id={u} />
+        ));
+        for (let i = 0; i < text.length; i++) {
+          if (text[i])
+            emojis.splice(2 * i, 0, <Text key={`text-${i}`}>{text[i]}</Text>);
+        }
+        return emojis;
+      }
+      return s;
     });
-    return elements.length > 1 ? elements : elements[0]
+    return subparts;
+  });
+  return elements.length > 1 ? elements : elements[0];
 }
 
 export const MarkdownView = (props: any) => {
