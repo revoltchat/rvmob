@@ -31,15 +31,16 @@ const Spoiler = ({content}) => {
     </SpoilerContext.Provider>
   );
 };
-const SvgEmoji = (props)=>{
+const SvgEmoji = ({id})=>{
     const [fail, setFail] = React.useState(false);
-    if(fail) return RE_UNICODE_EMOJI.test(id) ? <span>{id}</span> : <span>{`:${props.id}:`}</span>
-    return <SvgUri width={styles.emoji.width} height={styles.emoji.height} uri={parseEmoji(props.id in emojiDictionary ? emojiDictionary[props.id] : props.id)} onError={()=>setFail(true)} />
+    if(fail) return <span>{`:${id}:`}</span>
+    if(Object.hasOwn(emojiDictionary, id)) id=emojiDictionary[id]
+    return <SvgUri width={styles.emoji.width} height={styles.emoji.height} style={styles.emoji} uri={parseEmoji(id)} onError={()=>setFail(true)} fallback={<span>`:${id}:`</span>} />
 };
-const CustomEmoji = (props)=>{
+const CustomEmoji = ({id})=>{
     const [fail, setFail] = React.useState(false);
-    if(fail) return <span>{`:${props.id}:`}</span>
-    return <FastImage style={styles.emoji} source={{uri: `${client.configuration.features.autumn.url}/emojis/${props.id}`}} fallback={true} />
+    if(fail) return <span>{`:${id}:`}</span>
+    return <FastImage style={styles.emoji} source={{uri: `${client.configuration.features.autumn.url}/emojis/${id}`}} fallback={true} />
 }
 
 // the text and code_inline rules are the same as the built-in ones,
@@ -49,7 +50,7 @@ const spoilerRule = {
   text: (node, children, parent, styles, inheritedStyles = {}) => {
     if (hasParents(parent, 'spoiler')) {
       return (
-        <SpoilerContext.Consumer key={node.key}>
+        <SpoilerContext.Consumer key={node.key} >
           {isRevealed => (
             <Text
               style={{
@@ -59,7 +60,10 @@ const spoilerRule = {
                   ? spoilerStyle.revealedSpoiler
                   : spoilerStyle.hiddenSpoiler),
               }}>
-              {renderEmojis(node.content)}
+              {
+              /* FIXME: Rendering emojis reveals spoiler markdown
+                renderEmojis(node.content)*/
+              node.content}
             </Text>
           )}
         </SpoilerContext.Consumer>
@@ -85,7 +89,7 @@ const spoilerRule = {
                   ? spoilerStyle.revealedSpoiler
                   : spoilerStyle.hiddenSpoiler),
               }}>
-              {renderEmojis(node.content)}
+              {node.content}
             </Text>
           )}
         </SpoilerContext.Consumer>
@@ -94,35 +98,33 @@ const spoilerRule = {
 
     return (
       <Text key={node.key} style={{...inheritedStyles, ...styles.code_inline}}>
-       {renderEmojis(node.content)}
+       {node.content}
       </Text>
     );
   },
 };
+/* Can this function be more efficient? */
 function renderEmojis(content: string): Array<SvgEmoji|CustomEmoji|Text>{
-    const tokens = content.split(RE_CUSTOM_EMOJI).flatMap(s=>s.split(RE_DEFAULT_EMOJI))
+    const tokens = content.split(RE_CUSTOM_EMOJI)
     const elements = tokens.flatMap((part, index) => {
-        if (index % 2 == 1) {
-            /* It works when I duplicate */
-            if(RE_CUSTOM_EMOJI.test(`:${part}:`)) return <CustomEmoji key={index} id={part} />
-            if(RE_CUSTOM_EMOJI.test(`:${part}:`)) return <CustomEmoji key={index} id={part} />
-            if(RE_DEFAULT_EMOJI.test(`:${part}:`)) return <SvgEmoji key={index} id={part} />
-            if(RE_DEFAULT_EMOJI.test(`:${part}:`)) return <SvgEmoji key={index} id={part} />
-            console.log('[MARKDOWN] No match for', part)
-        }else{
-            let unicode = part.match(RE_UNICODE_EMOJI)
-            const text = part.split(RE_UNICODE_EMOJI)
-            if(unicode){
-                unicode = unicode.map((u,i)=><SvgEmoji key={`emoji-${i}`} id={u} />)
+        if(index % 2 == 1) return <CustomEmoji key={index} id={part} />
+        let subparts = part.split(RE_DEFAULT_EMOJI).map((id,i)=>i%2==1 ? <SvgEmoji key={`default-emoji-${i}`} id={id} /> : id).filter(t=>t)
+        subparts = subparts.flatMap(s=>{
+            if(typeof s != 'string') return s
+            let emojis = s.match(RE_UNICODE_EMOJI)
+            if(emojis){
+                let text = s.split(RE_UNICODE_EMOJI)
+                emojis = emojis.map((u,i)=><SvgEmoji key={`unicode-emoji-${i}`} id={u} />)
                 for(let i = 0;i < text.length; i++) {
-                    if(text[i]) unicode.splice(2*i,0,<Text key={`text-${i}`}>{text[i]}</Text>)
+                    if(text[i]) emojis.splice(2*i,0,<Text key={`text-${i}`}>{text[i]}</Text>)
                 }
-                return unicode
-           }
-        }
-        return <Text key={index}>{part}</Text>;
+                return emojis
+            }
+            return s
+        });
+        return subparts
     });
-    return elements
+    return elements.length > 1 ? elements : elements[0]
 }
 
 export const MarkdownView = (props: any) => {
@@ -134,7 +136,7 @@ export const MarkdownView = (props: any) => {
     newProps = Object.assign({markdownit: defaultMarkdownIt}, newProps);
   }
   if (!newProps.rules) {
-    newProps = Object.assign({rules:{...spoilerRule}}, newProps);
+    newProps = Object.assign({rules: spoilerRule}, newProps);
   }
   if (!newProps.style) {
     newProps = Object.assign({style: {}}, newProps);
