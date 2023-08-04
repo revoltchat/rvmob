@@ -72,6 +72,7 @@
     "react-native-web": "^0.19.6",
     "react-native-windows": "^0.72.1",
     "readable-stream": "^4.4.2",
+    "revkit": "^1.1.7",
     "revolt-api": "^0.6.5",
     "revolt.js": "^6.0.20",
     "stream-browserify": "^3.0.0",
