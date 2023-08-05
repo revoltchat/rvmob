@@ -1,21 +1,27 @@
-import {unicodeEmojiURL, RevoltEmojiDictionary} from 'revkit';
 import React from 'react';
-import {SvgUri} from 'react-native-svg';
-import FastImage from 'react-native-fast-image';
 
-import {client, app} from '../../Generic';
-import {styles} from '../../Theme';
-import {Text} from './atoms';
+import FastImage from 'react-native-fast-image';
+import {SvgUri} from 'react-native-svg';
+
+import {EmojiPacks, RevoltEmojiDictionary, unicodeEmojiURL} from 'revkit';
+
+import {client, app} from '../../../Generic';
+import {styles} from '../../../Theme';
+import {Text} from '../atoms';
 import {
   RE_CUSTOM_EMOJI,
   RE_DEFAULT_EMOJI,
   RE_UNICODE_EMOJI,
-} from '../../lib/consts';
+} from '../../../lib/consts';
 
-export const SvgEmoji = ({id, pack}) => {
+export const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
   const [fail, setFail] = React.useState(false);
-  if (fail) return <Text>{`:${id}:`}</Text>;
-  if (Object.hasOwn(RevoltEmojiDictionary, id)) id = RevoltEmojiDictionary[id];
+  if (fail) {
+    return <Text>{`:${id}:`}</Text>;
+  }
+  if (Object.hasOwn(RevoltEmojiDictionary, id)) {
+    id = RevoltEmojiDictionary[id];
+  }
   return (
     <SvgUri
       width={styles.emoji.width}
@@ -26,13 +32,17 @@ export const SvgEmoji = ({id, pack}) => {
     />
   );
 };
-export const CustomEmoji = ({id}) => {
+export const CustomEmoji = ({id}: {id: string}) => {
   const [fail, setFail] = React.useState(false);
-  if (fail) return <Text>{`:${id}:`}</Text>;
+  if (fail) {
+    return <Text>{`:${id}:`}</Text>;
+  }
   return (
     <FastImage
       style={styles.emoji}
-      source={{uri: `${client.configuration.features.autumn.url}/emojis/${id}`}}
+      source={{
+        uri: `${client.configuration?.features.autumn.url}/emojis/${id}`,
+      }}
       onError={() => setFail(true)}
     />
   );
@@ -40,14 +50,21 @@ export const CustomEmoji = ({id}) => {
 
 export function renderEmojis(content: string) {
   const tokens = content.split(RE_CUSTOM_EMOJI);
-  const emojiPack = app.settings.get('ui.messaging.emojiPack');
+
+  // get the emoji pack; default to system
+  let emojiPack = app.settings.get('ui.messaging.emojiPack');
+  emojiPack = emojiPack?.toString().toLowerCase() || 'system';
+
   const elements = tokens.flatMap((part, index) => {
-    if (index % 2 == 1) return <CustomEmoji key={index} id={part} />;
+    if (index % 2 === 1) {
+      return <CustomEmoji key={index} id={part} />;
+    }
     let subparts = part.split(RE_DEFAULT_EMOJI);
-    if (emojiPack != 'system') {
+    console.log(subparts);
+    if (emojiPack !== 'system') {
       subparts = subparts
         .map((id, i) =>
-          i % 2 == 1 ? (
+          i % 2 === 1 ? (
             <SvgEmoji key={`default-emoji-${i}`} id={id} pack={emojiPack} />
           ) : (
             id
@@ -55,15 +72,23 @@ export function renderEmojis(content: string) {
         )
         .filter(t => t)
         .flatMap(s => {
-          if (typeof s != 'string') return s;
+          if (typeof s !== 'string') {
+            return s;
+          }
           let emojis = s.match(RE_UNICODE_EMOJI);
           if (emojis) {
             let text = s.split(RE_UNICODE_EMOJI);
             emojis = emojis.map((u, i) => (
-              <SvgEmoji key={`unicode-emoji-${i}`} id={u} pack={emojiPack} />
+              <SvgEmoji
+                key={`unicode-emoji-${i}-${Math.random()}`}
+                id={u}
+                pack={emojiPack}
+              />
             ));
             for (let i = 0; i < text.length; i++) {
-              if (text[i]) emojis.splice(2 * i, 0, text[i]);
+              if (text[i]) {
+                emojis.splice(2 * i, 0, text[i]);
+              }
             }
             return emojis;
           }
@@ -71,7 +96,7 @@ export function renderEmojis(content: string) {
         });
     } else {
       subparts = subparts.map((id, i) =>
-        i % 2 == 1 ? RevoltEmojiDictionary[id] ?? `:${id}:` : id,
+        i % 2 === 1 ? RevoltEmojiDictionary[id] ?? `:${id}:` : id,
       );
     }
     return subparts;

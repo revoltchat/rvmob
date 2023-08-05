@@ -194,11 +194,11 @@ export const app = {
       },
       {
         key: 'ui.messaging.emojiPack',
-        name: 'Emoji Pack',
+        name: 'Emoji pack',
         category: 'appearance',
-        default: 'system',
+        default: 'System',
         type: 'string',
-        options: ['system', 'mutant', 'twemoji', 'noto','openmoji']
+        options: ['System', 'Mutant', 'Twemoji', 'Noto', 'Openmoji'],
       },
       {
         key: 'ui.messaging.showNSFWContent',

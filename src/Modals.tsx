@@ -69,10 +69,10 @@ export class Modals extends React.Component {
     setFunction('openImage', async a => {
       this.setState({imageViewerImage: a});
     });
-    setFunction('openServerContextMenu', async s => {
+    setFunction('openServerContextMenu', async (s: Server) => {
       this.setState({contextMenuServer: s});
     });
-    setFunction('openMessage', async m => {
+    setFunction('openMessage', async (m: Message) => {
       this.setState({contextMenuMessage: m});
     });
     setFunction('openSettings', async (o: boolean) => {
