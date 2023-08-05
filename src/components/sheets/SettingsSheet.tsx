@@ -157,7 +157,7 @@ const StringNumberSetting = ({
                 </View>
               </TouchableOpacity>
             ))}
-            <View style={{marginTop: 2}} />
+            <View style={{marginTop: 20}} />
           </ScrollView>
         </View>
       ) : (
