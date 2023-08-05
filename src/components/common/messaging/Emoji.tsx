@@ -65,7 +65,7 @@ export function renderEmojis(content: string) {
       subparts = subparts
         .map((id, i) =>
           i % 2 === 1 ? (
-            <SvgEmoji key={`default-emoji-${i}`} id={id} pack={emojiPack} />
+            <SvgEmoji key={`${id}-${i}`} id={id} pack={emojiPack} />
           ) : (
             id
           ),
@@ -86,9 +86,7 @@ export function renderEmojis(content: string) {
               />
             ));
             for (let i = 0; i < text.length; i++) {
-              if (text[i]) {
-                emojis.splice(2 * i, 0, text[i]);
-              }
+              emojis.splice(2 * i, 0, text[i]);
             }
             return emojis;
           }
