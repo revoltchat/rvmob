@@ -29,6 +29,7 @@ export const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
       style={styles.emoji}
       uri={unicodeEmojiURL(id, pack)}
       onError={() => setFail(true)}
+      fallback={<Text>{`:${id}:`}</Text>}
     />
   );
 };
@@ -52,17 +53,20 @@ export function renderEmojis(content: string) {
   const tokens = content.split(RE_CUSTOM_EMOJI);
 
   // get the emoji pack; default to system
-  let emojiPack = app.settings.get('ui.messaging.emojiPack');
-  emojiPack = emojiPack?.toString().toLowerCase() || 'system';
+  const rawEmojiPack = app.settings.get('ui.messaging.emojiPack');
+  const emojiPack = (rawEmojiPack?.toString().toLowerCase() || 'system') as
+    | EmojiPacks
+    | 'system';
 
   const elements = tokens.flatMap((part, index) => {
     if (index % 2 === 1) {
       return <CustomEmoji key={index} id={part} />;
     }
-    let subparts = part.split(RE_DEFAULT_EMOJI);
+    const subparts = part.split(RE_DEFAULT_EMOJI);
     console.log(subparts);
+    let renderedSubparts;
     if (emojiPack !== 'system') {
-      subparts = subparts
+      renderedSubparts = subparts
         .map((id, i) =>
           i % 2 === 1 ? (
             <SvgEmoji key={`${id}-${i}`} id={id} pack={emojiPack} />
@@ -93,11 +97,11 @@ export function renderEmojis(content: string) {
           return s;
         });
     } else {
-      subparts = subparts.map((id, i) =>
+      renderedSubparts = subparts.map((id, i) =>
         i % 2 === 1 ? RevoltEmojiDictionary[id] ?? `:${id}:` : id,
       );
     }
-    return subparts;
+    return renderedSubparts;
   });
   return elements.length > 1 ? elements : elements[0];
 }
