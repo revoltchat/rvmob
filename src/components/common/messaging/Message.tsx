@@ -9,13 +9,13 @@ import {enGB, enUS} from 'date-fns/locale';
 import {Message as RevoltMessage} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
-import {InviteEmbed, MessageEmbed, MessageReactions, ReplyMessage} from './';
+import {InviteEmbed, MessageEmbed, MessageReactions, PlatformModerationMessage, ReplyMessage} from './';
 import {app, client, openUrl} from '../../../Generic';
 import {Avatar} from '../../../Profile';
 import {currentTheme, styles} from '../../../Theme';
 import {Text, Username} from '../atoms';
 import {MarkdownView} from '../MarkdownView';
-import {RE_INVITE} from '../../../lib/consts';
+import {RE_INVITE, USER_IDS} from '../../../lib/consts';
 import {getReadableFileSize, parseRevoltNodes} from '../../../lib/utils';
 const Image = FastImage;
 
@@ -195,6 +195,24 @@ export const Message = observer((props: MessageProps) => {
     //     </Pressable>
     //   );
     // }
+    if (props.message.channel?.recipient?._id === USER_IDS.platformModeration) {
+      return (
+        <TouchableOpacity
+          key={props.message._id}
+          activeOpacity={0.8}
+          delayLongPress={750}
+          onLongPress={props.onLongPress}>
+          <View
+            style={{
+              marginTop: app.settings.get(
+                'ui.messaging.messageSpacing',
+              ) as number,
+            }}
+          />
+          <PlatformModerationMessage message={props.message} />
+        </TouchableOpacity>
+      );
+    }
     return (
       <TouchableOpacity
         key={props.message._id}
