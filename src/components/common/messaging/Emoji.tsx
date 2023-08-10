@@ -58,6 +58,13 @@ export function renderEmojis(content: string) {
     | EmojiPacks
     | 'system';
 
+  const elements = tokens.map((part, index) => {
+    if (index % 2 == 1) {
+      return <CustomEmoji key={index} id={part} />;
+    }
+    return part;
+  });
+  /*
   const elements = tokens.flatMap((part, index) => {
     if (index % 2 === 1) {
       return <CustomEmoji key={index} id={part} />;
@@ -103,5 +110,6 @@ export function renderEmojis(content: string) {
     }
     return renderedSubparts;
   });
+  */
   return elements.length > 1 ? elements : elements[0];
 }
