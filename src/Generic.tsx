@@ -193,6 +193,14 @@ export const app = {
         type: 'boolean',
       },
       {
+        key: 'ui.messaging.emojiPack',
+        name: 'Emoji pack',
+        category: 'appearance',
+        default: 'System',
+        type: 'string',
+        options: ['System', 'Mutant', 'Twemoji', 'Noto', 'Openmoji'],
+      },
+      {
         key: 'ui.messaging.showNSFWContent',
         category: 'functionality',
         name: 'Consent to 18+ content',

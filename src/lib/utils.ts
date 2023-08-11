@@ -99,14 +99,6 @@ export function parseRevoltNodes(text: string) {
     }
     return ping;
   });
-  text = text.replace(/:[0-9A-Z]*:/g, ping => {
-    let id = ping.slice(1, -1);
-    let emoji = client.emojis.get(id);
-    if (emoji) {
-      return `%EMOJI - [${emoji.name}](${emoji.imageURL}) - EMOJI%`;
-    }
-    return ping;
-  });
   return text;
 }
 

@@ -6,6 +6,7 @@ import Markdown, {hasParents, MarkdownIt} from 'react-native-markdown-display';
 import {openUrl} from '../../Generic';
 import {currentTheme} from '../../Theme';
 import {Text} from './atoms';
+import {renderEmojis} from './messaging/Emoji';
 
 const defaultMarkdownIt = MarkdownIt({typographer: true, linkify: true})
   .disable(['image'])
@@ -49,7 +50,11 @@ const spoilerRule = {
                   ? spoilerStyle.revealedSpoiler
                   : spoilerStyle.hiddenSpoiler),
               }}>
-              {node.content}
+              {
+                /* FIXME: Rendering emojis reveals spoiler markdown
+                renderEmojis(node.content)*/
+                node.content
+              }
             </Text>
           )}
         </SpoilerContext.Consumer>
@@ -58,7 +63,7 @@ const spoilerRule = {
 
     return (
       <Text key={node.key} style={{...inheritedStyles, ...styles.text}}>
-        {node.content}
+        {renderEmojis(node.content)}
       </Text>
     );
   },
