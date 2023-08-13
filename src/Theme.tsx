@@ -310,6 +310,14 @@ function refreshStyles() {
       alignItems: 'center',
       flexDirection: 'row',
     },
+    settingsEntry: {
+      flexDirection: 'row',
+      padding: 8,
+      marginVertical: 4,
+      backgroundColor: currentTheme.backgroundSecondary,
+      borderRadius: 4,
+      alignItems: 'center',
+    },
     channelButtonSelected: {
       backgroundColor: currentTheme.hover,
     },

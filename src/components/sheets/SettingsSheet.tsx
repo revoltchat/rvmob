@@ -285,6 +285,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
     mfaEnabled: false,
     sessions: [] as {_id: string; name: string}[],
   });
+  const [showEmail, setShowEmail] = React.useState(false);
 
   React.useEffect(() => {
     async function getAuthInfo() {
@@ -473,42 +474,110 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
         ) : section === 'account' ? (
           <View>
             <Text type={'header'}>Account</Text>
-            <ContextButton
-              style={{flex: 1}}
-              backgroundColor={currentTheme.backgroundSecondary}
-              onPress={() => {
-                Clipboard.setString(client.user?.username!);
-              }}>
-              <Text>
-                Username{'\n'}
-                <Text
-                  style={{
-                    marginTop: 4,
-                    fontSize: 12,
-                    color: currentTheme.foregroundSecondary,
-                  }}>
-                  {client.user?.username}
+            <View style={styles.settingsEntry} key={'username-settings'}>
+              <View style={{flex: 1, flexDirection: 'column'}}>
+                <Text key={'username-label'} style={{fontWeight: 'bold'}}>
+                  Username{' '}
                 </Text>
-              </Text>
-            </ContextButton>
-            <ContextButton
-              style={{flex: 1}}
-              backgroundColor={currentTheme.backgroundSecondary}
-              onPress={() => {
-                Clipboard.setString(authInfo.email);
-              }}>
-              <Text>
-                Email{'\n'}
-                <Text
-                  style={{
-                    marginTop: 4,
-                    fontSize: 12,
-                    color: currentTheme.foregroundSecondary,
-                  }}>
-                  {authInfo.email}
+                <Text key={'username'}>{client.user?.username}</Text>
+              </View>
+              <Pressable
+                style={{
+                  width: 30,
+                  height: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={() => {
+                  Clipboard.setString(client.user?.username!);
+                }}>
+                <View style={styles.iconContainer}>
+                  <MaterialIcon
+                    name="content-copy"
+                    size={20}
+                    color={currentTheme.foregroundPrimary}
+                  />
+                </View>
+              </Pressable>
+              <Pressable
+                style={{
+                  width: 30,
+                  height: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={async () => {}}>
+                <View style={styles.iconContainer}>
+                  <MaterialIcon
+                    name="edit"
+                    size={20}
+                    color={currentTheme.foregroundPrimary}
+                  />
+                </View>
+              </Pressable>
+            </View>
+            <View style={styles.settingsEntry} key={'email-settings'}>
+              <View style={{flex: 1, flexDirection: 'column'}}>
+                <Text key={'email-label'} style={{fontWeight: 'bold'}}>
+                  Email
                 </Text>
-              </Text>
-            </ContextButton>
+                <Text key={'email'}>
+                  {showEmail ? authInfo.email : '•••••••••••@••••••.•••'}
+                </Text>
+              </View>
+              <Pressable
+                style={{
+                  width: 30,
+                  height: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={() => {
+                  setShowEmail(!showEmail);
+                }}>
+                <View style={styles.iconContainer}>
+                  <MaterialIcon
+                    name={showEmail ? 'visibility-off' : 'visibility'}
+                    size={20}
+                    color={currentTheme.foregroundPrimary}
+                  />
+                </View>
+              </Pressable>
+              <Pressable
+                style={{
+                  width: 30,
+                  height: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={() => {
+                  Clipboard.setString(authInfo.email);
+                }}>
+                <View style={styles.iconContainer}>
+                  <MaterialIcon
+                    name="content-copy"
+                    size={20}
+                    color={currentTheme.foregroundPrimary}
+                  />
+                </View>
+              </Pressable>
+              <Pressable
+                style={{
+                  width: 30,
+                  height: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={async () => {}}>
+                <View style={styles.iconContainer}>
+                  <MaterialIcon
+                    name="edit"
+                    size={20}
+                    color={currentTheme.foregroundPrimary}
+                  />
+                </View>
+              </Pressable>
+            </View>
             <GapView size={4} />
             <Text type={'h1'}>Multi-factor authentication</Text>
             <Text
@@ -531,16 +600,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               Review your logged-in sessions.
             </Text>
             {authInfo.sessions.map(s => (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  padding: 8,
-                  marginVertical: 4,
-                  backgroundColor: currentTheme.background,
-                  borderRadius: 4,
-                  alignItems: 'center',
-                }}
-                key={`sessions-${s._id}`}>
+              <View style={styles.settingsEntry} key={`sessions-${s._id}`}>
                 <View style={{flex: 1, flexDirection: 'column'}}>
                   <Text
                     key={`sessions-${s._id}-name`}
