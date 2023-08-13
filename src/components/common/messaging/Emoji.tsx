@@ -48,68 +48,43 @@ export const CustomEmoji = ({id}: {id: string}) => {
     />
   );
 };
-
-export function renderEmojis(content: string) {
-  const tokens = content.split(RE_CUSTOM_EMOJI);
-
-  // get the emoji pack; default to system
-  const rawEmojiPack = app.settings.get('ui.messaging.emojiPack');
-  const emojiPack = (rawEmojiPack?.toString().toLowerCase() || 'system') as
-    | EmojiPacks
-    | 'system';
-
-  const elements = tokens.map((part, index) => {
-    if (index % 2 == 1) {
-      return <CustomEmoji key={index} id={part} />;
+export function emojiPlugin(md) {
+  function tokenize(state, silent) {
+    let pos = state.pos,
+      marker = state.src.charCodeAt(pos);
+    if (marker != 0x3a) return false;
+    let start = pos,
+      max = state.posMax;
+    pos++;
+    while (pos < max && state.src.charCodeAt(pos) == 0x3a) {
+      pos++;
     }
-    return part;
-  });
-  /*
-  const elements = tokens.flatMap((part, index) => {
-    if (index % 2 === 1) {
-      return <CustomEmoji key={index} id={part} />;
-    }
-    const subparts = part.split(RE_DEFAULT_EMOJI);
-    console.log(subparts);
-    let renderedSubparts;
-    if (emojiPack !== 'system') {
-      renderedSubparts = subparts
-        .map((id, i) =>
-          i % 2 === 1 ? (
-            <SvgEmoji key={`${id}-${i}`} id={id} pack={emojiPack} />
-          ) : (
-            id
-          ),
-        )
-        .filter(t => t)
-        .flatMap(s => {
-          if (typeof s !== 'string') {
-            return s;
+    marker = state.src.slice(start, pos);
+    let openerLength = marker.length,
+      matchEnd = pos,
+      matchStart;
+    while ((matchStart = state.src.indexOf(':', matchEnd)) != -1) {
+      matchEnd = matchStart + 1;
+      let closerLength = matchEnd - matchStart;
+      let token;
+      if (openerLength == closerLength) {
+        if (!silent) {
+          const id = state.src.slice(pos, matchStart).replace(/^ (.+) $/, '$1');
+          if (/[A-Z0-9]{26}/.test(id)) {
+            token = state.push('cemoji', '', 0);
+          } else {
+            token = state.push('uemoji', '', 0);
           }
-          let emojis = s.match(RE_UNICODE_EMOJI);
-          if (emojis) {
-            let text = s.split(RE_UNICODE_EMOJI);
-            emojis = emojis.map((u, i) => (
-              <SvgEmoji
-                key={`unicode-emoji-${i}-${Math.random()}`}
-                id={u}
-                pack={emojiPack}
-              />
-            ));
-            for (let i = 0; i < text.length; i++) {
-              emojis.splice(2 * i, 0, text[i]);
-            }
-            return emojis;
-          }
-          return s;
-        });
-    } else {
-      renderedSubparts = subparts.map((id, i) =>
-        i % 2 === 1 ? RevoltEmojiDictionary[id] ?? `:${id}:` : id,
-      );
+          token.markup = marker;
+          token.content = id;
+        }
+        state.pos = matchEnd;
+        return true;
+      }
     }
-    return renderedSubparts;
-  });
-  */
-  return elements.length > 1 ? elements : elements[0];
+    if (!silent) state.pending += marker;
+    state.pos += openerLength;
+    return true;
+  }
+  md.inline.ruler.after('emphasis', 'emoji', tokenize);
 }
