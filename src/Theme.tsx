@@ -418,6 +418,12 @@ function refreshStyles() {
       display: 'block',
       position: 'absolute',
     },
+    largeEmoji: {
+      objectFit: 'contain',
+      height: 28,
+      width: 28,
+      marginHorizontal: 5,
+    },
   });
 }
 export function setTheme(themeName: string) {

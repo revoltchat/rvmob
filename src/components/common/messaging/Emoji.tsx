@@ -14,7 +14,15 @@ import {
   RE_UNICODE_EMOJI,
 } from '../../../lib/consts';
 
-export const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
+export const SvgEmoji = ({
+  id,
+  pack,
+  large,
+}: {
+  id: string;
+  pack: EmojiPacks;
+  large: boolean;
+}) => {
   const [fail, setFail] = React.useState(false);
   if (fail) {
     return <Text>{`:${id}:`}</Text>;
@@ -22,25 +30,27 @@ export const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
   if (Object.hasOwn(RevoltEmojiDictionary, id)) {
     id = RevoltEmojiDictionary[id];
   }
+  const style = large ? styles.largeEmoji : styles.emoji;
   return (
     <SvgUri
-      width={styles.emoji.width}
-      height={styles.emoji.height}
-      style={styles.emoji}
+      width={style.width}
+      height={style.height}
+      style={style}
       uri={unicodeEmojiURL(id, pack)}
       onError={() => setFail(true)}
       fallback={<Text>{`:${id}:`}</Text>}
     />
   );
 };
-export const CustomEmoji = ({id}: {id: string}) => {
+export const CustomEmoji = ({id, large}: {id: string; large: boolean}) => {
   const [fail, setFail] = React.useState(false);
   if (fail) {
     return <Text>{`:${id}:`}</Text>;
   }
+  const style = large ? styles.largeEmoji : styles.emoji;
   return (
     <FastImage
-      style={styles.emoji}
+      style={style}
       source={{
         uri: `${client.configuration?.features.autumn.url}/emojis/${id}`,
       }}
@@ -86,5 +96,5 @@ export function emojiPlugin(md) {
     state.pos += openerLength;
     return true;
   }
-  md.inline.ruler.after('emphasis', 'emoji', tokenize);
+  md.inline.ruler.before('spoiler', 'emoji', tokenize);
 }

@@ -1,7 +1,12 @@
 import React from 'react';
 
 import spoilerPlugin from '@traptitech/markdown-it-spoiler';
-import Markdown, {hasParents, MarkdownIt} from 'react-native-markdown-display';
+import Markdown, {
+  hasParents,
+  MarkdownIt,
+  stringToTokens,
+  tokensToAST,
+} from 'react-native-markdown-display';
 
 import {openUrl, app} from '../../Generic';
 import {currentTheme} from '../../Theme';
@@ -96,7 +101,13 @@ const spoilerRule = {
 };
 const emojiRule = {
   cemoji: node => {
-    return <CustomEmoji key={node.key} id={node.content} />;
+    return (
+      <CustomEmoji
+        key={node.key}
+        id={node.content}
+        large={node.sourceMeta && node.sourceMeta.large}
+      />
+    );
   },
   uemoji: node => {
     const rawEmojiPack = app.settings.get('ui.messaging.emojiPack');
@@ -104,8 +115,14 @@ const emojiRule = {
       | EmojiPacks
       | 'system';
     if (emojiPack != 'system')
-      return <SvgEmoji key={node.key} id={node.content} pack={emojiPack} />;
-    // TODO: characters to emoji
+      return (
+        <SvgEmoji
+          key={node.key}
+          id={node.content}
+          pack={emojiPack}
+          large={node.sourceMeta && node.sourceMeta.large}
+        />
+      );
     else
       return (
         <Text>
@@ -196,6 +213,14 @@ export const MarkdownView = (props: any) => {
     },
     newProps.style.block_quote,
   );
+  const tokens = stringToTokens(newProps.children, defaultMarkdownIt);
+  const inlineTokens = tokens.filter(t => t.type == 'inline')[0].children;
+  if (inlineTokens.every(t => t.type == 'cemoji' || t.type == 'uemoji')) {
+    inlineTokens.forEach(t => {
+        t.meta = Object.assign({large: true}, t.meta);
+    });
+  }
+  newProps.children = tokensToAST(tokens);
   try {
     return <Markdown {...newProps}>{newProps.children}</Markdown>;
   } catch (e) {
