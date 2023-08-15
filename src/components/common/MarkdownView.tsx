@@ -214,11 +214,14 @@ export const MarkdownView = (props: any) => {
     newProps.style.block_quote,
   );
   const tokens = stringToTokens(newProps.children, defaultMarkdownIt);
-  const inlineTokens = tokens.filter(t => t.type == 'inline')[0].children;
-  if (inlineTokens.every(t => t.type == 'cemoji' || t.type == 'uemoji')) {
-    inlineTokens.forEach(t => {
+  const inlineToken = tokens.filter(t => t.type == 'inline')[0];
+  if (inlineToken) {
+    const children = inlineToken.children;
+    if (children.every(t => t.type == 'cemoji' || t.type == 'uemoji')) {
+      children.forEach(t => {
         t.meta = Object.assign({large: true}, t.meta);
-    });
+      });
+    }
   }
   newProps.children = tokensToAST(tokens);
   try {
