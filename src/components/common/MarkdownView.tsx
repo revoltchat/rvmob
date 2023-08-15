@@ -1,16 +1,23 @@
 import React from 'react';
 
 import spoilerPlugin from '@traptitech/markdown-it-spoiler';
-import Markdown, {hasParents, MarkdownIt} from 'react-native-markdown-display';
+import Markdown, {
+  hasParents,
+  MarkdownIt,
+  stringToTokens,
+  tokensToAST,
+} from 'react-native-markdown-display';
 
-import {openUrl} from '../../Generic';
+import {openUrl, app} from '../../Generic';
 import {currentTheme} from '../../Theme';
 import {Text} from './atoms';
-import {renderEmojis} from './messaging/Emoji';
+import {SvgEmoji, CustomEmoji, emojiPlugin} from './messaging/Emoji';
+import {RevoltEmojiDictionary} from 'revkit';
 
 const defaultMarkdownIt = MarkdownIt({typographer: true, linkify: true})
   .disable(['image'])
-  .use(spoilerPlugin);
+  .use(spoilerPlugin)
+  .use(emojiPlugin);
 
 const spoilerStyle = {
   hiddenSpoiler: {
@@ -49,12 +56,9 @@ const spoilerRule = {
                 ...(isRevealed
                   ? spoilerStyle.revealedSpoiler
                   : spoilerStyle.hiddenSpoiler),
-              }}>
-              {
-                /* FIXME: Rendering emojis reveals spoiler markdown
-                renderEmojis(node.content)*/
-                node.content
-              }
+              }}
+            >
+              {node.content}
             </Text>
           )}
         </SpoilerContext.Consumer>
@@ -63,7 +67,7 @@ const spoilerRule = {
 
     return (
       <Text key={node.key} style={{...inheritedStyles, ...styles.text}}>
-        {renderEmojis(node.content)}
+        {node.content}
       </Text>
     );
   },
@@ -79,7 +83,8 @@ const spoilerRule = {
                 ...(isRevealed
                   ? spoilerStyle.revealedSpoiler
                   : spoilerStyle.hiddenSpoiler),
-              }}>
+              }}
+            >
               {node.content}
             </Text>
           )}
@@ -94,6 +99,38 @@ const spoilerRule = {
     );
   },
 };
+const emojiRule = {
+  cemoji: node => {
+    return (
+      <CustomEmoji
+        key={node.key}
+        id={node.content}
+        large={node.sourceMeta && node.sourceMeta.large}
+      />
+    );
+  },
+  uemoji: node => {
+    const rawEmojiPack = app.settings.get('ui.messaging.emojiPack');
+    const emojiPack = (rawEmojiPack?.toString().toLowerCase() || 'system') as
+      | EmojiPacks
+      | 'system';
+    if (emojiPack != 'system')
+      return (
+        <SvgEmoji
+          key={node.key}
+          id={node.content}
+          pack={emojiPack}
+          large={node.sourceMeta && node.sourceMeta.large}
+        />
+      );
+    else
+      return (
+        <Text>
+          {RevoltEmojiDictionary[node.content] ?? `:${node.content}:`}
+        </Text>
+      );
+  },
+};
 
 export const MarkdownView = (props: any) => {
   let newProps = {...props};
@@ -104,7 +141,7 @@ export const MarkdownView = (props: any) => {
     newProps = Object.assign({markdownit: defaultMarkdownIt}, newProps);
   }
   if (!newProps.rules) {
-    newProps = Object.assign({rules: spoilerRule}, newProps);
+    newProps = Object.assign({rules: {...spoilerRule, ...emojiRule}}, newProps);
   }
   if (!newProps.style) {
     newProps = Object.assign({style: {}}, newProps);
@@ -176,6 +213,17 @@ export const MarkdownView = (props: any) => {
     },
     newProps.style.block_quote,
   );
+  const tokens = stringToTokens(newProps.children, defaultMarkdownIt);
+  const inlineToken = tokens.filter(t => t.type == 'inline')[0];
+  if (inlineToken) {
+    const children = inlineToken.children;
+    if (children.every(t => t.type == 'cemoji' || t.type == 'uemoji')) {
+      children.forEach(t => {
+        t.meta = Object.assign({large: true}, t.meta);
+      });
+    }
+  }
+  newProps.children = tokensToAST(tokens);
   try {
     return <Markdown {...newProps}>{newProps.children}</Markdown>;
   } catch (e) {
