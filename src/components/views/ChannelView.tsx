@@ -1,5 +1,5 @@
 import React from 'react';
-import {KeyboardAvoidingView, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {ErrorBoundary} from 'react-error-boundary';
