@@ -180,7 +180,11 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         {app.settings.get('ui.messaging.sendAttachments') &&
         attachments.length < 5 ? (
           <Pressable
-            style={{...styles.sendButton, marginHorizontal: 6}}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginEnd: 8,
+            }}
             onPress={async () => {
               try {
                 let res = await DocumentPicker.pickSingle({
@@ -220,11 +224,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
           multiline
           placeholderTextColor={currentTheme.foregroundSecondary}
           style={{
-            // if it's AMOLED, a little extra hint to where it is is nice visually
-            backgroundColor:
-              currentTheme.backgroundSecondary == '#000000'
-                ? '#111111'
-                : currentTheme.backgroundSecondary,
+            backgroundColor: currentTheme.messageBoxInput,
             fontSize: app.settings.get('ui.messaging.fontSize'),
             ...styles.messageBox,
           }}
@@ -248,12 +248,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         />
         {currentText.trim().length > 0 || attachments.length > 0 ? (
           <Pressable
-            style={{
-              padding: 5,
-              borderRadius: 8,
-              backgroundColor: currentTheme.accentColor,
-              ...styles.sendButton,
-            }}
+            style={styles.sendButton}
             onPress={async () => {
               let thisCurrentText = currentText;
               setCurrentText('');
