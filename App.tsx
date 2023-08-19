@@ -129,18 +129,26 @@ class MainView extends React.Component {
       });
 
       AsyncStorage.getItem('lastServer', async (err, lastServer) => {
-        if (lastServer) {
-          app.openServer(client.servers.get(lastServer));
-          await AsyncStorage.getItem('serverLastChannels', (err, data) => {
-            let serverLastChannels = JSON.parse(data || '{}') || {};
-            let lastChannel = serverLastChannels[lastServer];
-            if (lastChannel) {
-              let channel = client.channels.get(lastChannel);
-              if (channel) {
-                app.openChannel(channel);
+        if (!err) {
+          if (lastServer) {
+            app.openServer(client.servers.get(lastServer));
+            await AsyncStorage.getItem('serverLastChannels', (cerr, data) => {
+              if (!cerr) {
+                let serverLastChannels = JSON.parse(data || '{}') || {};
+                let lastChannel = serverLastChannels[lastServer];
+                if (lastChannel) {
+                  let channel = client.channels.get(lastChannel);
+                  if (channel) {
+                    app.openChannel(channel);
+                  }
+                }
+              } else {
+                console.log(`[APP] Error getting last channel: ${err}`);
               }
-            }
-          });
+            });
+          }
+        } else {
+          console.log(`[APP] Error getting last server: ${err}`);
         }
       });
     });
@@ -267,14 +275,18 @@ class MainView extends React.Component {
       messages: [],
     });
     await AsyncStorage.getItem('serverLastChannels', async (err, data) => {
-      let parsedData = JSON.parse(data || '{}') || {};
-      parsedData[server?._id || 'DirectMessage'] =
-        typeof channel == 'string' ? channel : channel._id;
-      console.log(parsedData);
-      await AsyncStorage.setItem(
-        'serverLastChannels',
-        JSON.stringify(parsedData),
-      );
+      if (!err) {
+        let parsedData = JSON.parse(data || '{}') || {};
+        parsedData[server?._id || 'DirectMessage'] =
+          typeof channel === 'string' ? channel : channel._id;
+        console.log(parsedData);
+        await AsyncStorage.setItem(
+          'serverLastChannels',
+          JSON.stringify(parsedData),
+        );
+      } else {
+        console.log(`[APP] Error getting last channel: ${err}`);
+      }
     });
   }
 
