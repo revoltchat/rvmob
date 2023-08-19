@@ -35,6 +35,7 @@ type ReactionPile = {
 
 export const Message = observer((props: MessageProps) => {
   const locale = app.settings.get('ui.messaging.use24H') ? enGB : enUS;
+  const mentionsUser = props.message.mention_ids?.includes(client.user?._id!);
 
   // check for invite links, then take the code from each
   const rawInvites = Array.from(
@@ -259,12 +260,13 @@ export const Message = observer((props: MessageProps) => {
             <View
               style={{
                 ...(props.grouped ? styles.messageGrouped : styles.message),
-                ...(props.message.mention_ids?.includes(client.user?._id)
+                ...(mentionsUser
                   ? {
+                      borderRadius: 4,
                       borderLeftWidth: 3,
                       borderStyle: 'solid',
-                      borderColor: '#beaf41',
-                      backgroundColor: '#383827',
+                      borderColor: currentTheme.mentionBorder,
+                      backgroundColor: currentTheme.mentionBackground,
                     }
                   : null),
               }}>
