@@ -180,7 +180,11 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         {app.settings.get('ui.messaging.sendAttachments') &&
         attachments.length < 5 ? (
           <Pressable
-            style={{...styles.sendButton, marginHorizontal: 6}}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginEnd: 8,
+            }}
             onPress={async () => {
               try {
                 let res = await DocumentPicker.pickSingle({
@@ -219,7 +223,11 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         <TextInput
           multiline
           placeholderTextColor={currentTheme.foregroundSecondary}
-          style={styles.messageBox}
+          style={{
+            backgroundColor: currentTheme.messageBoxInput,
+            fontSize: app.settings.get('ui.messaging.fontSize'),
+            ...styles.messageBox,
+          }}
           placeholder={
             (props.channel.channel_type !== 'SavedMessages' ? 'Message ' : '') +
             placeholderText(props.channel)

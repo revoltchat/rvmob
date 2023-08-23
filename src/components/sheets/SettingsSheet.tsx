@@ -125,6 +125,9 @@ const StringNumberSetting = ({
           <Text style={{flex: 1, fontWeight: 'bold', marginBottom: 4}}>
             {sRaw.name}
           </Text>
+          {sRaw.remark ? (
+            <Text style={{flex: 1, marginBottom: 15}}>{sRaw.remark}</Text>
+          ) : null}
           <ScrollView
             style={{
               borderRadius: 8,

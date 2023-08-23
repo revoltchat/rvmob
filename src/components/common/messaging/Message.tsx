@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Dimensions, Pressable, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -35,6 +35,7 @@ type ReactionPile = {
 
 export const Message = observer((props: MessageProps) => {
   const locale = app.settings.get('ui.messaging.use24H') ? enGB : enUS;
+  const mentionsUser = props.message.mention_ids?.includes(client.user?._id!);
 
   // check for invite links, then take the code from each
   const rawInvites = Array.from(
@@ -225,9 +226,9 @@ export const Message = observer((props: MessageProps) => {
         }>
         <View
           style={{
-            marginTop: app.settings.get(
-              'ui.messaging.messageSpacing',
-            ) as number,
+            marginTop: props.grouped
+              ? 0
+              : (app.settings.get('ui.messaging.messageSpacing') as number),
           }}
         />
         {props.message.author?.relationship === 'Blocked' ? (
@@ -275,7 +276,18 @@ export const Message = observer((props: MessageProps) => {
               </View>
             ) : null}
             <View
-              style={props.grouped ? styles.messageGrouped : styles.message}>
+              style={{
+                ...(props.grouped ? styles.messageGrouped : styles.message),
+                ...(mentionsUser
+                  ? {
+                      borderRadius: 4,
+                      borderLeftWidth: 3,
+                      borderStyle: 'solid',
+                      borderColor: currentTheme.mentionBorder,
+                      backgroundColor: currentTheme.mentionBackground,
+                    }
+                  : null),
+              }}>
               {props.message.author && !props.grouped ? (
                 <Pressable
                   key={`message-${props.message._id}-avatar`}

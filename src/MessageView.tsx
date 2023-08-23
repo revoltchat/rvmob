@@ -6,6 +6,8 @@ import {
   FlatList,
   NativeSyntheticEvent,
   NativeScrollEvent,
+  // Dimensions,
+  // Keyboard,
 } from 'react-native';
 import {autorun} from 'mobx';
 import {observer} from 'mobx-react-lite';
@@ -13,7 +15,6 @@ import {observer} from 'mobx-react-lite';
 import {ErrorBoundary} from 'react-error-boundary';
 
 import {Channel, Message as RevoltMessage} from 'revolt.js';
-import {decodeTime} from 'ulid';
 
 import {
   client,
@@ -36,6 +37,7 @@ export class Messages extends React.Component {
     super(props);
     this.state = {
       messages: [],
+      firstLoaded: true,
       queuedMessages: [],
       loading: true,
       forceUpdate: false,
@@ -98,6 +100,9 @@ export class Messages extends React.Component {
   //   return true;
   // }
   componentDidMount() {
+    // Keyboard.addListener('keyboardDidShow', () => {
+    //   this.state.scrollView?.scrollToEnd({animated: false});
+    // });
     console.log('[MESSAGERENDERER] Mounted component');
     client.on('message', async message => {
       console.log(`[MESSAGERENDERER] New message: ${message._id}`);
@@ -146,6 +151,7 @@ export class Messages extends React.Component {
                 ),
               };
             });
+            // this.scrollView.scrollToEnd({animated: false});
           } catch (err) {
             console.log(
               `[MESSAGERENDERER] Failed to push message (${message._id}): ${err}`,
@@ -220,8 +226,6 @@ export class Messages extends React.Component {
       }
       let messages = res.messages.reverse().map((message, i) => {
         try {
-          let time = decodeTime(message._id);
-          // let grouped = ((lastAuthor == message.author?._id) && !(message.reply_ids && message.reply_ids.length > 0) && (lastTime && time.diff(lastTime, "minute") < 5))
           let grouped =
             i !== 0 && calculateGrouped(res.messages[i - 1], message);
           let out = {
@@ -229,24 +233,24 @@ export class Messages extends React.Component {
             message: message,
             rendered: this.renderMessage({grouped, message}),
           };
-          // lastAuthor = (message.author ? message.author._id : lastAuthor)
-          // lastTime = time
           return out;
         } catch (e) {
           console.error(e);
         }
       });
-      let result =
+      let result: Array<RevoltMessage> =
         input.type === 'before'
           ? messages.concat(oldMessages)
           : input.type === 'after'
           ? oldMessages.concat(messages)
           : messages;
+      // const lastResultID = result[result.length - 1]._id;
+      // console.log(`result last message id: ${lastResultID}`);
       this.setState({
         messages: result,
         loading: false,
+        firstLoaded: true,
         atLatestMessages: true,
-        // atLatestMessages: input.type != "before" && this.props.channel.last_message_id == result[result.length - 1]?._id
       });
     });
   }
@@ -280,28 +284,21 @@ export class Messages extends React.Component {
       </View>
     ) : (
       <View style={{flex: 1}}>
-        {/* <FlatList data={this.state.messages}
-                removeClippedSubviews={false}
-                disableVirtualization={true}
-                maxToRenderPerBatch={12}
-                initialNumToRender={12}
-                inverted={true}
-                windowSize={17}
-                keyExtractor={this.keyExtractor}
-                renderItem={this.renderItem}
-                ref={ref => {this.scrollView = ref}}
-                onScroll={e => {this.setState({
-                    bottomOfPage: (e.nativeEvent.contentOffset.y >=
-                        (e.nativeEvent.contentSize.height -
-                        e.nativeEvent.layoutMeasurement.height))
-                    }}
-                onLayout={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToOffset({offset: 0, animated: false})}}}
-                onContentSizeChange={() => {if (this.state.bottomOfPage) {this.scrollView.scrollToOffset({offset: 0, animated: true})}}}
-                style={styles.messagesView} /> */}
         <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: 'flex-end',
+            flexDirection: 'column',
+          }}
           style={styles.messagesView}
           ref={ref => {
             this.scrollView = ref;
+          }}
+          onLayout={e => {
+            this.setState({firstLoaded: false});
+            if (this.state.bottomOfPage) {
+              this.scrollView.scrollToEnd({animated: false});
+            }
           }}
           onScroll={e => {
             // FIXME: let the user go forward too
@@ -340,19 +337,34 @@ export class Messages extends React.Component {
               });
             }
           }}
-          onLayout={() => {
-            if (this.state.bottomOfPage) {
-              this.scrollView.scrollToEnd({animated: false});
-            }
-          }}
-          onContentSizeChange={() => {
-            if (this.state.bottomOfPage) {
-              this.scrollView.scrollToEnd({animated: true});
-            }
-          }}>
-          {this.state.messages.map(m => m.rendered)}
-          {this.state.queuedMessages.map(m => m.rendered)}
-          <View style={{marginTop: 15}} />
+          // onContentSizeChange={e => {
+          //   if (this.state.firstLoaded) {
+          //     this.scrollView.scrollToEnd({animated: false});
+          //   }
+          // }}
+        >
+          {/* <View
+            style={{
+              flex: 1,
+              justifyContent: 'flex-end',
+              marginBottom: 16,
+              marginTop: 16,
+            }}>
+            <Text style={{...styles.loadingHeader, textAlign: 'left'}}>
+              {this.props.channel?.channel_type === 'DirectMessage'
+                ? '@' + this.props.channel?.recipient?.username
+                : this.props.channel?.channel_type === 'SavedMessages'
+                ? 'Saved Notes'
+                : '#' + this.props.channel?.name}
+            </Text>
+            <Text style={styles.beginningRemark}>
+              This is the start of your conversation.
+            </Text>
+          </View> */}
+          <View style={{marginBottom: 15, justifyContent: 'flex-end'}}>
+            {this.state.messages.map(m => m.rendered)}
+            {this.state.queuedMessages.map(m => m.rendered)}
+          </View>
         </ScrollView>
         {!this.state.atLatestMessages ? (
           <TouchableOpacity
@@ -362,7 +374,10 @@ export class Messages extends React.Component {
               alignItems: 'center',
               backgroundColor: currentTheme.accentColor,
             }}
-            onPress={() => this.fetchMessages()}>
+            onPress={() => {
+              this.fetchMessages();
+              this.scrollView.scrollToEnd({animated: true});
+            }}>
             <Text colour={currentTheme.accentColorForeground}>
               Go to latest messages
             </Text>

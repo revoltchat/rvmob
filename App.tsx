@@ -136,6 +136,30 @@ class MainView extends React.Component {
           await notifee.cancelNotification(notification!.id!);
         }
       });
+
+      AsyncStorage.getItem('lastServer', async (err, lastServer) => {
+        if (!err) {
+          if (lastServer) {
+            app.openServer(client.servers.get(lastServer));
+            await AsyncStorage.getItem('serverLastChannels', (cerr, data) => {
+              if (!cerr) {
+                let serverLastChannels = JSON.parse(data || '{}') || {};
+                let lastChannel = serverLastChannels[lastServer];
+                if (lastChannel) {
+                  let channel = client.channels.get(lastChannel);
+                  if (channel) {
+                    app.openChannel(channel);
+                  }
+                }
+              } else {
+                console.log(`[APP] Error getting last channel: ${err}`);
+              }
+            });
+          }
+        } else {
+          console.log(`[APP] Error getting last server: ${err}`);
+        }
+      });
     });
     client.on('dropped', async () => {
       this.setState({network: 'dropped'});
@@ -293,6 +317,29 @@ class MainView extends React.Component {
       }
     });
   }
+
+  async setChannel(channel: string | Channel, server?: Server) {
+    this.setState({
+      currentChannel: channel,
+      leftMenuOpen: false,
+      messages: [],
+    });
+    await AsyncStorage.getItem('serverLastChannels', async (err, data) => {
+      if (!err) {
+        let parsedData = JSON.parse(data || '{}') || {};
+        parsedData[server?._id || 'DirectMessage'] =
+          typeof channel === 'string' ? channel : channel._id;
+        console.log(parsedData);
+        await AsyncStorage.setItem(
+          'serverLastChannels',
+          JSON.stringify(parsedData),
+        );
+      } else {
+        console.log(`[APP] Error getting last channel: ${err}`);
+      }
+    });
+  }
+
   render() {
     return (
       <>
@@ -301,18 +348,12 @@ class MainView extends React.Component {
             <SideMenu
               openMenuOffset={Dimensions.get('window').width - 50}
               overlayColor={'#00000040'}
-              edgeHitWidth={200}
+              edgeHitWidth={Dimensions.get('window').width}
               isOpen={this.state.leftMenuOpen}
               onChange={open => this.setState({leftMenuOpen: open})}
               menu={
                 <LeftMenu
-                  onChannelClick={s => {
-                    this.setState({
-                      currentChannel: s,
-                      leftMenuOpen: false,
-                      messages: [],
-                    });
-                  }}
+                  onChannelClick={this.setChannel.bind(this)}
                   currentChannel={this.state.currentChannel}
                   onLogOut={() => {
                     console.log(

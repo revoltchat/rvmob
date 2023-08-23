@@ -3,7 +3,7 @@ import React from 'react';
 import spoilerPlugin from '@traptitech/markdown-it-spoiler';
 import Markdown, {hasParents, MarkdownIt} from 'react-native-markdown-display';
 
-import {openUrl} from '../../Generic';
+import {app, openUrl} from '../../Generic';
 import {currentTheme} from '../../Theme';
 import {Text} from './atoms';
 import {renderEmojis} from './messaging/Emoji';
@@ -120,7 +120,12 @@ export const MarkdownView = (props: any) => {
     newProps.style = Object.assign({paragraph: {}}, newProps.style);
   }
   newProps.style.paragraph = Object.assign(
-    {color: currentTheme.foregroundPrimary, marginTop: -3, marginBottom: 2},
+    {
+      color: currentTheme.foregroundPrimary,
+      marginTop: -3,
+      marginBottom: 2,
+      fontSize: app.settings.get('ui.messaging.fontSize'),
+    },
     newProps.style.paragraph,
   );
   if (!newProps.style.link) {
