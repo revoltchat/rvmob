@@ -6,8 +6,8 @@ import {
   FlatList,
   NativeSyntheticEvent,
   NativeScrollEvent,
-  Dimensions,
-  Keyboard,
+  // Dimensions,
+  // Keyboard,
 } from 'react-native';
 import {autorun} from 'mobx';
 import {observer} from 'mobx-react-lite';
@@ -15,7 +15,6 @@ import {observer} from 'mobx-react-lite';
 import {ErrorBoundary} from 'react-error-boundary';
 
 import {Channel, Message as RevoltMessage} from 'revolt.js';
-import {decodeTime} from 'ulid';
 
 import {
   client,
@@ -101,9 +100,9 @@ export class Messages extends React.Component {
   //   return true;
   // }
   componentDidMount() {
-    Keyboard.addListener('keyboardDidShow', () => {
-      this.state.scrollView?.scrollToEnd({animated: false});
-    });
+    // Keyboard.addListener('keyboardDidShow', () => {
+    //   this.state.scrollView?.scrollToEnd({animated: false});
+    // });
     console.log('[MESSAGERENDERER] Mounted component');
     client.on('message', async message => {
       console.log(`[MESSAGERENDERER] New message: ${message._id}`);
@@ -117,7 +116,6 @@ export class Messages extends React.Component {
             `[MESSAGERENDERER] Message ${message._id} is in current channel`,
           );
           try {
-            this.scrollView.scrollToEnd({animated: false});
             this.setState(prev => {
               let newMessages = prev.messages;
               if (newMessages.length >= (!this.state.bottomOfPage ? 150 : 50)) {
@@ -153,6 +151,7 @@ export class Messages extends React.Component {
                 ),
               };
             });
+            // this.scrollView.scrollToEnd({animated: false});
           } catch (err) {
             console.log(
               `[MESSAGERENDERER] Failed to push message (${message._id}): ${err}`,
@@ -245,8 +244,8 @@ export class Messages extends React.Component {
           : input.type === 'after'
           ? oldMessages.concat(messages)
           : messages;
-      const lastResultID = result[result.length - 1]._id;
-      console.log(`result last message id: ${lastResultID}`);
+      // const lastResultID = result[result.length - 1]._id;
+      // console.log(`result last message id: ${lastResultID}`);
       this.setState({
         messages: result,
         loading: false,
@@ -338,12 +337,13 @@ export class Messages extends React.Component {
               });
             }
           }}
-          onContentSizeChange={e => {
-            if (this.state.firstLoaded) {
-              this.scrollView.scrollToEnd({animated: false});
-            }
-          }}>
-          <View
+          // onContentSizeChange={e => {
+          //   if (this.state.firstLoaded) {
+          //     this.scrollView.scrollToEnd({animated: false});
+          //   }
+          // }}
+        >
+          {/* <View
             style={{
               flex: 1,
               justifyContent: 'flex-end',
@@ -360,7 +360,7 @@ export class Messages extends React.Component {
             <Text style={styles.beginningRemark}>
               This is the start of your conversation.
             </Text>
-          </View>
+          </View> */}
           <View style={{marginBottom: 15, justifyContent: 'flex-end'}}>
             {this.state.messages.map(m => m.rendered)}
             {this.state.queuedMessages.map(m => m.rendered)}
