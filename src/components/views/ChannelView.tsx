@@ -8,7 +8,8 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {Channel} from 'revolt.js';
 
 import {app, ChannelIcon, client} from '../../Generic';
-import {Messages, NewMessageView} from '../../MessageView';
+import {Messages} from '../../LegacyMessageView';
+import {NewMessageView} from '../../MessageView';
 import {MessageBox} from '../../MessageBox';
 import {currentTheme, styles} from '../../Theme';
 import {FriendsPage} from '../pages/FriendsPage';
