@@ -16,7 +16,6 @@ import {
   getBundleId,
   getDevice,
 } from 'react-native-device-info';
-import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -27,11 +26,10 @@ import {currentTheme, styles} from '../../Theme';
 import {Checkbox, ContextButton, Link, Text} from '../common/atoms';
 import {GapView} from '../layout';
 
-const Image = FastImage;
+import ReleaseIcon from '../../../assets/images/icon_release.svg';
+import DebugIcon from '../../../assets/images/icon_debug.svg';
 
-const icon = getBundleId().match('debug')
-  ? require('../../../assets/images/icon_debug.png')
-  : require('../../../assets/images/icon_release.png');
+const AppIcon = getBundleId().match('debug') ? DebugIcon : ReleaseIcon;
 
 type Section = string | null;
 
@@ -81,7 +79,12 @@ const BoolSetting = ({
         marginTop: 10,
       }}>
       <IndicatorIcons s={sRaw} />
-      <Text style={{flex: 1, fontWeight: 'bold'}}>{sRaw.name}</Text>
+      <View style={{flex: 1, flexDirection: 'column'}}>
+        <Text style={{fontWeight: 'bold'}}>{sRaw.name}</Text>
+        {sRaw.remark ? (
+          <Text colour={currentTheme.foregroundSecondary}>{sRaw.remark}</Text>
+        ) : null}
+      </View>
       <Checkbox
         key={`checkbox-${sRaw.name}`}
         value={value}
@@ -122,20 +125,20 @@ const StringNumberSetting = ({
       {sRaw.options ? (
         <View>
           <IndicatorIcons s={sRaw} />
-          <Text style={{flex: 1, fontWeight: 'bold', marginBottom: 4}}>
-            {sRaw.name}
-          </Text>
+          <Text style={{fontWeight: 'bold', marginBottom: 8}}>{sRaw.name}</Text>
           {sRaw.remark ? (
-            <Text style={{flex: 1, marginBottom: 15}}>{sRaw.remark}</Text>
+            <Text
+              colour={currentTheme.foregroundSecondary}
+              style={{marginBottom: 8}}>
+              {sRaw.remark}
+            </Text>
           ) : null}
-          <ScrollView
+          <View
             style={{
               borderRadius: 8,
-              maxHeight: 160,
               minWidth: '100%',
               backgroundColor: currentTheme.backgroundSecondary,
               padding: 8,
-              paddingRight: 12,
             }}>
             {sRaw.options.map(o => (
               <TouchableOpacity
@@ -160,15 +163,21 @@ const StringNumberSetting = ({
                 </View>
               </TouchableOpacity>
             ))}
-            <View style={{marginTop: 20}} />
-          </ScrollView>
+          </View>
         </View>
       ) : (
         <View>
           <IndicatorIcons s={sRaw} />
-          <Text style={{flex: 1, fontWeight: 'bold', marginBottom: 4}}>
+          <Text style={{flex: 1, fontWeight: 'bold', marginBottom: 8}}>
             {sRaw.name}
           </Text>
+          {sRaw.remark ? (
+            <Text
+              colour={currentTheme.foregroundSecondary}
+              style={{marginBottom: 8}}>
+              {sRaw.remark}
+            </Text>
+          ) : null}
           <TextInput
             style={{
               fontFamily: 'Open Sans',
@@ -362,7 +371,10 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
           </Text>
         </Pressable>
       )}
-      <ScrollView style={{flex: 1}}>
+      <ScrollView
+        style={{flex: 1}}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}>
         {section == null ? (
           <>
             <Text type={'header'}>Account</Text>
@@ -640,17 +652,14 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
             ))}
           </View>
         ) : section === 'info' ? (
-          <View>
-            <Text type={'header'}>About</Text>
+          <>
+            <Text type={'h1'}>About</Text>
             <View
               style={{
                 alignItems: 'center',
               }}>
               <View style={{alignItems: 'center'}}>
-                <Image
-                  source={icon}
-                  style={{height: 150, width: 150, marginVertical: 4}}
-                />
+                <AppIcon height={250} width={250} style={{marginVertical: 4}} />
                 <Text type={'header'}>RVMob v{app.version}</Text>
               </View>
               <View style={{flexDirection: 'row'}}>
@@ -700,20 +709,25 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                   label={'GNU GPL v3.0'}
                 />
               </View>
-              <ContextButton
-                backgroundColor={currentTheme.error}
-                style={{justifyContent: 'center', marginTop: 10}}
-                onPress={() => {
-                  app.settings.clear();
-                }}>
-                <Text style={{color: currentTheme.accentColorForeground}}>
-                  Reset Settings
-                </Text>
-              </ContextButton>
             </View>
-          </View>
+          </>
         ) : null}
       </ScrollView>
+      {section === 'info' ? (
+        <ContextButton
+          backgroundColor={currentTheme.error}
+          style={{
+            justifyContent: 'center',
+            bottom: 10,
+          }}
+          onPress={() => {
+            app.settings.clear();
+          }}>
+          <Text style={{color: currentTheme.accentColorForeground}}>
+            Reset Settings
+          </Text>
+        </ContextButton>
+      ) : null}
     </View>
   );
 });
