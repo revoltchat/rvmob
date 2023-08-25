@@ -8,6 +8,20 @@ import {GeneralAvatar, app, client} from '../../../Generic';
 import {currentTheme} from '../../../Theme';
 import {Button, Text} from '../atoms';
 
+const InviteBackground = observer(({children}: {children: any}) => {
+  return (
+    <View
+      style={{
+        backgroundColor: currentTheme.backgroundSecondary,
+        padding: 8,
+        borderRadius: 8,
+        marginVertical: 2,
+      }}>
+      {children}
+    </View>
+  );
+});
+
 export const InviteEmbed = observer(
   ({message, invite}: {message: Message; invite: string}) => {
     const [invObject, setInvObject] = React.useState({} as API.InviteResponse);
@@ -19,9 +33,10 @@ export const InviteEmbed = observer(
           const i = await client.fetchInvite(invite);
           setInvObject(i);
         } catch (e) {
-          const errorType = (e as string).match('404')
+          const stringE = `${e}`;
+          const errorType = stringE.match('404')
             ? 'notFound'
-            : (e as string).match('429')
+            : stringE.match('429')
             ? 'rateLimited'
             : 'otherError';
           if (errorType === 'otherError') {
@@ -38,23 +53,36 @@ export const InviteEmbed = observer(
     }, [invite]);
 
     return error ? (
-      <View
-        style={{
-          backgroundColor: currentTheme.backgroundSecondary,
-          padding: 8,
-          borderRadius: 8,
-          marginVertical: 2,
-        }}>
-        <Text>error: {error}</Text>
-      </View>
+      <InviteBackground>
+        <Text
+          colour={currentTheme.foregroundSecondary}
+          style={{marginBottom: 4}}>
+          <Text
+            colour={currentTheme.foregroundSecondary}
+            style={{
+              fontWeight: 'bold',
+            }}>
+            {message.author?.username}
+          </Text>{' '}
+          sent you an invite, but...
+        </Text>
+        <Text style={{fontWeight: 'bold', fontSize: 18}}>
+          {error === 'notFound'
+            ? "This invite doesn't exist"
+            : error === 'rateLimited'
+            ? 'Too many requests'
+            : 'An error occurred'}
+        </Text>
+        <Text>
+          {error === 'notFound'
+            ? `The invite may have expired or been deleted. Ask ${message.author?.username} for a new one.`
+            : error === 'rateLimited'
+            ? "You've fetched too many invites in a short period of time. Wait a few minutes and try again."
+            : 'Something went wrong. Please try again later.'}
+        </Text>
+      </InviteBackground>
     ) : invObject.type === 'Server' ? (
-      <View
-        style={{
-          backgroundColor: currentTheme.backgroundSecondary,
-          padding: 8,
-          borderRadius: 8,
-          marginVertical: 2,
-        }}>
+      <InviteBackground>
         <Text
           colour={currentTheme.foregroundSecondary}
           style={{marginBottom: 4}}>
@@ -102,7 +130,7 @@ export const InviteEmbed = observer(
               : 'Go to Server'}
           </Text>
         </Button>
-      </View>
+      </InviteBackground>
     ) : (
       <Text>Invite: {invite}</Text>
     );
