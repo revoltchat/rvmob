@@ -119,7 +119,7 @@ export class Modals extends React.Component {
               width: Dimensions.get('window').width,
               height: Dimensions.get('window').height,
               position: 'absolute',
-              backgroundColor: '#00000000',
+              backgroundColor: '#00000066',
             }}
           />
           <View
@@ -155,7 +155,7 @@ export class Modals extends React.Component {
               width: Dimensions.get('window').width,
               height: Dimensions.get('window').height,
               position: 'absolute',
-              backgroundColor: '#00000000',
+              backgroundColor: '#00000066',
             }}
           />
           <View style={styles.sheetBackground}>
@@ -176,7 +176,7 @@ export class Modals extends React.Component {
               width: Dimensions.get('window').width,
               height: Dimensions.get('window').height,
               position: 'absolute',
-              backgroundColor: '#00000000',
+              backgroundColor: '#00000066',
             }}
           />
           <View style={styles.sheetBackground}>
@@ -262,7 +262,7 @@ export class Modals extends React.Component {
               width: Dimensions.get('window').width,
               height: Dimensions.get('window').height,
               position: 'absolute',
-              backgroundColor: '#00000000',
+              backgroundColor: '#00000066',
             }}
           />
           <View style={styles.sheetBackground}>
@@ -317,7 +317,7 @@ export class Modals extends React.Component {
               width: Dimensions.get('window').width,
               height: Dimensions.get('window').height,
               position: 'absolute',
-              backgroundColor: '#00000000',
+              backgroundColor: '#00000066',
             }}
           />
           <View style={styles.sheetBackground}>
@@ -345,7 +345,7 @@ export class Modals extends React.Component {
               width: Dimensions.get('window').width,
               height: Dimensions.get('window').height,
               position: 'absolute',
-              backgroundColor: '#00000000',
+              backgroundColor: '#00000066',
             }}
           />
           <View style={styles.sheetBackground}>
@@ -366,7 +366,7 @@ export class Modals extends React.Component {
               width: Dimensions.get('window').width,
               height: Dimensions.get('window').height,
               position: 'absolute',
-              backgroundColor: '#00000000',
+              backgroundColor: '#00000066',
             }}
           />
           <View style={styles.sheetBackground}>
