@@ -240,9 +240,10 @@ function refreshStyles() {
       flexDirection: 'row',
       paddingTop: 2,
       paddingBottom: 2,
+      paddingHorizontal: 5,
     },
     messageGrouped: {
-      paddingLeft: 35,
+      paddingLeft: 40,
       width: '100%',
       paddingTop: 2,
       paddingBottom: 2,
@@ -350,6 +351,7 @@ function refreshStyles() {
     },
     messagesView: {
       padding: 10,
+      paddingHorizontal: 5,
       flex: 1,
     },
     messageBoxInner: {
