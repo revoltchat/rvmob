@@ -18,7 +18,7 @@
     "@babel/preset-env": "^7.22.9",
     "@chakrahq/react-native-side-menu": "^1.3.4",
     "@notifee/react-native": "^7.8.0",
-    "@react-native-async-storage/async-storage": "^1.19.1",
+    "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-native-clipboard/clipboard": "^1.11.2",
     "@react-native/eslint-config": "^0.73.0",
     "@react-native/metro-config": "^0.73.0",
@@ -41,7 +41,7 @@
     "mobx": "^6.9.0",
     "mobx-react": "^7.6.0",
     "mobx-react-lite": "^3.4.3",
-    "patch-package": "^7.0.2",
+    "patch-package": "^8.0.0",
     "path-browserify": "^1.0.1",
     "postinstall-postinstall": "^2.1.0",
     "process": "^0.11.10",
@@ -49,11 +49,11 @@
     "querystring-es3": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-error-boundary": "^4.0.10",
+    "react-error-boundary": "^4.0.11",
     "react-native": "0.72.1",
     "react-native-clean-project": "^4.0.1",
     "react-native-crypto": "^2.2.0",
-    "react-native-device-info": "^10.8.0",
+    "react-native-device-info": "^10.9.0",
     "react-native-document-picker": "^9.0.1",
     "react-native-fast-image": "^8.6.3",
     "react-native-fs": "^2.18.0",
@@ -65,15 +65,15 @@
     "react-native-os": "^1.2.6",
     "react-native-randombytes": "^3.6.1",
     "react-native-side-menu-updated": "^1.3.2",
-    "react-native-svg": "^13.10.0",
+    "react-native-svg": "^13.13.0",
     "react-native-tcp-socket": "^6.0.6",
     "react-native-udp": "^4.1.7",
     "react-native-vector-icons": "^10.0.0",
-    "react-native-web": "^0.19.6",
+    "react-native-web": "^0.19.8",
     "react-native-windows": "^0.72.1",
     "readable-stream": "^4.4.2",
     "revkit": "^1.1.7",
-    "revolt-api": "^0.6.5",
+    "revolt-api": "^0.6.7",
     "revolt.js": "^6.0.20",
     "stream-browserify": "^3.0.0",
     "timers-browserify": "^2.0.12",
@@ -94,7 +94,7 @@
     "@types/punycode": "^2.1.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
-    "@types/react-native-vector-icons": "^6.4.13",
+    "@types/react-native-vector-icons": "^6.4.14",
     "@types/react-test-renderer": "^18.0.0",
     "@types/readable-stream": "^2.3.15",
     "babel-jest": "^29.6.1",
@@ -105,7 +105,7 @@
     "react-native-svg-transformer": "^1.1.0",
     "react-test-renderer": "^18.2.0",
     "rn-nodeify": "^10.3.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
   "jest": {
     "preset": "react-native"
@@ -163,7 +163,7 @@
     "tls": false
   },
   "resolutions": {
-    "revolt-api": "^0.6.5"
+    "revolt-api": "^0.6.7"
   },
   "packageManager": "yarn@1.22.19"
 }
