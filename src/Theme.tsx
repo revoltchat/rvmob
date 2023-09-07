@@ -226,8 +226,6 @@ function refreshStyles() {
     },
     sheetBackground: {
       width: '100%',
-      height: Dimensions.get('window').height * 0.75,
-      top: '25%',
       padding: 15,
       backgroundColor: currentTheme.backgroundSecondary,
     },

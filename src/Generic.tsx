@@ -312,7 +312,7 @@ export const app = {
   logOut: () => {},
   openMemberList: (c: Channel | Server | null, u: User[] | null) => {},
   openChannelContextMenu: (c: Channel | null) => {},
-  openStatusMenu: (state: boolean | null) => {},
+  openStatusMenu: (state: boolean) => {},
   openReportMenu: (
     _object: User | Server | Message | null,
     _type: string | null,
