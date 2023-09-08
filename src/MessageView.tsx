@@ -124,6 +124,12 @@ export const NewMessageView = observer(
       }
     });
 
+    client.on('message/delete', async (id, msg) => {
+      if (msg?.channel?._id === channel._id) {
+        setMessages(messages.filter(m => m._id !== id));
+      }
+    });
+
     // set functions here so they don't get recreated
     const renderItem = ({item}: {item: RevoltMessage}) => {
       return renderMessage(item, messages);
