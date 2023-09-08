@@ -365,7 +365,6 @@ function refreshStyles() {
       overflow: 'hidden',
     },
     sendButton: {
-      margin: 3,
       marginStart: 8,
       justifyContent: 'center',
       alignItems: 'center',

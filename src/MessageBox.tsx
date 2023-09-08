@@ -305,16 +305,16 @@ export const MessageBox = observer((props: MessageBoxProps) => {
               }
             }}>
             {editingMessage ? (
-              <FA5Icon
+              <MaterialIcon
                 name="edit"
                 size={24}
-                color={currentTheme.foregroundPrimary}
+                color={currentTheme.messageBox}
               />
             ) : (
               <MaterialIcon
                 name="send"
                 size={24}
-                color={currentTheme.foregroundPrimary}
+                color={currentTheme.messageBox}
               />
             )}
           </Pressable>
