@@ -190,7 +190,12 @@ export const NewMessageView = observer(
               keyExtractor={keyExtractor}
               data={messages}
               style={styles.messagesView}
-              contentContainerStyle={{paddingBottom: 20}}
+              contentContainerStyle={{
+                paddingBottom: 20,
+                flexGrow: 1,
+                justifyContent: 'flex-end',
+                flexDirection: 'column',
+              }}
               ref={ref}
               renderItem={renderItem}
               onScroll={onScroll}

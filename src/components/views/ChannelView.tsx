@@ -7,7 +7,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Channel} from 'revolt.js';
 
-import {app, ChannelIcon, client} from '../../Generic';
+import {app, ChannelIcon} from '../../Generic';
 import {Messages} from '../../LegacyMessageView';
 import {NewMessageView} from '../../MessageView';
 import {MessageBox} from '../../MessageBox';
@@ -42,28 +42,14 @@ type CVChannel = Channel | 'friends' | 'debug' | null;
 
 export const ChannelView = observer(
   ({state, channel}: {state: any; channel: CVChannel}) => {
-    const [replacementChannel, setReplacementChannel] = React.useState(
-      undefined as Channel | undefined,
-    );
     const handledMessages = [] as string[];
-    React.useEffect(() => {
-      async function getChannel() {
-        const type = 'spam';
-        const c =
-          type === 'spam'
-            ? client.channels.get('01FBCT2PXQC0SSH6GD3V1BEHRP')
-            : type === 'lounge'
-            ? client.channels.get('01F7ZSBSFHCAAJQ92ZGTY67HMN')
-            : await client.user?.openDM();
-        setReplacementChannel(c);
-      }
-      getChannel();
-    });
+
     console.log(
       `[CHANNELVIEW] Rendering channel view for ${
         channel instanceof Channel ? channel._id : channel
       }...`,
     );
+
     return (
       <View style={styles.mainView}>
         {channel ? (
@@ -75,14 +61,9 @@ export const ChannelView = observer(
                 <View style={styles.iconContainer}>
                   <ChannelIcon channel={{type: 'special', channel: 'Debug'}} />
                 </View>
-                <Text style={styles.channelName}>
-                  Debug Menu (New MessageView)
-                </Text>
+                <Text style={styles.channelName}>Debug Menu</Text>
               </ChannelHeader>
-              <NewMessageView
-                channel={replacementChannel!}
-                handledMessages={handledMessages}
-              />
+              <Text>tbd</Text>
             </View>
           ) : (
             <View style={styles.flex}>
@@ -159,25 +140,37 @@ export const ChannelView = observer(
               ) : !channel?.nsfw ||
                 app.settings.get('ui.messaging.showNSFWContent') ? (
                 <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
-                  <Messages
-                    channel={channel}
-                    onLongPress={async m => {
-                      app.openMessage(m);
-                    }}
-                    onUserPress={m => {
-                      app.openProfile(m.author, channel.server);
-                    }}
-                    onImagePress={a => {
-                      app.openImage(a);
-                    }}
-                    onUsernamePress={m =>
-                      state.setState({
-                        currentText:
-                          state.state.currentText + '<@' + m.author?._id + '>',
-                      })
-                    }
-                  />
-                  <MessageBox channel={channel} />
+                  {app.settings.get('ui.messaging.useNewMessageView') ? (
+                    <NewMessageView
+                      channel={channel}
+                      handledMessages={handledMessages}
+                    />
+                  ) : (
+                    <>
+                      <Messages
+                        channel={channel}
+                        onLongPress={async m => {
+                          app.openMessage(m);
+                        }}
+                        onUserPress={m => {
+                          app.openProfile(m.author, channel.server);
+                        }}
+                        onImagePress={a => {
+                          app.openImage(a);
+                        }}
+                        onUsernamePress={m =>
+                          state.setState({
+                            currentText:
+                              state.state.currentText +
+                              '<@' +
+                              m.author?._id +
+                              '>',
+                          })
+                        }
+                      />
+                      <MessageBox channel={channel} />
+                    </>
+                  )}
                 </ErrorBoundary>
               ) : (
                 <View
