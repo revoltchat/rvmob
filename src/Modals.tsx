@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, Pressable, View} from 'react-native';
+import {Modal, Pressable, ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react';
 
 import Modal2 from 'react-native-modal';
@@ -29,24 +29,15 @@ const BottomSheet = observer(
     sheetKey,
     visible,
     callback,
-    useLegacyStyles,
-    height,
+    includeScrollView,
     children,
   }: {
     sheetKey: string;
     visible: boolean;
     callback: Function;
-    useLegacyStyles: boolean;
-    height?: number;
+    includeScrollView?: boolean;
     children: any;
   }) => {
-    const finalHeight = height ?? 50;
-    const finalStyle = useLegacyStyles
-      ? {
-          height: `${finalHeight}%`,
-          backgroundColor: currentTheme.backgroundSecondary,
-        }
-      : {...styles.sheetBackground, height: `${finalHeight}%`};
     return (
       <Modal2
         key={sheetKey}
@@ -55,13 +46,16 @@ const BottomSheet = observer(
         onBackButtonPress={() => callback()}
         swipeDirection={'down'}
         onSwipeComplete={() => callback()}
+        propagateSwipe
         style={{
           width: '100%',
           marginHorizontal: 0,
           marginBottom: 0,
           justifyContent: 'flex-end',
         }}>
-        <View style={finalStyle}>{children}</View>
+        <View style={styles.sheetBackground}>
+          {includeScrollView ? <ScrollView>{children}</ScrollView> : children}
+        </View>
       </Modal2>
     );
   },
@@ -200,8 +194,7 @@ export class Modals extends React.Component {
         <BottomSheet
           sheetKey={'messageMenu'}
           visible={this.state.showMessageMenu}
-          callback={() => app.openMessage(null)}
-          useLegacyStyles={true}>
+          callback={() => app.openMessage(null)}>
           <MessageMenuSheet
             setState={() => {
               app.openMessage(null);
@@ -215,16 +208,14 @@ export class Modals extends React.Component {
           callback={() => {
             app.openStatusMenu(false);
             this.setState({userStatusInput: ''});
-          }}
-          useLegacyStyles={false}>
+          }}>
           <StatusSheet />
         </BottomSheet>
         <BottomSheet
           sheetKey={'profileMenu'}
           visible={this.state.showUserMenu}
           callback={() => app.openProfile(null)}
-          useLegacyStyles={false}
-          height={70}>
+          includeScrollView>
           <ProfileSheet
             user={this.state.contextMenuUser}
             server={this.state.contextMenuUserServer}
@@ -298,8 +289,7 @@ export class Modals extends React.Component {
         <BottomSheet
           sheetKey={'serverMenu'}
           visible={this.state.showServerMenu}
-          callback={() => app.openServerContextMenu(null)}
-          useLegacyStyles={false}>
+          callback={() => app.openServerContextMenu(null)}>
           <ServerInfoSheet
             setState={() => {
               this.setState({contextMenuServer: null});
@@ -339,8 +329,7 @@ export class Modals extends React.Component {
         <BottomSheet
           sheetKey={'reportModal'}
           visible={this.state.showReportMenu}
-          callback={() => app.openReportMenu(null, null)}
-          useLegacyStyles={false}>
+          callback={() => app.openReportMenu(null, null)}>
           <ReportSheet
             object={this.state.reportObject}
             type={this.state.reportType}
@@ -349,8 +338,7 @@ export class Modals extends React.Component {
         <BottomSheet
           sheetKey={'memberList'}
           visible={this.state.showMemberList}
-          callback={() => app.openMemberList(null, null)}
-          useLegacyStyles={false}>
+          callback={() => app.openMemberList(null, null)}>
           <MemberListSheet
             context={this.state.memberListContext}
             users={this.state.memberListUsers}
@@ -359,8 +347,7 @@ export class Modals extends React.Component {
         <BottomSheet
           sheetKey={'channelMenu'}
           visible={this.state.showChannelMenu}
-          callback={() => app.openChannelContextMenu(null)}
-          useLegacyStyles={false}>
+          callback={() => app.openChannelContextMenu(null)}>
           <ChannelInfoSheet channel={this.state.contextMenuChannel} />
         </BottomSheet>
       </>
