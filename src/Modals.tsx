@@ -2,6 +2,7 @@ import React from 'react';
 import {Modal, Pressable, ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react';
 
+import BottomSheet from '@gorhom/bottom-sheet';
 import Modal2 from 'react-native-modal';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -24,7 +25,7 @@ import {
   StatusSheet,
 } from './components/sheets/';
 
-const BottomSheet = observer(
+const MBottomSheet = observer(
   ({
     sheetKey,
     visible,
@@ -201,7 +202,7 @@ export class Modals extends React.Component {
   render() {
     return (
       <>
-        <BottomSheet
+        <MBottomSheet
           sheetKey={'messageMenu'}
           visible={this.state.showMessageMenu}
           callback={() => app.openMessage(null)}>
@@ -211,8 +212,8 @@ export class Modals extends React.Component {
             }}
             message={this.state.contextMenuMessage}
           />
-        </BottomSheet>
-        <BottomSheet
+        </MBottomSheet>
+        <MBottomSheet
           sheetKey={'statusMenu'}
           visible={this.state.showStatusMenu}
           callback={() => {
@@ -220,8 +221,8 @@ export class Modals extends React.Component {
             this.setState({userStatusInput: ''});
           }}>
           <StatusSheet />
-        </BottomSheet>
-        <BottomSheet
+        </MBottomSheet>
+        <MBottomSheet
           sheetKey={'profileMenu'}
           visible={this.state.showUserMenu}
           callback={() => app.openProfile(null)}
@@ -230,7 +231,7 @@ export class Modals extends React.Component {
             user={this.state.contextMenuUser}
             server={this.state.contextMenuUserServer}
           />
-        </BottomSheet>
+        </MBottomSheet>
         <Modal
           visible={!!this.state.imageViewerImage}
           transparent={true}
@@ -296,7 +297,7 @@ export class Modals extends React.Component {
             setState={() => this.setState({settingsOpen: false})}
           />
         </Modal>
-        <BottomSheet
+        <MBottomSheet
           sheetKey={'serverMenu'}
           visible={this.state.showServerMenu}
           callback={() => app.openServerContextMenu(null)}>
@@ -306,7 +307,7 @@ export class Modals extends React.Component {
             }}
             server={this.state.contextMenuServer}
           />
-        </BottomSheet>
+        </MBottomSheet>
         <Modal
           visible={!!this.state.inviteServer}
           transparent={true}
@@ -336,7 +337,7 @@ export class Modals extends React.Component {
             bot={this.state.inviteBot}
           />
         </Modal>
-        <BottomSheet
+        <MBottomSheet
           sheetKey={'reportModal'}
           visible={this.state.showReportMenu}
           callback={() => app.openReportMenu(null, null)}>
@@ -344,8 +345,8 @@ export class Modals extends React.Component {
             object={this.state.reportObject}
             type={this.state.reportType}
           />
-        </BottomSheet>
-        <BottomSheet
+        </MBottomSheet>
+        <MBottomSheet
           sheetKey={'memberList'}
           visible={this.state.showMemberList}
           callback={() => app.openMemberList(null, null)}>
@@ -353,13 +354,13 @@ export class Modals extends React.Component {
             context={this.state.memberListContext}
             users={this.state.memberListUsers}
           />
-        </BottomSheet>
-        <BottomSheet
+        </MBottomSheet>
+        <MBottomSheet
           sheetKey={'channelMenu'}
           visible={this.state.showChannelMenu}
           callback={() => app.openChannelContextMenu(null)}>
           <ChannelInfoSheet channel={this.state.contextMenuChannel} />
-        </BottomSheet>
+        </MBottomSheet>
       </>
     );
   }

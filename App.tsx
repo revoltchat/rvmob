@@ -13,6 +13,7 @@ import {ErrorBoundary} from 'react-error-boundary';
 import SideMenu from '@chakrahq/react-native-side-menu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import {currentTheme, styles} from './src/Theme';
 import {client, app, selectedRemark, randomizeRemark} from './src/Generic';
@@ -732,7 +733,7 @@ function ErrorMessage({
 
 export const App = () => {
   return (
-    <View style={styles.outer}>
+    <GestureHandlerRootView style={styles.outer}>
       <StatusBar
         animated={true}
         backgroundColor={currentTheme.backgroundSecondary}
@@ -741,6 +742,6 @@ export const App = () => {
       <ErrorBoundary fallbackRender={ErrorMessage}>
         <MainView />
       </ErrorBoundary>
-    </View>
+    </GestureHandlerRootView>
   );
 };
