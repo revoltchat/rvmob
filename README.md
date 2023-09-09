@@ -10,12 +10,14 @@ For development updates and other news, join [RVMob's support server](https://rv
 
 If you want to install RVMob, simply go to [the releases tab](https://github.com/revoltchat/rvmob/releases) and download the latest version. We plan on publishing RVMob to app stores in the future.
 
-Debug builds are also produced for every commit. These are unoptimised - they're much larger and noticeably slower than the release builds, but you can try out new features early. Also bear in mind that they are produced as Android App Bundles (AABs), not APKs - to install them, you'll have to convert the bundles using something like [`bundletool`](https://developer.android.com/tools/bundletool).
+Debug builds are also produced for every commit. These are unoptimised - they're much larger and noticeably slower than the release builds, but you can try out new features early.
+
+Also note that, from v0.7.0, RVMob's APKs are **split by architecture**. This helps to reduce file sizes - however, you'll need to make sure that you **download the APK that matches your device's architecture**, or **it won't install!**
 
 ## Building
 
 If you want to build RVMob, you'll need:
-- [Node](https://nodejs.org/en/) (18+),
+- [Node](https://nodejs.org/en/) (v18+),
 - [Yarn Classic](https://classic.yarnpkg.com),
 - JDK 17 ([Microsoft's build](https://learn.microsoft.com/en-gb/java/openjdk/download) works well),
 - the latest Android SDK (preferably via [Android Studio](https://developer.android.com/studio)'s SDK Manager), and 
