@@ -280,10 +280,6 @@ export const Message = observer((props: MessageProps) => {
                 ...(props.grouped ? styles.messageGrouped : styles.message),
                 ...(mentionsUser
                   ? {
-                      paddingStart: props.grouped ? 37 : 2,
-                      borderRadius: 4,
-                      borderLeftWidth: 3,
-                      borderStyle: 'solid',
                       borderColor: currentTheme.mentionBorder,
                       backgroundColor: currentTheme.mentionBackground,
                     }
