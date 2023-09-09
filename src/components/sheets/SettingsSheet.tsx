@@ -723,9 +723,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
           onPress={() => {
             app.settings.clear();
           }}>
-          <Text style={{color: currentTheme.accentColorForeground}}>
-            Reset Settings
-          </Text>
+          <Text>Reset Settings</Text>
         </ContextButton>
       ) : null}
     </View>
