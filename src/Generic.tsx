@@ -192,7 +192,7 @@ export const app = {
         category: 'appearance',
         name: 'Font size',
         remark: 'This will aplly to messages and certain parts of the app.',
-        default: '16',
+        default: '14',
         type: 'number',
       },
       {
