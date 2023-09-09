@@ -227,8 +227,10 @@ function refreshStyles() {
     sheetBackground: {
       width: '100%',
       height: '70%',
-      padding: 15,
+      padding: 12,
       backgroundColor: currentTheme.backgroundSecondary,
+      borderTopStartRadius: 16,
+      borderTopEndRadius: 16,
     },
     textDefault: {
       color: currentTheme.foregroundPrimary,

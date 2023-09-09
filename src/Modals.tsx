@@ -54,6 +54,16 @@ const BottomSheet = observer(
           justifyContent: 'flex-end',
         }}>
         <View style={styles.sheetBackground}>
+          <View
+            style={{
+              alignSelf: 'center',
+              width: '25%',
+              height: '1%',
+              backgroundColor: currentTheme.foregroundPrimary,
+              borderRadius: 16,
+              marginBottom: 12,
+            }}
+          />
           {includeScrollView ? <ScrollView>{children}</ScrollView> : children}
         </View>
       </Modal2>
