@@ -3,6 +3,7 @@ import {View, Pressable, Modal, Dimensions} from 'react-native';
 import {observer} from 'mobx-react';
 
 import ImageViewer from 'react-native-image-zoom-viewer';
+import VideoPlayer from 'react-native-video-controls';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Server, User, Message, Channel} from 'revolt.js';
@@ -41,6 +42,7 @@ export class Modals extends React.Component {
       memberListContext: null,
       memberListUsers: null,
       contextMenuChannel: null,
+      videoPlayer: null,
     };
     setFunction('openProfile', async (u: User, s: Server) => {
       this.setState({
@@ -68,6 +70,9 @@ export class Modals extends React.Component {
     });
     setFunction('openImage', async a => {
       this.setState({imageViewerImage: a});
+    });
+    setFunction('openVideo', async (src, r) => {
+      this.setState({videoPlayer: {source: src, previewRef: r}});
     });
     setFunction('openServerContextMenu', async (s: Server) => {
       this.setState({contextMenuServer: s});
@@ -241,6 +246,53 @@ export class Modals extends React.Component {
             enableSwipeDown={true}
             onCancel={() => this.setState({imageViewerImage: null})}
           />
+        </Modal>
+        <Modal
+          visible={!!this.state.videoPlayer}
+          transparent={true}
+          animationType="fade">
+          {this.state.videoPlayer &&
+            ((playerRef = null),
+            (ts = this.state.videoPlayer.previewRef.state.currentTime)) && (
+              <>
+                <View
+                  style={{
+                    height: 50,
+                    width: '100%',
+                    backgroundColor: currentTheme.background,
+                    paddingHorizontal: 10,
+                    justifyContent: 'space-between',
+                    paddingVertical: 9,
+                    flexDirection: 'row',
+                  }}>
+                  <Pressable
+                    onPress={() => openUrl(this.state.videoPlayer.source)}>
+                    <MaterialCommunityIcon
+                      name="web"
+                      size={32}
+                      color={currentTheme.foregroundSecondary}
+                    />
+                  </Pressable>
+                  <GapView size={5} type={'horizontal'} />
+                  <Pressable onPress={() => this.setState({videoPlayer: null})}>
+                    <MaterialCommunityIcon
+                      name="close-circle"
+                      size={32}
+                      color={currentTheme.foregroundSecondary}
+                    />
+                  </Pressable>
+                </View>
+                <VideoPlayer
+                  source={{uri: this.state.videoPlayer.source}}
+                  disableFullscreen
+                  disableBack
+                  ref={ref => (playerRef = ref && ref.player.ref)}
+                  onLoad={() => playerRef.seek(ts)}
+                  resizeMode='contain'
+                  style={{width: '100%', height: '100%'}}
+                />
+              </>
+            )}
         </Modal>
         <Modal
           visible={this.state.settingsOpen}
