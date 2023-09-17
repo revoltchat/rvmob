@@ -1,4 +1,4 @@
-import {Message} from 'revolt.js';
+import {Message, Server, User} from 'revolt.js';
 
 type StringSetting = {
   default: string;
@@ -28,3 +28,20 @@ export type ReplyingMessage = {
   mentions: boolean;
   message: Message;
 };
+
+interface ReportedMessage {
+  type: 'Message';
+  object: Message;
+}
+
+interface ReportedServer {
+  type: 'Server';
+  object: Server;
+}
+
+interface ReportedUser {
+  type: 'User';
+  object: User;
+}
+
+export type ReportedObject = ReportedMessage | ReportedServer | ReportedUser;

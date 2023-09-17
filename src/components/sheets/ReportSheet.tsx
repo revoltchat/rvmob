@@ -6,27 +6,11 @@ import {Message, User, Server} from 'revolt.js';
 
 import {client} from '../../Generic';
 import {USER_IDS} from '../../lib/consts';
+import type {ReportedObject} from '../../lib/types';
 import {Avatar} from '../../Profile';
 import {currentTheme} from '../../Theme';
-import {Button, ContextButton, Text, Username} from '../common/atoms';
+import {Button, Text, Username} from '../common/atoms';
 import {MarkdownView} from '../common/MarkdownView';
-
-interface ReportedMessage {
-  type: 'Message';
-  object: Message;
-}
-
-interface ReportedServer {
-  type: 'Server';
-  object: Server;
-}
-
-interface ReportedUser {
-  type: 'User';
-  object: User;
-}
-
-type ReportedObject = ReportedMessage | ReportedServer | ReportedUser;
 
 type Reason = {
   label: string;
