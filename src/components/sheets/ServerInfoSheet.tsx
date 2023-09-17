@@ -117,7 +117,7 @@ export const ServerInfoSheet = observer(
               <ContextButton
                 key={'server-ctx-menu-report'}
                 onPress={() => {
-                  app.openReportMenu(server, 'Server');
+                  app.openReportMenu({object: server, type: 'Server'});
                 }}>
                 <View style={styles.iconContainer}>
                   <MaterialIcon

@@ -2,7 +2,7 @@ import React from 'react';
 import {ScrollView, TextInput, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {Message, User, Server} from 'revolt.js';
+import {Message} from 'revolt.js';
 
 import {client} from '../../Generic';
 import {USER_IDS} from '../../lib/consts';
@@ -60,12 +60,12 @@ const inputStyles = {
   color: currentTheme.foregroundPrimary,
 };
 
-export const ReportModal = observer((props: ReportedObject) => {
+export const ReportModal = observer(({obj}: {obj: ReportedObject}) => {
   const [additionalContext, setAdditionalContext] = React.useState('');
   const [reason, setReason] = React.useState({} as Reason);
   const [status, setStatus] = React.useState({} as Status);
-  const type = props.type;
-  const object = props.object;
+  const type = obj.type;
+  const object = obj.object;
   const messageReasons = [
     {label: 'This message breaks one or more laws', reason: 'Illegal'},
     {label: 'This message promotes harm', reason: 'PromotesHarm'},
@@ -215,7 +215,7 @@ export const ReportModal = observer((props: ReportedObject) => {
   }
 
   let output = <></>;
-  switch (type) {
+  switch (obj.type) {
     case 'Message':
       let msg = object as Message;
       const isLikelyBridged =
@@ -283,11 +283,7 @@ export const ReportModal = observer((props: ReportedObject) => {
               <Button
                 onPress={async () =>
                   setStatus(
-                    await sendReport(
-                      {type: type, object: msg},
-                      reason.reason,
-                      additionalContext,
-                    ),
+                    await sendReport(obj, reason.reason, additionalContext),
                   )
                 }>
                 <Text>Report message</Text>
@@ -296,13 +292,12 @@ export const ReportModal = observer((props: ReportedObject) => {
           )}
           {!reason.reason && <ReasonsSelector reasons={messageReasons} />}
           {status.status === 'success' && (
-            <SuccessScreen reportedObject={props} />
+            <SuccessScreen reportedObject={obj} />
           )}
         </>
       );
       break;
     case 'User':
-      let user = object as User;
       output = (
         <>
           <Text type={'header'}>Report user</Text>
@@ -320,11 +315,7 @@ export const ReportModal = observer((props: ReportedObject) => {
               <Button
                 onPress={async () =>
                   setStatus(
-                    await sendReport(
-                      {type: type, object: user},
-                      reason.reason,
-                      additionalContext,
-                    ),
+                    await sendReport(obj, reason.reason, additionalContext),
                   )
                 }>
                 <Text>Report user</Text>
@@ -333,13 +324,12 @@ export const ReportModal = observer((props: ReportedObject) => {
           )}
           {!reason.reason && <ReasonsSelector reasons={userReasons} />}
           {status.status === 'success' && (
-            <SuccessScreen reportedObject={props} />
+            <SuccessScreen reportedObject={obj} />
           )}
         </>
       );
       break;
     case 'Server':
-      let server = object as Server;
       output = (
         <>
           <Text type={'header'}>Report server</Text>
@@ -357,11 +347,7 @@ export const ReportModal = observer((props: ReportedObject) => {
               <Button
                 onPress={async () =>
                   setStatus(
-                    await sendReport(
-                      {type: type, object: server},
-                      reason.reason,
-                      additionalContext,
-                    ),
+                    await sendReport(obj, reason.reason, additionalContext),
                   )
                 }>
                 <Text>Report server</Text>
@@ -370,7 +356,7 @@ export const ReportModal = observer((props: ReportedObject) => {
           )}
           {!reason.reason && <ReasonsSelector reasons={serverReasons} />}
           {status.status === 'success' && (
-            <SuccessScreen reportedObject={props} />
+            <SuccessScreen reportedObject={obj} />
           )}
         </>
       );

@@ -7,7 +7,7 @@ import FastImage from 'react-native-fast-image';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {API, Channel, Client, Message, Server, User} from 'revolt.js';
+import {API, Channel, Client, Server, User} from 'revolt.js';
 
 import {currentTheme, setTheme, themes, styles} from './Theme';
 import {Button, Text} from './components/common/atoms';
@@ -20,7 +20,7 @@ import {
   RE_BOT_INVITE,
   WIKI_URL,
 } from './lib/consts';
-import {ReplyingMessage, Setting} from './lib/types';
+import {ReplyingMessage, ReportedObject, Setting} from './lib/types';
 const Image = FastImage;
 
 export const app = {
@@ -292,7 +292,7 @@ export const app = {
   openDirectMessage: (c: Channel) => {},
   openImage: a => {},
   openMessage: m => {},
-  openServerContextMenu: (s: Server) => {
+  openServerContextMenu: (s: Server | null) => {
     console.log(
       `[FUNCTIONS] Tried to run uninitialised function openServerContextMenu (args: ${s})`,
     );
@@ -313,10 +313,7 @@ export const app = {
   openMemberList: (c: Channel | Server | null, u: User[] | null) => {},
   openChannelContextMenu: (c: Channel | null) => {},
   openStatusMenu: (state: boolean) => {},
-  openReportMenu: (
-    _object: User | Server | Message | null,
-    _type: string | null,
-  ) => {},
+  openReportMenu: (object: ReportedObject| null) => {},
 };
 
 export function setFunction(name: string, func: any) {

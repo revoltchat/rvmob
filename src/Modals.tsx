@@ -1,13 +1,13 @@
 import React from 'react';
 import {Modal, Pressable, ScrollView, View} from 'react-native';
-import {observer} from 'mobx-react';
+import {observer} from 'mobx-react-lite';
 
 import BottomSheet from '@gorhom/bottom-sheet';
 import Modal2 from 'react-native-modal';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {Server, User, Message, Channel} from 'revolt.js';
+import {API, Channel, Message, Server, User} from 'revolt.js';
 
 import {app, client, openUrl, setFunction} from './Generic';
 import {styles, currentTheme} from './Theme';
@@ -24,6 +24,7 @@ import {
   SettingsSheet,
   StatusSheet,
 } from './components/sheets/';
+import type {ReportedObject} from './lib/types';
 
 const MBottomSheet = observer(
   ({
@@ -72,296 +73,302 @@ const MBottomSheet = observer(
   },
 );
 
-@observer
-export class Modals extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // MESSAGE SHEET
-      showMessageMenu: false,
-      contextMenuMessage: null,
-      // PROFILE SHEET
+export const Modals = observer(() => {
+  const [messageMenuState, setMessageMenuState] = React.useState({
+    showMessageMenu: false,
+    contextMenuMessage: null,
+  } as {showMessageMenu: boolean; contextMenuMessage: Message | null});
+  const [statusMenuState, setStatusMenuState] = React.useState(false);
+  const [profileMenuState, setProfileMenuState] = React.useState({
+    showUserMenu: false,
+    contextMenuUser: null,
+    contextMenuUserServer: null,
+  } as {
+    showUserMenu: boolean;
+    contextMenuUser: User | null;
+    contextMenuUserServer: Server | null;
+  });
+  const [imageViewerState, setImageViewerState] = React.useState({
+    i: null as any,
+  });
+  const [settingsVisibility, setSettingsVisibility] = React.useState(false);
+  const [reportMenuState, setReportMenuState] = React.useState({
+    showReportMenu: false,
+    reportObject: null,
+  } as {
+    showReportMenu: boolean;
+    reportObject: ReportedObject | null;
+  });
+  const [channelMenuState, setChannelMenuState] = React.useState({
+    showChannelMenu: false,
+    channelMenuChannel: null,
+  } as {
+    showChannelMenu: boolean;
+    channelMenuChannel: Channel | null;
+  });
+  const [inviteServer, setInviteServer] = React.useState({
+    inviteServer: null,
+    inviteServerCode: '',
+  } as {
+    inviteServer: API.InviteResponse | null;
+    inviteServerCode: string;
+  });
+  const [inviteBot, setInviteBot] = React.useState(null as User | null);
+  const [serverMenuState, setServerMenuState] = React.useState({
+    showServerMenu: false,
+    contextMenuServer: null,
+  } as {
+    showServerMenu: boolean;
+    contextMenuServer: Server | null;
+  });
+  const [memberListState, setMemberListState] = React.useState({
+    showMemberList: false,
+    memberListContext: null,
+    memberListUsers: null,
+  } as {
+    showMemberList: boolean;
+    memberListContext: Channel | /* Server | */ null;
+    memberListUsers: User[] | null;
+  });
+
+  setFunction('openMessage', async (m: Message | null) => {
+    setMessageMenuState(
+      m
+        ? {showMessageMenu: true, contextMenuMessage: m}
+        : {...messageMenuState, showMessageMenu: false},
+    );
+  });
+  setFunction('openStatusMenu', async (show: boolean) => {
+    setStatusMenuState(show);
+  });
+  setFunction('openProfile', async (u: User | null, s: Server | null) => {
+    setProfileMenuState(
+      u
+        ? {
+            showUserMenu: true,
+            contextMenuUser: u,
+            contextMenuUserServer: s,
+          }
+        : {...profileMenuState, showUserMenu: false},
+    );
+  });
+  setFunction('openDirectMessage', async (dm: Channel) => {
+    setProfileMenuState({
+      ...profileMenuState,
       showUserMenu: false,
-      contextMenuUser: null,
-      contextMenuUserServer: null,
-      // IMAGE VIEWER
-      imageViewerImage: null,
-      // SETTINGS
-      settingsOpen: false,
-      // SERVER SHEET
-      showServerMenu: false,
-      contextMenuServer: null,
-      // INVITE MENUS
-      inviteServer: null,
-      inviteServerCode: '',
-      inviteBot: null,
-      // STATUS MENU
-      showStatusMenu: false,
-      // MEMBER LIST
-      showMemberList: false,
-      memberListContext: null,
-      memberListUsers: null,
-      // CHANNEL MENU
-      showChannelMenu: false,
-      contextMenuChannel: null,
-      // REPORT MENU
-      showReportMenu: false,
-      reportObject: null,
-      reportType: null,
-    };
-    setFunction('openProfile', async (u: User | null, s: Server | null) => {
-      this.setState(
-        u
-          ? {
-              showUserMenu: true,
-              contextMenuUser: u,
-              contextMenuUserServer: s,
-            }
-          : {showUserMenu: false},
-      );
     });
-    setFunction('openInvite', async (i: string) => {
-      try {
-        let community = await client.fetchInvite(i);
-        if (community.type === 'Server') {
-          this.setState({
-            inviteServer: community,
-            inviteServerCode: i,
-          });
-        }
-      } catch (e) {
-        console.log(e);
+    app.openChannel(dm);
+  });
+  setFunction('openImage', async (a: any) => {
+    setImageViewerState({i: a});
+  });
+  setFunction('openSettings', async (o: boolean) => {
+    setSettingsVisibility(o);
+  });
+  setFunction('openReportMenu', async (object: ReportedObject | null) => {
+    setReportMenuState(
+      object
+        ? {showReportMenu: true, reportObject: object}
+        : {...reportMenuState, showReportMenu: false},
+    );
+  });
+  setFunction('openChannelContextMenu', async (channel: Channel | null) => {
+    setChannelMenuState(
+      channel
+        ? {showChannelMenu: true, channelMenuChannel: channel}
+        : {...channelMenuState, showChannelMenu: false},
+    );
+  });
+  setFunction('openInvite', async (i: string) => {
+    try {
+      let community = await client.fetchInvite(i);
+      if (community.type === 'Server') {
+        setInviteServer({
+          inviteServer: community,
+          inviteServerCode: i,
+        });
       }
-    });
-    setFunction('openBotInvite', async (id: string) => {
-      this.setState({
-        inviteBot: await client.bots.fetchPublic(id).catch(e => e),
-      });
-    });
-    setFunction('openImage', async (a: any) => {
-      this.setState({imageViewerImage: a});
-    });
-    setFunction('openServerContextMenu', async (s: Server | null) => {
-      this.setState(
-        s
-          ? {showServerMenu: true, contextMenuServer: s}
-          : {showServerMenu: false},
-      );
-    });
-    setFunction('openMessage', async (m: Message | null) => {
-      this.setState(
-        m
-          ? {showMessageMenu: true, contextMenuMessage: m}
-          : {showMessageMenu: false},
-      );
-    });
-    setFunction('openSettings', async (o: boolean) => {
-      this.setState({settingsOpen: o || !this.state.settingsOpen});
-    });
-    setFunction('openDirectMessage', async (dm: Channel) => {
-      this.setState({
-        showUserMenu: false,
-      });
-      app.openChannel(dm);
-    });
-    setFunction('openStatusMenu', async (show: boolean) => {
-      this.setState({showStatusMenu: show});
-    });
-    setFunction(
-      'openReportMenu',
-      async (object: User | Server | Message | null, type: string | null) => {
-        this.setState(
-          object
-            ? {showReportMenu: true, reportObject: object, reportType: type}
-            : {showReportMenu: false},
-        );
-      },
+    } catch (e) {
+      console.log(e);
+    }
+  });
+  setFunction('openBotInvite', async (id: string) => {
+    setInviteBot(await client.bots.fetchPublic(id).catch(e => e));
+  });
+  setFunction('openServerContextMenu', async (s: Server | null) => {
+    setServerMenuState(
+      s
+        ? {showServerMenu: true, contextMenuServer: s}
+        : {...serverMenuState, showServerMenu: false},
     );
-    setFunction(
-      'openMemberList',
-      async (context: Channel | Server | null, users: User[] | null) => {
-        this.setState(
-          context
-            ? {
-                showMemberList: true,
-                memberListContext: context,
-                memberListUsers: users,
-              }
-            : {showMemberList: false},
-        );
-      },
-    );
-    setFunction('openChannelContextMenu', async (channel: Channel | null) => {
-      this.setState(
-        channel
-          ? {showChannelMenu: true, contextMenuChannel: channel}
-          : {showChannelMenu: false},
-      );
-    });
-  }
-  render() {
-    return (
-      <>
-        <MBottomSheet
-          sheetKey={'messageMenu'}
-          visible={this.state.showMessageMenu}
-          callback={() => app.openMessage(null)}>
-          <MessageMenuSheet
-            setState={() => {
-              app.openMessage(null);
-            }}
-            message={this.state.contextMenuMessage}
-          />
-        </MBottomSheet>
-        <MBottomSheet
-          sheetKey={'statusMenu'}
-          visible={this.state.showStatusMenu}
-          callback={() => {
-            app.openStatusMenu(false);
-            this.setState({userStatusInput: ''});
-          }}>
-          <StatusSheet />
-        </MBottomSheet>
-        <MBottomSheet
-          sheetKey={'profileMenu'}
-          visible={this.state.showUserMenu}
-          callback={() => app.openProfile(null)}
-          includeScrollView>
-          <ProfileSheet
-            user={this.state.contextMenuUser}
-            server={this.state.contextMenuUserServer}
-          />
-        </MBottomSheet>
-        <Modal
-          visible={!!this.state.imageViewerImage}
-          transparent={true}
-          animationType="fade">
-          <ImageViewer
-            imageUrls={
-              this.state.imageViewerImage?.metadata
-                ? [
-                    {
-                      url: client.generateFileURL(this.state.imageViewerImage)!,
-                      width: this.state.imageViewerImage.metadata.width,
-                      height: this.state.imageViewerImage.metadata.height,
-                    },
-                  ]
-                : [{url: this.state.imageViewerImage}]
+  });
+  setFunction(
+    'openMemberList',
+    async (context: Channel | /* Server | */ null, users: User[] | null) => {
+      setMemberListState(
+        context
+          ? {
+              showMemberList: true,
+              memberListContext: context,
+              memberListUsers: users,
             }
-            renderHeader={() => (
-              <View
-                style={{
-                  height: 50,
-                  width: '100%',
-                  paddingHorizontal: 10,
-                  justifyContent: 'space-between',
-                  paddingVertical: 9,
-                  flexDirection: 'row',
-                }}>
-                <Pressable
-                  onPress={() =>
-                    openUrl(
-                      this.state.imageViewerImage?.metadata
-                        ? client.generateFileURL(this.state.imageViewerImage)
-                        : this.state.imageViewerImage,
-                    )
-                  }>
-                  <MaterialCommunityIcon
-                    name="web"
-                    size={32}
-                    color={currentTheme.foregroundSecondary}
-                  />
-                </Pressable>
-                <GapView size={5} type={'horizontal'} />
-                <Pressable
-                  onPress={() => this.setState({imageViewerImage: null})}>
-                  <MaterialCommunityIcon
-                    name="close-circle"
-                    size={32}
-                    color={currentTheme.foregroundSecondary}
-                  />
-                </Pressable>
-              </View>
-            )}
-            renderIndicator={(_1, _2) => <></>}
-            enableSwipeDown={true}
-            onCancel={() => this.setState({imageViewerImage: null})}
-          />
-        </Modal>
-        <Modal
-          visible={this.state.settingsOpen}
-          transparent={true}
-          animationType="slide"
-          onRequestClose={() => this.setState({settingsOpen: false})}>
-          <SettingsSheet
-            setState={() => this.setState({settingsOpen: false})}
-          />
-        </Modal>
-        <MBottomSheet
-          sheetKey={'serverMenu'}
-          visible={this.state.showServerMenu}
-          callback={() => app.openServerContextMenu(null)}>
-          <ServerInfoSheet
-            setState={() => {
-              this.setState({contextMenuServer: null});
-            }}
-            server={this.state.contextMenuServer}
-          />
-        </MBottomSheet>
-        <Modal
-          visible={!!this.state.inviteServer}
-          transparent={true}
-          animationType="fade"
-          onRequestClose={() => this.setState({inviteServer: null})}>
-          <ServerInviteSheet
-            setState={() => {
-              this.setState({
-                inviteServer: null,
-                inviteServerCode: null,
-              });
-            }}
-            server={this.state.inviteServer}
-            inviteCode={this.state.inviteServerCode}
-          />
-        </Modal>
-        <Modal
-          visible={!!this.state.inviteBot}
-          transparent={true}
-          animationType="fade">
-          <BotInviteSheet
-            setState={() => {
-              this.setState({
-                inviteBot: null,
-              });
-            }}
-            bot={this.state.inviteBot}
-          />
-        </Modal>
-        <MBottomSheet
-          sheetKey={'reportModal'}
-          visible={this.state.showReportMenu}
-          callback={() => app.openReportMenu(null, null)}>
-          <ReportSheet
-            object={this.state.reportObject}
-            type={this.state.reportType}
-          />
-        </MBottomSheet>
-        <MBottomSheet
-          sheetKey={'memberList'}
-          visible={this.state.showMemberList}
-          callback={() => app.openMemberList(null, null)}>
-          <MemberListSheet
-            context={this.state.memberListContext}
-            users={this.state.memberListUsers}
-          />
-        </MBottomSheet>
-        <MBottomSheet
-          sheetKey={'channelMenu'}
-          visible={this.state.showChannelMenu}
-          callback={() => app.openChannelContextMenu(null)}>
-          <ChannelInfoSheet channel={this.state.contextMenuChannel} />
-        </MBottomSheet>
-      </>
-    );
-  }
-}
+          : {...memberListState, showMemberList: false},
+      );
+    },
+  );
+
+  return (
+    <>
+      <MBottomSheet
+        sheetKey={'messageMenu'}
+        visible={messageMenuState.showMessageMenu}
+        callback={() => app.openMessage(null)}>
+        <MessageMenuSheet
+          setState={() => {
+            app.openMessage(null);
+          }}
+          message={messageMenuState.contextMenuMessage!}
+        />
+      </MBottomSheet>
+      <MBottomSheet
+        sheetKey={'statusMenu'}
+        visible={statusMenuState}
+        callback={() => {
+          app.openStatusMenu(false);
+        }}>
+        <StatusSheet />
+      </MBottomSheet>
+      <MBottomSheet
+        sheetKey={'profileMenu'}
+        visible={profileMenuState.showUserMenu}
+        callback={() => app.openProfile(null)}
+        includeScrollView>
+        <ProfileSheet
+          user={profileMenuState.contextMenuUser!}
+          server={profileMenuState.contextMenuUserServer!}
+        />
+      </MBottomSheet>
+      <Modal
+        visible={!!imageViewerState.i}
+        transparent={true}
+        animationType="fade">
+        <ImageViewer
+          imageUrls={
+            imageViewerState.i?.metadata
+              ? [
+                  {
+                    url: client.generateFileURL(imageViewerState.i)!,
+                    width: imageViewerState.i.metadata.width,
+                    height: imageViewerState.i.metadata.height,
+                  },
+                ]
+              : [{url: imageViewerState.i}]
+          }
+          renderHeader={() => (
+            <View
+              style={{
+                height: 50,
+                width: '100%',
+                paddingHorizontal: 10,
+                justifyContent: 'space-between',
+                paddingVertical: 9,
+                flexDirection: 'row',
+              }}>
+              <Pressable
+                onPress={() =>
+                  openUrl(
+                    imageViewerState.i?.metadata
+                      ? client.generateFileURL(imageViewerState.i)
+                      : imageViewerState.i,
+                  )
+                }>
+                <MaterialCommunityIcon
+                  name="web"
+                  size={32}
+                  color={currentTheme.foregroundSecondary}
+                />
+              </Pressable>
+              <GapView size={5} type={'horizontal'} />
+              <Pressable onPress={() => setImageViewerState({i: null})}>
+                <MaterialCommunityIcon
+                  name="close-circle"
+                  size={32}
+                  color={currentTheme.foregroundSecondary}
+                />
+              </Pressable>
+            </View>
+          )}
+          renderIndicator={(_1, _2) => <></>}
+          enableSwipeDown={true}
+          onCancel={() => setImageViewerState({i: null})}
+        />
+      </Modal>
+      <Modal
+        visible={settingsVisibility}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setSettingsVisibility(false)}>
+        <SettingsSheet setState={() => setSettingsVisibility(false)} />
+      </Modal>
+      <MBottomSheet
+        sheetKey={'reportModal'}
+        visible={reportMenuState.showReportMenu}
+        callback={() => app.openReportMenu(null)}>
+        <ReportSheet obj={reportMenuState.reportObject!} />
+      </MBottomSheet>
+      <MBottomSheet
+        sheetKey={'channelMenu'}
+        visible={channelMenuState.showChannelMenu}
+        callback={() => app.openChannelContextMenu(null)}>
+        <ChannelInfoSheet channel={channelMenuState.channelMenuChannel!} />
+      </MBottomSheet>
+      <Modal
+        visible={!!inviteServer.inviteServer}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() =>
+          setInviteServer({inviteServer: null, inviteServerCode: ''})
+        }>
+        <ServerInviteSheet
+          setState={() => {
+            setInviteServer({
+              inviteServer: null,
+              inviteServerCode: '',
+            });
+          }}
+          // @ts-expect-error this will always be a server response (TODO: figure out a solution?)
+          server={inviteServer.inviteServer}
+          inviteCode={inviteServer.inviteServerCode}
+        />
+      </Modal>
+      <Modal visible={!!inviteBot} transparent={true} animationType="fade">
+        <BotInviteSheet
+          setState={() => {
+            setInviteBot(null);
+          }}
+          bot={inviteBot!}
+        />
+      </Modal>
+      <MBottomSheet
+        sheetKey={'serverMenu'}
+        visible={serverMenuState.showServerMenu}
+        callback={() => app.openServerContextMenu(null)}>
+        <ServerInfoSheet
+          setState={() => {
+            app.openServerContextMenu(null);
+          }}
+          server={serverMenuState.contextMenuServer!}
+        />
+      </MBottomSheet>
+      <MBottomSheet
+        sheetKey={'memberList'}
+        visible={memberListState.showMemberList}
+        callback={() => app.openMemberList(null, null)}>
+        <MemberListSheet
+          context={memberListState.memberListContext!}
+          users={memberListState.memberListUsers!}
+        />
+      </MBottomSheet>
+    </>
+  );
+});

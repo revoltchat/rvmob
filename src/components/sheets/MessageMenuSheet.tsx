@@ -125,7 +125,7 @@ export const MessageMenuSheet = observer(
         {message?.author?.relationship !== 'User' ? (
           <ContextButton
             onPress={() => {
-              app.openReportMenu(message, 'Message');
+              app.openReportMenu({object: message, type: 'Message'});
               setState();
             }}>
             <View style={styles.iconContainer}>

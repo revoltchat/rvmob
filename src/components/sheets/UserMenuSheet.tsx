@@ -45,7 +45,7 @@ export const UserMenuSheet = observer(
           {user.relationship !== 'User' ? (
             <ContextButton
               onPress={() => {
-                app.openReportMenu(user, 'User');
+                app.openReportMenu({object: user, type: 'User'});
                 state(false);
               }}>
               <View style={styles.iconContainer}>

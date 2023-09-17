@@ -50,7 +50,6 @@ class MainView extends React.Component {
       emailInput: '',
       passwordInput: '',
       tfaInput: '',
-      userStatusInput: '',
       tfaTicket: '',
       leftMenuOpen: false,
       notificationMessage: null,
@@ -374,7 +373,7 @@ class MainView extends React.Component {
               bounceBackOnOverdraw={false}>
               <ChannelView state={this} channel={this.state.currentChannel} />
             </SideMenu>
-            <Modals state={this.state} setState={this.setState.bind(this)} />
+            <Modals />
             <NetworkIndicator client={client} />
             <View
               style={{position: 'absolute', top: 20, left: 0, width: '100%'}}>
