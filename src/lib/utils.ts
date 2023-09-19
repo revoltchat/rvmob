@@ -1,4 +1,5 @@
 import {ToastAndroid} from 'react-native';
+import TrackPlayer, { Event } from 'react-native-track-player';
 
 import {differenceInMinutes} from 'date-fns';
 import {Channel, Message} from 'revolt.js';
@@ -185,4 +186,12 @@ export async function fetchMessages(
 
 export function showToast(badgeName: string) {
   ToastAndroid.show(badgeName, ToastAndroid.SHORT);
+}
+export async function playbackService(){
+    TrackPlayer.addEventListener(Event.RemotePlay, () => TrackPlayer.play());
+    TrackPlayer.addEventListener(Event.RemotePause, () => TrackPlayer.pause());
+    TrackPlayer.addEventListener(Event.RemoteStop, () => TrackPlayer.stop());
+    TrackPlayer.addEventListener(Event.RemoteSeek, ({position}) => TrackPlayer.seekTo(position));
+    TrackPlayer.addEventListener(Event.RemoteJumpForward, async ({interval}) =>{TrackPlayer.seekTo(await TrackPlayer.getPosition() + interval)});
+    TrackPlayer.addEventListener(Event.RemoteJumpBackward, async ({interval}) =>{TrackPlayer.seekTo(await TrackPlayer.getPosition() - interval)});
 }
