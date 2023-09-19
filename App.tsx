@@ -26,6 +26,7 @@ import {Button, Link, Text} from './src/components/common/atoms';
 import {LoginSettingsPage} from './src/components/pages/LoginSettingsPage';
 import {ChannelView} from './src/components/views/ChannelView';
 import {Notification} from './src/components/Notification';
+import {sleep} from './src/lib/utils';
 
 async function createChannel() {
   const channel = await notifee.createChannel({
@@ -201,6 +202,8 @@ class MainView extends React.Component {
         );
         if (this.state.currentChannel !== msg.channel) {
           this.setState({notificationMessage: msg});
+          await sleep(5000);
+          this.setState({notificationMessage: null});
         }
         let notifs = (await notifee.getDisplayedNotifications()).filter(
           n => n.id === msg.channel?._id,
@@ -376,7 +379,12 @@ class MainView extends React.Component {
               style={{position: 'absolute', top: 20, left: 0, width: '100%'}}>
               <Notification
                 message={this.state.notificationMessage}
-                setState={() =>
+                dismiss={() =>
+                  this.setState({
+                    notificationMessage: null,
+                  })
+                }
+                openChannel={() =>
                   this.setState({
                     notificationMessage: null,
                     currentChannel: this.state.notificationMessage.channel,

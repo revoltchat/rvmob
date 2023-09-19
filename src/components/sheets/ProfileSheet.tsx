@@ -61,7 +61,7 @@ export const ProfileSheet = observer(
     return showMenu ? (
       <UserMenuSheet state={setShowMenu} user={user} />
     ) : (
-      <ScrollView>
+      <>
         <View style={{flexDirection: 'row', width: '80%'}}>
           <Avatar
             size={80}
@@ -627,7 +627,7 @@ export const ProfileSheet = observer(
             <View style={{marginTop: 10}} />
           </ScrollView>
         ) : null}
-      </ScrollView>
+      </>
     );
   },
 );

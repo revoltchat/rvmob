@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Pressable, Modal, Dimensions} from 'react-native';
+import {Modal, Pressable, ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react';
 
+import Modal2 from 'react-native-modal';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import VideoPlayer from 'react-native-video-controls';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -24,31 +25,102 @@ import {
   StatusSheet,
 } from './components/sheets/';
 
+const BottomSheet = observer(
+  ({
+    sheetKey,
+    visible,
+    callback,
+    includeScrollView,
+    children,
+  }: {
+    sheetKey: string;
+    visible: boolean;
+    callback: Function;
+    includeScrollView?: boolean;
+    children: any;
+  }) => {
+    return (
+      <Modal2
+        key={sheetKey}
+        isVisible={visible}
+        onBackdropPress={() => callback()}
+        onBackButtonPress={() => callback()}
+        swipeDirection={'down'}
+        onSwipeComplete={() => callback()}
+        propagateSwipe
+        style={{
+          width: '100%',
+          marginHorizontal: 0,
+          marginBottom: 0,
+          justifyContent: 'flex-end',
+        }}>
+        <View style={styles.sheetBackground}>
+          <View
+            style={{
+              alignSelf: 'center',
+              width: '25%',
+              height: '1%',
+              backgroundColor: currentTheme.foregroundPrimary,
+              borderRadius: 16,
+              marginBottom: 12,
+            }}
+          />
+          {includeScrollView ? <ScrollView>{children}</ScrollView> : children}
+        </View>
+      </Modal2>
+    );
+  },
+);
+
 @observer
 export class Modals extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // MESSAGE SHEET
+      showMessageMenu: false,
       contextMenuMessage: null,
+      // PROFILE SHEET
+      showUserMenu: false,
       contextMenuUser: null,
       contextMenuUserServer: null,
+      // IMAGE VIEWER
       imageViewerImage: null,
+      // SETTINGS
       settingsOpen: false,
+      // SERVER SHEET
+      showServerMenu: false,
       contextMenuServer: null,
+      // INVITE MENUS
       inviteServer: null,
       inviteServerCode: '',
       inviteBot: null,
-      showStatusMenu: null,
+      // STATUS MENU
+      showStatusMenu: false,
+      // MEMBER LIST
+      showMemberList: false,
       memberListContext: null,
       memberListUsers: null,
+      // CHANNEL MENU
+      showChannelMenu: false,
       contextMenuChannel: null,
+      // VIDEO PLAYER
       videoPlayer: null,
+      // REPORT MENU
+      showReportMenu: false,
+      reportObject: null,
+      reportType: null,
     };
-    setFunction('openProfile', async (u: User, s: Server) => {
-      this.setState({
-        contextMenuUser: u || null,
-        contextMenuUserServer: s || null,
-      });
+    setFunction('openProfile', async (u: User | null, s: Server | null) => {
+      this.setState(
+        u
+          ? {
+              showUserMenu: true,
+              contextMenuUser: u,
+              contextMenuUserServer: s,
+            }
+          : {showUserMenu: false},
+      );
     });
     setFunction('openInvite', async (i: string) => {
       try {
@@ -68,25 +140,32 @@ export class Modals extends React.Component {
         inviteBot: await client.bots.fetchPublic(id).catch(e => e),
       });
     });
-    setFunction('openImage', async a => {
+    setFunction('openImage', async (a: any) => {
       this.setState({imageViewerImage: a});
     });
     setFunction('openVideo', async (src, r) => {
       this.setState({videoPlayer: {source: src, previewRef: r}});
     });
-    setFunction('openServerContextMenu', async (s: Server) => {
-      this.setState({contextMenuServer: s});
+    setFunction('openServerContextMenu', async (s: Server | null) => {
+      this.setState(
+        s
+          ? {showServerMenu: true, contextMenuServer: s}
+          : {showServerMenu: false},
+      );
     });
-    setFunction('openMessage', async (m: Message) => {
-      this.setState({contextMenuMessage: m});
+    setFunction('openMessage', async (m: Message | null) => {
+      this.setState(
+        m
+          ? {showMessageMenu: true, contextMenuMessage: m}
+          : {showMessageMenu: false},
+      );
     });
     setFunction('openSettings', async (o: boolean) => {
       this.setState({settingsOpen: o || !this.state.settingsOpen});
     });
     setFunction('openDirectMessage', async (dm: Channel) => {
       this.setState({
-        contextMenuUser: null,
-        contextMenuUserServer: null,
+        showUserMenu: false,
       });
       app.openChannel(dm);
     });
@@ -96,101 +175,68 @@ export class Modals extends React.Component {
     setFunction(
       'openReportMenu',
       async (object: User | Server | Message | null, type: string | null) => {
-        this.setState({reportObject: object, reportType: type});
+        this.setState(
+          object
+            ? {showReportMenu: true, reportObject: object, reportType: type}
+            : {showReportMenu: false},
+        );
       },
     );
     setFunction(
       'openMemberList',
       async (context: Channel | Server | null, users: User[] | null) => {
-        this.setState({memberListContext: context, memberListUsers: users});
+        this.setState(
+          context
+            ? {
+                showMemberList: true,
+                memberListContext: context,
+                memberListUsers: users,
+              }
+            : {showMemberList: false},
+        );
       },
     );
     setFunction('openChannelContextMenu', async (channel: Channel | null) => {
-      this.setState({contextMenuChannel: channel});
+      this.setState(
+        channel
+          ? {showChannelMenu: true, contextMenuChannel: channel}
+          : {showChannelMenu: false},
+      );
     });
   }
   render() {
     return (
       <>
-        <Modal
-          key={'messageMenu'}
-          animationType="slide"
-          transparent={true}
-          visible={!!this.state.contextMenuMessage}
-          onRequestClose={() => this.setState({contextMenuMessage: null})}>
-          <Pressable
-            onPress={() => this.setState({contextMenuMessage: null})}
-            style={{
-              width: Dimensions.get('window').width,
-              height: Dimensions.get('window').height,
-              position: 'absolute',
-              backgroundColor: '#00000066',
+        <BottomSheet
+          sheetKey={'messageMenu'}
+          visible={this.state.showMessageMenu}
+          callback={() => app.openMessage(null)}>
+          <MessageMenuSheet
+            setState={() => {
+              app.openMessage(null);
             }}
+            message={this.state.contextMenuMessage}
           />
-          <View
-            style={{
-              width: '100%',
-              height: '50%',
-              top: '50%',
-              backgroundColor: currentTheme.backgroundSecondary,
-            }}>
-            <MessageMenuSheet
-              setState={() => {
-                this.setState({contextMenuMessage: null});
-              }}
-              message={this.state.contextMenuMessage}
-            />
-          </View>
-        </Modal>
-        <Modal
-          key={'statusMenu'}
-          animationType="slide"
-          transparent={true}
-          visible={!!this.state.showStatusMenu}
-          onRequestClose={() => {
-            app.openStatusMenu(null);
+        </BottomSheet>
+        <BottomSheet
+          sheetKey={'statusMenu'}
+          visible={this.state.showStatusMenu}
+          callback={() => {
+            app.openStatusMenu(false);
             this.setState({userStatusInput: ''});
           }}>
-          <Pressable
-            onPress={() => {
-              app.openStatusMenu(null);
-              this.setState({userStatusInput: ''});
-            }}
-            style={{
-              width: Dimensions.get('window').width,
-              height: Dimensions.get('window').height,
-              position: 'absolute',
-              backgroundColor: '#00000066',
-            }}
+          <StatusSheet />
+        </BottomSheet>
+        <BottomSheet
+          sheetKey={'profileMenu'}
+          visible={this.state.showUserMenu}
+          callback={() => app.openProfile(null)}
+          includeScrollView>
+          <ProfileSheet
+            user={this.state.contextMenuUser}
+            server={this.state.contextMenuUserServer}
           />
-          <View style={styles.sheetBackground}>
-            <StatusSheet />
-          </View>
-        </Modal>
-        <Modal
-          key={'profileMenu'}
-          animationType="slide"
-          transparent={true}
-          visible={!!this.state.contextMenuUser}
-          onRequestClose={() => app.openProfile(null)}>
-          <Pressable
-            onPress={() => {
-              app.openProfile(null);
-            }}
-            style={{
-              width: Dimensions.get('window').width,
-              height: Dimensions.get('window').height,
-              position: 'absolute',
-              backgroundColor: '#00000066',
-            }}
-          />
-          <View style={styles.sheetBackground}>
-            <ProfileSheet
-              user={this.state.contextMenuUser}
-              server={this.state.contextMenuUserServer}
-            />
-          </View>
-        </Modal>
+        </BottomSheet>
         <Modal
           visible={!!this.state.imageViewerImage}
           transparent={true}
@@ -303,29 +349,17 @@ export class Modals extends React.Component {
             setState={() => this.setState({settingsOpen: false})}
           />
         </Modal>
-        <Modal
-          visible={!!this.state.contextMenuServer}
-          transparent={true}
-          animationType="slide"
-          onRequestClose={() => app.openServerContextMenu(null)}>
-          <Pressable
-            onPress={() => app.openServerContextMenu(null)}
-            style={{
-              width: Dimensions.get('window').width,
-              height: Dimensions.get('window').height,
-              position: 'absolute',
-              backgroundColor: '#00000066',
+        <BottomSheet
+          sheetKey={'serverMenu'}
+          visible={this.state.showServerMenu}
+          callback={() => app.openServerContextMenu(null)}>
+          <ServerInfoSheet
+            setState={() => {
+              this.setState({contextMenuServer: null});
             }}
+            server={this.state.contextMenuServer}
           />
-          <View style={styles.sheetBackground}>
-            <ServerInfoSheet
-              setState={() => {
-                this.setState({contextMenuServer: null});
-              }}
-              server={this.state.contextMenuServer}
-            />
-          </View>
-        </Modal>
+        </BottomSheet>
         <Modal
           visible={!!this.state.inviteServer}
           transparent={true}
@@ -355,76 +389,30 @@ export class Modals extends React.Component {
             bot={this.state.inviteBot}
           />
         </Modal>
-        <Modal
-          key={'reportModal'}
-          animationType="slide"
-          transparent={true}
-          visible={!!this.state.reportObject}
-          onRequestClose={() => app.openReportMenu(null, null)}>
-          <Pressable
-            onPress={() => {
-              app.openReportMenu(null, null);
-            }}
-            style={{
-              width: Dimensions.get('window').width,
-              height: Dimensions.get('window').height,
-              position: 'absolute',
-              backgroundColor: '#00000066',
-            }}
+        <BottomSheet
+          sheetKey={'reportModal'}
+          visible={this.state.showReportMenu}
+          callback={() => app.openReportMenu(null, null)}>
+          <ReportSheet
+            object={this.state.reportObject}
+            type={this.state.reportType}
           />
-          <View style={styles.sheetBackground}>
-            <ReportSheet
-              object={this.state.reportObject}
-              type={this.state.reportType}
-            />
-          </View>
-        </Modal>
-        <Modal
-          key={'memberList'}
-          animationType="slide"
-          transparent={true}
-          visible={
-            !!this.state.memberListContext && !!this.state.memberListUsers
-          }
-          onRequestClose={() =>
-            this.setState({memberListContext: null, memberListUsers: null})
-          }>
-          <Pressable
-            onPress={() =>
-              this.setState({memberListContext: null, memberListUsers: null})
-            }
-            style={{
-              width: Dimensions.get('window').width,
-              height: Dimensions.get('window').height,
-              position: 'absolute',
-              backgroundColor: '#00000066',
-            }}
+        </BottomSheet>
+        <BottomSheet
+          sheetKey={'memberList'}
+          visible={this.state.showMemberList}
+          callback={() => app.openMemberList(null, null)}>
+          <MemberListSheet
+            context={this.state.memberListContext}
+            users={this.state.memberListUsers}
           />
-          <View style={styles.sheetBackground}>
-            <MemberListSheet
-              context={this.state.memberListContext}
-              users={this.state.memberListUsers}
-            />
-          </View>
-        </Modal>
-        <Modal
-          visible={!!this.state.contextMenuChannel}
-          transparent={true}
-          animationType="slide"
-          onRequestClose={() => app.openChannelContextMenu(null)}>
-          <Pressable
-            onPress={() => app.openChannelContextMenu(null)}
-            style={{
-              width: Dimensions.get('window').width,
-              height: Dimensions.get('window').height,
-              position: 'absolute',
-              backgroundColor: '#00000066',
-            }}
-          />
-          <View style={styles.sheetBackground}>
-            <ChannelInfoSheet channel={this.state.contextMenuChannel} />
-          </View>
-        </Modal>
+        </BottomSheet>
+        <BottomSheet
+          sheetKey={'channelMenu'}
+          visible={this.state.showChannelMenu}
+          callback={() => app.openChannelContextMenu(null)}>
+          <ChannelInfoSheet channel={this.state.contextMenuChannel} />
+        </BottomSheet>
       </>
     );
   }

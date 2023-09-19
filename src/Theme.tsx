@@ -226,23 +226,33 @@ function refreshStyles() {
     },
     sheetBackground: {
       width: '100%',
-      height: Dimensions.get('window').height * 0.75,
-      top: '25%',
-      padding: 15,
+      height: '70%',
+      padding: 12,
       backgroundColor: currentTheme.backgroundSecondary,
+      borderTopStartRadius: 16,
+      borderTopEndRadius: 16,
     },
     textDefault: {
       color: currentTheme.foregroundPrimary,
     },
     message: {
+      borderRadius: 4,
+      borderLeftWidth: 3,
+      borderStyle: 'solid',
+      borderColor: currentTheme.backgroundPrimary,
       width: '100%',
       flex: 1,
       flexDirection: 'row',
       paddingTop: 2,
       paddingBottom: 2,
+      paddingHorizontal: 2,
     },
     messageGrouped: {
-      paddingLeft: 35,
+      borderRadius: 4,
+      borderLeftWidth: 3,
+      borderStyle: 'solid',
+      borderColor: currentTheme.backgroundPrimary,
+      paddingLeft: 37,
       width: '100%',
       paddingTop: 2,
       paddingBottom: 2,
@@ -350,6 +360,7 @@ function refreshStyles() {
     },
     messagesView: {
       padding: 10,
+      paddingHorizontal: 5,
       flex: 1,
     },
     messageBoxInner: {
@@ -364,7 +375,6 @@ function refreshStyles() {
       overflow: 'hidden',
     },
     sendButton: {
-      margin: 3,
       marginStart: 8,
       justifyContent: 'center',
       alignItems: 'center',
