@@ -9,7 +9,7 @@ import {app, client} from '../../../Generic';
 
 export const VideoEmbed = observer(
   ({attachment: a}: {attachment: Attachment}) => {
-    const [expand, setExpand] = useState(!1);
+    const [expand, setExpand] = useState(false);
     const video = useRef(null);
     let width = a.metadata.width,
       height = a.metadata.height;
@@ -22,8 +22,8 @@ export const VideoEmbed = observer(
     useEffect(() => {
       expand &&
         video.current &&
-        video.current.setState({isFullscreen: !1, paused: !0}),
-        setExpand(!1);
+        video.current.setState({isFullscreen: false, paused: true}),
+        setExpand(false);
     }, [expand]);
     return (
       <Pressable>
@@ -34,7 +34,7 @@ export const VideoEmbed = observer(
           disableBack
           onEnterFullscreen={() => {
             app.openVideo(uri, video.current);
-            setExpand(!0);
+            setExpand(false);
           }}
           onLoad={() => {
             video.current && video.current.setState({paused: true});
