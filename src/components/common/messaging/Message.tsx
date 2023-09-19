@@ -409,8 +409,13 @@ export const Message = observer((props: MessageProps) => {
                         attachment={a}
                       />
                     );
-                  } else if(a.metadata?.type == 'Audio') {
-                    return <AudioPlayer key={`message-${props.message._id}-audio-${a._id}`} attachment={a}/>
+                  } else if (a.metadata?.type == 'Audio') {
+                    return (
+                      <AudioPlayer
+                        key={`message-${props.message._id}-audio-${a._id}`}
+                        attachment={a}
+                      />
+                    );
                   } else {
                     return (
                       <Pressable

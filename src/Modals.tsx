@@ -288,7 +288,7 @@ export class Modals extends React.Component {
                   disableBack
                   ref={ref => (playerRef = ref && ref.player.ref)}
                   onLoad={() => playerRef.seek(ts)}
-                  resizeMode='contain'
+                  resizeMode="contain"
                   style={{width: '100%', height: '100%'}}
                 />
               </>
