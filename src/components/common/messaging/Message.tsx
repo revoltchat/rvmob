@@ -22,6 +22,7 @@ import {currentTheme, styles} from '../../../Theme';
 import {Text, Username} from '../atoms';
 import {MarkdownView} from '../MarkdownView';
 import {VideoEmbed} from './VideoEmbed';
+import {AudioPlayer} from './AudioPlayer';
 import {RE_INVITE, USER_IDS} from '../../../lib/consts';
 import {getReadableFileSize, parseRevoltNodes} from '../../../lib/utils';
 const Image = FastImage;
@@ -408,6 +409,8 @@ export const Message = observer((props: MessageProps) => {
                         attachment={a}
                       />
                     );
+                  } else if(a.metadata?.type == 'Audio') {
+                    return <AudioPlayer key={`message-${props.message._id}-audio-${a._id}`} attachment={a}/>
                   } else {
                     return (
                       <Pressable
