@@ -15,14 +15,14 @@ import {
   MessageReactions,
   PlatformModerationMessage,
   ReplyMessage,
+  VideoEmbed,
+  AudioPlayer,
 } from './';
 import {app, client, openUrl} from '../../../Generic';
 import {Avatar} from '../../../Profile';
 import {currentTheme, styles} from '../../../Theme';
 import {Text, Username} from '../atoms';
 import {MarkdownView} from '../MarkdownView';
-import {VideoEmbed} from './VideoEmbed';
-import {AudioPlayer} from './AudioPlayer';
 import {RE_INVITE, USER_IDS} from '../../../lib/consts';
 import {getReadableFileSize, parseRevoltNodes} from '../../../lib/utils';
 const Image = FastImage;
