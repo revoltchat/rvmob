@@ -18,12 +18,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const LeftMenu = ({
   currentChannel,
   onChannelClick,
-  onLogOut,
   orderedServers,
 }: {
   currentChannel: any;
   onChannelClick: Function;
-  onLogOut: Function;
   orderedServers: string[];
 }) => {
   const [currentServer, setCurrentServerInner] = React.useState(
@@ -111,16 +109,6 @@ export const LeftMenu = ({
           backgroundColor={currentTheme.background}>
           <MaterialIcon
             name="settings"
-            size={20}
-            color={currentTheme.foregroundPrimary}
-          />
-        </Button>
-        <Button
-          key={'bottom-nav-logout'}
-          onPress={onLogOut}
-          backgroundColor={currentTheme.background}>
-          <MaterialIcon
-            name="logout"
             size={20}
             color={currentTheme.foregroundPrimary}
           />
