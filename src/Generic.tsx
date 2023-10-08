@@ -7,7 +7,7 @@ import FastImage from 'react-native-fast-image';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {API, Channel, Client, Server, User} from 'revolt.js';
+import {API, Channel, Client, Server} from 'revolt.js';
 
 import {currentTheme, setTheme, themes, styles} from './Theme';
 import {Button, Text} from './components/common/atoms';
@@ -310,10 +310,10 @@ export const app = {
   pushToQueue: m => {},
   joinInvite: async (i: API.InviteResponse) => {},
   logOut: () => {},
-  openMemberList: (c: Channel | Server | null, u: User[] | null) => {},
+  openMemberList: (data: Channel | Server | null) => {},
   openChannelContextMenu: (c: Channel | null) => {},
   openStatusMenu: (state: boolean) => {},
-  openReportMenu: (object: ReportedObject| null) => {},
+  openReportMenu: (object: ReportedObject | null) => {},
 };
 
 export function setFunction(name: string, func: any) {

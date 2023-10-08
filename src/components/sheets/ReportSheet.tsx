@@ -1,16 +1,20 @@
-import React from 'react';
+import React, {useMemo, useRef} from 'react';
 import {ScrollView, TextInput, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
+import BottomSheetCore from '@gorhom/bottom-sheet';
+import {useBackHandler} from '@react-native-community/hooks';
+
 import {Message} from 'revolt.js';
 
-import {client} from '../../Generic';
+import {app, client, setFunction} from '../../Generic';
 import {USER_IDS} from '../../lib/consts';
 import type {ReportedObject} from '../../lib/types';
 import {Avatar} from '../../Profile';
 import {currentTheme} from '../../Theme';
 import {Button, Text, Username} from '../common/atoms';
 import {MarkdownView} from '../common/MarkdownView';
+import {BottomSheet} from '../common/BottomSheet';
 
 type Reason = {
   label: string;
@@ -60,307 +64,378 @@ const inputStyles = {
   color: currentTheme.foregroundPrimary,
 };
 
-export const ReportModal = observer(({obj}: {obj: ReportedObject}) => {
+function SuccessScreen({reportedObject}: {reportedObject: ReportedObject}) {
+  return (
+    <>
+      <Text style={{marginBottom: 10}}>
+        Your report has been sent to the Revolt team for review - thank you for
+        helping us keep Revolt safe.
+      </Text>
+      <Text type={'header'}>Next steps</Text>
+      {reportedObject.type === 'Message' || reportedObject.type === 'User' ? (
+        <>
+          <Text>
+            You can also block{' '}
+            {reportedObject.type === 'Message'
+              ? 'the author of this message'
+              : 'this user'}
+            .
+          </Text>
+          {(reportedObject.type === 'Message'
+            ? reportedObject.object.author!
+            : reportedObject.object
+          ).relationship === 'Blocked' ? (
+            <Button style={{backgroundColor: currentTheme.backgroundTertiary}}>
+              <Text style={{color: currentTheme.foregroundTertiary}}>
+                {reportedObject.type === 'Message'
+                  ? 'Author blocked'
+                  : 'User blocked'}
+              </Text>
+            </Button>
+          ) : (
+            <Button
+              backgroundColor={currentTheme.error}
+              onPress={() => {
+                (reportedObject.type === 'Message'
+                  ? reportedObject.object.author!
+                  : reportedObject.object
+                ).blockUser();
+              }}>
+              <Text>
+                {reportedObject.type === 'Message'
+                  ? 'Block author'
+                  : 'Block user'}
+              </Text>
+            </Button>
+          )}
+        </>
+      ) : (
+        <>
+          <Text>
+            You can also leave this server. Other members will not be notified.
+          </Text>
+          <Button
+            backgroundColor={currentTheme.error}
+            onPress={() => {
+              reportedObject.object.delete(true);
+            }}>
+            <Text>Leave server</Text>
+          </Button>
+        </>
+      )}
+      <Button
+        onPress={() => {
+          app.openReportMenu(null);
+        }}>
+        <Text>Done</Text>
+      </Button>
+    </>
+  );
+}
+
+function ReasonsSelector({
+  reportedObject,
+  reasons,
+  setReason,
+}: {
+  reportedObject: ReportedObject;
+  reasons: Reason[];
+  setReason: Function;
+}) {
+  return (
+    <>
+      <Text>
+        Why are you reporting this {reportedObject.type.toLowerCase()}? You can
+        add more context after selecting a reason.
+      </Text>
+      {reasons.map(r => {
+        return (
+          <Button
+            key={`reason_${r.reason}`}
+            style={{
+              backgroundColor: currentTheme.backgroundPrimary,
+              justifyContent: 'flex-start',
+            }}
+            onPress={() => {
+              setReason(r);
+            }}>
+            <Text style={{fontWeight: 'bold'}}>{r.label}</Text>
+          </Button>
+        );
+      })}
+    </>
+  );
+}
+
+export const ReportSheet = observer(() => {
+  const [obj, setObj] = React.useState(null as ReportedObject | null);
+
+  const sheetRef = useRef<BottomSheetCore>(null);
+
+  useBackHandler(() => {
+    if (obj) {
+      sheetRef.current?.close();
+      return true;
+    }
+
+    return false;
+  });
+
+  setFunction('openReportMenu', async (o: ReportedObject | null) => {
+    setObj(o);
+    o ? sheetRef.current?.expand() : sheetRef.current?.close();
+  });
+
   const [additionalContext, setAdditionalContext] = React.useState('');
   const [reason, setReason] = React.useState({} as Reason);
   const [status, setStatus] = React.useState({} as Status);
-  const type = obj.type;
-  const object = obj.object;
-  const messageReasons = [
-    {label: 'This message breaks one or more laws', reason: 'Illegal'},
-    {label: 'This message promotes harm', reason: 'PromotesHarm'},
-    {
-      label: 'This message is spam or abuse of the platform',
-      reason: 'SpamAbuse',
-    },
-    {
-      label: 'This message contains malware or dangerous links',
-      reason: 'Malware',
-    },
-    {
-      label: 'This message is harassing me or someone else',
-      reason: 'Harassment',
-    },
-    {label: 'Something else not listed here', reason: 'NoneSpecified'},
-  ] as Reason[];
-  const serverReasons = [
-    {label: 'This server breaks one or more laws', reason: 'Illegal'},
-    {label: 'This server promotes harm', reason: 'PromotesHarm'},
-    {
-      label: 'This server is spamming or abusing the platform',
-      reason: 'SpamAbuse',
-    },
-    {
-      label: 'This server contains malware or dangerous links',
-      reason: 'Malware',
-    },
-    {
-      label: 'This server is harassing me or someone else',
-      reason: 'Harassment',
-    },
-    {label: 'Something else not listed here', reason: 'NoneSpecified'},
-  ] as Reason[];
-  const userReasons = [
-    {
-      label: "This user's profile is inappropriate for a general audience",
-      reason: 'InappropriateProfile',
-    },
-    {
-      label: 'This user is spamming or abusing the platform',
-      reason: 'SpamAbuse',
-    },
-    {
-      label: 'This user is impersonating me or someone else',
-      reason: 'Impersonation',
-    },
-    {
-      label: 'This user is evading a ban',
-      reason: 'BanEvasion',
-    },
-    {
-      label: 'This user is too young to be using Revolt',
-      reason: 'Underage',
-    },
-    {label: 'Something else not listed here', reason: 'NoneSpecified'},
-  ] as Reason[];
 
-  function ReasonsSelector({reasons}: {reasons: Reason[]}) {
-    return (
-      <>
-        <Text>
-          Why are you reporting this {type.toLowerCase()}? You can add more
-          context after selecting a reason.
-        </Text>
-        {reasons.map(r => {
-          return (
-            <Button
-              key={`reason_${r.reason}`}
-              style={{
-                backgroundColor: currentTheme.backgroundPrimary,
-                justifyContent: 'flex-start',
-              }}
-              onPress={() => {
-                setReason(r);
-              }}>
-              <Text style={{fontWeight: 'bold'}}>{r.label}</Text>
-            </Button>
-          );
-        })}
-      </>
-    );
-  }
-
-  function SuccessScreen({reportedObject}: {reportedObject: ReportedObject}) {
-    return (
-      <>
-        <Text style={{marginBottom: 10}}>
-          Your report has been sent to the Revolt team for review - thank you
-          for helping us keep Revolt safe.
-        </Text>
-        <Text type={'header'}>Next steps</Text>
-        {reportedObject.type === 'Message' || reportedObject.type === 'User' ? (
-          <>
-            <Text>
-              You can also block{' '}
-              {reportedObject.type === 'Message'
-                ? 'the author of this message'
-                : 'this user'}
-              .
-            </Text>
-            {(reportedObject.type === 'Message'
-              ? reportedObject.object.author!
-              : reportedObject.object
-            ).relationship === 'Blocked' ? (
-              <Button
-                style={{backgroundColor: currentTheme.backgroundTertiary}}>
-                <Text style={{color: currentTheme.foregroundTertiary}}>
-                  {reportedObject.type === 'Message'
-                    ? 'Author blocked'
-                    : 'User blocked'}
-                </Text>
-              </Button>
-            ) : (
-              <Button
-                onPress={() => {
-                  (reportedObject.type === 'Message'
-                    ? reportedObject.object.author!
-                    : reportedObject.object
-                  ).blockUser();
-                }}>
-                <Text>
-                  {reportedObject.type === 'Message'
-                    ? 'Block author'
-                    : 'Block user'}
-                </Text>
-              </Button>
-            )}
-          </>
-        ) : (
-          <>
-            <Text>
-              You can also leave this server. Other members will not be
-              notified.
-            </Text>
-            <Button
-              onPress={() => {
-                reportedObject.object.delete(true);
-              }}>
-              <Text>Leave server</Text>
-            </Button>
-          </>
-        )}
-        <Text>If not, tap above the sheet to close it.</Text>
-      </>
-    );
-  }
+  const messageReasons = useMemo(
+    () =>
+      [
+        {label: 'This message breaks one or more laws', reason: 'Illegal'},
+        {label: 'This message promotes harm', reason: 'PromotesHarm'},
+        {
+          label: 'This message is spam or abuse of the platform',
+          reason: 'SpamAbuse',
+        },
+        {
+          label: 'This message contains malware or dangerous links',
+          reason: 'Malware',
+        },
+        {
+          label: 'This message is harassing me or someone else',
+          reason: 'Harassment',
+        },
+        {label: 'Something else not listed here', reason: 'NoneSpecified'},
+      ] as Reason[],
+    [],
+  );
+  const serverReasons = useMemo(
+    () =>
+      [
+        {label: 'This server breaks one or more laws', reason: 'Illegal'},
+        {label: 'This server promotes harm', reason: 'PromotesHarm'},
+        {
+          label: 'This server is spamming or abusing the platform',
+          reason: 'SpamAbuse',
+        },
+        {
+          label: 'This server contains malware or dangerous links',
+          reason: 'Malware',
+        },
+        {
+          label: 'This server is harassing me or someone else',
+          reason: 'Harassment',
+        },
+        {label: 'Something else not listed here', reason: 'NoneSpecified'},
+      ] as Reason[],
+    [],
+  );
+  const userReasons = useMemo(
+    () =>
+      [
+        {
+          label: "This user's profile is inappropriate for a general audience",
+          reason: 'InappropriateProfile',
+        },
+        {
+          label: 'This user is spamming or abusing the platform',
+          reason: 'SpamAbuse',
+        },
+        {
+          label: 'This user is impersonating me or someone else',
+          reason: 'Impersonation',
+        },
+        {
+          label: 'This user is evading a ban',
+          reason: 'BanEvasion',
+        },
+        {
+          label: 'This user is too young to be using Revolt',
+          reason: 'Underage',
+        },
+        {label: 'Something else not listed here', reason: 'NoneSpecified'},
+      ] as Reason[],
+    [],
+  );
 
   let output = <></>;
-  switch (obj.type) {
-    case 'Message':
-      let msg = object as Message;
-      const isLikelyBridged =
-        msg.author?._id === USER_IDS.automod && msg.masquerade !== null;
-      console.log(isLikelyBridged, msg.author?._id, msg.masquerade?.name);
-      output = (
-        <>
-          <Text type={'header'}>Report message</Text>
-          <ScrollView style={{marginBottom: 4, maxHeight: '40%'}}>
-            <View style={{flexDirection: 'row'}}>
-              <Avatar
-                user={msg.author}
-                server={msg.channel?.server}
-                size={25}
-              />
-              <View
-                style={{
-                  flexDirection: 'column',
-                  marginLeft: 4,
-                  width: '90%',
-                }}>
-                <Username
-                  user={msg.author!}
+
+  if (obj) {
+    switch (obj.type) {
+      case 'Message':
+        let msg = obj.object as Message;
+        const isLikelyBridged =
+          msg.author?._id === USER_IDS.automod && msg.masquerade !== null;
+        console.log(isLikelyBridged, msg.author?._id, msg.masquerade?.name);
+        output = (
+          <>
+            <Text type={'header'}>Report message</Text>
+            <ScrollView style={{marginBottom: 4, maxHeight: '40%'}}>
+              <View style={{flexDirection: 'row'}}>
+                <Avatar
+                  user={msg.author}
                   server={msg.channel?.server}
-                  size={14}
+                  size={25}
                 />
-                {msg.content ? (
-                  <MarkdownView>{msg.content}</MarkdownView>
-                ) : msg.attachments ? (
-                  <Text style={{color: currentTheme.foregroundSecondary}}>
-                    Sent an attachment
-                  </Text>
-                ) : msg.embeds ? (
-                  <Text style={{color: currentTheme.foregroundSecondary}}>
-                    Sent an embed
-                  </Text>
-                ) : (
-                  <Text style={{color: currentTheme.foregroundSecondary}}>
-                    No content
-                  </Text>
-                )}
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    marginLeft: 4,
+                    width: '90%',
+                  }}>
+                  <Username
+                    user={msg.author!}
+                    server={msg.channel?.server}
+                    size={14}
+                  />
+                  {msg.content ? (
+                    <MarkdownView>{msg.content}</MarkdownView>
+                  ) : msg.attachments ? (
+                    <Text style={{color: currentTheme.foregroundSecondary}}>
+                      Sent an attachment
+                    </Text>
+                  ) : msg.embeds ? (
+                    <Text style={{color: currentTheme.foregroundSecondary}}>
+                      Sent an embed
+                    </Text>
+                  ) : (
+                    <Text style={{color: currentTheme.foregroundSecondary}}>
+                      No content
+                    </Text>
+                  )}
+                </View>
               </View>
-            </View>
-          </ScrollView>
-          {isLikelyBridged && (
-            <>
-              <Text style={{marginVertical: 4}}>
-                <Text style={{fontWeight: 'bold'}}>NOTE:</Text> This message may
-                have been sent from another platform. If so, we recommend
-                reporting it there as well.
-              </Text>
-            </>
-          )}
-          {reason.reason && !status.status && (
-            <>
-              <Text>You can add more context to your report here.</Text>
-              <TextInput
-                style={inputStyles}
-                value={additionalContext}
-                onChangeText={(c: string) => {
-                  setAdditionalContext(c);
-                }}
-                placeholder={'Add more context (optional)'}
+            </ScrollView>
+            {isLikelyBridged && (
+              <>
+                <Text style={{marginVertical: 4}}>
+                  <Text style={{fontWeight: 'bold'}}>NOTE:</Text> This message
+                  may have been sent from another platform. If so, we recommend
+                  reporting it there as well.
+                </Text>
+              </>
+            )}
+            {reason.reason && !status.status && (
+              <>
+                <Text>You can add more context to your report here.</Text>
+                <TextInput
+                  style={inputStyles}
+                  value={additionalContext}
+                  onChangeText={(c: string) => {
+                    setAdditionalContext(c);
+                  }}
+                  placeholder={`Add more context (${
+                    reason.reason === 'NoneSpecified'
+                      ? 'recommended'
+                      : 'optional'
+                  })`}
+                />
+                <Button
+                  onPress={async () =>
+                    setStatus(
+                      await sendReport(obj, reason.reason, additionalContext),
+                    )
+                  }>
+                  <Text>Report message</Text>
+                </Button>
+              </>
+            )}
+            {!reason.reason && (
+              <ReasonsSelector
+                reasons={messageReasons}
+                reportedObject={obj}
+                setReason={setReason}
               />
-              <Button
-                onPress={async () =>
-                  setStatus(
-                    await sendReport(obj, reason.reason, additionalContext),
-                  )
-                }>
-                <Text>Report message</Text>
-              </Button>
-            </>
-          )}
-          {!reason.reason && <ReasonsSelector reasons={messageReasons} />}
-          {status.status === 'success' && (
-            <SuccessScreen reportedObject={obj} />
-          )}
-        </>
-      );
-      break;
-    case 'User':
-      output = (
-        <>
-          <Text type={'header'}>Report user</Text>
-          {reason.reason && !status.status && (
-            <>
-              <Text>You can add more context to your report here.</Text>
-              <TextInput
-                style={inputStyles}
-                value={additionalContext}
-                onChangeText={(c: string) => {
-                  setAdditionalContext(c);
-                }}
-                placeholder={'Add more context (optional)'}
+            )}
+            {status.status === 'success' && (
+              <SuccessScreen reportedObject={obj} />
+            )}
+          </>
+        );
+        break;
+      case 'User':
+        output = (
+          <>
+            <Text type={'header'}>Report user</Text>
+            {reason.reason && !status.status && (
+              <>
+                <Text>You can add more context to your report here.</Text>
+                <TextInput
+                  style={inputStyles}
+                  value={additionalContext}
+                  onChangeText={(c: string) => {
+                    setAdditionalContext(c);
+                  }}
+                  placeholder={'Add more context (optional)'}
+                />
+                <Button
+                  onPress={async () =>
+                    setStatus(
+                      await sendReport(obj, reason.reason, additionalContext),
+                    )
+                  }>
+                  <Text>Report user</Text>
+                </Button>
+              </>
+            )}
+            {!reason.reason && (
+              <ReasonsSelector
+                reasons={userReasons}
+                reportedObject={obj}
+                setReason={setReason}
               />
-              <Button
-                onPress={async () =>
-                  setStatus(
-                    await sendReport(obj, reason.reason, additionalContext),
-                  )
-                }>
-                <Text>Report user</Text>
-              </Button>
-            </>
-          )}
-          {!reason.reason && <ReasonsSelector reasons={userReasons} />}
-          {status.status === 'success' && (
-            <SuccessScreen reportedObject={obj} />
-          )}
-        </>
-      );
-      break;
-    case 'Server':
-      output = (
-        <>
-          <Text type={'header'}>Report server</Text>
-          {reason.reason && !status.status && (
-            <>
-              <Text>You can add more context to your report here.</Text>
-              <TextInput
-                style={inputStyles}
-                value={additionalContext}
-                onChangeText={(c: string) => {
-                  setAdditionalContext(c);
-                }}
-                placeholder={'Add more context (optional)'}
+            )}
+            {status.status === 'success' && (
+              <SuccessScreen reportedObject={obj} />
+            )}
+          </>
+        );
+        break;
+      case 'Server':
+        output = (
+          <>
+            <Text type={'header'}>Report server</Text>
+            {reason.reason && !status.status && (
+              <>
+                <Text>You can add more context to your report here.</Text>
+                <TextInput
+                  style={inputStyles}
+                  value={additionalContext}
+                  onChangeText={(c: string) => {
+                    setAdditionalContext(c);
+                  }}
+                  placeholder={'Add more context (optional)'}
+                />
+                <Button
+                  onPress={async () =>
+                    setStatus(
+                      await sendReport(obj, reason.reason, additionalContext),
+                    )
+                  }>
+                  <Text>Report server</Text>
+                </Button>
+              </>
+            )}
+            {!reason.reason && (
+              <ReasonsSelector
+                reasons={serverReasons}
+                reportedObject={obj}
+                setReason={setReason}
               />
-              <Button
-                onPress={async () =>
-                  setStatus(
-                    await sendReport(obj, reason.reason, additionalContext),
-                  )
-                }>
-                <Text>Report server</Text>
-              </Button>
-            </>
-          )}
-          {!reason.reason && <ReasonsSelector reasons={serverReasons} />}
-          {status.status === 'success' && (
-            <SuccessScreen reportedObject={obj} />
-          )}
-        </>
-      );
-      break;
+            )}
+            {status.status === 'success' && (
+              <SuccessScreen reportedObject={obj} />
+            )}
+          </>
+        );
+        break;
+    }
   }
-  return <View>{output}</View>;
+  return (
+    <BottomSheet sheetRef={sheetRef}>
+      <View style={{paddingHorizontal: 16}}>{output}</View>
+    </BottomSheet>
+  );
 });
