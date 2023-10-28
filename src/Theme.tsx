@@ -389,9 +389,8 @@ function refreshStyles() {
       borderRadius: 8,
     },
     serverName: {
-      margin: 10,
-      marginTop: 13,
-      marginBottom: 9,
+      marginVertical: 10,
+      maxWidth: '90%',
       fontSize: 18,
       fontWeight: 'bold',
     },
