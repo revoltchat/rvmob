@@ -31,6 +31,9 @@ export const LeftMenu = ({
     setCurrentServerInner(s);
     AsyncStorage.setItem('lastServer', s?._id || 'DirectMessage');
   }
+  setFunction('getCurrentServer', () => {
+    return currentServer?._id ?? undefined;
+  })
   setFunction('openServer', (s: Server | null) => {
     setCurrentServer(s);
   });

@@ -291,6 +291,9 @@ export const app = {
   openInvite: i => {},
   openBotInvite: i => {},
   openServer: (s?: Server) => {},
+  getCurrentServer: () => {
+    return undefined as string | undefined;
+  },
   openChannel: c => {},
   openDirectMessage: (c: Channel) => {},
   openImage: a => {},

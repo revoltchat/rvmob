@@ -293,6 +293,13 @@ class MainView extends React.Component {
         }
       }
     });
+    client.on('server/delete', async s => {
+      const currentServer = app.getCurrentServer();
+      if (currentServer === s) {
+        app.openServer(undefined);
+        app.openChannel(null);
+      }
+    });
     AsyncStorage.getItem('token', async (err, res) => {
       if (!err) {
         if (typeof res !== 'string') {
