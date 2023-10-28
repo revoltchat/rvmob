@@ -6,14 +6,13 @@ import {app} from '../../Generic';
 import {DeletableObject} from '../../lib/types';
 import {currentTheme} from '../../Theme';
 import {Button, Text} from '../common/atoms';
-import { set } from 'mobx';
 
 export const ConfirmDeletionModal = observer(
   ({target}: {target: DeletableObject}) => {
     return (
       <View
         style={{
-          marginHorizontal: 16,
+          width: '80%',
           borderRadius: 8,
           padding: 20,
           backgroundColor: currentTheme.backgroundPrimary,
@@ -45,8 +44,9 @@ export const ConfirmDeletionModal = observer(
                   target.object.delete();
                   app.openDeletionConfirmationModal(null);
                   break;
-                case 'Message': 
-                  await target.object.delete()
+                case 'Message':
+                  await target.object.delete();
+                  break;
                 default:
                   break;
               }

@@ -145,7 +145,7 @@ export const ServerSettingsSheet = observer(
                 }}>
                 <View style={styles.iconContainer}>
                   <MaterialIcon
-                    name={'person'}
+                    name={'info'}
                     color={currentTheme.foregroundPrimary}
                     size={24}
                   />
@@ -156,7 +156,7 @@ export const ServerSettingsSheet = observer(
                 style={{flex: 1, marginBottom: 10}}
                 backgroundColor={currentTheme.backgroundSecondary}
                 onPress={() => {
-                  setSection('overview');
+                  setSection('channels');
                 }}>
                 <View style={styles.iconContainer}>
                   <MaterialIcon
