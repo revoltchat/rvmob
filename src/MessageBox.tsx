@@ -5,7 +5,6 @@ import {observer} from 'mobx-react-lite';
 import DocumentPicker, {
   DocumentPickerResponse,
 } from 'react-native-document-picker';
-import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -18,7 +17,7 @@ import {styles, currentTheme} from './Theme';
 import {Text, Username} from './components/common/atoms';
 import {USER_IDS} from './lib/consts';
 import {ReplyingMessage} from './lib/types';
-import {getReadableFileSize} from './lib/utils';
+import {getReadableFileSize, showToast} from './lib/utils';
 
 let typing = false;
 
@@ -190,24 +189,32 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                 let res = await DocumentPicker.pickSingle({
                   type: [DocumentPicker.types.allFiles],
                 });
-                let isDuplicate = false;
-                for (const a of attachments) {
-                  if (a.uri === res.uri) {
-                    console.log(
-                      `[MESSAGEBOX] Not pushing duplicate attachment ${res.name} (${res.uri})`,
-                    );
-                    isDuplicate = true;
-                  }
+                let tooBig = false;
+                if (res.size && res.size > 20000000) {
+                  showToast('Attachments must be less than 20MB!');
+                  tooBig = true;
                 }
-                if (res.uri && !isDuplicate) {
-                  console.log(
-                    `[MESSAGEBOX] Pushing attachment ${res.name} (${res.uri})`,
-                  );
-                  setAttachments(existingAttachments => [
-                    ...existingAttachments,
-                    res,
-                  ]);
-                  console.log(attachments);
+                if (!tooBig) {
+                  let isDuplicate = false;
+                  for (const a of attachments) {
+                    if (a.uri === res.uri) {
+                      console.log(
+                        `[MESSAGEBOX] Not pushing duplicate attachment ${res.name} (${res.uri})`,
+                      );
+                      isDuplicate = true;
+                    }
+                  }
+
+                  if (res.uri && !isDuplicate) {
+                    console.log(
+                      `[MESSAGEBOX] Pushing attachment ${res.name} (${res.uri})`,
+                    );
+                    setAttachments(existingAttachments => [
+                      ...existingAttachments,
+                      res,
+                    ]);
+                    console.log(attachments);
+                  }
                 }
               } catch (error) {
                 console.log(`[MESSAGEBOX] Error: ${error}`);
