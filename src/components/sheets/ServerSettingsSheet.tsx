@@ -125,8 +125,7 @@ export const ServerSettingsSheet = observer(
                     }}
                   />
                 ) : (
-                  <View
-                    style={styles.serverSettingsInitials}>
+                  <View style={styles.serverSettingsInitials}>
                     <Text
                       key={`server-settings-${server._id}-initials`}
                       style={{fontWeight: 'bold', fontSize: 20}}>
@@ -250,7 +249,10 @@ export const ServerSettingsSheet = observer(
                   style={{flex: 1, marginBottom: 10}}
                   backgroundColor={currentTheme.error}
                   onPress={() => {
-                    console.log('sussy');
+                    app.openDeletionConfirmationModal({
+                      type: 'Server',
+                      object: server,
+                    });
                   }}>
                   <View style={styles.iconContainer}>
                     <MaterialIcon
@@ -292,18 +294,18 @@ export const ServerSettingsSheet = observer(
                 Server description
               </Text>
               <View>
-              <Text
-              style={{
-                color: currentTheme.foregroundSecondary,
-              }}>
-              Server descriptions support Markdown formatting.
-              </Text>
-                      <Link
-                        link={'https://support.revolt.chat/kb/account/badges'}
-                        label={'Learn more.'}
-                        style={{fontWeight: 'bold'}}
-                      />
-                    </View>
+                <Text
+                  style={{
+                    color: currentTheme.foregroundSecondary,
+                  }}>
+                  Server descriptions support Markdown formatting.
+                </Text>
+                <Link
+                  link={'https://support.revolt.chat/kb/account/badges'}
+                  label={'Learn more.'}
+                  style={{fontWeight: 'bold'}}
+                />
+              </View>
               <GapView size={2} />
               <InputWithButton
                 placeholder="Add a description..."

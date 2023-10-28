@@ -8,8 +8,10 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import {API, Channel, Server, User} from 'revolt.js';
 
 import {app, client, openUrl, setFunction} from './Generic';
+import {DeletableObject} from './lib/types';
 import {currentTheme} from './Theme';
 import {GapView} from './components/layout';
+import {ConfirmDeletionModal} from './components/modals';
 import {
   BotInviteSheet,
   ChannelInfoSheet,
@@ -29,7 +31,9 @@ export const Modals = observer(() => {
     i: null as any,
   });
   const [settingsVisibility, setSettingsVisibility] = React.useState(false);
-  const [serverSettingsServer, setServerSettingsServer] = React.useState(null as Server | null)
+  const [serverSettingsServer, setServerSettingsServer] = React.useState(
+    null as Server | null,
+  );
   const [inviteServer, setInviteServer] = React.useState({
     inviteServer: null,
     inviteServerCode: '',
@@ -38,6 +42,9 @@ export const Modals = observer(() => {
     inviteServerCode: string;
   });
   const [inviteBot, setInviteBot] = React.useState(null as User | null);
+  const [deletableObject, setDeletableObject] = React.useState(
+    null as DeletableObject | null,
+  );
 
   setFunction('openDirectMessage', async (dm: Channel) => {
     app.openProfile(null);
@@ -52,6 +59,12 @@ export const Modals = observer(() => {
   setFunction('openServerSettings', async (s: Server | null) => {
     setServerSettingsServer(s);
   });
+  setFunction(
+    'openDeletionConfirmationModal',
+    async (o: DeletableObject | null) => {
+      setDeletableObject(o);
+    },
+  );
   setFunction('openInvite', async (i: string) => {
     try {
       let community = await client.fetchInvite(i);
@@ -172,7 +185,25 @@ export const Modals = observer(() => {
         transparent={true}
         animationType="slide"
         onRequestClose={() => setServerSettingsServer(null)}>
-        <ServerSettingsSheet server={serverSettingsServer!} setState={() => setServerSettingsServer(null)} />
+        <ServerSettingsSheet
+          server={serverSettingsServer!}
+          setState={() => setServerSettingsServer(null)}
+        />
+      </Modal>
+      <Modal
+        visible={!!deletableObject}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setDeletableObject(null)}>
+        <View
+          style={{
+            flex: 1,
+            alignContent: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#00000080',
+          }}>
+          <ConfirmDeletionModal target={deletableObject!} />
+        </View>
       </Modal>
     </>
   );

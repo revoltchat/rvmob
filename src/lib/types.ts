@@ -31,19 +31,21 @@ export type ReplyingMessage = {
   message: Message;
 };
 
-interface ReportedMessage {
+interface TypedMessage {
   type: 'Message';
   object: Message;
 }
 
-interface ReportedServer {
+interface TypedServer {
   type: 'Server';
   object: Server;
 }
 
-interface ReportedUser {
+interface TypedUser {
   type: 'User';
   object: User;
 }
 
-export type ReportedObject = ReportedMessage | ReportedServer | ReportedUser;
+export type ReportedObject = TypedMessage | TypedServer | TypedUser;
+
+export type DeletableObject = TypedMessage | TypedServer;

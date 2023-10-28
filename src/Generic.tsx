@@ -6,7 +6,7 @@ import FastImage from 'react-native-fast-image';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {API, Channel, Client, Server} from 'revolt.js';
+import {API, Channel, Client, Message, Server} from 'revolt.js';
 
 import {currentTheme, setTheme, themes, styles} from './Theme';
 import {
@@ -18,7 +18,12 @@ import {
   RE_BOT_INVITE,
   WIKI_URL,
 } from './lib/consts';
-import {ReplyingMessage, ReportedObject, Setting} from './lib/types';
+import {
+  DeletableObject,
+  ReplyingMessage,
+  ReportedObject,
+  Setting,
+} from './lib/types';
 const Image = FastImage;
 
 export const app = {
@@ -301,7 +306,8 @@ export const app = {
       `[FUNCTIONS] Tried to run uninitialised function openServerSettings (args: ${s})`,
     );
   },
-  setMessageBoxInput: t => {},
+  setMessageBoxInput: (t: string | null) => {},
+  setEditingMessage: (message: Message) => {},
   setReplyingMessages: (m: ReplyingMessage[]) => {
     console.log(
       `[FUNCTIONS] Tried to run uninitialised function setReplyingMessages (args: ${m})`,
@@ -310,6 +316,9 @@ export const app = {
   getReplyingMessages: () => {
     return undefined as unknown as ReplyingMessage[];
   },
+  /**
+   * @deprecated Message queuing will be removed/reworked due to the switch of message views
+   */
   pushToQueue: m => {},
   joinInvite: async (i: API.InviteResponse) => {},
   logOut: () => {},
@@ -317,6 +326,7 @@ export const app = {
   openChannelContextMenu: (c: Channel | null) => {},
   openStatusMenu: (state: boolean) => {},
   openReportMenu: (object: ReportedObject | null) => {},
+  openDeletionConfirmationModal: (object: DeletableObject | null) => {},
 };
 
 export function setFunction(name: string, func: any) {
