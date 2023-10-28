@@ -9954,10 +9954,10 @@ revkit@^1.1.14:
     revolt-api "^0.6.7"
     ulid "^2.3.0"
 
-revolt-api@0.5.7, revolt-api@^0.6.7:
-  version "0.6.7"
-  resolved "https://registry.yarnpkg.com/revolt-api/-/revolt-api-0.6.7.tgz#de8de8cb22b8c875435025a0c0174d17d04fae0c"
-  integrity sha512-CfMs8xCy9VcZIzyaJ9/t6ixcUR+YJ1hahIiunHd2FcoSKKiPgJNZvCXSV2vSWW1b8y2ftFeFygU/+AfdZocOeQ==
+revolt-api@0.5.7, revolt-api@^0.6.7, revolt-api@^0.6.8:
+  version "0.6.8"
+  resolved "https://registry.yarnpkg.com/revolt-api/-/revolt-api-0.6.8.tgz#8703e2ea28489f6ed69a0e861a44a8747b4a46c0"
+  integrity sha512-ktqs/3M9iiB1aBFmyF1pw7Mt8/k44VGXF5TGed7+3eIFtJIEGPSt+zcvrK/EfL3dYmbtUcZL+apFDEjot6yr3Q==
   dependencies:
     "@insertish/oapi" "0.1.18"
     axios "^0.26.1"
