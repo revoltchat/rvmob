@@ -296,6 +296,11 @@ export const app = {
     );
   },
   openSettings: o => {},
+  openServerSettings: (s: Server | null) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function openServerSettings (args: ${s})`,
+    );
+  },
   setMessageBoxInput: t => {},
   setReplyingMessages: (m: ReplyingMessage[]) => {
     console.log(

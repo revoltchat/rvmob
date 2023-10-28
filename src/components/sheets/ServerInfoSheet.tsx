@@ -119,11 +119,40 @@ export const ServerInfoSheet = observer(() => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
+                {server.havePermission("ManageServer") ? (<ContextButton
+                    key={'server-ctx-menu-settings'}
+                    onPress={() => {
+                      app.openServerSettings(server);
+                    }}>
+                    <View style={styles.iconContainer}>
+                      <MaterialIcon
+                        name={"settings"}
+                        size={20}
+                        color={currentTheme.foregroundPrimary}
+                      />
+                    </View>
+                    <Text>Server Settings</Text>
+                  </ContextButton>) : null}
               {app.settings.get('ui.showDeveloperFeatures') ? (
                 <CopyIDButton id={server._id} />
               ) : null}
               {server.owner !== client.user?._id ? (
                 <>
+                <ContextButton
+                    key={'server-ctx-menu-report'}
+                    onPress={() => {
+                      app.openReportMenu({object: server, type: 'Server'});
+                      app.openServerContextMenu(null);
+                    }}>
+                    <View style={styles.iconContainer}>
+                      <MaterialIcon
+                        name="flag"
+                        size={20}
+                        color={currentTheme.error}
+                      />
+                    </View>
+                    <Text colour={currentTheme.error}>Report Server</Text>
+                  </ContextButton>
                   <ContextButton
                     key={'server-ctx-menu-leave'}
                     onPress={async () => {
@@ -139,20 +168,6 @@ export const ServerInfoSheet = observer(() => {
                       />
                     </View>
                     <Text colour={currentTheme.error}>Leave Server</Text>
-                  </ContextButton>
-                  <ContextButton
-                    key={'server-ctx-menu-report'}
-                    onPress={() => {
-                      app.openReportMenu({object: server, type: 'Server'});
-                    }}>
-                    <View style={styles.iconContainer}>
-                      <MaterialIcon
-                        name="flag"
-                        size={20}
-                        color={currentTheme.foregroundPrimary}
-                      />
-                    </View>
-                    <Text>Report Server</Text>
                   </ContextButton>
                 </>
               ) : null}

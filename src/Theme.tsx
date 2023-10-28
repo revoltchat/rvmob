@@ -294,6 +294,15 @@ function refreshStyles() {
       textAlign: 'center',
       marginTop: '30%',
     },
+    serverSettingsInitials: {
+      borderRadius: 5000,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 80,
+      height: 80,
+      backgroundColor: currentTheme.backgroundSecondary,
+      overflow: 'hidden',
+    },
     serverIcon: {
       width: 48,
       height: 48,

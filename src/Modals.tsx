@@ -5,7 +5,7 @@ import {observer} from 'mobx-react-lite';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {API, Channel, User} from 'revolt.js';
+import {API, Channel, Server, User} from 'revolt.js';
 
 import {app, client, openUrl, setFunction} from './Generic';
 import {currentTheme} from './Theme';
@@ -19,6 +19,7 @@ import {
   ReportSheet,
   ServerInfoSheet,
   ServerInviteSheet,
+  ServerSettingsSheet,
   SettingsSheet,
   StatusSheet,
 } from './components/sheets/';
@@ -28,6 +29,7 @@ export const Modals = observer(() => {
     i: null as any,
   });
   const [settingsVisibility, setSettingsVisibility] = React.useState(false);
+  const [serverSettingsServer, setServerSettingsServer] = React.useState(null as Server | null)
   const [inviteServer, setInviteServer] = React.useState({
     inviteServer: null,
     inviteServerCode: '',
@@ -46,6 +48,9 @@ export const Modals = observer(() => {
   });
   setFunction('openSettings', async (o: boolean) => {
     setSettingsVisibility(o);
+  });
+  setFunction('openServerSettings', async (s: Server | null) => {
+    setServerSettingsServer(s);
   });
   setFunction('openInvite', async (i: string) => {
     try {
@@ -161,6 +166,13 @@ export const Modals = observer(() => {
           }}
           bot={inviteBot!}
         />
+      </Modal>
+      <Modal
+        visible={!!serverSettingsServer}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setServerSettingsServer(null)}>
+        <ServerSettingsSheet server={serverSettingsServer!} setState={() => setServerSettingsServer(null)} />
       </Modal>
     </>
   );
