@@ -24,6 +24,8 @@ export type Setting = (StringSetting | BoolSetting) & {
   remark?: string;
 };
 
+export type SettingsSection = string | null;
+
 export type ReplyingMessage = {
   mentions: boolean;
   message: Message;

@@ -1,0 +1,1 @@
+export {SettingsCategory} from './SettingsCategory';
