@@ -5,10 +5,10 @@ import {observer} from 'mobx-react-lite';
 import BottomSheetCore from '@gorhom/bottom-sheet';
 import {useBackHandler} from '@react-native-community/hooks';
 
-import {client, InputWithButton, setFunction} from '../../Generic';
+import {client, setFunction} from '../../Generic';
 import {STATUSES} from '../../lib/consts';
 import {currentTheme} from '../../Theme';
-import {ContextButton, Text} from '../common/atoms';
+import {ContextButton, InputWithButton, Text} from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
 
 export const StatusSheet = observer(() => {
@@ -74,7 +74,7 @@ export const StatusSheet = observer(() => {
               },
             });
           }}
-          buttonLabel="Set text"
+          buttonContents={{type: "string", content: "Set text"}}
           backgroundColor={currentTheme.backgroundPrimary}
         />
       </View>

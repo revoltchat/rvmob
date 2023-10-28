@@ -1,6 +1,5 @@
 import React from 'react';
-import {Linking, TextInput, View, ViewStyle} from 'react-native';
-import {observer} from 'mobx-react-lite';
+import {Linking, View} from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image';
@@ -10,7 +9,6 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import {API, Channel, Client, Server} from 'revolt.js';
 
 import {currentTheme, setTheme, themes, styles} from './Theme';
-import {Button, Text} from './components/common/atoms';
 import {
   DEFAULT_API_URL,
   DEFAULT_MAX_SIDE,
@@ -499,19 +497,6 @@ export const ChannelIcon = ({
   );
 };
 
-export const ServerName = observer(
-  ({server, size}: {server: Server; size?: number}) => {
-    return (
-      <View style={{flexDirection: 'row'}}>
-        <Text
-          style={{fontWeight: 'bold', fontSize: size || 14, flexWrap: 'wrap'}}>
-          {server.name}
-        </Text>
-      </View>
-    );
-  },
-);
-
 export var selectedRemark =
   LOADING_SCREEN_REMARKS[
     Math.floor(Math.random() * LOADING_SCREEN_REMARKS.length)
@@ -521,105 +506,4 @@ export function randomizeRemark() {
     LOADING_SCREEN_REMARKS[
       Math.floor(Math.random() * LOADING_SCREEN_REMARKS.length)
     ];
-}
-
-type InputProps = {
-  value?: string;
-  onChangeText?: any;
-  placeholder?: string;
-  style?: any;
-  backgroundColor: ViewStyle['backgroundColor'];
-};
-
-export function Input({
-  value,
-  onChangeText,
-  placeholder,
-  style,
-  backgroundColor,
-  ...props
-}: InputProps) {
-  return (
-    <TextInput
-      value={value}
-      onChangeText={onChangeText}
-      placeholder={placeholder}
-      style={[
-        {
-          minWidth: '100%',
-          borderRadius: 8,
-          backgroundColor: currentTheme.backgroundSecondary,
-          padding: 6,
-          paddingLeft: 10,
-          paddingRight: 10,
-          color: currentTheme.foregroundPrimary,
-        },
-        backgroundColor ? {backgroundColor} : {},
-        style,
-      ]}
-      {...props}
-    />
-  );
-}
-
-export function InputWithButton({
-  defaultValue,
-  placeholder,
-  buttonLabel,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  style,
-  backgroundColor,
-  onPress,
-  ...props
-}: {
-  defaultValue?: string;
-  placeholder?: string;
-  buttonLabel: string;
-  style?: any;
-  backgroundColor: ViewStyle['backgroundColor'];
-  onPress: any;
-}) {
-  let [value, setValue] = React.useState(defaultValue);
-  return (
-    // style.input and style.button are applied to the input and button respectively
-    <View
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minWidth: '100%',
-      }}>
-      <TextInput
-        value={value}
-        onChangeText={v => {
-          setValue(v);
-        }}
-        placeholder={placeholder}
-        style={{
-          fontFamily: 'Open Sans',
-          flex: 1,
-          borderRadius: 8,
-          backgroundColor: backgroundColor || currentTheme.backgroundSecondary,
-          padding: 6,
-          paddingLeft: 10,
-          paddingRight: 10,
-          color: currentTheme.foregroundPrimary,
-        }}
-        {...props}
-      />
-      <Button
-        onPress={() => {
-          onPress(value);
-        }}
-        style={[
-          styles.button,
-          {marginRight: 0},
-          backgroundColor ? {backgroundColor} : {},
-        ]}>
-        <Text style={{color: currentTheme.foregroundPrimary}}>
-          {buttonLabel}
-        </Text>
-      </Button>
-    </View>
-  );
 }

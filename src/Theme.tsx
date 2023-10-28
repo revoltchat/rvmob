@@ -455,6 +455,21 @@ function refreshStyles() {
       display: 'block',
       position: 'absolute',
     },
+    iwbContainer:  {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minWidth: '100%',
+    },
+    iwbInput: {
+      fontFamily: 'Open Sans',
+      flex: 1,
+      borderRadius: 8,
+      backgroundColor: currentTheme.backgroundSecondary,
+      padding: 6,
+      paddingHorizontal: 10,
+      color: currentTheme.foregroundPrimary,
+    }
   });
 }
 export function setTheme(themeName: string) {
