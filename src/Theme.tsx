@@ -1,6 +1,18 @@
 import {Dimensions, StyleSheet} from 'react-native';
+
+const commonColours = {
+  statusOnline: '#3ABF7E',
+  statusIdle: '#F39F00',
+  statusBusy: '#F84848',
+  statusFocus: '#4799F0',
+  statusStreaming: '#977EFF',
+  statusOffline: '#A5A5A5',
+  statusInvisible: '#A5A5A5',
+}
+
 export const themes = {
-  Light: {
+  Light: { 
+    ...commonColours,
     background: '#F6F6F6',
     backgroundPrimary: '#FFFFFF',
     backgroundSecondary: '#F1F1F1',
@@ -19,17 +31,11 @@ export const themes = {
     accentColor: '#219E87',
     accentColorForeground: '#000000',
     contentType: 'light',
-    statusOnline: '#3ABF7E',
-    statusIdle: '#F39F00',
-    statusBusy: '#F84848',
-    statusFocus: '#4799F0',
-    statusStreaming: '#977EFF',
-    statusOffline: '#A5A5A5',
-    statusInvisible: '#A5A5A5',
     error: '#ED4245',
     pingColor: '#FBFF0050',
   },
   Dark: {
+    ...commonColours,
     background: '#191919',
     backgroundPrimary: '#242424',
     backgroundSecondary: '#1E1E1E',
@@ -48,13 +54,6 @@ export const themes = {
     accentColor: '#1AD4B2',
     accentColorForeground: '#000000',
     contentType: 'light',
-    statusOnline: '#3ABF7E',
-    statusIdle: '#F39F00',
-    statusBusy: '#F84848',
-    statusFocus: '#4799F0',
-    statusStreaming: '#977EFF',
-    statusOffline: '#A5A5A5',
-    statusInvisible: '#A5A5A5',
     error: '#ED4245',
     pingColor: '#FBFF000F',
   },
@@ -103,6 +102,7 @@ export const themes = {
   //     pingColorForeground: "#ffffff"
   // },
   AMOLED: {
+    ...commonColours,
     backgroundPrimary: '#000000',
     backgroundSecondary: '#000000',
     foregroundPrimary: '#F6F6F6',
@@ -124,12 +124,6 @@ export const themes = {
     generalBorderColor: '#ffffff22',
     generalBorderWidth: 1,
     buttonBorderColorActive: '#3333ff',
-    statusOnline: '#3abf7e',
-    statusIdle: '#f39f00',
-    statusBusy: '#f84848',
-    statusStreaming: '#977eff',
-    statusOffline: '#a5a5a5',
-    statusInvisible: '#a5a5a5',
     pingColor: '#f84848',
     pingColorForeground: '#ffffff',
   },
