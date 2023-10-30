@@ -16,7 +16,6 @@ import {
   PlatformModerationMessage,
   ReplyMessage,
   VideoEmbed,
-  AudioPlayer,
 } from './';
 import {app, client, openUrl} from '../../../Generic';
 import {Avatar} from '../../../Profile';
@@ -403,13 +402,6 @@ export const Message = observer((props: MessageProps) => {
                     return (
                       <VideoEmbed
                         key={`message-${props.message._id}-video-${a._id}`}
-                        attachment={a}
-                      />
-                    );
-                  } else if (a.metadata?.type == 'Audio') {
-                    return (
-                      <AudioPlayer
-                        key={`message-${props.message._id}-audio-${a._id}`}
                         attachment={a}
                       />
                     );

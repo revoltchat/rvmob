@@ -9443,11 +9443,6 @@ react-native-tcp-socket@^6.0.6:
     buffer "^5.4.3"
     eventemitter3 "^4.0.7"
 
-react-native-track-player@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-track-player/-/react-native-track-player-3.2.0.tgz#c7b7a53eaf4c248af2ac876ef349feaee2ef774a"
-  integrity sha512-svv6TOgU/quFV1aajG5PskVhgFG0wHQtO+aYs6cIH0D27ckzN8WVoC3jI94m1CVaSgLMw48P911csYuD2fIcqA==
-
 react-native-udp@^4.1.7:
   version "4.1.7"
   resolved "https://registry.yarnpkg.com/react-native-udp/-/react-native-udp-4.1.7.tgz#9fa90b772b44c991605e8191444dd2ca3259cb58"
