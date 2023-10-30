@@ -1,18 +1,43 @@
-import React from 'react';
-import {ScrollView, View} from 'react-native';
+import React, {useRef} from 'react';
+import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
+
+import BottomSheetCore from '@gorhom/bottom-sheet';
+import {useBackHandler} from '@react-native-community/hooks';
 
 import {Channel, User} from 'revolt.js';
 
+import {setFunction} from '../../Generic';
 import {currentTheme} from '../../Theme';
 import {Text} from '../common/atoms';
+import {BottomSheet} from '../common/BottomSheet';
 import {MarkdownView} from '../common/MarkdownView';
 
-export const ChannelInfoSheet = observer(({channel}: {channel: Channel}) => {
+export const ChannelInfoSheet = observer(() => {
+  const [channel, setChannel] = React.useState(null as Channel | null);
   const [groupMembers, setGroupMembers] = React.useState([] as User[]);
+
+  const sheetRef = useRef<BottomSheetCore>(null);
+
+  useBackHandler(() => {
+    if (channel) {
+      sheetRef.current?.close();
+      return true;
+    }
+
+    return false;
+  });
+
+  setFunction('openChannelContextMenu', async (c: Channel | null) => {
+    setChannel(c);
+    c ? sheetRef.current?.expand() : sheetRef.current?.close();
+  });
 
   React.useEffect(() => {
     async function fetchMembers() {
+      if (!channel) {
+        return;
+      }
       const m =
         channel.channel_type === 'Group' ? await channel.fetchMembers() : [];
       setGroupMembers(m);
@@ -20,38 +45,46 @@ export const ChannelInfoSheet = observer(({channel}: {channel: Channel}) => {
     fetchMembers();
   }, [channel]);
   return (
-    <ScrollView>
-      <View style={{justifyContent: 'center'}}>
-        <Text type={'header'}>{channel.name}</Text>
-        <Text
-          colour={currentTheme.foregroundSecondary}
-          style={{
-            marginVertical: 4,
-          }}>
-          {channel.channel_type === 'Group'
-            ? `Group (${groupMembers.length} ${
-                groupMembers.length === 1 ? 'member' : 'members'
-              })`
-            : 'Regular channel'}
-        </Text>
-        {channel.description ? (
-          <View
-            style={{
-              backgroundColor: currentTheme.background,
-              padding: 8,
-              borderRadius: 8,
-            }}>
-            <MarkdownView
-              style={{
-                color: currentTheme.foregroundSecondary,
-                fontSize: 16,
-                textAlign: 'center',
-              }}>
-              {channel.description}
-            </MarkdownView>
-          </View>
-        ) : null}
+    <BottomSheet sheetRef={sheetRef}>
+      <View style={{paddingHorizontal: 16}}>
+        {!channel ? (
+          <></>
+        ) : (
+          <>
+            <View style={{justifyContent: 'center'}}>
+              <Text type={'header'}>{channel.name}</Text>
+              <Text
+                colour={currentTheme.foregroundSecondary}
+                style={{
+                  marginVertical: 4,
+                }}>
+                {channel.channel_type === 'Group'
+                  ? `Group (${groupMembers.length} ${
+                      groupMembers.length === 1 ? 'member' : 'members'
+                    })`
+                  : 'Regular channel'}
+              </Text>
+              {channel.description ? (
+                <View
+                  style={{
+                    backgroundColor: currentTheme.background,
+                    padding: 8,
+                    borderRadius: 8,
+                  }}>
+                  <MarkdownView
+                    style={{
+                      color: currentTheme.foregroundSecondary,
+                      fontSize: 16,
+                      textAlign: 'center',
+                    }}>
+                    {channel.description}
+                  </MarkdownView>
+                </View>
+              ) : null}
+            </View>
+          </>
+        )}
       </View>
-    </ScrollView>
+    </BottomSheet>
   );
 });

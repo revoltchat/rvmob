@@ -21,186 +21,16 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import AppInfo from '../../../package.json';
 import {app, client} from '../../Generic';
-import {Setting} from '../../lib/types';
+import {Setting, SettingsSection} from '../../lib/types';
 import {currentTheme, styles} from '../../Theme';
-import {Checkbox, ContextButton, Link, Text} from '../common/atoms';
+import {ContextButton, Link, Text} from '../common/atoms';
+import {SettingsCategory} from '../common/settings';
 import {GapView} from '../layout';
 
 import ReleaseIcon from '../../../assets/images/icon_release.svg';
 import DebugIcon from '../../../assets/images/icon_debug.svg';
 
 const AppIcon = getBundleId().match('debug') ? DebugIcon : ReleaseIcon;
-
-type Section = string | null;
-
-const IndicatorIcons = ({s}: {s: Setting}) => {
-  return (
-    <>
-      {s.experimental ? (
-        <View style={styles.iconContainer}>
-          <MaterialCommunityIcon
-            name="flask"
-            size={28}
-            color={currentTheme.accentColor}
-          />
-        </View>
-      ) : null}
-      {s.developer ? (
-        <View style={styles.iconContainer}>
-          <MaterialIcon
-            name="bug-report"
-            size={28}
-            color={currentTheme.accentColor}
-          />
-        </View>
-      ) : null}
-    </>
-  );
-};
-
-const BoolSetting = ({
-  sRaw,
-  experimentalFunction,
-  devFunction,
-}: {
-  sRaw: Setting;
-  experimentalFunction: any;
-  devFunction: any;
-}) => {
-  const [value, setValue] = React.useState(
-    app.settings.get(sRaw.key) as boolean,
-  );
-  return (
-    <View
-      key={`settings_${sRaw.key}`}
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 10,
-      }}>
-      <IndicatorIcons s={sRaw} />
-      <View style={{flex: 1, flexDirection: 'column'}}>
-        <Text style={{fontWeight: 'bold'}}>{sRaw.name}</Text>
-        {sRaw.remark ? (
-          <Text colour={currentTheme.foregroundSecondary}>{sRaw.remark}</Text>
-        ) : null}
-      </View>
-      <Checkbox
-        key={`checkbox-${sRaw.name}`}
-        value={value}
-        callback={() => {
-          const newValue = !value;
-          app.settings.set(sRaw.key, newValue);
-          setValue(newValue);
-          sRaw.key === 'ui.settings.showExperimental'
-            ? experimentalFunction(newValue)
-            : null;
-          sRaw.key === 'ui.showDeveloperFeatures'
-            ? devFunction(newValue)
-            : null;
-        }}
-      />
-    </View>
-  );
-};
-
-const StringNumberSetting = ({
-  sRaw,
-  renderCount,
-  rerender,
-}: {
-  sRaw: Setting;
-  renderCount: number;
-  rerender: Function;
-}) => {
-  const [value, setValue] = React.useState(app.settings.getRaw(sRaw.key));
-  return (
-    <View
-      key={`settings_${sRaw.key}`}
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 10,
-      }}>
-      {sRaw.options ? (
-        <View>
-          <IndicatorIcons s={sRaw} />
-          <Text style={{fontWeight: 'bold', marginBottom: 8}}>{sRaw.name}</Text>
-          {sRaw.remark ? (
-            <Text
-              colour={currentTheme.foregroundSecondary}
-              style={{marginBottom: 8}}>
-              {sRaw.remark}
-            </Text>
-          ) : null}
-          <View
-            style={{
-              borderRadius: 8,
-              minWidth: '100%',
-              backgroundColor: currentTheme.backgroundSecondary,
-              padding: 8,
-            }}>
-            {sRaw.options.map(o => (
-              <TouchableOpacity
-                key={o}
-                style={styles.actionTile}
-                onPress={() => {
-                  app.settings.set(sRaw.key, o);
-                  setValue(o);
-
-                  // if this is the theme toggle, re-render the category
-                  if (sRaw.key === 'ui.theme') {
-                    rerender(renderCount + 1);
-                  }
-                }}>
-                <Text style={{flex: 1}}>{o}</Text>
-                <View style={{...styles.iconContainer, marginRight: 0}}>
-                  <MaterialIcon
-                    name={`radio-button-${value === o ? 'on' : 'off'}`}
-                    size={28}
-                    color={currentTheme.accentColor}
-                  />
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-      ) : (
-        <View>
-          <IndicatorIcons s={sRaw} />
-          <Text style={{flex: 1, fontWeight: 'bold', marginBottom: 8}}>
-            {sRaw.name}
-          </Text>
-          {sRaw.remark ? (
-            <Text
-              colour={currentTheme.foregroundSecondary}
-              style={{marginBottom: 8}}>
-              {sRaw.remark}
-            </Text>
-          ) : null}
-          <TextInput
-            style={{
-              fontFamily: 'Open Sans',
-              minWidth: '100%',
-              borderRadius: 8,
-              backgroundColor: currentTheme.backgroundSecondary,
-              padding: 6,
-              paddingLeft: 10,
-              paddingRight: 10,
-              color: currentTheme.foregroundPrimary,
-            }}
-            value={value as string}
-            keyboardType={sRaw.type === 'number' ? 'decimal-pad' : 'default'}
-            onChangeText={v => {
-              app.settings.set(sRaw.key, v);
-              setValue(v);
-            }}
-          />
-        </View>
-      )}
-    </View>
-  );
-};
 
 async function copyDebugInfo() {
   const obj = {
@@ -226,71 +56,9 @@ function copyDebugInfoWrapper() {
   });
 }
 
-const SettingsCategory = observer(
-  ({
-    category,
-    friendlyName,
-    renderCount,
-    rerender,
-  }: {
-    category: string;
-    friendlyName: string;
-    renderCount: number;
-    rerender: Function;
-  }) => {
-    const [showExperimental, setShowExperimental] = React.useState(
-      app.settings.get('ui.settings.showExperimental') as boolean,
-    );
-
-    const [showDev, setShowDev] = React.useState(
-      app.settings.get('ui.showDeveloperFeatures') as boolean,
-    );
-
-    return (
-      <View key={`settings-category-${category}`}>
-        <Text key={`settings-category-${category}-header`} type={'header'}>
-          {friendlyName}
-        </Text>
-        {app.settings.list.map(sRaw => {
-          try {
-            if (
-              (sRaw.experimental && !showExperimental) ||
-              (sRaw.developer && !showDev) ||
-              sRaw.category !== category
-            ) {
-              return null;
-            }
-            if (sRaw.type === 'boolean') {
-              return (
-                <BoolSetting
-                  key={`settings-${sRaw.key}-outer`}
-                  sRaw={sRaw}
-                  experimentalFunction={setShowExperimental}
-                  devFunction={setShowDev}
-                />
-              );
-            } else if (sRaw.type === 'string' || sRaw.type === 'number') {
-              return (
-                <StringNumberSetting
-                  key={`settings-${sRaw.key}-outer`}
-                  sRaw={sRaw}
-                  renderCount={renderCount}
-                  rerender={rerender}
-                />
-              );
-            }
-          } catch (err) {
-            console.log(err);
-          }
-        })}
-      </View>
-    );
-  },
-);
-
 export const SettingsSheet = observer(({setState}: {setState: Function}) => {
   const [renderCount, rerender] = React.useState(0);
-  const [section, setSection] = React.useState(null as Section);
+  const [section, setSection] = React.useState(null as SettingsSection);
 
   const [authInfo, setAuthInfo] = React.useState({
     email: '',
@@ -723,9 +491,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
           onPress={() => {
             app.settings.clear();
           }}>
-          <Text style={{color: currentTheme.accentColorForeground}}>
-            Reset Settings
-          </Text>
+          <Text>Reset Settings</Text>
         </ContextButton>
       ) : null}
     </View>

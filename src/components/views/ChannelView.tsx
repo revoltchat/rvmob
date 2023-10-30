@@ -106,12 +106,9 @@ export const ChannelView = observer(
                 {channel.channel_type === 'Group' ? (
                   <View style={{marginEnd: 16}}>
                     <TouchableOpacity
-                      onPress={async () =>
-                        app.openMemberList(
-                          channel,
-                          await channel.fetchMembers(),
-                        )
-                      }>
+                      onPress={() => {
+                        app.openMemberList(channel);
+                      }}>
                       <MaterialIcon
                         name="group"
                         size={24}

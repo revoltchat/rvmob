@@ -1,4 +1,4 @@
-import {Message} from 'revolt.js';
+import {Message, Server, User} from 'revolt.js';
 
 type StringSetting = {
   default: string;
@@ -24,7 +24,28 @@ export type Setting = (StringSetting | BoolSetting) & {
   remark?: string;
 };
 
+export type SettingsSection = string | null;
+
 export type ReplyingMessage = {
   mentions: boolean;
   message: Message;
 };
+
+interface TypedMessage {
+  type: 'Message';
+  object: Message;
+}
+
+interface TypedServer {
+  type: 'Server';
+  object: Server;
+}
+
+interface TypedUser {
+  type: 'User';
+  object: User;
+}
+
+export type ReportedObject = TypedMessage | TypedServer | TypedUser;
+
+export type DeletableObject = TypedMessage | TypedServer;

@@ -13,6 +13,7 @@ import {ErrorBoundary} from 'react-error-boundary';
 import SideMenu from '@chakrahq/react-native-side-menu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import {currentTheme, styles} from './src/Theme';
 import {client, app, selectedRemark, randomizeRemark} from './src/Generic';
@@ -49,7 +50,6 @@ class MainView extends React.Component {
       emailInput: '',
       passwordInput: '',
       tfaInput: '',
-      userStatusInput: '',
       tfaTicket: '',
       leftMenuOpen: false,
       notificationMessage: null,
@@ -293,6 +293,13 @@ class MainView extends React.Component {
         }
       }
     });
+    client.on('server/delete', async s => {
+      const currentServer = app.getCurrentServer();
+      if (currentServer === s) {
+        app.openServer(undefined);
+        app.openChannel(null);
+      }
+    });
     AsyncStorage.getItem('token', async (err, res) => {
       if (!err) {
         if (typeof res !== 'string') {
@@ -358,14 +365,6 @@ class MainView extends React.Component {
                 <LeftMenu
                   onChannelClick={this.setChannel.bind(this)}
                   currentChannel={this.state.currentChannel}
-                  onLogOut={() => {
-                    console.log(
-                      `[AUTH] Logging out of current session... (user: ${client.user?._id})`,
-                    );
-                    AsyncStorage.setItem('token', '');
-                    client.logout();
-                    this.setState({status: 'awaitingLogin'});
-                  }}
                   orderedServers={this.state.orderedServers}
                 />
               }
@@ -373,7 +372,7 @@ class MainView extends React.Component {
               bounceBackOnOverdraw={false}>
               <ChannelView state={this} channel={this.state.currentChannel} />
             </SideMenu>
-            <Modals state={this.state} setState={this.setState.bind(this)} />
+            <Modals />
             <NetworkIndicator client={client} />
             <View
               style={{position: 'absolute', top: 20, left: 0, width: '100%'}}>
@@ -732,7 +731,7 @@ function ErrorMessage({
 
 export const App = () => {
   return (
-    <View style={styles.outer}>
+    <GestureHandlerRootView style={styles.outer}>
       <StatusBar
         animated={true}
         backgroundColor={currentTheme.backgroundSecondary}
@@ -741,6 +740,6 @@ export const App = () => {
       <ErrorBoundary fallbackRender={ErrorMessage}>
         <MainView />
       </ErrorBoundary>
-    </View>
+    </GestureHandlerRootView>
   );
 };

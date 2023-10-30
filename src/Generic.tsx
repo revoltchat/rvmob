@@ -1,16 +1,14 @@
 import React from 'react';
-import {Linking, TextInput, View, ViewStyle} from 'react-native';
-import {observer} from 'mobx-react-lite';
+import {Linking, View} from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {API, Channel, Client, Message, Server, User} from 'revolt.js';
+import {API, Channel, Client, Message, Server} from 'revolt.js';
 
 import {currentTheme, setTheme, themes, styles} from './Theme';
-import {Button, Text} from './components/common/atoms';
 import {
   DEFAULT_API_URL,
   DEFAULT_MAX_SIDE,
@@ -20,7 +18,12 @@ import {
   RE_BOT_INVITE,
   WIKI_URL,
 } from './lib/consts';
-import {ReplyingMessage, Setting} from './lib/types';
+import {
+  DeletableObject,
+  ReplyingMessage,
+  ReportedObject,
+  Setting,
+} from './lib/types';
 const Image = FastImage;
 
 export const app = {
@@ -192,7 +195,7 @@ export const app = {
         category: 'appearance',
         name: 'Font size',
         remark: 'This will aplly to messages and certain parts of the app.',
-        default: '16',
+        default: '14',
         type: 'number',
       },
       {
@@ -288,18 +291,27 @@ export const app = {
   openInvite: i => {},
   openBotInvite: i => {},
   openServer: (s?: Server) => {},
+  getCurrentServer: () => {
+    return undefined as string | undefined;
+  },
   openChannel: c => {},
   openDirectMessage: (c: Channel) => {},
   openImage: a => {},
   openVideo: (a, data) => {},
   openMessage: m => {},
-  openServerContextMenu: (s: Server) => {
+  openServerContextMenu: (s: Server | null) => {
     console.log(
       `[FUNCTIONS] Tried to run uninitialised function openServerContextMenu (args: ${s})`,
     );
   },
   openSettings: o => {},
-  setMessageBoxInput: t => {},
+  openServerSettings: (s: Server | null) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function openServerSettings (args: ${s})`,
+    );
+  },
+  setMessageBoxInput: (t: string | null) => {},
+  setEditingMessage: (message: Message) => {},
   setReplyingMessages: (m: ReplyingMessage[]) => {
     console.log(
       `[FUNCTIONS] Tried to run uninitialised function setReplyingMessages (args: ${m})`,
@@ -308,16 +320,17 @@ export const app = {
   getReplyingMessages: () => {
     return undefined as unknown as ReplyingMessage[];
   },
+  /**
+   * @deprecated Message queuing will be removed/reworked due to the switch of message views
+   */
   pushToQueue: m => {},
   joinInvite: async (i: API.InviteResponse) => {},
   logOut: () => {},
-  openMemberList: (c: Channel | Server | null, u: User[] | null) => {},
+  openMemberList: (data: Channel | Server | null) => {},
   openChannelContextMenu: (c: Channel | null) => {},
   openStatusMenu: (state: boolean) => {},
-  openReportMenu: (
-    _object: User | Server | Message | null,
-    _type: string | null,
-  ) => {},
+  openReportMenu: (object: ReportedObject | null) => {},
+  openDeletionConfirmationModal: (object: DeletableObject | null) => {},
 };
 
 export function setFunction(name: string, func: any) {
@@ -503,19 +516,6 @@ export const ChannelIcon = ({
   );
 };
 
-export const ServerName = observer(
-  ({server, size}: {server: Server; size?: number}) => {
-    return (
-      <View style={{flexDirection: 'row'}}>
-        <Text
-          style={{fontWeight: 'bold', fontSize: size || 14, flexWrap: 'wrap'}}>
-          {server.name}
-        </Text>
-      </View>
-    );
-  },
-);
-
 export var selectedRemark =
   LOADING_SCREEN_REMARKS[
     Math.floor(Math.random() * LOADING_SCREEN_REMARKS.length)
@@ -525,105 +525,4 @@ export function randomizeRemark() {
     LOADING_SCREEN_REMARKS[
       Math.floor(Math.random() * LOADING_SCREEN_REMARKS.length)
     ];
-}
-
-type InputProps = {
-  value?: string;
-  onChangeText?: any;
-  placeholder?: string;
-  style?: any;
-  backgroundColor: ViewStyle['backgroundColor'];
-};
-
-export function Input({
-  value,
-  onChangeText,
-  placeholder,
-  style,
-  backgroundColor,
-  ...props
-}: InputProps) {
-  return (
-    <TextInput
-      value={value}
-      onChangeText={onChangeText}
-      placeholder={placeholder}
-      style={[
-        {
-          minWidth: '100%',
-          borderRadius: 8,
-          backgroundColor: currentTheme.backgroundSecondary,
-          padding: 6,
-          paddingLeft: 10,
-          paddingRight: 10,
-          color: currentTheme.foregroundPrimary,
-        },
-        backgroundColor ? {backgroundColor} : {},
-        style,
-      ]}
-      {...props}
-    />
-  );
-}
-
-export function InputWithButton({
-  defaultValue,
-  placeholder,
-  buttonLabel,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  style,
-  backgroundColor,
-  onPress,
-  ...props
-}: {
-  defaultValue?: string;
-  placeholder?: string;
-  buttonLabel: string;
-  style?: any;
-  backgroundColor: ViewStyle['backgroundColor'];
-  onPress: any;
-}) {
-  let [value, setValue] = React.useState(defaultValue);
-  return (
-    // style.input and style.button are applied to the input and button respectively
-    <View
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minWidth: '100%',
-      }}>
-      <TextInput
-        value={value}
-        onChangeText={v => {
-          setValue(v);
-        }}
-        placeholder={placeholder}
-        style={{
-          fontFamily: 'Open Sans',
-          flex: 1,
-          borderRadius: 8,
-          backgroundColor: backgroundColor || currentTheme.backgroundSecondary,
-          padding: 6,
-          paddingLeft: 10,
-          paddingRight: 10,
-          color: currentTheme.foregroundPrimary,
-        }}
-        {...props}
-      />
-      <Button
-        onPress={() => {
-          onPress(value);
-        }}
-        style={[
-          styles.button,
-          {marginRight: 0},
-          backgroundColor ? {backgroundColor} : {},
-        ]}>
-        <Text style={{color: currentTheme.foregroundPrimary}}>
-          {buttonLabel}
-        </Text>
-      </Button>
-    </View>
-  );
 }
