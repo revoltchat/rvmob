@@ -123,7 +123,7 @@ class MainView extends React.Component {
         this.setState({tokenInput: ''});
       }
       notifee.onBackgroundEvent(async ({type, detail}) => {
-        const {notification, pressAction} = detail;
+        const {notification /*, pressAction */} = detail;
         if (type === EventType.PRESS) {
           console.log(
             `[NOTIFEE] User pressed on ${notification?.data?.channel}/${notification?.data?.messageID}`,
@@ -147,9 +147,9 @@ class MainView extends React.Component {
                 let serverLastChannels = JSON.parse(data || '{}') || {};
                 let lastChannel = serverLastChannels[lastServer];
                 if (lastChannel) {
-                  let channel = client.channels.get(lastChannel);
-                  if (channel) {
-                    app.openChannel(channel);
+                  let fetchedLastChannel = client.channels.get(lastChannel);
+                  if (fetchedLastChannel) {
+                    app.openChannel(fetchedLastChannel);
                   }
                 }
               } else {
@@ -638,10 +638,10 @@ class MainView extends React.Component {
                                 emailInput: '',
                                 logInError: null,
                               });
-                            } catch (e) {
-                              console.error(e);
+                            } catch (tokenErr) {
+                              console.error(tokenErr);
                               this.setState({
-                                logInError: e,
+                                logInError: tokenErr,
                                 status: 'awaitingLogin',
                               });
                             }
