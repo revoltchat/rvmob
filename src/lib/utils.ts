@@ -1,4 +1,5 @@
 import {ToastAndroid} from 'react-native';
+import TrackPlayer, {Event} from 'react-native-track-player';
 
 import {differenceInMinutes} from 'date-fns';
 import {Channel, Message} from 'revolt.js';

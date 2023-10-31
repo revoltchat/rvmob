@@ -9,7 +9,14 @@ import {enGB, enUS} from 'date-fns/locale';
 import {Message as RevoltMessage} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
-import {InviteEmbed, MessageEmbed, MessageReactions, PlatformModerationMessage, ReplyMessage} from './';
+import {
+  InviteEmbed,
+  MessageEmbed,
+  MessageReactions,
+  PlatformModerationMessage,
+  ReplyMessage,
+  VideoEmbed,
+} from './';
 import {app, client, openUrl} from '../../../Generic';
 import {Avatar} from '../../../Profile';
 import {currentTheme, styles} from '../../../Theme';
@@ -390,6 +397,13 @@ export const Message = observer((props: MessageProps) => {
                           }}
                         />
                       </Pressable>
+                    );
+                  } else if (a.metadata?.type == 'Video') {
+                    return (
+                      <VideoEmbed
+                        key={`message-${props.message._id}-video-${a._id}`}
+                        attachment={a}
+                      />
                     );
                   } else {
                     return (

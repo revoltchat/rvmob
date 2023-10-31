@@ -3,6 +3,7 @@ import {Modal, Pressable, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import ImageViewer from 'react-native-image-zoom-viewer';
+import VideoPlayer from 'react-native-video-controls';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {API, Channel, Server, User} from 'revolt.js';
@@ -45,7 +46,6 @@ export const Modals = observer(() => {
   const [deletableObject, setDeletableObject] = React.useState(
     null as DeletableObject | null,
   );
-
   setFunction('openDirectMessage', async (dm: Channel) => {
     app.openProfile(null);
     app.openChannel(dm);

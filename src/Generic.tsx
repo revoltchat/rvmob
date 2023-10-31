@@ -297,6 +297,7 @@ export const app = {
   openChannel: c => {},
   openDirectMessage: (c: Channel) => {},
   openImage: a => {},
+  openVideo: (a, data) => {},
   openMessage: m => {},
   openServerContextMenu: (s: Server | null) => {
     console.log(
