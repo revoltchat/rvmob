@@ -47,6 +47,10 @@ react {
     // hermesFlags = ["-O", "-output-source-map"]
 }
 
+project.ext.vectoricons = [
+    iconFontNames: ['MaterialIcons.ttf', 'MaterialCommunityIcons.ttf', 'FontAwesome5_Regular.ttf', 'FontAwesome5_Solid.ttf']
+]
+
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 /**
@@ -110,6 +114,7 @@ android {
         debug {
             signingConfig signingConfigs.debug
             applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
         }
         release {
             signingConfig signingConfigs.release
