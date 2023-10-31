@@ -1,7 +1,6 @@
 import React from 'react';
 import {Pressable, ScrollView, View} from 'react-native';
 
-import FAIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Server} from 'revolt.js';

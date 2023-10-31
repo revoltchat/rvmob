@@ -2,7 +2,6 @@ import React from 'react';
 import {Pressable, ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import Clipboard from '@react-native-clipboard/clipboard';
 import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -11,7 +10,7 @@ import {Server} from 'revolt.js';
 
 import {app, client} from '../../Generic';
 import {MAX_SIDE_HQ} from '../../lib/consts';
-import {Setting, SettingsSection} from '../../lib/types';
+import {SettingsSection} from '../../lib/types';
 import {currentTheme, styles} from '../../Theme';
 import {ContextButton, InputWithButton, Link, Text} from '../common/atoms';
 import {GapView} from '../layout';

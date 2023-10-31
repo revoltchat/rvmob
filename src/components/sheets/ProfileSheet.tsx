@@ -28,7 +28,6 @@ import {
 import {BottomSheet} from '../common/BottomSheet';
 import {MarkdownView} from '../common/MarkdownView';
 import {UserList} from '../navigation/UserList';
-import {GapView} from '../layout';
 
 // const Image = FastImage;
 

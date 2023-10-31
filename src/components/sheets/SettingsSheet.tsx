@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Pressable,
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Pressable, ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -21,7 +15,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import AppInfo from '../../../package.json';
 import {app, client} from '../../Generic';
-import {Setting, SettingsSection} from '../../lib/types';
+import {SettingsSection} from '../../lib/types';
 import {currentTheme, styles} from '../../Theme';
 import {ContextButton, Link, Text} from '../common/atoms';
 import {SettingsCategory} from '../common/settings';

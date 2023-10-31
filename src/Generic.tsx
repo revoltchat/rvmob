@@ -8,7 +8,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {API, Channel, Client, Message, Server} from 'revolt.js';
 
-import {currentTheme, setTheme, themes, styles} from './Theme';
+import {currentTheme, setTheme, themes} from './Theme';
 import {
   DEFAULT_API_URL,
   DEFAULT_MAX_SIDE,

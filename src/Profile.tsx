@@ -1,10 +1,10 @@
 import {observer} from 'mobx-react-lite';
 import React from 'react';
 import {client, app} from './Generic';
-import {currentTheme, styles} from './Theme';
+import {currentTheme} from './Theme';
 import {Pressable, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {Server, User, Message, Channel} from 'revolt.js';
+import {Server, User, Channel} from 'revolt.js';
 import {Text, Username} from './components/common/atoms';
 import {DEFAULT_MAX_SIDE} from './lib/consts';
 
