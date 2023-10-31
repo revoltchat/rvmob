@@ -18,17 +18,17 @@ const Image = FastImage;
 
 export const ServerSettingsSheet = observer(
   ({server, setState}: {server: Server; setState: Function}) => {
-    const [renderCount, rerender] = React.useState(0);
+    // const [renderCount, rerender] = React.useState(0);
     const [section, setSection] = React.useState(null as SettingsSection);
 
-    const iconURL = React.useMemo(() => server.generateIconURL(), []);
+    const iconURL = React.useMemo(() => server.generateIconURL(), [server]);
     const initials = React.useMemo(() => {
       let i = '';
       for (const word of server.name.split(' ')) {
         i += word.charAt(0);
       }
       return i;
-    }, []);
+    }, [server.name]);
 
     // React.useEffect(() => {
     //   async function getAuthInfo() {
@@ -121,6 +121,7 @@ export const ServerSettingsSheet = observer(
                     style={{
                       width: 80,
                       height: 80,
+                      borderRadius: 5000,
                     }}
                   />
                 ) : (
