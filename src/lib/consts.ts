@@ -169,6 +169,11 @@ export const BADGES = {
   ReservedRelevantJokeBadge2: 1024,
 };
 
+export const SERVER_FLAGS = {
+  Official: 1,
+  Verified: 2,
+};
+
 // Splash text seen on loading screens
 export const LOADING_SCREEN_REMARKS = [
   "I'm writing a complaint to the Head of Loading Screens.",

@@ -1,16 +1,18 @@
 import React, {useEffect, useRef} from 'react';
-import {View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import BottomSheetCore from '@gorhom/bottom-sheet';
 import {useBackHandler} from '@react-native-community/hooks';
 import FastImage from 'react-native-fast-image';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Member, Server} from 'revolt.js';
 
 import {GeneralAvatar, app, client, setFunction} from '../../Generic';
-import {SPECIAL_SERVERS} from '../../lib/consts';
+import {SERVER_FLAGS, SPECIAL_SERVERS} from '../../lib/consts';
+import {showToast} from '../../lib/utils';
 import {currentTheme, styles} from '../../Theme';
 import {ContextButton, CopyIDButton, Text} from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
@@ -69,20 +71,63 @@ export const ServerInfoSheet = observer(() => {
               {server.banner ? (
                 <Image
                   source={{uri: server.generateBannerURL()}}
-                  style={{width: '100%', height: 110, marginBottom: 4}}
+                  style={{width: '100%', height: 120, marginBottom: 8}}
                 />
               ) : null}
               {server.icon ? (
                 <GeneralAvatar attachment={server.icon} size={72} />
               ) : null}
-              <Text
-                type={'header'}
-                style={{
-                  marginBottom: 0,
-                  fontSize: 24,
-                }}>
-                {server.name}
-              </Text>
+              <View style={{flexDirection: 'row'}}>
+                {server.flags === SERVER_FLAGS.Official ? (
+                  <TouchableOpacity
+                    onPress={() => showToast('Official Server')}
+                    style={{alignSelf: 'center', marginEnd: 4}}>
+                    <MaterialCommunityIcon
+                      name={'crown'}
+                      color={currentTheme.foregroundPrimary}
+                      size={24}
+                    />
+                  </TouchableOpacity>
+                ) : server.flags === SERVER_FLAGS.Verified ? (
+                  <TouchableOpacity
+                    onPress={() => showToast('Verified Server')}
+                    style={{alignSelf: 'center', marginEnd: 4}}>
+                    <MaterialIcon
+                      name={'verified'}
+                      color={currentTheme.foregroundPrimary}
+                      size={24}
+                    />
+                  </TouchableOpacity>
+                ) : null}
+                <Text
+                  type={'header'}
+                  style={{
+                    fontSize: 24,
+                  }}>
+                  {server.name}
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={() =>
+                  showToast(
+                    server.discoverable
+                      ? 'Anyone can join this server.'
+                      : 'You need an invite to join this server.',
+                  )
+                }
+                style={{flexDirection: 'row'}}>
+                <MaterialIcon
+                  name={server.discoverable ? 'public' : 'home'}
+                  color={currentTheme.foregroundSecondary}
+                  size={20}
+                  style={{alignSelf: 'center', marginEnd: 4}}
+                />
+                <Text
+                  colour={currentTheme.foregroundSecondary}
+                  style={{alignSelf: 'center'}}>
+                  {server.discoverable ? 'Public server' : 'Invite-only server'}
+                </Text>
+              </TouchableOpacity>
               <Text
                 colour={currentTheme.foregroundSecondary}
                 style={{
@@ -100,17 +145,10 @@ export const ServerInfoSheet = observer(() => {
                 <View
                   style={{
                     backgroundColor: currentTheme.background,
-                    padding: 8,
+                    padding: 16,
                     borderRadius: 8,
                   }}>
-                  <MarkdownView
-                    style={{
-                      color: currentTheme.foregroundSecondary,
-                      fontSize: 16,
-                      textAlign: 'center',
-                    }}>
-                    {server.description}
-                  </MarkdownView>
+                  <MarkdownView>{server.description}</MarkdownView>
                 </View>
               ) : null}
             </View>
@@ -119,26 +157,28 @@ export const ServerInfoSheet = observer(() => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-                {server.havePermission("ManageServer") ? (<ContextButton
-                    key={'server-ctx-menu-settings'}
-                    onPress={() => {
-                      app.openServerSettings(server);
-                    }}>
-                    <View style={styles.iconContainer}>
-                      <MaterialIcon
-                        name={"settings"}
-                        size={20}
-                        color={currentTheme.foregroundPrimary}
-                      />
-                    </View>
-                    <Text>Server Settings</Text>
-                  </ContextButton>) : null}
+              {server.havePermission('ManageServer') ? (
+                <ContextButton
+                  key={'server-ctx-menu-settings'}
+                  onPress={() => {
+                    app.openServerSettings(server);
+                  }}>
+                  <View style={styles.iconContainer}>
+                    <MaterialIcon
+                      name={'settings'}
+                      size={20}
+                      color={currentTheme.foregroundPrimary}
+                    />
+                  </View>
+                  <Text>Server Settings</Text>
+                </ContextButton>
+              ) : null}
               {app.settings.get('ui.showDeveloperFeatures') ? (
                 <CopyIDButton id={server._id} />
               ) : null}
               {server.owner !== client.user?._id ? (
                 <>
-                <ContextButton
+                  <ContextButton
                     key={'server-ctx-menu-report'}
                     onPress={() => {
                       app.openReportMenu({object: server, type: 'Server'});
