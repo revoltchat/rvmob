@@ -69,7 +69,7 @@ const ServerChannelList = observer((props: ChannelListProps) => {
   const [processedChannels, setProcessedChannels] = React.useState(
     [] as string[],
   );
-  const [res, setRes] = React.useState([] as JSX.Element[] | undefined);
+  const [res, setRes] = React.useState([] as React.JSX.Element[] | undefined);
 
   React.useEffect(() => {
     let categories = props.currentServer.categories?.map(c => {

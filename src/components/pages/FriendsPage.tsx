@@ -32,16 +32,19 @@ export const FriendsPage = observer(() => {
     blocked: true,
   } as DisplayStates);
 
+  // FIXME: this needs a lot of cleaning up
+  // TODO: react to relationship updates
+
   // sort the user list, then filter for friends/blocked users/outgoing/incoming friend requests and render the buttons
   const sortedUsers = [...client.users.values()].sort((f1, f2) =>
     f1.username.localeCompare(f2.username),
   );
 
-  const onlineFriends = [] as JSX.Element[];
-  const offlineFriends = [] as JSX.Element[];
-  const incoming = [] as JSX.Element[];
-  const outgoing = [] as JSX.Element[];
-  const blocked = [] as JSX.Element[];
+  const onlineFriends = [] as React.JSX.Element[];
+  const offlineFriends = [] as React.JSX.Element[];
+  const incoming = [] as React.JSX.Element[];
+  const outgoing = [] as React.JSX.Element[];
+  const blocked = [] as React.JSX.Element[];
 
   for (const u of sortedUsers) {
     switch (u.relationship) {
