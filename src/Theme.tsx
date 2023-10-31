@@ -8,10 +8,10 @@ const commonColours = {
   statusStreaming: '#977EFF',
   statusOffline: '#A5A5A5',
   statusInvisible: '#A5A5A5',
-}
+};
 
 export const themes = {
-  Light: { 
+  Light: {
     ...commonColours,
     background: '#F6F6F6',
     backgroundPrimary: '#FFFFFF',
@@ -457,7 +457,7 @@ function refreshStyles() {
       display: 'block',
       position: 'absolute',
     },
-    iwbContainer:  {
+    iwbContainer: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
@@ -471,7 +471,7 @@ function refreshStyles() {
       padding: 6,
       paddingHorizontal: 10,
       color: currentTheme.foregroundPrimary,
-    }
+    },
   });
 }
 export function setTheme(themeName: string) {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Dimensions, Pressable, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -9,7 +9,13 @@ import {enGB, enUS} from 'date-fns/locale';
 import {Message as RevoltMessage} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
-import {InviteEmbed, MessageEmbed, MessageReactions, PlatformModerationMessage, ReplyMessage} from './';
+import {
+  InviteEmbed,
+  MessageEmbed,
+  MessageReactions,
+  PlatformModerationMessage,
+  ReplyMessage,
+} from './';
 import {app, client, openUrl} from '../../../Generic';
 import {Avatar} from '../../../Profile';
 import {currentTheme, styles} from '../../../Theme';

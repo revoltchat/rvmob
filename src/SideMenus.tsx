@@ -32,7 +32,7 @@ export const LeftMenu = ({
   }
   setFunction('getCurrentServer', () => {
     return currentServer?._id ?? undefined;
-  })
+  });
   setFunction('openServer', (s: Server | null) => {
     setCurrentServer(s);
   });

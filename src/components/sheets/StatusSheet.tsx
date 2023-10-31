@@ -74,7 +74,7 @@ export const StatusSheet = observer(() => {
               },
             });
           }}
-          buttonContents={{type: "string", content: "Set text"}}
+          buttonContents={{type: 'string', content: 'Set text'}}
           backgroundColor={currentTheme.backgroundPrimary}
         />
       </View>
