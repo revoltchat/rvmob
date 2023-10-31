@@ -101,35 +101,46 @@ const ServerChannelList = observer((props: ChannelListProps) => {
           <TouchableOpacity
             onPress={() => app.openServerContextMenu(props.currentServer)}
             style={{width: '100%', paddingHorizontal: 12}}>
-              <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
-            <Text style={styles.serverName} numberOfLines={1}>{props.currentServer.name}</Text>
             <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.serverName} numberOfLines={1}>
+                {props.currentServer.name}
+              </Text>
+              <View
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                  <MaterialCommunityIcon name={'dots-horizontal'} size={30}
-                    color={currentTheme.foregroundPrimary} />
+                <MaterialCommunityIcon
+                  name={'dots-horizontal'}
+                  size={30}
+                  color={currentTheme.foregroundPrimary}
+                />
               </View>
-              </View>
+            </View>
           </TouchableOpacity>
         </Image>
       ) : (
         <TouchableOpacity
-            onPress={() => app.openServerContextMenu(props.currentServer)}
-            style={{width: '100%', paddingHorizontal: 10}}>
-              <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
-            <Text style={styles.serverName} numberOfLines={1}>{props.currentServer.name}</Text>
+          onPress={() => app.openServerContextMenu(props.currentServer)}
+          style={{width: '100%', paddingHorizontal: 10}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.serverName} numberOfLines={1}>
+              {props.currentServer.name}
+            </Text>
             <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                  <MaterialCommunityIcon name={'dots-horizontal'} size={30}
-                    color={currentTheme.foregroundPrimary} />
-              </View>
-              </View>
-          </TouchableOpacity>
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <MaterialCommunityIcon
+                name={'dots-horizontal'}
+                size={30}
+                color={currentTheme.foregroundPrimary}
+              />
+            </View>
+          </View>
+        </TouchableOpacity>
       )}
 
       {props.currentServer.channels.map(c => {

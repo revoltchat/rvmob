@@ -35,7 +35,7 @@ export const DEFAULT_API_URL = 'https://api.revolt.chat'; // TODO: switch to htt
 export const DEFAULT_MAX_SIDE = '128';
 
 // higher max side param - used for the server settings menu
-export const MAX_SIDE_HQ = "1024";
+export const MAX_SIDE_HQ = '1024';
 
 // default amount of messages to load
 export const DEFAULT_MESSAGE_LOAD_COUNT = 50;
