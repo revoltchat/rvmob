@@ -3645,13 +3645,6 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-axios@^0.21.4:
-  version "0.21.4"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
-  integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
-  dependencies:
-    follow-redirects "^1.14.0"
-
 axios@^0.26.1:
   version "0.26.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.26.1.tgz#1ede41c51fcf51bbbd6fd43669caaa4f0495aaa9"
@@ -5366,7 +5359,7 @@ eventemitter3@^4.0.7:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
-eventemitter3@^5.0.0:
+eventemitter3@^5.0.0, eventemitter3@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-5.0.1.tgz#53f5ffd0a492ac800721bb42c66b841de96423c4"
   integrity sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==
@@ -5659,7 +5652,7 @@ flow-parser@^0.206.0:
   resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.206.0.tgz#f4f794f8026535278393308e01ea72f31000bfef"
   integrity sha512-HVzoK3r6Vsg+lKvlIZzaWNBVai+FXTX1wdYhz/wVlH13tb/gOdLXmlTqy6odmTBhT5UoWUbq0k8263Qhr9d88w==
 
-follow-redirects@^1.14.0, follow-redirects@^1.14.8, follow-redirects@^1.15.0:
+follow-redirects@^1.14.8, follow-redirects@^1.15.0:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
   integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
@@ -7513,12 +7506,7 @@ logkitty@^0.7.1:
     dayjs "^1.8.15"
     yargs "^15.1.0"
 
-long@^5.2.0:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/long/-/long-5.2.1.tgz#e27595d0083d103d2fa2c20c7699f8e0c92b897f"
-  integrity sha512-GKSNGeNAtw8IryjjkhZxuKB3JzlcLTwjtiQCHKvqQet81I93kXslhDQruGI/QsddO83mcDToBVy7GqGS/zYf/A==
-
-long@^5.2.1:
+long@^5.2.1, long@^5.2.3:
   version "5.2.3"
   resolved "https://registry.yarnpkg.com/long/-/long-5.2.3.tgz#a3ba97f3877cf1d778eccbcb048525ebb77499e1"
   integrity sha512-lcHwpNoggQTObv5apGNCTdJrO69eHOZMi4BNC+rTLER8iHAqGrUVeLh/irVIM7zTw2bOXA8T6uNPeujwOLg/2Q==
@@ -9954,7 +9942,7 @@ revkit@^1.1.14:
     revolt-api "^0.6.7"
     ulid "^2.3.0"
 
-revolt-api@0.6.8, revolt-api@^0.6.7, revolt-api@^0.6.8:
+revolt-api@0.6.8, revolt-api@^0.6.7:
   version "0.6.8"
   resolved "https://registry.yarnpkg.com/revolt-api/-/revolt-api-0.6.8.tgz#8703e2ea28489f6ed69a0e861a44a8747b4a46c0"
   integrity sha512-ktqs/3M9iiB1aBFmyF1pw7Mt8/k44VGXF5TGed7+3eIFtJIEGPSt+zcvrK/EfL3dYmbtUcZL+apFDEjot6yr3Q==
@@ -9963,23 +9951,22 @@ revolt-api@0.6.8, revolt-api@^0.6.7, revolt-api@^0.6.8:
     axios "^0.26.1"
     lodash.defaultsdeep "^4.6.1"
 
-"revolt.js@npm:@rexovolt/revolt.js":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@rexovolt/revolt.js/-/revolt.js-6.1.0.tgz#11c9e28e6ec1e768614a016f2419a91d338591c9"
-  integrity sha512-THmIxFr/fvyi8VVrIRdwEpYtK+ITRQq3RflzejoCNPjBxzeJd1NSKrA5d1djnXLchin+saxprtmuSU7q4LyPFQ==
+"revolt.js@npm:@rexovolt/revolt.js@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@rexovolt/revolt.js/-/revolt.js-6.2.0.tgz#fcb53a93c709a24df49b73a4a9fbc40201790cc4"
+  integrity sha512-aViNMHE8hx+foenk3eI0f/LuD2z5S4qjedxCzSwQZrjnIlwdQMhTy0SU7bHsSE87Rjs89Xrmi78siLw5CykzlQ==
   dependencies:
     "@insertish/exponential-backoff" "3.1.0-patch.2"
     "@insertish/isomorphic-ws" "^4.0.1"
-    axios "^0.21.4"
-    eventemitter3 "^4.0.7"
+    eventemitter3 "^5.0.1"
     lodash.defaultsdeep "^4.6.1"
     lodash.flatten "^4.4.0"
     lodash.isequal "^4.5.0"
-    long "^5.2.0"
+    long "^5.2.3"
     mobx "^6.3.2"
     revolt-api "0.6.8"
     ulid "^2.3.0"
-    ws "^8.2.2"
+    ws "^8.14.2"
 
 rimraf@^2.2.8, rimraf@^2.6.3:
   version "2.7.1"
@@ -11209,10 +11196,10 @@ ws@^7, ws@^7.5.1:
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.9.tgz#54fa7db29f4c7cec68b1ddd3a89de099942bb591"
   integrity sha512-F+P9Jil7UiSKSkppIiD94dN07AwvFixvLIj1Og1Rl9GGMuNipJnV9JzjD6XuqmAeiswGvUmNLjr5cFuXwNS77Q==
 
-ws@^8.2.2:
-  version "8.13.0"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.13.0.tgz#9a9fb92f93cf41512a0735c8f4dd09b8a1211cd0"
-  integrity sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==
+ws@^8.14.2:
+  version "8.14.2"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.14.2.tgz#6c249a806eb2db7a20d26d51e7709eab7b2e6c7f"
+  integrity sha512-wEBG1ftX4jcglPxgFCMJmZ2PLtSbJ2Peg6TmpJFTbe9GZYOQCDPdMYu/Tm0/bGZkw8paZnJY45J4K2PZrLYq8g==
 
 xdg-basedir@^3.0.0:
   version "3.0.0"

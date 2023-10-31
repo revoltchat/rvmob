@@ -67,7 +67,7 @@
     "react-native-vector-icons": "^10.0.0",
     "readable-stream": "^4.4.2",
     "revkit": "^1.1.14",
-    "revolt.js": "npm:@rexovolt/revolt.js",
+    "revolt.js": "npm:@rexovolt/revolt.js@^6.2.0",
     "stream-browserify": "^3.0.0",
     "timers-browserify": "^2.0.12",
     "tty-browserify": "^0.0.1",

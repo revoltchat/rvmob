@@ -28,6 +28,7 @@ import {
 import {BottomSheet} from '../common/BottomSheet';
 import {MarkdownView} from '../common/MarkdownView';
 import {UserList} from '../navigation/UserList';
+import {GapView} from '../layout';
 
 // const Image = FastImage;
 
@@ -175,26 +176,44 @@ export const ProfileSheet = observer(() => {
               style={{flexDirection: 'row', width: '80%', marginBottom: 12}}>
               <View>
                 <Username user={user} server={server ?? undefined} size={24} />
-                <View key={1} style={{flexDirection: 'row'}}>
-                  {server ? (
-                    <>
-                      {client.members.getKey({
-                        server: server?._id,
-                        user: user._id,
-                      })?.avatar?._id !== user.avatar?._id ? (
-                        <>
-                          <Avatar size={24} user={user} />
-                          <Text type={'header'} style={{marginLeft: 4}}>
-                            @
-                          </Text>
-                        </>
-                      ) : (
-                        <Text type={'header'}>@</Text>
-                      )}
+                {!server ? (
+                  <Username
+                    user={user}
+                    server={server ?? undefined}
+                    size={16}
+                    color={currentTheme.foregroundSecondary}
+                    skipDisplayName
+                  />
+                ) : null}
+                {server ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                    }}>
+                    {client.members.getKey({
+                      server: server?._id,
+                      user: user._id,
+                    })?.avatar?._id !== user.avatar?._id &&
+                    client.members.getKey({
+                      server: server?._id,
+                      user: user._id,
+                    })?.avatar?._id !== undefined ? (
+                      <View style={{alignSelf: 'center', marginEnd: 4}}>
+                        <Avatar size={24} user={user} />
+                      </View>
+                    ) : null}
+                    <View style={{flexDirection: 'column'}}>
                       <Username user={user} size={16} noBadge />
-                    </>
-                  ) : null}
-                </View>
+                      <Username
+                        user={user}
+                        size={16}
+                        color={currentTheme.foregroundSecondary}
+                        noBadge
+                        skipDisplayName
+                      />
+                    </View>
+                  </View>
+                ) : null}
                 {user.status?.text ? <Text>{user.status?.text}</Text> : <></>}
               </View>
             </View>

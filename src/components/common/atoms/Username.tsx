@@ -8,7 +8,7 @@ import {app, client} from '../../../Generic';
 import {currentTheme, styles} from '../../../Theme';
 import {Text} from './Text';
 import {USER_IDS} from '../../../lib/consts';
-import {getColour, getHighestRole} from '../../../lib/utils';
+import {getColour} from '../../../lib/utils';
 
 type UsernameProps = {
   server?: Server;
@@ -17,26 +17,37 @@ type UsernameProps = {
   size?: number;
   masquerade?: string | null;
   color?: string;
+  skipDisplayName?: boolean;
 };
 
 export const Username = observer(
-  ({server, user, noBadge, size, masquerade, color}: UsernameProps) => {
+  ({
+    server,
+    user,
+    noBadge,
+    size,
+    masquerade,
+    color,
+    skipDisplayName,
+  }: UsernameProps) => {
     if (typeof user !== 'object') {
       return (
         <Text style={size ? {fontSize: size} : {}}>{'<Unknown User>'}</Text>
       );
     }
-    let memberObject = server
+    const memberObject = server
       ? client.members.getKey({
           server: server?._id,
           user: user?._id,
         })
       : undefined;
     let roleColor = color ? getColour(color) : styles.textDefault.color;
-    let name =
+    const name =
       server && memberObject?.nickname
         ? memberObject?.nickname
-        : user?.username;
+        : !skipDisplayName
+        ? user.display_name ?? user.username
+        : user.username;
     if (server && memberObject?.roles && memberObject?.roles?.length > 0) {
       let srv = client.servers.get(memberObject._id.server);
       if (srv?.roles) {
@@ -67,7 +78,9 @@ export const Username = observer(
             fontWeight: 'bold',
             fontSize: size || app.settings.get('ui.messaging.fontSize'),
           }}>
+          {skipDisplayName ? '@' : null}
           {masquerade ?? name}
+          {skipDisplayName ? `#${user.discriminator}` : null}
         </Text>
         {!noBadge ? (
           <>
