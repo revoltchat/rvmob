@@ -472,6 +472,12 @@ function refreshStyles() {
       paddingHorizontal: 10,
       color: currentTheme.foregroundPrimary,
     },
+    friendsListHeader: {
+      fontWeight: 'bold',
+      margin: 5,
+      marginLeft: 10,
+      marginTop: 10,
+    },
   });
 }
 export function setTheme(themeName: string) {
