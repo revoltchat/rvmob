@@ -4,7 +4,7 @@ import {observer} from 'mobx-react-lite';
 
 import {User} from 'revolt.js';
 
-import {client, ChannelIcon, app, selectedRemark} from '../../Generic';
+import {app, client, ChannelIcon} from '../../Generic';
 import {MiniProfile} from '../../Profile';
 import {styles} from '../../Theme';
 import {ChannelHeader} from '../navigation/ChannelHeader';
@@ -83,6 +83,7 @@ function finalSort(users: User[]) {
   };
 }
 
+// TODO: refresh when relationships update
 export const FriendsPage = observer(() => {
   const [displayState, setDisplayState] = useState({
     onlineFriends: true,

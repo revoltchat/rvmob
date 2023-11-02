@@ -13,7 +13,7 @@ import {ChannelButton, Text} from '../common/atoms';
 const Image = FastImage;
 
 type ChannelListProps = {
-  onChannelClick: any;
+  onChannelClick: Function;
   currentChannel: Channel;
   currentServer: Server;
 };

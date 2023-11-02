@@ -14,7 +14,7 @@ import {ServerList} from './components/navigation/ServerList';
 import {DEFAULT_API_URL} from './lib/consts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const LeftMenu = ({
+export const SideMenu = ({
   currentChannel,
   onChannelClick,
   orderedServers,
@@ -79,7 +79,9 @@ export const LeftMenu = ({
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}>
           <ChannelList
-            onChannelClick={channel => onChannelClick(channel, currentServer)}
+            onChannelClick={(channel: any) =>
+              onChannelClick(channel, currentServer)
+            }
             currentChannel={currentChannel}
             currentServer={currentServer}
           />

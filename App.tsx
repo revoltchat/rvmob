@@ -10,7 +10,7 @@ import {
   StatusBarStyle,
 } from 'react-native';
 import {ErrorBoundary} from 'react-error-boundary';
-import SideMenu from '@chakrahq/react-native-side-menu';
+import SideMenuBase from '@chakrahq/react-native-side-menu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -18,7 +18,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {currentTheme, styles} from './src/Theme';
 import {client, app, selectedRemark, randomizeRemark} from './src/Generic';
 import {setFunction} from './src/Generic';
-import {LeftMenu} from './src/SideMenus';
+import {SideMenu} from './src/SideMenu';
 import {Modals} from './src/Modals';
 import {NetworkIndicator} from './src/components/NetworkIndicator';
 import {decodeTime} from 'ulid';
@@ -355,14 +355,14 @@ class MainView extends React.Component {
       <>
         {this.state.status === 'loggedIn' ? (
           <View style={styles.app}>
-            <SideMenu
+            <SideMenuBase
               openMenuOffset={Dimensions.get('window').width - 50}
               overlayColor={'#00000040'}
               edgeHitWidth={Dimensions.get('window').width}
               isOpen={this.state.leftMenuOpen}
               onChange={open => this.setState({leftMenuOpen: open})}
               menu={
-                <LeftMenu
+                <SideMenu
                   onChannelClick={this.setChannel.bind(this)}
                   currentChannel={this.state.currentChannel}
                   orderedServers={this.state.orderedServers}
@@ -371,7 +371,7 @@ class MainView extends React.Component {
               style={styles.app}
               bounceBackOnOverdraw={false}>
               <ChannelView state={this} channel={this.state.currentChannel} />
-            </SideMenu>
+            </SideMenuBase>
             <Modals />
             <NetworkIndicator client={client} />
             <View
