@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -18,8 +18,72 @@ type DisplayStates = {
   blocked: boolean;
 };
 
+type RelationshipGroups = {
+  onlineFriends: React.JSX.Element[]; // online friends
+  offlineFriends: React.JSX.Element[]; // offline friends
+  incoming: React.JSX.Element[]; // incoming friend requests
+  outgoing: React.JSX.Element[]; // outgoing friend requests
+  blocked: React.JSX.Element[]; // users blocked by the current user
+};
+
+function sortUsers(unsortedUsers: User[]) {
+  console.log('sus');
+
+  const users = unsortedUsers.sort((user1, user2) =>
+    user1.username.localeCompare(user2.username),
+  );
+  return users;
+}
+
+/*
+ * Sorts the users into each category and returns an array of buttons
+ */
+function finalSort(users: User[]) {
+  const onlineButtons = [] as React.JSX.Element[];
+  const offlineButtons = [] as React.JSX.Element[];
+  const incomingButtons = [] as React.JSX.Element[];
+  const outgoingButtons = [] as React.JSX.Element[];
+  const blockedButtons = [] as React.JSX.Element[];
+
+  for (const user of users) {
+    const button = (
+      <Button
+        style={{justifyContent: 'flex-start'}}
+        key={user._id}
+        onPress={() => app.openProfile(user)}>
+        <View style={{maxWidth: '90%'}}>
+          <MiniProfile user={user} scale={1.15} />
+        </View>
+      </Button>
+    );
+
+    switch (user.relationship) {
+      case 'Friend':
+        (user.online ? onlineButtons : offlineButtons).push(button);
+        break;
+      case 'Incoming':
+        incomingButtons.push(button);
+        break;
+      case 'Outgoing':
+        outgoingButtons.push(button);
+        break;
+      case 'Blocked':
+        blockedButtons.push(button);
+        break;
+      default:
+        break;
+    }
+  }
+  return {
+    onlineButtons,
+    offlineButtons,
+    incomingButtons,
+    outgoingButtons,
+    blockedButtons,
+  };
+}
+
 export const FriendsPage = observer(() => {
-  const [loading, setLoading] = useState(true);
   const [displayState, setDisplayState] = useState({
     onlineFriends: true,
     offlineFriends: true,
@@ -28,98 +92,21 @@ export const FriendsPage = observer(() => {
     blocked: true,
   } as DisplayStates);
 
-  const [onlineFriends, setOnlineFriends] = React.useState(
-    [] as React.JSX.Element[],
-  );
-  const [offlineFriends, setOfflineFriends] = React.useState(
-    [] as React.JSX.Element[],
-  );
-  const [incoming, setIncoming] = React.useState([] as React.JSX.Element[]);
-  const [outgoing, setOutgoing] = React.useState([] as React.JSX.Element[]);
-  const [blocked, setBlocked] = React.useState([] as React.JSX.Element[]);
+  // sort the user list...
+  const sortedUsers = useMemo(() => sortUsers([...client.users.values()]), []);
 
-  // FIXME: this could do with another lookover
-  // TODO: react to relationship updates
+  // ...then filter for friends/blocked users/outgoing/incoming friend requests and render the buttons
+  const groups: RelationshipGroups = useMemo(() => {
+    const sortedGroups = finalSort(sortedUsers);
 
-  // sort the user list, then filter for friends/blocked users/outgoing/incoming friend requests and render the buttons
-  useEffect(() => {
-    const _onlineFriends = [] as React.JSX.Element[];
-    const _offlineFriends = [] as React.JSX.Element[];
-    const _incoming = [] as React.JSX.Element[];
-    const _outgoing = [] as React.JSX.Element[];
-    const _blocked = [] as React.JSX.Element[];
-
-    const sortedUsers = [...client.users.values()].sort((f1, f2) =>
-      f1.username.localeCompare(f2.username),
-    );
-
-    async function finalSort(users: User[]) {
-      for (const u of users) {
-        console.log('switch');
-        switch (u.relationship) {
-          case 'Friend':
-            (u.online ? _onlineFriends : _offlineFriends).push(
-              <Button
-                style={{justifyContent: 'flex-start'}}
-                key={u._id}
-                onPress={() => app.openProfile(u)}>
-                <View style={{maxWidth: '90%'}}>
-                  <MiniProfile user={u} scale={1.15} />
-                </View>
-              </Button>,
-            );
-            break;
-          case 'Incoming':
-            _incoming.push(
-              <Button
-                style={{justifyContent: 'flex-start'}}
-                key={u._id}
-                onPress={() => app.openProfile(u)}>
-                <View style={{maxWidth: '90%'}}>
-                  <MiniProfile user={u} scale={1.15} />
-                </View>
-              </Button>,
-            );
-            break;
-          case 'Outgoing':
-            _outgoing.push(
-              <Button
-                style={{justifyContent: 'flex-start'}}
-                key={u._id}
-                onPress={() => app.openProfile(u)}>
-                <View style={{maxWidth: '90%'}}>
-                  <MiniProfile user={u} scale={1.15} />
-                </View>
-              </Button>,
-            );
-            break;
-          case 'Blocked':
-            _blocked.push(
-              <Button
-                style={{justifyContent: 'flex-start'}}
-                key={u._id}
-                onPress={() => app.openProfile(u)}>
-                <View style={{maxWidth: '90%'}}>
-                  <MiniProfile user={u} scale={1.15} />
-                </View>
-              </Button>,
-            );
-            break;
-          default:
-            break;
-        }
-      }
-    }
-
-    finalSort(sortedUsers).then(() => {
-      setOnlineFriends(_onlineFriends);
-      setOfflineFriends(_offlineFriends);
-      setIncoming(_incoming);
-      setOutgoing(_outgoing);
-      setBlocked(_blocked);
-      setLoading(false);
-    });
-  }, []);
+    return {
+      onlineFriends: sortedGroups.onlineButtons,
+      offlineFriends: sortedGroups.offlineButtons,
+      incoming: sortedGroups.incomingButtons,
+      outgoing: sortedGroups.outgoingButtons,
+      blocked: sortedGroups.blockedButtons,
+    };
+  }, [sortedUsers]);
 
   return (
     <View style={styles.flex}>
@@ -129,125 +116,118 @@ export const FriendsPage = observer(() => {
         </View>
         <Text style={styles.channelName}>Friends</Text>
       </ChannelHeader>
-      {loading ? (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={styles.loadingHeader}>Loading...</Text>
-          <Text style={styles.remark}>{selectedRemark || null}</Text>
-        </View>
-      ) : (
-        <ScrollView style={{flex: 1}}>
-          {/* incoming requests */}
-          <TouchableOpacity
-            onPress={() =>
-              setDisplayState({
-                ...displayState,
-                incoming: !displayState.incoming,
-              })
-            }>
-            <Text style={styles.friendsListHeader}>
-              INCOMING REQUESTS - {incoming.length}
-            </Text>
-          </TouchableOpacity>
-          {displayState.incoming && (
-            <View>
-              {incoming.length > 0 ? (
-                incoming
-              ) : (
-                <Text style={{marginHorizontal: 10}}>No incoming requests</Text>
-              )}
-            </View>
-          )}
+      <ScrollView style={{flex: 1}}>
+        {/* incoming requests */}
+        <TouchableOpacity
+          onPress={() =>
+            setDisplayState({
+              ...displayState,
+              incoming: !displayState.incoming,
+            })
+          }>
+          <Text style={styles.friendsListHeader}>
+            INCOMING REQUESTS - {groups.incoming.length}
+          </Text>
+        </TouchableOpacity>
+        {displayState.incoming && (
+          <View>
+            {groups.incoming.length > 0 ? (
+              groups.incoming
+            ) : (
+              <Text style={{marginHorizontal: 10}}>No incoming requests</Text>
+            )}
+          </View>
+        )}
 
-          {/* outgoing requests */}
-          <TouchableOpacity
-            onPress={() =>
-              setDisplayState({
-                ...displayState,
-                outgoing: !displayState.outgoing,
-              })
-            }>
-            <Text style={styles.friendsListHeader}>
-              OUTGOING REQUESTS - {outgoing.length}
-            </Text>
-          </TouchableOpacity>
-          {displayState.outgoing && (
-            <View>
-              {outgoing.length > 0 ? (
-                outgoing
-              ) : (
-                <Text style={{marginHorizontal: 10}}>No outgoing requests</Text>
-              )}
-            </View>
-          )}
+        {/* outgoing requests */}
+        <TouchableOpacity
+          onPress={() =>
+            setDisplayState({
+              ...displayState,
+              outgoing: !displayState.outgoing,
+            })
+          }>
+          <Text style={styles.friendsListHeader}>
+            OUTGOING REQUESTS - {groups.outgoing.length}
+          </Text>
+        </TouchableOpacity>
+        {displayState.outgoing && (
+          <View>
+            {groups.outgoing.length > 0 ? (
+              groups.outgoing
+            ) : (
+              <Text style={{marginHorizontal: 10}}>No outgoing requests</Text>
+            )}
+          </View>
+        )}
 
-          {/* online friends */}
-          <TouchableOpacity
-            onPress={() => {
-              console.log('online');
-              setDisplayState({
-                ...displayState,
-                onlineFriends: !displayState.onlineFriends,
-              });
-            }}>
-            <Text style={styles.friendsListHeader}>
-              ONLINE FRIENDS - {onlineFriends.length}
-            </Text>
-          </TouchableOpacity>
-          {displayState.onlineFriends && (
-            <View>
-              {onlineFriends.length > 0 ? (
-                onlineFriends
-              ) : (
-                <Text style={{marginHorizontal: 10}}>No online friends</Text>
-              )}
-            </View>
-          )}
+        {/* online friends */}
+        <TouchableOpacity
+          onPress={() => {
+            console.log('online');
+            setDisplayState({
+              ...displayState,
+              onlineFriends: !displayState.onlineFriends,
+            });
+          }}>
+          <Text style={styles.friendsListHeader}>
+            ONLINE FRIENDS - {groups.onlineFriends.length}
+          </Text>
+        </TouchableOpacity>
+        {displayState.onlineFriends && (
+          <View>
+            {groups.onlineFriends.length > 0 ? (
+              groups.onlineFriends
+            ) : (
+              <Text style={{marginHorizontal: 10}}>No online friends</Text>
+            )}
+          </View>
+        )}
 
-          {/* offline friends */}
-          <TouchableOpacity
-            onPress={() =>
-              setDisplayState({
-                ...displayState,
-                offlineFriends: !displayState.offlineFriends,
-              })
-            }>
-            <Text style={styles.friendsListHeader}>
-              OFFLINE FRIENDS - {offlineFriends.length}
-            </Text>
-          </TouchableOpacity>
-          {displayState.offlineFriends && (
-            <View>
-              {offlineFriends.length > 0 ? (
-                offlineFriends
-              ) : (
-                <Text style={{marginHorizontal: 10}}>No offline friends</Text>
-              )}
-            </View>
-          )}
+        {/* offline friends */}
+        <TouchableOpacity
+          onPress={() =>
+            setDisplayState({
+              ...displayState,
+              offlineFriends: !displayState.offlineFriends,
+            })
+          }>
+          <Text style={styles.friendsListHeader}>
+            OFFLINE FRIENDS - {groups.offlineFriends.length}
+          </Text>
+        </TouchableOpacity>
+        {displayState.offlineFriends && (
+          <View>
+            {groups.offlineFriends.length > 0 ? (
+              groups.offlineFriends
+            ) : (
+              <Text style={{marginHorizontal: 10}}>No offline friends</Text>
+            )}
+          </View>
+        )}
 
-          {/* blocked users */}
-          <TouchableOpacity
-            onPress={() =>
-              setDisplayState({
-                ...displayState,
-                blocked: !displayState.blocked,
-              })
-            }>
-            <Text style={styles.friendsListHeader}>
-              BLOCKED - {blocked.length}
-            </Text>
-          </TouchableOpacity>
-          {displayState.blocked && (
-            <View>
-              {blocked.length > 0 ? (
-                blocked
-              ) : (
-                <Text style={{marginHorizontal: 10}}>No blocked users</Text>
-              )}
-            </View>
-          )}
-        </ScrollView>
-      )}
+        {/* blocked users */}
+        <TouchableOpacity
+          onPress={() =>
+            setDisplayState({
+              ...displayState,
+              blocked: !displayState.blocked,
+            })
+          }>
+          <Text style={styles.friendsListHeader}>
+            BLOCKED - {groups.blocked.length}
+          </Text>
+        </TouchableOpacity>
+        {displayState.blocked && (
+          <View>
+            {groups.blocked.length > 0 ? (
+              groups.blocked
+            ) : (
+              <Text style={{marginHorizontal: 10}}>No blocked users</Text>
+            )}
+          </View>
+        )}
+      </ScrollView>
     </View>
   );
 });
