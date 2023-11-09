@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -14,6 +15,8 @@ import {ChannelHeader} from '../navigation/ChannelHeader';
 import {Button, Text, Username} from '../common/atoms';
 
 export const HomePage = observer(() => {
+  const {t} = useTranslation();
+
   // holiday emoji
   const rawDate = new Date();
   const rawMonth = rawDate.getMonth() + 1;
@@ -90,16 +93,16 @@ export const HomePage = observer(() => {
         <Text
           key={'no-channel-selected'}
           style={{textAlign: 'center', marginBottom: 10}}>
-          Swipe from the left of the screen or press the three lines icon to see
-          your servers and messages!
+          {t('app.home.description')}
         </Text>
         <Button
           style={{width: '65%'}}
           key={'home-revolt-lounge'}
           onPress={() => app.openInvite(SPECIAL_SERVERS.lounge.invite)}>
           <Text style={styles.buttonText}>
-            {client.servers.get(SPECIAL_SERVERS.lounge.id) ? 'Open' : 'Join'}{' '}
-            the Revolt Lounge
+            {client.servers.get(SPECIAL_SERVERS.lounge.id)
+              ? t('app.home.open_lounge')
+              : t('app.home.join_lounge')}
           </Text>
         </Button>
         <Button
@@ -108,16 +111,15 @@ export const HomePage = observer(() => {
           onPress={() => app.openInvite(SPECIAL_SERVERS.supportServer.invite)}>
           <Text style={styles.buttonText}>
             {client.servers.get(SPECIAL_SERVERS.supportServer.id)
-              ? 'Open'
-              : 'Join'}{' '}
-            the RVMob server
+              ? t('app.home.open_rvmob')
+              : t('app.home.join_rvmob')}
           </Text>
         </Button>
         <Button
-          style={{width: '30%'}}
+          style={{width: '65%'}}
           key={'home-settings-button'}
           onPress={() => app.openSettings(true)}>
-          <Text style={styles.buttonText}>Settings</Text>
+          <Text style={styles.buttonText}>{t('app.home.open_settings')}</Text>
         </Button>
         {app.settings.get('ui.home.holidays') ? holidayEmoji : null}
       </View>

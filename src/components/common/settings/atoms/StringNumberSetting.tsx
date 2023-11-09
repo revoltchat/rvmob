@@ -3,6 +3,7 @@ import {TextInput, TouchableOpacity, View} from 'react-native';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
+import {languages} from '../../../../../i18n/languages';
 import {app} from '../../../../Generic';
 import {currentTheme, styles} from '../../../../Theme';
 import {Setting} from '../../../../lib/types';
@@ -58,7 +59,12 @@ export const StringNumberSetting = ({
                     rerender(renderCount + 1);
                   }
                 }}>
-                <Text style={{flex: 1}}>{o}</Text>
+                <Text style={{flex: 1}}>
+                  {sRaw.key === 'app.language'
+                    ? // @ts-expect-error this will always exist
+                      `${languages[o].emoji} ${languages[o].name}`
+                    : o}
+                </Text>
                 <View style={{...styles.iconContainer, marginRight: 0}}>
                   <MaterialIcon
                     name={`radio-button-${value === o ? 'on' : 'off'}`}

@@ -9,6 +9,7 @@ import {
   Dimensions,
   StatusBarStyle,
 } from 'react-native';
+import {withTranslation} from 'react-i18next';
 import {ErrorBoundary} from 'react-error-boundary';
 import SideMenuBase from '@chakrahq/react-native-side-menu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -351,6 +352,7 @@ class MainView extends React.Component {
   }
 
   render() {
+    const {t} = this.props;
     return (
       <>
         {this.state.status === 'loggedIn' ? (
@@ -692,6 +694,8 @@ class MainView extends React.Component {
   }
 }
 
+const MainViewi18n = withTranslation()(MainView);
+
 function ErrorMessage({
   error,
   resetErrorBoundary,
@@ -738,7 +742,7 @@ export const App = () => {
         barStyle={(currentTheme.contentType + '-content') as StatusBarStyle}
       />
       <ErrorBoundary fallbackRender={ErrorMessage}>
-        <MainView />
+        <MainViewi18n />
       </ErrorBoundary>
     </GestureHandlerRootView>
   );

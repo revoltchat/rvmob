@@ -8,6 +8,8 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {API, Channel, Client, Message, Server} from 'revolt.js';
 
+import {setLanguage} from '../i18n/i18n';
+import {languages} from '../i18n/languages';
 import {currentTheme, setTheme, themes} from './Theme';
 import {
   DEFAULT_API_URL,
@@ -115,6 +117,20 @@ export const app = {
       }
     },
     list: [
+      {
+        key: 'app.language',
+        name: 'Language',
+        category: 'functionality',
+        default: 'en',
+        type: 'string',
+        options: Object.keys(languages),
+        onChange: (v: string) => {
+          setLanguage(v);
+        },
+        onInitialize: (v: string) => {
+          setLanguage(v);
+        },
+      },
       {
         key: 'ui.theme',
         name: 'Theme',

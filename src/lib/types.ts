@@ -49,3 +49,8 @@ interface TypedUser {
 export type ReportedObject = TypedMessage | TypedServer | TypedUser;
 
 export type DeletableObject = TypedMessage | TypedServer;
+
+export type Language = {
+  name: string;
+  emoji: string;
+};
