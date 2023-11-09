@@ -12,7 +12,12 @@ import {app, client} from '../../Generic';
 import {MAX_SIDE_HQ} from '../../lib/consts';
 import {SettingsSection} from '../../lib/types';
 import {currentTheme, styles} from '../../Theme';
-import {ContextButton, InputWithButton, Link, Text} from '../common/atoms';
+import {ContextButton, Text} from '../common/atoms';
+import {
+  InviteSettingsSection,
+  RoleSettingsSection,
+  OverviewSettingsSection,
+} from '../common/settings/sections/server';
 import {GapView} from '../layout';
 const Image = FastImage;
 
@@ -29,20 +34,6 @@ export const ServerSettingsSheet = observer(
       }
       return i;
     }, [server.name]);
-
-    // React.useEffect(() => {
-    //   async function getAuthInfo() {
-    //     const e = await client.api.get('/auth/account/');
-    //     const m = await client.api.get('/auth/mfa/');
-    //     const s = await client.api.get('/auth/session/all');
-    //     setAuthInfo({
-    //       email: e.email,
-    //       mfaEnabled: m.totp_mfa ?? m.security_key_mfa ?? false,
-    //       sessions: s,
-    //     });
-    //   }
-    //   getAuthInfo();
-    // }, []);
 
     return (
       <View
@@ -77,7 +68,7 @@ export const ServerSettingsSheet = observer(
               Close
             </Text>
           </Pressable>
-        ) : (
+        ) : section !== 'roles' ? (
           <Pressable
             style={{
               flexDirection: 'row',
@@ -101,7 +92,7 @@ export const ServerSettingsSheet = observer(
               Back
             </Text>
           </Pressable>
-        )}
+        ) : null}
         <ScrollView
           style={{flex: 1}}
           showsVerticalScrollIndicator={false}
@@ -266,70 +257,14 @@ export const ServerSettingsSheet = observer(
               ) : null}
             </>
           ) : section === 'overview' ? (
-            <View>
-              <Text type={'header'}>Overview</Text>
-              <Text key={'server-name-label'} type={'h2'}>
-                Server name
-              </Text>
-              <InputWithButton
-                placeholder="Server name"
-                defaultValue={server.name}
-                onPress={(v: string) => {
-                  server.edit({
-                    name: v,
-                  });
-                }}
-                buttonContents={{
-                  type: 'icon',
-                  name: 'save',
-                  pack: 'regular',
-                }}
-                backgroundColor={currentTheme.backgroundSecondary}
-                skipIfSame
-                cannotBeEmpty
-                emptyError={'Server names cannot be empty!'}
-              />
-              <GapView size={4} />
-              <Text key={'server-desc-label'} type={'h2'}>
-                Server description
-              </Text>
-              <View>
-                <Text
-                  style={{
-                    color: currentTheme.foregroundSecondary,
-                  }}>
-                  Server descriptions support Markdown formatting.
-                </Text>
-                <Link
-                  link={'https://support.revolt.chat/kb/account/badges'}
-                  label={'Learn more.'}
-                  style={{fontWeight: 'bold'}}
-                />
-              </View>
-              <GapView size={2} />
-              <InputWithButton
-                placeholder="Add a description..."
-                defaultValue={server.description ?? undefined}
-                onPress={(v: string) => {
-                  server.edit({
-                    description: v,
-                  });
-                }}
-                buttonContents={{type: 'string', content: 'Set description'}}
-                backgroundColor={currentTheme.backgroundSecondary}
-                skipIfSame
-                // @ts-expect-error this is passed down to the TextInput
-                multiline
-                extraStyles={{
-                  container: {
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                  },
-                  input: {width: '100%'},
-                  button: {marginHorizontal: 0},
-                }}
-              />
-            </View>
+            <OverviewSettingsSection server={server} />
+          ) : section === 'roles' ? (
+            <RoleSettingsSection
+              server={server}
+              callback={() => setSection(null)}
+            />
+          ) : section === 'invites' ? (
+            <InviteSettingsSection server={server} />
           ) : section === 'info' ? (
             <>
               <Text type={'h1'}>About</Text>
