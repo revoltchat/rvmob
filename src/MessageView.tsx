@@ -148,6 +148,7 @@ export const NewMessageView = observer(
       if (viewHeight - position <= 1) {
         console.log('bonk!');
         setAtEndOfPage(true);
+        channel.ack(channel.last_message_id ?? '01ANOMESSAGES', true);
       } else {
         if (atEndOfPage) {
           setAtEndOfPage(false);
