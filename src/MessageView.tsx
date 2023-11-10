@@ -31,7 +31,7 @@ function renderMessage(msg: RevoltMessage, messages?: RevoltMessage[]) {
   } catch (err) {
     grouped = false;
     console.log(
-      `[NEWMESSAGEVIEW] Error calculating grouped status for ${msg}: ${err}`,
+      `[NEWMESSAGEVIEW] Error calculating grouped status for ${msg._id}: ${err}`,
     );
   }
   return (
