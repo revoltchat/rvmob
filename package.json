@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "clean": "react-native-clean-project",
-    "android": "react-native run-android",
+    "android": "react-native run-android --active-arch-only --appIdSuffix=debug",
     "android-release": "react-native build-android --tasks assembleRelease",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -108,9 +108,6 @@
     "react-test-renderer": "^18.2.0",
     "rn-nodeify": "^10.3.0",
     "typescript": "^5.2.2"
-  },
-  "jest": {
-    "preset": "react-native"
   },
   "react-native": {
     "zlib": "browserify-zlib",
