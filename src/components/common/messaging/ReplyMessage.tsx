@@ -22,7 +22,7 @@ export const ReplyMessage = (props: ReplyProps) => {
           <Text
             style={{
               fontWeight: 'bold',
-              marginHorizontal: props.symbolMargin ?? 15,
+              marginHorizontal: props.symbolMargin ?? 21,
             }}>
             ↱
           </Text>
