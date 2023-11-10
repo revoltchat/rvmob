@@ -8,7 +8,7 @@ import {currentTheme} from '../Theme';
 import {Text} from './common/atoms';
 
 export const NetworkIndicator = observer(({client}: {client: Client}) => {
-  if (!client.user?.online) {
+  if (!client.user?.online && client.user?.status?.presence) {
     return (
       <View
         style={{
