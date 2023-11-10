@@ -148,6 +148,13 @@ function ReasonsSelector({
         Why are you reporting this {reportedObject.type.toLowerCase()}? You can
         add more context after selecting a reason.
       </Text>
+      {reportedObject.type === 'Message' &&
+      reportedObject.object.channel?.server ? (
+        <Text style={{fontWeight: 'bold', marginVertical: 8}}>
+          This report will be sent to Revolt's moderation team, not this
+          server's moderators.
+        </Text>
+      ) : null}
       {reasons.map(r => {
         return (
           <Button
