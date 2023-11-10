@@ -143,7 +143,7 @@ export const app = {
           setTheme(v);
         },
         remark:
-          "You'll have to restart the app after selecting a new theme for it to take effect.",
+          "You'll have to open or close the side menu for your changes to appear everywhere.",
       },
       {
         key: 'ui.messaging.showSelfInTypingIndicator',
