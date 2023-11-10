@@ -7,15 +7,16 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Channel} from 'revolt.js';
 
-import {app, ChannelIcon} from '../../Generic';
-import {Messages} from '../../LegacyMessageView';
-import {NewMessageView} from '../../MessageView';
-import {MessageBox} from '../../MessageBox';
-import {currentTheme, styles} from '../../Theme';
-import {FriendsPage} from '../pages/FriendsPage';
-import {HomePage} from '../pages/HomePage';
-import {ChannelHeader} from '../navigation/ChannelHeader';
-import {Button, Text} from '../common/atoms';
+import {app} from '@rvmob/Generic';
+import {Messages} from '@rvmob/LegacyMessageView';
+import {NewMessageView} from '@rvmob/MessageView';
+import {MessageBox} from '@rvmob/MessageBox';
+import {currentTheme, styles} from '@rvmob/Theme';
+import {Button, Text} from '@rvmob/components/common/atoms';
+import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
+import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
+import {FriendsPage} from '@rvmob/components/pages/FriendsPage';
+import {HomePage} from '@rvmob/components/pages/HomePage';
 
 function MessageViewErrorMessage({
   error,

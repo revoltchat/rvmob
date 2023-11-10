@@ -15,6 +15,10 @@ const Image = FastImage;
 type ChannelListProps = {
   onChannelClick: Function;
   currentChannel: Channel;
+  currentServer: Server | null;
+};
+
+type ServerChannelListProps = ChannelListProps & {
   currentServer: Server;
 };
 
@@ -65,7 +69,7 @@ const ServerChannelListCategory = observer(
   },
 );
 
-const ServerChannelList = observer((props: ChannelListProps) => {
+const ServerChannelList = observer((props: ServerChannelListProps) => {
   const [processedChannels, setProcessedChannels] = React.useState(
     [] as string[],
   );
@@ -194,7 +198,7 @@ export const ChannelList = observer((props: ChannelListProps) => {
             }}
             key={'friends'}
             channel={'Friends'}
-            selected={props.currentChannel === 'friends'}
+            selected={(props.currentChannel as Channel | string) === 'friends'}
           />
 
           <ChannelButton
@@ -214,7 +218,7 @@ export const ChannelList = observer((props: ChannelListProps) => {
               }}
               key={'debugChannel'}
               channel={'Debug'}
-              selected={props.currentChannel === 'debug'}
+              selected={(props.currentChannel as Channel | string) === 'debug'}
             />
           ) : null}
 

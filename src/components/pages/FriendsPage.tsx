@@ -4,11 +4,12 @@ import {observer} from 'mobx-react-lite';
 
 import {User} from 'revolt.js';
 
-import {app, client, ChannelIcon} from '../../Generic';
-import {MiniProfile} from '../../Profile';
-import {styles} from '../../Theme';
-import {ChannelHeader} from '../navigation/ChannelHeader';
-import {Button, Text} from '../common/atoms';
+import {app, client} from '@rvmob/Generic';
+import {MiniProfile} from '@rvmob/Profile';
+import {styles} from '@rvmob/Theme';
+import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
+import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
+import {Button, Text} from '@rvmob/components/common/atoms';
 
 type DisplayStates = {
   onlineFriends: boolean;

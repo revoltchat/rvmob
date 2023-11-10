@@ -3,16 +3,17 @@ import {useTranslation} from 'react-i18next';
 import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {app, ChannelIcon, client, openUrl} from '../../Generic';
-import {Avatar} from '../../Profile';
+import {app, client, openUrl} from '@rvmob/Generic';
+import {Avatar} from '@rvmob/Profile';
 import {
   SPECIAL_DATES,
   SPECIAL_DATE_OBJECTS,
   SPECIAL_SERVERS,
-} from '../../lib/consts';
-import {styles} from '../../Theme';
-import {ChannelHeader} from '../navigation/ChannelHeader';
-import {Button, Text, Username} from '../common/atoms';
+} from '@rvmob/lib/consts';
+import {styles} from '@rvmob/Theme';
+import {Button, Text, Username} from '@rvmob/components/common/atoms';
+import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
+import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
 
 export const HomePage = observer(() => {
   const {t} = useTranslation();
