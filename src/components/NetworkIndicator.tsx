@@ -1,5 +1,5 @@
-import React from 'react';
-import {View} from 'react-native';
+import React, {useState} from 'react';
+import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {Client} from 'revolt.js';
@@ -8,7 +8,8 @@ import {currentTheme} from '../Theme';
 import {Text} from './common/atoms';
 
 export const NetworkIndicator = observer(({client}: {client: Client}) => {
-  if (!client.user?.online && client.user?.status?.presence) {
+  const [collapsed, setCollapsed] = useState(false);
+  if (!client.user?.online && client.user?.status?.presence && !collapsed) {
     return (
       <View
         style={{
@@ -16,19 +17,30 @@ export const NetworkIndicator = observer(({client}: {client: Client}) => {
           top: 0,
           left: 0,
           width: '100%',
-          height: 32,
+          height: 50,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: currentTheme.accentColor,
+          backgroundColor: currentTheme.background,
+          flexDirection: 'row',
         }}>
         <Text
-          colour={currentTheme.accentColorForeground}
+          colour={currentTheme.accentColor}
           style={{
             fontSize: 16,
             fontWeight: 'bold',
           }}>
-          Connection lost
+          Connection lost{' '}
         </Text>
+        <TouchableOpacity onPress={() => setCollapsed(true)}>
+          <Text
+            colour={currentTheme.accentColor}
+            style={{
+              fontSize: 16,
+              fontWeight: 'bold',
+            }}>
+            (hide)
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
