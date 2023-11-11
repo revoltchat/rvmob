@@ -1,7 +1,12 @@
 {
     "app": {
         "home": {
-            "description": ""
+            "description": "Wische vom linken Rand oder tippe auf die drei Linien, um deine Server und Nachrichten zu sehen!",
+            "join_lounge": "Revolt Lounge beitreten",
+            "open_lounge": "Revolt Lounge öffnen",
+            "join_rvmob": "Dem RVMob-Server beitreten",
+            "open_rvmob": "Den RVMob-Server öffnen",
+            "open_settings": "Einstellungen öffnen"
         }
     }
 }
