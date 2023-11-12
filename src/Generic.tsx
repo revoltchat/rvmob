@@ -118,7 +118,7 @@ export const app = {
       {
         key: 'app.language',
         name: 'Language',
-        category: 'functionality',
+        category: 'i18n',
         default: 'en',
         type: 'string',
         options: Object.keys(languages),

@@ -186,6 +186,21 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               </View>
               <Text>Features</Text>
             </ContextButton>
+            <ContextButton
+              style={{flex: 1, marginBottom: 10}}
+              backgroundColor={currentTheme.backgroundSecondary}
+              onPress={() => {
+                setSection('i18n');
+              }}>
+              <View style={styles.iconContainer}>
+                <MaterialIcon
+                  name={'translate'}
+                  color={currentTheme.foregroundPrimary}
+                  size={20}
+                />
+              </View>
+              <Text>Language</Text>
+            </ContextButton>
             <Text type={'header'}>Advanced</Text>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
@@ -245,6 +260,13 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
           <SettingsCategory
             category={'functionality'}
             friendlyName={'Features'}
+            renderCount={renderCount}
+            rerender={rerender}
+          />
+        ) : section === 'i18n' ? (
+          <SettingsCategory
+            category={'i18n'}
+            friendlyName={'Language'}
             renderCount={renderCount}
             rerender={rerender}
           />
