@@ -52,5 +52,6 @@ export type DeletableObject = TypedMessage | TypedServer;
 
 export type Language = {
   name: string;
+  englishName: string;
   emoji: string;
 };

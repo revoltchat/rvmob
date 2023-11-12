@@ -2,15 +2,28 @@ import {Language} from '../src/lib/types';
 
 // string files
 import {default as en} from './strings/en.json';
+import {default as de} from './strings/en.json';
+import {default as ru} from './strings/en.json';
 
 // resources object passed to i18next
 export const resources = {
   en: {translation: en},
+  de: {translation: de},
+  ru: {translation: ru},
 };
 
 // languages object, used for settings
 export const languages = {
-  en: {name: 'English (Traditional)', emoji: '🇬🇧'} as Language,
-  de: {name: 'Deutsch (Deutschland)', emoji: '🇩🇪'} as Language,
-  it: {name: 'Italiano', emoji: '🇮🇹'} as Language,
+  en: {
+    name: 'English (Traditional)',
+    englishName: 'English (UK)',
+    emoji: '🇬🇧',
+  } as Language,
+  de: {
+    name: 'Deutsch (Deutschland)',
+    englishName: 'German (Germany)',
+    emoji: '🇩🇪',
+  } as Language,
+  it: {name: 'Italiano', englishName: 'Italian', emoji: '🇮🇹'} as Language,
+  ru: {name: 'Русский', englishName: 'Russian', emoji: '🇷🇺'} as Language,
 };

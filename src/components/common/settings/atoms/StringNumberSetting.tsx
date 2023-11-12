@@ -59,12 +59,26 @@ export const StringNumberSetting = ({
                     rerender(renderCount + 1);
                   }
                 }}>
-                <Text style={{flex: 1}}>
-                  {sRaw.key === 'app.language'
-                    ? // @ts-expect-error this will always exist
-                      `${languages[o].emoji} ${languages[o].name}`
-                    : o}
-                </Text>
+                {sRaw.key === 'app.language' ? (
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Text style={{alignSelf: 'center', marginEnd: 8}}>
+                      {/* @ts-expect-error this will always exist */}
+                      {languages[o].emoji}
+                    </Text>
+                    <View style={{flexDirection: 'column'}}>
+                      <Text style={{fontWeight: 'bold'}}>
+                        {/* @ts-expect-error this will always exist */}
+                        {languages[o].name}
+                      </Text>
+                      <Text colour={currentTheme.foregroundSecondary}>
+                        {/* @ts-expect-error this will always exist */}
+                        {languages[o].englishName}
+                      </Text>
+                    </View>
+                  </View>
+                ) : (
+                  <Text style={{flex: 1}}>{o}</Text>
+                )}
                 <View style={{...styles.iconContainer, marginRight: 0}}>
                   <MaterialIcon
                     name={`radio-button-${value === o ? 'on' : 'off'}`}

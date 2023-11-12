@@ -117,7 +117,7 @@ export const app = {
     list: [
       {
         key: 'app.language',
-        name: 'Language',
+        name: 'Select your language',
         category: 'i18n',
         default: 'en',
         type: 'string',
