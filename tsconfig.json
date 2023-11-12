@@ -3,7 +3,7 @@
       "experimentalDecorators": true,
       "paths": {
         "@rvmob/*": ["./src/*"],
-        "@rvmob/i18n/*": ["./i18n/*"]
+        "@rvmob-i18n/*": ["./i18n/*"]
       },
     },
     "extends": "@tsconfig/react-native/tsconfig.json",
