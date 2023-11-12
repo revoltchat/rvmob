@@ -1,1 +1,11 @@
-{}
+{
+    "app": {
+        "home": {
+            "join_lounge": "Bergabung ke Revolt Lounge",
+            "open_lounge": "Buka Revolt Lounge",
+            "join_rvmob": "Bergabung ke server RVMob",
+            "open_rvmob": "Buka server RVMob",
+            "open_settings": "Buka pengaturan"
+        }
+    }
+}
