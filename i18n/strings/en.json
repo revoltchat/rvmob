@@ -5,8 +5,8 @@
             "cancel": "Cancel"
         },
         "loading": {
-            "generic": "Loading...",
-            "connecting": "Logging in..."
+            "generic": "Loading…",
+            "connecting": "Logging in…"
         },
         "home": {
             "description": "Swipe from the left of the screen or tap the three lines icon to see your servers and messages!",
