@@ -2,8 +2,8 @@ import {Language} from '../src/lib/types';
 
 // string files
 import {default as en} from './strings/en.json';
-import {default as de} from './strings/en.json';
-import {default as ru} from './strings/en.json';
+import {default as de} from './strings/de.json';
+import {default as ru} from './strings/ru.json';
 
 // resources object passed to i18next
 export const resources = {
