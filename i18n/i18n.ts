@@ -2,9 +2,11 @@ import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import 'intl-pluralrules';
 
-import {resources} from './languages';
-import {languageDetectorPlugin} from './getLanguage';
+import {resources} from '@rvmob-i18n/languages';
+import {languageDetectorPlugin} from '@rvmob-i18n/getLanguage';
+import {Text} from '@rvmob/components/common/atoms';
 
+// @ts-expect-error upstream typing issue (https://github.com/i18next/react-i18next/issues/1648)
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .use(languageDetectorPlugin) // get the user's language if it's stored
@@ -18,6 +20,7 @@ i18n
     },
 
     react: {
+      defaultTransParent: Text,
       useSuspense: false,
     },
   });

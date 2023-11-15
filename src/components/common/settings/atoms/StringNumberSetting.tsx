@@ -1,5 +1,6 @@
 import React from 'react';
 import {TextInput, TouchableOpacity, View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -19,6 +20,7 @@ export const StringNumberSetting = ({
   renderCount: number;
   rerender: Function;
 }) => {
+  const {t} = useTranslation();
   const [value, setValue] = React.useState(app.settings.getRaw(sRaw.key));
   return (
     <View
@@ -31,12 +33,14 @@ export const StringNumberSetting = ({
       {sRaw.options ? (
         <View>
           <IndicatorIcons s={sRaw} />
-          <Text style={{fontWeight: 'bold', marginBottom: 8}}>{sRaw.name}</Text>
+          <Text style={{fontWeight: 'bold', marginBottom: 8}}>
+            {t(`app.settings.${sRaw.key}`)}
+          </Text>
           {sRaw.remark ? (
             <Text
               colour={currentTheme.foregroundSecondary}
               style={{marginBottom: 8}}>
-              {sRaw.remark}
+              {t(`app.settings.${sRaw.key}_remark`)}
             </Text>
           ) : null}
           <View
@@ -94,13 +98,13 @@ export const StringNumberSetting = ({
         <View>
           <IndicatorIcons s={sRaw} />
           <Text style={{flex: 1, fontWeight: 'bold', marginBottom: 8}}>
-            {sRaw.name}
+            {t(`app.settings.${sRaw.key}`)}
           </Text>
           {sRaw.remark ? (
             <Text
               colour={currentTheme.foregroundSecondary}
               style={{marginBottom: 8}}>
-              {sRaw.remark}
+              {t(`app.settings.${sRaw.key}_remark`)}
             </Text>
           ) : null}
           <TextInput

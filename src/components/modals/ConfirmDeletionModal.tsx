@@ -1,14 +1,17 @@
 import React from 'react';
 import {View} from 'react-native';
+import {Trans, useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
-import {app} from '../../Generic';
-import {DeletableObject} from '../../lib/types';
-import {currentTheme} from '../../Theme';
-import {Button, Text} from '../common/atoms';
+import {app} from '@rvmob/Generic';
+import {DeletableObject} from '@rvmob/lib/types';
+import {currentTheme} from '@rvmob/Theme';
+import {Button, Text} from '@rvmob/components/common/atoms';
 
 export const ConfirmDeletionModal = observer(
   ({target}: {target: DeletableObject}) => {
+    const {t} = useTranslation();
+    const name = target.type === 'Server' ? target.object.name : '';
     return (
       <View
         style={{
@@ -19,15 +22,28 @@ export const ConfirmDeletionModal = observer(
           justifyContent: 'center',
           alignSelf: 'center',
         }}>
-        <Text type={'h1'}>Delete {target.type}?</Text>
-        <Text>
-          Are you sure you want to delete{' '}
-          <Text style={{fontWeight: 'bold'}}>
-            {target.type === 'Server' ? target.object.name : 'this message'}
-          </Text>
-          ?
+        <Text type={'h1'}>
+          {t(`app.modals.confirm_deletion.header_${target.type.toLowerCase()}`)}
         </Text>
-        <Text style={{fontWeight: 'bold'}}>This cannot be undone.</Text>
+        {target.type === 'Server' ? (
+          <Trans t={t} i18nKey={'app.modals.confirm_deletion.body_server'}>
+            Are you sure you want to delete{' '}
+            <Text style={{fontWeight: 'bold'}}>{{name}}</Text>?
+          </Trans>
+        ) : (
+          <Trans
+            t={t}
+            i18nKey={`app.modals.confirm_deletion.body_${target.type.toLowerCase()}`}>
+            Are you sure you want to delete{' '}
+            <Text style={{fontWeight: 'bold'}}>
+              this {target.type.toLowerCase()}
+            </Text>
+            ?
+          </Trans>
+        )}
+        <Text style={{fontWeight: 'bold'}}>
+          {t('app.modals.confirm_deletion.warning')}
+        </Text>
         <View
           style={{
             flexDirection: 'column',
@@ -53,14 +69,14 @@ export const ConfirmDeletionModal = observer(
             }}
             backgroundColor={currentTheme.error}
             style={{marginHorizontal: 0}}>
-            <Text>Delete</Text>
+            <Text>{t('app.actions.delete')}</Text>
           </Button>
           <Button
             onPress={() => {
               app.openDeletionConfirmationModal(null);
             }}
             style={{marginHorizontal: 0}}>
-            <Text>Cancel</Text>
+            <Text>{t('app.actions.cancel')}</Text>
           </Button>
         </View>
       </View>

@@ -1,5 +1,13 @@
 {
     "app": {
+        "actions": {
+            "delete": "Delete",
+            "cancel": "Cancel"
+        },
+        "loading": {
+            "generic": "Loading...",
+            "connecting": "Logging in..."
+        },
         "home": {
             "description": "Swipe from the left of the screen or tap the three lines icon to see your servers and messages!",
             "join_lounge": "Join the Revolt Lounge",
@@ -7,6 +15,64 @@
             "join_rvmob": "Join the RVMob server",
             "open_rvmob": "Open the RVMob server",
             "open_settings": "Open settings"
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_message": "Delete message?",
+                "header_server": "Delete server?",
+                "body_message": "Are you sure you want to delete <2>this message</2>?",
+                "body_server": "Are you sure you want to delete <2>{{name}}</2>?",
+                "warning": "This cannot be undone."
+            }
+        },
+        "settings": {
+            "app": {
+                "language": "Select your language",
+                "refetchOnReconnect": "Refetch messages when reconnecting",
+                "notifications": {
+                    "enabled": "Enable push notifications",
+                    "notifyOnSelfPing": "Receive a notification when you ping yourself"
+                },
+                "showChangelogs": "Show changelogs after updating RVMob"
+            },
+            "ui": {
+                "home": {
+                    "holidays": "Show holidays on the home page"
+                },
+                "theme": "Theme",
+                "theme_remark": "You'll have to open or close the side menu for your changes to appear everywhere.",
+                "messaging": {
+                    "emojiPack": "Emoji pack",
+                    "experimentalScrolling": "Enable channel scrolling for old message view",
+                    "experimentalScrolling_remark": "You can only scroll backwards.",
+                    "fontSize": "Font size",
+                    "fontSize_remark": "This will apply to messages and certain parts of the app.",
+                    "messageSpacing": "Message spacing",
+                    "sendAttachments": "Enable attachment sending",
+                    "showMasqAvatar": "Show masqueraded avatar in corner",
+                    "showNSFWContent": "Consent to 18+ content",
+                    "showReactions": "Show reactions under messages",
+                    "showReactions_remark": "You can add to existing reactions, but you can't add new ones yet.",
+                    "showSelfInTypingIndicator": "Show yourself in the typing indicator",
+                    "statusInChatAvatars": "Show user status in chat avatars",
+                    "use24H": "Use 24-hour timestamps",
+                    "useNewMessageView": "Use new message view"
+                },
+                "settings": {
+                    "showExperimental": "Show experimental features"
+                },
+                "showDeveloperFeatures": "Show developer tools"
+            }
+        },
+        "misc": {
+            "network_indicator": {
+                "body": "Connection lost",
+                "hide": "(hide)"
+            },
+            "voice": {
+                "header": "Voice channels aren't supported in RVMob yet!",
+                "body": "In the meantime, you can join them via the web app or Revolt Desktop."
+            }
         }
     }
 }

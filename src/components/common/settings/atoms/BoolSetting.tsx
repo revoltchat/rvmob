@@ -1,5 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 import {app} from '../../../../Generic';
 import {currentTheme} from '../../../../Theme';
@@ -16,6 +17,7 @@ export const BoolSetting = ({
   experimentalFunction: any;
   devFunction: any;
 }) => {
+  const {t} = useTranslation();
   const [value, setValue] = React.useState(
     app.settings.get(sRaw.key) as boolean,
   );
@@ -29,13 +31,17 @@ export const BoolSetting = ({
       }}>
       <IndicatorIcons s={sRaw} />
       <View style={{flex: 1, flexDirection: 'column'}}>
-        <Text style={{fontWeight: 'bold'}}>{sRaw.name}</Text>
+        <Text style={{fontWeight: 'bold'}}>
+          {t(`app.settings.${sRaw.key}`)}
+        </Text>
         {sRaw.remark ? (
-          <Text colour={currentTheme.foregroundSecondary}>{sRaw.remark}</Text>
+          <Text colour={currentTheme.foregroundSecondary}>
+            {t(`app.settings.${sRaw.key}_remark`)}
+          </Text>
         ) : null}
       </View>
       <Checkbox
-        key={`checkbox-${sRaw.name}`}
+        key={`checkbox-${sRaw.key}`}
         value={value}
         callback={() => {
           const newValue = !value;

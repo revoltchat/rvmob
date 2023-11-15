@@ -1,10 +1,12 @@
 import React from 'react';
 import {View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 import {styles} from '../../Theme';
 import {Text} from '../common/atoms';
 
 export const VoiceChannel = () => {
+  const {t} = useTranslation();
   return (
     <View
       style={{
@@ -13,12 +15,8 @@ export const VoiceChannel = () => {
         alignItems: 'center',
         padding: 30,
       }}>
-      <Text style={styles.loadingHeader}>
-        Voice channels aren't supported in RVMob yet!
-      </Text>
-      <Text style={styles.remark}>
-        In the meantime, you can join them via the web app or Revolt Desktop.
-      </Text>
+      <Text style={styles.loadingHeader}>{t('app.misc.voice.header')}</Text>
+      <Text style={styles.remark}>{t('app.misc.voice.body')}</Text>
     </View>
   );
 };

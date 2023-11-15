@@ -14,14 +14,13 @@ type BoolSetting = {
 
 export type Setting = (StringSetting | BoolSetting) & {
   key: string;
-  name: string;
   category: string;
   experimental?: boolean;
   developer?: boolean;
   options?: string[];
   onChange?: any;
   onInitialize?: any;
-  remark?: string;
+  remark?: boolean;
 };
 
 export type SettingsSection = string | null;

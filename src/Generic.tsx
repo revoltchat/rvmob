@@ -117,7 +117,6 @@ export const app = {
     list: [
       {
         key: 'app.language',
-        name: 'Select your language',
         category: 'i18n',
         default: 'en',
         type: 'string',
@@ -131,7 +130,6 @@ export const app = {
       },
       {
         key: 'ui.theme',
-        name: 'Theme',
         category: 'appearance',
         default: 'Dark',
         type: 'string',
@@ -142,13 +140,11 @@ export const app = {
         onInitialize: (v: any) => {
           setTheme(v);
         },
-        remark:
-          "You'll have to open or close the side menu for your changes to appear everywhere.",
+        remark: true,
       },
       {
         key: 'ui.messaging.showSelfInTypingIndicator',
         category: 'appearance',
-        name: 'Show yourself in the typing indicator',
         default: false,
         type: 'boolean',
         developer: true,
@@ -156,35 +152,30 @@ export const app = {
       {
         key: 'ui.messaging.statusInChatAvatars',
         category: 'appearance',
-        name: 'Show user status in chat avatars',
         default: false,
         type: 'boolean',
       },
       {
         key: 'ui.messaging.use24H',
         category: 'appearance',
-        name: 'Use 24-hour timestamps',
         default: true,
         type: 'boolean',
       },
       {
         key: 'ui.messaging.showMasqAvatar',
         category: 'appearance',
-        name: 'Show masqueraded avatar in corner',
         default: true,
         type: 'boolean',
       },
       {
         key: 'app.refetchOnReconnect',
         category: 'functionality',
-        name: 'Refetch messages when reconnecting',
         default: true,
         type: 'boolean',
       },
       {
         key: 'app.notifications.enabled',
         category: 'functionality',
-        name: 'Enable push notifications',
         default: false,
         type: 'boolean',
         experimental: true,
@@ -192,7 +183,6 @@ export const app = {
       {
         key: 'app.notifications.notifyOnSelfPing',
         category: 'functionality',
-        name: 'Receive a notification when you ping yourself',
         default: false,
         type: 'boolean',
         developer: true,
@@ -200,28 +190,24 @@ export const app = {
       {
         key: 'ui.messaging.messageSpacing',
         category: 'appearance',
-        name: 'Message spacing',
         default: '10',
         type: 'number',
       },
       {
         key: 'ui.messaging.fontSize',
         category: 'appearance',
-        name: 'Font size',
-        remark: 'This will aplly to messages and certain parts of the app.',
+        remark: true,
         default: '14',
         type: 'number',
       },
       {
         key: 'ui.home.holidays',
         category: 'appearance',
-        name: 'Show holidays on home page',
         default: true,
         type: 'boolean',
       },
       {
         key: 'ui.messaging.emojiPack',
-        name: 'Emoji pack',
         category: 'appearance',
         default: 'System',
         type: 'string',
@@ -230,21 +216,19 @@ export const app = {
       {
         key: 'ui.messaging.showNSFWContent',
         category: 'functionality',
-        name: 'Consent to 18+ content',
         default: false,
         type: 'boolean',
       },
       {
         key: 'ui.messaging.sendAttachments',
         category: 'functionality',
-        name: 'Enable attachment sending',
         default: true,
         type: 'boolean',
       },
       {
         key: 'ui.messaging.showReactions',
         category: 'functionality',
-        name: 'Show reactions under messages',
+        remark: true,
         default: false,
         type: 'boolean',
         experimental: true,
@@ -252,8 +236,7 @@ export const app = {
       {
         key: 'ui.messaging.experimentalScrolling',
         category: 'functionality',
-        name: 'Enable channel scrolling for old message view',
-        remark: 'You can only scroll backwards.',
+        remark: true,
         default: false,
         type: 'boolean',
         experimental: true,
@@ -261,7 +244,6 @@ export const app = {
       {
         key: 'ui.messaging.useNewMessageView',
         category: 'functionality',
-        name: 'Use new message view',
         default: false,
         type: 'boolean',
         experimental: true,
@@ -269,7 +251,6 @@ export const app = {
       {
         key: 'app.showChangelogs',
         category: 'functionality',
-        name: 'Show changelogs after updating RVMob',
         default: true,
         type: 'boolean',
       },
@@ -283,14 +264,14 @@ export const app = {
       {
         key: 'ui.showDeveloperFeatures',
         category: 'functionality',
-        name: 'Show developer tools',
         default: false,
         type: 'boolean',
       },
+
+      // instance URL
       {
         key: 'app.instance',
         category: 'donotshow',
-        name: 'Instance URL',
         default: DEFAULT_API_URL,
         type: 'string',
       },

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
 import {Client} from 'revolt.js';
@@ -8,6 +9,7 @@ import {currentTheme} from '../Theme';
 import {Text} from './common/atoms';
 
 export const NetworkIndicator = observer(({client}: {client: Client}) => {
+  const {t} = useTranslation();
   const [collapsed, setCollapsed] = useState(false);
   if (!client.user?.online && client.user?.status?.presence && !collapsed) {
     return (
@@ -29,7 +31,7 @@ export const NetworkIndicator = observer(({client}: {client: Client}) => {
             fontSize: 16,
             fontWeight: 'bold',
           }}>
-          Connection lost{' '}
+          {t('app.misc.network_indicator.body')}
         </Text>
         <TouchableOpacity onPress={() => setCollapsed(true)}>
           <Text
@@ -38,7 +40,7 @@ export const NetworkIndicator = observer(({client}: {client: Client}) => {
               fontSize: 16,
               fontWeight: 'bold',
             }}>
-            (hide)
+            {t('app.misc.network_indicator.hide')}
           </Text>
         </TouchableOpacity>
       </View>

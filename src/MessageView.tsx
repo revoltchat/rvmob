@@ -7,6 +7,7 @@ import {
   // Dimensions,
   // Keyboard,
 } from 'react-native';
+import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
 import {ErrorBoundary} from 'react-error-boundary';
@@ -75,6 +76,7 @@ export const NewMessageView = observer(
     channel: Channel;
     handledMessages: string[];
   }) => {
+    const {t} = useTranslation();
     console.log(`[NEWMESSAGEVIEW] Creating message view for ${channel._id}...`);
     const [messages, setMessages] = React.useState([] as RevoltMessage[]);
     const [loading, setLoading] = React.useState(true);
@@ -187,7 +189,7 @@ export const NewMessageView = observer(
         ) : loading ? (
           <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={styles.loadingHeader}>Loading...</Text>
+            <Text style={styles.loadingHeader}>{t('app.loading.generic')}</Text>
             <Text style={styles.remark}>{selectedRemark || null}</Text>
           </View>
         ) : (

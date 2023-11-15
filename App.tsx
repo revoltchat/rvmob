@@ -670,7 +670,7 @@ class MainView extends React.Component {
             ) : (
               <View style={styles.loggingInScreen}>
                 <Text style={{fontSize: 30, fontWeight: 'bold'}}>
-                  Logging in...
+                  {t('app.loading.connecting')}
                 </Text>
                 <Text style={styles.remark}>{selectedRemark || null}</Text>
               </View>
