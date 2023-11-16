@@ -1,1 +1,78 @@
-{}
+{
+    "app": {
+        "actions": {
+            "delete": "Törlés",
+            "cancel": "Mégsem"
+        },
+        "loading": {
+            "generic": "Betöltés…",
+            "connecting": "Bejelentkezés alatt…"
+        },
+        "home": {
+            "description": "A szervereidhez és üzeneteidhez balról húzz egyet a képernyőn, vagy koppints a háromvonalas ikonra!",
+            "join_lounge": "Csatlakozás a Revolt Lounge-hoz",
+            "open_lounge": "Revolt Lounge megnyitása",
+            "join_rvmob": "Csatlakozás az RVMob-szerverhez",
+            "open_rvmob": "RVMob-szerver megnyitása",
+            "open_settings": "Beállítások megnyitása"
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_message": "Törlöd az üzenetet?",
+                "body_message": "Biztosan <2>ezt szeretnéd</2> törölni?",
+                "body_server": "Biztosan törlöd <2>{{name}}</2> őt?",
+                "warning": "A törlést nem lehet majd visszavonni.",
+                "header_server": "Törlöd a szervert?"
+            }
+        },
+        "settings": {
+            "app": {
+                "language": "Válassz nyelvet",
+                "notifications": {
+                    "enabled": "Leküldéses értesítések engedélyezése",
+                    "notifyOnSelfPing": "Értesítést kapsz, amikor megpingeled magad"
+                },
+                "showChangelogs": "Az RVMob frissítése után változások mutatása",
+                "refetchOnReconnect": "Üzenetek újratöltése újracsatlakozáskor"
+            },
+            "ui": {
+                "home": {
+                    "holidays": "Kezdőhelyen ünnepnapok mutatása"
+                },
+                "theme": "Színséma",
+                "messaging": {
+                    "emojiPack": "Emodzsicsomag",
+                    "experimentalScrolling": "A régebbi üzenetek olvasásakor a csatornák görgetésének engedélyezése",
+                    "experimentalScrolling_remark": "Csak visszafelé görgethetsz az időben.",
+                    "fontSize": "Betűtípus mérete",
+                    "messageSpacing": "Üzenetek közti hely",
+                    "sendAttachments": "Csatolmányküldés engedélyezése",
+                    "showMasqAvatar": "A sarokban az elmaszkírozott avatar mutatása",
+                    "showNSFWContent": "Kijelentem, hogy elmúltam 18 éves.",
+                    "showReactions": "Reagálások mutatása az üzenetek alatt",
+                    "showSelfInTypingIndicator": "A gépelést mutató sávban látható leszel",
+                    "statusInChatAvatars": "A beszélgetők profilképei mutatják mit csinálnak éppen",
+                    "use24H": "24 órás időbélyegek",
+                    "useNewMessageView": "Új üzenetek nézete",
+                    "fontSize_remark": "A megváltoztatása csak az üzeneteknél és az app egyes részeinél jelenik majd meg.",
+                    "showReactions_remark": "A létező reagálásokra te is reagálhatsz, de újakat még nem tudsz csinálni."
+                },
+                "settings": {
+                    "showExperimental": "Kísérleti lehetőségek mutatása"
+                },
+                "showDeveloperFeatures": "Fejlesztői eszközök mutatása",
+                "theme_remark": "A változásaid mindenhol történő megjelenéséhez ki kell nyitnod, vagy pedig be kell zárnod az oldalmenüt."
+            }
+        },
+        "misc": {
+            "network_indicator": {
+                "body": "Megszakadt a kapcsolat",
+                "hide": "(elrejt)"
+            },
+            "voice": {
+                "header": "Az RVMob még nem támogatja a beszédcsatornákat.",
+                "body": "Amíg el nem készül, addig a web app-ban, vagy pedig a Revolt Desktop-ban tudsz hangcsatornához csatlakozni."
+            }
+        }
+    }
+}
