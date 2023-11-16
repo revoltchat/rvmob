@@ -70,7 +70,7 @@
                 "hide": "(elrejt)"
             },
             "voice": {
-                "header": "Az RVMob még nem támogatja a beszédcsatornákat.",
+                "header": "Az RVMob még nem támogatja a beszédcsatornákat!",
                 "body": "Amíg el nem készül, addig a web app-ban, vagy pedig a Revolt Desktop-ban tudsz hangcsatornához csatlakozni."
             }
         }
