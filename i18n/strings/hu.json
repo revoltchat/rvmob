@@ -20,7 +20,7 @@
             "confirm_deletion": {
                 "header_message": "Törlöd az üzenetet?",
                 "body_message": "Biztosan <2>ezt szeretnéd</2> törölni?",
-                "body_server": "Biztosan törlöd <2>{{name}}</2> őt?",
+                "body_server": "Biztosan törlöd őt: <2>{{name}}</2>?",
                 "warning": "A törlést nem lehet majd visszavonni.",
                 "header_server": "Törlöd a szervert?"
             }
@@ -48,11 +48,11 @@
                     "messageSpacing": "Üzenetek közti hely",
                     "sendAttachments": "Csatolmányküldés engedélyezése",
                     "showMasqAvatar": "A sarokban az elmaszkírozott avatar mutatása",
-                    "showNSFWContent": "Kijelentem, hogy elmúltam 18 éves.",
+                    "showNSFWContent": "Kijelentem, hogy elmúltam 18 éves",
                     "showReactions": "Reagálások mutatása az üzenetek alatt",
-                    "showSelfInTypingIndicator": "A gépelést mutató sávban látható leszel",
+                    "showSelfInTypingIndicator": "A gépelést mutató sávban látod, ahogy gépelsz",
                     "statusInChatAvatars": "A beszélgetők profilképei mutatják mit csinálnak éppen",
-                    "use24H": "24 órás időbélyegek",
+                    "use24H": "24 órás időbélyeg",
                     "useNewMessageView": "Új üzenetek nézete",
                     "fontSize_remark": "A megváltoztatása csak az üzeneteknél és az app egyes részeinél jelenik majd meg.",
                     "showReactions_remark": "A létező reagálásokra te is reagálhatsz, de újakat még nem tudsz csinálni."
