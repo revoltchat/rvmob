@@ -6,6 +6,32 @@
             "join_rvmob": "Bergabung ke server RVMob",
             "open_rvmob": "Buka server RVMob",
             "open_settings": "Buka pengaturan"
+        },
+        "actions": {
+            "delete": "Hapus",
+            "cancel": "Batal"
+        },
+        "loading": {
+            "generic": "Memuat…"
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_message": "Hapus pesan?",
+                "header_server": "Hapus server?",
+                "body_server": "Apa kamu yakin ingin menghapus <2>{{name}}</2>?",
+                "body_message": "Apa kamu yakin ingin menghapus <2>pesan ini</2>?"
+            }
+        },
+        "settings": {
+            "app": {
+                "language": "Pilih bahasamu",
+                "notifications": {
+                    "enabled": "Aktifkan notifikasi push"
+                }
+            },
+            "ui": {
+                "theme": "Tema"
+            }
         }
     }
 }
