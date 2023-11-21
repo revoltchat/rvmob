@@ -1,5 +1,6 @@
 import React from 'react';
 import {Pressable, ScrollView, View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
 import FastImage from 'react-native-fast-image';
@@ -14,6 +15,7 @@ import {SettingsSection} from '../../lib/types';
 import {currentTheme, styles} from '../../Theme';
 import {ContextButton, Text} from '../common/atoms';
 import {
+  BanSettingsSection,
   InviteSettingsSection,
   RoleSettingsSection,
   OverviewSettingsSection,
@@ -23,6 +25,8 @@ const Image = FastImage;
 
 export const ServerSettingsSheet = observer(
   ({server, setState}: {server: Server; setState: Function}) => {
+    const {t} = useTranslation();
+
     // const [renderCount, rerender] = React.useState(0);
     const [section, setSection] = React.useState(null as SettingsSection);
 
@@ -65,10 +69,11 @@ export const ServerSettingsSheet = observer(
                 fontSize: 20,
                 marginLeft: 5,
               }}>
-              Close
+              {t('app.actions.close')}
             </Text>
           </Pressable>
-        ) : section !== 'roles' ? (
+        ) : /* the role settings menu handles this itself as it has subsections */
+        section !== 'roles' ? (
           <Pressable
             style={{
               flexDirection: 'row',
@@ -89,7 +94,7 @@ export const ServerSettingsSheet = observer(
                 fontSize: 20,
                 marginLeft: 5,
               }}>
-              Back
+              {t('app.actions.back')}
             </Text>
           </Pressable>
         ) : null}
@@ -127,7 +132,7 @@ export const ServerSettingsSheet = observer(
                 <GapView size={5} />
                 <Text type={'h1'}>{server.name}</Text>
               </View>
-              <Text type={'header'}>General</Text>
+              <Text type={'header'}>{t('app.servers.settings.general')}</Text>
               <ContextButton
                 style={{flex: 1, marginBottom: 10}}
                 backgroundColor={currentTheme.backgroundSecondary}
@@ -141,7 +146,7 @@ export const ServerSettingsSheet = observer(
                     size={24}
                   />
                 </View>
-                <Text>Overview</Text>
+                <Text>{t('app.servers.settings.overview.title')}</Text>
               </ContextButton>
               <ContextButton
                 style={{flex: 1, marginBottom: 10}}
@@ -156,9 +161,11 @@ export const ServerSettingsSheet = observer(
                     size={24}
                   />
                 </View>
-                <Text>Channels</Text>
+                <Text>{t('app.servers.settings.channels.title')}</Text>
               </ContextButton>
-              <Text type={'header'}>Customisation</Text>
+              <Text type={'header'}>
+                {t('app.servers.settings.customisation')}
+              </Text>
               <ContextButton
                 style={{flex: 1, marginBottom: 10}}
                 backgroundColor={currentTheme.backgroundSecondary}
@@ -172,7 +179,7 @@ export const ServerSettingsSheet = observer(
                     size={24}
                   />
                 </View>
-                <Text>Roles</Text>
+                <Text>{t('app.servers.settings.roles.title')}</Text>
               </ContextButton>
               <ContextButton
                 style={{flex: 1, marginBottom: 10}}
@@ -187,9 +194,11 @@ export const ServerSettingsSheet = observer(
                     size={24}
                   />
                 </View>
-                <Text>Emoji</Text>
+                <Text>{t('app.servers.settings.emoji.title')}</Text>
               </ContextButton>
-              <Text type={'header'}>User Management</Text>
+              <Text type={'header'}>
+                {t('app.servers.settings.user_management')}
+              </Text>
               <ContextButton
                 style={{flex: 1, marginBottom: 10}}
                 backgroundColor={currentTheme.backgroundSecondary}
@@ -203,7 +212,7 @@ export const ServerSettingsSheet = observer(
                     size={24}
                   />
                 </View>
-                <Text>Members</Text>
+                <Text>{t('app.servers.settings.members.title')}</Text>
               </ContextButton>
               <ContextButton
                 style={{flex: 1, marginBottom: 10}}
@@ -218,7 +227,7 @@ export const ServerSettingsSheet = observer(
                     size={24}
                   />
                 </View>
-                <Text>Invites</Text>
+                <Text>{t('app.servers.settings.invites.title')}</Text>
               </ContextButton>
               <ContextButton
                 style={{flex: 1, marginBottom: 10}}
@@ -233,7 +242,7 @@ export const ServerSettingsSheet = observer(
                     size={24}
                   />
                 </View>
-                <Text>Bans</Text>
+                <Text>{t('app.servers.settings.bans.title')}</Text>
               </ContextButton>
               {server.owner === client.user?._id ? (
                 <ContextButton
@@ -252,7 +261,7 @@ export const ServerSettingsSheet = observer(
                       size={24}
                     />
                   </View>
-                  <Text>Delete Server</Text>
+                  <Text>{t('app.servers.settings.delete_server')}</Text>
                 </ContextButton>
               ) : null}
             </>
@@ -265,10 +274,8 @@ export const ServerSettingsSheet = observer(
             />
           ) : section === 'invites' ? (
             <InviteSettingsSection server={server} />
-          ) : section === 'info' ? (
-            <>
-              <Text type={'h1'}>About</Text>
-            </>
+          ) : section === 'bans' ? (
+            <BanSettingsSection server={server} />
           ) : null}
         </ScrollView>
       </View>

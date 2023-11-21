@@ -1,5 +1,6 @@
 import React from 'react';
 import {Pressable, View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -13,6 +14,8 @@ import {Text} from '../../../atoms';
 
 export const RoleSettingsSection = observer(
   ({server, callback}: {server: Server; callback: Function}) => {
+    const {t} = useTranslation();
+
     const [subsection, setSubsection] = React.useState(null as SettingsSection);
 
     return (
@@ -37,7 +40,7 @@ export const RoleSettingsSection = observer(
               fontSize: 20,
               marginLeft: 5,
             }}>
-            Back
+            {t('app.actions.back')}
           </Text>
         </Pressable>
         {subsection ? (
@@ -52,7 +55,7 @@ export const RoleSettingsSection = observer(
             </Text>
             <Text colour={currentTheme.foregroundSecondary}>{subsection}</Text>
             <GapView size={2} />
-            <Text type={'h2'}>Rank</Text>
+            <Text type={'h2'}>{t('app.servers.settings.roles.rank')}</Text>
             {/* <TextInput
                     style={{
                       fontFamily: 'Open Sans',
@@ -72,15 +75,17 @@ export const RoleSettingsSection = observer(
                   /> */}
             <Text>{server.roles![subsection].rank}</Text>
             <GapView size={2} />
-            <Text type={'h2'}>Permissions</Text>
+            <Text type={'h2'}>
+              {t('app.servers.settings.roles.permissions')}
+            </Text>
             <Text>{server.roles![subsection].permissions.a}</Text>
             <GapView size={2} />
-            <Text type={'h2'}>Colour</Text>
+            <Text type={'h2'}>{t('app.servers.settings.roles.colour')}</Text>
             <Text>{server.roles![subsection].colour}</Text>
           </>
         ) : (
           <>
-            <Text type={'h1'}>Roles</Text>
+            <Text type={'h1'}>{t('app.servers.settings.roles.title')}</Text>
             {server.orderedRoles.map(r => (
               <View
                 style={styles.settingsEntry}

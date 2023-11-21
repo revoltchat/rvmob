@@ -1,8 +1,10 @@
 {
     "app": {
         "actions": {
-            "delete": "Delete",
-            "cancel": "Cancel"
+            "back": "Back",
+            "cancel": "Cancel",
+            "close": "Close",
+            "delete": "Delete"
         },
         "loading": {
             "generic": "Loading…",
@@ -23,6 +25,53 @@
                 "body_message": "Are you sure you want to delete <2>this message</2>?",
                 "body_server": "Are you sure you want to delete <2>{{name}}</2>?",
                 "warning": "This cannot be undone."
+            }
+        },
+        "servers": {
+            "settings": {
+                "general": "General",
+                "customisation": "Customisation",
+                "user_management": "User Management",
+                "delete_server": "Delete Server",
+                "overview": {
+                    "title": "Overview",
+                    "name": "Server name",
+                    "description": "Server description",
+                    "markdown_tip": "Server descriptions support Markdown formatting.",
+                    "markdown_tip_link": "Learn more.",
+                    "description_placeholder": "Add a description…",
+                    "set_description": "Set description",
+                    "system_messages": "System messages",
+                    "errors": {
+                        "empty_server_name": "Server names cannot be empty!"
+                    }
+                },
+                "channels": {
+                    "title": "Channels"
+                },
+                "roles": {
+                    "title": "Roles",
+                    "rank": "Rank",
+                    "permissions": "Permissions",
+                    "colour": "Colour"
+                },
+                "emoji": {
+                    "title": "Emoji"
+                },
+                "members": {
+                    "title": "Members"
+                },
+                "invites": {
+                    "title": "Invites",
+                    "loading": "Fetching invites…",
+                    "empty": "No invites"
+                },
+                "bans": {
+                    "title": "Bans",
+                    "loading": "Fetching bans…",
+                    "empty": "No bans",
+                    "no_reason": "No reason provided"
+                }
             }
         },
         "settings": {

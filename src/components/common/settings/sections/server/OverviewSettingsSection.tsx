@@ -1,5 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
 import {Server} from 'revolt.js';
@@ -10,14 +11,16 @@ import {InputWithButton, Link, Text} from '../../../atoms';
 
 export const OverviewSettingsSection = observer(
   ({server}: {server: Server}) => {
+    const {t} = useTranslation();
+
     return (
       <>
-        <Text type={'h1'}>Overview</Text>
+        <Text type={'h1'}>{t('app.servers.settings.overview.title')}</Text>
         <Text key={'server-name-label'} type={'h2'}>
-          Server name
+          {t('app.servers.settings.overview.name')}
         </Text>
         <InputWithButton
-          placeholder="Server name"
+          placeholder={t('app.servers.settings.overview.name')}
           defaultValue={server.name}
           onPress={(v: string) => {
             server.edit({
@@ -32,35 +35,42 @@ export const OverviewSettingsSection = observer(
           backgroundColor={currentTheme.backgroundSecondary}
           skipIfSame
           cannotBeEmpty
-          emptyError={'Server names cannot be empty!'}
+          emptyError={t(
+            'app.servers.settings.overview.errors.empty_server_name',
+          )}
         />
         <GapView size={4} />
         <Text key={'server-desc-label'} type={'h2'}>
-          Server description
+          {t('app.servers.settings.overview.description')}
         </Text>
         <View>
           <Text
             style={{
               color: currentTheme.foregroundSecondary,
             }}>
-            Server descriptions support Markdown formatting.
+            {t('app.servers.settings.overview.markdown_tip')}
+            <Link
+              link={'https://support.revolt.chat/kb/account/badges'}
+              label={t('app.servers.settings.overview.markdown_tip_link')}
+              style={{fontWeight: 'bold'}}
+            />
           </Text>
-          <Link
-            link={'https://support.revolt.chat/kb/account/badges'}
-            label={'Learn more.'}
-            style={{fontWeight: 'bold'}}
-          />
         </View>
         <GapView size={2} />
         <InputWithButton
-          placeholder="Add a description..."
+          placeholder={t(
+            'app.servers.settings.overview.description_placeholder',
+          )}
           defaultValue={server.description ?? undefined}
           onPress={(v: string) => {
             server.edit({
               description: v,
             });
           }}
-          buttonContents={{type: 'string', content: 'Set description'}}
+          buttonContents={{
+            type: 'string',
+            content: t('app.servers.settings.overview.set_description'),
+          }}
           backgroundColor={currentTheme.backgroundSecondary}
           skipIfSame
           // @ts-expect-error this is passed down to the TextInput
@@ -75,7 +85,9 @@ export const OverviewSettingsSection = observer(
           }}
         />
         <GapView size={2} />
-        <Text type={'h2'}>System messages</Text>
+        <Text type={'h2'}>
+          {t('app.servers.settings.overview.system_messages')}
+        </Text>
         <Text>
           When members join/leave or are kicked/banned, you can receive
           messages. (not final copy)
