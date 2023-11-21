@@ -30,6 +30,7 @@ export const NetworkIndicator = observer(({client}: {client: Client}) => {
           style={{
             fontSize: 16,
             fontWeight: 'bold',
+            marginEnd: 4,
           }}>
           {t('app.misc.network_indicator.body')}
         </Text>
