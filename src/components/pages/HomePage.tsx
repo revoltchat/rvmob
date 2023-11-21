@@ -1,6 +1,6 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
 import {TouchableOpacity, View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
 import {app, client, openUrl} from '@rvmob/Generic';
