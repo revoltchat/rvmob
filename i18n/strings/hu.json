@@ -2,7 +2,9 @@
     "app": {
         "actions": {
             "delete": "Törlés",
-            "cancel": "Mégsem"
+            "cancel": "Mégsem",
+            "close": "Bezárás",
+            "back": "Vissza"
         },
         "loading": {
             "generic": "Betöltés…",
@@ -72,6 +74,53 @@
             "voice": {
                 "header": "Az RVMob még nem támogatja a beszédcsatornákat!",
                 "body": "Amíg el nem készül, addig a web app-ban, vagy pedig a Revolt Desktop-ban tudsz hangcsatornához csatlakozni."
+            }
+        },
+        "servers": {
+            "settings": {
+                "customisation": "Testreszabás",
+                "delete_server": "Szerver törlése",
+                "overview": {
+                    "title": "Áttekintés",
+                    "name": "Szervernév",
+                    "markdown_tip_link": "Bővebben",
+                    "description_placeholder": "A leírás helye…",
+                    "set_description": "Leírás mentése",
+                    "system_messages": "Rendszerértesítések",
+                    "description": "Szerver leírása",
+                    "markdown_tip": "A szerver leírásához Markdown-formázás is használható.",
+                    "errors": {
+                        "empty_server_name": "Meg kell adnod a szerver nevét"
+                    }
+                },
+                "user_management": "Felhasználók kezelése",
+                "channels": {
+                    "title": "Csatornák"
+                },
+                "roles": {
+                    "title": "Titulusok",
+                    "rank": "Rang",
+                    "permissions": "Engedélyek",
+                    "colour": "Szín"
+                },
+                "emoji": {
+                    "title": "Emodzsi"
+                },
+                "members": {
+                    "title": "Tagok"
+                },
+                "invites": {
+                    "loading": "Meghívók előhozása…",
+                    "empty": "nincs meghívó",
+                    "title": "Meghívók"
+                },
+                "bans": {
+                    "loading": "Kitiltások előhozása…",
+                    "title": "Kitiltások",
+                    "empty": "nincsenek kitiltottak",
+                    "no_reason": "Indoklás nélkül"
+                },
+                "general": "Általános"
             }
         }
     }
