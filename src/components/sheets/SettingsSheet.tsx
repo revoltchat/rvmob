@@ -457,12 +457,16 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                   )} and{' '}
                 </Text>
                 <Link
-                  link={'https://github.com/revoltchat/revolt.js'}
+                  link={'https://github.com/rexogamer/revolt.js'}
                   label={'revolt.js'}
                 />
                 <Text>
                   {' '}
-                  v{AppInfo.dependencies['revolt.js'].replace('^', '')}
+                  v
+                  {AppInfo.dependencies['revolt.js'].replace(
+                    'npm:@rexovolt/revolt.js@^',
+                    '',
+                  )}
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>

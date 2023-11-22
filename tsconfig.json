@@ -6,5 +6,5 @@
         "@rvmob-i18n/*": ["./i18n/*"]
       },
     },
-    "extends": "@tsconfig/react-native/tsconfig.json",
+    "extends": "@react-native/typescript-config/tsconfig.json",
 }
