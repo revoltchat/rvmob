@@ -82,8 +82,8 @@ android {
         applicationId "site.endl.taiku.rvmob"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
-        versionName "0.7.0-alpha"
+        versionCode 10
+        versionName "0.7.0-beta1"
     }
 
     splits {

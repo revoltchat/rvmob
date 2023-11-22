@@ -1,6 +1,23 @@
 # RVMob's changelog
 
+## v0.7.0
+
+*This version has not been released yet.*
+
+### What's new
+
+- RVMob now uses React Native 0.73.
+- fill out other features closer to completion
+
+### Experimental/WIP features
+
+### Bug fixes
+
+### Known issues
+
 ## v0.6.0
+
+*This version was released on 14/07/2023.*
 
 ### Important info for users of 0.5.0 or earlier
 
