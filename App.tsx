@@ -1,5 +1,6 @@
 import 'react-native-get-random-values'; // react native moment
 import './shim'; // react native moment 2: the thrilling sequel
+
 import React from 'react';
 import {
   View,
@@ -9,32 +10,42 @@ import {
   Dimensions,
   StatusBarStyle,
 } from 'react-native';
-import {withTranslation} from 'react-i18next';
 import {ErrorBoundary} from 'react-error-boundary';
+import {withTranslation} from 'react-i18next';
+
 import SideMenuBase from '@chakrahq/react-native-side-menu';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
+import notifee, {EventType} from '@notifee/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
+import {Channel, Server} from 'revolt.js';
+
 import {currentTheme, styles} from './src/Theme';
 import {client, app, selectedRemark, randomizeRemark} from './src/Generic';
 import {setFunction} from './src/Generic';
 import {SideMenu} from './src/SideMenu';
 import {Modals} from './src/Modals';
 import {NetworkIndicator} from './src/components/NetworkIndicator';
-import {decodeTime} from 'ulid';
-import notifee, {EventType} from '@notifee/react-native';
 import {Button, Link, Text} from './src/components/common/atoms';
 import {LoginSettingsPage} from './src/components/pages/LoginSettingsPage';
 import {ChannelView} from './src/components/views/ChannelView';
 import {Notification} from './src/components/Notification';
 import {sleep} from './src/lib/utils';
+import {
+  loginRegular,
+  loginWithSavedToken,
+  loginWithToken,
+} from './src/lib/auth';
 
 async function createChannel() {
-  const channel = await notifee.createChannel({
-    id: 'rvmob',
-    name: 'RVMob',
-  });
+  const channel = (await notifee.getChannel('rvmob'))
+    ? 'rvmob'
+    : await notifee.createChannel({
+        id: 'rvmob',
+        name: 'RVMob',
+      });
   return channel;
 }
 
@@ -118,11 +129,6 @@ class MainView extends React.Component {
         channelNotifications: channel,
       });
       console.log(`[APP] Client is ready (${new Date().getTime()})`);
-      if (this.state.tokenInput) {
-        console.log(`[AUTH] Setting saved token to ${this.state.tokenInput}`);
-        AsyncStorage.setItem('token', this.state.tokenInput);
-        this.setState({tokenInput: ''});
-      }
       notifee.onBackgroundEvent(async ({type, detail}) => {
         const {notification /*, pressAction */} = detail;
         if (type === EventType.PRESS) {
@@ -301,32 +307,7 @@ class MainView extends React.Component {
         app.openChannel(null);
       }
     });
-    AsyncStorage.getItem('token', async (err, res) => {
-      if (!err) {
-        if (typeof res !== 'string') {
-          console.log(
-            `[AUTH] Saved token was not a string: ${typeof res}, ${res}`,
-          );
-          this.setState({status: 'awaitingLogin'});
-          return;
-        }
-        try {
-          await client.useExistingSession({token: res});
-        } catch (e: any) {
-          console.log(e);
-          !(
-            e.message?.startsWith('Read error') || e.message === 'Network Error'
-          ) && client.user
-            ? this.setState({logInError: e, status: 'awaitingLogin'})
-            : this.state.status === 'loggedIn'
-            ? this.setState({logInError: e})
-            : this.setState({logInError: e, status: 'awaitingLogin'});
-        }
-      } else {
-        console.log(err);
-        this.setState({status: 'awaitingLogin'});
-      }
-    });
+    await loginWithSavedToken(this);
   }
 
   async setChannel(channel: string | Channel, server?: Server) {
@@ -468,117 +449,7 @@ class MainView extends React.Component {
                           />
                         </>
                       ) : null}
-                      <Button
-                        onPress={async () => {
-                          this.setState({status: 'tryingLogin'});
-                          try {
-                            console.log(
-                              '[AUTH] Attempting login with email and password...',
-                            );
-                            let session = await client.api.post(
-                              '/auth/session/login',
-                              {
-                                email: this.state.emailInput,
-                                password: this.state.passwordInput,
-                                friendly_name: 'RVMob',
-                              },
-                            );
-
-                            // Check if account is disabled; if not, prompt for MFA verificaiton if necessary
-                            if (session.result === 'Disabled') {
-                              console.log(
-                                '[AUTH] Account is disabled; need to add a proper handler for this',
-                              );
-                            } else if (session.result === 'MFA') {
-                              if (this.state.tfaTicket === '') {
-                                console.log(
-                                  `[AUTH] MFA required; prompting for code... (ticket: ${session.ticket})`,
-                                );
-                                return this.setState({
-                                  status: 'awaitingLogin',
-                                  askForTFACode: true,
-                                  tfaTicket: session.ticket,
-                                });
-                              } else {
-                                try {
-                                  console.log(
-                                    `[AUTH] Attempting to log in with MFA (code: ${this.state.tfaInput})`,
-                                  );
-                                  const isRecovery =
-                                    this.state.tfaInput.length > 7;
-                                  console.log(
-                                    `[AUTH] Using recovery code: ${isRecovery}`,
-                                  );
-                                  session = await client.api.post(
-                                    '/auth/session/login',
-                                    {
-                                      mfa_response: isRecovery
-                                        ? {recovery_code: this.state.tfaInput}
-                                        : {totp_code: this.state.tfaInput},
-                                      mfa_ticket: this.state.tfaTicket,
-                                      friendly_name: 'RVMob',
-                                    },
-                                  );
-                                  console.log(
-                                    `[AUTH] Result: ${session.result}`,
-                                  );
-                                  if (session.result !== 'Success') {
-                                    throw Error;
-                                  }
-                                  const token = session.token;
-                                  console.log(
-                                    '[AUTH] Logging in with a new token...',
-                                  );
-                                  await client.useExistingSession({
-                                    token: token,
-                                  });
-                                  await AsyncStorage.setItem('token', token);
-                                  console.log(
-                                    '[AUTH] Successfuly logged in and saved the token!',
-                                  );
-                                  this.setState({
-                                    status: 'loggedIn',
-                                    tokenInput: '',
-                                    passwordInput: '',
-                                    emailInput: '',
-                                    tfaInput: '',
-                                    logInError: null,
-                                    tfaTicket: '',
-                                    askForTFACode: false,
-                                  });
-                                } catch (err) {
-                                  this.setState({logInError: err});
-                                }
-                              }
-                            } else {
-                              const token = session.token;
-                              console.log(
-                                '[AUTH] Logging in with a new token...',
-                              );
-                              await client.useExistingSession({token: token});
-                              await AsyncStorage.setItem('token', token);
-                              console.log(
-                                '[AUTH] Successfuly logged in and saved the token!',
-                              );
-                              this.setState({
-                                status: 'loggedIn',
-                                tokenInput: '',
-                                passwordInput: '',
-                                emailInput: '',
-                                tfaInput: '',
-                                logInError: null,
-                                tfaTicket: '',
-                                askForTFACode: false,
-                              });
-                            }
-                          } catch (e) {
-                            console.error(e);
-                            this.setState({
-                              logInError: e,
-                              status: 'awaitingLogin',
-                            });
-                          }
-                        }}>
+                      <Button onPress={async () => await loginRegular(this)}>
                         <Text useInter={true}>Log in</Text>
                       </Button>
                       {this.state.logInError ? (
@@ -612,43 +483,7 @@ class MainView extends React.Component {
                         label={'How do I get my token?'}
                         style={{fontFamily: 'Inter', fontWeight: 'bold'}}
                       />
-                      <Button
-                        onPress={async () => {
-                          this.setState({status: 'tryingLogin'});
-                          try {
-                            console.log(decodeTime(this.state.tokenInput));
-                            this.setState({
-                              logInError: 'That is a user ID, not a token.',
-                              status: 'awaitingLogin',
-                            });
-                          } catch (e) {
-                            try {
-                              await client.useExistingSession({
-                                token: this.state.tokenInput,
-                              });
-                              console.log(
-                                `[AUTH] Setting saved token to ${this.state.tokenInput}`,
-                              );
-                              AsyncStorage.setItem(
-                                'token',
-                                this.state.tokenInput,
-                              );
-                              this.setState({
-                                status: 'loggedIn',
-                                tokenInput: '',
-                                passwordInput: '',
-                                emailInput: '',
-                                logInError: null,
-                              });
-                            } catch (tokenErr) {
-                              console.error(tokenErr);
-                              this.setState({
-                                logInError: tokenErr,
-                                status: 'awaitingLogin',
-                              });
-                            }
-                          }
-                        }}>
+                      <Button onPress={async () => await loginWithToken(this)}>
                         <Text useInter={true}>Log in</Text>
                       </Button>
                       {this.state.logInError ? (
