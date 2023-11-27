@@ -49,7 +49,19 @@
                     }
                 },
                 "general": "Umum",
-                "delete_server": "Hapus Server"
+                "delete_server": "Hapus Server",
+                "channels": {
+                    "title": "Saluran"
+                },
+                "roles": {
+                    "colour": "Warna"
+                },
+                "emoji": {
+                    "title": "Emoji"
+                },
+                "members": {
+                    "title": "Anggota"
+                }
             }
         }
     }
