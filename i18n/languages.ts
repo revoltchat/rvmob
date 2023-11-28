@@ -24,6 +24,12 @@ export const languages = {
     englishName: 'German (Germany)',
     emoji: '🇩🇪',
   } as Language,
+  hu: {name: 'Magyar', englishName: 'Hungarian', emoji: '🇭🇺'},
+  id: {
+    name: 'Bahasa Indonesia',
+    englishName: 'Indonesian',
+    emoji: '🇮🇩',
+  } as Language,
   it: {name: 'Italiano', englishName: 'Italian', emoji: '🇮🇹'} as Language,
   ru: {name: 'Русский', englishName: 'Russian', emoji: '🇷🇺'} as Language,
 };
