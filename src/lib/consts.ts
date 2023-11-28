@@ -40,6 +40,9 @@ export const MAX_SIDE_HQ = '1024';
 // default amount of messages to load
 export const DEFAULT_MESSAGE_LOAD_COUNT = 50;
 
+// sign up URL for the official instance
+export const OFFICIAL_INSTANCE_SIGNUP_URL = 'https://revolt.chat/login/create';
+
 // server invite paths for the official instance
 export const INVITE_PATHS = [
   'app.revolt.chat/invite',

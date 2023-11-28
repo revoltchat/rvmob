@@ -96,19 +96,19 @@ export const LoginSettingsPage = ({state}: {state: any}) => {
               }}
               value={instanceURL}
             />
-            <Text style={{textAlign: 'center', marginHorizontal: 30}}>
-              {testResponse
-                ? testResponse === 'valid'
+            {testResponse ? (
+              <Text style={{textAlign: 'center', marginHorizontal: 30}}>
+                {testResponse === 'valid'
                   ? 'This looks like a Revolt instance!'
                   : testResponse === 'invalid'
                   ? "This doesn't look like a Revolt instance..."
                   : testResponse === 'notJSON'
-                  ? "Could not parse response - make sure you're linking to the API URL"
+                  ? "Could not parse response. Make sure you're linking to the API URL!"
                   : testResponse === 'requestFailed'
-                  ? 'Could not fetch that URL'
-                  : 'Something went wrong!'
-                : null}
-            </Text>
+                  ? 'Could not fetch that URL.'
+                  : 'Something went wrong!'}
+              </Text>
+            ) : null}
             <Button
               onPress={async () => {
                 await testURL(instanceURL, false);

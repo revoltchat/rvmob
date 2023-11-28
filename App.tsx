@@ -9,6 +9,7 @@ import {
   StatusBar,
   Dimensions,
   StatusBarStyle,
+  Pressable,
 } from 'react-native';
 import {ErrorBoundary} from 'react-error-boundary';
 import {withTranslation} from 'react-i18next';
@@ -23,7 +24,13 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {Channel, Server} from 'revolt.js';
 
 import {currentTheme, styles} from './src/Theme';
-import {client, app, selectedRemark, randomizeRemark} from './src/Generic';
+import {
+  client,
+  app,
+  selectedRemark,
+  randomizeRemark,
+  openUrl,
+} from './src/Generic';
 import {setFunction} from './src/Generic';
 import {SideMenu} from './src/SideMenu';
 import {Modals} from './src/Modals';
@@ -32,12 +39,13 @@ import {Button, Link, Text} from './src/components/common/atoms';
 import {LoginSettingsPage} from './src/components/pages/LoginSettingsPage';
 import {ChannelView} from './src/components/views/ChannelView';
 import {Notification} from './src/components/Notification';
-import {sleep} from './src/lib/utils';
 import {
   loginRegular,
   loginWithSavedToken,
   loginWithToken,
 } from './src/lib/auth';
+import {OFFICIAL_INSTANCE_SIGNUP_URL} from '@rvmob/lib/consts';
+import {sleep} from './src/lib/utils';
 
 async function createChannel() {
   const channel = (await notifee.getChannel('rvmob'))
@@ -54,7 +62,7 @@ class MainView extends React.Component {
     super(props);
     this.state = {
       status: 'tryingLogin',
-      loginWithEmail: true,
+      loginType: '',
       askForTFACode: false,
       currentChannel: null,
       currentText: '',
@@ -383,10 +391,38 @@ class MainView extends React.Component {
                 <View
                   style={{
                     marginTop: 8,
-                    marginLeft: '90%',
-                    justifyContent: 'center',
+                    marginStart: 8,
+                    marginEnd: 4,
+                    justifyContent: 'space-between',
                     alignItems: 'center',
+                    flexDirection: 'row',
                   }}>
+                  {this.state.loginType !== '' ? (
+                    <Pressable
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                      onPress={() => {
+                        this.setState({loginType: ''});
+                      }}>
+                      <MaterialIcon
+                        name="arrow-back"
+                        size={24}
+                        color={currentTheme.foregroundSecondary}
+                      />
+                      <Text
+                        style={{
+                          color: currentTheme.foregroundSecondary,
+                          fontSize: 20,
+                          marginLeft: 5,
+                        }}>
+                        {t('app.actions.back')}
+                      </Text>
+                    </Pressable>
+                  ) : (
+                    <View />
+                  )}
                   <TouchableOpacity
                     onPress={() => this.setState({status: 'loginSettings'})}>
                     <MaterialIcon
@@ -410,7 +446,7 @@ class MainView extends React.Component {
                     }}>
                     RVMob
                   </Text>
-                  {this.state.loginWithEmail === true ? (
+                  {this.state.loginType === 'email' ? (
                     <>
                       <TextInput
                         placeholderTextColor={currentTheme.foregroundSecondary}
@@ -458,14 +494,8 @@ class MainView extends React.Component {
                             this.state.logInError.toString()}
                         </Text>
                       ) : null}
-                      <Button
-                        onPress={() => {
-                          this.setState({loginWithEmail: false});
-                        }}>
-                        <Text useInter={true}>Log in with token</Text>
-                      </Button>
                     </>
-                  ) : (
+                  ) : this.state.loginType === 'token' ? (
                     <>
                       <TextInput
                         placeholderTextColor={currentTheme.foregroundSecondary}
@@ -492,11 +522,60 @@ class MainView extends React.Component {
                             this.state.logInError}
                         </Text>
                       ) : null}
+                    </>
+                  ) : (
+                    <>
+                      <Text
+                        useInter={true}
+                        style={{
+                          marginVertical: 8,
+                          fontSize: 18,
+                          fontWeight: 'bold',
+                        }}>
+                        Do you have an account?
+                      </Text>
                       <Button
                         onPress={() => {
-                          this.setState({loginWithEmail: true});
-                        }}>
-                        <Text useInter={true}>Log in with email</Text>
+                          this.setState({loginType: 'email'});
+                        }}
+                        style={{alignItems: 'center', width: '80%'}}>
+                        <Text
+                          useInter={true}
+                          style={{fontSize: 16, fontWeight: 'bold'}}>
+                          Yes, log in with my email and password
+                        </Text>
+                      </Button>
+                      <Button
+                        onPress={() => {
+                          this.setState({loginType: 'token'});
+                        }}
+                        style={{alignItems: 'center', width: '80%'}}>
+                        <Text
+                          useInter={true}
+                          style={{fontSize: 16, fontWeight: 'bold'}}>
+                          Yes, log in with a session token
+                        </Text>
+                      </Button>
+                      <Button
+                        onPress={() => {
+                          openUrl(
+                            client.configuration
+                              ? `${client.configuration.app}/login/create`
+                              : OFFICIAL_INSTANCE_SIGNUP_URL,
+                          );
+                        }}
+                        style={{width: '80%'}}>
+                        <View style={{alignItems: 'center'}}>
+                          <Text
+                            useInter={true}
+                            style={{fontSize: 16, fontWeight: 'bold'}}>
+                            No, sign up
+                          </Text>
+                          <Text useInter={true}>
+                            You'll be redirected to the web app. Once you've
+                            signed up, come back and log in.
+                          </Text>
+                        </View>
                       </Button>
                     </>
                   )}
