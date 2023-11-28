@@ -14,7 +14,7 @@ import {
 import {ErrorBoundary} from 'react-error-boundary';
 import {withTranslation} from 'react-i18next';
 
-import SideMenuBase from '@chakrahq/react-native-side-menu';
+import SideMenuBase from '@rexovolt/react-native-side-menu';
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import notifee, {EventType} from '@notifee/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
