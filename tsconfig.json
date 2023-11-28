@@ -1,10 +1,10 @@
 {
-    "compilerOptions": {
-      "experimentalDecorators": true,
-      "paths": {
-        "@rvmob/*": ["./src/*"],
-        "@rvmob-i18n/*": ["./i18n/*"]
-      },
-    },
-    "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "paths": {
+      "@rvmob/*": ["./src/*"],
+      "@rvmob-i18n/*": ["./i18n/*"]
+    }
+  },
+  "extends": "@react-native/typescript-config/tsconfig.json"
 }

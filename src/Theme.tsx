@@ -251,7 +251,6 @@ function refreshStyles() {
       paddingTop: 2,
       paddingBottom: 2,
     },
-
     messageInner: {
       flex: 1,
       paddingLeft: 10,

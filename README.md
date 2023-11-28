@@ -4,7 +4,7 @@
 <img src="https://translate.revolt.chat/widgets/rvmorb/-/app/svg-badge.svg" alt="Translation status" />
 </a>
 
-**RVMob** is a mobile Revolt client made in React Native. 
+**RVMob** is a mobile Revolt client made in React Native.
 
 **Please note that RVMob is currently in beta.** It is exclusive to Android and contains several bugs/incomplete features - use at your own discretion.
 
@@ -18,11 +18,12 @@ Debug builds are also produced for every commit. These are unoptimised - they're
 
 ### Info about split builds
 
-Also note that, from v0.7.0, RVMob's APKs are **split by architecture**. This helps to reduce file and app sizes - however, you'll need to make sure that you **download the APK that matches your device's architecture**, or **it won't install!** 
+Also note that, from v0.7.0, RVMob's APKs are **split by architecture**. This helps to reduce file and app sizes - however, you'll need to make sure that you **download the APK that matches your device's architecture**, or **it won't install!**
 
 If you're using an app store, this should be handled for you. If not, however, you'll need to check your device's architecture. I'd recommend using [Treble Info](https://gitlab.com/TrebleInfo/TrebleInfo/-/blob/dev/README.md) for this. Install and open the app - **don't worry about what it says on the home page!** - then open the Details tab and check the CPU architecture entry.
 
 Depending on what it says:
+
 - if it says `ARM64`, you'll want the APK with **`arm64-v8a`** in its file name;
 - if it says `ARM32`, you'll want the APK with **`armeabi-v7a`** in its file name;
 - if it says `x86_64`, you'll want the APK with **`x86_64`** in its file name;
@@ -30,14 +31,14 @@ Depending on what it says:
 
 If it says `Unknown`, please ask for help in [our support server][support-server]
 
-
 ## Building
 
 If you want to build RVMob, you'll need:
+
 - [Node](https://nodejs.org/en/) (v18+),
 - [Yarn Classic](https://classic.yarnpkg.com),
 - JDK 17 ([Microsoft's build](https://learn.microsoft.com/en-gb/java/openjdk/download) works well),
-- the latest Android SDK (preferably via [Android Studio](https://developer.android.com/studio)'s SDK Manager), and 
+- the latest Android SDK (preferably via [Android Studio](https://developer.android.com/studio)'s SDK Manager), and
 - [npx](https://www.npmjs.com/package/npx).
 
 Then run the following:
@@ -52,13 +53,13 @@ yarn start
 
 CLI commands:
 
-| Command          | Description                               |
-| ---------------- | ----------------------------------------- |
-| `yarn start`     | Starts Metro (the dev server).            |
-| `yarn test`      | Tests to see if everything is working.    |
-| `yarn android`   | Runs the Android app.                     |
-| `yarn ios`       | Runs the iOS app (broken/requires a Mac). |
-| `yarn lint`      | Checks the code syntax using ESLint.      |
+| Command        | Description                               |
+| -------------- | ----------------------------------------- |
+| `yarn start`   | Starts Metro (the dev server).            |
+| `yarn test`    | Tests to see if everything is working.    |
+| `yarn android` | Runs the Android app.                     |
+| `yarn ios`     | Runs the iOS app (broken/requires a Mac). |
+| `yarn lint`    | Checks the code syntax using ESLint.      |
 
 For more information, see a list of `react-native`'s commands [here](https://github.com/react-native-community/cli/blob/master/docs/commands.md). You can access them by running `yarn react-native`.
 
