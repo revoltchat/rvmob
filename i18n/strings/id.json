@@ -9,7 +9,9 @@
         },
         "actions": {
             "delete": "Hapus",
-            "cancel": "Batal"
+            "cancel": "Batal",
+            "close": "Tutup",
+            "back": "Kembali"
         },
         "loading": {
             "generic": "Memuat…"
@@ -31,6 +33,35 @@
             },
             "ui": {
                 "theme": "Tema"
+            }
+        },
+        "servers": {
+            "settings": {
+                "overview": {
+                    "title": "Ikhtisar",
+                    "description": "Deskripsi server",
+                    "description_placeholder": "Tambah deskripsi…",
+                    "set_description": "Atur deskripsi",
+                    "name": "Nama server",
+                    "system_messages": "Pesan sistem",
+                    "errors": {
+                        "empty_server_name": "Nama server tidak boleh kosong!"
+                    }
+                },
+                "general": "Umum",
+                "delete_server": "Hapus Server",
+                "channels": {
+                    "title": "Saluran"
+                },
+                "roles": {
+                    "colour": "Warna"
+                },
+                "emoji": {
+                    "title": "Emoji"
+                },
+                "members": {
+                    "title": "Anggota"
+                }
             }
         }
     }
