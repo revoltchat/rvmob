@@ -7,6 +7,92 @@
             "join_rvmob": "Dem RVMob-Server beitreten",
             "open_rvmob": "Den RVMob-Server öffnen",
             "open_settings": "Einstellungen öffnen"
+        },
+        "actions": {
+            "back": "Zurück",
+            "close": "schließen",
+            "cancel": "Abbrechen",
+            "delete": "löschen"
+        },
+        "servers": {
+            "settings": {
+                "general": "Allgemein",
+                "overview": {
+                    "description": "Serverbeschreibung",
+                    "markdown_tip_link": "Erfahre mehr.",
+                    "description_placeholder": "Füge eine Beschreibung hinzu…",
+                    "system_messages": "System Nachrichten",
+                    "title": "Übersicht",
+                    "name": "Servername",
+                    "markdown_tip": "Serverbeschreibungen unterstützen Markdown Formatierungen.",
+                    "errors": {
+                        "empty_server_name": "Ein Servername wird benötigt!"
+                    }
+                },
+                "channels": {
+                    "title": "Kanäle"
+                },
+                "roles": {
+                    "title": "Rollen",
+                    "rank": "Rang",
+                    "colour": "Farbe",
+                    "permissions": "Erlaubnis"
+                },
+                "emoji": {
+                    "title": "Emoji"
+                },
+                "members": {
+                    "title": "Mitglieder"
+                },
+                "invites": {
+                    "title": "Einladungen",
+                    "loading": "Einladungen werden geladen…",
+                    "empty": "Keine Einladungen"
+                },
+                "bans": {
+                    "title": "Bans",
+                    "loading": "Bans werden abgerufen…",
+                    "empty": "Keine Bans",
+                    "no_reason": "Kein Grund wurde angegeben"
+                },
+                "delete_server": "Server löschen",
+                "customisation": "Individualisierung"
+            }
+        },
+        "settings": {
+            "ui": {
+                "messaging": {
+                    "experimentalScrolling_remark": "Du kannst nur zurück scrollen.",
+                    "emojiPack": "Emoji-Packet",
+                    "fontSize": "Schriftgröße"
+                },
+                "home": {
+                    "holidays": "Feiertage auf der Startseite anzeigen"
+                },
+                "theme": "Thema",
+                "theme_remark": "Sie müssen das Seitenmenü öffnen oder schließen, damit Ihre Änderungen überall erscheinen."
+            },
+            "app": {
+                "refetchOnReconnect": "Nachrichten werden abgerufen, sobald eine Verbindung besteht",
+                "notifications": {
+                    "enabled": "Schalte bitte Benachrichtigungen ein",
+                    "notifyOnSelfPing": "Erhalte eine Benachrichtigung, wenn du dich selbst anpingst"
+                },
+                "showChangelogs": "Änderungsprotokolle nach der Aktualisierung von RVMob anzeigen",
+                "language": "Wähle deine Sprache aus"
+            }
+        },
+        "loading": {
+            "generic": "Lädt…"
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_message": "Nachricht löschen?",
+                "header_server": "Server löschen?",
+                "body_message": "Bist du dir sicher, dass du <2>this message</2> löschen willst?",
+                "warning": "Dies kann nicht rückgängig gemacht werden.",
+                "body_server": "Bist du dir sicher, dass du <2>{{name}}</2> löschen willst?"
+            }
         }
     }
 }
