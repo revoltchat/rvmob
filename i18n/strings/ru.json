@@ -10,7 +10,9 @@
         },
         "actions": {
             "delete": "Удалить",
-            "cancel": "Отмена"
+            "cancel": "Отмена",
+            "close": "Закрыть",
+            "back": "Назад"
         },
         "modals": {
             "confirm_deletion": {
@@ -72,6 +74,53 @@
             "voice": {
                 "header": "Голосовые каналы пока не поддерживаются в RVMob!",
                 "body": "А пока вы можете присоединяться к ним через веб-приложение или Revolt Desktop."
+            }
+        },
+        "servers": {
+            "settings": {
+                "general": "Основные",
+                "customisation": "Персонализация",
+                "delete_server": "Удалить сервер",
+                "overview": {
+                    "title": "Обзор",
+                    "name": "Название сервера",
+                    "description": "Описание сервера",
+                    "markdown_tip_link": "Узнать больше.",
+                    "description_placeholder": "Добавить описание…",
+                    "set_description": "Установить описание",
+                    "system_messages": "Системные сообщения",
+                    "errors": {
+                        "empty_server_name": "Название сервера не может быть пустым!"
+                    },
+                    "markdown_tip": "Описание сервера не поддерживает разметку Markdown."
+                },
+                "channels": {
+                    "title": "Каналы"
+                },
+                "roles": {
+                    "title": "Роли",
+                    "rank": "Уровень",
+                    "permissions": "Права",
+                    "colour": "Цвет"
+                },
+                "emoji": {
+                    "title": "Эмодзи"
+                },
+                "members": {
+                    "title": "Участники"
+                },
+                "invites": {
+                    "loading": "Загрузка приглашений…",
+                    "empty": "Нет приглашений",
+                    "title": "Приглашения"
+                },
+                "bans": {
+                    "title": "Баны",
+                    "loading": "Загрузка банов…",
+                    "empty": "Нет банов",
+                    "no_reason": "Причина не указана"
+                },
+                "user_management": "Управление пользователем"
             }
         }
     }
