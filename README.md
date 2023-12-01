@@ -4,6 +4,8 @@
 <img src="https://translate.revolt.chat/widgets/rvmorb/-/app/svg-badge.svg" alt="Translation status" />
 </a>
 
+![Fediverse badge from shields.io](https://img.shields.io/badge/fedi-@rvmob@lea.pet-teal?link=https://lea.pet/@rvmob)
+
 **RVMob** is a mobile Revolt client made in React Native.
 
 **Please note that RVMob is currently in beta.** It is exclusive to Android and contains several bugs/incomplete features - use at your own discretion.
@@ -29,7 +31,7 @@ Depending on what it says:
 - if it says `x86_64`, you'll want the APK with **`x86_64`** in its file name;
 - and if it says `x86`, you'll want the APK with **`x86` but without `64`** in its file name.
 
-If it says `Unknown`, please ask for help in [our support server][support-server]
+If it says `Unknown`, please ask for help in [our support server][support-server].
 
 ## Building
 
