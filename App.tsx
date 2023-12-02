@@ -1,5 +1,5 @@
 import 'react-native-get-random-values'; // react native moment
-import './shim'; // react native moment 2: the thrilling sequel
+// import './shim'; // react native moment 2: the thrilling sequel
 
 import React from 'react';
 import {

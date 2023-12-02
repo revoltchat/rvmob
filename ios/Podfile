@@ -18,8 +18,6 @@ target 'Revvy' do
     :hermes_enabled => false
   )
 
-  pod 'react-native-randombytes', :path => '../node_modules/react-native-randombytes'
-
   pod 'react-native-get-random-values', :path => '../node_modules/react-native-get-random-values'
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'

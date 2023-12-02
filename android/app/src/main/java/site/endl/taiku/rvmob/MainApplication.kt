@@ -15,7 +15,6 @@ import com.facebook.soloader.SoLoader
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage
 import org.linusu.RNGetRandomValuesPackage
 import io.invertase.notifee.NotifeePackage
-import com.bitgo.randombytes.RandomBytesPackage
 import com.facebook.react.modules.systeminfo.AndroidInfoHelpers
 
 class MainApplication : Application(), ReactApplication {
