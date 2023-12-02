@@ -12,5 +12,16 @@ module.exports = {
       ],
     },
   },
-  plugins: ['react-native-reanimated/plugin'],
+  plugins: [
+    [
+      'module-resolver',
+      {
+        alias: {
+          '@rvmob': './src',
+          '@rvmob-i18n': './i18n',
+        },
+      },
+    ],
+    'react-native-reanimated/plugin',
+  ],
 };
