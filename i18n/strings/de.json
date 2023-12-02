@@ -27,7 +27,8 @@
                     "markdown_tip": "Serverbeschreibungen unterstützen Markdown Formatierungen.",
                     "errors": {
                         "empty_server_name": "Ein Servername wird benötigt!"
-                    }
+                    },
+                    "set_description": "Setze eine Beschreibung"
                 },
                 "channels": {
                     "title": "Kanäle"
@@ -56,7 +57,8 @@
                     "no_reason": "Kein Grund wurde angegeben"
                 },
                 "delete_server": "Server löschen",
-                "customisation": "Individualisierung"
+                "customisation": "Individualisierung",
+                "user_management": "Nutzermanagment"
             }
         },
         "settings": {
@@ -64,7 +66,9 @@
                 "messaging": {
                     "experimentalScrolling_remark": "Du kannst nur zurück scrollen.",
                     "emojiPack": "Emoji-Packet",
-                    "fontSize": "Schriftgröße"
+                    "fontSize": "Schriftgröße",
+                    "showReactions": "Zeige Raktionen unter Nachrichten",
+                    "showNSFWContent": "Der Inhalt ist ab 18"
                 },
                 "home": {
                     "holidays": "Feiertage auf der Startseite anzeigen"
@@ -83,7 +87,8 @@
             }
         },
         "loading": {
-            "generic": "Lädt…"
+            "generic": "Lädt…",
+            "connecting": "Loggt ein…"
         },
         "modals": {
             "confirm_deletion": {
