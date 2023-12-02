@@ -343,9 +343,9 @@ class MainView extends React.Component {
   render() {
     const {t} = this.props;
     return (
-      <>
+      <View style={styles.app}>
         {this.state.status === 'loggedIn' ? (
-          <View style={styles.app}>
+          <>
             <SideMenuBase
               openMenuOffset={Dimensions.get('window').width - 50}
               overlayColor={'#00000040'}
@@ -382,10 +382,10 @@ class MainView extends React.Component {
                 }
               />
             </View>
-          </View>
+          </>
         ) : this.state.status === 'awaitingLogin' ||
           this.state.status === 'tryingLogin' ? (
-          <View style={styles.app}>
+          <>
             {this.state.status === 'awaitingLogin' ? (
               <>
                 <View
@@ -420,9 +420,7 @@ class MainView extends React.Component {
                         {t('app.actions.back')}
                       </Text>
                     </Pressable>
-                  ) : (
-                    <View />
-                  )}
+                  ) : null}
                   <TouchableOpacity
                     onPress={() => this.setState({status: 'loginSettings'})}>
                     <MaterialIcon
@@ -589,21 +587,19 @@ class MainView extends React.Component {
                 <Text style={styles.remark}>{selectedRemark || null}</Text>
               </View>
             )}
-          </View>
+          </>
         ) : this.state.status === 'loginSettings' ? (
           <LoginSettingsPage state={this} />
         ) : (
-          <View style={styles.app}>
-            <View style={styles.loggingInScreen}>
-              <Text style={{fontSize: 30, fontWeight: 'bold'}}>Uh oh...</Text>
-              <Text style={styles.remark}>
-                Please let the developers know that you saw this (value:{' '}
-                {this.state.status})
-              </Text>
-            </View>
+          <View style={styles.loggingInScreen}>
+            <Text style={{fontSize: 30, fontWeight: 'bold'}}>Uh oh...</Text>
+            <Text style={styles.remark}>
+              Please let the developers know that you saw this (value:{' '}
+              {this.state.status})
+            </Text>
           </View>
         )}
-      </>
+      </View>
     );
   }
 }

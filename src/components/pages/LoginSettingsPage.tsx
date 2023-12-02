@@ -50,7 +50,7 @@ export const LoginSettingsPage = ({state}: {state: any}) => {
   }
 
   return (
-    <View style={styles.app}>
+    <>
       <Pressable
         style={{
           flexDirection: 'row',
@@ -130,6 +130,6 @@ export const LoginSettingsPage = ({state}: {state: any}) => {
           </>
         )}
       </View>
-    </View>
+    </>
   );
 };
