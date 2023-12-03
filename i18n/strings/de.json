@@ -68,7 +68,10 @@
                     "emojiPack": "Emoji-Packet",
                     "fontSize": "Schriftgröße",
                     "showReactions": "Zeige Raktionen unter Nachrichten",
-                    "showNSFWContent": "Der Inhalt ist ab 18"
+                    "showNSFWContent": "Der Inhalt ist ab 18",
+                    "messageSpacing": "Abstand zwischen den Nachrichten",
+                    "fontSize_remark": "Dies wird auf Nachrichten und bestimmte Teile der App Auswirkungen haben.",
+                    "statusInChatAvatars": "Zeige Nutzerstatus im Chatavatar"
                 },
                 "home": {
                     "holidays": "Feiertage auf der Startseite anzeigen"
