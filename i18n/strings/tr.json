@@ -1,1 +1,127 @@
-{}
+{
+    "app": {
+        "actions": {
+            "cancel": "İptal",
+            "close": "Kapat",
+            "delete": "Sil",
+            "back": "Geri"
+        },
+        "loading": {
+            "generic": "Yükleniyor…",
+            "connecting": "Giriş yapılıyor…"
+        },
+        "home": {
+            "join_lounge": "Revolt Lounge'a katılın",
+            "open_lounge": "Revolt Lounge'ı açın",
+            "join_rvmob": "RVMob sunucusuna katılın",
+            "open_settings": "Ayarları açın",
+            "description": "Sunucularınızı ve mesajlarınızı görmek için ekranın solundan kaydırın veya üç çizgi simgesine tıklayın!",
+            "open_rvmob": "RVMob sunucusunu açın"
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_message": "Mesajı sil?",
+                "header_server": "Sunucuyu sil?",
+                "body_server": "<2>{{name}}</2> silmek istediğine emin misin?",
+                "body_message": "<2>Bu mesajı</2> silmek istediğine emin misin?",
+                "warning": "Bu geri alınamaz."
+            }
+        },
+        "servers": {
+            "settings": {
+                "general": "Genel",
+                "customisation": "Özelleştirme",
+                "user_management": "Kullanıcı Yönetimi",
+                "overview": {
+                    "markdown_tip_link": "Daha fazla bilgi edinin.",
+                    "description_placeholder": "Bir açıklama ekleyin…",
+                    "set_description": "Açıklamayı ayarlayın",
+                    "title": "Genel bakış",
+                    "name": "Sunucu adı",
+                    "description": "Sunucu açıklaması",
+                    "markdown_tip": "Sunucu açıklamaları Markdown formatını destekler.",
+                    "system_messages": "Sistem mesajları",
+                    "errors": {
+                        "empty_server_name": "Sunucu adları boş olamaz!"
+                    }
+                },
+                "channels": {
+                    "title": "Kanallar"
+                },
+                "roles": {
+                    "title": "Roller",
+                    "permissions": "İzinler",
+                    "rank": "Sıralama",
+                    "colour": "Renk"
+                },
+                "emoji": {
+                    "title": "Emoji"
+                },
+                "members": {
+                    "title": "Üyeler"
+                },
+                "invites": {
+                    "empty": "Davetler yok",
+                    "title": "Davetler",
+                    "loading": "Davetler alınıyor…"
+                },
+                "bans": {
+                    "loading": "Yasaklamalar alınıyor…",
+                    "empty": "Yasaklama yok",
+                    "title": "Yasaklamalar",
+                    "no_reason": "Herhangi bir neden belirtilmemiş"
+                },
+                "delete_server": "Sunucuyu Sil"
+            }
+        },
+        "settings": {
+            "app": {
+                "language": "Dilinizi seçin",
+                "notifications": {
+                    "enabled": "Bildirimleri açın",
+                    "notifyOnSelfPing": "Kendinize ping attığınızda bildirim alın"
+                },
+                "showChangelogs": "RVMob güncellendikten sonra değişim kayıtlarını göster",
+                "refetchOnReconnect": "Yeniden bağlandığında mesajları yeniden alın"
+            },
+            "ui": {
+                "home": {
+                    "holidays": "Tatilleri ana sayfada göster"
+                },
+                "theme": "Tema",
+                "messaging": {
+                    "emojiPack": "Emoji paketi",
+                    "experimentalScrolling": "Eski mesaj görünümü için kanal kaydırmayı etkinleştirin",
+                    "fontSize_remark": "Bu, mesajlar ve uygulamanın belirli bölümlerine uygulanacaktır.",
+                    "messageSpacing": "Mesaj aralığı",
+                    "sendAttachments": "Dosya göndermeyi etkinleştirin",
+                    "showReactions": "Mesajların altındaki tepkileri göster",
+                    "showSelfInTypingIndicator": "Yazma göstergesinde kendinizi gösterin",
+                    "statusInChatAvatars": "Sohbet avatarlarında kullanıcı durumlarını göster",
+                    "use24H": "24 saatlik zaman damgaları kullanın",
+                    "useNewMessageView": "Yeni mesaj görünümü kullan",
+                    "experimentalScrolling_remark": "Sadece geriye doğru kaydırabilirsin.",
+                    "fontSize": "Font boyutu",
+                    "showMasqAvatar": "Maskelenmiş avatarı köşede göster",
+                    "showNSFWContent": "18+ içeriğe izin ver",
+                    "showReactions_remark": "Mevcut tepkilere ekleme yapabilirsiniz ancak şimdilik yenilerini ekleyemezsin."
+                },
+                "settings": {
+                    "showExperimental": "Deneysel özellikleri göster"
+                },
+                "theme_remark": "Değişikliklerin her yerde görünmesi için yan menüyü açman ya da kapatman gerekir.",
+                "showDeveloperFeatures": "Geliştirici araçlarını göster"
+            }
+        },
+        "misc": {
+            "network_indicator": {
+                "body": "Bağlantı kaybedildi",
+                "hide": "(gizle)"
+            },
+            "voice": {
+                "header": "Ses kanalları şimdilik RVMob'da desteklenmiyor!",
+                "body": "Bu arada web uygulaması veya Revolt Desktop aracılığıyla onlara katılabilirsin."
+            }
+        }
+    }
+}
