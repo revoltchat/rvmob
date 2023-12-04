@@ -36,7 +36,7 @@
                 "overview": {
                     "title": "Агляд",
                     "name": "Назва серверу",
-                    "description": "Апісанне сервера",
+                    "description": "Апісанне серверу",
                     "markdown_tip": "Апісанне серверу не падтрымлівае Markdown.",
                     "set_description": "Усталяваць апісанне",
                     "system_messages": "Сістэмныя паведамленні",
