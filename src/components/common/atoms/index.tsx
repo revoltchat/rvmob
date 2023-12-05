@@ -1,3 +1,4 @@
+export {BackButton} from './BackButton';
 export {Button} from './Button';
 export {ChannelButton} from './ChannelButton';
 export {Checkbox} from './Checkbox';

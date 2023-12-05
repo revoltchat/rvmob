@@ -10,7 +10,7 @@ import {Server} from 'revolt.js';
 import {SettingsSection} from '../../../../../lib/types';
 import {currentTheme, styles} from '../../../../../Theme';
 import {GapView} from '../../../../layout';
-import {Text} from '../../../atoms';
+import {BackButton, Text} from '../../../atoms';
 
 export const RoleSettingsSection = observer(
   ({server, callback}: {server: Server; callback: Function}) => {
@@ -20,29 +20,12 @@ export const RoleSettingsSection = observer(
 
     return (
       <>
-        <Pressable
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginBottom: 10,
-          }}
-          onPress={() => {
+        <BackButton
+          callback={() => {
             subsection ? setSubsection(null) : callback();
-          }}>
-          <MaterialIcon
-            name="arrow-back"
-            size={24}
-            color={currentTheme.foregroundSecondary}
-          />
-          <Text
-            style={{
-              color: currentTheme.foregroundSecondary,
-              fontSize: 20,
-              marginLeft: 5,
-            }}>
-            {t('app.actions.back')}
-          </Text>
-        </Pressable>
+          }}
+          margin
+        />
         {subsection ? (
           <>
             <Text

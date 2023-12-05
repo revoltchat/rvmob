@@ -10,14 +10,13 @@ import {
   getBundleId,
   getDevice,
 } from 'react-native-device-info';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import AppInfo from '../../../package.json';
 import {app, client} from '../../Generic';
 import {SettingsSection} from '../../lib/types';
 import {currentTheme, styles} from '../../Theme';
-import {ContextButton, Link, Text} from '../common/atoms';
+import {BackButton, ContextButton, Link, Text} from '../common/atoms';
 import {SettingsCategory} from '../common/settings';
 import {GapView} from '../layout';
 
@@ -85,53 +84,9 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
         borderTopRightRadius: 15,
       }}>
       {section == null ? (
-        <Pressable
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginBottom: 10,
-          }}
-          onPress={() => {
-            setState();
-          }}>
-          <MaterialCommunityIcon
-            name="close-circle"
-            size={24}
-            color={currentTheme.foregroundSecondary}
-          />
-          <Text
-            style={{
-              color: currentTheme.foregroundSecondary,
-              fontSize: 20,
-              marginLeft: 5,
-            }}>
-            Close
-          </Text>
-        </Pressable>
+        <BackButton callback={() => setState()} type={'close'} margin />
       ) : (
-        <Pressable
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginBottom: 10,
-          }}
-          onPress={() => {
-            setSection(null);
-          }}>
-          <MaterialIcon
-            name="arrow-back"
-            size={24}
-            color={currentTheme.foregroundSecondary}
-          />
-          <Text
-            style={{
-              color: currentTheme.foregroundSecondary,
-              fontSize: 20,
-              marginLeft: 5,
-            }}>
-            Back
-          </Text>
-        </Pressable>
+        <BackButton callback={() => setSection(null)} margin />
       )}
       <ScrollView
         style={{flex: 1}}

@@ -8,7 +8,6 @@ import {
   StatusBar,
   Dimensions,
   StatusBarStyle,
-  Pressable,
 } from 'react-native';
 import {ErrorBoundary} from 'react-error-boundary';
 import {withTranslation} from 'react-i18next';
@@ -34,8 +33,8 @@ import {setFunction} from './src/Generic';
 import {SideMenu} from './src/SideMenu';
 import {Modals} from './src/Modals';
 import {NetworkIndicator} from './src/components/NetworkIndicator';
-import {Button, Link, Text} from './src/components/common/atoms';
-import {LoginSettingsPage} from './src/components/pages/LoginSettingsPage';
+import {BackButton, Button, Link, Text} from './src/components/common/atoms';
+import {LoginSettingsPage} from './src/pages/auth/LoginSettingsPage';
 import {ChannelView} from './src/components/views/ChannelView';
 import {Notification} from './src/components/Notification';
 import {
@@ -389,7 +388,7 @@ class MainView extends React.Component {
               <>
                 <View
                   style={{
-                    marginTop: 8,
+                    marginTop: 12,
                     marginStart: 8,
                     marginEnd: 4,
                     justifyContent: 'space-between',
@@ -397,29 +396,14 @@ class MainView extends React.Component {
                     flexDirection: 'row',
                   }}>
                   {this.state.loginType !== '' ? (
-                    <Pressable
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                      }}
-                      onPress={() => {
+                    <BackButton
+                      callback={() => {
                         this.setState({loginType: ''});
-                      }}>
-                      <MaterialIcon
-                        name="arrow-back"
-                        size={24}
-                        color={currentTheme.foregroundSecondary}
-                      />
-                      <Text
-                        style={{
-                          color: currentTheme.foregroundSecondary,
-                          fontSize: 20,
-                          marginLeft: 5,
-                        }}>
-                        {t('app.actions.back')}
-                      </Text>
-                    </Pressable>
-                  ) : null}
+                      }}
+                    />
+                  ) : (
+                    <View />
+                  )}
                   <TouchableOpacity
                     onPress={() => this.setState({status: 'loginSettings'})}>
                     <MaterialIcon

@@ -13,7 +13,7 @@ import {app, client} from '../../Generic';
 import {MAX_SIDE_HQ} from '../../lib/consts';
 import {SettingsSection} from '../../lib/types';
 import {currentTheme, styles} from '../../Theme';
-import {ContextButton, Text} from '../common/atoms';
+import {BackButton, ContextButton, Text} from '../common/atoms';
 import {
   BanSettingsSection,
   InviteSettingsSection,
@@ -74,29 +74,7 @@ export const ServerSettingsSheet = observer(
           </Pressable>
         ) : /* the role settings menu handles this itself as it has subsections */
         section !== 'roles' ? (
-          <Pressable
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: 10,
-            }}
-            onPress={() => {
-              setSection(null);
-            }}>
-            <MaterialIcon
-              name="arrow-back"
-              size={24}
-              color={currentTheme.foregroundSecondary}
-            />
-            <Text
-              style={{
-                color: currentTheme.foregroundSecondary,
-                fontSize: 20,
-                marginLeft: 5,
-              }}>
-              {t('app.actions.back')}
-            </Text>
-          </Pressable>
+          <BackButton callback={() => setSection(null)} margin />
         ) : null}
         <ScrollView
           style={{flex: 1}}

@@ -1,11 +1,9 @@
 import React from 'react';
-import {Pressable, TextInput, View} from 'react-native';
-
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {TextInput, View} from 'react-native';
 
 import {app} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
-import {Button, Text} from '../common/atoms';
+import {BackButton, Button, Text} from '../../components/common/atoms';
 
 export const LoginSettingsPage = ({state}: {state: any}) => {
   const [instanceURL, setInstanceURL] = React.useState(
@@ -51,29 +49,13 @@ export const LoginSettingsPage = ({state}: {state: any}) => {
 
   return (
     <>
-      <Pressable
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          padding: 10,
-        }}
-        onPress={() => {
+      <BackButton
+        callback={() => {
           state.setState({status: 'awaitingLogin'});
-        }}>
-        <MaterialCommunityIcon
-          name="close-circle"
-          size={24}
-          color={currentTheme.foregroundSecondary}
-        />
-        <Text
-          style={{
-            color: currentTheme.foregroundSecondary,
-            fontSize: 20,
-            marginLeft: 5,
-          }}>
-          Close
-        </Text>
-      </Pressable>
+        }}
+        type={'close'}
+        style={{padding: 12}}
+      />
       <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
         {saved ? (
           <>
@@ -122,7 +104,6 @@ export const LoginSettingsPage = ({state}: {state: any}) => {
                   console.log(`[AUTH] Setting instance URL to ${instanceURL}`);
                   app.settings.set('app.instance', instanceURL);
                   setSaved(true);
-                  // state.setState({status: 'awaitingLogin'});
                 }
               }}>
               <Text>Save</Text>

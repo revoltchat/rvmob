@@ -70,7 +70,7 @@ export const InviteSettingsSection = observer(({server}: {server: Server}) => {
           <Text>{t('app.servers.settings.invites.empty')}</Text>
         )
       ) : (
-        <Text>{t('app.servers.settings.invites.empty')}</Text>
+        <Text>{t('app.servers.settings.invites.loading')}</Text>
       )}
     </>
   );
