@@ -1,1 +1,127 @@
-{}
+{
+    "app": {
+        "actions": {
+            "cancel": "Nuligi",
+            "close": "Fermi",
+            "delete": "Viŝi",
+            "back": "Reen"
+        },
+        "loading": {
+            "generic": "Ŝargante…",
+            "connecting": "Ensalutante…"
+        },
+        "home": {
+            "open_lounge": "Malfermi la Revolto Loŭnĝeo",
+            "join_lounge": "Aliĝi al la Revolto Loŭnĝeo",
+            "open_settings": "Malfermi agordojn",
+            "description": "Ŝovumu de maldekstre de la ekrano aŭ tuŝetu la trilinian ikonon por vidi viajn servilojn kaj mesaĝojn!",
+            "open_rvmob": "Malfermi la servilon de RVMobo",
+            "join_rvmob": "Aliĝi al la servilo de RVMobo"
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_server": "Ĉu forigi servilon?",
+                "body_message": "Ĉu vi certas, ke vi volas forigi <2>ĉi tiun mesaĝon</2>?",
+                "warning": "Ĉi tio ne povas esti malfarita.",
+                "body_server": "Ĉu vi certas, ke vi volas forigi <2>{{name}}</2>?",
+                "header_message": "Ĉu forigi mesaĝon?"
+            }
+        },
+        "servers": {
+            "settings": {
+                "user_management": "Administrado de uzantoj",
+                "delete_server": "Forigi Servilon",
+                "overview": {
+                    "title": "Superrigardo",
+                    "name": "Servilnomo",
+                    "description": "Servilpriskribo",
+                    "markdown_tip_link": "Lerni pli.",
+                    "description_placeholder": "Aldoni priskribon…",
+                    "set_description": "Agordi priskribon",
+                    "markdown_tip": "Servilpriskriboj subtenas Markdown-formatado.",
+                    "system_messages": "Mesaĝoj de sistemo",
+                    "errors": {
+                        "empty_server_name": "Servilnomoj ne povas esti malplenaj!"
+                    }
+                },
+                "channels": {
+                    "title": "Kanaloj"
+                },
+                "roles": {
+                    "title": "Roloj",
+                    "rank": "Rango",
+                    "permissions": "Permesoj",
+                    "colour": "Koloro"
+                },
+                "invites": {
+                    "title": "Invitoj",
+                    "empty": "Neniuj invitoj",
+                    "loading": "Alportante invitojn…"
+                },
+                "bans": {
+                    "title": "Forbaroj",
+                    "no_reason": "Neniu kialo provizita",
+                    "loading": "Alportante forbarojn…",
+                    "empty": "Neniuj forbaroj"
+                },
+                "general": "Ĝenerala",
+                "customisation": "Personigo",
+                "emoji": {
+                    "title": "Emoĝio"
+                },
+                "members": {
+                    "title": "Anoj"
+                }
+            }
+        },
+        "settings": {
+            "app": {
+                "language": "Elektu vian lingvon",
+                "notifications": {
+                    "enabled": "Ebligi puŝo-sciigojn",
+                    "notifyOnSelfPing": "Ricevi sciigon kiam vi eĥosondas vin mem"
+                },
+                "showChangelogs": "Montri ŝanĝprotokolojn post ĝisdatigo de RVMob",
+                "refetchOnReconnect": "Reŝarĝi mesaĝojn dum rekonekto"
+            },
+            "ui": {
+                "home": {
+                    "holidays": "Montri feriojn sur la ĉefpaĝo"
+                },
+                "theme": "Haŭto",
+                "messaging": {
+                    "fontSize": "Grando de tiparo",
+                    "messageSpacing": "Mesaĝinterspaco",
+                    "sendAttachments": "Ebligi la sendadon de alkroĉaĵoj",
+                    "statusInChatAvatars": "Montri uzantstatuson en babilaj avataroj",
+                    "use24H": "Uzi 24-horajn tempomarkojn",
+                    "useNewMessageView": "Uzi novan mesaĝan rigardon",
+                    "emojiPack": "Emoĝiaro",
+                    "experimentalScrolling": "Ebligi kanalan rulumadon por malnova mesaĝo",
+                    "experimentalScrolling_remark": "Vi nur povas rulumi malantaŭen.",
+                    "fontSize_remark": "Ĉi tio aplikiĝos al mesaĝoj kaj iuj partoj de la programo.",
+                    "showMasqAvatar": "Montru maskeritan avataron en la angulo",
+                    "showNSFWContent": "Konsenti al 18+ enhavo",
+                    "showReactions": "Montri reagojn sub mesaĝoj",
+                    "showReactions_remark": "Vi povas aldoni al ekzistantaj reagoj, sed vi ankoraŭ ne povas aldoni novajn.",
+                    "showSelfInTypingIndicator": "Montri vin en la indikilo de tajpado"
+                },
+                "settings": {
+                    "showExperimental": "Montri eksperimentajn funkciojn"
+                },
+                "showDeveloperFeatures": "Montri programilojn",
+                "theme_remark": "Vi devos malfermi aŭ fermi la flankan menuon por ke viaj ŝanĝoj aperu ĉie."
+            }
+        },
+        "misc": {
+            "network_indicator": {
+                "body": "Konekto perdita",
+                "hide": "(kaŝi)"
+            },
+            "voice": {
+                "header": "Voĉaj kanaloj ankoraŭ ne estas subtenataj en RVMob!",
+                "body": "Dume, vi povas aliĝi al ĝi per la retejo-aplikaĵo aŭ Revolt Desktop."
+            }
+        }
+    }
+}
