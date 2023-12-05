@@ -51,7 +51,7 @@
                     "empty": "Keine Einladungen"
                 },
                 "bans": {
-                    "title": "Bans",
+                    "title": "Banliste",
                     "loading": "Bans werden abgerufen…",
                     "empty": "Keine Bans",
                     "no_reason": "Kein Grund wurde angegeben"
@@ -68,16 +68,27 @@
                     "emojiPack": "Emoji-Packet",
                     "fontSize": "Schriftgröße",
                     "showReactions": "Zeige Raktionen unter Nachrichten",
-                    "showNSFWContent": "Der Inhalt ist ab 18",
+                    "showNSFWContent": "Zustimmung zu Inhalten ab 18 Jahren",
                     "messageSpacing": "Abstand zwischen den Nachrichten",
                     "fontSize_remark": "Dies wird auf Nachrichten und bestimmte Teile der App Auswirkungen haben.",
-                    "statusInChatAvatars": "Zeige Nutzerstatus im Chatavatar"
+                    "statusInChatAvatars": "Zeige deinen Nutzerstatus im Chatavatar",
+                    "experimentalScrolling": "Aktiviere Scrollen im Kanal, um alte Nachrichten anzuzeigen",
+                    "showMasqAvatar": "Maskierten Avatar in der Ecke anzeigen",
+                    "sendAttachments": "Aktiviere das Senden von Anhängen",
+                    "showReactions_remark": "Du kannst bereits bestehende Reaktionen hinzufügen, aber keine neuen.",
+                    "showSelfInTypingIndicator": "Zeigen dich im Tippindikator",
+                    "use24H": "Verwende den 24-Stunden-Zeitstempel",
+                    "useNewMessageView": "Neue Nachrichtenansicht verwenden"
                 },
                 "home": {
                     "holidays": "Feiertage auf der Startseite anzeigen"
                 },
                 "theme": "Thema",
-                "theme_remark": "Sie müssen das Seitenmenü öffnen oder schließen, damit Ihre Änderungen überall erscheinen."
+                "theme_remark": "Sie müssen das Seitenmenü öffnen oder schließen, damit Ihre Änderungen überall erscheinen.",
+                "settings": {
+                    "showExperimental": "Experimentelle Funktionen anzeigen"
+                },
+                "showDeveloperFeatures": "Entwicklerwerkzeuge anzeigen"
             },
             "app": {
                 "refetchOnReconnect": "Nachrichten werden abgerufen, sobald eine Verbindung besteht",
@@ -100,6 +111,16 @@
                 "body_message": "Bist du dir sicher, dass du <2>this message</2> löschen willst?",
                 "warning": "Dies kann nicht rückgängig gemacht werden.",
                 "body_server": "Bist du dir sicher, dass du <2>{{name}}</2> löschen willst?"
+            }
+        },
+        "misc": {
+            "voice": {
+                "body": "In der Zwischenzeit kannst du über die Web-App oder Revolt Desktop beitreten.",
+                "header": "Sprachkanäle werden in RVMob noch nicht unterstützt!"
+            },
+            "network_indicator": {
+                "body": "Verbindung verloren",
+                "hide": "(verstecken)"
             }
         }
     }
