@@ -10,6 +10,25 @@
             "generic": "Loading…",
             "connecting": "Logging in…"
         },
+        "login": {
+            "forms": {
+                "email_placeholder": "Email",
+                "password_placeholder": "Password",
+                "mfa_placeholder": "One-time code",
+                "session_token_placeholder": "Token"
+            },
+            "instance_notice": "You're connecting to {{url}}.",
+            "options": {
+                "login_regular": "Yes, log in with my email and password",
+                "login_regular_body": "Recommended for most users.",
+                "login_session_token": "Yes, log in with a session token",
+                "login_session_token_body": "Use this if you're having issues with the regular login system. Some functionality may not be available.",
+                "signup": "No, sign up",
+                "signup_body": "You'll be redirected to the web app. Once you've signed up, come back and log in."
+            },
+            "subheader": "Do you have an account?",
+            "token_info_label": "How do I get my token?"
+        },
         "home": {
             "description": "Swipe from the left of the screen or tap the three lines icon to see your servers and messages!",
             "join_lounge": "Join the Revolt Lounge",

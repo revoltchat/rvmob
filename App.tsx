@@ -1,5 +1,4 @@
 import 'react-native-get-random-values'; // react native moment
-// import './shim'; // react native moment 2: the thrilling sequel
 
 import React from 'react';
 import {
@@ -449,7 +448,7 @@ class MainView extends React.Component {
                       <TextInput
                         placeholderTextColor={currentTheme.foregroundSecondary}
                         style={styles.loginInput}
-                        placeholder={'Email'}
+                        placeholder={t('app.login.forms.email_placeholder')}
                         keyboardType={'email-address'}
                         autoComplete={'email'}
                         onChangeText={(text: string) => {
@@ -462,7 +461,7 @@ class MainView extends React.Component {
                         style={styles.loginInput}
                         secureTextEntry={true}
                         autoComplete={'password'}
-                        placeholder={'Password'}
+                        placeholder={t('app.login.forms.password_placeholder')}
                         onChangeText={text => {
                           this.setState({passwordInput: text});
                         }}
@@ -475,7 +474,7 @@ class MainView extends React.Component {
                               currentTheme.foregroundSecondary
                             }
                             style={styles.loginInput}
-                            placeholder={'One-time code'} // /recovery code
+                            placeholder={t('app.login.forms.mfa_placeholder')}
                             onChangeText={text => {
                               this.setState({tfaInput: text});
                             }}
@@ -498,7 +497,9 @@ class MainView extends React.Component {
                       <TextInput
                         placeholderTextColor={currentTheme.foregroundSecondary}
                         style={styles.loginInput}
-                        placeholder={'Token'}
+                        placeholder={t(
+                          'app.login.forms.session_token_placeholder',
+                        )}
                         onChangeText={text => {
                           this.setState({tokenInput: text});
                         }}
@@ -508,7 +509,7 @@ class MainView extends React.Component {
                         link={
                           'https://infi.sh/posts/revolt-tokens?utm_source=rvmob'
                         }
-                        label={'How do I get my token?'}
+                        label={t('app.login.token_info_label')}
                         style={{fontFamily: 'Inter', fontWeight: 'bold'}}
                       />
                       <Button onPress={async () => await loginWithToken(this)}>
@@ -530,7 +531,7 @@ class MainView extends React.Component {
                           fontSize: 18,
                           fontWeight: 'bold',
                         }}>
-                        Do you have an account?
+                        {t('app.login.subheader')}
                       </Text>
                       <Button
                         onPress={() => {
@@ -540,7 +541,7 @@ class MainView extends React.Component {
                         <Text
                           useInter={true}
                           style={{fontSize: 16, fontWeight: 'bold'}}>
-                          Yes, log in with my email and password
+                          {t('app.login.options.login_regular')}
                         </Text>
                       </Button>
                       <Button
@@ -551,7 +552,7 @@ class MainView extends React.Component {
                         <Text
                           useInter={true}
                           style={{fontSize: 16, fontWeight: 'bold'}}>
-                          Yes, log in with a session token
+                          {t('app.login.options.login_session_token')}
                         </Text>
                       </Button>
                       <Button
@@ -567,14 +568,18 @@ class MainView extends React.Component {
                           <Text
                             useInter={true}
                             style={{fontSize: 16, fontWeight: 'bold'}}>
-                            No, sign up
+                            {t('app.login.options.signup')}
                           </Text>
                           <Text useInter={true}>
-                            You'll be redirected to the web app. Once you've
-                            signed up, come back and log in.
+                            {t('app.login.options.signup_body')}
                           </Text>
                         </View>
                       </Button>
+                      <Text colour={currentTheme.foregroundSecondary}>
+                        {t('app.login.instance_notice', {
+                          url: app.settings.get('app.instance'),
+                        })}
+                      </Text>
                     </>
                   )}
                 </View>
