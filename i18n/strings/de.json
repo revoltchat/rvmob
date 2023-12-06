@@ -128,8 +128,19 @@
             "options": {
                 "login_regular": "Ja, logge mit meine E-Mail und meinem Passwort ein",
                 "login_regular_body": "Empfohlen für die meisten Nutzer.",
-                "login_session_token": "Ja, logge mit meinem Session-Tocken ein"
-            }
+                "login_session_token": "Ja, logge mit meinem Session-Tocken ein",
+                "login_session_token_body": "Benutze das hier wenn das normale Loginsystem nicht funktioniert. Einige Funktionen sind vielleicht nicht verfügbar.",
+                "signup": "Nein, melde dich an",
+                "signup_body": "Du wirst zur Web-App weitergeleitet. Sobald du dich angemeldet hast, komm zurück und melde dich an."
+            },
+            "forms": {
+                "email_placeholder": "E-Mail",
+                "password_placeholder": "Passwort",
+                "mfa_placeholder": "Ein-Mal Code",
+                "session_token_placeholder": "Token"
+            },
+            "subheader": "Hast du einen Account?",
+            "token_info_label": "Wie komme ich an mein Token?"
         }
     }
 }
