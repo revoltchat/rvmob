@@ -63,6 +63,18 @@
                     "title": "Anggota"
                 }
             }
+        },
+        "login": {
+            "forms": {
+                "mfa_placeholder": "Kode sekali pakai",
+                "session_token_placeholder": "Token"
+            }
+        },
+        "misc": {
+            "network_indicator": {
+                "body": "Koneksi hilang",
+                "hide": "(sembunyikan)"
+            }
         }
     }
 }
