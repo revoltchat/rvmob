@@ -122,6 +122,25 @@
                 },
                 "general": "Általános"
             }
+        },
+        "login": {
+            "forms": {
+                "email_placeholder": "E-mail",
+                "password_placeholder": "Jelszó",
+                "mfa_placeholder": "Egyszeri kód",
+                "session_token_placeholder": "Token"
+            },
+            "instance_notice": "{{url}} címhez csatlakozol.",
+            "options": {
+                "login_regular": "Igen, az e-mail-címemmel és jelszavammal bejelentkezem",
+                "login_regular_body": "A legtöbb felhasználónak ezt ajánljuk.",
+                "login_session_token": "Igen, munkameneti tokennel bejelentkezem",
+                "login_session_token_body": "Ezt az általános bejelentkezőrendszer gondjai esetén használd. Néhány dolog így lehet, nem lesz elérhető.",
+                "signup": "Nem, regisztrálni akarok",
+                "signup_body": "Átirányítunk a web apphoz, ahol regisztrálhatsz. Miután regisztráltál, jelentkezz be!"
+            },
+            "subheader": "Van már fiókod?",
+            "token_info_label": "Hogyan kapok tokent?"
         }
     }
 }
