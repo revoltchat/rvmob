@@ -122,6 +122,14 @@
                 "body": "Verbindung verloren",
                 "hide": "(verstecken)"
             }
+        },
+        "login": {
+            "instance_notice": "Du bist verbunden mit {{url}}.",
+            "options": {
+                "login_regular": "Ja, logge mit meine E-Mail und meinem Passwort ein",
+                "login_regular_body": "Empfohlen für die meisten Nutzer.",
+                "login_session_token": "Ja, logge mit meinem Session-Tocken ein"
+            }
         }
     }
 }
