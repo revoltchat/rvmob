@@ -59,9 +59,42 @@
                     "name": "Nome de l serbidor",
                     "markdown_tip": "Çcriçones de serbidores suportan formataçon de Markdown.",
                     "description_placeholder": "Adiciona ũa çcriçon…",
-                    "system_messages": "Mensaiges de sistema"
+                    "system_messages": "Mensaiges de sistema",
+                    "errors": {
+                        "empty_server_name": "Nomes de serbidores nun puoden star bazius!"
+                    }
                 },
-                "delete_server": "Apagar Serbidor"
+                "delete_server": "Apagar Serbidor",
+                "channels": {
+                    "title": "Canales"
+                },
+                "roles": {
+                    "title": "Ancarregos",
+                    "rank": "Classeficaçon",
+                    "permissions": "Permissones",
+                    "colour": "Quelor",
+                    "set_colour": "Definir quelor de ancarrego",
+                    "errors": {
+                        "empty_role_name": "Nomes de ancarregos nun puoden star bazius!"
+                    },
+                    "name": "Nome",
+                    "name_placeholder": "Define un nome de ancarrego…"
+                },
+                "emoji": {
+                    "title": "Emoji"
+                },
+                "members": {
+                    "title": "Nembros"
+                },
+                "invites": {
+                    "title": "Cumbites",
+                    "loading": "Apercurando cumbites…",
+                    "empty": "Sien cumbites"
+                },
+                "bans": {
+                    "title": "Banimientos",
+                    "loading": "Apercurando banimientos…"
+                }
             }
         }
     }
