@@ -14,7 +14,8 @@
             "back": "Kembali"
         },
         "loading": {
-            "generic": "Memuat…"
+            "generic": "Memuat…",
+            "connecting": "Memuat akun…"
         },
         "modals": {
             "confirm_deletion": {
@@ -67,7 +68,13 @@
         "login": {
             "forms": {
                 "mfa_placeholder": "Kode sekali pakai",
-                "session_token_placeholder": "Token"
+                "session_token_placeholder": "Token",
+                "email_placeholder": "Email",
+                "password_placeholder": "Sandi"
+            },
+            "options": {
+                "login_regular": "Ya, masuk dengan email dan sandiku",
+                "login_regular_body": "Disarankan untuk mayoritas pengguna."
             }
         },
         "misc": {
