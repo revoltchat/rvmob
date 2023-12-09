@@ -1,1 +1,29 @@
-{}
+{
+    "app": {
+        "actions": {
+            "cancel": "Cancelar",
+            "back": "Atrás",
+            "close": "Cerrar",
+            "delete": "Apagar"
+        },
+        "loading": {
+            "connecting": "Ampeçando sesson…",
+            "generic": "Carregando…"
+        },
+        "login": {
+            "forms": {
+                "password_placeholder": "Palabra-passe",
+                "email_placeholder": "Email",
+                "mfa_placeholder": "Código de ũa-beç",
+                "session_token_placeholder": "Token"
+            },
+            "instance_notice": "Stás conetando a {{url}}.",
+            "options": {
+                "login_regular": "Si, ampeça sesson cul miu email i palabra-passe",
+                "login_regular_body": "Recomendado pa la maiorie de ls outelizadores.",
+                "login_session_token": "Si, ampeçar sesson cun ũa token de sesson",
+                "login_session_token_body": "Outeliza esto se tenes berbicachos cul sistema normal de ampeço de sesson. Algũa funcionalidade puode nun star çponible."
+            }
+        }
+    }
+}
