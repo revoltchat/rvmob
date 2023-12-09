@@ -22,7 +22,46 @@
                 "login_regular": "Si, ampeça sesson cul miu email i palabra-passe",
                 "login_regular_body": "Recomendado pa la maiorie de ls outelizadores.",
                 "login_session_token": "Si, ampeçar sesson cun ũa token de sesson",
-                "login_session_token_body": "Outeliza esto se tenes berbicachos cul sistema normal de ampeço de sesson. Algũa funcionalidade puode nun star çponible."
+                "login_session_token_body": "Outeliza esto se tenes berbicachos cul sistema normal de ampeço de sesson. Algũa funcionalidade puode nun star çponible.",
+                "signup": "Nó, anscrebir-se",
+                "signup_body": "Bais a ser redirecionado pa la app de web. Quando se te anscrebires, bolbe-te i ampeça la tue sesson."
+            },
+            "token_info_label": "Cumo cunsigo ũa token?",
+            "subheader": "Tenes ũa conta?"
+        },
+        "home": {
+            "join_lounge": "Oune-te a la Lounge de l Revolt",
+            "open_lounge": "Abrir la Lounge de l Revolt",
+            "open_rvmob": "Abre l serbidor RVMob",
+            "open_settings": "Abrir definiçones",
+            "description": "Arrastra pula izquierda de l’ecran ó clica l’ícone cun trés lhinhas pa ber ls tous serbidores i mensaiges!",
+            "join_rvmob": "Oune-te al serbidor RVMob"
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_server": "Apagar serbidor?",
+                "body_message": "Stás assegurado que quieres apagar <2>esta mensaige</2>?",
+                "body_server": "Stás assegurado que quieres apagar <2>{{name}}</2>?",
+                "header_message": "Apagar mensaige?",
+                "warning": "Esto nun puode ser çfeito."
+            }
+        },
+        "servers": {
+            "settings": {
+                "general": "General",
+                "customisation": "Customizaçon",
+                "user_management": "Gerenciamiento de Outelizador",
+                "overview": {
+                    "title": "Bison General",
+                    "description": "Çcriçon de l serbidor",
+                    "markdown_tip_link": "Daprende más.",
+                    "set_description": "Define çcriçon",
+                    "name": "Nome de l serbidor",
+                    "markdown_tip": "Çcriçones de serbidores suportan formataçon de Markdown.",
+                    "description_placeholder": "Adiciona ũa çcriçon…",
+                    "system_messages": "Mensaiges de sistema"
+                },
+                "delete_server": "Apagar Serbidor"
             }
         }
     }
