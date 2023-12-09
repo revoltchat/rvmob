@@ -110,6 +110,8 @@
                 "theme": "Theme",
                 "theme_remark": "You'll have to open or close the side menu for your changes to appear everywhere.",
                 "messaging": {
+                    "doubleTapToReply": "Reply to messages by double-tapping them",
+                    "doubleTapToReply_remark": "This is only supported in the new message view.",
                     "emojiPack": "Emoji pack",
                     "experimentalScrolling": "Enable channel scrolling for old message view",
                     "experimentalScrolling_remark": "You can only scroll backwards.",

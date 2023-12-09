@@ -207,6 +207,14 @@ export const app = {
         type: 'boolean',
       },
       {
+        key: 'ui.messaging.doubleTapToReply',
+        category: 'functionality',
+        default: true,
+        type: 'boolean',
+        experimental: true,
+        remark: true,
+      },
+      {
         key: 'ui.messaging.emojiPack',
         category: 'appearance',
         default: 'System',

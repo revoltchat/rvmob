@@ -21,7 +21,16 @@ import {Button, Text} from './components/common/atoms';
 import {Message} from './components/common/messaging';
 import {calculateGrouped, fetchMessages} from './lib/utils';
 
-function renderMessage(msg: RevoltMessage, messages?: RevoltMessage[]) {
+type DoubleTapState = {
+  count: number;
+  message: string;
+};
+
+function renderMessage(
+  msg: RevoltMessage,
+  onPress: (m: RevoltMessage) => void,
+  messages?: RevoltMessage[],
+) {
   let grouped: boolean;
   try {
     grouped = messages
@@ -40,11 +49,44 @@ function renderMessage(msg: RevoltMessage, messages?: RevoltMessage[]) {
       key={`message-${msg._id}`}
       message={msg}
       grouped={grouped}
+      onPress={() => onPress(msg)}
       onUserPress={() => app.openProfile(msg.author, msg.channel?.server)}
       onLongPress={async () => app.openMessage(msg)}
       queued={false}
     />
   );
+}
+
+function handleTap(
+  oldState: DoubleTapState,
+  newMessage: RevoltMessage,
+  setState: (s: DoubleTapState) => void,
+) {
+  if (newMessage._id === oldState.message) {
+    if (oldState.count === 1) {
+      if (app.settings.get('ui.messaging.doubleTapToReply')) {
+        const existingReplies = [...app.getReplyingMessages()];
+        if (
+          existingReplies.filter(m => m.message._id === newMessage._id).length >
+          0
+        ) {
+          setState({count: 0, message: ''});
+          return;
+        }
+        if (existingReplies.length >= 5) {
+          setState({count: 0, message: ''});
+          return;
+        }
+        app.setReplyingMessages([
+          ...existingReplies,
+          {message: newMessage, mentions: false},
+        ]);
+      }
+      setState({count: 0, message: ''});
+    }
+  } else {
+    setState({count: 1, message: newMessage._id});
+  }
 }
 
 function MessageViewErrorMessage({
@@ -80,9 +122,18 @@ export const NewMessageView = observer(
     console.log(`[NEWMESSAGEVIEW] Creating message view for ${channel._id}...`);
     const [messages, setMessages] = React.useState([] as RevoltMessage[]);
     const [loading, setLoading] = React.useState(true);
+    const [doubleTapStatus, setDoubleTapStatus] = React.useState({
+      count: 0,
+      message: '',
+    });
+    // const setDoubleTapStatus = (s: DoubleTapState) => {
+    //   console.log(s);
+    //   _setDoubleTapStatus(s);
+    // };
     const [atEndOfPage, setAtEndOfPage] = React.useState(false);
     const [error, setError] = React.useState(null as any);
     let scrollView: FlatList | null;
+
     React.useEffect(() => {
       console.log(`[NEWMESSAGEVIEW] Fetching messages for ${channel._id}...`);
       async function getMessages() {
@@ -133,8 +184,12 @@ export const NewMessageView = observer(
     });
 
     // set functions here so they don't get recreated
+    const onPress = (m: RevoltMessage) => {
+      handleTap(doubleTapStatus, m, setDoubleTapStatus);
+    };
+
     const renderItem = ({item}: {item: RevoltMessage}) => {
-      return renderMessage(item, messages);
+      return renderMessage(item, onPress, messages);
     };
 
     const keyExtractor = (item: RevoltMessage) => {

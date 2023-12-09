@@ -31,6 +31,7 @@ type MessageProps = {
   queued: boolean;
   onUserPress?: any;
   onUsernamePress?: any;
+  onPress?: any;
   onLongPress?: any;
 };
 
@@ -225,6 +226,11 @@ export const Message = observer((props: MessageProps) => {
         key={props.message._id}
         activeOpacity={0.8}
         delayLongPress={750}
+        onPress={
+          props.message.author?.relationship === 'Blocked'
+            ? null
+            : props.onPress
+        }
         onLongPress={
           props.message.author?.relationship === 'Blocked'
             ? null
