@@ -427,6 +427,7 @@ function refreshStyles() {
     },
     messageBoxBar: {
       padding: 4,
+      paddingVertical: 8,
       borderBottomColor: currentTheme.backgroundPrimary,
       borderBottomWidth: 1,
       flexDirection: 'row',
