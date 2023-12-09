@@ -133,7 +133,10 @@ export const MessageMenuSheet = observer(() => {
             message?.author?.relationship === 'User' ? (
               <ContextButton
                 onPress={() => {
-                  message.delete();
+                  app.openDeletionConfirmationModal({
+                    type: 'Message',
+                    object: message,
+                  });
                   app.openMessage(null);
                 }}>
                 <View style={styles.iconContainer}>

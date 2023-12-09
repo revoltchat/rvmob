@@ -322,7 +322,7 @@ export const Message = observer((props: MessageProps) => {
                     style={{
                       fontSize: 11,
                       position: 'relative',
-                      right: 47,
+                      right: 49,
                       marginBottom: -16,
                     }}>
                     {' '}

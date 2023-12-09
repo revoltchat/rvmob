@@ -62,6 +62,7 @@ export const ConfirmDeletionModal = observer(
                   break;
                 case 'Message':
                   await target.object.delete();
+                  app.openDeletionConfirmationModal(null);
                   break;
                 default:
                   break;
