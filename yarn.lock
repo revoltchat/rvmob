@@ -8351,6 +8351,11 @@ readline@^1.3.0:
   resolved "https://registry.yarnpkg.com/readline/-/readline-1.3.0.tgz#c580d77ef2cfc8752b132498060dc9793a7ac01c"
   integrity sha512-k2d6ACCkiNYz222Fs/iNze30rRJ1iIicW7JuX/7/cozvih6YCkFZH+J6mAFDVgv0dRBaAyr4jDqC95R2y4IADg==
 
+reanimated-color-picker@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/reanimated-color-picker/-/reanimated-color-picker-2.4.1.tgz#b36235db068b5271b8fec58986b777b56d5af553"
+  integrity sha512-BM5uV8QHRMc4e6YWyCOtMNcGN0QMdnpjfV3Cv7CikHksIflJoqnRtT2hGcKp8MNmpc8nKGQhvCeHj5iSYsiC7A==
+
 recast@^0.20.4:
   version "0.20.5"
   resolved "https://registry.yarnpkg.com/recast/-/recast-0.20.5.tgz#8e2c6c96827a1b339c634dd232957d230553ceae"

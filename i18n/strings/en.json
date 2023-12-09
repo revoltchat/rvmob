@@ -70,9 +70,16 @@
                 },
                 "roles": {
                     "title": "Roles",
+                    "name": "Name",
+                    "name_placeholder": "Set a role name…",
                     "rank": "Rank",
                     "permissions": "Permissions",
-                    "colour": "Colour"
+                    "colour": "Colour",
+                    "set_colour": "Set role colour",
+                    "errors": {
+                        "empty_role_name": "Role names cannot be empty!"
+                    }
+
                 },
                 "emoji": {
                     "title": "Emoji"
