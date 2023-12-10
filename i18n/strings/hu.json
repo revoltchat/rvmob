@@ -57,7 +57,9 @@
                     "use24H": "24 órás időbélyeg",
                     "useNewMessageView": "Új üzenetek nézete",
                     "fontSize_remark": "A megváltoztatása csak az üzeneteknél és az app egyes részeinél jelenik majd meg.",
-                    "showReactions_remark": "A létező reagálásokra te is reagálhatsz, de újakat még nem tudsz csinálni."
+                    "showReactions_remark": "A létező reagálásokra te is reagálhatsz, de újakat még nem tudsz csinálni.",
+                    "doubleTapToReply": "Kétszer rákoppintva válaszolsz az üzenetre",
+                    "doubleTapToReply_remark": "Ez csak az új üzenetek nézetében működik."
                 },
                 "settings": {
                     "showExperimental": "Kísérleti lehetőségek mutatása"
@@ -101,7 +103,13 @@
                     "title": "Titulusok",
                     "rank": "Rang",
                     "permissions": "Engedélyek",
-                    "colour": "Szín"
+                    "colour": "Szín",
+                    "name_placeholder": "A titulus pedig…",
+                    "set_colour": "Színe",
+                    "name": "Titulus",
+                    "errors": {
+                        "empty_role_name": "A titulus nem maradhat üresen!"
+                    }
                 },
                 "emoji": {
                     "title": "Emodzsi"
