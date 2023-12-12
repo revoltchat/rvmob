@@ -37,7 +37,13 @@
                     "title": "Rollen",
                     "rank": "Rang",
                     "colour": "Farbe",
-                    "permissions": "Erlaubnis"
+                    "permissions": "Erlaubnis",
+                    "errors": {
+                        "empty_role_name": "Du musst der Rolle einen Namen geben!"
+                    },
+                    "name": "Name",
+                    "name_placeholder": "Bestimme einen Namen für die Rolle…",
+                    "set_colour": "Bestimme eine Farbe für die Rolle"
                 },
                 "emoji": {
                     "title": "Emoji"
@@ -78,7 +84,9 @@
                     "showReactions_remark": "Du kannst bereits bestehende Reaktionen hinzufügen, aber keine neuen.",
                     "showSelfInTypingIndicator": "Zeigen dich im Tippindikator",
                     "use24H": "Verwende den 24-Stunden-Zeitstempel",
-                    "useNewMessageView": "Neue Nachrichtenansicht verwenden"
+                    "useNewMessageView": "Neue Nachrichtenansicht verwenden",
+                    "doubleTapToReply": "Antworte einer Nachricht, indem du sie doppelt antippst",
+                    "doubleTapToReply_remark": "Dies wird nur in der neuen Nachrichtenansicht unterstützt."
                 },
                 "home": {
                     "holidays": "Feiertage auf der Startseite anzeigen"
