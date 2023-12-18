@@ -93,8 +93,61 @@
                 },
                 "bans": {
                     "title": "Banimientos",
-                    "loading": "Apercurando banimientos…"
+                    "loading": "Apercurando banimientos…",
+                    "empty": "Nun hai bans",
+                    "no_reason": "Ningũa rezon oufrecida"
                 }
+            }
+        },
+        "settings": {
+            "ui": {
+                "theme_remark": "Tenerás que abrir ó cerrar l sidemenu pa tues demudanças apareceren an to l lhado.",
+                "messaging": {
+                    "emojiPack": "Pack de emojis",
+                    "doubleTapToReply": "Arrespunde a mensaiges por fazer clique-doble neilhas",
+                    "experimentalScrolling_remark": "Solo puodes fazer scroll alrobés.",
+                    "sendAttachments": "Atibar ambio de aneixos",
+                    "messageSpacing": "Spácio de mensaiges",
+                    "doubleTapToReply_remark": "Esto solo ye suportado na nuoba bisualizaçon de mensaiges.",
+                    "experimentalScrolling": "Atibar scrolling de canales pa l’antiga bisualizaçon de mensaiges",
+                    "fontSize": "Tamanho de fontes",
+                    "showMasqAvatar": "Amostrar avatar cun maçcarielha ne l canto",
+                    "showReactions": "Amostrar reaçones ambaixo de mensaiges",
+                    "showSelfInTypingIndicator": "Se me amostrar ne l’andicador de digitaçon",
+                    "statusInChatAvatars": "Amostrar stado de outelizadores ne ls avatares de chat",
+                    "use24H": "Ousar carimbos temporales de 24 horas",
+                    "useNewMessageView": "Ousar nuoba bisualizaçon de mensaiges",
+                    "fontSize_remark": "Esto solo bai a aplicar-se a mensaiges i algũas partes de l’app.",
+                    "showNSFWContent": "Cunsentimiento a cuntenido 18+",
+                    "showReactions_remark": "Puodes adicionar a reaçones yá eisistentes, mas inda nun puodes poner nuobas."
+                },
+                "showDeveloperFeatures": "Amostrar ferramientas de zambolbedor",
+                "home": {
+                    "holidays": "Amostrar feriados na páigina percipal"
+                },
+                "theme": "Tema",
+                "settings": {
+                    "showExperimental": "Amostrar recursos spormentales"
+                }
+            },
+            "app": {
+                "language": "Seleciona tue lhéngua",
+                "refetchOnReconnect": "Apercurar mensaiges quando reconetando",
+                "notifications": {
+                    "notifyOnSelfPing": "Recibe ũa notificaçon quando se te amentas a ti",
+                    "enabled": "Atibar notificaçones push"
+                },
+                "showChangelogs": "Amostrar changelogs açpuis de atualizar l RVMob"
+            }
+        },
+        "misc": {
+            "voice": {
+                "header": "Canales de boç inda nun son suportados an RVMob!",
+                "body": "Ne l’antretiempo, puodes ounir-te a eilhes pula app de web ó Revolt pa Desktop."
+            },
+            "network_indicator": {
+                "body": "Coneçon perdida",
+                "hide": "(scunder)"
             }
         }
     }
