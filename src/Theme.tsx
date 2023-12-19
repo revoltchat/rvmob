@@ -129,7 +129,6 @@ export const themes = {
   },
 };
 export var currentTheme = themes['Dark'];
-export var currentThemeName = 'Dark';
 
 export var styles: any;
 function refreshStyles() {
@@ -481,7 +480,6 @@ function refreshStyles() {
   });
 }
 export function setTheme(themeName: string) {
-  currentThemeName = themeName;
   currentTheme = themes[themeName] ?? themes.Dark;
   refreshStyles();
 }

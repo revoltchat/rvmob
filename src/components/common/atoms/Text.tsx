@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactNative from 'react-native';
+import {Text as NativeText} from 'react-native';
 
 import {currentTheme, styles} from '../../../Theme';
 
@@ -40,5 +40,5 @@ export const Text = (props: any) => {
     },
     newProps.style,
   );
-  return <ReactNative.Text {...newProps}>{newProps.children}</ReactNative.Text>;
+  return <NativeText {...newProps}>{newProps.children}</NativeText>;
 };

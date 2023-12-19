@@ -80,7 +80,7 @@ export const DISCOVER_URL = 'rvlt.gg/discover';
 // link to the revolt wiki, per above
 export const WIKI_URL = 'wiki.rvlt.gg';
 
-export type SpecialDateObject = {
+type SpecialDateObject = {
   name: string;
   key: string;
   emoji: string;

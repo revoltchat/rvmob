@@ -5,7 +5,11 @@ import {observer} from 'mobx-react-lite';
 
 import Clipboard from '@react-native-clipboard/clipboard';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import ColourPicker, {HueCircular, OpacitySlider, Panel1} from 'reanimated-color-picker';
+import ColourPicker, {
+  HueCircular,
+  OpacitySlider,
+  Panel1,
+} from 'reanimated-color-picker';
 
 import {Server} from 'revolt.js';
 

@@ -331,7 +331,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
   );
 });
 
-export const AttachmentsBar = observer(
+const AttachmentsBar = observer(
   ({
     attachments,
     setAttachments,
@@ -405,7 +405,7 @@ export const AttachmentsBar = observer(
   },
 );
 
-export const TypingIndicator = observer(({channel}: {channel: Channel}) => {
+const TypingIndicator = observer(({channel}: {channel: Channel}) => {
   if (channel) {
     let users = channel.typing?.filter(entry => !!entry) || undefined;
     !app.settings.get('ui.messaging.showSelfInTypingIndicator') &&
