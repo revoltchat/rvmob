@@ -22,18 +22,26 @@
                 "header_message": "Hapus pesan?",
                 "header_server": "Hapus server?",
                 "body_server": "Apa kamu yakin ingin menghapus <2>{{name}}</2>?",
-                "body_message": "Apa kamu yakin ingin menghapus <2>pesan ini</2>?"
+                "body_message": "Apa kamu yakin ingin menghapus <2>pesan ini</2>?",
+                "warning": "Tindakan ini tidak dapat dibatalkan."
             }
         },
         "settings": {
             "app": {
                 "language": "Pilih bahasamu",
                 "notifications": {
-                    "enabled": "Aktifkan notifikasi push"
+                    "enabled": "Aktifkan notifikasi push",
+                    "notifyOnSelfPing": "Terima notifikasi ketika kamu mem-ping diri sendiri"
                 }
             },
             "ui": {
-                "theme": "Tema"
+                "theme": "Tema",
+                "messaging": {
+                    "doubleTapToReply_remark": "Fitur ini hanya tersedia pada tampilan pesan yang baru.",
+                    "doubleTapToReply": "Balas dengan mengetuk dua kali pada pesan",
+                    "sendAttachments": "Aktifkan pengiriman lampiran",
+                    "fontSize": "Ukuran teks"
+                }
             }
         },
         "servers": {
@@ -47,7 +55,9 @@
                     "system_messages": "Pesan sistem",
                     "errors": {
                         "empty_server_name": "Nama server tidak boleh kosong!"
-                    }
+                    },
+                    "markdown_tip": "Teks deskripsi server mendukung format Markdown.",
+                    "markdown_tip_link": "Ketahui selengkapnya."
                 },
                 "general": "Umum",
                 "delete_server": "Hapus Server",
@@ -55,13 +65,21 @@
                     "title": "Saluran"
                 },
                 "roles": {
-                    "colour": "Warna"
+                    "colour": "Warna",
+                    "name": "Nama",
+                    "permissions": "Izin"
                 },
                 "emoji": {
                     "title": "Emoji"
                 },
                 "members": {
                     "title": "Anggota"
+                },
+                "user_management": "Manajemen Pengguna",
+                "invites": {
+                    "loading": "Memuat undangan…",
+                    "empty": "Tidak ada undangan",
+                    "title": "Undangan"
                 }
             }
         },
@@ -73,14 +91,25 @@
                 "password_placeholder": "Sandi"
             },
             "options": {
-                "login_regular": "Ya, masuk dengan email dan sandiku",
-                "login_regular_body": "Disarankan untuk mayoritas pengguna."
-            }
+                "login_regular": "Sudah, masuk dengan email dan sandiku",
+                "login_regular_body": "Disarankan untuk mayoritas pengguna.",
+                "signup_body": "Kamu akan diarahkan ke web app Revolt. Setelah mendaftar, kembali dan masuk ke akunmu.",
+                "signup": "Belum, daftarkan",
+                "login_session_token": "Sudah, masuk menggunakan token sesi",
+                "login_session_token_body": "Gunakan metode ini apabila kamu mengalami kendala dengan sistem masuk akun biasa. Sejumlah fungsi mungkin tidak tersedia."
+            },
+            "instance_notice": "Kamu sedang masuk akun di {{url}}.",
+            "token_info_label": "Bagaimana cara mendapatkan token?",
+            "subheader": "Apa kamu sudah memiliki akun?"
         },
         "misc": {
             "network_indicator": {
                 "body": "Koneksi hilang",
                 "hide": "(sembunyikan)"
+            },
+            "voice": {
+                "body": "Kamu bisa bergabung melalui web app atau Revolt Desktop untuk sementara.",
+                "header": "Saluran suara belum didukung RVMob!"
             }
         }
     }
