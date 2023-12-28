@@ -15,6 +15,7 @@ import {withTranslation} from 'react-i18next';
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import notifee, {EventType} from '@notifee/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Clipboard from '@react-native-clipboard/clipboard';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import SideMenuBase from '@rexovolt/react-native-side-menu';
@@ -606,11 +607,9 @@ function ErrorMessage({
 }) {
   console.error(`[APP] Uncaught error: ${error}`);
   return (
-    <>
+    <View style={{flex: 1, padding: 16, justifyContent: 'center'}}>
       <Text
         style={{
-          flex: 1,
-          padding: 15,
           alignItems: 'center',
           justifyContent: 'center',
           textAlign: 'center',
@@ -620,17 +619,33 @@ function ErrorMessage({
         </Text>
         We made a fucky wucky!! A wittle fucko boingo! The code monkeys at our
         headquarters are working VEWY HAWD to fix this! {'>w<\n\n'}
-        <Text style={{color: '#ff5555', fontWeight: 'regular'}}>
+        On a more serious note, please let us know that you experienced the
+        following error:
+      </Text>
+      <View
+        style={{
+          backgroundColor: currentTheme.background,
+          borderRadius: 8,
+          marginVertical: 16,
+          padding: 16,
+        }}>
+        <Text font={'JetBrains Mono'} colour={'#ff5555'}>
           {error.toString()}
         </Text>
-      </Text>
+      </View>
+      <Button
+        onPress={() => {
+          Clipboard.setString(error.toString());
+        }}>
+        <Text>Copy error message</Text>
+      </Button>
       <Button
         onPress={() => {
           resetErrorBoundary();
         }}>
         <Text>Reload app</Text>
       </Button>
-    </>
+    </View>
   );
 }
 
