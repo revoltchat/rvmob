@@ -12,12 +12,12 @@ import {
 import {ErrorBoundary} from 'react-error-boundary';
 import {withTranslation} from 'react-i18next';
 
-import SideMenuBase from '@rexovolt/react-native-side-menu';
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import notifee, {EventType} from '@notifee/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import SideMenuBase from '@rexovolt/react-native-side-menu';
 
 import {Channel, Server} from 'revolt.js';
 
@@ -467,7 +467,7 @@ class MainView extends React.Component {
                         </>
                       ) : null}
                       <Button onPress={async () => await loginRegular(this)}>
-                        <Text useInter={true}>Log in</Text>
+                        <Text font={'Inter'}>Log in</Text>
                       </Button>
                       {this.state.logInError ? (
                         <Text>
@@ -497,7 +497,7 @@ class MainView extends React.Component {
                         style={{fontFamily: 'Inter', fontWeight: 'bold'}}
                       />
                       <Button onPress={async () => await loginWithToken(this)}>
-                        <Text useInter={true}>Log in</Text>
+                        <Text font={'Inter'}>Log in</Text>
                       </Button>
                       {this.state.logInError ? (
                         <Text>
@@ -509,7 +509,7 @@ class MainView extends React.Component {
                   ) : (
                     <>
                       <Text
-                        useInter={true}
+                        font={'Inter'}
                         style={{
                           marginVertical: 8,
                           fontSize: 18,
@@ -523,7 +523,7 @@ class MainView extends React.Component {
                         }}
                         style={{alignItems: 'center', width: '80%'}}>
                         <Text
-                          useInter={true}
+                          font={'Inter'}
                           style={{fontSize: 16, fontWeight: 'bold'}}>
                           {t('app.login.options.login_regular')}
                         </Text>
@@ -534,7 +534,7 @@ class MainView extends React.Component {
                         }}
                         style={{alignItems: 'center', width: '80%'}}>
                         <Text
-                          useInter={true}
+                          font={'Inter'}
                           style={{fontSize: 16, fontWeight: 'bold'}}>
                           {t('app.login.options.login_session_token')}
                         </Text>
@@ -550,16 +550,18 @@ class MainView extends React.Component {
                         style={{width: '80%'}}>
                         <View style={{alignItems: 'center'}}>
                           <Text
-                            useInter={true}
+                            font={'Inter'}
                             style={{fontSize: 16, fontWeight: 'bold'}}>
                             {t('app.login.options.signup')}
                           </Text>
-                          <Text useInter={true}>
+                          <Text font={'Inter'}>
                             {t('app.login.options.signup_body')}
                           </Text>
                         </View>
                       </Button>
-                      <Text colour={currentTheme.foregroundSecondary}>
+                      <Text
+                        font={'Inter'}
+                        colour={currentTheme.foregroundSecondary}>
                         {t('app.login.instance_notice', {
                           url: app.settings.get('app.instance'),
                         })}
