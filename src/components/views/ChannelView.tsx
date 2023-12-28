@@ -1,8 +1,9 @@
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
+import {ErrorBoundary} from 'react-error-boundary';
 import {observer} from 'mobx-react-lite';
 
-import {ErrorBoundary} from 'react-error-boundary';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Channel} from 'revolt.js';
@@ -12,7 +13,7 @@ import {Messages} from '@rvmob/LegacyMessageView';
 import {NewMessageView} from '@rvmob/MessageView';
 import {MessageBox} from '@rvmob/MessageBox';
 import {currentTheme, styles} from '@rvmob/Theme';
-import {Button, Text} from '@rvmob/components/common/atoms';
+import {Button, InputWithButton, Text} from '@rvmob/components/common/atoms';
 import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
 import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
 import {FriendsPage} from '@rvmob/components/pages/FriendsPage';
@@ -46,6 +47,12 @@ export const ChannelView = observer(
   ({state, channel}: {state: any; channel: CVChannel}) => {
     const handledMessages = [] as string[];
 
+    const pluginTools = {
+      state,
+      saveData: AsyncStorage.setItem,
+      getData: AsyncStorage.getItem,
+    };
+
     console.log(
       `[CHANNELVIEW] Rendering channel view for ${
         channel instanceof Channel ? channel._id : channel
@@ -65,7 +72,20 @@ export const ChannelView = observer(
                 </View>
                 <Text style={styles.channelName}>Debug Menu</Text>
               </ChannelHeader>
-              <Text>tbd</Text>
+              <Text type={'h1'}>howdy</Text>
+              <Button onPress={() => console.log(state.state)}>
+                <Text>Log State</Text>
+              </Button>
+              <Text type={'h2'}>testing</Text>
+              <InputWithButton
+                // @ts-expect-error passed to input component
+                multiline
+                buttonContents={{type: 'string', content: 'sussy'}}
+                onPress={(v: string) => {
+                  // eslint-disable-next-line no-new-func
+                  new Function('tools', `${v}`)(pluginTools);
+                }}
+              />
             </View>
           ) : (
             <View style={styles.flex}>

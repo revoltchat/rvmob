@@ -3,18 +3,15 @@ import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {app} from '../../../Generic';
-import {Text} from '../atoms';
 import {BoolSetting, StringNumberSetting} from './atoms';
 
 export const SettingsCategory = observer(
   ({
     category,
-    friendlyName,
     renderCount,
     rerender,
   }: {
     category: string;
-    friendlyName: string;
     renderCount: number;
     rerender: Function;
   }) => {
@@ -28,9 +25,6 @@ export const SettingsCategory = observer(
 
     return (
       <View key={`settings-category-${category}`}>
-        <Text key={`settings-category-${category}-header`} type={'header'}>
-          {friendlyName}
-        </Text>
         {app.settings.list.map(sRaw => {
           try {
             if (

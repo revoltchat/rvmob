@@ -1,5 +1,6 @@
 import React from 'react';
 import {Pressable, ScrollView, View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,7 +15,13 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import AppInfo from '../../../package.json';
-import {app, client} from '../../Generic';
+import {app, client, openUrl} from '../../Generic';
+import {
+  CONTRIBUTORS_LIST,
+  FEDI_PROFILE,
+  GITHUB_REPO,
+  OPEN_ISSUES,
+} from '@rvmob/lib/consts';
 import {SettingsSection} from '../../lib/types';
 import {currentTheme, styles} from '../../Theme';
 import {BackButton, ContextButton, Link, Text} from '../common/atoms';
@@ -51,6 +58,8 @@ function copyDebugInfoWrapper() {
 }
 
 export const SettingsSheet = observer(({setState}: {setState: Function}) => {
+  const {t} = useTranslation();
+
   const [renderCount, rerender] = React.useState(0);
   const [section, setSection] = React.useState(null as SettingsSection);
 
@@ -92,13 +101,23 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
       ) : (
         <BackButton callback={() => setSection(null)} margin />
       )}
+      {section !== null ? (
+        <Text type={'h1'}>{t(`app.settings_menu.${section}.title`)}</Text>
+      ) : null}
       <ScrollView
         style={{flex: 1}}
+        contentContainerStyle={
+          section === 'info'
+            ? {
+                flex: 1,
+              }
+            : null
+        }
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
         {section == null ? (
           <>
-            <Text type={'header'}>Account</Text>
+            <Text type={'header'}>{t('app.settings_menu.groups.user')}</Text>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}
@@ -109,10 +128,10 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                 <MaterialIcon
                   name={'person'}
                   color={currentTheme.foregroundPrimary}
-                  size={25}
+                  size={24}
                 />
               </View>
-              <Text>Account</Text>
+              <Text>{t('app.settings_menu.account.title')}</Text>
             </ContextButton>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
@@ -124,12 +143,12 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                 <MaterialCommunityIcon
                   name={'card-account-details'}
                   color={currentTheme.foregroundPrimary}
-                  size={25}
+                  size={24}
                 />
               </View>
-              <Text>Profile</Text>
+              <Text>{t('app.settings_menu.profile.title')}</Text>
             </ContextButton>
-            <Text type={'header'}>App</Text>
+            <Text type={'header'}>{t('app.settings_menu.groups.app')}</Text>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}
@@ -140,10 +159,10 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                 <MaterialIcon
                   name={'palette'}
                   color={currentTheme.foregroundPrimary}
-                  size={25}
+                  size={24}
                 />
               </View>
-              <Text>Appearance</Text>
+              <Text>{t('app.settings_menu.appearance.title')}</Text>
             </ContextButton>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
@@ -155,10 +174,10 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                 <MaterialIcon
                   name={'build'}
                   color={currentTheme.foregroundPrimary}
-                  size={20}
+                  size={24}
                 />
               </View>
-              <Text>Features</Text>
+              <Text>{t('app.settings_menu.functionality.title')}</Text>
             </ContextButton>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
@@ -170,12 +189,14 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                 <MaterialIcon
                   name={'translate'}
                   color={currentTheme.foregroundPrimary}
-                  size={20}
+                  size={24}
                 />
               </View>
               <Text>Language</Text>
             </ContextButton>
-            <Text type={'header'}>Advanced</Text>
+            <Text type={'header'}>
+              {t('app.settings_menu.groups.advanced')}
+            </Text>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}
@@ -186,13 +207,14 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                 <MaterialIcon
                   name={'bug-report'}
                   color={currentTheme.foregroundPrimary}
-                  size={25}
+                  size={24}
                 />
               </View>
-              <Text>Copy Debug Info</Text>
+              <Text>{t('app.settings_menu.other.debug_info')}</Text>
             </ContextButton>
+            <Text type={'header'}>{t('app.settings_menu.groups.other')}</Text>
             <ContextButton
-              style={{flex: 1, marginTop: 10}}
+              style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}
               onPress={() => {
                 setSection('info');
@@ -201,13 +223,28 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                 <MaterialIcon
                   name={'info'}
                   color={currentTheme.foregroundPrimary}
-                  size={20}
+                  size={24}
                 />
               </View>
-              <Text>About RVMob</Text>
+              <Text>{t('app.settings_menu.info.title')}</Text>
             </ContextButton>
             <ContextButton
-              style={{flex: 1, marginTop: 10}}
+              style={{flex: 1, marginBottom: 10}}
+              backgroundColor={currentTheme.backgroundSecondary}
+              onPress={() => {
+                openUrl(OPEN_ISSUES);
+              }}>
+              <View style={styles.iconContainer}>
+                <MaterialCommunityIcon
+                  name={'github'}
+                  color={currentTheme.foregroundPrimary}
+                  size={24}
+                />
+              </View>
+              <Text>{t('app.settings_menu.other.view_issues')}</Text>
+            </ContextButton>
+            <ContextButton
+              style={{flex: 1}}
               backgroundColor={currentTheme.error}
               onPress={() => {
                 setState();
@@ -217,36 +254,32 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                 <MaterialIcon
                   name={'logout'}
                   color={currentTheme.foregroundPrimary}
-                  size={20}
+                  size={24}
                 />
               </View>
-              <Text>Log Out</Text>
+              <Text>{t('app.settings_menu.other.logout')}</Text>
             </ContextButton>
           </>
         ) : section === 'appearance' ? (
           <SettingsCategory
             category={'appearance'}
-            friendlyName={'Appearance'}
             renderCount={renderCount}
             rerender={rerender}
           />
         ) : section === 'functionality' ? (
           <SettingsCategory
             category={'functionality'}
-            friendlyName={'Features'}
             renderCount={renderCount}
             rerender={rerender}
           />
         ) : section === 'i18n' ? (
           <SettingsCategory
             category={'i18n'}
-            friendlyName={'Language'}
             renderCount={renderCount}
             rerender={rerender}
           />
         ) : section === 'account' ? (
           <View>
-            <Text type={'header'}>Account</Text>
             <View style={styles.settingsEntry} key={'username-settings'}>
               <View style={{flex: 1, flexDirection: 'column'}}>
                 <Text key={'username-label'} style={{fontWeight: 'bold'}}>
@@ -450,7 +483,6 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
           </View>
         ) : section === 'profile' ? (
           <View>
-            <Text type={'header'}>Profile</Text>
             <View style={styles.settingsEntry} key={'display-name-settings'}>
               <View style={{flex: 1, flexDirection: 'column'}}>
                 <Text key={'display-name-label'} style={{fontWeight: 'bold'}}>
@@ -513,16 +545,17 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
             </View>
           </View>
         ) : section === 'info' ? (
-          <>
-            <Text type={'h1'}>About</Text>
-            <View
-              style={{
-                alignItems: 'center',
-              }}>
-              <View style={{alignItems: 'center'}}>
-                <AppIcon height={250} width={250} style={{marginVertical: 4}} />
-                <Text type={'header'}>RVMob v{app.version}</Text>
-              </View>
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <View style={{alignItems: 'center'}}>
+              <AppIcon height={250} width={250} />
+            </View>
+            <View style={{alignItems: 'center', marginVertical: 16}}>
+              <Text type={'header'}>RVMob v{app.version}</Text>
               <View style={{flexDirection: 'row'}}>
                 <Text>Powered by </Text>
                 <Link link={'https://reactnative.dev'} label={'React Native'} />
@@ -558,39 +591,49 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                   label={'Rexogamer'}
                 />
                 <Text> and </Text>
-                <Link
-                  link={
-                    'https://github.com/revoltchat/rvmob/graphs/contributors'
-                  }
-                  label={'other contributors'}
-                />
+                <Link link={CONTRIBUTORS_LIST} label={'other contributors'} />
               </View>
               <View style={{flexDirection: 'row'}}>
                 <Text>Licensed under the </Text>
                 <Link
-                  link={
-                    'https://github.com/revoltchat/rvmob/blob/master/LICENSE'
-                  }
+                  link={`${GITHUB_REPO}/blob/master/LICENSE`}
                   label={'GNU GPL v3.0'}
                 />
               </View>
             </View>
-          </>
+            <View style={{flexDirection: 'row', marginBottom: 16}}>
+              <Pressable
+                onPress={() => openUrl(GITHUB_REPO)}
+                style={{marginEnd: 16}}>
+                <MaterialCommunityIcon
+                  name={'github'}
+                  color={currentTheme.foregroundPrimary}
+                  size={60}
+                />
+              </Pressable>
+              <Pressable
+                onPress={() => openUrl(FEDI_PROFILE)}
+                style={{marginStart: 16}}>
+                <MaterialCommunityIcon
+                  name={'mastodon'}
+                  color={currentTheme.foregroundPrimary}
+                  size={60}
+                />
+              </Pressable>
+            </View>
+            <ContextButton
+              backgroundColor={currentTheme.error}
+              style={{
+                justifyContent: 'center',
+              }}
+              onPress={() => {
+                app.settings.clear();
+              }}>
+              <Text>Reset Settings</Text>
+            </ContextButton>
+          </View>
         ) : null}
       </ScrollView>
-      {section === 'info' ? (
-        <ContextButton
-          backgroundColor={currentTheme.error}
-          style={{
-            justifyContent: 'center',
-            bottom: 10,
-          }}
-          onPress={() => {
-            app.settings.clear();
-          }}>
-          <Text>Reset Settings</Text>
-        </ContextButton>
-      ) : null}
     </View>
   );
 });

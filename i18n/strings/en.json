@@ -149,6 +149,37 @@
                 "showDeveloperFeatures": "Show developer tools"
             }
         },
+        "settings_menu": {
+            "account": {
+                "title": "Account"
+            },
+            "appearance": {
+                "title": "Appearance"
+            },
+            "functionality": {
+                "title": "Features"
+            },
+            "groups": {
+                "advanced": "Advanced",
+                "app": "App",
+                "other": "Other",
+                "user": "User"
+            },
+            "i18n": {
+                "title": "Language"
+            },
+            "info": {
+                "title": "About RVMob"
+            },
+            "other": {
+                "debug_info": "Copy Debug Info",
+                "view_issues": "View Open Issues",
+                "logout": "Log Out"
+            },
+            "profile": {
+                "title": "Profile"
+            }
+        },
         "misc": {
             "network_indicator": {
                 "body": "Connection lost",
