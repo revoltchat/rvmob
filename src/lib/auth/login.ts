@@ -52,8 +52,13 @@ export async function loginRegular(state: any) {
           await client.useExistingSession({
             token: token,
           });
-          await AsyncStorage.setItem('token', token);
-          console.log('[AUTH] Successfuly logged in and saved the token!');
+          await AsyncStorage.multiSet([
+            ['token', token],
+            ['sessionID', session._id],
+          ]);
+          console.log(
+            '[AUTH] Successfuly logged in and saved the token/session ID!',
+          );
           state.setState({
             status: 'loggedIn',
             tokenInput: '',
@@ -72,8 +77,13 @@ export async function loginRegular(state: any) {
       const token = session.token;
       console.log('[AUTH] Logging in with a new token...');
       await client.useExistingSession({token: token});
-      await AsyncStorage.setItem('token', token);
-      console.log('[AUTH] Successfuly logged in and saved the token!');
+      await AsyncStorage.multiSet([
+        ['token', token],
+        ['sessionID', session._id],
+      ]);
+      console.log(
+        '[AUTH] Successfuly logged in and saved the token/session ID!',
+      );
       state.setState({
         status: 'loggedIn',
         tokenInput: '',
