@@ -91,7 +91,10 @@ class MainView extends React.Component {
       console.log(
         `[AUTH] Logging out of current session... (user: ${client.user?._id})`,
       );
-      AsyncStorage.setItem('token', '');
+      AsyncStorage.multiSet([
+        ['token', ''],
+        ['sessionID', ''],
+      ]);
       client.logout();
       this.setState({status: 'awaitingLogin'});
     });
