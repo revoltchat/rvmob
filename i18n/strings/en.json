@@ -4,7 +4,9 @@
             "back": "Back",
             "cancel": "Cancel",
             "close": "Close",
-            "delete": "Delete"
+            "confirm": "Confirm",
+            "delete": "Delete",
+            "save": "Save"
         },
         "loading": {
             "generic": "Loading…",
@@ -44,6 +46,12 @@
                 "body_message": "Are you sure you want to delete <2>this message</2>?",
                 "body_server": "Are you sure you want to delete <2>{{name}}</2>?",
                 "warning": "This cannot be undone."
+            },
+            "edit_text": {
+                "display_name_header": "Set display name",
+                "display_name_placeholder": "Display name",
+                "session_name_header": "Set session name",
+                "session_name_placeholder": "Session name"
             }
         },
         "servers": {

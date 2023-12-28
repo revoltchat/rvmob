@@ -10,6 +10,7 @@ import {
   getBundleId,
   getDevice,
 } from 'react-native-device-info';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import AppInfo from '../../../package.json';
@@ -57,6 +58,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
     email: '',
     mfaEnabled: false,
     sessions: [] as {_id: string; name: string}[],
+    sessionID: '' as string | null,
   });
   const [showEmail, setShowEmail] = React.useState(false);
 
@@ -65,10 +67,12 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
       const e = await client.api.get('/auth/account/');
       const m = await client.api.get('/auth/mfa/');
       const s = await client.api.get('/auth/session/all');
+      const i = await AsyncStorage.getItem('sessionID');
       setAuthInfo({
         email: e.email,
         mfaEnabled: m.totp_mfa ?? m.security_key_mfa ?? false,
         sessions: s,
+        sessionID: i,
       });
     }
     getAuthInfo();
@@ -109,6 +113,21 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                 />
               </View>
               <Text>Account</Text>
+            </ContextButton>
+            <ContextButton
+              style={{flex: 1, marginBottom: 10}}
+              backgroundColor={currentTheme.backgroundSecondary}
+              onPress={() => {
+                setSection('profile');
+              }}>
+              <View style={styles.iconContainer}>
+                <MaterialCommunityIcon
+                  name={'card-account-details'}
+                  color={currentTheme.foregroundPrimary}
+                  size={25}
+                />
+              </View>
+              <Text>Profile</Text>
             </ContextButton>
             <Text type={'header'}>App</Text>
             <ContextButton
@@ -233,7 +252,12 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                 <Text key={'username-label'} style={{fontWeight: 'bold'}}>
                   Username{' '}
                 </Text>
-                <Text key={'username'}>{client.user?.username}</Text>
+                <Text key={'username'}>
+                  {client.user?.username}
+                  <Text colour={currentTheme.foregroundSecondary}>
+                    #{client.user?.discriminator}
+                  </Text>
+                </Text>
               </View>
               <Pressable
                 style={{
@@ -253,7 +277,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                   />
                 </View>
               </Pressable>
-              <Pressable
+              {/* <Pressable
                 style={{
                   width: 30,
                   height: 20,
@@ -268,7 +292,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                     color={currentTheme.foregroundPrimary}
                   />
                 </View>
-              </Pressable>
+              </Pressable> */}
             </View>
             <View style={styles.settingsEntry} key={'email-settings'}>
               <View style={{flex: 1, flexDirection: 'column'}}>
@@ -315,7 +339,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                   />
                 </View>
               </Pressable>
-              <Pressable
+              {/* <Pressable
                 style={{
                   width: 30,
                   height: 20,
@@ -330,7 +354,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                     color={currentTheme.foregroundPrimary}
                   />
                 </View>
-              </Pressable>
+              </Pressable> */}
             </View>
             <GapView size={4} />
             <Text type={'h1'}>Multi-factor authentication</Text>
@@ -341,6 +365,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               Make your account more secure by enabling multi-factor
               authentication (MFA).
             </Text>
+            <GapView size={2} />
             <Text type={'h2'}>Status</Text>
             <Text>
               MFA is currently {authInfo.mfaEnabled ? 'enabled' : 'disabled'}.
@@ -362,6 +387,11 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                     {s.name} {s.name.match(/RVMob/) ? '✨' : ''}
                   </Text>
                   <Text key={`sessions-${s._id}-id`}>{s._id}</Text>
+                  {authInfo.sessionID === s._id ? (
+                    <Text colour={currentTheme.foregroundSecondary}>
+                      Current session
+                    </Text>
+                  ) : null}
                 </View>
                 <Pressable
                   style={{
@@ -370,25 +400,117 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}
-                  onPress={async () => {
-                    await client.api.delete(`/auth/session/${s._id}`);
-                    setAuthInfo({
-                      ...authInfo,
-                      sessions: authInfo.sessions.filter(
-                        ses => ses._id !== s._id,
-                      ),
+                  onPress={() => {
+                    app.openTextEditModal({
+                      initialString: s.name,
+                      id: 'session_name',
+                      callback: newName => {
+                        client.api.patch(`/auth/session/${s._id}`, {
+                          friendly_name: newName,
+                        });
+                      },
                     });
                   }}>
                   <View style={styles.iconContainer}>
                     <MaterialIcon
-                      name="logout"
+                      name="edit"
                       size={20}
                       color={currentTheme.foregroundPrimary}
                     />
                   </View>
                 </Pressable>
+                {authInfo.sessionID !== s._id ? (
+                  <Pressable
+                    style={{
+                      width: 30,
+                      height: 20,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                    onPress={async () => {
+                      await client.api.delete(`/auth/session/${s._id}`);
+                      setAuthInfo({
+                        ...authInfo,
+                        sessions: authInfo.sessions.filter(
+                          ses => ses._id !== s._id,
+                        ),
+                      });
+                    }}>
+                    <View style={styles.iconContainer}>
+                      <MaterialIcon
+                        name="logout"
+                        size={20}
+                        color={currentTheme.foregroundPrimary}
+                      />
+                    </View>
+                  </Pressable>
+                ) : null}
               </View>
             ))}
+          </View>
+        ) : section === 'profile' ? (
+          <View>
+            <Text type={'header'}>Profile</Text>
+            <View style={styles.settingsEntry} key={'display-name-settings'}>
+              <View style={{flex: 1, flexDirection: 'column'}}>
+                <Text key={'display-name-label'} style={{fontWeight: 'bold'}}>
+                  Display name
+                </Text>
+                <Text
+                  key={'display-name'}
+                  colour={
+                    client.user?.display_name
+                      ? currentTheme.foregroundPrimary
+                      : currentTheme.foregroundSecondary
+                  }>
+                  {client.user?.display_name ?? 'No display name set'}
+                </Text>
+              </View>
+              <Pressable
+                style={{
+                  width: 30,
+                  height: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={() => {
+                  Clipboard.setString(
+                    client.user?.display_name ?? 'No display name set',
+                  );
+                }}>
+                <View style={styles.iconContainer}>
+                  <MaterialIcon
+                    name="content-copy"
+                    size={20}
+                    color={currentTheme.foregroundPrimary}
+                  />
+                </View>
+              </Pressable>
+              <Pressable
+                style={{
+                  width: 30,
+                  height: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={() => {
+                  app.openTextEditModal({
+                    initialString: client.user?.display_name ?? '',
+                    id: 'display_name',
+                    callback: newName => {
+                      client.api.patch('/users/@me', {display_name: newName});
+                    },
+                  });
+                }}>
+                <View style={styles.iconContainer}>
+                  <MaterialIcon
+                    name="edit"
+                    size={20}
+                    color={currentTheme.foregroundPrimary}
+                  />
+                </View>
+              </Pressable>
+            </View>
           </View>
         ) : section === 'info' ? (
           <>
