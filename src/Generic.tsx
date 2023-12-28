@@ -23,6 +23,7 @@ import {
   ReplyingMessage,
   ReportedObject,
   Setting,
+  TextEditingModalProps,
 } from './lib/types';
 const Image = FastImage;
 
@@ -333,6 +334,7 @@ export const app = {
   openStatusMenu: (state: boolean) => {},
   openReportMenu: (object: ReportedObject | null) => {},
   openDeletionConfirmationModal: (object: DeletableObject | null) => {},
+  openTextEditModal: (object: TextEditingModalProps | null) => {},
 };
 
 export function setFunction(name: string, func: any) {

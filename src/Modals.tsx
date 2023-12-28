@@ -8,10 +8,10 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import {API, Channel, Server, User} from 'revolt.js';
 
 import {app, client, openUrl, setFunction} from './Generic';
-import {DeletableObject} from './lib/types';
+import {DeletableObject, TextEditingModalProps} from './lib/types';
 import {currentTheme} from './Theme';
 import {GapView} from './components/layout';
-import {ConfirmDeletionModal} from './components/modals';
+import {ConfirmDeletionModal, TextEditModal} from './components/modals';
 import {
   BotInviteSheet,
   ChannelInfoSheet,
@@ -45,6 +45,9 @@ export const Modals = observer(() => {
   const [deletableObject, setDeletableObject] = React.useState(
     null as DeletableObject | null,
   );
+  const [editingText, setEditingText] = React.useState(
+    null as TextEditingModalProps | null,
+  );
 
   setFunction('openDirectMessage', async (dm: Channel) => {
     app.openProfile(null);
@@ -63,6 +66,12 @@ export const Modals = observer(() => {
     'openDeletionConfirmationModal',
     async (o: DeletableObject | null) => {
       setDeletableObject(o);
+    },
+  );
+  setFunction(
+    'openTextEditModal',
+    async (object: TextEditingModalProps | null) => {
+      setEditingText(object);
     },
   );
   setFunction('openInvite', async (i: string) => {
@@ -203,6 +212,21 @@ export const Modals = observer(() => {
             backgroundColor: '#00000080',
           }}>
           <ConfirmDeletionModal target={deletableObject!} />
+        </View>
+      </Modal>
+      <Modal
+        visible={!!editingText}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setEditingText(null)}>
+        <View
+          style={{
+            flex: 1,
+            alignContent: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#00000080',
+          }}>
+          <TextEditModal object={editingText!} />
         </View>
       </Modal>
     </>

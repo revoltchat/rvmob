@@ -49,6 +49,12 @@ export type ReportedObject = TypedMessage | TypedServer | TypedUser;
 
 export type DeletableObject = TypedMessage | TypedServer;
 
+export type TextEditingModalProps = {
+  initialString: string;
+  id: string;
+  callback: (s: string) => void;
+};
+
 export type Language = {
   name: string;
   englishName: string;
