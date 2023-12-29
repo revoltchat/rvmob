@@ -50,6 +50,8 @@
             "edit_text": {
                 "display_name_header": "Set display name",
                 "display_name_placeholder": "Display name",
+                "role_colour_header": "Set role colour",
+                "role_colour_placeholder": "Role colour",
                 "session_name_header": "Set session name",
                 "session_name_placeholder": "Session name"
             }
@@ -91,6 +93,7 @@
                     "permissions": "Permissions",
                     "colour": "Colour",
                     "set_colour": "Set role colour",
+                    "open_colour_modal": "Enter colour manually",
                     "errors": {
                         "empty_role_name": "Role names cannot be empty!"
                     }

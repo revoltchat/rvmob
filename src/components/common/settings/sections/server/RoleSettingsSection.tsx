@@ -13,10 +13,16 @@ import ColourPicker, {
 
 import {Server} from 'revolt.js';
 
-import {SettingsSection} from '../../../../../lib/types';
-import {currentTheme, styles} from '../../../../../Theme';
-import {GapView} from '../../../../layout';
-import {BackButton, Button, InputWithButton, Text} from '../../../atoms';
+import {app} from '@rvmob/Generic';
+import {SettingsSection} from '@rvmob/lib/types';
+import {currentTheme, styles} from '@rvmob/Theme';
+import {GapView} from '@rvmob/components/layout';
+import {
+  BackButton,
+  Button,
+  InputWithButton,
+  Text,
+} from '@rvmob/components/common/atoms';
 
 export const RoleSettingsSection = observer(
   ({server, callback}: {server: Server; callback: Function}) => {
@@ -180,6 +186,16 @@ export const RoleSettingsSection = observer(
                     alignContent: 'center',
                     justifyContent: 'center',
                   }}>
+                  <Text
+                    colour={colour}
+                    style={{
+                      alignSelf: 'center',
+                      fontWeight: 'bold',
+                      fontSize: 18,
+                    }}>
+                    {server.roles![subsection].name}
+                  </Text>
+                  <GapView size={8} />
                   <ColourPicker
                     style={{alignSelf: 'center', width: '70%'}}
                     value={server.roles![subsection].colour ?? '#00000000'}
@@ -195,15 +211,22 @@ export const RoleSettingsSection = observer(
                     <OpacitySlider />
                   </ColourPicker>
                   <GapView size={8} />
-                  <Text
-                    colour={colour}
-                    style={{
-                      alignSelf: 'center',
-                      fontWeight: 'bold',
-                      fontSize: 18,
+                  <Button
+                    onPress={() => {
+                      app.openTextEditModal({
+                        initialString: colour,
+                        id: 'role_colour',
+                        callback: c => {
+                          if (c.length < 10) {
+                            setColour(c);
+                          }
+                        },
+                      });
                     }}>
-                    {server.roles![subsection].name}
-                  </Text>
+                    <Text>
+                      {t('app.servers.settings.roles.open_colour_modal')}
+                    </Text>
+                  </Button>
                   <GapView size={8} />
                   <Button
                     onPress={() => {
