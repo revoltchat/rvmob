@@ -6,9 +6,9 @@ import FastImage from 'react-native-fast-image';
 
 import {API, Channel, Client, Message, Server} from 'revolt.js';
 
-import {setLanguage} from '../i18n/i18n';
-import {languages} from '../i18n/languages';
-import {setTheme, themes} from './Theme';
+import {setLanguage} from '@rvmob-i18n/i18n';
+import {languages} from '@rvmob-i18n/languages';
+import {setTheme, themes} from '@rvmob/Theme';
 import {
   DEFAULT_API_URL,
   DEFAULT_MAX_SIDE,
@@ -17,14 +17,15 @@ import {
   RE_INVITE,
   RE_BOT_INVITE,
   WIKI_URL,
-} from './lib/consts';
+} from '@rvmob/lib/consts';
 import {
+  CreateChannelModalProps,
   DeletableObject,
   ReplyingMessage,
   ReportedObject,
   Setting,
   TextEditingModalProps,
-} from './lib/types';
+} from '@rvmob/lib/types';
 const Image = FastImage;
 
 export const app = {
@@ -335,6 +336,7 @@ export const app = {
   openReportMenu: (object: ReportedObject | null) => {},
   openDeletionConfirmationModal: (object: DeletableObject | null) => {},
   openTextEditModal: (object: TextEditingModalProps | null) => {},
+  openCreateChannelModal: (object: CreateChannelModalProps | null) => {},
 };
 
 export function setFunction(name: string, func: any) {

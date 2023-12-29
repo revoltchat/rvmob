@@ -7,6 +7,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Server} from 'revolt.js';
 
+import {app} from '@rvmob/Generic';
 import {ChannelSettingsSubsection} from '@rvmob/lib/types';
 import {currentTheme, styles} from '@rvmob/Theme';
 import {GapView} from '@rvmob/components/layout';
@@ -95,17 +96,100 @@ export const ChannelSettingsSection = observer(
           </>
         ) : (
           <>
-            <Text type={'h1'}>{t('app.servers.settings.channels.title')}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginVertical: 4,
+              }}>
+              <View style={{flex: 1}}>
+                <Text type={'h1'}>
+                  {t('app.servers.settings.channels.title')}
+                </Text>
+              </View>
+              {server.havePermission('ManageChannel') ? (
+                <Pressable
+                  onPress={() => {
+                    app.openCreateChannelModal({
+                      server,
+                      callback: () => {},
+                    });
+                  }}
+                  style={{
+                    width: 30,
+                    height: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <View style={styles.iconContainer}>
+                    <MaterialIcon
+                      name={'add'}
+                      size={20}
+                      color={currentTheme.foregroundPrimary}
+                    />
+                  </View>
+                </Pressable>
+              ) : null}
+            </View>
             {server.orderedChannels.map(cat => (
               <View key={`channel-settings-category-${cat.id}`}>
-                <Text type={'h2'}>
-                  {cat.id === 'default' ? 'Uncategorised' : cat.title}
-                </Text>
-                {cat.id !== 'default' ? (
-                  <Text colour={currentTheme.foregroundSecondary}>
-                    {cat.id}
-                  </Text>
-                ) : null}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginVertical: 4,
+                  }}>
+                  <View style={{flex: 1}}>
+                    <Text type={'h2'}>
+                      {cat.id === 'default' ? 'Uncategorised' : cat.title}
+                    </Text>
+                    {cat.id !== 'default' ? (
+                      <Text colour={currentTheme.foregroundSecondary}>
+                        {cat.id}
+                      </Text>
+                    ) : null}
+                  </View>
+                  {/* uncomment when revolt lets you create channels in categories
+                  {server.havePermission('ManageChannel') ? (
+                    <Pressable
+                      onPress={() => {
+                        app.openCreateChannelModal({
+                          server,
+                          callback: () => {},
+                          category: cat.id,
+                        });
+                      }}
+                      style={{
+                        width: 30,
+                        height: 20,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <View style={styles.iconContainer}>
+                        <MaterialIcon
+                          name={'add'}
+                          size={20}
+                          color={currentTheme.foregroundPrimary}
+                        />
+                      </View>
+                    </Pressable>
+                  ) : null} */}
+                  <Pressable
+                    style={{
+                      width: 30,
+                      height: 20,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <View style={styles.iconContainer}>
+                      <MaterialIcon
+                        name={'arrow-forward'}
+                        size={20}
+                        color={currentTheme.foregroundPrimary}
+                      />
+                    </View>
+                  </Pressable>
+                </View>
                 {cat.channels.map(c => (
                   <Pressable
                     style={styles.settingsEntry}

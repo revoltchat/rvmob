@@ -5,6 +5,7 @@
             "cancel": "Cancel",
             "close": "Close",
             "confirm": "Confirm",
+            "create_channel": "Create channel",
             "delete": "Delete",
             "save": "Save"
         },
@@ -46,6 +47,16 @@
                 "body_message": "Are you sure you want to delete <2>this message</2>?",
                 "body_server": "Are you sure you want to delete <2>{{name}}</2>?",
                 "warning": "This cannot be undone."
+            },
+            "create_channel": {
+                "header": "Create a new channel",
+                "name_header": "Name",
+                "name_placeholder": "Channel name",
+                "type_header": "Type",
+                "type_text": "Text channel",
+                "type_voice": "Voice channel",
+                "nsfw_header": "NSFW",
+                "nsfw_label": "Mark channel as NSFW"
             },
             "edit_text": {
                 "display_name_header": "Set display name",

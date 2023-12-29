@@ -57,6 +57,12 @@ export type TextEditingModalProps = {
   callback: (s: string) => void;
 };
 
+export type CreateChannelModalProps = {
+  server: Server;
+  category?: string;
+  callback: (c: string) => void;
+};
+
 export type Language = {
   name: string;
   englishName: string;
