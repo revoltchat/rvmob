@@ -74,7 +74,14 @@
                     }
                 },
                 "channels": {
-                    "title": "Channels"
+                    "title": "Channels",
+                    "name": "Channel name",
+                    "name_placeholder": "Set a channel name…",
+                    "permissions": "Channel permissions",
+                    "no_perms_set": "Not set",
+                    "errors": {
+                        "empty_channel_name": "Channel names cannot be empty!"
+                    }
                 },
                 "roles": {
                     "title": "Roles",

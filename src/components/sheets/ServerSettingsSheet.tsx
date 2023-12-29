@@ -16,6 +16,7 @@ import {currentTheme, styles} from '../../Theme';
 import {BackButton, ContextButton, Text} from '../common/atoms';
 import {
   BanSettingsSection,
+  ChannelSettingsSection,
   InviteSettingsSection,
   RoleSettingsSection,
   OverviewSettingsSection,
@@ -72,8 +73,8 @@ export const ServerSettingsSheet = observer(
               {t('app.actions.close')}
             </Text>
           </Pressable>
-        ) : /* the role settings menu handles this itself as it has subsections */
-        section !== 'roles' ? (
+        ) : /* the channel and role settings menus handle this themselves as they have subsections */
+        section !== 'roles' && section !== 'channels' ? (
           <BackButton callback={() => setSection(null)} margin />
         ) : null}
         <ScrollView
@@ -245,6 +246,11 @@ export const ServerSettingsSheet = observer(
             </>
           ) : section === 'overview' ? (
             <OverviewSettingsSection server={server} />
+          ) : section === 'channels' ? (
+            <ChannelSettingsSection
+              server={server}
+              callback={() => setSection(null)}
+            />
           ) : section === 'roles' ? (
             <RoleSettingsSection
               server={server}
