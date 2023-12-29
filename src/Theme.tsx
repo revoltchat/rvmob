@@ -206,6 +206,16 @@ function refreshStyles() {
       flex: 1,
       fontWeight: 'bold',
     },
+    input: {
+      fontFamily: 'Open Sans',
+      minWidth: '100%',
+      borderRadius: 8,
+      backgroundColor: currentTheme.backgroundSecondary,
+      padding: 6,
+      paddingLeft: 10,
+      paddingRight: 10,
+      color: currentTheme.foregroundPrimary,
+    },
     link: {
       color: currentTheme.accentColor,
       textDecorationLine: 'underline',

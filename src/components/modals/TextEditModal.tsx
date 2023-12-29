@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
 import {app} from '@rvmob/Generic';
-import {currentTheme} from '@rvmob/Theme';
+import {currentTheme, styles} from '@rvmob/Theme';
 import {Button, Text} from '@rvmob/components/common/atoms';
 import {TextEditingModalProps} from '@rvmob/lib/types';
 
@@ -31,16 +31,7 @@ export const TextEditModal = observer(
             marginTop: 10,
           }}>
           <TextInput
-            style={{
-              fontFamily: 'Open Sans',
-              minWidth: '100%',
-              borderRadius: 8,
-              backgroundColor: currentTheme.backgroundSecondary,
-              padding: 6,
-              paddingLeft: 10,
-              paddingRight: 10,
-              color: currentTheme.foregroundPrimary,
-            }}
+            style={styles.input}
             value={string}
             placeholder={t(`app.modals.edit_text.${object.id}_placeholder`)}
             onChangeText={v => {

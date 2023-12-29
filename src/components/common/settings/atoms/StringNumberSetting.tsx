@@ -108,16 +108,7 @@ export const StringNumberSetting = ({
             </Text>
           ) : null}
           <TextInput
-            style={{
-              fontFamily: 'Open Sans',
-              minWidth: '100%',
-              borderRadius: 8,
-              backgroundColor: currentTheme.backgroundSecondary,
-              padding: 6,
-              paddingLeft: 10,
-              paddingRight: 10,
-              color: currentTheme.foregroundPrimary,
-            }}
+            style={styles.input}
             value={value as string}
             keyboardType={sRaw.type === 'number' ? 'decimal-pad' : 'default'}
             onChangeText={v => {
