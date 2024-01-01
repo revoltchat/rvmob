@@ -12,7 +12,10 @@
             "back": "Zurück",
             "close": "schließen",
             "cancel": "Abbrechen",
-            "delete": "löschen"
+            "delete": "löschen",
+            "confirm": "Bestätigen",
+            "save": "Speichern",
+            "create_channel": "Kanal erstellen"
         },
         "servers": {
             "settings": {
@@ -31,7 +34,14 @@
                     "set_description": "Setze eine Beschreibung"
                 },
                 "channels": {
-                    "title": "Kanäle"
+                    "title": "Kanäle",
+                    "name": "Kanal Name",
+                    "name_placeholder": "Lege einen Kanalnamen fest …",
+                    "permissions": "Kanalberechtigungen",
+                    "no_perms_set": "Nicht eingestellt",
+                    "errors": {
+                        "empty_channel_name": "Kanalnamen dürfen nicht leer sein!"
+                    }
                 },
                 "roles": {
                     "title": "Rollen",
@@ -43,7 +53,8 @@
                     },
                     "name": "Name",
                     "name_placeholder": "Bestimme einen Namen für die Rolle…",
-                    "set_colour": "Bestimme eine Farbe für die Rolle"
+                    "set_colour": "Bestimme eine Farbe für die Rolle",
+                    "open_colour_modal": "Gebe die Farbe manuell ein"
                 },
                 "emoji": {
                     "title": "Emoji"
@@ -119,6 +130,24 @@
                 "body_message": "Bist du dir sicher, dass du <2>this message</2> löschen willst?",
                 "warning": "Dies kann nicht rückgängig gemacht werden.",
                 "body_server": "Bist du dir sicher, dass du <2>{{name}}</2> löschen willst?"
+            },
+            "create_channel": {
+                "header": "Neuen Kanal erstellen",
+                "name_header": "Name",
+                "name_placeholder": "Kanalname",
+                "type_header": "Typ",
+                "type_text": "Text Kanal",
+                "type_voice": "Sprachkanal",
+                "nsfw_header": "NSFW",
+                "nsfw_label": "Kanal als NSFW markieren"
+            },
+            "edit_text": {
+                "display_name_header": "Anzeigenamen festlegen",
+                "display_name_placeholder": "Anzeigenamen",
+                "role_colour_placeholder": "Rollenfarbe",
+                "session_name_header": "Sitzungsnamen festlegen",
+                "session_name_placeholder": "Sitzungsname",
+                "role_colour_header": "Rollenfarbe festlegen"
             }
         },
         "misc": {
@@ -149,6 +178,37 @@
             },
             "subheader": "Hast du einen Account?",
             "token_info_label": "Wie komme ich an mein Token?"
+        },
+        "settings_menu": {
+            "account": {
+                "title": "Konto"
+            },
+            "appearance": {
+                "title": "Aussehen"
+            },
+            "functionality": {
+                "title": "Features"
+            },
+            "groups": {
+                "advanced": "Fortgeschritten",
+                "app": "App",
+                "other": "Andere",
+                "user": "Benutzer"
+            },
+            "i18n": {
+                "title": "Sprache"
+            },
+            "info": {
+                "title": "Über RVMob"
+            },
+            "other": {
+                "debug_info": "Kopiere Debug-Informationen",
+                "view_issues": "Offene Probleme anzeigen",
+                "logout": "Ausloggen"
+            },
+            "profile": {
+                "title": "Profil"
+            }
         }
     }
 }
