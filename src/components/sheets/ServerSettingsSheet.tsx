@@ -19,6 +19,7 @@ import {
   ChannelSettingsSection,
   InviteSettingsSection,
   RoleSettingsSection,
+  MemberSettingsSection,
   OverviewSettingsSection,
   EmojiSettingsSection,
 } from '../common/settings/sections/server';
@@ -259,6 +260,8 @@ export const ServerSettingsSheet = observer(
             />
           ) : section === 'emoji' ? (
             <EmojiSettingsSection server={server} />
+          ) : section === 'members' ? (
+            <MemberSettingsSection server={server} />
           ) : section === 'invites' ? (
             <InviteSettingsSection server={server} />
           ) : section === 'bans' ? (
