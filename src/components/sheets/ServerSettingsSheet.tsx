@@ -20,6 +20,7 @@ import {
   InviteSettingsSection,
   RoleSettingsSection,
   OverviewSettingsSection,
+  EmojiSettingsSection,
 } from '../common/settings/sections/server';
 import {GapView} from '../layout';
 const Image = FastImage;
@@ -256,6 +257,8 @@ export const ServerSettingsSheet = observer(
               server={server}
               callback={() => setSection(null)}
             />
+          ) : section === 'emoji' ? (
+            <EmojiSettingsSection server={server} />
           ) : section === 'invites' ? (
             <InviteSettingsSection server={server} />
           ) : section === 'bans' ? (

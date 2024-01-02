@@ -111,7 +111,10 @@
 
                 },
                 "emoji": {
-                    "title": "Emoji"
+                    "title": "Emoji",
+                    "added_by": "Added by @{{name}}",
+                    "empty": "No emoji",
+                    "deleted_toast": "{{name}} deleted"
                 },
                 "members": {
                     "title": "Members"
