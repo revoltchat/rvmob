@@ -57,10 +57,14 @@
                     "open_colour_modal": "Gebe die Farbe manuell ein"
                 },
                 "emoji": {
-                    "title": "Emoji"
+                    "title": "Emoji",
+                    "added_by": "Hinzugefügt durch @{{name}}",
+                    "empty": "Kein Emoji",
+                    "deleted_toast": "{{name}} gelöscht"
                 },
                 "members": {
-                    "title": "Mitglieder"
+                    "title": "Mitglieder",
+                    "loading": "Mitglieder werden abgerufen…"
                 },
                 "invites": {
                     "title": "Einladungen",
@@ -147,7 +151,11 @@
                 "role_colour_placeholder": "Rollenfarbe",
                 "session_name_header": "Sitzungsnamen festlegen",
                 "session_name_placeholder": "Sitzungsname",
-                "role_colour_header": "Rollenfarbe festlegen"
+                "role_colour_header": "Rollenfarbe festlegen",
+                "nickname_placeholder": "Spitzname (zum Zurücksetzen leer lassen)",
+                "nickname_other_placeholder": "Spitzname (zum Zurücksetzen leer lassen)",
+                "nickname_header": "Spitzname festlegen",
+                "nickname_other_header": "Lege den Spitznamen des Mitglieds fest"
             }
         },
         "misc": {
