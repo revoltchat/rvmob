@@ -213,12 +213,13 @@ export const RoleSettingsSection = observer(
                   <GapView size={8} />
                   <Button
                     onPress={() => {
+                      setShowColourPicker(false);
                       app.openTextEditModal({
                         initialString: colour,
                         id: 'role_colour',
                         callback: c => {
                           if (c.length < 10) {
-                            setColour(c);
+                            server.editRole(subsection, {colour: c});
                           }
                         },
                       });
