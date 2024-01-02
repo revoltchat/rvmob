@@ -49,12 +49,12 @@ export const OverviewSettingsSection = observer(
               color: currentTheme.foregroundSecondary,
             }}>
             {t('app.servers.settings.overview.markdown_tip')}
-            <Link
-              link={'https://support.revolt.chat/kb/account/badges'}
-              label={t('app.servers.settings.overview.markdown_tip_link')}
-              style={{fontWeight: 'bold'}}
-            />
           </Text>
+          <Link
+            link={'https://support.revolt.chat/kb/account/badges'}
+            label={t('app.servers.settings.overview.markdown_tip_link')}
+            style={{fontWeight: 'bold'}}
+          />
         </View>
         <GapView size={2} />
         <InputWithButton
