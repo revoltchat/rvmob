@@ -4,7 +4,10 @@
             "delete": "Törlés",
             "cancel": "Mégsem",
             "close": "Bezárás",
-            "back": "Vissza"
+            "back": "Vissza",
+            "confirm": "Jóváhagy",
+            "save": "Mentés",
+            "create_channel": "Csatorna létrehozása"
         },
         "loading": {
             "generic": "Betöltés…",
@@ -25,6 +28,28 @@
                 "body_server": "Biztosan törlöd őt: <2>{{name}}</2>?",
                 "warning": "A törlést nem lehet majd visszavonni.",
                 "header_server": "Törlöd a szervert?"
+            },
+            "edit_text": {
+                "nickname_placeholder": "Becenév (hagy üresen a visszaállításhoz)",
+                "display_name_header": "Megjelenő név",
+                "display_name_placeholder": "A megjelenő neved",
+                "session_name_header": "Munkamenet neve",
+                "session_name_placeholder": "A munkamenet neve",
+                "role_colour_header": "Titulus színe",
+                "role_colour_placeholder": "A titulus színe",
+                "nickname_header": "Becenév",
+                "nickname_other_header": "Tag beceneve",
+                "nickname_other_placeholder": "A tag beceneve (hagy üresen a visszaállításhoz)"
+            },
+            "create_channel": {
+                "header": "Új csatorna létrehozása",
+                "name_header": "Csatornanév",
+                "name_placeholder": "A csatornád neve",
+                "type_header": "Csatornatípus",
+                "type_text": "Szövegcsatorna",
+                "type_voice": "Beszédcsatorna",
+                "nsfw_header": "NSFW",
+                "nsfw_label": "Csatorna NSFW-ként jelölése"
             }
         },
         "settings": {
@@ -97,7 +122,14 @@
                 },
                 "user_management": "Felhasználók kezelése",
                 "channels": {
-                    "title": "Csatornák"
+                    "title": "Csatornák",
+                    "name_placeholder": "A csatorna neve",
+                    "permissions": "Csatornaszintű engedélyek",
+                    "name": "Csatornanév",
+                    "no_perms_set": "még nincsenek beállítva",
+                    "errors": {
+                        "empty_channel_name": "A csatorna neve nem maradhat üresen"
+                    }
                 },
                 "roles": {
                     "title": "Titulusok",
@@ -109,13 +141,18 @@
                     "name": "Titulus",
                     "errors": {
                         "empty_role_name": "A titulus nem maradhat üresen!"
-                    }
+                    },
+                    "open_colour_modal": "Szín egyéni megadása"
                 },
                 "emoji": {
-                    "title": "Emodzsi"
+                    "title": "Emodzsi",
+                    "added_by": "@{{name}} adta hozzá",
+                    "empty": "nincsenek emodzsik",
+                    "deleted_toast": "{{name}} törölve"
                 },
                 "members": {
-                    "title": "Tagok"
+                    "title": "Tagok",
+                    "loading": "Tagok előhozása…"
                 },
                 "invites": {
                     "loading": "Meghívók előhozása…",
@@ -149,6 +186,37 @@
             },
             "subheader": "Van már fiókod?",
             "token_info_label": "Hogyan kapok tokent?"
+        },
+        "settings_menu": {
+            "other": {
+                "debug_info": "Hibakeresési infó másolása",
+                "view_issues": "Nyitott issue-k megtekintése",
+                "logout": "Kijelentkezés"
+            },
+            "account": {
+                "title": "Fiók"
+            },
+            "appearance": {
+                "title": "Megjelenés"
+            },
+            "functionality": {
+                "title": "Lehetőségek"
+            },
+            "groups": {
+                "advanced": "Speciális",
+                "app": "App",
+                "other": "Egyéb",
+                "user": "Felhasználó"
+            },
+            "i18n": {
+                "title": "Nyelv"
+            },
+            "info": {
+                "title": "Az RVMobról"
+            },
+            "profile": {
+                "title": "Profil"
+            }
         }
     }
 }
