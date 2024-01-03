@@ -4,7 +4,10 @@
             "back": "Назад",
             "cancel": "Адмена",
             "close": "Закрыць",
-            "delete": "Выдаліць"
+            "delete": "Выдаліць",
+            "confirm": "Пацвердзіць",
+            "save": "Захаваць",
+            "create_channel": "Стварыць канал"
         },
         "loading": {
             "connecting": "Ідзе аўтарызацыя…",
@@ -25,6 +28,28 @@
                 "body_server": "Вы сапраўды хочаце выдаліць <2>{{name}}</2>?",
                 "warning": "Гэта ня можа быць адменена.",
                 "body_message": "Вы сапраўды хочаце выдаліць <2>гэта паведамленне</2>?"
+            },
+            "edit_text": {
+                "nickname_header": "Задаць нікнэйм",
+                "session_name_placeholder": "Назва сэсіі",
+                "session_name_header": "Задаць назву сэсіі",
+                "display_name_header": "Абраць адлюстраванае імя",
+                "display_name_placeholder": "Адлюстраванае імя",
+                "role_colour_header": "Задаць колер ролі",
+                "role_colour_placeholder": "Колер ролі",
+                "nickname_placeholder": "Нікнэйм (пакінце пустым каб аднавіць)",
+                "nickname_other_header": "Задаць нікнэйм карыстача",
+                "nickname_other_placeholder": "Нікнэйм (пакінце пустым каб аднавіць)"
+            },
+            "create_channel": {
+                "header": "Стварыць новы канал",
+                "name_header": "Назва",
+                "name_placeholder": "Назва канала",
+                "type_text": "Тэкставы канал",
+                "type_voice": "Галасавы канал",
+                "nsfw_header": "NSFW",
+                "nsfw_label": "Пазначыць канал як NSFW",
+                "type_header": "Тып"
             }
         },
         "servers": {
@@ -47,7 +72,14 @@
                     "description_placeholder": "Дадаць апісанне…"
                 },
                 "channels": {
-                    "title": "Каналы"
+                    "title": "Каналы",
+                    "name": "Назва канала",
+                    "name_placeholder": "Задаць назву канала…",
+                    "no_perms_set": "Ня задана",
+                    "permissions": "Правы каналу",
+                    "errors": {
+                        "empty_channel_name": "Назвы каналаў ня могуць быць пустымі!"
+                    }
                 },
                 "roles": {
                     "title": "Ролі",
