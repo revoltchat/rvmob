@@ -1,1 +1,222 @@
-{}
+{
+    "app": {
+        "login": {
+            "options": {
+                "login_session_token": "Oo, mag-log in gamit ng session token",
+                "signup_body": "Mare-redirect ka sa web app. Kapag nag-sign up ka na, bumalik ka at mag-log in.",
+                "login_regular": "Oo, mag-log in gamit ang aking email at password",
+                "login_regular_body": "Inirerekomenda para sa karamihan ng mga user.",
+                "login_session_token_body": "Gamitin ito kapag nagkakaroon ka ng problema sa regular na login system. Maaring hindi available ang ibang functionality.",
+                "signup": "Hindi, mag-sign up"
+            },
+            "forms": {
+                "email_placeholder": "Email",
+                "password_placeholder": "Password",
+                "mfa_placeholder": "Isang beses na code",
+                "session_token_placeholder": "Token"
+            },
+            "instance_notice": "Kumokonekta ka sa {{url}}.",
+            "subheader": "Mayroon ka bang account?",
+            "token_info_label": "Paano ko makukuha ang aking token?"
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_message": "Burahin ang mensahe?",
+                "body_server": "Sigurado ka bang gusto mong burahin ang <2>{{name}}</2>?",
+                "header_server": "Burahin ang server?",
+                "body_message": "Sigurado kang gusto mong burahin <2>ang mensahe na ito</2>?",
+                "warning": "Hindi ito maaring bawiin."
+            },
+            "edit_text": {
+                "nickname_placeholder": "Palayaw (iwanang walang laman para i-reset)",
+                "display_name_header": "Itakda ang display name",
+                "display_name_placeholder": "Display name",
+                "nickname_header": "Itakda ang palayaw",
+                "nickname_other_header": "Itakda ang palayaw ng miyembro",
+                "nickname_other_placeholder": "Palayaw (iwanang walang laman para i-reset)",
+                "role_colour_header": "Itakda ang kulay ng role",
+                "role_colour_placeholder": "Kulay ng role",
+                "session_name_header": "Itakda ang pangalan ng sesyon",
+                "session_name_placeholder": "Pangalan ng sesyon"
+            },
+            "create_channel": {
+                "header": "Gumawa ng bagong channel",
+                "name_header": "Pangalan",
+                "name_placeholder": "Pangalan ng channel",
+                "type_header": "Uri",
+                "type_voice": "Channel na pamboses",
+                "type_text": "Channel na panteksto",
+                "nsfw_header": "NSFW",
+                "nsfw_label": "I-mark ang channel bilang NSFW"
+            }
+        },
+        "servers": {
+            "settings": {
+                "delete_server": "Burahin ang Server",
+                "overview": {
+                    "name": "Pangalan ng server",
+                    "set_description": "Itakda ang deskripsyon",
+                    "title": "Pangkalahatan",
+                    "description": "Deskripsyon ng server",
+                    "markdown_tip": "Sinusuportahan ng mga deskripsyon ng server ang Markdown formatting.",
+                    "markdown_tip_link": "Matuto pa.",
+                    "description_placeholder": "Magdagdag ng deskripsyon…",
+                    "system_messages": "Mga mensaheng sistema",
+                    "errors": {
+                        "empty_server_name": "Hindi maaring walang laman ang mga pangalan ng server!"
+                    }
+                },
+                "channels": {
+                    "no_perms_set": "Hindi nakatakda",
+                    "title": "Mga channel",
+                    "name": "Pangalan ng channel",
+                    "name_placeholder": "Magtakda ng pangalan ng channel…",
+                    "permissions": "Mga permiso ng channel",
+                    "errors": {
+                        "empty_channel_name": "Hindi maaring walang laman ang mga pangalan ng channel!"
+                    }
+                },
+                "roles": {
+                    "set_colour": "Magtakda ng kulay ng role",
+                    "title": "Mga Role",
+                    "name": "Pangalan",
+                    "name_placeholder": "Magtakda ng pangalan ng role…",
+                    "rank": "Ranggo",
+                    "permissions": "Mga Permiso",
+                    "colour": "Kulay",
+                    "open_colour_modal": "Ilagay ang kulay mano-mano",
+                    "errors": {
+                        "empty_role_name": "Hindi maaring walang laman ang mga pangalan ng role!"
+                    }
+                },
+                "members": {
+                    "loading": "Kinukuha ang mga miyembro…",
+                    "title": "Mga Miyembro"
+                },
+                "general": "General",
+                "customisation": "Pag-customize",
+                "user_management": "Pamahalaan ng User",
+                "emoji": {
+                    "title": "Emoji",
+                    "added_by": "Dinagdag ni @{{name}}",
+                    "empty": "Walang emoji",
+                    "deleted_toast": "Binura ang {{name}}"
+                },
+                "invites": {
+                    "title": "Mga Imbitasyon",
+                    "loading": "Kinukuha ang mga imbitasyon…",
+                    "empty": "Walang mga imbitasyon"
+                },
+                "bans": {
+                    "title": "Mga Ban",
+                    "loading": "Kinukuha ang mga ban…",
+                    "empty": "Walang mga ban",
+                    "no_reason": "Walang binigay na dahilan"
+                }
+            }
+        },
+        "settings": {
+            "app": {
+                "refetchOnReconnect": "Kunin ulit ang mga mensahe kapag kumokonekta ulit",
+                "notifications": {
+                    "notifyOnSelfPing": "Magkaroon ng abiso kapag i-ping ang iyong sarili",
+                    "enabled": "Paganahin ang mga push notification"
+                },
+                "language": "Piliin ang iyong wika",
+                "showChangelogs": "Ipakita ang mga pagbabago pagkatapos i-update ang RVMob"
+            },
+            "ui": {
+                "theme_remark": "Kailangan mong ibuksan o isara ang side menu para mapakita ang iyong mga pagbabago sa lahat ng lugar.",
+                "messaging": {
+                    "doubleTapToReply_remark": "Sinusuportahan lamang ito sa bagong message view.",
+                    "showMasqAvatar": "Ipakita ang nakabalaktayo na avatar sa sulok",
+                    "doubleTapToReply": "Mag-reply sa mga mensahe sa pamamagitan ng pag-double tap sa kanila",
+                    "emojiPack": "Pakete ng emoji",
+                    "experimentalScrolling": "Paganahin ang channel scrolling sa lumang message view",
+                    "experimentalScrolling_remark": "Maari ka lang mag-scroll pabalik.",
+                    "fontSize": "Laki ng font",
+                    "fontSize_remark": "Maga-apply lang ito sa mga mensahe at ibang parte ng app.",
+                    "messageSpacing": "Spacing ng Mensahe",
+                    "sendAttachments": "Paganahin ang pagpadala ng attachment",
+                    "showNSFWContent": "Sumang-ayon sa 18+ na nilalaman",
+                    "showReactions": "Ipakita ang mga reaksyon sa ilalim ng mga mensahe",
+                    "showReactions_remark": "Pwede ka magdagdag sa mga umiiral na reaksyon, pero hindi ka pa makakadagdag ng bago.",
+                    "showSelfInTypingIndicator": "Ipakita ang sarili mo sa typing indicator",
+                    "statusInChatAvatars": "Ipakita ang user status sa mga chat avatar",
+                    "use24H": "Gumamit ng 24-hour na timestamp",
+                    "useNewMessageView": "Gamitin ang bagong message view"
+                },
+                "home": {
+                    "holidays": "Ipakita ang mga holiday sa home page"
+                },
+                "theme": "Tema",
+                "settings": {
+                    "showExperimental": "Ipakita ang mga experimental na feature"
+                },
+                "showDeveloperFeatures": "Ipakita ang mga developer tool"
+            }
+        },
+        "actions": {
+            "back": "Bumalik",
+            "cancel": "Kaneslahin",
+            "close": "Isara",
+            "confirm": "Kumpirmahin",
+            "create_channel": "Gumawa ng channel",
+            "delete": "I-delete",
+            "save": "I-save"
+        },
+        "loading": {
+            "generic": "Naglo-load…",
+            "connecting": "Naglo-log in…"
+        },
+        "home": {
+            "description": "Mag-swipe sa kaliwa ng screen o i-tap ang tatlong linyang icon para makita ang iyong mga server at mensahe!",
+            "join_lounge": "Sumali sa Revolt Lounge",
+            "open_lounge": "Buksan ang Revolt Lounge",
+            "join_rvmob": "Sumali sa RVMob server",
+            "open_rvmob": "Buksan ang RVMob server",
+            "open_settings": "Buksan ang mga setting"
+        },
+        "settings_menu": {
+            "account": {
+                "title": "Account"
+            },
+            "appearance": {
+                "title": "Hitsura"
+            },
+            "functionality": {
+                "title": "Mga Feature"
+            },
+            "groups": {
+                "advanced": "Advanced",
+                "app": "App",
+                "other": "Iba pa",
+                "user": "User"
+            },
+            "i18n": {
+                "title": "Wika"
+            },
+            "info": {
+                "title": "Tungkol sa RVMob"
+            },
+            "other": {
+                "debug_info": "Kopyahin ang Debug Info",
+                "view_issues": "Tignan ang mga Nakabukas na Isyu",
+                "logout": "Mag-Log Out"
+            },
+            "profile": {
+                "title": "Profile"
+            }
+        },
+        "misc": {
+            "network_indicator": {
+                "body": "Nawalan ng koneksyon",
+                "hide": "(itago)"
+            },
+            "voice": {
+                "header": "Hindi pa sinusuportahan ang mga voice channel sa RVMob!",
+                "body": "Sa ngayon, maari mong silang i-join sa web app o Revolt Desktop."
+            }
+        }
+    }
+}
