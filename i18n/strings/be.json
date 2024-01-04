@@ -91,13 +91,18 @@
                     "set_colour": "Устанавіце колер ролі",
                     "errors": {
                         "empty_role_name": "Назва ролі ня можа быць пустой!"
-                    }
+                    },
+                    "open_colour_modal": "Увесць колер уручную"
                 },
                 "emoji": {
-                    "title": "Эмодзі"
+                    "title": "Эмодзі",
+                    "added_by": "Дадана @{{name}}",
+                    "empty": "Без эмодзі",
+                    "deleted_toast": "{{name}} выделена"
                 },
                 "members": {
-                    "title": "Удзельнікі"
+                    "title": "Удзельнікі",
+                    "loading": "Загрузка карыстачоў…"
                 },
                 "invites": {
                     "title": "Запрашэнні",
@@ -181,6 +186,34 @@
             },
             "subheader": "Ёсць акаунт?",
             "token_info_label": "Як атрымаць токен?"
+        },
+        "settings_menu": {
+            "account": {
+                "title": "Акаўнт"
+            },
+            "appearance": {
+                "title": "Выгляд"
+            },
+            "groups": {
+                "advanced": "Пашыраныя налады",
+                "app": "Прыкладанне",
+                "other": "Іншыя",
+                "user": "Карыстач"
+            },
+            "i18n": {
+                "title": "Мова"
+            },
+            "info": {
+                "title": "Аб RVMob"
+            },
+            "other": {
+                "debug_info": "Скапіяваць інфармацыю з атладкі",
+                "view_issues": "Праглядзець адкрытыя праблемы",
+                "logout": "Выйсці"
+            },
+            "profile": {
+                "title": "Профіль"
+            }
         }
     }
 }
