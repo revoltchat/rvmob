@@ -3,12 +3,10 @@ import React from 'react';
 import {client, app} from './Generic';
 import {currentTheme} from './Theme';
 import {Pressable, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
 import {Server, User, Channel} from 'revolt.js';
 import {Text, Username} from './components/common/atoms';
+import {Image} from '@rvmob/crossplat/Image';
 import {DEFAULT_MAX_SIDE} from './lib/consts';
-
-const Image = FastImage;
 
 type AvatarProps = {
   channel?: Channel;

@@ -3,6 +3,7 @@ module.exports = {
   env: {
     production: {
       plugins: [
+        'react-native-web',
         [
           'transform-remove-console',
           {
@@ -19,6 +20,7 @@ module.exports = {
         alias: {
           '@rvmob': './src',
           '@rvmob-i18n': './i18n',
+          "^react-native$": "react-native-web",
         },
       },
     ],

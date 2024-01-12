@@ -1,10 +1,10 @@
 import React from 'react';
 
-import FastImage from 'react-native-fast-image';
 import {SvgUri} from 'react-native-svg';
 
 import {EmojiPacks, RevoltEmojiDictionary, unicodeEmojiURL} from 'revkit';
 
+import {Image} from '@rvmob/crossplat/Image';
 import {client, app} from '../../../Generic';
 import {styles} from '../../../Theme';
 import {Text} from '../atoms';
@@ -39,7 +39,7 @@ export const CustomEmoji = ({id}: {id: string}) => {
     return <Text>{`:${id}:`}</Text>;
   }
   return (
-    <FastImage
+    <Image
       style={styles.emoji}
       source={{
         uri: `${client.configuration?.features.autumn.url}/emojis/${id}`,

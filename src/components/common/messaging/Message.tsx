@@ -2,8 +2,6 @@ import React from 'react';
 import {Dimensions, Pressable, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import FastImage from 'react-native-fast-image';
-
 import {formatRelative} from 'date-fns';
 import {enGB, enUS} from 'date-fns/locale';
 import {Message as RevoltMessage} from 'revolt.js';
@@ -19,11 +17,11 @@ import {
 import {app, client, openUrl} from '../../../Generic';
 import {Avatar} from '../../../Profile';
 import {currentTheme, styles} from '../../../Theme';
+import {Image} from '@rvmob/crossplat/Image';
 import {Text, Username} from '../atoms';
 import {MarkdownView} from '../MarkdownView';
 import {RE_INVITE, USER_IDS} from '../../../lib/consts';
 import {getReadableFileSize, parseRevoltNodes} from '../../../lib/utils';
-const Image = FastImage;
 
 type MessageProps = {
   message: RevoltMessage;
@@ -393,7 +391,7 @@ export const Message = observer((props: MessageProps) => {
                         onPress={() => app.openImage(a)}>
                         <Image
                           source={{uri: client.generateFileURL(a)}}
-                          resizeMode={FastImage.resizeMode.contain}
+                          resizeMode={'contain'}
                           style={{
                             width: width,
                             height: height,

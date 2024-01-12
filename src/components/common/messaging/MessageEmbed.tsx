@@ -2,15 +2,13 @@ import React from 'react';
 import {Dimensions, Pressable, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import FastImage from 'react-native-fast-image';
-
 import {API} from 'revolt.js';
 
+import {Image} from '@rvmob/crossplat/Image';
 import {app, client} from '../../../Generic';
 import {currentTheme} from '../../../Theme';
 import {MarkdownView} from '../MarkdownView';
 import {Link, Text} from '../atoms';
-const Image = FastImage;
 
 export const MessageEmbed = observer((eRaw: API.Embed) => {
   // @ts-expect-error This seems to be necessary even though it clashses with the API types

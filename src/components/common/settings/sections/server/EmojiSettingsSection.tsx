@@ -3,7 +3,6 @@ import {Pressable, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
-import FastImage from 'react-native-fast-image';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Server} from 'revolt.js';
@@ -11,8 +10,8 @@ import {Server} from 'revolt.js';
 import {client} from '@rvmob/Generic';
 import {currentTheme, styles} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms';
+import {Image} from '@rvmob/crossplat/Image';
 import {showToast} from '@rvmob/lib/utils';
-const Image = FastImage;
 
 export const EmojiSettingsSection = observer(({server}: {server: Server}) => {
   const {t} = useTranslation();

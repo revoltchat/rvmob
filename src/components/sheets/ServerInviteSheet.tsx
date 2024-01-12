@@ -2,7 +2,6 @@ import React from 'react';
 import {Pressable, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {API} from 'revolt.js';
@@ -10,8 +9,7 @@ import {API} from 'revolt.js';
 import {app, client, GeneralAvatar} from '../../Generic';
 import {currentTheme} from '../../Theme';
 import {Button, Text} from '../common/atoms';
-
-const Image = FastImage;
+import {Image} from '@rvmob/crossplat/Image';
 
 export const ServerInviteSheet = observer(
   ({
