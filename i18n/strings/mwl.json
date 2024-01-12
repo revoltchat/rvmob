@@ -4,7 +4,10 @@
             "cancel": "Cancelar",
             "back": "Atrás",
             "close": "Cerrar",
-            "delete": "Apagar"
+            "delete": "Apagar",
+            "confirm": "Cunfirmar",
+            "save": "Salbar",
+            "create_channel": "Criar canal"
         },
         "loading": {
             "connecting": "Ampeçando sesson…",
@@ -44,6 +47,27 @@
                 "body_server": "Stás assegurado que quieres apagar <2>{{name}}</2>?",
                 "header_message": "Apagar mensaige?",
                 "warning": "Esto nun puode ser çfeito."
+            },
+            "edit_text": {
+                "nickname_header": "Poner nomeada",
+                "nickname_placeholder": "Nomeada (deixar baziu pa reampeçar)",
+                "display_name_header": "Poner nome amostrado",
+                "display_name_placeholder": "Nome amostrado",
+                "session_name_header": "Poner nome de sesson",
+                "session_name_placeholder": "Nome de sesson",
+                "role_colour_header": "Poner quelor de ancarrego",
+                "role_colour_placeholder": "Quelor de ancarrego",
+                "nickname_other_header": "Poner nomeada de nembro",
+                "nickname_other_placeholder": "Nomeada (deixar baziu pa reampeçar)"
+            },
+            "create_channel": {
+                "header": "Criar un nuobo canal",
+                "name_header": "Nome",
+                "name_placeholder": "Nome de canal",
+                "type_text": "Canal de testo",
+                "type_voice": "Canal de boç",
+                "nsfw_header": "Einaporpriado (+18)",
+                "nsfw_label": "Marcar canal cumo Einaporpriado"
             }
         },
         "servers": {
@@ -66,7 +90,14 @@
                 },
                 "delete_server": "Apagar Serbidor",
                 "channels": {
-                    "title": "Canales"
+                    "title": "Canales",
+                    "name": "Nome de canal",
+                    "name_placeholder": "Poner un nome de canal…",
+                    "permissions": "Permissones de canal",
+                    "no_perms_set": "Nó ponido",
+                    "errors": {
+                        "empty_channel_name": "Nomes de canales nun puoden star bazius!"
+                    }
                 },
                 "roles": {
                     "title": "Ancarregos",
@@ -78,13 +109,18 @@
                         "empty_role_name": "Nomes de ancarregos nun puoden star bazius!"
                     },
                     "name": "Nome",
-                    "name_placeholder": "Define un nome de ancarrego…"
+                    "name_placeholder": "Define un nome de ancarrego…",
+                    "open_colour_modal": "Poner quelor manualmente"
                 },
                 "emoji": {
-                    "title": "Emoji"
+                    "title": "Emoji",
+                    "added_by": "Adicionado por @{{name}}",
+                    "empty": "Sien emoji",
+                    "deleted_toast": "{{name}} apagado"
                 },
                 "members": {
-                    "title": "Nembros"
+                    "title": "Nembros",
+                    "loading": "Apercurando nembros…"
                 },
                 "invites": {
                     "title": "Cumbites",
@@ -148,6 +184,34 @@
             "network_indicator": {
                 "body": "Coneçon perdida",
                 "hide": "(scunder)"
+            }
+        },
+        "settings_menu": {
+            "account": {
+                "title": "Cuonta"
+            },
+            "appearance": {
+                "title": "Aparéncia"
+            },
+            "groups": {
+                "advanced": "Abançado",
+                "app": "Aplicaçon",
+                "other": "Outros",
+                "user": "Outelizador"
+            },
+            "i18n": {
+                "title": "Lhéngua"
+            },
+            "info": {
+                "title": "Subre RVMob"
+            },
+            "other": {
+                "debug_info": "Anformaçon de la Cópia Debug",
+                "view_issues": "Ber Berbicachos Abiertos",
+                "logout": "Ancerrar Sesson"
+            },
+            "profile": {
+                "title": "Perfil"
             }
         }
     }
