@@ -7,8 +7,8 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {API, Server} from 'revolt.js';
 
-import {currentTheme, styles} from '../../../../../Theme';
-import {Text} from '../../../atoms';
+import {currentTheme, styles} from '@rvmob/Theme';
+import {Text} from '@rvmob/components/common/atoms';
 
 export const InviteSettingsSection = observer(({server}: {server: Server}) => {
   const {t} = useTranslation();
@@ -43,7 +43,7 @@ export const InviteSettingsSection = observer(({server}: {server: Server}) => {
                   @{i.creator} - #{i.channel}
                 </Text>
               </View>
-              {i._id.length === 8 ? (
+              {server.havePermission('ManageServer') && i._id.length === 8 ? (
                 <Pressable
                   style={{
                     width: 30,

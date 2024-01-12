@@ -5,9 +5,9 @@ import {observer} from 'mobx-react-lite';
 
 import {Server} from 'revolt.js';
 
-import {currentTheme} from '../../../../../Theme';
-import {GapView} from '../../../../layout';
-import {InputWithButton, Link, Text} from '../../../atoms';
+import {currentTheme} from '@rvmob/Theme';
+import {GapView} from '@rvmob/components/layout';
+import {InputWithButton, Link, Text} from '@rvmob/components/common/atoms';
 
 export const OverviewSettingsSection = observer(
   ({server}: {server: Server}) => {

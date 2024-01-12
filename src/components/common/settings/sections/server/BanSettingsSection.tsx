@@ -44,25 +44,27 @@ export const BanSettingsSection = observer(({server}: {server: Server}) => {
                   {b.reason ?? t('app.servers.settings.bans.no_reason')}
                 </Text>
               </View>
-              <Pressable
-                style={{
-                  width: 30,
-                  height: 20,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                onPress={() => {
-                  server.unbanUser(b._id.user);
-                  triggerReload(reload + 1);
-                }}>
-                <View style={styles.iconContainer}>
-                  <MaterialIcon
-                    name={'delete'}
-                    size={20}
-                    color={currentTheme.foregroundPrimary}
-                  />
-                </View>
-              </Pressable>
+              {server.havePermission('BanMembers') ? (
+                <Pressable
+                  style={{
+                    width: 30,
+                    height: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  onPress={() => {
+                    server.unbanUser(b._id.user);
+                    triggerReload(reload + 1);
+                  }}>
+                  <View style={styles.iconContainer}>
+                    <MaterialIcon
+                      name={'delete'}
+                      size={20}
+                      color={currentTheme.foregroundPrimary}
+                    />
+                  </View>
+                </Pressable>
+              ) : null}
             </View>
           ))
         ) : (
