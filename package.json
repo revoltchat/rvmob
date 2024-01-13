@@ -14,12 +14,13 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@gorhom/bottom-sheet": "^4.5.1",
+    "@gorhom/bottom-sheet": "^5.0.0-alpha.6",
     "@notifee/react-native": "^7.8.2",
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-native-clipboard/clipboard": "^1.13.2",
     "@react-native-community/hooks": "^3.0.0",
     "@rexovolt/react-native-side-menu": "^2.0.0",
+    "@svgr/webpack": "^8.1.0",
     "@tradle/react-native-http": "^2.0.1",
     "@traptitech/markdown-it-spoiler": "^1.1.6",
     "assert": "^2.1.0",

@@ -27,7 +27,7 @@ const babelLoaderConfiguration = {
   test: /\.js$|tsx?$/,
   // Add every directory that needs to be compiled by Babel during the build.
   include: [
-    path.resolve(__dirname, 'index.js'),
+    path.resolve(__dirname, 'index.web.js'),
     path.resolve(__dirname, 'App.tsx'),
     path.resolve(__dirname, 'src'),
     path.resolve(__dirname, 'i18n'),
@@ -46,7 +46,7 @@ const babelLoaderConfiguration = {
 };
 
 const imageLoaderConfiguration = {
-  test: /\.(gif|jpe?g|png|svg)$/,
+  test: /\.(gif|jpe?g|png)$/,
   use: {
     loader: 'url-loader',
     options: {
@@ -55,9 +55,25 @@ const imageLoaderConfiguration = {
   },
 };
 
+const vectorLoaderConfiguration = {
+  test: /\.svg$/,
+  exclude: /node_modules/,
+  use: [
+    {
+      loader: '@svgr/webpack',
+    },
+  ],
+};
+
+const vectorIconLoaderConfiguration = {
+  test: /\.ttf$/,
+  loader: "url-loader",
+  include: path.resolve(__dirname, "node_modules/react-native-vector-icons"),
+}
+
 module.exports = {
   entry: {
-    app: path.join(__dirname, 'index.js'),
+    app: path.join(__dirname, 'index.web.js'),
   },
   output: {
     filename: 'bundle.web.js',
@@ -72,7 +88,7 @@ module.exports = {
     fallback: { "crypto": require.resolve("react-native-get-random-values") }
   },
   module: {
-    rules: [babelLoaderConfiguration, imageLoaderConfiguration],
+    rules: [babelLoaderConfiguration, imageLoaderConfiguration, vectorLoaderConfiguration, vectorIconLoaderConfiguration],
   },
   plugins: [
     new HtmlWebpackPlugin({
