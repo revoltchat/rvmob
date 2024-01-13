@@ -3,7 +3,6 @@ module.exports = {
   env: {
     production: {
       plugins: [
-        'react-native-web',
         [
           'transform-remove-console',
           {
@@ -24,6 +23,7 @@ module.exports = {
         },
       },
     ],
+    'react-native-web',
     'react-native-reanimated/plugin',
   ],
 };

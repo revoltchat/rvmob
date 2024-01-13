@@ -8,6 +8,8 @@ const {presets} = require(`${appDirectory}/babel.config.js`);
 
 const compileNodeModules = [
   // react-native packages that need compiling
+  '@gorhom/bottom-sheet',
+  'react-native-gesture-handler',
   'react-native-image-pan-zoom',
   'react-native-image-zoom-viewer',
   'react-native-markdown-display',
@@ -38,7 +40,7 @@ const babelLoaderConfiguration = {
     options: {
       cacheDirectory: true,
       presets,
-      plugins: ['react-native-web'],
+      plugins: ['react-native-reanimated/plugin', 'react-native-web'],
     },
   },
 };
