@@ -1,4 +1,4 @@
-import {ToastAndroid} from 'react-native';
+import {Platform, ToastAndroid} from 'react-native';
 
 import {differenceInMinutes} from 'date-fns';
 import {Channel, Message} from 'revolt.js';
@@ -129,5 +129,11 @@ export async function fetchMessages(
 }
 
 export function showToast(badgeName: string) {
-  ToastAndroid.show(badgeName, ToastAndroid.SHORT);
+  if (Platform.OS === 'android') {
+    ToastAndroid.show(badgeName, ToastAndroid.SHORT);
+  } else {
+    console.warn(
+      `[UTILS] attempted to show toast outside android (${badgeName}) - implement this !!!`,
+    );
+  }
 }
