@@ -213,6 +213,9 @@
             },
             "profile": {
                 "title": "Профіль"
+            },
+            "functionality": {
+                "title": "Асаблівасці"
             }
         }
     }
