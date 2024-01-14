@@ -12,7 +12,10 @@
             "delete": "Удалить",
             "cancel": "Отмена",
             "close": "Закрыть",
-            "back": "Назад"
+            "back": "Назад",
+            "confirm": "Подтвердить",
+            "save": "Сохранить",
+            "create_channel": "Создать канал"
         },
         "modals": {
             "confirm_deletion": {
@@ -21,6 +24,28 @@
                 "body_server": "Вы точно хотите удалить <2>{{name}}</2>?",
                 "warning": "Это не может быть отменено.",
                 "body_message": "Вы точно хотите удалить <2>это сообщение</2>?"
+            },
+            "edit_text": {
+                "nickname_header": "Задать никнейм",
+                "nickname_placeholder": "Никнейм(оставте пустым для сброса)",
+                "display_name_header": "Задать отображаемое имя",
+                "display_name_placeholder": "Отображаемое имя",
+                "role_colour_header": "Задать цвет роли",
+                "role_colour_placeholder": "Цвет роли",
+                "session_name_header": "Задать название сессии",
+                "session_name_placeholder": "Название сессии",
+                "nickname_other_header": "Задать никнейм участника",
+                "nickname_other_placeholder": "Никнейм(оставте пустым для сброса)"
+            },
+            "create_channel": {
+                "header": "Создать новый канал",
+                "name_header": "Название",
+                "name_placeholder": "Название канала",
+                "type_header": "Тип",
+                "type_text": "Текстовый канал",
+                "type_voice": "Голосовой канал",
+                "nsfw_header": "NSFW",
+                "nsfw_label": "Пометить канал как NSFW"
             }
         },
         "loading": {
@@ -97,7 +122,14 @@
                     "markdown_tip": "Описание сервера не поддерживает разметку Markdown."
                 },
                 "channels": {
-                    "title": "Каналы"
+                    "title": "Каналы",
+                    "errors": {
+                        "empty_channel_name": "Название канала не может быть пустым!"
+                    },
+                    "name": "Название канала",
+                    "name_placeholder": "Задайте название канала…",
+                    "permissions": "Разрешения канала",
+                    "no_perms_set": "Не задано"
                 },
                 "roles": {
                     "title": "Роли",
@@ -109,13 +141,18 @@
                         "empty_role_name": "Название роли не может быть пустым!"
                     },
                     "name": "Название",
-                    "name_placeholder": "Установите название для роли…"
+                    "name_placeholder": "Установите название для роли…",
+                    "open_colour_modal": "Ввести цвет вручную"
                 },
                 "emoji": {
-                    "title": "Эмодзи"
+                    "title": "Эмодзи",
+                    "added_by": "Добавлено @{{name}}",
+                    "empty": "Без эмоджи",
+                    "deleted_toast": "{{name}} было удалено"
                 },
                 "members": {
-                    "title": "Участники"
+                    "title": "Участники",
+                    "loading": "Получение участников…"
                 },
                 "invites": {
                     "loading": "Загрузка приглашений…",
@@ -149,6 +186,37 @@
             },
             "subheader": "Есть аккаунт?",
             "token_info_label": "Как получить токен?"
+        },
+        "settings_menu": {
+            "profile": {
+                "title": "Профиль"
+            },
+            "account": {
+                "title": "Аккаунт"
+            },
+            "appearance": {
+                "title": "Внешний вид"
+            },
+            "functionality": {
+                "title": "Особенности"
+            },
+            "groups": {
+                "advanced": "Расширенные",
+                "app": "Приложение",
+                "other": "Другие",
+                "user": "Пользователь"
+            },
+            "i18n": {
+                "title": "Язык"
+            },
+            "info": {
+                "title": "Об RVMob"
+            },
+            "other": {
+                "debug_info": "Скопировать информацию с отладки",
+                "view_issues": "Просмотреть известные проблемы",
+                "logout": "Выйти"
+            }
         }
     }
 }
