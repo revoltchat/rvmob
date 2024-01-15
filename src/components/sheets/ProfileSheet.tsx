@@ -147,7 +147,8 @@ export const ProfileSheet = observer(() => {
           </>
         ) : (
           <>
-            <View style={{flexDirection: 'row', width: '80%'}}>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Avatar
                 size={80}
                 user={user}
@@ -158,7 +159,6 @@ export const ProfileSheet = observer(() => {
               />
               <View
                 style={{
-                  marginLeft: '90%',
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>

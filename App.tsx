@@ -348,23 +348,41 @@ class MainView extends React.Component {
       <View style={styles.app}>
         {this.state.status === 'loggedIn' ? (
           <>
-            <SideMenuBase
-              openMenuOffset={Dimensions.get('window').width - 50}
-              overlayColor={'#00000040'}
-              edgeHitWidth={Dimensions.get('window').width}
-              isOpen={this.state.leftMenuOpen}
-              onChange={open => this.setState({leftMenuOpen: open})}
-              menu={
-                <SideMenu
-                  onChannelClick={this.setChannel.bind(this)}
-                  currentChannel={this.state.currentChannel}
-                  orderedServers={this.state.orderedServers}
-                />
-              }
-              style={styles.app}
-              bounceBackOnOverdraw={false}>
-              <ChannelView state={this} channel={this.state.currentChannel} />
-            </SideMenuBase>
+            {Dimensions.get('window').width >
+            Dimensions.get('window').height ? (
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <View
+                  style={{
+                    width: '20%',
+                    flexDirection: 'column',
+                  }}>
+                  <SideMenu
+                    onChannelClick={this.setChannel.bind(this)}
+                    currentChannel={this.state.currentChannel}
+                    orderedServers={this.state.orderedServers}
+                  />
+                </View>
+                <ChannelView state={this} channel={this.state.currentChannel} />
+              </View>
+            ) : (
+              <SideMenuBase
+                openMenuOffset={Dimensions.get('window').width - 50}
+                overlayColor={'#00000040'}
+                edgeHitWidth={Dimensions.get('window').width}
+                isOpen={this.state.leftMenuOpen}
+                onChange={open => this.setState({leftMenuOpen: open})}
+                menu={
+                  <SideMenu
+                    onChannelClick={this.setChannel.bind(this)}
+                    currentChannel={this.state.currentChannel}
+                    orderedServers={this.state.orderedServers}
+                  />
+                }
+                style={styles.app}
+                bounceBackOnOverdraw={false}>
+                <ChannelView state={this} channel={this.state.currentChannel} />
+              </SideMenuBase>
+            )}
             <Modals />
             <NetworkIndicator client={client} />
             <View
