@@ -66,3 +66,6 @@ yarn-error.log
 
 # Testing
 /coverage
+
+# Webpack
+dist
