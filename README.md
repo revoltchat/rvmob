@@ -70,7 +70,7 @@ CLI commands:
 | -------------- | ----------------------------------------- |
 | `yarn start`   | Starts Metro (the dev server).            |
 | `yarn test`    | Tests to see if everything is working.    |
-| `yarn web`     | Runs the web app.                     |
+| `yarn web`     | Runs the web app.                         |
 | `yarn android` | Runs the Android app.                     |
 | `yarn ios`     | Runs the iOS app (broken/requires a Mac). |
 | `yarn lint`    | Checks the code syntax using ESLint.      |
