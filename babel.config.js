@@ -1,3 +1,5 @@
+const {mobilePlugins} = require('./config/babel-shared');
+
 module.exports = {
   presets: ['module:@react-native/babel-preset'],
   env: {
@@ -12,18 +14,5 @@ module.exports = {
       ],
     },
   },
-  plugins: [
-    [
-      'module-resolver',
-      {
-        alias: {
-          '@rvmob': './src',
-          '@rvmob-i18n': './i18n',
-          "^react-native$": "react-native-web",
-        },
-      },
-    ],
-    'react-native-web',
-    'react-native-reanimated/plugin',
-  ],
+  plugins: mobilePlugins,
 };
