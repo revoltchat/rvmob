@@ -108,7 +108,6 @@
     "react-native-clean-project": "^4.0.3",
     "react-native-svg-transformer": "^1.2.0",
     "react-test-renderer": "^18.2.0",
-    "rn-nodeify": "^10.3.0",
     "typescript": "^5.3.3",
     "url-loader": "^4.1.1",
     "webpack": "^5.89.0",

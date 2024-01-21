@@ -59,7 +59,6 @@ npx react-native-asset
 # for web:
 yarn web
 # OR for android:
-npx rn-nodeify -e
 yarn android
 yarn start
 ```
