@@ -1,3 +1,5 @@
+import {Platform} from 'react-native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {decodeTime} from 'ulid';
@@ -5,13 +7,17 @@ import {decodeTime} from 'ulid';
 import {client} from '@rvmob/Generic';
 
 export async function loginRegular(state: any) {
+  const friendlyName = `RVMob for ${Platform.OS.charAt(
+    0,
+  ).toUpperCase()}${Platform.OS.slice(1)}`;
+
   state.setState({status: 'tryingLogin'});
   try {
     console.log('[AUTH] Attempting login with email and password...');
     let session = await client.api.post('/auth/session/login', {
       email: state.state.emailInput,
       password: state.state.passwordInput,
-      friendly_name: 'RVMob',
+      friendly_name: friendlyName,
     });
 
     // check if account is disabled; if not, prompt for MFA verificaiton if necessary
@@ -41,7 +47,7 @@ export async function loginRegular(state: any) {
               ? {recovery_code: state.state.tfaInput}
               : {totp_code: state.state.tfaInput},
             mfa_ticket: state.state.tfaTicket,
-            friendly_name: 'RVMob',
+            friendly_name: friendlyName,
           });
           console.log(`[AUTH] Result: ${session.result}`);
           if (session.result !== 'Success') {
