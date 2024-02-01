@@ -10,7 +10,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "web": "yarn webpack-dev-server --config webpack.config.js --hot --mode=development",
+    "web": "webpack-dev-server --config webpack.config.js --hot --mode=development",
+    "web-release": "webpack --config webpack.config.js",
     "postinstall": "patch-package"
   },
   "dependencies": {
