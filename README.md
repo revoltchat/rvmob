@@ -9,7 +9,7 @@
   </a>
 </div>
 
-**RVMob** is a Revolt client made with React Native. It is available for Android and web.
+**RVMob** is a Revolt client made with React Native. It is currently available for Android and will be available for web in the future.
 
 **Please note that RVMob is currently in beta.** It contains several bugs and incomplete features - use at your own discretion.
 
@@ -19,7 +19,7 @@ For development updates and other news, join [RVMob's support server][support-se
 
 If you want to install RVMob for Android, simply go to [the releases tab](https://github.com/revoltchat/rvmob/releases) and download the latest version. We plan on publishing RVMob to app stores in the future.
 
-You can try RVMob for web [here](). Note that, as the web version is still under development, some features are only available on Android or may not work as smoothly. You may also see some layout issues.
+<!-- You can try RVMob for web [here](). Note that, as the web version is still under development, some features are only available on Android or may not work as smoothly. You may also see some layout issues. -->
 
 Debug builds are also produced for every commit. These are unoptimised - they're much larger and noticeably slower than the release builds, but you can try out new features early.
 
@@ -27,9 +27,11 @@ Debug builds are also produced for every commit. These are unoptimised - they're
 
 Also note that, from v0.7.0, RVMob's APKs are **split by architecture**. This helps to reduce file and app sizes - however, you'll need to make sure that you **download the APK that matches your device's architecture**, or **it won't install!**
 
-If you're using an app store, this should be handled for you. If not, however, you'll need to check your device's architecture. I'd recommend using [Treble Info](https://gitlab.com/TrebleInfo/TrebleInfo/-/blob/dev/README.md) for this. Install and open the app - **don't worry about what it says on the home page!** - then open the Details tab and check the CPU architecture entry.
+**If you're using an app store, this should be handled for you.** 
 
-Depending on what it says:
+If not, however, you'll need to check your device's architecture. I'd recommend using [Treble Info](https://gitlab.com/TrebleInfo/TrebleInfo/-/blob/dev/README.md) for this. 
+
+Install and open the app - **don't worry about what it says on the home page!** - then open the Details tab and check the CPU architecture entry. Depending on what it says:
 
 - if it says `ARM64`, you'll want the APK with **`arm64-v8a`** in its file name;
 - if it says `ARM32`, you'll want the APK with **`armeabi-v7a`** in its file name;
@@ -49,7 +51,6 @@ If you want to build RVMob for Android, you'll also need:
 
 - JDK 17 ([Microsoft's build](https://learn.microsoft.com/en-gb/java/openjdk/download) works well),
 - the latest Android SDK (preferably via [Android Studio](https://developer.android.com/studio)'s SDK Manager), and
-- [npx](https://www.npmjs.com/package/npx).
 
 Then run the following:
 
@@ -58,7 +59,7 @@ yarn install
 npx react-native-asset
 # for web:
 yarn web
-# OR for android:
+# for android:
 yarn android
 yarn start
 ```
