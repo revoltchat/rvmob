@@ -5,13 +5,17 @@
             "open_lounge": "Buka Revolt Lounge",
             "join_rvmob": "Bergabung ke server RVMob",
             "open_rvmob": "Buka server RVMob",
-            "open_settings": "Buka pengaturan"
+            "open_settings": "Buka pengaturan",
+            "description": "Geser dari kiri layar atau ketuk ikon tiga baris untuk melihat server dan pesan kamu!"
         },
         "actions": {
             "delete": "Hapus",
             "cancel": "Batal",
             "close": "Tutup",
-            "back": "Kembali"
+            "back": "Kembali",
+            "confirm": "Konfirmasi",
+            "save": "Simpan",
+            "create_channel": "Buat saluran"
         },
         "loading": {
             "generic": "Memuat…",
@@ -24,6 +28,16 @@
                 "body_server": "Apa kamu yakin ingin menghapus <2>{{name}}</2>?",
                 "body_message": "Apa kamu yakin ingin menghapus <2>pesan ini</2>?",
                 "warning": "Tindakan ini tidak dapat dibatalkan."
+            },
+            "create_channel": {
+                "header": "Buat saluran baru",
+                "name_header": "Nama",
+                "name_placeholder": "Nama saluran",
+                "type_header": "Jenis",
+                "type_text": "Saluran teks",
+                "type_voice": "Saluran suara",
+                "nsfw_header": "NSFW",
+                "nsfw_label": "Tandai saluran sebagai NSFW"
             }
         },
         "settings": {
