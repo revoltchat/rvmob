@@ -24,7 +24,7 @@
             "options": {
                 "login_regular": "Si, ampeça sesson cul miu email i palabra-passe",
                 "login_regular_body": "Recomendado pa la maiorie de ls outelizadores.",
-                "login_session_token": "Si, ampeçar sesson cun ũa token de sesson",
+                "login_session_token": "Si, ampeçar sesson cũa token de sesson",
                 "login_session_token_body": "Outeliza esto se tenes berbicachos cul sistema normal de ampeço de sesson. Algũa funcionalidade puode nun star çponible.",
                 "signup": "Nó, anscrebir-se",
                 "signup_body": "Bais a ser redirecionado pa la app de web. Quando se te anscrebires, bolbe-te i ampeça la tue sesson."
@@ -137,10 +137,10 @@
         },
         "settings": {
             "ui": {
-                "theme_remark": "Tenerás que abrir ó cerrar l sidemenu pa tues demudanças apareceren an to l lhado.",
+                "theme_remark": "Tenerás qu'abrir ó cerrar l sidemenu pa tues demudanças apareceren an to l lhado.",
                 "messaging": {
                     "emojiPack": "Pack de emojis",
-                    "doubleTapToReply": "Arrespunde a mensaiges por fazer clique-doble neilhas",
+                    "doubleTapToReply": "Arrespunde a mensaiges fazendo clique-doble neilhas",
                     "experimentalScrolling_remark": "Solo puodes fazer scroll alrobés.",
                     "sendAttachments": "Atibar ambio de aneixos",
                     "messageSpacing": "Spácio de mensaiges",
