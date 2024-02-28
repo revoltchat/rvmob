@@ -12,7 +12,7 @@
     "test": "jest",
     "lint": "eslint .",
     "web": "webpack-dev-server --config webpack.config.js --hot --mode=development",
-    "web-release": "webpack --config webpack.config.js",
+    "web-release": "webpack --config webpack.config.js --mode=production",
     "postinstall": "patch-package"
   },
   "dependencies": {

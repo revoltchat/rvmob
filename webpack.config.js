@@ -98,6 +98,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'web/index.html'),
+      favicon: path.join(__dirname, 'public/favicon.ico'),
     }),
     new webpack.DefinePlugin({
       // See: https://github.com/necolas/react-native-web/issues/349
