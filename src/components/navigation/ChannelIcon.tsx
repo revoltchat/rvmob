@@ -1,15 +1,13 @@
 import React from 'react';
 
-import FastImage from 'react-native-fast-image';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Channel} from 'revolt.js';
 
+import {Image} from '@rvmob/crossplat/Image';
 import {DEFAULT_MAX_SIDE} from '@rvmob/lib/consts';
 import {currentTheme} from '@rvmob/Theme';
-
-const Image = FastImage;
 
 interface CIChannel {
   type: 'channel';

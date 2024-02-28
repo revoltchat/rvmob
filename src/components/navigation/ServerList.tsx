@@ -2,7 +2,6 @@ import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {decodeTime} from 'ulid';
@@ -10,9 +9,8 @@ import {decodeTime} from 'ulid';
 import {client, openUrl} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
 import {Text} from '../common/atoms';
+import {Image} from '@rvmob/crossplat/Image';
 import {DEFAULT_MAX_SIDE} from '../../lib/consts';
-
-const Image = FastImage;
 
 export const ServerList = observer(
   ({

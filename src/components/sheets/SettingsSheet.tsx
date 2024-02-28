@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, ScrollView, View} from 'react-native';
+import {Platform, Pressable, ScrollView, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
@@ -10,6 +10,7 @@ import {
   getBrand,
   getBundleId,
   getDevice,
+  getUserAgent,
 } from 'react-native-device-info';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -37,8 +38,13 @@ async function copyDebugInfo() {
   const obj = {
     deviceInfo: {
       time: new Date().getTime(),
-      model: `${getBrand()}/${await getDevice()}`,
-      version: `${await getApiLevel()}`,
+      platform: Platform.OS,
+      model:
+        Platform.OS === 'android'
+          ? `${getBrand()}/${await getDevice()}`
+          : 'N/A',
+      browser: Platform.OS === 'web' ? `${await getUserAgent()}` : 'N/A',
+      version: Platform.OS === 'android' ? `${await getApiLevel()}` : 'N/A',
     },
 
     appInfo: {

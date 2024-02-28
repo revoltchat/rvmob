@@ -3,15 +3,13 @@ import {Pressable, View} from 'react-native';
 import {action} from 'mobx';
 import {observer} from 'mobx-react-lite';
 
-import FastImage from 'react-native-fast-image';
-
 import {Message} from 'revolt.js';
 
+import {Image} from '@rvmob/crossplat/Image';
 import {client} from '../../../Generic';
 import {showToast} from '../../../lib/utils';
 import {currentTheme} from '../../../Theme';
 import {Text} from '../atoms';
-const Image = FastImage;
 
 type ReactionPile = {
   emoji: string;

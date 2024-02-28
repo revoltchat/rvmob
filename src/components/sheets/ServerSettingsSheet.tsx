@@ -3,13 +3,13 @@ import {Pressable, ScrollView, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
-import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Server} from 'revolt.js';
 
 import {app, client} from '../../Generic';
+import {Image} from '@rvmob/crossplat/Image';
 import {MAX_SIDE_HQ} from '../../lib/consts';
 import {SettingsSection} from '../../lib/types';
 import {currentTheme, styles} from '../../Theme';
@@ -24,7 +24,6 @@ import {
   EmojiSettingsSection,
 } from '../common/settings/sections/server';
 import {GapView} from '../layout';
-const Image = FastImage;
 
 export const ServerSettingsSheet = observer(
   ({server, setState}: {server: Server; setState: Function}) => {

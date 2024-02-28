@@ -2,9 +2,10 @@ import React from 'react';
 import {Pressable, View, TextInput} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import DocumentPicker, {
-  DocumentPickerResponse,
-} from 'react-native-document-picker';
+// FIXME: uncomment once rndp is excluded on web
+// import DocumentPicker, {
+//  DocumentPickerResponse,
+// } from 'react-native-document-picker';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 

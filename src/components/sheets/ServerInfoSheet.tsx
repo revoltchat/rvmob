@@ -4,7 +4,6 @@ import {observer} from 'mobx-react-lite';
 
 import BottomSheetCore from '@gorhom/bottom-sheet';
 import {useBackHandler} from '@react-native-community/hooks';
-import FastImage from 'react-native-fast-image';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -17,8 +16,7 @@ import {currentTheme, styles} from '../../Theme';
 import {ContextButton, CopyIDButton, Text} from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
 import {MarkdownView} from '../common/MarkdownView';
-
-const Image = FastImage;
+import {Image} from '@rvmob/crossplat/Image';
 
 export const ServerInfoSheet = observer(() => {
   const [server, setServer] = React.useState(null as Server | null);

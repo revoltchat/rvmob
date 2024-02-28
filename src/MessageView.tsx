@@ -1,9 +1,10 @@
 import React from 'react';
 import {
-  View,
   FlatList,
   NativeSyntheticEvent,
   NativeScrollEvent,
+  Platform,
+  View,
   // Dimensions,
   // Keyboard,
 } from 'react-native';
@@ -255,7 +256,7 @@ export const NewMessageView = observer(
               data={messages}
               style={styles.messagesView}
               contentContainerStyle={{
-                paddingBottom: 20,
+                paddingBottom: Platform.OS === 'web' ? 0 : 20,
                 flexGrow: 1,
                 justifyContent: 'flex-end',
                 flexDirection: 'column',

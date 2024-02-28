@@ -20,6 +20,7 @@ export const BottomSheet = observer(
         snapPoints={snapPoints}
         enablePanDownToClose
         backdropComponent={BottomSheetBackdrop}
+        style={{margin: 'auto', maxWidth: 800}}
         backgroundStyle={{
           backgroundColor: currentTheme.backgroundSecondary,
         }}

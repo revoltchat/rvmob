@@ -1,6 +1,6 @@
-import {ToastAndroid} from 'react-native';
+import {Platform, ToastAndroid} from 'react-native';
 
-import {differenceInMinutes} from 'date-fns';
+import {differenceInMinutes, isSameDay} from 'date-fns';
 import {Channel, Message} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
@@ -62,15 +62,16 @@ export function calculateGrouped(msg1: Message, msg2: Message) {
   if (!msg1.author || !msg2.author) {
     return false;
   }
+
+  const time1 = decodeTime(msg1._id);
+  const time2 = decodeTime(msg2._id);
+
   return (
-    // a message is grouped with the previous message if all of the following is true:
+    // a message is grouped with the previous message if all of the following statements are true:
     msg1.author._id === msg2.author._id && // the author is the same
     !(msg1.reply_ids && msg1.reply_ids.length > 0) && // the message is not a reply
-    differenceInMinutes(
-      // the time difference is less than 7 minutes and
-      decodeTime(msg1._id),
-      decodeTime(msg2._id),
-    ) < 7 &&
+    differenceInMinutes(time1, time2) < 7 && // the time difference is less than 7 minutes
+    isSameDay(time1, time2) && // the messages were sent on the same day and
     (msg2.masquerade // the masquerade is the same
       ? msg2.masquerade.avatar === msg1.masquerade?.avatar &&
         msg2.masquerade.name === msg1.masquerade?.name
@@ -129,5 +130,11 @@ export async function fetchMessages(
 }
 
 export function showToast(badgeName: string) {
-  ToastAndroid.show(badgeName, ToastAndroid.SHORT);
+  if (Platform.OS === 'android') {
+    ToastAndroid.show(badgeName, ToastAndroid.SHORT);
+  } else {
+    console.warn(
+      `[UTILS] attempted to show toast outside android (${badgeName}) - implement this !!!`,
+    );
+  }
 }

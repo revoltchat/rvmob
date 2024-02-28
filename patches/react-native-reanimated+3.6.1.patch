@@ -1,0 +1,18 @@
+diff --git a/node_modules/react-native-reanimated/lib/module/reanimated2/PlatformChecker.js b/node_modules/react-native-reanimated/lib/module/reanimated2/PlatformChecker.js
+index eff25dc..fad42a8 100644
+--- a/node_modules/react-native-reanimated/lib/module/reanimated2/PlatformChecker.js
++++ b/node_modules/react-native-reanimated/lib/module/reanimated2/PlatformChecker.js
+@@ -5,7 +5,12 @@ import { Platform } from 'react-native';
+ // This type is necessary since some libraries tend to do a lib check
+ // and this file causes type errors on `global` access.
+ export function isJest() {
+-  return !!process.env.JEST_WORKER_ID;
++  // don't crash if `process` is undefined as this causes problems on web
++  try {
++    return !!process.env.JEST_WORKER_ID;
++  } catch (e) {
++    return false
++  }
+ }
+ 
+ // `isChromeDebugger` also returns true in Jest environment, so `isJest()` check should always be performed first

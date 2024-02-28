@@ -2,12 +2,12 @@ import React from 'react';
 import {Linking, View} from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import FastImage from 'react-native-fast-image';
 
 import {API, Channel, Client, Message, Server} from 'revolt.js';
 
 import {setLanguage} from '@rvmob-i18n/i18n';
 import {languages} from '@rvmob-i18n/languages';
+import {Image} from '@rvmob/crossplat/Image';
 import {setTheme, themes} from '@rvmob/Theme';
 import {
   DEFAULT_API_URL,
@@ -26,7 +26,6 @@ import {
   Setting,
   TextEditingModalProps,
 } from '@rvmob/lib/types';
-const Image = FastImage;
 
 export const app = {
   version: '0.6.0',

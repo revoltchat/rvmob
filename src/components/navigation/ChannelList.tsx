@@ -1,8 +1,7 @@
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {ImageBackground, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Channel, Server} from 'revolt.js';
@@ -10,7 +9,6 @@ import {Channel, Server} from 'revolt.js';
 import {app, client} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
 import {ChannelButton, Text} from '../common/atoms';
-const Image = FastImage;
 
 type ChannelListProps = {
   onChannelClick: Function;
@@ -99,7 +97,7 @@ const ServerChannelList = observer((props: ServerChannelListProps) => {
   return (
     <>
       {props.currentServer.banner ? (
-        <Image
+        <ImageBackground
           source={{uri: props.currentServer.generateBannerURL()}}
           style={{width: '100%', height: 110, justifyContent: 'flex-end'}}>
           <TouchableOpacity
@@ -123,7 +121,7 @@ const ServerChannelList = observer((props: ServerChannelListProps) => {
               </View>
             </View>
           </TouchableOpacity>
-        </Image>
+        </ImageBackground>
       ) : (
         <TouchableOpacity
           onPress={() => app.openServerContextMenu(props.currentServer)}
