@@ -1,6 +1,7 @@
 {
   "name": "rvmob",
   "version": "0.7.0-beta1",
+  "homepage": "https://revoltchat.github.io/rvmob",
   "private": true,
   "scripts": {
     "clean": "react-native-clean-project",

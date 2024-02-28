@@ -1,4 +1,4 @@
-name: Build RVMob (debug)
+name: Build RVMob for Android (debug)
 
 on:
   push:
