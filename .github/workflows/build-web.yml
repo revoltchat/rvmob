@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build-and-deploy-web:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

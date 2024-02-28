@@ -4,7 +4,7 @@ on:
   push:
 
 jobs:
-  # build-win:
+  # build-android-debug-win:
   #   runs-on: windows-latest
   #   steps:
   #     - name: Checkout Repository
@@ -28,13 +28,13 @@ jobs:
   #       with:
   #         path: D:\a\rvmob\rvmob\android\app\build\outputs\apk\debug\app-debug.apk
   #         name: RVMob-Debug-${{ github.sha }}.apk
-  build-linux:
+  build-android-debug-linux:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Set up Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'yarn'
