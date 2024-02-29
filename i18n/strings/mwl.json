@@ -27,7 +27,7 @@
                 "login_session_token": "Si, ampeçar sesson cũa token de sesson",
                 "login_session_token_body": "Outeliza esto se tenes berbicachos cul sistema normal de ampeço de sesson. Algũa funcionalidade puode nun star çponible.",
                 "signup": "Nó, anscrebir-se",
-                "signup_body": "Bais a ser redirecionado pa la app de web. Quando se te anscrebires, bolbe-te i ampeça la tue sesson."
+                "signup_body": "Bais a ser redirecionado pa la app de web. Quando se t'anscrebires, bolbe-te i ampeça la tue sesson."
             },
             "token_info_label": "Cumo cunsigo ũa token?",
             "subheader": "Tenes ũa conta?"
@@ -46,7 +46,7 @@
                 "body_message": "Stás assegurado que quieres apagar <2>esta mensaige</2>?",
                 "body_server": "Stás assegurado que quieres apagar <2>{{name}}</2>?",
                 "header_message": "Apagar mensaige?",
-                "warning": "Esto nun puode ser çfeito."
+                "warning": "Esto nun puode ser çfazido."
             },
             "edit_text": {
                 "nickname_header": "Poner nomeada",
@@ -67,7 +67,8 @@
                 "type_text": "Canal de testo",
                 "type_voice": "Canal de boç",
                 "nsfw_header": "Einaporpriado (+18)",
-                "nsfw_label": "Marcar canal cumo Einaporpriado"
+                "nsfw_label": "Marcar canal cumo Einaporpriado",
+                "type_header": "Tipo"
             }
         },
         "servers": {
@@ -170,7 +171,7 @@
                 "language": "Seleciona tue lhéngua",
                 "refetchOnReconnect": "Apercurar mensaiges quando reconetando",
                 "notifications": {
-                    "notifyOnSelfPing": "Recibe ũa notificaçon quando se te amentas a ti",
+                    "notifyOnSelfPing": "Recibe ũa notificaçon quando se t'amentas a ti",
                     "enabled": "Atibar notificaçones push"
                 },
                 "showChangelogs": "Amostrar changelogs açpuis de atualizar l RVMob"
@@ -212,6 +213,9 @@
             },
             "profile": {
                 "title": "Perfil"
+            },
+            "functionality": {
+                "title": "Caratelísticas"
             }
         }
     }
