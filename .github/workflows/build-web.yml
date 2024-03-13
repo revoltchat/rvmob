@@ -2,7 +2,7 @@ name: Build and deploy RVMob for web
 
 on:
   push:
-    branches: ["main", "master"] # TODO: clean up after switching
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

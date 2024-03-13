@@ -602,7 +602,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               <View style={{flexDirection: 'row'}}>
                 <Text>Licensed under the </Text>
                 <Link
-                  link={`${GITHUB_REPO}/blob/master/LICENSE`}
+                  link={`${GITHUB_REPO}/blob/main/LICENSE`}
                   label={'GNU GPL v3.0'}
                 />
               </View>
