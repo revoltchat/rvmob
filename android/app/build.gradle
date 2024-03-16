@@ -137,8 +137,6 @@ dependencies {
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
     
-    // implementation('com.ts:auth-control-sdk:5.1.1@aar') { transitive=true }
-
     // if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     // } else {
