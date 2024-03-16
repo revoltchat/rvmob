@@ -266,7 +266,6 @@ export const app = {
       {
         key: 'ui.settings.showExperimental',
         category: 'functionality',
-        name: 'Show experimental features',
         default: false,
         type: 'boolean',
       },

@@ -85,6 +85,6 @@ If you're still experiencing issues, and there aren't any open issues for the bu
 
 ## License
 
-RVMob is licensed under the [GNU Affero General Public License v3.0](https://github.com/revoltchat/rvmob/blob/master/LICENSE).
+RVMob is licensed under the [GNU Affero General Public License v3.0](https://github.com/revoltchat/rvmob/blob/main/LICENSE).
 
 [support-server]: https://rvlt.gg/rvmob
