@@ -103,6 +103,7 @@ export const themes = {
   // },
   AMOLED: {
     ...commonColours,
+    background: '#000000',
     backgroundPrimary: '#000000',
     backgroundSecondary: '#000000',
     foregroundPrimary: '#F6F6F6',
