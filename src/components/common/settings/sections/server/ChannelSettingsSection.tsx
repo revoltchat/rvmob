@@ -5,10 +5,10 @@ import {observer} from 'mobx-react-lite';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {Server} from 'revolt.js';
+import {Channel, Server} from 'revolt.js';
 
 import {app} from '@rvmob/Generic';
-import {ChannelSettingsSubsection} from '@rvmob/lib/types';
+import {SettingsSection} from '@rvmob/lib/types';
 import {currentTheme, styles} from '@rvmob/Theme';
 import {GapView} from '@rvmob/components/layout';
 import {
@@ -19,34 +19,43 @@ import {
 import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
 
 export const ChannelSettingsSection = observer(
-  ({server, callback}: {server: Server; callback: Function}) => {
+  ({
+    server,
+    section,
+    setSection,
+  }: {
+    server: Server;
+    section: SettingsSection;
+    setSection: Function;
+  }) => {
     const {t} = useTranslation();
 
-    const [subsection, setSubsection] = React.useState(
-      null as ChannelSettingsSubsection,
-    );
+    const [channel, setChannel] = React.useState<Channel | null>(null);
+
+    const handleBackInSubsection = () => {
+      setChannel(null);
+      setSection({section: 'channels', subsection: undefined});
+    };
 
     return (
       <>
         <BackButton
           callback={() => {
-            subsection ? setSubsection(null) : callback();
+            channel ? handleBackInSubsection() : setSection(null);
           }}
           margin
         />
-        {subsection ? (
+        {section!.subsection !== undefined && channel ? (
           <>
-            <Text type={'h1'}>{subsection.name}</Text>
-            <Text colour={currentTheme.foregroundSecondary}>
-              {subsection._id}
-            </Text>
+            <Text type={'h1'}>{channel.name}</Text>
+            <Text colour={currentTheme.foregroundSecondary}>{channel._id}</Text>
             <GapView size={2} />
             <Text type={'h2'}>{t('app.servers.settings.channels.name')}</Text>
             <InputWithButton
               placeholder={t('app.servers.settings.channels.name_placeholder')}
-              defaultValue={subsection.name ?? ''}
+              defaultValue={channel.name ?? ''}
               onPress={(v: string) => {
-                subsection.edit({name: v});
+                channel.edit({name: v});
               }}
               buttonContents={{
                 type: 'icon',
@@ -67,7 +76,7 @@ export const ChannelSettingsSection = observer(
             {server.orderedRoles.map(r => (
               <View
                 style={styles.settingsEntry}
-                key={`channel-settings-${subsection._id}-perms-${r.id}`}>
+                key={`channel-settings-${channel._id}-perms-${r.id}`}>
                 <View style={{flex: 1}}>
                   <View>
                     <Text
@@ -83,10 +92,9 @@ export const ChannelSettingsSection = observer(
                 </View>
                 <View>
                   <Text>
-                    {subsection.role_permissions &&
-                    subsection.role_permissions[r.id]
-                      ? `${subsection.role_permissions[r.id].a} | ${
-                          subsection.role_permissions[r.id].d
+                    {channel.role_permissions && channel.role_permissions[r.id]
+                      ? `${channel.role_permissions[r.id].a} | ${
+                          channel.role_permissions[r.id].d
                         }`
                       : 'Not set'}
                   </Text>
@@ -195,7 +203,8 @@ export const ChannelSettingsSection = observer(
                     style={styles.settingsEntry}
                     key={`channel-settings-entry-${c._id}`}
                     onPress={() => {
-                      setSubsection(c);
+                      setChannel(c);
+                      setSection({section: 'channels', subsection: c._id});
                     }}>
                     <View style={{marginEnd: 8}}>
                       <ChannelIcon

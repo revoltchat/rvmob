@@ -176,7 +176,9 @@ export const Modals = observer(() => {
         visible={settingsVisibility}
         transparent={true}
         animationType="slide"
-        onRequestClose={() => setSettingsVisibility(false)}>
+        onRequestClose={() =>
+          app.handleSettingsVisibility(setSettingsVisibility)
+        }>
         <SettingsSheet setState={() => setSettingsVisibility(false)} />
       </Modal>
       <Modal
@@ -210,7 +212,9 @@ export const Modals = observer(() => {
         visible={!!serverSettingsServer}
         transparent={true}
         animationType="slide"
-        onRequestClose={() => setServerSettingsServer(null)}>
+        onRequestClose={() =>
+          app.handleServerSettingsVisibility(setServerSettingsServer)
+        }>
         <ServerSettingsSheet
           server={serverSettingsServer!}
           setState={() => setServerSettingsServer(null)}

@@ -1,4 +1,4 @@
-import {Channel, Message, Server, User} from 'revolt.js';
+import {Message, Server, User} from 'revolt.js';
 
 type StringSetting = {
   default: string;
@@ -23,9 +23,10 @@ export type Setting = (StringSetting | BoolSetting) & {
   remark?: boolean;
 };
 
-export type SettingsSection = string | null;
-
-export type ChannelSettingsSubsection = Channel | null;
+export type SettingsSection = {
+  section: string;
+  subsection?: string;
+} | null;
 
 export type ReplyingMessage = {
   mentions: boolean;

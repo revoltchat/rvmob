@@ -335,6 +335,16 @@ export const app = {
   openDeletionConfirmationModal: (object: DeletableObject | null) => {},
   openTextEditModal: (object: TextEditingModalProps | null) => {},
   openCreateChannelModal: (object: CreateChannelModalProps | null) => {},
+  handleSettingsVisibility: (stateFunction: (state: boolean) => void) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function handleSettingsVisibility(args: ${stateFunction})`,
+    );
+  },
+  handleServerSettingsVisibility: (stateFunction: (state: null) => void) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function handleServerSettingsVisibility (args: ${stateFunction})`,
+    );
+  },
 };
 
 export function setFunction(name: string, func: any) {

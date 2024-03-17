@@ -8,7 +8,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Server} from 'revolt.js';
 
-import {app, client} from '../../Generic';
+import {app, client, setFunction} from '../../Generic';
 import {Image} from '@rvmob/crossplat/Image';
 import {MAX_SIDE_HQ} from '../../lib/consts';
 import {SettingsSection} from '../../lib/types';
@@ -30,7 +30,7 @@ export const ServerSettingsSheet = observer(
     const {t} = useTranslation();
 
     // const [renderCount, rerender] = React.useState(0);
-    const [section, setSection] = React.useState(null as SettingsSection);
+    const [section, setSection] = React.useState<SettingsSection>(null);
 
     const iconURL = React.useMemo(() => server.generateIconURL(), [server]);
     const initials = React.useMemo(() => {
@@ -40,6 +40,17 @@ export const ServerSettingsSheet = observer(
       }
       return i;
     }, [server.name]);
+
+    setFunction(
+      'handleServerSettingsVisibility',
+      (setVisibility: (state: null) => void) => {
+        if (section) {
+          setSection(section.subsection ? {section: section.section} : null);
+        } else {
+          setVisibility(null);
+        }
+      },
+    );
 
     return (
       <View
@@ -75,7 +86,7 @@ export const ServerSettingsSheet = observer(
             </Text>
           </Pressable>
         ) : /* the channel and role settings menus handle this themselves as they have subsections */
-        section !== 'roles' && section !== 'channels' ? (
+        section.section !== 'roles' && section.section !== 'channels' ? (
           <BackButton callback={() => setSection(null)} margin />
         ) : null}
         <ScrollView
@@ -117,7 +128,7 @@ export const ServerSettingsSheet = observer(
                 style={{flex: 1, marginBottom: 10}}
                 backgroundColor={currentTheme.backgroundSecondary}
                 onPress={() => {
-                  setSection('overview');
+                  setSection({section: 'overview'});
                 }}>
                 <View style={styles.iconContainer}>
                   <MaterialIcon
@@ -132,7 +143,7 @@ export const ServerSettingsSheet = observer(
                 style={{flex: 1, marginBottom: 10}}
                 backgroundColor={currentTheme.backgroundSecondary}
                 onPress={() => {
-                  setSection('channels');
+                  setSection({section: 'channels'});
                 }}>
                 <View style={styles.iconContainer}>
                   <MaterialIcon
@@ -150,7 +161,7 @@ export const ServerSettingsSheet = observer(
                 style={{flex: 1, marginBottom: 10}}
                 backgroundColor={currentTheme.backgroundSecondary}
                 onPress={() => {
-                  setSection('roles');
+                  setSection({section: 'roles'});
                 }}>
                 <View style={styles.iconContainer}>
                   <MaterialIcon
@@ -165,7 +176,7 @@ export const ServerSettingsSheet = observer(
                 style={{flex: 1, marginBottom: 10}}
                 backgroundColor={currentTheme.backgroundSecondary}
                 onPress={() => {
-                  setSection('emoji');
+                  setSection({section: 'emoji'});
                 }}>
                 <View style={styles.iconContainer}>
                   <MaterialIcon
@@ -183,7 +194,7 @@ export const ServerSettingsSheet = observer(
                 style={{flex: 1, marginBottom: 10}}
                 backgroundColor={currentTheme.backgroundSecondary}
                 onPress={() => {
-                  setSection('members');
+                  setSection({section: 'members'});
                 }}>
                 <View style={styles.iconContainer}>
                   <MaterialIcon
@@ -198,7 +209,7 @@ export const ServerSettingsSheet = observer(
                 style={{flex: 1, marginBottom: 10}}
                 backgroundColor={currentTheme.backgroundSecondary}
                 onPress={() => {
-                  setSection('invites');
+                  setSection({section: 'invites'});
                 }}>
                 <View style={styles.iconContainer}>
                   <MaterialIcon
@@ -213,7 +224,7 @@ export const ServerSettingsSheet = observer(
                 style={{flex: 1, marginBottom: 10}}
                 backgroundColor={currentTheme.backgroundSecondary}
                 onPress={() => {
-                  setSection('bans');
+                  setSection({section: 'bans'});
                 }}>
                 <View style={styles.iconContainer}>
                   <MaterialCommunityIcon
@@ -245,25 +256,27 @@ export const ServerSettingsSheet = observer(
                 </ContextButton>
               ) : null}
             </>
-          ) : section === 'overview' ? (
+          ) : section.section === 'overview' ? (
             <OverviewSettingsSection server={server} />
-          ) : section === 'channels' ? (
+          ) : section.section === 'channels' ? (
             <ChannelSettingsSection
               server={server}
-              callback={() => setSection(null)}
+              section={section}
+              setSection={setSection}
             />
-          ) : section === 'roles' ? (
+          ) : section.section === 'roles' ? (
             <RoleSettingsSection
               server={server}
-              callback={() => setSection(null)}
+              section={section}
+              setSection={setSection}
             />
-          ) : section === 'emoji' ? (
+          ) : section.section === 'emoji' ? (
             <EmojiSettingsSection server={server} />
-          ) : section === 'members' ? (
+          ) : section.section === 'members' ? (
             <MemberSettingsSection server={server} />
-          ) : section === 'invites' ? (
+          ) : section.section === 'invites' ? (
             <InviteSettingsSection server={server} />
-          ) : section === 'bans' ? (
+          ) : section.section === 'bans' ? (
             <BanSettingsSection server={server} />
           ) : null}
         </ScrollView>

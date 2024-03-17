@@ -16,7 +16,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import AppInfo from '../../../package.json';
-import {app, client, openUrl} from '../../Generic';
+import {app, client, openUrl, setFunction} from '../../Generic';
 import {
   CONTRIBUTORS_LIST,
   FEDI_PROFILE,
@@ -93,6 +93,17 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
     getAuthInfo();
   }, []);
 
+  setFunction(
+    'handleSettingsVisibility',
+    (setVisibility: (state: boolean) => void) => {
+      if (section) {
+        setSection(null);
+      } else {
+        setVisibility(false);
+      }
+    },
+  );
+
   return (
     <View
       style={{
@@ -108,12 +119,14 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
         <BackButton callback={() => setSection(null)} margin />
       )}
       {section !== null ? (
-        <Text type={'h1'}>{t(`app.settings_menu.${section}.title`)}</Text>
+        <Text type={'h1'}>
+          {t(`app.settings_menu.${section.section}.title`)}
+        </Text>
       ) : null}
       <ScrollView
         style={{flex: 1}}
         contentContainerStyle={
-          section === 'info'
+          section && section.section === 'info'
             ? {
                 flex: 1,
               }
@@ -128,7 +141,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}
               onPress={() => {
-                setSection('account');
+                setSection({section: 'account'});
               }}>
               <View style={styles.iconContainer}>
                 <MaterialIcon
@@ -143,7 +156,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}
               onPress={() => {
-                setSection('profile');
+                setSection({section: 'profile'});
               }}>
               <View style={styles.iconContainer}>
                 <MaterialCommunityIcon
@@ -159,7 +172,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}
               onPress={() => {
-                setSection('appearance');
+                setSection({section: 'appearance'});
               }}>
               <View style={styles.iconContainer}>
                 <MaterialIcon
@@ -174,7 +187,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}
               onPress={() => {
-                setSection('functionality');
+                setSection({section: 'functionality'});
               }}>
               <View style={styles.iconContainer}>
                 <MaterialIcon
@@ -189,7 +202,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}
               onPress={() => {
-                setSection('i18n');
+                setSection({section: 'i18n'});
               }}>
               <View style={styles.iconContainer}>
                 <MaterialIcon
@@ -223,7 +236,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}
               onPress={() => {
-                setSection('info');
+                setSection({section: 'info'});
               }}>
               <View style={styles.iconContainer}>
                 <MaterialIcon
@@ -266,25 +279,25 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               <Text>{t('app.settings_menu.other.logout')}</Text>
             </ContextButton>
           </>
-        ) : section === 'appearance' ? (
+        ) : section.section === 'appearance' ? (
           <SettingsCategory
             category={'appearance'}
             renderCount={renderCount}
             rerender={rerender}
           />
-        ) : section === 'functionality' ? (
+        ) : section.section === 'functionality' ? (
           <SettingsCategory
             category={'functionality'}
             renderCount={renderCount}
             rerender={rerender}
           />
-        ) : section === 'i18n' ? (
+        ) : section.section === 'i18n' ? (
           <SettingsCategory
             category={'i18n'}
             renderCount={renderCount}
             rerender={rerender}
           />
-        ) : section === 'account' ? (
+        ) : section.section === 'account' ? (
           <View>
             <View style={styles.settingsEntry} key={'username-settings'}>
               <View style={{flex: 1, flexDirection: 'column'}}>
@@ -487,7 +500,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               </View>
             ))}
           </View>
-        ) : section === 'profile' ? (
+        ) : section.section === 'profile' ? (
           <View>
             <View style={styles.settingsEntry} key={'display-name-settings'}>
               <View style={{flex: 1, flexDirection: 'column'}}>
@@ -550,7 +563,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               </Pressable>
             </View>
           </View>
-        ) : section === 'info' ? (
+        ) : section.section === 'info' ? (
           <View
             style={{
               flex: 1,

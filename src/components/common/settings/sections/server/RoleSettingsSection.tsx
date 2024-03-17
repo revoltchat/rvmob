@@ -25,10 +25,16 @@ import {
 } from '@rvmob/components/common/atoms';
 
 export const RoleSettingsSection = observer(
-  ({server, callback}: {server: Server; callback: Function}) => {
+  ({
+    server,
+    section,
+    setSection,
+  }: {
+    server: Server;
+    section: SettingsSection;
+    setSection: Function;
+  }) => {
     const {t} = useTranslation();
-
-    const [subsection, setSubsection] = React.useState(null as SettingsSection);
 
     const [colour, setColour] = React.useState('');
     const [showColourPicker, setShowColourPicker] = React.useState(false);
@@ -41,28 +47,32 @@ export const RoleSettingsSection = observer(
       <>
         <BackButton
           callback={() => {
-            subsection ? setSubsection(null) : callback();
+            section!.subsection
+              ? setSection({section: 'roles', subsection: undefined})
+              : setSection(null);
           }}
           margin
         />
-        {subsection ? (
+        {section!.subsection !== undefined ? (
           <>
             <Text
               type={'h1'}
               colour={
-                server.roles![subsection].colour ??
+                server.roles![section!.subsection].colour ??
                 currentTheme.foregroundPrimary
               }>
-              {server.roles![subsection].name}
+              {server.roles![section!.subsection].name}
             </Text>
-            <Text colour={currentTheme.foregroundSecondary}>{subsection}</Text>
+            <Text colour={currentTheme.foregroundSecondary}>
+              {section!.subsection}
+            </Text>
             <GapView size={2} />
             <Text type={'h2'}>{t('app.servers.settings.roles.name')}</Text>
             <InputWithButton
               placeholder={t('app.servers.settings.roles.name_placeholder')}
-              defaultValue={server.roles![subsection].name}
+              defaultValue={server.roles![section!.subsection].name}
               onPress={(v: string) => {
-                server.editRole(subsection, {
+                server.editRole(section!.subsection!, {
                   name: v,
                 });
               }}
@@ -97,12 +107,12 @@ export const RoleSettingsSection = observer(
                       setRankValue(v);
                     }}
                   /> */}
-            <Text>{server.roles![subsection].rank}</Text>
+            <Text>{server.roles![section!.subsection].rank}</Text>
             <GapView size={2} />
             <Text type={'h2'}>
               {t('app.servers.settings.roles.permissions')}
             </Text>
-            <Text>{server.roles![subsection].permissions.a}</Text>
+            <Text>{server.roles![section!.subsection].permissions.a}</Text>
             <GapView size={2} />
             <Text type={'h2'}>{t('app.servers.settings.roles.colour')}</Text>
             <View
@@ -121,10 +131,12 @@ export const RoleSettingsSection = observer(
                     borderRadius: 8,
                     marginEnd: 8,
                     backgroundColor:
-                      server.roles![subsection].colour ?? '#00000000',
+                      server.roles![section!.subsection].colour ?? '#00000000',
                   }}
                 />
-                <Text>{server.roles![subsection].colour ?? 'No colour'}</Text>
+                <Text>
+                  {server.roles![section!.subsection].colour ?? 'No colour'}
+                </Text>
               </View>
               <View style={{alignItems: 'center', flexDirection: 'row'}}>
                 <Pressable
@@ -135,7 +147,9 @@ export const RoleSettingsSection = observer(
                     justifyContent: 'center',
                   }}
                   onPress={() => {
-                    setColour(server.roles![subsection].colour ?? '#00000000');
+                    setColour(
+                      server.roles![section!.subsection!].colour ?? '#00000000',
+                    );
                     setShowColourPicker(true);
                   }}>
                   <View style={styles.iconContainer}>
@@ -155,7 +169,7 @@ export const RoleSettingsSection = observer(
                   }}
                   onPress={() =>
                     Clipboard.setString(
-                      server.roles![subsection].colour ?? 'No colour',
+                      server.roles![section!.subsection!].colour ?? 'No colour',
                     )
                   }>
                   <View style={styles.iconContainer}>
@@ -193,12 +207,14 @@ export const RoleSettingsSection = observer(
                       fontWeight: 'bold',
                       fontSize: 18,
                     }}>
-                    {server.roles![subsection].name}
+                    {server.roles![section!.subsection].name}
                   </Text>
                   <GapView size={8} />
                   <ColourPicker
                     style={{alignSelf: 'center', width: '70%'}}
-                    value={server.roles![subsection].colour ?? '#00000000'}
+                    value={
+                      server.roles![section!.subsection].colour ?? '#00000000'
+                    }
                     onComplete={onSelectColour}>
                     <HueCircular
                       containerStyle={{
@@ -219,7 +235,7 @@ export const RoleSettingsSection = observer(
                         id: 'role_colour',
                         callback: c => {
                           if (c.length < 10) {
-                            server.editRole(subsection, {colour: c});
+                            server.editRole(section!.subsection!, {colour: c});
                           }
                         },
                       });
@@ -232,7 +248,7 @@ export const RoleSettingsSection = observer(
                   <Button
                     onPress={() => {
                       setShowColourPicker(false);
-                      server.editRole(subsection, {colour: colour});
+                      server.editRole(section!.subsection!, {colour: colour});
                     }}>
                     <Text>{t('app.servers.settings.roles.set_colour')}</Text>
                   </Button>
@@ -248,7 +264,7 @@ export const RoleSettingsSection = observer(
                 style={styles.settingsEntry}
                 key={`role-settings-entry-${r.id}`}
                 onPress={() => {
-                  setSubsection(r.id);
+                  setSection({section: 'roles', subsection: r.id});
                 }}>
                 <View style={{flex: 1, flexDirection: 'column'}}>
                   <Text
