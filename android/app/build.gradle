@@ -142,6 +142,11 @@ dependencies {
     // } else {
     //    implementation jscFlavor
     // }
+
+    // remove GMS from RNDI - future major release should remove it upstream
+    implementation(project(':react-native-device-info')) {
+        exclude group: 'com.google.android.gms'
+    }
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
