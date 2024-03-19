@@ -78,10 +78,10 @@
                 "user_management": "Gerenciamiento de Outelizador",
                 "overview": {
                     "title": "Bison General",
-                    "description": "Çcriçon de l serbidor",
+                    "description": "Çcriçon de'l serbidor",
                     "markdown_tip_link": "Daprende más.",
                     "set_description": "Define çcriçon",
-                    "name": "Nome de l serbidor",
+                    "name": "Nome de'l serbidor",
                     "markdown_tip": "Çcriçones de serbidores suportan formataçon de Markdown.",
                     "description_placeholder": "Adiciona ũa çcriçon…",
                     "system_messages": "Mensaiges de sistema",
@@ -138,7 +138,7 @@
         },
         "settings": {
             "ui": {
-                "theme_remark": "Tenerás qu'abrir ó cerrar l sidemenu pa tues demudanças apareceren an to l lhado.",
+                "theme_remark": "Tenerás qu'abrir ó cerrar l sidemenu pa tues demudanças apareceren an to'l lhado.",
                 "messaging": {
                     "emojiPack": "Pack de emojis",
                     "doubleTapToReply": "Arrespunde a mensaiges fazendo clique-doble neilhas",
@@ -148,7 +148,7 @@
                     "doubleTapToReply_remark": "Esto solo ye suportado na nuoba bisualizaçon de mensaiges.",
                     "experimentalScrolling": "Atibar scrolling de canales pa l’antiga bisualizaçon de mensaiges",
                     "fontSize": "Tamanho de fontes",
-                    "showMasqAvatar": "Amostrar avatar cun maçcarielha ne l canto",
+                    "showMasqAvatar": "Amostrar avatar cun maçcarielha ne'l canto",
                     "showReactions": "Amostrar reaçones ambaixo de mensaiges",
                     "showSelfInTypingIndicator": "Se me amostrar ne l’andicador de digitaçon",
                     "statusInChatAvatars": "Amostrar stado de outelizadores ne ls avatares de chat",
