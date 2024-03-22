@@ -4,7 +4,10 @@
             "cancel": "Nuligi",
             "close": "Fermi",
             "delete": "Viŝi",
-            "back": "Reen"
+            "back": "Reen",
+            "confirm": "Konfirmi",
+            "save": "Konservi",
+            "create_channel": "Krei kanalon"
         },
         "loading": {
             "generic": "Ŝargante…",
@@ -25,6 +28,15 @@
                 "warning": "Ĉi tio ne povas esti malfarita.",
                 "body_server": "Ĉu vi certas, ke vi volas forigi <2>{{name}}</2>?",
                 "header_message": "Ĉu forigi mesaĝon?"
+            },
+            "create_channel": {
+                "name_header": "Nomo",
+                "name_placeholder": "Nomo de la kanalo",
+                "type_header": "Tipo",
+                "type_voice": "Voĉa kanalo"
+            },
+            "edit_text": {
+                "role_colour_placeholder": "Koloro de la rolo"
             }
         },
         "servers": {
@@ -122,6 +134,16 @@
                 "header": "Voĉaj kanaloj ankoraŭ ne estas subtenataj en RVMob!",
                 "body": "Dume, vi povas aliĝi al ĝi per la retejo-aplikaĵo aŭ Revolt Desktop."
             }
+        },
+        "login": {
+            "forms": {
+                "password_placeholder": "Pasvorto",
+                "email_placeholder": "Emajlo"
+            },
+            "options": {
+                "login_regular": "Jes, ensaluti kun mia emaljo kaj pasvorto"
+            },
+            "subheader": "Ĉu vi havas konton ?"
         }
     }
 }
