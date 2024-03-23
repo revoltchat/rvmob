@@ -31,12 +31,25 @@
             },
             "create_channel": {
                 "name_header": "Nomo",
-                "name_placeholder": "Nomo de la kanalo",
+                "name_placeholder": "Kanala nomo",
                 "type_header": "Tipo",
-                "type_voice": "Voĉa kanalo"
+                "type_voice": "Voĉa kanalo",
+                "header": "Krei novan kanalon",
+                "type_text": "Teksta kanalo",
+                "nsfw_header": "Plenkreskula enhavo",
+                "nsfw_label": "Averti pri plenkreskula enhavo en la kanalo"
             },
             "edit_text": {
-                "role_colour_placeholder": "Koloro de la rolo"
+                "role_colour_placeholder": "Rolkoloro",
+                "session_name_placeholder": "Seanca nomo",
+                "display_name_placeholder": "Vidiga nomo",
+                "display_name_header": "Meti vidigan nomon",
+                "session_name_header": "Difini seancas nomo",
+                "role_colour_header": "Difini rolkoloron",
+                "nickname_header": "Meti kromnomo",
+                "nickname_placeholder": "Kromnomo (lasu malplena por rekomencigi)",
+                "nickname_other_placeholder": "Kromnomo (lasu malplena por rekomencigi)",
+                "nickname_other_header": "Difini kromnomon de la membro"
             }
         },
         "servers": {
@@ -57,13 +70,27 @@
                     }
                 },
                 "channels": {
-                    "title": "Kanaloj"
+                    "title": "Kanaloj",
+                    "name": "Kanala nomo",
+                    "permissions": "Kanalaj permesoj",
+                    "errors": {
+                        "empty_channel_name": "Kanalaj nomoj ne povas esti malplenaj !"
+                    },
+                    "no_perms_set": "Malplena",
+                    "name_placeholder": "Difini kanalan nomon…"
                 },
                 "roles": {
                     "title": "Roloj",
                     "rank": "Rango",
                     "permissions": "Permesoj",
-                    "colour": "Koloro"
+                    "colour": "Koloro",
+                    "name": "Nomo",
+                    "errors": {
+                        "empty_role_name": "Rolnomoj ne povas esti malplenaj !"
+                    },
+                    "name_placeholder": "Difini rolnomo…",
+                    "set_colour": "Difini rolkoloron",
+                    "open_colour_modal": "Eniru koloro mane"
                 },
                 "invites": {
                     "title": "Invitoj",
@@ -79,10 +106,14 @@
                 "general": "Ĝenerala",
                 "customisation": "Personigo",
                 "emoji": {
-                    "title": "Emoĝio"
+                    "title": "Emoĝio",
+                    "added_by": "Adiciita de @{{name}}",
+                    "deleted_toast": "{{name}} forigita",
+                    "empty": "Neniu emoĝio"
                 },
                 "members": {
-                    "title": "Anoj"
+                    "title": "Anoj",
+                    "loading": "Alportante membrojn…"
                 }
             }
         },
@@ -116,7 +147,9 @@
                     "showNSFWContent": "Konsenti al 18+ enhavo",
                     "showReactions": "Montri reagojn sub mesaĝoj",
                     "showReactions_remark": "Vi povas aldoni al ekzistantaj reagoj, sed vi ankoraŭ ne povas aldoni novajn.",
-                    "showSelfInTypingIndicator": "Montri vin en la indikilo de tajpado"
+                    "showSelfInTypingIndicator": "Montri vin en la indikilo de tajpado",
+                    "doubleTapToReply": "Respondu al mesaĝoj duoble premante ilin",
+                    "doubleTapToReply_remark": "Tio estas subtenata nur en la nova mesaĝovido."
                 },
                 "settings": {
                     "showExperimental": "Montri eksperimentajn funkciojn"
@@ -138,12 +171,52 @@
         "login": {
             "forms": {
                 "password_placeholder": "Pasvorto",
-                "email_placeholder": "Emajlo"
+                "email_placeholder": "Emajlo",
+                "mfa_placeholder": "Unufoja kodo",
+                "session_token_placeholder": "Ĵetono"
             },
             "options": {
-                "login_regular": "Jes, ensaluti kun mia emaljo kaj pasvorto"
+                "login_regular": "Jes, ensaluti kun mia emaljo kaj pasvorto",
+                "login_regular_body": "Rekomendita por la plej multaj uzantoj.",
+                "login_session_token": "Jes, ensaluti kun seanca ĵetono",
+                "login_session_token_body": "Uzu tion se vi havas problemoj kun la regula salutsistemo. Funkciadoj povas ne esti disponeblaj.",
+                "signup": "Ne, registriĝi",
+                "signup_body": "Vi estas alidirektota al la retaplikaĵo. Unufoje vi registriĝis, revenu kaj ensalutu."
             },
-            "subheader": "Ĉu vi havas konton ?"
+            "subheader": "Ĉu vi havas konton ?",
+            "instance_notice": "Vi estas ensalutanta en {{url}}.",
+            "token_info_label": "Kiel mi akiras mian ĵetonon ?"
+        },
+        "settings_menu": {
+            "account": {
+                "title": "Konto"
+            },
+            "appearance": {
+                "title": "Apero"
+            },
+            "functionality": {
+                "title": "Funkciadoj"
+            },
+            "groups": {
+                "advanced": "Detala",
+                "app": "Aplikaĵo",
+                "other": "Alia",
+                "user": "Uzanto"
+            },
+            "i18n": {
+                "title": "Lingvo"
+            },
+            "info": {
+                "title": "Pri RVMob"
+            },
+            "other": {
+                "debug_info": "Kopii sencimigajn informojn",
+                "view_issues": "Vidi Malkaŝajn Problemojn",
+                "logout": "Elsaluti"
+            },
+            "profile": {
+                "title": "Profilo"
+            }
         }
     }
 }
