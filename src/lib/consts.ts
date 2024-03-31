@@ -123,7 +123,7 @@ export const SPECIAL_DATE_OBJECTS = {
   '1/4': {
     name: "April Fools' Day",
     key: 'app-home-holiday-april-fools',
-    emoji: '🤡',
+    emoji: '🧌',
     link: 'https://en.wikipedia.org/wiki/April_Fools%27_Day',
   } as SpecialDateObject,
   '31/10': {
