@@ -65,10 +65,13 @@ const vectorLoaderConfiguration = {
   ],
 };
 
-const vectorIconLoaderConfiguration = {
+const fontLoaderConfiguration = {
   test: /\.ttf$/,
   loader: 'url-loader',
-  include: path.resolve(__dirname, 'node_modules/react-native-vector-icons'),
+  include: [
+    path.resolve(__dirname, 'assets/fonts'),
+    path.resolve(__dirname, 'node_modules/react-native-vector-icons'),
+  ]
 };
 
 module.exports = {
@@ -90,9 +93,9 @@ module.exports = {
   module: {
     rules: [
       babelLoaderConfiguration,
+      fontLoaderConfiguration,
       imageLoaderConfiguration,
       vectorLoaderConfiguration,
-      vectorIconLoaderConfiguration,
     ],
   },
   plugins: [
