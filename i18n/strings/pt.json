@@ -1,1 +1,161 @@
-{}
+{
+    "app": {
+        "actions": {
+            "cancel": "Cancelar",
+            "close": "Fechar",
+            "create_channel": "Criar canal",
+            "delete": "Deletar",
+            "save": "Salvar",
+            "back": "Voltar",
+            "confirm": "Confirmar"
+        },
+        "loading": {
+            "generic": "Carregando…",
+            "connecting": "Iniciando sessão…"
+        },
+        "login": {
+            "forms": {
+                "email_placeholder": "E-mail",
+                "password_placeholder": "Senha",
+                "mfa_placeholder": "Código único",
+                "session_token_placeholder": "Token"
+            },
+            "instance_notice": "Você está se conectando à {{url}}.",
+            "options": {
+                "login_regular_body": "Recomendado para a maioria dos usuários.",
+                "login_session_token": "Sim, logar com um token de sessão",
+                "signup": "Não, criar conta",
+                "signup_body": "Você será redirecionado ao aplicativo da web. Assim que tiver criado uma conta, volte e faça login.",
+                "login_regular": "Sim, logar com meu e-mail e senha",
+                "login_session_token_body": "Use isso se você estiver tendo problemas com o método de login regular. Algumas funcionalidades podem não estar disponíveis."
+            },
+            "subheader": "Você tem uma conta?",
+            "token_info_label": "Como eu consigo meu token?"
+        },
+        "home": {
+            "join_lounge": "Participe do Revolt Lounge",
+            "open_lounge": "Abrir o Revolt Lounge",
+            "join_rvmob": "Junte-se ao servidor RVMob",
+            "open_rvmob": "Abrir o servidor RVMob",
+            "open_settings": "Abrir as configurações",
+            "description": "Deslize o dedo a partir da borda esquerda da tela ou toque nas três linhas para ver seus servidores e mensagens!"
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_message": "Deletar mensagem?",
+                "header_server": "Deletar servidor?",
+                "body_message": "Você tem certeza que quer deletar <2>essa mensagem</2>?",
+                "warning": "Isso não pode ser desfeito.",
+                "body_server": "Você tem certeza que quer deletar <2>{{name}}</2>?"
+            },
+            "create_channel": {
+                "header": "Criar um novo canal",
+                "name_header": "Nome",
+                "name_placeholder": "Nome do canal",
+                "type_header": "Tipo",
+                "type_text": "Canal de texto",
+                "type_voice": "Canal de voz",
+                "nsfw_header": "NSFW",
+                "nsfw_label": "Marcar canal como NSFW"
+            },
+            "edit_text": {
+                "display_name_header": "Definir nome de exibição",
+                "display_name_placeholder": "Nome de exibição",
+                "nickname_header": "Definir apelido",
+                "nickname_other_header": "Definir apelido do membro",
+                "nickname_placeholder": "Apelido (deixe em branco para redefinir)",
+                "role_colour_header": "Definir cor do cargo",
+                "role_colour_placeholder": "Cor do cargo",
+                "session_name_header": "Definir nome da sessão",
+                "session_name_placeholder": "Nome da sessão",
+                "nickname_other_placeholder": "Apelido (deixe em branco para redefinir)"
+            }
+        },
+        "servers": {
+            "settings": {
+                "general": "Geral",
+                "customisation": "Customização",
+                "user_management": "Gerenciamento de usuário",
+                "delete_server": "Deletar Servidor",
+                "overview": {
+                    "title": "Visão geral",
+                    "name": "Nome do servidor",
+                    "description": "Descrição do servidor",
+                    "markdown_tip": "As descrições do servidor suportam a formatação Markdown.",
+                    "markdown_tip_link": "Saiba mais.",
+                    "description_placeholder": "Adicione uma descrição…",
+                    "set_description": "Definir descrição",
+                    "system_messages": "Mensagens do sistema",
+                    "errors": {
+                        "empty_server_name": "Nome do servidor não pode estar vazio!"
+                    }
+                },
+                "channels": {
+                    "title": "Canais",
+                    "permissions": "Permissões do canal",
+                    "no_perms_set": "Não definido",
+                    "name_placeholder": "Defina um nome do canal…",
+                    "name": "Nome do canal",
+                    "errors": {
+                        "empty_channel_name": "Os nomes dos canais não podem estar vazios!"
+                    }
+                },
+                "roles": {
+                    "title": "Cargos",
+                    "name": "Nome",
+                    "rank": "Rank",
+                    "permissions": "Permissões",
+                    "name_placeholder": "Defina um nome de cargo…",
+                    "colour": "Cor",
+                    "set_colour": "Definir cor do cargo",
+                    "open_colour_modal": "Inserir cor manualmente",
+                    "errors": {
+                        "empty_role_name": "Nome dos cargos não podem estar vazios!"
+                    }
+                },
+                "emoji": {
+                    "title": "Emoji",
+                    "added_by": "Adicionado por @{{name}}",
+                    "empty": "Sem emoji",
+                    "deleted_toast": "{{name}} deletado"
+                },
+                "members": {
+                    "title": "Membros",
+                    "loading": "Buscando membros…"
+                },
+                "invites": {
+                    "title": "Convites",
+                    "empty": "Sem convites",
+                    "loading": "Buscando convites…"
+                },
+                "bans": {
+                    "title": "Banimentos",
+                    "loading": "Buscando banimentos…",
+                    "empty": "Sem banimentos",
+                    "no_reason": "Nenhum motivo foi fornecido"
+                }
+            }
+        },
+        "settings": {
+            "app": {
+                "language": "Selecione seu idioma",
+                "refetchOnReconnect": "Recuperar mensagens ao se reconectar",
+                "notifications": {
+                    "enabled": "Ativar notificações push",
+                    "notifyOnSelfPing": "Receber uma notificação quando você se marcar"
+                },
+                "showChangelogs": "Mostrar registro de alterações após atualizar RVMob"
+            },
+            "ui": {
+                "home": {
+                    "holidays": "Mostrar feriados na página inicial"
+                },
+                "theme": "Tema",
+                "messaging": {
+                    "doubleTapToReply": "Responda às mensagens ao tocar duas vezes nelas"
+                },
+                "theme_remark": "Você precisará abrir ou fechar o menu lateral para que suas alterações apareçam em todos os lugares."
+            }
+        }
+    }
+}
