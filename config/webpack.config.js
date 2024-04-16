@@ -3,9 +3,10 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const appDirectory = path.resolve(__dirname);
-const {webPlugins} = require(`${appDirectory}/config/babel-shared`);
-const {presets} = require(`${appDirectory}/babel.config.js`);
+const dir = path.resolve(__dirname);
+const appDirectory = `${dir}/../`
+const {webPlugins} = require(`${dir}/babel-shared`);
+const {presets} = require(`${dir}/../babel.config.js`);
 
 const compileNodeModules = [
   // react-native packages that need compiling
@@ -27,10 +28,10 @@ const babelLoaderConfiguration = {
   test: /\.js$|tsx?$/,
   // Add every directory that needs to be compiled by Babel during the build.
   include: [
-    path.resolve(__dirname, 'index.web.js'),
-    path.resolve(__dirname, 'App.tsx'),
-    path.resolve(__dirname, 'src'),
-    path.resolve(__dirname, 'i18n'),
+    path.resolve(__dirname, '../index.web.js'),
+    path.resolve(__dirname, '../App.tsx'),
+    path.resolve(__dirname, '../src'),
+    path.resolve(__dirname, '../i18n'),
     ...compileNodeModules,
   ],
   // FIXME: why doesn't this work quite right
@@ -69,14 +70,14 @@ const fontLoaderConfiguration = {
   test: /\.ttf$/,
   loader: 'url-loader',
   include: [
-    path.resolve(__dirname, 'assets/fonts'),
-    path.resolve(__dirname, 'node_modules/react-native-vector-icons'),
+    path.resolve(__dirname, '../assets/fonts'),
+    path.resolve(__dirname, '../node_modules/react-native-vector-icons'),
   ]
 };
 
 module.exports = {
   entry: {
-    app: path.join(__dirname, 'index.web.js'),
+    app: path.join(__dirname, '../index.web.js'),
   },
   output: {
     filename: 'bundle.web.js',
@@ -100,8 +101,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'web/index.html'),
-      favicon: path.join(__dirname, 'public/favicon.ico'),
+      template: path.join(__dirname, '../web/index.html'),
+      favicon: path.join(__dirname, '../public/favicon.ico'),
     }),
     new webpack.DefinePlugin({
       // See: https://github.com/necolas/react-native-web/issues/349
