@@ -49,8 +49,8 @@ If you want to build RVMob for web, you'll need:
 
 If you want to build RVMob for Android, you'll also need:
 
-- JDK 17 ([Microsoft's build](https://learn.microsoft.com/en-gb/java/openjdk/download) works well),
-- the latest Android SDK (preferably via [Android Studio](https://developer.android.com/studio)'s SDK Manager), and
+- JDK 17 ([Microsoft's build](https://learn.microsoft.com/en-gb/java/openjdk/download) works well) and
+- the latest Android SDK (preferably via [Android Studio](https://developer.android.com/studio)'s SDK Manager).
 
 Then run the following:
 
@@ -59,8 +59,7 @@ yarn install
 npx react-native-asset
 # for web:
 yarn web
-# for android:
-yarn android
+# for android, run the following then press `a`:
 yarn start
 ```
 
