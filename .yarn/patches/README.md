@@ -4,7 +4,7 @@ This folder contains small patches necessary to fix build issues/bugs with unmai
 
 ## Creating new patches
 
-These patches are created using [`patch-package`](https://www.npmjs.com/package/patch-package) - for more information, check its README/documentation.
+These patches are created using [`yarn patch`](https://yarnpkg.com/features/patching) - for more information, check its README/documentation.
 
 ## Notes
 

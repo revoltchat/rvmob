@@ -1,7 +1,7 @@
-diff --git a/node_modules/react-native-reanimated/lib/module/reanimated2/PlatformChecker.js b/node_modules/react-native-reanimated/lib/module/reanimated2/PlatformChecker.js
-index 13ac999..87f2822 100644
---- a/node_modules/react-native-reanimated/lib/module/reanimated2/PlatformChecker.js
-+++ b/node_modules/react-native-reanimated/lib/module/reanimated2/PlatformChecker.js
+diff --git a/lib/module/reanimated2/PlatformChecker.js b/lib/module/reanimated2/PlatformChecker.js
+index 13ac9997adc7d8c528a2f117df6dfe1a6cb5be07..87f28229bb758fa19b70b56b5c0533e43504bebb 100644
+--- a/lib/module/reanimated2/PlatformChecker.js
++++ b/lib/module/reanimated2/PlatformChecker.js
 @@ -5,7 +5,12 @@ import { Platform } from 'react-native';
  // This type is necessary since some libraries tend to do a lib check
  // and this file causes type errors on `global` access.
