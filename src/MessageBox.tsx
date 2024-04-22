@@ -1,17 +1,15 @@
 import React from 'react';
-import {Pressable, View, TextInput} from 'react-native';
+import {Pressable, View, TextInput, Platform} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-// FIXME: uncomment once rndp is excluded on web
-// import DocumentPicker, {
-//  DocumentPickerResponse,
-// } from 'react-native-document-picker';
+import {type DocumentPickerResponse} from 'react-native-document-picker';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Channel, Message} from 'revolt.js';
 import {ulid} from 'ulid';
 
+import {DocumentPicker} from './crossplat/DocumentPicker';
 import {app, client, setFunction} from './Generic';
 import {Avatar} from './Profile';
 import {styles, currentTheme} from './Theme';
@@ -43,14 +41,14 @@ function placeholderText(channel: Channel) {
 }
 
 export const MessageBox = observer((props: MessageBoxProps) => {
-  let [currentText, setCurrentText] = React.useState('');
-  let [editingMessage, setEditingMessage] = React.useState(
+  const [currentText, setCurrentText] = React.useState('');
+  const [editingMessage, setEditingMessage] = React.useState(
     null as Message | null,
   );
-  let [replyingMessages, setReplyingMessages] = React.useState(
+  const [replyingMessages, setReplyingMessages] = React.useState(
     [] as ReplyingMessage[],
   );
-  let [attachments, setAttachments] = React.useState(
+  const [attachments, setAttachments] = React.useState(
     [] as DocumentPickerResponse[],
   );
 
@@ -177,7 +175,8 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         </View>
       ) : null}
       <View style={styles.messageBoxInner}>
-        {app.settings.get('ui.messaging.sendAttachments') &&
+        {Platform.OS !== 'web' &&
+        app.settings.get('ui.messaging.sendAttachments') &&
         attachments.length < 5 ? (
           <Pressable
             style={{
