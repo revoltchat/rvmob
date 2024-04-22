@@ -111,6 +111,22 @@ class MainView extends React.Component {
     console.log(`[APP] Mounted component (${new Date().getTime()})`);
     let defaultnotif = await createChannel();
     console.log(`[NOTIFEE] Created channel: ${defaultnotif}`);
+    console.log(app.version, app.settings.get('app.lastVersion'));
+    const lastVersion = app.settings.get('app.lastVersion');
+    if (!lastVersion || lastVersion === '') {
+      console.log(
+        `[APP] lastVersion is null (${lastVersion}), setting to app.version (${app.version})`,
+      );
+      app.settings.set('app.lastVersion', app.version);
+    } else {
+      app.version === lastVersion
+        ? console.log(
+            `[APP] lastVersion (${lastVersion}) is equal to app.version (${app.version})`,
+          )
+        : console.log(
+            `[APP] lastVersion (${lastVersion}) is different from app.version (${app.version})`,
+          );
+    }
     client.on('connecting', () => {
       console.log(`[APP] Connecting to instance... (${new Date().getTime()})`);
     });

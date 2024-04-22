@@ -97,7 +97,6 @@ export const app = {
             out.push({key: s.key, value: s.value});
           }
         }
-        out.push({key: 'app.lastVersion', value: app.version});
         AsyncStorage.setItem('settings', JSON.stringify(out));
       } catch (err) {
         console.log(`[SETTINGS] Error saving settings: ${err}`);
@@ -281,6 +280,13 @@ export const app = {
         key: 'app.instance',
         category: 'donotshow',
         default: DEFAULT_API_URL,
+        type: 'string',
+      },
+      // last ver
+      {
+        key: 'app.lastVersion',
+        category: 'donotshow',
+        default: '',
         type: 'string',
       },
     ] as Setting[],

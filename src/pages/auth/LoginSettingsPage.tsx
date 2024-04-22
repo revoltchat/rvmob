@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, View} from 'react-native';
+import {Platform, TextInput, View} from 'react-native';
 
 import {app} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
@@ -61,9 +61,9 @@ export const LoginSettingsPage = ({state}: {state: any}) => {
           <>
             <Text style={styles.loadingHeader}>Saved!</Text>
             <Text style={{textAlign: 'center', marginHorizontal: 30}}>
-              For now, you'll have to close and reopen the app for your changes
-              to apply. We know this isn't ideal - we'll fix this at a later
-              date.
+              {Platform.OS === 'web'
+                ? 'You can now close this menu and log in.'
+                : "For now, you'll have to close and reopen the app for your changes to apply. We know this isn't ideal - we'll fix this at a later date."}
             </Text>
           </>
         ) : (

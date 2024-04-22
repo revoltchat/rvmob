@@ -575,15 +575,26 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
             </View>
             <View style={{alignItems: 'center', marginVertical: 16}}>
               <Text type={'header'}>RVMob v{app.version}</Text>
-              <View style={{flexDirection: 'row'}}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                }}>
                 <Text>Powered by </Text>
                 <Link link={'https://reactnative.dev'} label={'React Native'} />
                 <Text>
-                  {' '}
-                  v{AppInfo.dependencies['react-native'].replace(
-                    '^',
-                    '',
-                  )} and{' '}
+                  {' v'}
+                  {Platform.OS === 'web'
+                    ? AppInfo.dependencies['react-native'].replace('^', '')
+                    : `${Platform.constants.reactNativeVersion.major}.${
+                        Platform.constants.reactNativeVersion.minor
+                      }.${Platform.constants.reactNativeVersion.patch}${
+                        Platform.constants.reactNativeVersion.prerelease
+                          ? `-${Platform.constants.reactNativeVersion.prerelease}`
+                          : ''
+                      }`}
+                  {' and '}
                 </Text>
                 <Link
                   link={'https://github.com/rexogamer/revolt.js'}
