@@ -103,7 +103,7 @@
                 "roles": {
                     "title": "Cargos",
                     "name": "Nome",
-                    "rank": "Rank",
+                    "rank": "Classificação",
                     "permissions": "Permissões",
                     "name_placeholder": "Defina um nome de cargo…",
                     "colour": "Cor",
@@ -152,9 +152,70 @@
                 },
                 "theme": "Tema",
                 "messaging": {
-                    "doubleTapToReply": "Responda às mensagens ao tocar duas vezes nelas"
+                    "doubleTapToReply": "Responda às mensagens ao tocar duas vezes nelas",
+                    "doubleTapToReply_remark": "Esta opção só é suportada na visualização de novas mensagens.",
+                    "emojiPack": "Pacote de Emoji",
+                    "experimentalScrolling": "Ativar a deslocação de canais para a visualização de mensagens antigas",
+                    "experimentalScrolling_remark": "Só é possível deslocar-se para trás.",
+                    "fontSize": "Tamanho da letra",
+                    "messageSpacing": "Espaçamento das mensagens",
+                    "sendAttachments": "Ativar envio de anexos",
+                    "showMasqAvatar": "Mostrar avatar mascarado no canto",
+                    "showReactions_remark": "Pode adicionar a reações existentes, mas ainda não pode adicionar novas.",
+                    "showReactions": "Mostrar reações sob as mensagens",
+                    "showSelfInTypingIndicator": "Mostrar-te no indicador de digitação",
+                    "use24H": "Utilizar horários com formato de 24 horas",
+                    "useNewMessageView": "Utilizar a visualização de novas mensagens",
+                    "fontSize_remark": "Isto será aplicado a mensagens e certas partes da aplicação.",
+                    "showNSFWContent": "Consentimento para conteúdo para maiores de 18 anos",
+                    "statusInChatAvatars": "Mostrar o estado do utilizador nos avatares do chat"
                 },
-                "theme_remark": "Você precisará abrir ou fechar o menu lateral para que suas alterações apareçam em todos os lugares."
+                "theme_remark": "Você precisará abrir ou fechar o menu lateral para que suas alterações apareçam em todos os lugares.",
+                "settings": {
+                    "showExperimental": "Mostrar funcionalidades experimentais"
+                },
+                "showDeveloperFeatures": "Mostrar ferramentas de desenvolvedor"
+            }
+        },
+        "settings_menu": {
+            "account": {
+                "title": "Conta"
+            },
+            "appearance": {
+                "title": "Aspecto"
+            },
+            "functionality": {
+                "title": "Funcionalidades"
+            },
+            "groups": {
+                "advanced": "Avançado",
+                "app": "Aplicativo",
+                "other": "Outro",
+                "user": "Utilizador"
+            },
+            "info": {
+                "title": "Sobre o RVMob"
+            },
+            "other": {
+                "debug_info": "Copiar Informações de Depuração",
+                "view_issues": "Ver Problemas em Aberto",
+                "logout": "Terminar Sessão"
+            },
+            "profile": {
+                "title": "Perfil"
+            },
+            "i18n": {
+                "title": "Linguagem"
+            }
+        },
+        "misc": {
+            "network_indicator": {
+                "body": "Perda de ligação",
+                "hide": "(esconder)"
+            },
+            "voice": {
+                "body": "Entretanto, pode juntar-se a eles através da aplicação Web ou do Revolt Desktop.",
+                "header": "Os canais de voz ainda não são suportados no RVMob!"
             }
         }
     }
