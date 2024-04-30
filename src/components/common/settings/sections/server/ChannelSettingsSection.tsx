@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {Pressable, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
@@ -30,7 +30,7 @@ export const ChannelSettingsSection = observer(
   }) => {
     const {t} = useTranslation();
 
-    const [channel, setChannel] = React.useState<Channel | null>(null);
+    const [channel, setChannel] = useState<Channel | null>(null);
 
     const handleBackInSubsection = () => {
       setChannel(null);

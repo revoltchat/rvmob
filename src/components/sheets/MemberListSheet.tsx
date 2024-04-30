@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -13,8 +13,8 @@ import {BottomSheet} from '../common/BottomSheet';
 import {UserList} from '../navigation/UserList';
 
 export const MemberListSheet = observer(() => {
-  const [context, setContext] = React.useState(null as Channel | Server | null);
-  const [users, setUsers] = React.useState([] as User[]);
+  const [context, setContext] = useState(null as Channel | Server | null);
+  const [users, setUsers] = useState([] as User[]);
 
   const sheetRef = useRef<BottomSheetCore>(null);
 

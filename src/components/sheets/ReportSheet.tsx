@@ -1,4 +1,4 @@
-import React, {useMemo, useRef} from 'react';
+import {useMemo, useRef, useState} from 'react';
 import {ScrollView, TextInput, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -175,7 +175,7 @@ function ReasonsSelector({
 }
 
 export const ReportSheet = observer(() => {
-  const [obj, setObj] = React.useState(null as ReportedObject | null);
+  const [obj, setObj] = useState(null as ReportedObject | null);
 
   const sheetRef = useRef<BottomSheetCore>(null);
 
@@ -193,9 +193,9 @@ export const ReportSheet = observer(() => {
     o ? sheetRef.current?.expand() : sheetRef.current?.close();
   });
 
-  const [additionalContext, setAdditionalContext] = React.useState('');
-  const [reason, setReason] = React.useState({} as Reason);
-  const [status, setStatus] = React.useState({} as Status);
+  const [additionalContext, setAdditionalContext] = useState('');
+  const [reason, setReason] = useState({} as Reason);
+  const [status, setStatus] = useState({} as Status);
 
   const messageReasons = useMemo(
     () =>

@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -15,11 +15,11 @@ export const SettingsCategory = observer(
     renderCount: number;
     rerender: Function;
   }) => {
-    const [showExperimental, setShowExperimental] = React.useState(
+    const [showExperimental, setShowExperimental] = useState(
       app.settings.get('ui.settings.showExperimental') as boolean,
     );
 
-    const [showDev, setShowDev] = React.useState(
+    const [showDev, setShowDev] = useState(
       app.settings.get('ui.showDeveloperFeatures') as boolean,
     );
 

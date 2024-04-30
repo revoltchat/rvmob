@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {Modal, Platform, Pressable, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -35,28 +35,28 @@ import {
 } from './components/sheets/';
 
 export const Modals = observer(() => {
-  const [imageViewerState, setImageViewerState] = React.useState({
+  const [imageViewerState, setImageViewerState] = useState({
     i: null as any,
   });
-  const [settingsVisibility, setSettingsVisibility] = React.useState(false);
-  const [serverSettingsServer, setServerSettingsServer] = React.useState(
+  const [settingsVisibility, setSettingsVisibility] = useState(false);
+  const [serverSettingsServer, setServerSettingsServer] = useState(
     null as Server | null,
   );
-  const [inviteServer, setInviteServer] = React.useState({
+  const [inviteServer, setInviteServer] = useState({
     inviteServer: null,
     inviteServerCode: '',
   } as {
     inviteServer: API.InviteResponse | null;
     inviteServerCode: string;
   });
-  const [inviteBot, setInviteBot] = React.useState(null as User | null);
-  const [deletableObject, setDeletableObject] = React.useState(
+  const [inviteBot, setInviteBot] = useState(null as User | null);
+  const [deletableObject, setDeletableObject] = useState(
     null as DeletableObject | null,
   );
-  const [editingText, setEditingText] = React.useState(
+  const [editingText, setEditingText] = useState(
     null as TextEditingModalProps | null,
   );
-  const [createChannelObject, setCreateChannelObject] = React.useState(
+  const [createChannelObject, setCreateChannelObject] = useState(
     null as CreateChannelModalProps | null,
   );
 

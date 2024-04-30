@@ -1,4 +1,4 @@
-import React from 'react';
+import {useMemo, useState} from 'react';
 import {Pressable, ScrollView, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
@@ -29,11 +29,11 @@ export const ServerSettingsSheet = observer(
   ({server, setState}: {server: Server; setState: Function}) => {
     const {t} = useTranslation();
 
-    // const [renderCount, rerender] = React.useState(0);
-    const [section, setSection] = React.useState<SettingsSection>(null);
+    // const [renderCount, rerender] = useState(0);
+    const [section, setSection] = useState<SettingsSection>(null);
 
-    const iconURL = React.useMemo(() => server.generateIconURL(), [server]);
-    const initials = React.useMemo(() => {
+    const iconURL = useMemo(() => server.generateIconURL(), [server]);
+    const initials = useMemo(() => {
       let i = '';
       for (const word of server.name.split(' ')) {
         i += word.charAt(0);

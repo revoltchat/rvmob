@@ -1,4 +1,4 @@
-import React from 'react';
+import {useEffect, useState} from 'react';
 import {
   FlatList,
   NativeSyntheticEvent,
@@ -121,9 +121,9 @@ export const NewMessageView = observer(
   }) => {
     const {t} = useTranslation();
     console.log(`[NEWMESSAGEVIEW] Creating message view for ${channel._id}...`);
-    const [messages, setMessages] = React.useState([] as RevoltMessage[]);
-    const [loading, setLoading] = React.useState(true);
-    const [doubleTapStatus, setDoubleTapStatus] = React.useState({
+    const [messages, setMessages] = useState([] as RevoltMessage[]);
+    const [loading, setLoading] = useState(true);
+    const [doubleTapStatus, setDoubleTapStatus] = useState({
       count: 0,
       message: '',
     });
@@ -131,11 +131,11 @@ export const NewMessageView = observer(
     //   console.log(s);
     //   _setDoubleTapStatus(s);
     // };
-    const [atEndOfPage, setAtEndOfPage] = React.useState(false);
-    const [error, setError] = React.useState(null as any);
+    const [atEndOfPage, setAtEndOfPage] = useState(false);
+    const [error, setError] = useState(null as any);
     let scrollView: FlatList | null;
 
-    React.useEffect(() => {
+    useEffect(() => {
       console.log(`[NEWMESSAGEVIEW] Fetching messages for ${channel._id}...`);
       async function getMessages() {
         const msgs = await fetchMessages(channel, {}, []);

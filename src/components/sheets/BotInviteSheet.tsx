@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {Pressable, ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -11,7 +11,7 @@ import {ServerList} from '../navigation/ServerList';
 
 export const BotInviteSheet = observer(
   ({setState, bot}: {setState: Function; bot: User}) => {
-    const [destination, setDestination] = React.useState(null as Server | null);
+    const [destination, setDestination] = useState(null as Server | null);
     return (
       <View
         style={{

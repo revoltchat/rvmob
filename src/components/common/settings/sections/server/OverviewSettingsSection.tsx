@@ -1,4 +1,3 @@
-import React from 'react';
 import {View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';

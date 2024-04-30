@@ -1,4 +1,3 @@
-import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {ErrorBoundary} from 'react-error-boundary';
 import {observer} from 'mobx-react-lite';

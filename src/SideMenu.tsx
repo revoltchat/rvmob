@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {Pressable, ScrollView, View} from 'react-native';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -23,7 +23,7 @@ export const SideMenu = ({
   onChannelClick: Function;
   orderedServers: string[];
 }) => {
-  const [currentServer, setCurrentServerInner] = React.useState(
+  const [currentServer, setCurrentServerInner] = useState(
     null as Server | null,
   );
   function setCurrentServer(s: Server | null) {

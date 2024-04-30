@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 
 import {SvgUri} from 'react-native-svg';
 
@@ -15,7 +15,7 @@ import {
 } from '../../../lib/consts';
 
 export const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
-  const [fail, setFail] = React.useState(false);
+  const [fail, setFail] = useState(false);
   if (fail) {
     return <Text>{`:${id}:`}</Text>;
   }
@@ -34,7 +34,7 @@ export const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
   );
 };
 export const CustomEmoji = ({id}: {id: string}) => {
-  const [fail, setFail] = React.useState(false);
+  const [fail, setFail] = useState(false);
   if (fail) {
     return <Text>{`:${id}:`}</Text>;
   }

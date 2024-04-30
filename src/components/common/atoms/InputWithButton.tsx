@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {TextInput, View, ViewStyle} from 'react-native';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -74,7 +74,7 @@ export function InputWithButton({
   cannotBeEmpty?: boolean;
   emptyError?: string;
 }) {
-  let [value, setValue] = React.useState(defaultValue);
+  let [value, setValue] = useState(defaultValue);
   return (
     // style.input and style.button are applied to the input and button respectively
     <View style={[styles.iwbContainer, extraStyles?.container]}>

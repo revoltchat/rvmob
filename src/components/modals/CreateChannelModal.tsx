@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {Pressable, TextInput, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
@@ -14,9 +14,9 @@ export const CreateChannelModal = observer(
   ({object}: {object: CreateChannelModalProps}) => {
     const {t} = useTranslation();
 
-    const [name, setName] = React.useState('');
-    const [type, setType] = React.useState('Text' as 'Text' | 'Voice');
-    const [nsfw, setNSFW] = React.useState(false);
+    const [name, setName] = useState('');
+    const [type, setType] = useState('Text' as 'Text' | 'Voice');
+    const [nsfw, setNSFW] = useState(false);
 
     return (
       <View

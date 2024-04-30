@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {Platform, TextInput, View} from 'react-native';
 
 import {app} from '../../Generic';
@@ -6,12 +6,12 @@ import {currentTheme, styles} from '../../Theme';
 import {BackButton, Button, Text} from '../../components/common/atoms';
 
 export const LoginSettingsPage = ({state}: {state: any}) => {
-  const [instanceURL, setInstanceURL] = React.useState(
+  const [instanceURL, setInstanceURL] = useState(
     (app.settings.get('app.instance') as string) ?? '',
   );
-  const [testResponse, setTestResponse] = React.useState(null as string | null);
+  const [testResponse, setTestResponse] = useState(null as string | null);
 
-  const [saved, setSaved] = React.useState(false);
+  const [saved, setSaved] = useState(false);
 
   async function testURL(url: string, returnIfSuccessful: boolean) {
     try {

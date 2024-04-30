@@ -1,4 +1,4 @@
-import React from 'react';
+import {useEffect, useState} from 'react';
 import {Platform, Pressable, ScrollView, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
@@ -66,18 +66,18 @@ function copyDebugInfoWrapper() {
 export const SettingsSheet = observer(({setState}: {setState: Function}) => {
   const {t} = useTranslation();
 
-  const [renderCount, rerender] = React.useState(0);
-  const [section, setSection] = React.useState(null as SettingsSection);
+  const [renderCount, rerender] = useState(0);
+  const [section, setSection] = useState(null as SettingsSection);
 
-  const [authInfo, setAuthInfo] = React.useState({
+  const [authInfo, setAuthInfo] = useState({
     email: '',
     mfaEnabled: false,
     sessions: [] as {_id: string; name: string}[],
     sessionID: '' as string | null,
   });
-  const [showEmail, setShowEmail] = React.useState(false);
+  const [showEmail, setShowEmail] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function getAuthInfo() {
       const e = await client.api.get('/auth/account/');
       const m = await client.api.get('/auth/mfa/');

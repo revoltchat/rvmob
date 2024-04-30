@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import {useRef, useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -16,7 +16,7 @@ import {BottomSheet} from '../common/BottomSheet';
 import {ReplyMessage} from '../common/messaging';
 
 export const MessageMenuSheet = observer(() => {
-  const [message, setMessage] = React.useState(null as Message | null);
+  const [message, setMessage] = useState(null as Message | null);
 
   const sheetRef = useRef<BottomSheetCore>(null);
 

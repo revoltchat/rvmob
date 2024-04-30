@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {TextInput, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
@@ -11,7 +11,7 @@ import {TextEditingModalProps} from '@rvmob/lib/types';
 export const TextEditModal = observer(
   ({object}: {object: TextEditingModalProps}) => {
     const {t} = useTranslation();
-    const [string, setString] = React.useState(object.initialString);
+    const [string, setString] = useState(object.initialString);
     return (
       <View
         style={{

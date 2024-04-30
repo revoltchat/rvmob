@@ -1,4 +1,4 @@
-import React from 'react';
+import {createContext, useState} from 'react';
 
 import spoilerPlugin from '@traptitech/markdown-it-spoiler';
 import Markdown, {hasParents, MarkdownIt} from 'react-native-markdown-display';
@@ -23,9 +23,9 @@ const spoilerStyle = {
   },
 };
 
-const SpoilerContext = React.createContext();
+const SpoilerContext = createContext(false);
 const Spoiler = ({content}) => {
-  const [revealed, setRevealed] = React.useState(false);
+  const [revealed, setRevealed] = useState(false);
   return (
     <SpoilerContext.Provider value={revealed}>
       <Text onPress={() => setRevealed(!revealed)}>{content}</Text>

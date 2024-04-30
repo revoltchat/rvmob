@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {TextInput, TouchableOpacity, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
@@ -21,7 +21,7 @@ export const StringNumberSetting = ({
   rerender: Function;
 }) => {
   const {t} = useTranslation();
-  const [value, setValue] = React.useState(app.settings.getRaw(sRaw.key));
+  const [value, setValue] = useState(app.settings.getRaw(sRaw.key));
   return (
     <View
       key={`settings_${sRaw.key}`}

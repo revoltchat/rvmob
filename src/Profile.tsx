@@ -1,5 +1,4 @@
 import {observer} from 'mobx-react-lite';
-import React from 'react';
 import {client, app} from './Generic';
 import {currentTheme} from './Theme';
 import {Pressable, View} from 'react-native';

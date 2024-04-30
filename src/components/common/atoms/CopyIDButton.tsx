@@ -1,4 +1,3 @@
-import React from 'react';
 import {View} from 'react-native';
 
 import Clipboard from '@react-native-clipboard/clipboard';

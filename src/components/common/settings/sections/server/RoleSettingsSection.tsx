@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {Modal, Pressable, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
@@ -36,8 +36,8 @@ export const RoleSettingsSection = observer(
   }) => {
     const {t} = useTranslation();
 
-    const [colour, setColour] = React.useState('');
-    const [showColourPicker, setShowColourPicker] = React.useState(false);
+    const [colour, setColour] = useState('');
+    const [showColourPicker, setShowColourPicker] = useState(false);
 
     const onSelectColour = ({hex}: {hex: string}) => {
       setColour(hex);

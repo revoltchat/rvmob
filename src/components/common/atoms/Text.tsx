@@ -1,4 +1,3 @@
-import React from 'react';
 import {Text as NativeText /*, TextProps, TextStyle*/} from 'react-native';
 
 import {currentTheme, styles} from '../../../Theme';

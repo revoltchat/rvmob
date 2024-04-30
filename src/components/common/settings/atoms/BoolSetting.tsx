@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
@@ -18,9 +18,7 @@ export const BoolSetting = ({
   devFunction: any;
 }) => {
   const {t} = useTranslation();
-  const [value, setValue] = React.useState(
-    app.settings.get(sRaw.key) as boolean,
-  );
+  const [value, setValue] = useState(app.settings.get(sRaw.key) as boolean);
   return (
     <View
       key={`settings_${sRaw.key}`}

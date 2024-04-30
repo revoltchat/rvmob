@@ -1,6 +1,6 @@
 import 'react-native-get-random-values'; // react native moment
 
-import React from 'react';
+import {Component as ReactComponent} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -56,7 +56,7 @@ async function createChannel() {
   return channel;
 }
 
-class MainView extends React.Component {
+class MainView extends ReactComponent {
   constructor(props) {
     super(props);
     this.state = {

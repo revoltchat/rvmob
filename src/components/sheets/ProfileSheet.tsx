@@ -1,5 +1,5 @@
 /* eslint-disable no-bitwise */
-import React, {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Pressable, ScrollView, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -32,8 +32,8 @@ import {UserList} from '../navigation/UserList';
 // const Image = FastImage;
 
 export const ProfileSheet = observer(() => {
-  const [user, setUser] = React.useState(null as User | null);
-  const [server, setServer] = React.useState(null as Server | null);
+  const [user, setUser] = useState(null as User | null);
+  const [server, setServer] = useState(null as Server | null);
 
   const sheetRef = useRef<BottomSheetCore>(null);
 
@@ -56,14 +56,14 @@ export const ProfileSheet = observer(() => {
     u ? sheetRef.current?.expand() : sheetRef.current?.close();
   });
 
-  const [section, setSection] = React.useState('Profile');
-  const [profile, setProfile] = React.useState(
+  const [section, setSection] = useState('Profile');
+  const [profile, setProfile] = useState(
     {} as {content?: string | null | undefined},
   );
-  const [mutual, setMutual] = React.useState(
+  const [mutual, setMutual] = useState(
     {} as {users: User[]; servers: Server[]},
   );
-  const [showMenu, setShowMenu] = React.useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     async function getInfo() {

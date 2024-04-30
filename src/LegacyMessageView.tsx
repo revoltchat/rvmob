@@ -1,4 +1,4 @@
-import React from 'react';
+import {Component as ReactComponent} from 'react';
 import {
   View,
   ScrollView,
@@ -25,7 +25,7 @@ import {calculateGrouped} from './lib/utils';
 
 let didUpdateFirstTime = false;
 
-export class Messages extends React.Component {
+export class Messages extends ReactComponent {
   constructor(props) {
     super(props);
     this.state = {

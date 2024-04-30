@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -24,8 +24,8 @@ const InviteBackground = observer(({children}: {children: any}) => {
 
 export const InviteEmbed = observer(
   ({message, invite}: {message: Message; invite: string}) => {
-    const [invObject, setInvObject] = React.useState({} as API.InviteResponse);
-    const [error, setError] = React.useState('');
+    const [invObject, setInvObject] = useState({} as API.InviteResponse);
+    const [error, setError] = useState('');
 
     useEffect(() => {
       async function getInv() {

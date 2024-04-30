@@ -1,4 +1,4 @@
-import React from 'react';
+import {useEffect, useState} from 'react';
 import {ImageBackground, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -29,7 +29,7 @@ type Category = {
 
 const ServerChannelListCategory = observer(
   ({category, props}: {category: Category; props: ChannelListProps}) => {
-    const [isVisible, setIsVisible] = React.useState(true);
+    const [isVisible, setIsVisible] = useState(true);
     return (
       <View key={category.id} style={{marginVertical: 8}}>
         <TouchableOpacity
@@ -68,12 +68,10 @@ const ServerChannelListCategory = observer(
 );
 
 const ServerChannelList = observer((props: ServerChannelListProps) => {
-  const [processedChannels, setProcessedChannels] = React.useState(
-    [] as string[],
-  );
-  const [res, setRes] = React.useState([] as React.JSX.Element[] | undefined);
+  const [processedChannels, setProcessedChannels] = useState([] as string[]);
+  const [res, setRes] = useState([] as React.JSX.Element[] | undefined);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let categories = props.currentServer.categories?.map(c => {
       const element = (
         <ServerChannelListCategory

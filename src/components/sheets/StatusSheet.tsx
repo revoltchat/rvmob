@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import {useRef, useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -12,7 +12,7 @@ import {ContextButton, InputWithButton, Text} from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
 
 export const StatusSheet = observer(() => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const sheetRef = useRef<BottomSheetCore>(null);
 
   useBackHandler(() => {

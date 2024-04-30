@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -14,8 +14,8 @@ import {BottomSheet} from '../common/BottomSheet';
 import {MarkdownView} from '../common/MarkdownView';
 
 export const ChannelInfoSheet = observer(() => {
-  const [channel, setChannel] = React.useState(null as Channel | null);
-  const [groupMembers, setGroupMembers] = React.useState([] as User[]);
+  const [channel, setChannel] = useState(null as Channel | null);
+  const [groupMembers, setGroupMembers] = useState([] as User[]);
 
   const sheetRef = useRef<BottomSheetCore>(null);
 
@@ -33,7 +33,7 @@ export const ChannelInfoSheet = observer(() => {
     c ? sheetRef.current?.expand() : sheetRef.current?.close();
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function fetchMembers() {
       if (!channel) {
         return;

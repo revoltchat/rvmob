@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {Pressable, View, TextInput, Platform} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -41,14 +41,12 @@ function placeholderText(channel: Channel) {
 }
 
 export const MessageBox = observer((props: MessageBoxProps) => {
-  const [currentText, setCurrentText] = React.useState('');
-  const [editingMessage, setEditingMessage] = React.useState(
-    null as Message | null,
-  );
-  const [replyingMessages, setReplyingMessages] = React.useState(
+  const [currentText, setCurrentText] = useState('');
+  const [editingMessage, setEditingMessage] = useState(null as Message | null);
+  const [replyingMessages, setReplyingMessages] = useState(
     [] as ReplyingMessage[],
   );
-  const [attachments, setAttachments] = React.useState(
+  const [attachments, setAttachments] = useState(
     [] as DocumentPickerResponse[],
   );
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {Dimensions, Pressable, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -58,7 +58,7 @@ export const Message = observer((props: MessageProps) => {
     reactions.push({emoji: r[0], reactors: Array.from(r[1])});
   }
 
-  let [error, setError] = React.useState(null as any);
+  let [error, setError] = useState(null as any);
   if (error) {
     return (
       <View key={props.message._id}>

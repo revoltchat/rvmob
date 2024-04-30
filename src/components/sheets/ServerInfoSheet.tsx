@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -19,8 +19,8 @@ import {MarkdownView} from '../common/MarkdownView';
 import {Image} from '@rvmob/crossplat/Image';
 
 export const ServerInfoSheet = observer(() => {
-  const [server, setServer] = React.useState(null as Server | null);
-  const [members, setMembers] = React.useState(null as Member[] | null);
+  const [server, setServer] = useState(null as Server | null);
+  const [members, setMembers] = useState(null as Member[] | null);
 
   const sheetRef = useRef<BottomSheetCore>(null);
 
