@@ -5,8 +5,8 @@ import {SvgUri} from 'react-native-svg';
 import {EmojiPacks, RevoltEmojiDictionary, unicodeEmojiURL} from 'revkit';
 
 import {Image} from '@rvmob/crossplat/Image';
-import {client, app} from '../../../Generic';
-import {styles} from '../../../Theme';
+import {client, app} from '@rvmob/Generic';
+import {styles} from '@rvmob/Theme';
 import {Text} from '../atoms';
 import {
   RE_CUSTOM_EMOJI,
@@ -15,8 +15,8 @@ import {
 } from '../../../lib/consts';
 
 export const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
-  const [fail, setFail] = useState(false);
-  if (fail) {
+  const [error, setError] = useState(false);
+  if (error) {
     return <Text>{`:${id}:`}</Text>;
   }
   if (Object.hasOwn(RevoltEmojiDictionary, id)) {
@@ -28,14 +28,14 @@ export const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
       height={styles.emoji.height}
       style={styles.emoji}
       uri={unicodeEmojiURL(id, pack)}
-      onError={() => setFail(true)}
+      onError={() => setError(true)}
       fallback={<Text>{`:${id}:`}</Text>}
     />
   );
 };
 export const CustomEmoji = ({id}: {id: string}) => {
-  const [fail, setFail] = useState(false);
-  if (fail) {
+  const [error, setError] = useState(false);
+  if (error) {
     return <Text>{`:${id}:`}</Text>;
   }
   return (
@@ -44,7 +44,7 @@ export const CustomEmoji = ({id}: {id: string}) => {
       source={{
         uri: `${client.configuration?.features.autumn.url}/emojis/${id}`,
       }}
-      onError={() => setFail(true)}
+      onError={() => setError(true)}
     />
   );
 };
@@ -59,18 +59,11 @@ export function renderEmojis(content: string) {
     | 'system';
 
   const elements = tokens.map((part, index) => {
-    if (index % 2 == 1) {
-      return <CustomEmoji key={index} id={part} />;
-    }
-    return part;
-  });
-  /*
-  const elements = tokens.flatMap((part, index) => {
     if (index % 2 === 1) {
       return <CustomEmoji key={index} id={part} />;
     }
+
     const subparts = part.split(RE_DEFAULT_EMOJI);
-    console.log(subparts);
     let renderedSubparts;
     if (emojiPack !== 'system') {
       renderedSubparts = subparts
@@ -110,6 +103,5 @@ export function renderEmojis(content: string) {
     }
     return renderedSubparts;
   });
-  */
   return elements.length > 1 ? elements : elements[0];
 }
