@@ -180,9 +180,10 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         attachments.length < 5 ? (
           <Pressable
             style={{
-              justifyContent: 'center',
-              alignItems: 'center',
+              ...styles.sendButton,
+              marginStart: 0,
               marginEnd: 8,
+              backgroundColor: currentTheme.messageBox,
             }}
             onPress={async () => {
               try {
@@ -222,7 +223,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
             }}>
             <MaterialIcon
               name="add-circle"
-              size={20}
+              size={24}
               color={currentTheme.foregroundPrimary}
             />
           </Pressable>

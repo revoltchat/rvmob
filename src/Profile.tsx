@@ -7,6 +7,7 @@ import {Server, User, Channel} from 'revolt.js';
 import {Text, Username} from './components/common/atoms';
 import {Image} from '@rvmob/crossplat/Image';
 import {DEFAULT_MAX_SIDE} from './lib/consts';
+import {getColour} from './lib/utils';
 
 type AvatarProps = {
   channel?: Channel;
@@ -222,15 +223,16 @@ export const RoleView = observer(({server, user}: RoleViewProps) => {
       <View
         key={`roleview-${server._id}-container`}
         style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-        {roles.map(r => (
+        {roles.map((r, i, a) => (
           <View
             key={`roleview-${server._id}-${r.name}-${Math.random()}`}
             style={{
               flexDirection: 'row',
               padding: 6,
-              paddingLeft: 8,
-              paddingRight: 8,
-              margin: 2,
+              paddingStart: 8,
+              paddingEnd: 8,
+              marginStart: i === 0 ? 0 : 4,
+              marginEnd: i === a.length - 1 ? 0 : 4,
               backgroundColor: currentTheme.backgroundPrimary,
               borderRadius: 8,
             }}>
@@ -238,7 +240,9 @@ export const RoleView = observer(({server, user}: RoleViewProps) => {
               key={`roleview-${server._id}-${r.name}-colour`}
               style={{
                 borderRadius: 10000,
-                backgroundColor: r.colour || currentTheme.foregroundSecondary,
+                backgroundColor: r.colour
+                  ? getColour(r.colour)
+                  : currentTheme.foregroundSecondary,
                 height: 16,
                 width: 16,
                 margin: 2,
