@@ -1,1 +1,222 @@
-{}
+{
+    "app": {
+        "actions": {
+            "back": "Atrás",
+            "cancel": "Cancelar",
+            "close": "Cerrar",
+            "confirm": "Confirmar",
+            "create_channel": "Crear canal",
+            "delete": "Eliminar",
+            "save": "Guardar"
+        },
+        "loading": {
+            "generic": "Cargando…",
+            "connecting": "Iniciando sesión…"
+        },
+        "login": {
+            "forms": {
+                "email_placeholder": "Correo Electrónico",
+                "password_placeholder": "Contraseña",
+                "session_token_placeholder": "Token",
+                "mfa_placeholder": "Código de autentificación"
+            },
+            "instance_notice": "Estás siendo conectado a {{url}}.",
+            "options": {
+                "login_regular": "Sí, inicia sesión con mi correo y contraseña",
+                "login_session_token": "Sí, inicia sesión con un token",
+                "signup": "No, crear una cuenta",
+                "signup_body": "Vas a ser redirigido a la aplicación web. Después de crear su cuenta, vuelva e inicie sesión.",
+                "login_regular_body": "Recomendado para la mayoría de los usuarios.",
+                "login_session_token_body": "Usa esta opción si está teniendo problemas de autentificación. Alguna funcionalidad podría no estar disponible."
+            },
+            "subheader": "¿Tienes una cuenta?",
+            "token_info_label": "¿Como obtengo mi token?"
+        },
+        "home": {
+            "description": "¡Desliza desde la parte izquierda de la pantalla o, presione el icono de tres líneas para mirar tus servidores y mensajes!",
+            "open_lounge": "Abrir Revolt Lounge",
+            "join_lounge": "Únete al servidor de Revolt Lounge",
+            "join_rvmob": "Únete al servidor de RVMob",
+            "open_rvmob": "Abrir el servidor de RVMob",
+            "open_settings": "Abrir configuración"
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_server": "¿Eliminar servidor?",
+                "body_message": "¿Estás seguro de eliminar <2>este mensaje</2>?",
+                "warning": "Esto no se puede deshacer.",
+                "header_message": "¿Eliminar mensaje?",
+                "body_server": "¿Estás seguro de eliminar <2>{{name}}</2>?"
+            },
+            "create_channel": {
+                "name_header": "Nombre",
+                "name_placeholder": "Nombre del canal",
+                "type_header": "Tipo",
+                "type_voice": "Canal de voz",
+                "nsfw_header": "NSFW",
+                "nsfw_label": "Marcar canal como NSFW",
+                "header": "Crear un canal",
+                "type_text": "Canal de texto"
+            },
+            "edit_text": {
+                "display_name_header": "Establecer nombre para mostrar",
+                "display_name_placeholder": "Nombre para mostrar",
+                "nickname_header": "Establecer apodo",
+                "nickname_other_header": "Establecer apodo de miembro",
+                "nickname_other_placeholder": "Apodo (Dejalo en blanco para restablecer)",
+                "role_colour_header": "Establecer color del rol",
+                "role_colour_placeholder": "Color del rol",
+                "session_name_header": "Establecer nombre de la sesión",
+                "session_name_placeholder": "Nombre de la sesión",
+                "nickname_placeholder": "Apodo (Dejalo en blanco para restablecer)"
+            }
+        },
+        "servers": {
+            "settings": {
+                "general": "General",
+                "customisation": "Personalización",
+                "overview": {
+                    "name": "Nombre del servidor",
+                    "title": "Vista general",
+                    "description": "Descripción del servidor",
+                    "markdown_tip_link": "Más información.",
+                    "description_placeholder": "Agrega una descripción…",
+                    "set_description": "Establecer descripción",
+                    "system_messages": "Mensajes del sistema",
+                    "errors": {
+                        "empty_server_name": "¡El nombre del servidor no puede estar vacío!"
+                    },
+                    "markdown_tip": "La descripción del servidor soporta Markdown."
+                },
+                "user_management": "Administración de usuarios",
+                "channels": {
+                    "title": "Canales",
+                    "name": "Nombre del canal",
+                    "permissions": "Permisos del canal",
+                    "no_perms_set": "No establecido",
+                    "errors": {
+                        "empty_channel_name": "¡El nombre del canal no puede estar vacío!"
+                    },
+                    "name_placeholder": "Establecer nombre del canal…"
+                },
+                "roles": {
+                    "rank": "Rango",
+                    "title": "Roles",
+                    "permissions": "Permisos",
+                    "colour": "Color",
+                    "set_colour": "Establecer color del rol",
+                    "open_colour_modal": "Ingresar color manualmente",
+                    "errors": {
+                        "empty_role_name": "¡El nombre del rol no puede estar vacío!"
+                    },
+                    "name": "Nombre",
+                    "name_placeholder": "Establecer nombre del rol…"
+                },
+                "emoji": {
+                    "title": "Emoji",
+                    "added_by": "Agregado por @{{name}}",
+                    "empty": "Sin emoji",
+                    "deleted_toast": "{{name}} fue eliminado"
+                },
+                "members": {
+                    "title": "Miembros",
+                    "loading": "Consiguiendo miembros…"
+                },
+                "invites": {
+                    "title": "Invitaciones",
+                    "loading": "Consiguiendo invitaciones…",
+                    "empty": "Sin invitaciones"
+                },
+                "bans": {
+                    "title": "Expulsiones",
+                    "loading": "Cargando expulsiones…",
+                    "empty": "Sin expulsiones",
+                    "no_reason": "No se proveyó una razón"
+                },
+                "delete_server": "Eliminar servidor"
+            }
+        },
+        "settings": {
+            "app": {
+                "language": "Selecciona tu lenguaje",
+                "refetchOnReconnect": "Recargar mensajes al reconectarse",
+                "notifications": {
+                    "enabled": "Habilitar notificaciones “push”",
+                    "notifyOnSelfPing": "Recibir una notificación al mencionarse a sí mismo"
+                },
+                "showChangelogs": "Mostrar cambios al actualizar RVMob"
+            },
+            "ui": {
+                "home": {
+                    "holidays": "Mostrar festividades en inicio"
+                },
+                "theme": "Tema",
+                "messaging": {
+                    "doubleTapToReply": "Doble toque para responder mensajes",
+                    "emojiPack": "Pack de emoji",
+                    "doubleTapToReply_remark": "Esto está soportado en la nueva vista de mensajes.",
+                    "experimentalScrolling": "Habilitar desplazamiento de canal en la vieja vista de canales",
+                    "fontSize": "Tamaño de fuente",
+                    "experimentalScrolling_remark": "Solamente se puede desplazar al revés.",
+                    "fontSize_remark": "Esto solo aplica a los mensajes y a ciertas partes de la aplicación.",
+                    "messageSpacing": "Espacio entre mensajes",
+                    "sendAttachments": "Habilitar mandar adjuntos",
+                    "showMasqAvatar": "Mostrar avatar mascarada en la esquina",
+                    "showNSFWContent": "Consentir a contenido +18",
+                    "showReactions": "Mostrar reacciones debajo de los mensajes",
+                    "showReactions_remark": "Puedes agregar reacciones existentes, pero no nuevas.",
+                    "showSelfInTypingIndicator": "Mostrarte a ti mismo mientras escribes",
+                    "statusInChatAvatars": "Mostrar estatus en avatares",
+                    "use24H": "Usar tiempo en 24 horas",
+                    "useNewMessageView": "Usar nueva vista de menajes"
+                },
+                "theme_remark": "Tienes que cerrar o abrir el menú lateral para mostrar los cambios.",
+                "settings": {
+                    "showExperimental": "Mostrar opciones experimentales"
+                },
+                "showDeveloperFeatures": "Mostrar herramientas de desarrolladores"
+            }
+        },
+        "settings_menu": {
+            "account": {
+                "title": "Cuenta"
+            },
+            "functionality": {
+                "title": "Funciones"
+            },
+            "appearance": {
+                "title": "Apariencia"
+            },
+            "groups": {
+                "advanced": "Avanzado",
+                "app": "Aplicación",
+                "other": "Otros",
+                "user": "Usuario"
+            },
+            "i18n": {
+                "title": "Lenguaje"
+            },
+            "info": {
+                "title": "Acerca de RVMob"
+            },
+            "other": {
+                "view_issues": "Ver problemas abiertos",
+                "logout": "Cerrar sesión",
+                "debug_info": "Copiar información de depuración"
+            },
+            "profile": {
+                "title": "Perfil"
+            }
+        },
+        "misc": {
+            "network_indicator": {
+                "body": "Conexión perdida",
+                "hide": "(esconder)"
+            },
+            "voice": {
+                "header": "¡Los canales de voz todavía no están soportados en RVMob!",
+                "body": "Mientras tanto, puedes unirte a través de Revolt para escritorio o la aplicación web."
+            }
+        }
+    }
+}
