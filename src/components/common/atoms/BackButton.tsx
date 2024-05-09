@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {Text} from '.';
+import {Text} from './Text';
 import {currentTheme} from '@rvmob/Theme';
 
 export function BackButton({

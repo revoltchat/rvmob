@@ -3,11 +3,11 @@ import {observer} from 'mobx-react-lite';
 
 import {Server, User} from 'revolt.js';
 
-import {app, client} from '../../../Generic';
-import {currentTheme, styles} from '../../../Theme';
+import {app, client} from '@rvmob/Generic';
+import {currentTheme, styles} from '@rvmob/Theme';
 import {Text} from './Text';
-import {USER_IDS} from '../../../lib/consts';
-import {getColour} from '../../../lib/utils';
+import {USER_IDS} from '@rvmob/lib/consts';
+import {getColour} from '@rvmob/lib/utils';
 
 type UsernameProps = {
   server?: Server;

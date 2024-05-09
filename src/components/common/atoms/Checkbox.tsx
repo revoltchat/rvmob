@@ -1,7 +1,7 @@
 import {TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {currentTheme} from '../../../Theme';
+import {currentTheme} from '@rvmob/Theme';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 

@@ -1,22 +1,11 @@
-import {Linking, View} from 'react-native';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {API, Channel, Client, Message, Server} from 'revolt.js';
 
 import {setLanguage} from '@rvmob-i18n/i18n';
 import {languages} from '@rvmob-i18n/languages';
-import {Image} from '@rvmob/crossplat/Image';
 import {setTheme, themes} from '@rvmob/Theme';
-import {
-  DEFAULT_API_URL,
-  DEFAULT_MAX_SIDE,
-  DISCOVER_URL,
-  LOADING_SCREEN_REMARKS,
-  RE_INVITE,
-  RE_BOT_INVITE,
-  WIKI_URL,
-} from '@rvmob/lib/consts';
+import {DEFAULT_API_URL, LOADING_SCREEN_REMARKS} from '@rvmob/lib/consts';
 import {
   CreateChannelModalProps,
   DeletableObject,
@@ -417,67 +406,6 @@ getAPIURL().then(url => {
     apiURL: apiURL,
   });
 });
-
-export const openUrl = (url: string) => {
-  console.log(`[FUNCTIONS] Handling URL: ${url}`);
-  if (url.startsWith('/@')) {
-    console.log(`[FUNCTIONS] Opening user profile from URL: ${url}`);
-    let id = url.slice(2);
-    let user = client.users.get(id);
-    if (user) {
-      app.openProfile(user);
-    }
-    return;
-  }
-  let match = url.match(RE_INVITE);
-  let isDiscover = url.match(DISCOVER_URL);
-  let isWiki = url.match(WIKI_URL);
-  if (match && !isWiki && !isDiscover) {
-    console.log(`[FUNCTIONS] Opening server invite from URL: ${url}`);
-    app.openInvite(match[0].split('/').pop());
-    return;
-  }
-  let botmatch = url.match(RE_BOT_INVITE);
-  if (botmatch) {
-    console.log(`[FUNCTIONS] Opening bot invite from URL: ${url}`);
-    app.openBotInvite(botmatch[0].split('/').pop());
-    return;
-  }
-  if (url.startsWith('/bot/')) {
-    console.log(`[FUNCTIONS] Opening bot invite from URL: ${url}`);
-    const id = url.split('/');
-    app.openBotInvite(id[2]);
-    return;
-  }
-
-  Linking.openURL(url);
-};
-
-export const GeneralAvatar = ({
-  attachment,
-  size,
-  directory,
-}: {
-  attachment: any;
-  size: number;
-  directory?: string;
-}) => {
-  const uri = directory
-    ? client.configuration?.features.autumn.url + directory + attachment
-    : client.generateFileURL(attachment) + '?max_side=' + DEFAULT_MAX_SIDE;
-  return (
-    <View>
-      {
-        <Image
-          source={{
-            uri: uri,
-          }}
-          style={{width: size || 35, height: size || 35, borderRadius: 10000}}
-        />
-      }
-    </View>
-  );
-};
 
 export var selectedRemark =
   LOADING_SCREEN_REMARKS[

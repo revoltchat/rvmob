@@ -7,12 +7,13 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {API, Channel, Server, User} from 'revolt.js';
 
-import {app, client, openUrl, setFunction} from './Generic';
+import {app, client, setFunction} from './Generic';
 import {
   CreateChannelModalProps,
   DeletableObject,
   TextEditingModalProps,
 } from './lib/types';
+import {openUrl} from '@rvmob/lib/utils';
 import {currentTheme} from './Theme';
 import {GapView} from './components/layout';
 import {

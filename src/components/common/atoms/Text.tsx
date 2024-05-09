@@ -1,6 +1,6 @@
 import {Text as NativeText /*, TextProps, TextStyle*/} from 'react-native';
 
-import {currentTheme, styles} from '../../../Theme';
+import {currentTheme, styles} from '@rvmob/Theme';
 
 // TODO: fix typing issue (the children prop seemingly isn't being set to any) then stop using any for the Text component itself
 // type FullTextProps = TextProps & {

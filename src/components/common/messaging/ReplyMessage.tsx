@@ -2,9 +2,8 @@ import {View} from 'react-native';
 
 import {Message} from 'revolt.js';
 
-import {Avatar} from '../../../Profile';
 import {styles} from '../../../Theme';
-import {Text, Username} from '../atoms';
+import {Avatar, Text, Username} from '../atoms';
 
 type ReplyProps = {
   message?: Message;

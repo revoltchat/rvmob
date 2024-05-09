@@ -4,9 +4,10 @@ import {TextInput, View, ViewStyle} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {showToast} from '../../../lib/utils';
-import {currentTheme, styles} from '../../../Theme';
-import {Button, Text} from '.';
+import {showToast} from '@rvmob/lib/utils';
+import {currentTheme, styles} from '@rvmob/Theme';
+import {Button} from '@rvmob/components/common/atoms/Button';
+import {Text} from '@rvmob/components/common/atoms/Text';
 
 // TODO: move these once i figure out what to do with the plain Input component/where it'll be useful
 

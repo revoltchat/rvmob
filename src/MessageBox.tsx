@@ -11,9 +11,8 @@ import {ulid} from 'ulid';
 
 import {DocumentPicker} from './crossplat/DocumentPicker';
 import {app, client, setFunction} from './Generic';
-import {Avatar} from './Profile';
 import {styles, currentTheme} from './Theme';
-import {Text, Username} from './components/common/atoms';
+import {Avatar, Text, Username} from './components/common/atoms';
 import {USER_IDS} from './lib/consts';
 import {ReplyingMessage} from './lib/types';
 import {getReadableFileSize, showToast} from './lib/utils';

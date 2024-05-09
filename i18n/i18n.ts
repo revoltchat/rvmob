@@ -4,7 +4,7 @@ import 'intl-pluralrules';
 
 import {resources} from '@rvmob-i18n/languages';
 import {languageDetectorPlugin} from '@rvmob-i18n/getLanguage';
-import {Text} from '@rvmob/components/common/atoms';
+import {Text} from '@rvmob/components/common/atoms/Text';
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next

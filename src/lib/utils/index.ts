@@ -3,6 +3,7 @@ export {
   calculateGrouped,
   fetchMessages,
   getReadableFileSize,
+  openUrl,
   parseRevoltNodes,
   showToast,
   sleep,

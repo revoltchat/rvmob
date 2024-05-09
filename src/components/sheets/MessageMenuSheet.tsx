@@ -13,7 +13,7 @@ import {app, setFunction} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
 import {ContextButton, CopyIDButton, Text} from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
-import {ReplyMessage} from '../common/messaging';
+import {ReplyMessage} from '../common/messaging/ReplyMessage';
 
 export const MessageMenuSheet = observer(() => {
   const [message, setMessage] = useState(null as Message | null);

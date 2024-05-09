@@ -14,7 +14,7 @@ import {
   RE_UNICODE_EMOJI,
 } from '../../../lib/consts';
 
-export const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
+const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
   const [error, setError] = useState(false);
   if (error) {
     return <Text>{`:${id}:`}</Text>;
@@ -33,7 +33,7 @@ export const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
     />
   );
 };
-export const CustomEmoji = ({id}: {id: string}) => {
+const CustomEmoji = ({id}: {id: string}) => {
   const [error, setError] = useState(false);
   if (error) {
     return <Text>{`:${id}:`}</Text>;
@@ -49,7 +49,7 @@ export const CustomEmoji = ({id}: {id: string}) => {
   );
 };
 
-export function renderEmojis(content: string) {
+export function renderEmoji(content: string) {
   const tokens = content.split(RE_CUSTOM_EMOJI);
 
   // get the emoji pack; default to system

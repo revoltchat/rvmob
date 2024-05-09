@@ -16,14 +16,15 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import AppInfo from '../../../package.json';
-import {app, client, openUrl, setFunction} from '../../Generic';
+import {app, client, setFunction} from '../../Generic';
 import {
   CONTRIBUTORS_LIST,
   FEDI_PROFILE,
   GITHUB_REPO,
   OPEN_ISSUES,
 } from '@rvmob/lib/consts';
-import {SettingsSection} from '../../lib/types';
+import {SettingsSection} from '@rvmob/lib/types';
+import {openUrl} from '@rvmob/lib/utils';
 import {currentTheme, styles} from '../../Theme';
 import {BackButton, ContextButton, Link, Text} from '../common/atoms';
 import {SettingsCategory} from '../common/settings';

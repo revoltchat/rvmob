@@ -7,21 +7,18 @@ import {enGB, enUS} from 'date-fns/locale';
 import {Message as RevoltMessage} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
-import {
-  InviteEmbed,
-  MessageEmbed,
-  MessageReactions,
-  PlatformModerationMessage,
-  ReplyMessage,
-} from './';
-import {app, client, openUrl} from '../../../Generic';
-import {Avatar} from '../../../Profile';
+import {InviteEmbed} from './InviteEmbed';
+import {MessageEmbed} from './MessageEmbed';
+import {MessageReactions} from './MessageReactions';
+import {PlatformModerationMessage} from './PlatformModerationMessage';
+import {ReplyMessage} from './ReplyMessage';
+import {app, client} from '../../../Generic';
 import {currentTheme, styles} from '../../../Theme';
 import {Image} from '@rvmob/crossplat/Image';
-import {Text, Username} from '../atoms';
+import {Avatar, Text, Username} from '../atoms';
 import {MarkdownView} from '../MarkdownView';
 import {RE_INVITE, USER_IDS} from '../../../lib/consts';
-import {getReadableFileSize, parseRevoltNodes} from '../../../lib/utils';
+import {getReadableFileSize, openUrl, parseRevoltNodes} from '@rvmob/lib/utils';
 
 type MessageProps = {
   message: RevoltMessage;

@@ -5,9 +5,8 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {Message} from 'revolt.js';
 
-import {Avatar} from '../Profile';
 import {currentTheme, styles} from '../Theme';
-import {Text, Username} from './common/atoms';
+import {Avatar, Text, Username} from './common/atoms';
 import {MarkdownView} from './common/MarkdownView';
 import {parseRevoltNodes} from '../lib/utils';
 

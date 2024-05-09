@@ -12,15 +12,17 @@ import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 
 import {User, Server} from 'revolt.js';
 
-import {app, client, GeneralAvatar, openUrl, setFunction} from '../../Generic';
+import {app, client, setFunction} from '@rvmob/Generic';
 import {BADGES, USER_IDS} from '../../lib/consts';
-import {parseRevoltNodes, showToast} from '../../lib/utils';
-import {Avatar, MiniProfile, RoleView} from '../../Profile';
+import {openUrl, parseRevoltNodes, showToast} from '@rvmob/lib/utils';
+import {MiniProfile, RoleView} from '@rvmob/Profile';
 import {currentTheme, styles} from '../../Theme';
 import {
+  Avatar,
   Button,
   ContextButton,
   CopyIDButton,
+  GeneralAvatar,
   Link,
   Text,
   Username,

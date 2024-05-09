@@ -4,9 +4,9 @@ import {observer} from 'mobx-react-lite';
 
 import {Server, User} from 'revolt.js';
 
-import {client, GeneralAvatar} from '../../Generic';
+import {client} from '../../Generic';
 import {currentTheme} from '../../Theme';
-import {Button, Text} from '../common/atoms';
+import {Button, GeneralAvatar, Text} from '../common/atoms';
 import {ServerList} from '../navigation/ServerList';
 
 export const BotInviteSheet = observer(

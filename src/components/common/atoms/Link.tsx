@@ -1,8 +1,8 @@
 import {TouchableOpacity} from 'react-native';
 
-import {openUrl} from '../../../Generic';
-import {styles} from '../../../Theme';
+import {styles} from '@rvmob/Theme';
 import {Text} from './Text';
+import {openUrl} from '@rvmob/lib/utils';
 
 type LinkProps = {
   link: string;

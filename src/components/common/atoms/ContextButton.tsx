@@ -1,6 +1,6 @@
 import {TouchableOpacity} from 'react-native';
 
-import {styles} from '../../../Theme';
+import {styles} from '@rvmob/Theme';
 
 type ButtonProps = {
   children?: any;

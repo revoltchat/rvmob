@@ -10,9 +10,8 @@ import {Message} from 'revolt.js';
 import {app, client, setFunction} from '../../Generic';
 import {USER_IDS} from '../../lib/consts';
 import type {ReportedObject} from '../../lib/types';
-import {Avatar} from '../../Profile';
 import {currentTheme} from '../../Theme';
-import {Button, Text, Username} from '../common/atoms';
+import {Avatar, Button, Text, Username} from '../common/atoms';
 import {MarkdownView} from '../common/MarkdownView';
 import {BottomSheet} from '../common/BottomSheet';
 

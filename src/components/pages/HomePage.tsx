@@ -2,15 +2,15 @@ import {TouchableOpacity, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
-import {app, client, openUrl} from '@rvmob/Generic';
-import {Avatar} from '@rvmob/Profile';
+import {app, client} from '@rvmob/Generic';
 import {
   SPECIAL_DATES,
   SPECIAL_DATE_OBJECTS,
   SPECIAL_SERVERS,
 } from '@rvmob/lib/consts';
+import {openUrl} from '@rvmob/lib/utils';
 import {styles} from '@rvmob/Theme';
-import {Button, Text, Username} from '@rvmob/components/common/atoms';
+import {Avatar, Button, Text, Username} from '@rvmob/components/common/atoms';
 import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
 import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
 

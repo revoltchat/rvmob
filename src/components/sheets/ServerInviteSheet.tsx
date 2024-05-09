@@ -5,9 +5,9 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {API} from 'revolt.js';
 
-import {app, client, GeneralAvatar} from '../../Generic';
+import {app, client} from '../../Generic';
 import {currentTheme} from '../../Theme';
-import {Button, Text} from '../common/atoms';
+import {Button, GeneralAvatar, Text} from '../common/atoms';
 import {Image} from '@rvmob/crossplat/Image';
 
 export const ServerInviteSheet = observer(

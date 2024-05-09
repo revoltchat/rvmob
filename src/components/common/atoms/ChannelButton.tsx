@@ -6,7 +6,7 @@ import {Channel} from 'revolt.js';
 import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
 import {MiniProfile} from '@rvmob/Profile';
 import {currentTheme, styles} from '@rvmob/Theme';
-import {Text} from './Text';
+import {Text} from '@rvmob/components/common/atoms/Text';
 
 type ChannelButtonProps = {
   channel: Channel | 'Home' | 'Friends' | 'Saved Notes' | 'Debug';

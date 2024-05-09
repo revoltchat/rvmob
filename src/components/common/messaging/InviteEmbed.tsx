@@ -4,9 +4,9 @@ import {observer} from 'mobx-react-lite';
 
 import {API, Message} from 'revolt.js';
 
-import {GeneralAvatar, app, client} from '../../../Generic';
+import {app, client} from '../../../Generic';
 import {currentTheme} from '../../../Theme';
-import {Button, Text} from '../atoms';
+import {Button, GeneralAvatar, Text} from '../atoms';
 
 const InviteBackground = observer(({children}: {children: any}) => {
   return (

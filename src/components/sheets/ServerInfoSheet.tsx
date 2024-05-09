@@ -9,11 +9,16 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {Member, Server} from 'revolt.js';
 
-import {GeneralAvatar, app, client, setFunction} from '../../Generic';
+import {app, client, setFunction} from '../../Generic';
 import {SERVER_FLAGS, SPECIAL_SERVERS} from '../../lib/consts';
 import {showToast} from '../../lib/utils';
 import {currentTheme, styles} from '../../Theme';
-import {ContextButton, CopyIDButton, Text} from '../common/atoms';
+import {
+  ContextButton,
+  CopyIDButton,
+  GeneralAvatar,
+  Text,
+} from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
 import {MarkdownView} from '../common/MarkdownView';
 import {Image} from '@rvmob/crossplat/Image';

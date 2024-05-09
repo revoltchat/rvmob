@@ -6,9 +6,8 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {Server} from 'revolt.js';
 
 import {app, setFunction, client} from './Generic';
-import {Avatar} from './Profile';
 import {styles, currentTheme} from './Theme';
-import {Button} from './components/common/atoms';
+import {Avatar, Button} from './components/common/atoms';
 import {ChannelList} from './components/navigation/ChannelList';
 import {ServerList} from './components/navigation/ServerList';
 import {DEFAULT_API_URL} from './lib/consts';

@@ -1,11 +1,17 @@
-import {Platform, ToastAndroid} from 'react-native';
+import {Linking, Platform, ToastAndroid} from 'react-native';
 
 import {differenceInMinutes, isSameDay} from 'date-fns';
 import {Channel, Message} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
-import {client} from '@rvmob/Generic';
-import {DEFAULT_MESSAGE_LOAD_COUNT} from '@rvmob/lib/consts';
+import {app, client} from '@rvmob/Generic';
+import {
+  DEFAULT_MESSAGE_LOAD_COUNT,
+  DISCOVER_URL,
+  RE_BOT_INVITE,
+  RE_INVITE,
+  WIKI_URL,
+} from '@rvmob/lib/consts';
 
 /**
  * Sleep for the specified amount of milliseconds before continuing.
@@ -138,3 +144,38 @@ export function showToast(badgeName: string) {
     );
   }
 }
+
+export const openUrl = (url: string) => {
+  console.log(`[FUNCTIONS] Handling URL: ${url}`);
+  if (url.startsWith('/@')) {
+    console.log(`[FUNCTIONS] Opening user profile from URL: ${url}`);
+    let id = url.slice(2);
+    let user = client.users.get(id);
+    if (user) {
+      app.openProfile(user);
+    }
+    return;
+  }
+  let match = url.match(RE_INVITE);
+  let isDiscover = url.match(DISCOVER_URL);
+  let isWiki = url.match(WIKI_URL);
+  if (match && !isWiki && !isDiscover) {
+    console.log(`[FUNCTIONS] Opening server invite from URL: ${url}`);
+    app.openInvite(match[0].split('/').pop());
+    return;
+  }
+  let botmatch = url.match(RE_BOT_INVITE);
+  if (botmatch) {
+    console.log(`[FUNCTIONS] Opening bot invite from URL: ${url}`);
+    app.openBotInvite(botmatch[0].split('/').pop());
+    return;
+  }
+  if (url.startsWith('/bot/')) {
+    console.log(`[FUNCTIONS] Opening bot invite from URL: ${url}`);
+    const id = url.split('/');
+    app.openBotInvite(id[2]);
+    return;
+  }
+
+  Linking.openURL(url);
+};

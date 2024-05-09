@@ -3,10 +3,11 @@ import {createContext, useState} from 'react';
 import spoilerPlugin from '@traptitech/markdown-it-spoiler';
 import Markdown, {hasParents, MarkdownIt} from 'react-native-markdown-display';
 
-import {app, openUrl} from '../../Generic';
-import {currentTheme} from '../../Theme';
+import {app} from '@rvmob/Generic';
+import {currentTheme} from '@rvmob/Theme';
 import {Text} from './atoms';
-import {renderEmojis} from './messaging/Emoji';
+import {renderEmoji} from './messaging/Emoji';
+import {openUrl} from '@rvmob/lib/utils';
 
 const defaultMarkdownIt = MarkdownIt({typographer: true, linkify: true})
   .disable(['image'])
@@ -51,8 +52,8 @@ const spoilerRule = {
                   : spoilerStyle.hiddenSpoiler),
               }}>
               {
-                /* FIXME: Rendering emojis reveals spoiler markdown
-                renderEmojis(node.content)*/
+                /* FIXME: Rendering emoji reveals spoiler markdown
+                renderEmoji(node.content)*/
                 node.content
               }
             </Text>
@@ -63,7 +64,7 @@ const spoilerRule = {
 
     return (
       <Text key={node.key} style={{...inheritedStyles, ...styles.text}}>
-        {renderEmojis(node.content)}
+        {renderEmoji(node.content)}
       </Text>
     );
   },
