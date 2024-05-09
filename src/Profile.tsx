@@ -10,7 +10,7 @@ import {getColour} from './lib/utils';
 
 type AvatarProps = {
   channel?: Channel;
-  user?: User;
+  user?: User | null;
   server?: Server;
   status?: boolean;
   size?: number;

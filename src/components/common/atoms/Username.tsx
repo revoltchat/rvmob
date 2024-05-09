@@ -11,7 +11,7 @@ import {getColour} from '../../../lib/utils';
 
 type UsernameProps = {
   server?: Server;
-  user?: User;
+  user?: User | null;
   noBadge?: boolean;
   size?: number;
   masquerade?: string | null;
@@ -29,7 +29,7 @@ export const Username = observer(
     color,
     skipDisplayName,
   }: UsernameProps) => {
-    if (typeof user !== 'object') {
+    if (!user || typeof user !== 'object') {
       return (
         <Text style={size ? {fontSize: size} : {}}>{'<Unknown User>'}</Text>
       );
@@ -37,7 +37,7 @@ export const Username = observer(
     const memberObject = server
       ? client.members.getKey({
           server: server?._id,
-          user: user?._id,
+          user: user._id,
         })
       : undefined;
     let roleColor = color ? getColour(color) : styles.textDefault.color;
@@ -57,7 +57,7 @@ export const Username = observer(
     }
     let badgeSize = (size || 14) * 0.6;
     let bridgedMessage =
-      user?._id === USER_IDS.automod && masquerade !== undefined;
+      user._id === USER_IDS.automod && masquerade !== undefined;
     let badgeStyle = {
       color: currentTheme.accentColorForeground,
       backgroundColor: currentTheme.accentColor,
