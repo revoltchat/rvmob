@@ -23,13 +23,7 @@ import SideMenuBase from '@rexovolt/react-native-side-menu';
 import {Channel, Server} from 'revolt.js';
 
 import {currentTheme, styles} from './src/Theme';
-import {
-  client,
-  app,
-  selectedRemark,
-  randomizeRemark,
-  openUrl,
-} from './src/Generic';
+import {client, app, selectedRemark, randomizeRemark} from './src/Generic';
 import {setFunction} from './src/Generic';
 import {SideMenu} from './src/SideMenu';
 import {Modals} from './src/Modals';
@@ -44,7 +38,7 @@ import {
   loginWithToken,
 } from './src/lib/auth';
 import {OFFICIAL_INSTANCE_SIGNUP_URL} from '@rvmob/lib/consts';
-import {sleep} from './src/lib/utils';
+import {openUrl, sleep} from '@rvmob/lib/utils';
 
 async function createChannel() {
   const channel = (await notifee.getChannel('rvmob'))
