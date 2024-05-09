@@ -44,7 +44,7 @@
     "react-native-markdown-display": "^7.0.2",
     "react-native-reanimated": "patch:react-native-reanimated@npm%3A3.9.0-rc.1#~/.yarn/patches/react-native-reanimated-npm-3.9.0-rc.1-c5149e62b9.patch",
     "react-native-svg": "^15.2.0",
-    "react-native-vector-icons": "patch:react-native-vector-icons@npm%3A10.0.3#~/.yarn/patches/react-native-vector-icons-npm-10.0.3-d1cb4af000.patch",
+    "react-native-vector-icons": "^10.1.0",
     "react-native-web": "^0.19.11",
     "reanimated-color-picker": "^3.0.3",
     "revkit": "^1.1.14",

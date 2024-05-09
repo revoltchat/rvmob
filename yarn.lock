@@ -12849,9 +12849,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-vector-icons@npm:10.0.3":
-  version: 10.0.3
-  resolution: "react-native-vector-icons@npm:10.0.3"
+"react-native-vector-icons@npm:^10.1.0":
+  version: 10.1.0
+  resolution: "react-native-vector-icons@npm:10.1.0"
   dependencies:
     prop-types: "npm:^15.7.2"
     yargs: "npm:^16.1.1"
@@ -12860,22 +12860,7 @@ __metadata:
     fa5-upgrade: bin/fa5-upgrade.sh
     fa6-upgrade: bin/fa6-upgrade.sh
     generate-icon: bin/generate-icon.js
-  checksum: 10c0/f7741e03cba701ac577779784db64ef581d5056a14698ac34de0bea731ff0d2bbe4b1c5ede441caa1b8748b18e57ee96b4d8dd75d53ef1b240995d1ffdc6419d
-  languageName: node
-  linkType: hard
-
-"react-native-vector-icons@patch:react-native-vector-icons@npm%3A10.0.3#~/.yarn/patches/react-native-vector-icons-npm-10.0.3-d1cb4af000.patch":
-  version: 10.0.3
-  resolution: "react-native-vector-icons@patch:react-native-vector-icons@npm%3A10.0.3#~/.yarn/patches/react-native-vector-icons-npm-10.0.3-d1cb4af000.patch::version=10.0.3&hash=bc3199"
-  dependencies:
-    prop-types: "npm:^15.7.2"
-    yargs: "npm:^16.1.1"
-  bin:
-    fa-upgrade.sh: bin/fa-upgrade.sh
-    fa5-upgrade: bin/fa5-upgrade.sh
-    fa6-upgrade: bin/fa6-upgrade.sh
-    generate-icon: bin/generate-icon.js
-  checksum: 10c0/60f63a0d256c8d3311b3e11999df527001a2142ff47bb234e558a88dc31eb03093e443be733937b89da657aae9bcd60843f38e34517779bf5d162198fe7d345b
+  checksum: 10c0/fd6df2090857c7b124a0d2d800fb8c5fc1b1fa78e0af5136bd984bdd5690cf46ea7961689d41c5f324cb21f6b5375643d50384132d9321f52e73e7e6f1f7dd46
   languageName: node
   linkType: hard
 
@@ -13535,7 +13520,7 @@ __metadata:
     react-native-reanimated: "patch:react-native-reanimated@npm%3A3.9.0-rc.1#~/.yarn/patches/react-native-reanimated-npm-3.9.0-rc.1-c5149e62b9.patch"
     react-native-svg: "npm:^15.2.0"
     react-native-svg-transformer: "npm:^1.3.0"
-    react-native-vector-icons: "patch:react-native-vector-icons@npm%3A10.0.3#~/.yarn/patches/react-native-vector-icons-npm-10.0.3-d1cb4af000.patch"
+    react-native-vector-icons: "npm:^10.1.0"
     react-native-web: "npm:^0.19.11"
     react-test-renderer: "npm:^18.3.1"
     reanimated-color-picker: "npm:^3.0.3"
