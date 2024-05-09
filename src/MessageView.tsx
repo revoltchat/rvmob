@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   NativeSyntheticEvent,
@@ -127,13 +127,9 @@ export const NewMessageView = observer(
       count: 0,
       message: '',
     });
-    // const setDoubleTapStatus = (s: DoubleTapState) => {
-    //   console.log(s);
-    //   _setDoubleTapStatus(s);
-    // };
     const [atEndOfPage, setAtEndOfPage] = useState(false);
     const [error, setError] = useState(null as any);
-    let scrollView: FlatList | null;
+    const scrollViewRef = useRef<FlatList>(null);
 
     useEffect(() => {
       console.log(`[NEWMESSAGEVIEW] Fetching messages for ${channel._id}...`);
@@ -167,7 +163,7 @@ export const NewMessageView = observer(
           );
           setMessages(oldMessages => [...oldMessages, msg]);
           if (shouldScroll) {
-            scrollView?.scrollToEnd();
+            scrollViewRef.current?.scrollToEnd();
           }
         } catch (err) {
           console.log(
@@ -232,10 +228,6 @@ export const NewMessageView = observer(
       // );
     };
 
-    const ref = (view: FlatList) => {
-      scrollView = view;
-    };
-
     return (
       <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
         {error ? (
@@ -261,7 +253,7 @@ export const NewMessageView = observer(
                 justifyContent: 'flex-end',
                 flexDirection: 'column',
               }}
-              ref={ref}
+              ref={scrollViewRef}
               renderItem={renderItem}
               onScroll={onScroll}
             />
