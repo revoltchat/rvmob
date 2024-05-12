@@ -1,1 +1,196 @@
-{}
+{
+    "app": {
+        "actions": {
+            "cancel": "إلغاء",
+            "close": "إغلاق",
+            "back": "العودة",
+            "confirm": "تأكيد",
+            "delete": "حذف",
+            "save": "حفظ",
+            "create_channel": "إنشاء قناة"
+        },
+        "loading": {
+            "generic": "جار التحميل…",
+            "connecting": "جار تسجيل الدخول…"
+        },
+        "login": {
+            "forms": {
+                "email_placeholder": "البريد الإلكتروني",
+                "password_placeholder": "كلمة المرور",
+                "session_token_placeholder": "رمز",
+                "mfa_placeholder": "رمز لمرة واحدة"
+            },
+            "instance_notice": "أنت تتصل بـ{{url}}.",
+            "subheader": "هل لديك حساب؟",
+            "token_info_label": "كيف يمكنني الحصول على الرمز المشفر الخاص بي؟",
+            "options": {
+                "login_regular_body": "يُوصى به لمعظم المستخدمين.",
+                "signup": "لا، سجِّل",
+                "login_session_token": "نعم، قم بتسجيل الدخول باستخدام رمز الجلسة",
+                "login_regular": "نعم، سجل الدخول بالبريد الإلكتروني وكلمة المرور",
+                "signup_body": "سيتم إعادة توجيهك إلى تطبيق الويب. بمجرد التسجيل، عد مرة أخرى وسجّل الدخول.",
+                "login_session_token_body": "استخدم هذا إذا كنت تواجه مشكلات في نظام تسجيل الدخول العادي. قد لا تتوفر بعض الوظائف."
+            }
+        },
+        "home": {
+            "join_lounge": "انضم إلى ردهة Revolt",
+            "open_lounge": "افتح ردهة Revolt",
+            "description": "اسحب من يسار الشاشة أو اضغط على أيقونة الخطوط الثلاثة لترى السيرفرات والرسائل!",
+            "open_settings": "فتح الإعدادات",
+            "open_rvmob": "فتح سيرفر RVMob",
+            "join_rvmob": "انضم إلى سيرفر RVMob"
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_server": "حذف السيرفر؟",
+                "body_message": "هل أنت متأكد أنك تريد حذف<2>هذه الرسالة؟</2>?",
+                "body_server": "هل أنت متأكد أنك تريد حذف <2>{{name}}</2>?",
+                "warning": "لا يمكن التراجع عن هذا الإجراء.",
+                "header_message": "حذف الرسالة؟"
+            },
+            "create_channel": {
+                "header": "إنشاء قناة جديدة",
+                "name_placeholder": "اسم القناة",
+                "name_header": "أسم",
+                "type_voice": "قناة صوتية",
+                "type_header": "النوع",
+                "type_text": "قناة نصية",
+                "nsfw_header": "محتوي غير آمن للعرض",
+                "nsfw_label": "وضع القناة كمحتوى غير آمن للعرض"
+            },
+            "edit_text": {
+                "display_name_placeholder": "اسم العرض",
+                "nickname_placeholder": "اللقب (اتركه فارغًا لإعادة التعيين)",
+                "nickname_other_placeholder": "اللقب (اتركه فارغًا لإعادة التعيين)",
+                "role_colour_placeholder": "لون الدور",
+                "role_colour_header": "تعيين لون الدور",
+                "session_name_placeholder": "اسم الجلسة",
+                "session_name_header": "تعيين اسم الجلسة",
+                "nickname_header": "تعيين اسم مستعار",
+                "display_name_header": "اضف اسم العرض",
+                "nickname_other_header": "تعيين اسم مستعار للعضو"
+            }
+        },
+        "servers": {
+            "settings": {
+                "general": "عام",
+                "user_management": "إدارة المستخدمين",
+                "overview": {
+                    "title": "نظرة عامة",
+                    "name": "إسم السيرفر",
+                    "markdown_tip_link": "تعرّف على المزيد.",
+                    "set_description": "تعيين وصف",
+                    "system_messages": "رسائل النظام",
+                    "errors": {
+                        "empty_server_name": "لا يمكن أن تكون أسماء السيرفر فارغة!"
+                    },
+                    "description": "وصف السيرفر",
+                    "description_placeholder": "قم بإضافة وصف…"
+                },
+                "delete_server": "حذف السيرفر",
+                "customisation": "التخصيص",
+                "channels": {
+                    "title": "القنوات",
+                    "name": "اسم القناة",
+                    "name_placeholder": "ضع اسم قناة…",
+                    "permissions": "أذونات القناة",
+                    "no_perms_set": "غير محدد",
+                    "errors": {
+                        "empty_channel_name": "لا يمكن أن تكون أسماء القنوات فارغة!"
+                    }
+                },
+                "roles": {
+                    "name": "أسم",
+                    "name_placeholder": "تعيين اسم الدور…",
+                    "colour": "لون",
+                    "permissions": "الأذونات",
+                    "open_colour_modal": "أدخل اللون يدوياً",
+                    "set_colour": "حدد لون الدور",
+                    "errors": {
+                        "empty_role_name": "لا يمكن أن تكون أسماء الأدوار فارغة!"
+                    },
+                    "title": "أدوار",
+                    "rank": "رُتبة"
+                },
+                "emoji": {
+                    "title": "إيموجي",
+                    "empty": "‌‌لا يوجد ايموچى",
+                    "deleted_toast": "حُذف {{name}}",
+                    "added_by": "تمت الإضافة بواسطة @{{name}}"
+                },
+                "invites": {
+                    "title": "دعوات",
+                    "empty": "لا توجد دعوات"
+                },
+                "bans": {
+                    "title": "الحظر",
+                    "no_reason": "لم يتم تقديم أي سبب",
+                    "empty": "لا يوجد أي حظر"
+                },
+                "members": {
+                    "title": "الأعضاء"
+                }
+            }
+        },
+        "settings": {
+            "app": {
+                "language": "اختر لغتك",
+                "refetchOnReconnect": "إعادة توجيه الرسائل عند إعادة الاتصال"
+            },
+            "ui": {
+                "theme": "السمة",
+                "messaging": {
+                    "fontSize": "حجم الخط",
+                    "fontSize_remark": "سيتم تطبيق هذا على الرسائل وأجزاء محددة من التطبيق.",
+                    "doubleTapToReply": "رد على الرسائل عن طريق النقر المزدوج",
+                    "showReactions": "إظهار التفاعلات تحت الرسائل",
+                    "messageSpacing": "تباعد الرسائل",
+                    "sendAttachments": "تمكين إرسال المرفقات"
+                },
+                "showDeveloperFeatures": "عرض أدوات المطور",
+                "theme_remark": "سيتعين عليك فتح القائمة الجانبية أو إغلاقها حتى تظهر تغييراتك في كل مكان."
+            }
+        },
+        "settings_menu": {
+            "appearance": {
+                "title": "المظهر"
+            },
+            "functionality": {
+                "title": "الميزات"
+            },
+            "groups": {
+                "user": "مستخدم",
+                "advanced": "متقدم",
+                "other": "أخرى",
+                "app": "تطبيق"
+            },
+            "other": {
+                "logout": "تسجيل الخروج",
+                "debug_info": "نسخ معلومات تصحيح الأخطاء",
+                "view_issues": "القنوات الصوتية غير مدعومة في RVMob حتى الآن!"
+            },
+            "i18n": {
+                "title": "اللغة"
+            },
+            "info": {
+                "title": "حول RVMob"
+            },
+            "profile": {
+                "title": "الملف الشخصي"
+            },
+            "account": {
+                "title": "الحساب"
+            }
+        },
+        "misc": {
+            "network_indicator": {
+                "body": "تم فقد الاتصال",
+                "hide": "(إخفاء)"
+            },
+            "voice": {
+                "header": "القنوات الصوتية غير مدعومة في RVMob حتى الآن!",
+                "body": "في الوقت الحالي، يمكنك الانضمام إليهم عبر تطبيق الويب أو تطبيق Revolt."
+            }
+        }
+    }
+}
