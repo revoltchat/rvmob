@@ -5,12 +5,11 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {decodeTime} from 'ulid';
 
-import {client} from '@rvmob/Generic';
+import {app, client} from '@rvmob/Generic';
 import {currentTheme, styles} from '../../Theme';
 import {Text} from '../common/atoms';
 import {Image} from '@rvmob/crossplat/Image';
 import {DEFAULT_MAX_SIDE} from '../../lib/consts';
-import {openUrl} from '@rvmob/lib/utils';
 
 export const ServerList = observer(
   ({
@@ -142,7 +141,7 @@ export const ServerList = observer(
             />
             <TouchableOpacity
               onPress={() => {
-                openUrl('https://rvlt.gg/discover');
+                app.openChannel('discover');
               }}
               key={'serverlist-discover'}
               style={styles.serverButton}>

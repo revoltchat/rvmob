@@ -18,6 +18,7 @@ import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
 import {FriendsPage} from '@rvmob/components/pages/FriendsPage';
 import {HomePage} from '@rvmob/components/pages/HomePage';
 import {VoiceChannel} from '@rvmob/components/pages/VoiceChannel';
+import {DiscoverPage} from '@rvmob/pages/discover/DiscoverPage';
 
 function MessageViewErrorMessage({
   error,
@@ -40,7 +41,7 @@ function MessageViewErrorMessage({
   );
 }
 
-type CVChannel = Channel | 'friends' | 'debug' | null;
+type CVChannel = Channel | 'friends' | 'discover' | 'debug' | null;
 
 export const ChannelView = observer(
   ({state, channel}: {state: any; channel: CVChannel}) => {
@@ -63,6 +64,8 @@ export const ChannelView = observer(
         {channel ? (
           channel === 'friends' ? (
             <FriendsPage />
+          ) : channel === 'discover' ? (
+            <DiscoverPage />
           ) : channel === 'debug' ? (
             <View style={styles.flex}>
               <ChannelHeader>

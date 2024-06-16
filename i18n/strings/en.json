@@ -9,6 +9,20 @@
             "delete": "Delete",
             "save": "Save"
         },
+        "discover": {
+            "count_bots_one": "{{count}} servers",
+            "count_bots_other": "{{count}} servers",
+            "count_servers_one": "{{count}} servers",
+            "count_servers_other": "{{count}} servers",
+            "fetching_bots": "Loading bots…",
+            "fetching_servers": "Loading servers…",
+            "header_bots": "Discover Bots",
+            "header_servers": "Discover Servers",
+            "tabs": {
+                "bots": "Bots",
+                "servers": "Servers"
+            }
+        },
         "loading": {
             "generic": "Loading…",
             "connecting": "Logging in…"

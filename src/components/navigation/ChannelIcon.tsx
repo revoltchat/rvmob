@@ -14,7 +14,7 @@ interface CIChannel {
 
 interface SpecialCIChannel {
   type: 'special';
-  channel: 'Home' | 'Friends' | 'Saved Notes' | 'Debug';
+  channel: 'Home' | 'Friends' | 'Saved Notes' | 'Discover' | 'Debug';
 }
 
 export const ChannelIcon = ({
@@ -40,6 +40,8 @@ export const ChannelIcon = ({
     <MaterialIcon name="group" size={24} color={color} />
   ) : channel.channel === 'Saved Notes' ? (
     <MaterialIcon name="sticky-note-2" size={24} color={color} />
+  ) : channel.channel === 'Discover' ? (
+    <MaterialCommunityIcon name="compass" size={24} color={color} />
   ) : channel.channel === 'Debug' ? (
     <MaterialIcon name="bug-report" size={24} color={color} />
   ) : channel.channel.generateIconURL && channel.channel.generateIconURL() ? (
