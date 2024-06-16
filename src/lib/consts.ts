@@ -28,7 +28,7 @@ export const SPECIAL_SERVERS = {
   },
 };
 
-// default API URL - when support for other instances is added, this will be the default one
+// default API URL - used unless the user specifies another instance
 export const DEFAULT_API_URL = 'https://api.revolt.chat'; // TODO: switch to https://revolt.chat/api when it's available
 
 // default max side param - used to specify the size of images
