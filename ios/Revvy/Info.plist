@@ -53,37 +53,20 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>AntDesign.ttf</string>
-		<string>Entypo.ttf</string>
-		<string>EvilIcons.ttf</string>
-		<string>Feather.ttf</string>
 		<string>FontAwesome.ttf</string>
 		<string>FontAwesome5_Brands.ttf</string>
 		<string>FontAwesome5_Regular.ttf</string>
 		<string>FontAwesome5_Solid.ttf</string>
-		<string>Fontisto.ttf</string>
-		<string>Foundation.ttf</string>
-		<string>Ionicons.ttf</string>
 		<string>MaterialCommunityIcons.ttf</string>
 		<string>MaterialIcons.ttf</string>
-		<string>Octicons.ttf</string>
-		<string>SimpleLineIcons.ttf</string>
-		<string>Zocial.ttf</string>
 		<string>Inter.ttf</string>
-		<string>Inter_Black.ttf</string>
-		<string>Inter_Bold.ttf</string>
-		<string>Inter_ExtraBold.ttf</string>
-		<string>Inter_ExtraLight.ttf</string>
-		<string>Inter_Light.ttf</string>
-		<string>Inter_Medium.ttf</string>
-		<string>Inter_SemiBold.ttf</string>
-		<string>Inter_Thin.ttf</string>
 		<string>Open Sans.ttf</string>
 		<string>Open Sans_bold.ttf</string>
 		<string>Open Sans_bold_italic.ttf</string>
 		<string>Open Sans_italic.ttf</string>
 		<string>JetBrains Mono.ttf</string>
-		<string>JetBrains Mono_Bold.ttf</string>
+		<string>Inter_bold.ttf</string>
+		<string>JetBrains Mono_bold.ttf</string>
 	</array>
 </dict>
 </plist>

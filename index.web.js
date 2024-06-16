@@ -10,9 +10,9 @@ import './i18n/i18n';
 import {name as appName} from './app.json';
 
 import Inter from './assets/fonts/Inter/Inter.ttf';
-import InterBold from './assets/fonts/Inter/Inter_Bold.ttf';
+import InterBold from './assets/fonts/Inter/Inter_bold.ttf';
 import JetBrainsMono from './assets/fonts/JetBrains Mono/JetBrains Mono.ttf';
-import JetBrainsMonoBold from './assets/fonts/JetBrains Mono/JetBrains Mono_Bold.ttf';
+import JetBrainsMonoBold from './assets/fonts/JetBrains Mono/JetBrains Mono_bold.ttf';
 import OpenSans from './assets/fonts/Open Sans/Open Sans.ttf';
 import OpenSansBold from './assets/fonts/Open Sans/Open Sans_bold.ttf';
 
