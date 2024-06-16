@@ -1,10 +1,10 @@
 diff --git a/lib/module/reanimated2/PlatformChecker.js b/lib/module/reanimated2/PlatformChecker.js
-index 13ac9997adc7d8c528a2f117df6dfe1a6cb5be07..87f28229bb758fa19b70b56b5c0533e43504bebb 100644
+index 812f2e817d4af2c1695cc9ddd063fc56e6d7d159..a7956708e23285019933923c891055056de21f8e 100644
 --- a/lib/module/reanimated2/PlatformChecker.js
 +++ b/lib/module/reanimated2/PlatformChecker.js
-@@ -5,7 +5,12 @@ import { Platform } from 'react-native';
- // This type is necessary since some libraries tend to do a lib check
+@@ -6,7 +6,12 @@ import { Platform } from 'react-native';
  // and this file causes type errors on `global` access.
+ 
  export function isJest() {
 -  return !!process.env.JEST_WORKER_ID;
 +  // don't crash if `process` is undefined as this causes problems on web
