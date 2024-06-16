@@ -167,7 +167,7 @@ export const NewMessageView = observer(
           }
         } catch (err) {
           console.log(
-            `[NEWMESSAGEVIEW] Error pusshing new message (${msg._id}): ${err}`,
+            `[NEWMESSAGEVIEW] Error pushing new message (${msg._id}): ${err}`,
           );
           setError(err);
         }
