@@ -217,6 +217,20 @@
             "profile": {
                 "title": "Profil"
             }
+        },
+        "discover": {
+            "count_servers_one": "{{count}} Server",
+            "count_servers_other": "{{count}} Server",
+            "fetching_bots": "Lade Bots…",
+            "fetching_servers": "Lade Server…",
+            "header_bots": "Bots entdecken",
+            "header_servers": "Server entdecken",
+            "tabs": {
+                "bots": "Bots",
+                "servers": "Server"
+            },
+            "count_bots_one": "{{count}} Server",
+            "count_bots_other": "{{count}} Server"
         }
     }
 }
