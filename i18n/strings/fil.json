@@ -217,6 +217,20 @@
                 "header": "Hindi pa sinusuportahan ang mga voice channel sa RVMob!",
                 "body": "Sa ngayon, maari mong silang i-join sa web app o Revolt Desktop."
             }
+        },
+        "discover": {
+            "count_servers_one": "{{count}} server",
+            "count_servers_other": "{{count}} mga server",
+            "fetching_bots": "Nilo-load ang mga bot…",
+            "header_bots": "Tuklasin ang Mga Bot",
+            "tabs": {
+                "bots": "Mga Bot",
+                "servers": "Mga Server"
+            },
+            "count_bots_one": "{{count}} server",
+            "count_bots_other": "{{count}} mga server",
+            "fetching_servers": "Nilo-load ang mga server…",
+            "header_servers": "Tuklasin ang Mga Server"
         }
     }
 }
