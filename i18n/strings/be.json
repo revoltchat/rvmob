@@ -2,7 +2,7 @@
     "app": {
         "actions": {
             "back": "Назад",
-            "cancel": "Адмена",
+            "cancel": "Скасаваць",
             "close": "Закрыць",
             "delete": "Выдаліць",
             "confirm": "Пацвердзіць",
@@ -18,7 +18,7 @@
             "open_lounge": "Адкрыць Revolt Lounge",
             "open_rvmob": "Адкрыць сервер RVMob",
             "open_settings": "Адкрыць налады",
-            "description": "Правядзіце пальцам ад левага краю экрана або націсніце на значок з трымя лініямі каб убачыць свае серверы ды паведамленні!",
+            "description": "Правядзіце пальцам ад левага краю экрана або націсніце на значок з трымя лініямі, каб убачыць свае серверы і паведамленні!",
             "join_rvmob": "Далучыцца да серверу RVMob"
         },
         "modals": {
@@ -31,15 +31,15 @@
             },
             "edit_text": {
                 "nickname_header": "Задаць нікнэйм",
-                "session_name_placeholder": "Назва сэсіі",
-                "session_name_header": "Задаць назву сэсіі",
-                "display_name_header": "Задаць адлюстраванае імя",
-                "display_name_placeholder": "Адлюстраванае імя",
+                "session_name_placeholder": "Назва сеанса",
+                "session_name_header": "Задаць назву сеанса",
+                "display_name_header": "Задаць бачнае імя",
+                "display_name_placeholder": "Бачнае імя",
                 "role_colour_header": "Задаць колер ролі",
                 "role_colour_placeholder": "Колер ролі",
-                "nickname_placeholder": "Нікнэйм (пакінце пустым каб аднавіць)",
-                "nickname_other_header": "Задаць нікнэйм карыстача",
-                "nickname_other_placeholder": "Нікнэйм (пакінце пустым каб аднавіць)"
+                "nickname_placeholder": "Нікнэйм (пакінце пустым каб скінуць)",
+                "nickname_other_header": "Задаць нікнэйм удзельніка",
+                "nickname_other_placeholder": "Нікнэйм (пакінце пустым каб скінуць)"
             },
             "create_channel": {
                 "header": "Стварыць новы канал",
@@ -55,14 +55,14 @@
         "servers": {
             "settings": {
                 "general": "Асноўныя",
-                "customisation": "Персаналізацыя",
-                "user_management": "Кіраванне карыстачом",
+                "customisation": "Дапасаванне",
+                "user_management": "Кіраванне карыстальнікам",
                 "delete_server": "Выдаліць сервер",
                 "overview": {
                     "title": "Агляд",
-                    "name": "Назва серверу",
-                    "description": "Апісанне серверу",
-                    "markdown_tip": "Апісанне серверу не падтрымлівае Markdown.",
+                    "name": "Назва сервера",
+                    "description": "Апісанне сервера",
+                    "markdown_tip": "Апісанне сервера не падтрымлівае Markdown.",
                     "set_description": "Задаць апісанне",
                     "system_messages": "Сістэмныя паведамленні",
                     "errors": {
@@ -75,8 +75,8 @@
                     "title": "Каналы",
                     "name": "Назва канала",
                     "name_placeholder": "Задаць назву канала…",
-                    "no_perms_set": "Ня задана",
-                    "permissions": "Правы каналу",
+                    "no_perms_set": "Не задана",
+                    "permissions": "Дазволы канала",
                     "errors": {
                         "empty_channel_name": "Назвы каналаў ня могуць быць пустымі!"
                     }
@@ -85,7 +85,7 @@
                     "title": "Ролі",
                     "rank": "Узровень",
                     "colour": "Колер",
-                    "permissions": "Правы",
+                    "permissions": "Дазволы",
                     "name": "Назва",
                     "name_placeholder": "Задаць назву ролі…",
                     "set_colour": "Задаць колер ролі",
@@ -170,22 +170,22 @@
         },
         "login": {
             "forms": {
-                "email_placeholder": "Электроная пошта",
+                "email_placeholder": "Электронны адрас",
                 "password_placeholder": "Пароль",
                 "mfa_placeholder": "Аднаразовы код",
-                "session_token_placeholder": "Токен"
+                "session_token_placeholder": "Маркёр"
             },
             "instance_notice": "Вы далучайцеся да {{url}}.",
             "options": {
                 "login_regular": "Так, увайсці з маёю эл. почтаю ды паролем",
                 "login_regular_body": "Рэкамендавана большай колькасці карыстачоў.",
-                "login_session_token": "Так, увайсці з токенам сэсіі",
+                "login_session_token": "Так, увайсці з маркёрам сеансу",
                 "login_session_token_body": "Выкарыстоўвайце, калі ў вас праблемы са звычайным уваходам. Некаторыя функцыі могуць быць недаступны.",
                 "signup": "Не, зарэгістравацца",
-                "signup_body": "Вы будзеце перанакіраваны да вэб прыкладання. Калі вы зарэгіструйцеся, вяртайцеся сюды і ўвайдзіце."
+                "signup_body": "Вы будзеце перанакіраваны да вэбсайта. Калі вы зарэгіструйцеся, вяртайцеся сюды і ўвайдзіце."
             },
-            "subheader": "Ёсць акаунт?",
-            "token_info_label": "Як атрымаць токен?"
+            "subheader": "Ёсць уліковы запіс?",
+            "token_info_label": "Як атрымаць маркёр?"
         },
         "settings_menu": {
             "account": {
@@ -217,6 +217,22 @@
             "functionality": {
                 "title": "Асаблівасці"
             }
+        },
+        "discover": {
+            "fetching_bots": "Загрузка ботаў…",
+            "header_bots": "Знайсці ботаў",
+            "header_servers": "Знайсці серверы",
+            "tabs": {
+                "bots": "Боты",
+                "servers": "Серверы"
+            },
+            "count_bots_one": "на {{count}} серверы",
+            "count_bots_few": "на {{count}} серверах",
+            "count_bots_many": "на {{count}} сервераў",
+            "count_servers_one": "{{count}} сервер",
+            "count_servers_few": "{{count}} сервера",
+            "count_servers_many": "{{count}} сервераў",
+            "fetching_servers": "Загрузка сервераў…"
         }
     }
 }
