@@ -39,7 +39,7 @@
     "react-native-device-info": "^11.1.0",
     "react-native-document-picker": "^9.3.0",
     "react-native-fast-image": "^8.6.3",
-    "react-native-gesture-handler": "^2.16.2",
+    "react-native-gesture-handler": "^2.17.0",
     "react-native-get-random-values": "^1.11.0",
     "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-markdown-display": "^7.0.2",
@@ -86,11 +86,11 @@
     "react-devtools": "^5.2.0",
     "react-native-svg-transformer": "^1.4.0",
     "react-test-renderer": "^18.3.1",
-    "typescript": "^5.4.5",
+    "typescript": "^5.5.2",
     "url-loader": "^4.1.1",
-    "webpack": "^5.92.0",
+    "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.2"
+    "webpack-dev-server": "^5.0.4"
   },
   "resolutions": {
     "@insertish/oapi": "npm:@favware/skip-dependency@^1.2.1"
