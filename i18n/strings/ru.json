@@ -147,12 +147,12 @@
                 "emoji": {
                     "title": "Эмодзи",
                     "added_by": "Добавлено @{{name}}",
-                    "empty": "Без эмоджи",
+                    "empty": "Без эмодзи",
                     "deleted_toast": "{{name}} было удалено"
                 },
                 "members": {
                     "title": "Участники",
-                    "loading": "Получение участников…"
+                    "loading": "Загрузка участников…"
                 },
                 "invites": {
                     "loading": "Загрузка приглашений…",
@@ -217,6 +217,22 @@
                 "view_issues": "Просмотреть известные проблемы",
                 "logout": "Выйти"
             }
+        },
+        "discover": {
+            "count_servers_one": "{{count}} сервер",
+            "count_servers_few": "{{count}} сервера",
+            "count_servers_many": "{{count}} серверов",
+            "fetching_bots": "Загрузка ботов…",
+            "fetching_servers": "Загрузка серверов…",
+            "header_bots": "Найти ботов",
+            "tabs": {
+                "bots": "Боты",
+                "servers": "Серверы"
+            },
+            "count_bots_one": "На {{count}} сервере",
+            "count_bots_few": "На {{count}} серверах",
+            "count_bots_many": "На {{count}} серверах",
+            "header_servers": "Найти серверы"
         }
     }
 }
