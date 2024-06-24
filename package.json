@@ -48,7 +48,6 @@
     "react-native-vector-icons": "^10.1.0",
     "react-native-web": "^0.19.12",
     "reanimated-color-picker": "^3.0.4",
-    "revkit": "^1.1.14",
     "revolt.js": "npm:@rexovolt/revolt.js@^6.3.0"
   },
   "devDependencies": {
@@ -91,9 +90,6 @@
     "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4"
-  },
-  "resolutions": {
-    "@insertish/oapi": "npm:@favware/skip-dependency@^1.2.1"
   },
   "engines": {
     "node": ">=18"
