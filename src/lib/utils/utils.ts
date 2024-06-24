@@ -12,6 +12,7 @@ import {
   RE_INVITE,
   WIKI_URL,
 } from '@rvmob/lib/consts';
+import {EmojiPacks} from '@rvmob/lib/types';
 
 /**
  * Sleep for the specified amount of milliseconds before continuing.
@@ -179,3 +180,35 @@ export const openUrl = (url: string) => {
 
   Linking.openURL(url);
 };
+
+// <from src=https://github.com/Revolt-Unofficial-Clients/revkit/blob/0af5ab5fea68eba89661685be4fe8a60ca72f90a/core/src/utils/Emojis.ts>
+function emojiToCodePoint(rune: string) {
+  rune =
+    rune.indexOf(String.fromCharCode(0x200d)) < 0
+      ? rune.replace(/\uFE0F/g, '')
+      : rune;
+  const pairs = [];
+  let low = 0;
+  let i = 0;
+  while (i < rune.length) {
+    const charCode = rune.charCodeAt(i++);
+    if (low) {
+      // eslint-disable-next-line no-bitwise
+      pairs.push(0x10000 + ((low - 0xd800) << 10) + (charCode - 0xdc00));
+      low = 0;
+    } else if (charCode >= 0xd800 && charCode <= 0xdbff) {
+      low = charCode;
+    } else {
+      pairs.push(charCode);
+    }
+  }
+  return pairs.map(val => val.toString(16)).join('-');
+}
+
+export function unicodeEmojiURL(emoji: string, pack: EmojiPacks = 'mutant') {
+  const REVISION = 3;
+  return `https://static.revolt.chat/emoji/${pack}/${emojiToCodePoint(
+    emoji,
+  )}.svg?rev=${REVISION}`;
+}
+// </from>

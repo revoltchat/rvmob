@@ -23,35 +23,24 @@ export const HomePage = observer(() => {
   const date = `${rawDate.getDate()}/${rawMonth}`;
   const month = `month${rawMonth}`;
 
+  // @ts-expect-error hmmmm
   let holidayEmoji = SPECIAL_DATES.includes(date) ? (
     <TouchableOpacity
       onPress={() => {
-        // @ts-expect-error TODO: figure out types for this
         openUrl(SPECIAL_DATE_OBJECTS[date].link);
       }}>
-      <Text
-        // @ts-expect-error as above
-        key={SPECIAL_DATE_OBJECTS[date].key}
-        style={{fontSize: 40}}>
-        {
-          // @ts-expect-error as above
-          SPECIAL_DATE_OBJECTS[date].emoji
-        }
+      <Text key={SPECIAL_DATE_OBJECTS[date].key} style={{fontSize: 40}}>
+        {SPECIAL_DATE_OBJECTS[date].emoji}
       </Text>
     </TouchableOpacity>
-  ) : SPECIAL_DATES.includes(month) ? (
+  ) : // @ts-expect-error hmmmm
+  SPECIAL_DATES.includes(month) ? (
     <TouchableOpacity
       onPress={() => {
-        // @ts-expect-error as above
         openUrl(SPECIAL_DATE_OBJECTS[month].link);
       }}>
-      <Text // @ts-expect-error as above
-        key={SPECIAL_DATE_OBJECTS[month].key}
-        style={{fontSize: 40}}>
-        {
-          // @ts-expect-error as above
-          SPECIAL_DATE_OBJECTS[month].emoji
-        }
+      <Text key={SPECIAL_DATE_OBJECTS[month].key} style={{fontSize: 40}}>
+        {SPECIAL_DATE_OBJECTS[month].emoji}
       </Text>
     </TouchableOpacity>
   ) : null;

@@ -2,8 +2,6 @@ import {useState} from 'react';
 
 import {SvgUri} from 'react-native-svg';
 
-import {EmojiPacks, RevoltEmojiDictionary, unicodeEmojiURL} from 'revkit';
-
 import {Image} from '@rvmob/crossplat/Image';
 import {client, app} from '@rvmob/Generic';
 import {styles} from '@rvmob/Theme';
@@ -12,7 +10,10 @@ import {
   RE_CUSTOM_EMOJI,
   RE_DEFAULT_EMOJI,
   RE_UNICODE_EMOJI,
-} from '../../../lib/consts';
+  RevoltEmojiDictionary,
+} from '@rvmob/lib/consts';
+import {EmojiPacks} from '@rvmob/lib/types';
+import {unicodeEmojiURL} from '@rvmob/lib/utils';
 
 const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
   const [error, setError] = useState(false);

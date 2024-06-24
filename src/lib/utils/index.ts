@@ -7,4 +7,5 @@ export {
   parseRevoltNodes,
   showToast,
   sleep,
+  unicodeEmojiURL,
 } from './utils';
