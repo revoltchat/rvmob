@@ -39,7 +39,7 @@
     "react-native-device-info": "^11.1.0",
     "react-native-document-picker": "^9.3.0",
     "react-native-fast-image": "^8.6.3",
-    "react-native-gesture-handler": "^2.17.0",
+    "react-native-gesture-handler": "^2.17.1",
     "react-native-get-random-values": "^1.11.0",
     "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-markdown-display": "^7.0.2",
@@ -49,7 +49,7 @@
     "react-native-web": "^0.19.12",
     "reanimated-color-picker": "^3.0.4",
     "revkit": "^1.1.14",
-    "revolt.js": "npm:@rexovolt/revolt.js@^6.2.0"
+    "revolt.js": "npm:@rexovolt/revolt.js@^6.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",

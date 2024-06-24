@@ -11841,13 +11841,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mobx@npm:^6.3.2":
-  version: 6.11.0
-  resolution: "mobx@npm:6.11.0"
-  checksum: 10c0/79e47e454ba9a0b947878dca62999cd1e8a1977309752873db7d9114ff6d27d807c4c978816e8cb665995e8b59ab0e64dcab5114d3dc578bffd9ffae8e7d846b
-  languageName: node
-  linkType: hard
-
 "ms@npm:2.0.0":
   version: 2.0.0
   resolution: "ms@npm:2.0.0"
@@ -13057,9 +13050,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-gesture-handler@npm:^2.17.0":
-  version: 2.17.0
-  resolution: "react-native-gesture-handler@npm:2.17.0"
+"react-native-gesture-handler@npm:^2.17.1":
+  version: 2.17.1
+  resolution: "react-native-gesture-handler@npm:2.17.1"
   dependencies:
     "@egjs/hammerjs": "npm:^2.0.17"
     hoist-non-react-statics: "npm:^3.3.0"
@@ -13068,7 +13061,7 @@ __metadata:
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10c0/b53510fe97f05f79231027be99bb7ca68fd1669f5cf797289ed751d9fa7736e67e67a6c06bfc9efdf339fdc554ab079361ae07c2bf3db85044b6aba81c0d1afc
+  checksum: 10c0/01ea97f347df2505c58be8551c62e9fd0bae7814346a41f3367ec0b4836877fd8b9b710619f8bc10c6cdbb0e2670dd6c131124d27aabc4745383aab690dae6b3
   languageName: node
   linkType: hard
 
@@ -13721,14 +13714,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"revolt-api@npm:0.6.8":
-  version: 0.6.8
-  resolution: "revolt-api@npm:0.6.8"
+"revolt-api@npm:0.7.9":
+  version: 0.7.9
+  resolution: "revolt-api@npm:0.7.9"
   dependencies:
-    "@insertish/oapi": "npm:0.1.18"
     axios: "npm:^0.26.1"
     lodash.defaultsdeep: "npm:^4.6.1"
-  checksum: 10c0/0530a8a1a1149123df199ae4f71fa3db434bda4e32ea7cdf8898296e3e1ff7257c079ebeb5bb8eff2b8b80bd713e15cfaf46a1125c5928f931b82fbcfb32188a
+  checksum: 10c0/8efc68a9fa8b66f29f3abbb24fbac533508906a14144a0c34b9ff8f9a9edf1b144e3baba0c2bc43beba36eaffe92a6a7cce961593934e6efcd53fadd4a26b5f7
   languageName: node
   linkType: hard
 
@@ -13743,9 +13735,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"revolt.js@npm:@rexovolt/revolt.js@^6.2.0":
-  version: 6.2.0
-  resolution: "@rexovolt/revolt.js@npm:6.2.0"
+"revolt.js@npm:@rexovolt/revolt.js@^6.3.0":
+  version: 6.3.0
+  resolution: "@rexovolt/revolt.js@npm:6.3.0"
   dependencies:
     "@insertish/exponential-backoff": "npm:3.1.0-patch.2"
     "@insertish/isomorphic-ws": "npm:^4.0.1"
@@ -13754,11 +13746,11 @@ __metadata:
     lodash.flatten: "npm:^4.4.0"
     lodash.isequal: "npm:^4.5.0"
     long: "npm:^5.2.3"
-    mobx: "npm:^6.3.2"
-    revolt-api: "npm:0.6.8"
+    mobx: "npm:^6.12.4"
+    revolt-api: "npm:0.7.9"
     ulid: "npm:^2.3.0"
-    ws: "npm:^8.14.2"
-  checksum: 10c0/b54210884c57ae3a4c36799b2c2c905560bc41ffd7097981d9eb646599f62844a28b2b383f50920a157e047b7af7a59e4df1fd0a45d6d951b0ba0d0204e393b8
+    ws: "npm:^8.17.1"
+  checksum: 10c0/1b24524e7a54995cbb2e55278c9ba4b8cba6fd4a47f0af8ed17dcd61a28a801ce2d436ebd256b5d1638ff18d44316e87e49eb9c12b9e4d43364bcf7c6e42be98
   languageName: node
   linkType: hard
 
@@ -13885,7 +13877,7 @@ __metadata:
     react-native-device-info: "npm:^11.1.0"
     react-native-document-picker: "npm:^9.3.0"
     react-native-fast-image: "npm:^8.6.3"
-    react-native-gesture-handler: "npm:^2.17.0"
+    react-native-gesture-handler: "npm:^2.17.1"
     react-native-get-random-values: "npm:^1.11.0"
     react-native-image-zoom-viewer: "npm:^3.0.1"
     react-native-markdown-display: "npm:^7.0.2"
@@ -13897,7 +13889,7 @@ __metadata:
     react-test-renderer: "npm:^18.3.1"
     reanimated-color-picker: "npm:^3.0.4"
     revkit: "npm:^1.1.14"
-    revolt.js: "npm:@rexovolt/revolt.js@^6.2.0"
+    revolt.js: "npm:@rexovolt/revolt.js@^6.3.0"
     typescript: "npm:^5.5.2"
     url-loader: "npm:^4.1.1"
     webpack: "npm:^5.92.1"
@@ -15818,22 +15810,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.14.2":
-  version: 8.14.2
-  resolution: "ws@npm:8.14.2"
-  peerDependencies:
-    bufferutil: ^4.0.1
-    utf-8-validate: ">=5.0.2"
-  peerDependenciesMeta:
-    bufferutil:
-      optional: true
-    utf-8-validate:
-      optional: true
-  checksum: 10c0/35b4c2da048b8015c797fd14bcb5a5766216ce65c8a5965616a5440ca7b6c3681ee3cbd0ea0c184a59975556e9d58f2002abf8485a14d11d3371770811050a16
-  languageName: node
-  linkType: hard
-
-"ws@npm:^8.16.0":
+"ws@npm:^8.16.0, ws@npm:^8.17.1":
   version: 8.17.1
   resolution: "ws@npm:8.17.1"
   peerDependencies:
