@@ -4,7 +4,10 @@
             "cancel": "İptal",
             "close": "Kapat",
             "delete": "Sil",
-            "back": "Geri"
+            "back": "Geri",
+            "confirm": "Onayla",
+            "save": "Kaydet",
+            "create_channel": "Kanal oluştur"
         },
         "loading": {
             "generic": "Yükleniyor…",
@@ -25,6 +28,28 @@
                 "body_server": "<2>{{name}}</2> silmek istediğine emin misin?",
                 "body_message": "<2>Bu mesajı</2> silmek istediğine emin misin?",
                 "warning": "Bu geri alınamaz."
+            },
+            "create_channel": {
+                "name_placeholder": "Kanal adı",
+                "type_header": "Tür",
+                "type_text": "Metin kanalı",
+                "type_voice": "Ses kanalı",
+                "nsfw_header": "NSFW",
+                "nsfw_label": "Kanalı NSFW olarak işaretle",
+                "header": "Yeni bir kanal oluştur",
+                "name_header": "Ad"
+            },
+            "edit_text": {
+                "display_name_placeholder": "Görünen ad",
+                "role_colour_header": "Rol rengini ayarla",
+                "role_colour_placeholder": "Rol rengi",
+                "session_name_header": "Oturum adını ayarla",
+                "session_name_placeholder": "Oturum adı",
+                "display_name_header": "Görünen adı ayarla",
+                "nickname_placeholder": "Takma ad (sıfırlamak için boş bırakın)",
+                "nickname_header": "Takma adı ayarla",
+                "nickname_other_placeholder": "Takma ad (sıfırlamak için boş bırakın)",
+                "nickname_other_header": "Üye takma adını ayarla"
             }
         },
         "servers": {
@@ -46,19 +71,37 @@
                     }
                 },
                 "channels": {
-                    "title": "Kanallar"
+                    "title": "Kanallar",
+                    "errors": {
+                        "empty_channel_name": "Kanal adları boş olamaz!"
+                    },
+                    "name": "Kanal ismi",
+                    "name_placeholder": "Bir kanal adı belirleyin…",
+                    "permissions": "Kanal izinleri",
+                    "no_perms_set": "Ayarlanmadı"
                 },
                 "roles": {
                     "title": "Roller",
                     "permissions": "İzinler",
                     "rank": "Sıralama",
-                    "colour": "Renk"
+                    "colour": "Renk",
+                    "name": "İsim",
+                    "name_placeholder": "Bir rol adı belirleyin…",
+                    "set_colour": "Rol rengini ayarla",
+                    "open_colour_modal": "Rengi manuel olarak girin",
+                    "errors": {
+                        "empty_role_name": "Rol adları boş olamaz!"
+                    }
                 },
                 "emoji": {
-                    "title": "Emoji"
+                    "title": "Emoji",
+                    "added_by": "@{{name}} tarafından eklendi",
+                    "empty": "Emoji yok",
+                    "deleted_toast": "{{name}} silindi"
                 },
                 "members": {
-                    "title": "Üyeler"
+                    "title": "Üyeler",
+                    "loading": "Üyeler getiriliyor…"
                 },
                 "invites": {
                     "empty": "Davetler yok",
@@ -104,7 +147,9 @@
                     "fontSize": "Font boyutu",
                     "showMasqAvatar": "Maskelenmiş avatarı köşede göster",
                     "showNSFWContent": "18+ içeriğe izin ver",
-                    "showReactions_remark": "Mevcut tepkilere ekleme yapabilirsiniz ancak şimdilik yenilerini ekleyemezsin."
+                    "showReactions_remark": "Mevcut tepkilere ekleme yapabilirsiniz ancak şimdilik yenilerini ekleyemezsin.",
+                    "doubleTapToReply": "Mesajlara iki kez dokunarak yanıt verin",
+                    "doubleTapToReply_remark": "Bu yalnızca yeni mesaj görünümünde desteklenir."
                 },
                 "settings": {
                     "showExperimental": "Deneysel özellikleri göster"
@@ -121,6 +166,70 @@
             "voice": {
                 "header": "Ses kanalları şimdilik RVMob'da desteklenmiyor!",
                 "body": "Bu arada web uygulaması veya Revolt Desktop aracılığıyla onlara katılabilirsin."
+            }
+        },
+        "login": {
+            "forms": {
+                "password_placeholder": "Şifre",
+                "mfa_placeholder": "Tek seferlik kod",
+                "email_placeholder": "E-Posta",
+                "session_token_placeholder": "Jeton"
+            },
+            "options": {
+                "login_session_token_body": "Normal giriş sistemiyle ilgili sorun yaşıyorsanız bunu kullanın. Bazı işlevler kullanılamayabilir.",
+                "login_session_token": "Evet, oturum belirteciyle oturum açın",
+                "signup": "Hayır, kaydol",
+                "signup_body": "Web uygulamasına yönlendirileceksiniz. Kaydolduktan sonra geri gelin ve giriş yapın.",
+                "login_regular": "Evet, e-posta adresim ve şifremle giriş yapın",
+                "login_regular_body": "Çoğu kullanıcı için önerilir."
+            },
+            "instance_notice": "{{url}} bağlanıyorsunuz.",
+            "subheader": "Hesabın var mı?",
+            "token_info_label": "Jetonumu nasıl alabilirim?"
+        },
+        "discover": {
+            "count_bots_one": "{{count}} sunucu",
+            "count_bots_other": "{{count}}  sunucu",
+            "count_servers_one": "{{count}} sunucu",
+            "count_servers_other": "{{count}} sunucular",
+            "fetching_bots": "Botlar yükleniyor…",
+            "fetching_servers": "Sunucular yükleniyor…",
+            "header_bots": "Botları Keşfet",
+            "header_servers": "Sunucuları Keşfet",
+            "tabs": {
+                "bots": "Botlar",
+                "servers": "Sunucular"
+            }
+        },
+        "settings_menu": {
+            "groups": {
+                "advanced": "Gelişmiş",
+                "app": "Uygulama",
+                "other": "Diğer",
+                "user": "Kullanıcı"
+            },
+            "i18n": {
+                "title": "Dil"
+            },
+            "info": {
+                "title": "RVMob Hakkında"
+            },
+            "other": {
+                "debug_info": "Hata Ayıklama Bilgilerini Kopyala",
+                "view_issues": "Açık Sayıları Görüntüle",
+                "logout": "Çıkış Yap"
+            },
+            "profile": {
+                "title": "Profil"
+            },
+            "account": {
+                "title": "Hesap"
+            },
+            "functionality": {
+                "title": "Özellikler"
+            },
+            "appearance": {
+                "title": "Dış görünüş"
             }
         }
     }
