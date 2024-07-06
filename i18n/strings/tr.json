@@ -189,7 +189,7 @@
         },
         "discover": {
             "count_bots_one": "{{count}} sunucu",
-            "count_bots_other": "{{count}}  sunucu",
+            "count_bots_other": "{{count}} sunucu",
             "count_servers_one": "{{count}} sunucu",
             "count_servers_other": "{{count}} sunucular",
             "fetching_bots": "Botlar yükleniyor…",
