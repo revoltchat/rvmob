@@ -7,48 +7,25 @@ import {Image} from '@rvmob/crossplat/Image';
 import {DEFAULT_MAX_SIDE} from '@rvmob/lib/consts';
 import {currentTheme} from '@rvmob/Theme';
 
-interface CIChannel {
-  type: 'channel';
-  channel: Channel;
-}
-
-interface SpecialCIChannel {
-  type: 'special';
-  channel: 'Home' | 'Friends' | 'Saved Notes' | 'Discover' | 'Debug';
-}
-
 export const ChannelIcon = ({
   channel,
   showUnread = true,
 }: {
-  channel: CIChannel | SpecialCIChannel;
+  channel: Channel;
   showUnread?: boolean;
 }) => {
   let color =
-    channel.type === 'channel' && showUnread && channel.channel.unread
+    showUnread && channel.unread
       ? currentTheme.foregroundPrimary
       : currentTheme.foregroundSecondary;
   let radius =
-    channel.type === 'channel' &&
-    (channel.channel.channel_type === 'DirectMessage' ||
-      channel.channel.channel_type === 'Group')
+    channel.channel_type === 'DirectMessage' || channel.channel_type === 'Group'
       ? 10000
       : 0;
-  return channel.channel === 'Home' ? (
-    <MaterialIcon name="home" size={24} color={color} />
-  ) : channel.channel === 'Friends' ? (
-    <MaterialIcon name="group" size={24} color={color} />
-  ) : channel.channel === 'Saved Notes' ? (
-    <MaterialIcon name="sticky-note-2" size={24} color={color} />
-  ) : channel.channel === 'Discover' ? (
-    <MaterialCommunityIcon name="compass" size={24} color={color} />
-  ) : channel.channel === 'Debug' ? (
-    <MaterialIcon name="bug-report" size={24} color={color} />
-  ) : channel.channel.generateIconURL && channel.channel.generateIconURL() ? (
+  return channel.generateIconURL && channel.generateIconURL() ? (
     <Image
       source={{
-        uri:
-          channel.channel.generateIconURL() + '?max_side=' + DEFAULT_MAX_SIDE,
+        uri: channel.generateIconURL() + '?max_side=' + DEFAULT_MAX_SIDE,
       }}
       style={{
         width: 24,
@@ -56,9 +33,9 @@ export const ChannelIcon = ({
         borderRadius: radius,
       }}
     />
-  ) : channel.channel.channel_type === 'DirectMessage' ? (
+  ) : channel.channel_type === 'DirectMessage' ? (
     <MaterialCommunityIcon name="at" size={24} color={color} />
-  ) : channel.channel.channel_type === 'VoiceChannel' ? (
+  ) : channel.channel_type === 'VoiceChannel' ? (
     <MaterialIcon name="volume-up" size={24} color={color} />
   ) : (
     <MaterialIcon name="tag" size={24} color={color} />

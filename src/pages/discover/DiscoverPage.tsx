@@ -8,7 +8,7 @@ import {app, client} from '@rvmob/Generic';
 import {currentTheme, styles} from '@rvmob/Theme';
 import {Button, Text} from '@rvmob/components/common/atoms';
 import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
-import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
+import {SpecialChannelIcon} from '@rvmob/components/navigation/SpecialChannelIcon';
 
 const parser = new DOMParser({
   errorHandler: (level, message) => {
@@ -76,7 +76,7 @@ export const DiscoverPage = () => {
     <View style={{flex: 1}}>
       <ChannelHeader>
         <View style={styles.iconContainer}>
-          <ChannelIcon channel={{type: 'special', channel: 'Discover'}} />
+          <SpecialChannelIcon channel={'Discover'} />
         </View>
         <Text style={styles.channelName}>
           {t(`app.discover.header_${tab}`)}

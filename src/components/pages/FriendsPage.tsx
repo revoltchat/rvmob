@@ -8,7 +8,7 @@ import {app, client} from '@rvmob/Generic';
 import {MiniProfile} from '@rvmob/Profile';
 import {styles} from '@rvmob/Theme';
 import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
-import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
+import {SpecialChannelIcon} from '@rvmob/components/navigation/SpecialChannelIcon';
 import {Button, Text} from '@rvmob/components/common/atoms';
 
 type DisplayStates = {
@@ -114,7 +114,7 @@ export const FriendsPage = observer(() => {
     <View style={styles.flex}>
       <ChannelHeader>
         <View style={styles.iconContainer}>
-          <ChannelIcon channel={{type: 'special', channel: 'Friends'}} />
+          <SpecialChannelIcon channel={'Friends'} />
         </View>
         <Text style={styles.channelName}>Friends</Text>
       </ChannelHeader>

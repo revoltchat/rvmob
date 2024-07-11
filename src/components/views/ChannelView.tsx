@@ -19,6 +19,7 @@ import {FriendsPage} from '@rvmob/components/pages/FriendsPage';
 import {HomePage} from '@rvmob/components/pages/HomePage';
 import {VoiceChannel} from '@rvmob/components/pages/VoiceChannel';
 import {DiscoverPage} from '@rvmob/pages/discover/DiscoverPage';
+import {SpecialChannelIcon} from '../navigation/SpecialChannelIcon';
 
 function MessageViewErrorMessage({
   error,
@@ -70,7 +71,7 @@ export const ChannelView = observer(
             <View style={styles.flex}>
               <ChannelHeader>
                 <View style={styles.iconContainer}>
-                  <ChannelIcon channel={{type: 'special', channel: 'Debug'}} />
+                  <SpecialChannelIcon channel={'Debug'} />
                 </View>
                 <Text style={styles.channelName}>Debug Menu</Text>
               </ChannelHeader>
@@ -93,16 +94,11 @@ export const ChannelView = observer(
             <View style={styles.flex}>
               <ChannelHeader>
                 <View style={styles.iconContainer}>
-                  <ChannelIcon
-                    channel={
-                      channel.channel_type === 'SavedMessages'
-                        ? {type: 'special', channel: 'Saved Notes'}
-                        : {
-                            type: 'channel',
-                            channel: channel,
-                          }
-                    }
-                  />
+                  {channel.channel_type === 'SavedMessages' ? (
+                    <SpecialChannelIcon channel={'Saved Notes'} />
+                  ) : (
+                    <ChannelIcon channel={channel} />
+                  )}
                 </View>
                 <Text
                   style={{

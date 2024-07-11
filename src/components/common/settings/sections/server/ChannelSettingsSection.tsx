@@ -207,10 +207,7 @@ export const ChannelSettingsSection = observer(
                       setSection({section: 'channels', subsection: c._id});
                     }}>
                     <View style={{marginEnd: 8}}>
-                      <ChannelIcon
-                        channel={{type: 'channel', channel: c}}
-                        showUnread={false}
-                      />
+                      <ChannelIcon channel={c} showUnread={false} />
                     </View>
                     <View style={{flex: 1}}>
                       <View>

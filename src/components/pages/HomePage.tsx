@@ -11,8 +11,8 @@ import {
 import {openUrl} from '@rvmob/lib/utils';
 import {styles} from '@rvmob/Theme';
 import {Avatar, Button, Text, Username} from '@rvmob/components/common/atoms';
-import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
 import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
+import {SpecialChannelIcon} from '@rvmob/components/navigation/SpecialChannelIcon';
 
 export const HomePage = observer(() => {
   const {t} = useTranslation();
@@ -49,7 +49,7 @@ export const HomePage = observer(() => {
     <>
       <ChannelHeader>
         <View style={styles.iconContainer}>
-          <ChannelIcon channel={{type: 'special', channel: 'Home'}} />
+          <SpecialChannelIcon channel={'Home'} />
         </View>
         <Text style={styles.channelName}>Home</Text>
       </ChannelHeader>

@@ -4,6 +4,7 @@ import {observer} from 'mobx-react-lite';
 import {Channel} from 'revolt.js';
 
 import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
+import {SpecialChannelIcon} from '@rvmob/components/navigation/SpecialChannelIcon';
 import {MiniProfile} from '@rvmob/Profile';
 import {currentTheme, styles} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms/Text';
@@ -70,9 +71,11 @@ export const ChannelButton = observer(
         ) : (
           <>
             <View style={styles.iconContainer}>
-              <ChannelIcon
-                channel={{type: 'channel', channel: channel as Channel}}
-              />
+              {channel instanceof Channel ? (
+                <ChannelIcon channel={channel} />
+              ) : (
+                <SpecialChannelIcon channel={channel} />
+              )}
             </View>
             <Text style={{flex: 1, fontWeight: 'bold', color, fontSize: 15}}>
               {channel instanceof Channel ? channel.name ?? channel : channel}
