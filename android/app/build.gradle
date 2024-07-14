@@ -49,7 +49,7 @@ react {
 }
 
 project.ext.vectoricons = [
-    iconFontNames: ['MaterialIcons.ttf', 'MaterialCommunityIcons.ttf', 'FontAwesome5_Regular.ttf', 'FontAwesome5_Solid.ttf']
+    iconFontNames: ['MaterialIcons.ttf', 'MaterialCommunityIcons.ttf']
 ]
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
