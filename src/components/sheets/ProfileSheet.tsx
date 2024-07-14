@@ -8,7 +8,6 @@ import {useBackHandler} from '@react-native-community/hooks';
 // import FastImage from 'react-native-fast-image';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 
 import {User, Server} from 'revolt.js';
 
@@ -468,7 +467,7 @@ export const ProfileSheet = observer(() => {
                                       return (
                                         <TouchableOpacity
                                           onPress={() => showToast('Founder')}>
-                                          <FA5Icon
+                                          <MaterialIcon
                                             name="star"
                                             size={28}
                                             color={'red'}
@@ -481,8 +480,8 @@ export const ProfileSheet = observer(() => {
                                           onPress={() =>
                                             showToast('Revolt Developer')
                                           }>
-                                          <FA5Icon
-                                            name="wrench"
+                                          <MaterialIcon
+                                            name="build"
                                             size={28}
                                             color={
                                               currentTheme.foregroundSecondary
@@ -510,9 +509,9 @@ export const ProfileSheet = observer(() => {
                                           onLongPress={() =>
                                             openUrl('https://insrt.uk/donate')
                                           }>
-                                          <FA5Icon
-                                            name="money-bill"
-                                            size={24}
+                                          <MaterialCommunityIcon
+                                            name="cash"
+                                            size={28}
                                             color={'#80c95b'}
                                           />
                                         </TouchableOpacity>
@@ -525,8 +524,8 @@ export const ProfileSheet = observer(() => {
                                               'Responisbly disclosed a security issue',
                                             )
                                           }>
-                                          <FA5Icon
-                                            name="shield-alt"
+                                          <MaterialCommunityIcon
+                                            name="bug-check"
                                             size={28}
                                             color={'pink'}
                                           />
@@ -551,7 +550,7 @@ export const ProfileSheet = observer(() => {
                                           onPress={() =>
                                             showToast('Platform Moderator')
                                           }>
-                                          <FA5Icon
+                                          <MaterialIcon
                                             name="gavel"
                                             size={28}
                                             color={'red'}
@@ -659,12 +658,6 @@ export const ProfileSheet = observer(() => {
                               }}
                               key={'insert-raccoon'}>
                               <Text style={{fontSize: 24}}>🦝</Text>
-                              {/* <Image
-                            style={{height: 20, width: 20}}
-                            source={{
-                              uri: 'https://app.revolt.chat/assets/badges/raccoon.svg',
-                            }}
-                          /> */}
                             </View>
                           </TouchableOpacity>
                         ) : null}
