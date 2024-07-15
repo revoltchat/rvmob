@@ -9,14 +9,16 @@ import {App} from '../App';
 import {expect, it} from '@jest/globals';
 
 // Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
+import ReactTestRenderer from 'react-test-renderer';
 
 /* FIXME: sort out import problems
  * (appear to be problems with ESM modules - looks like we need to set up Jest ESM support somehow? hmmm)
  * and get tests running, then uncomment
  **/
-// it('renders correctly', () => {
-//   renderer.create(<App />);
+// it('renders correctly', async () => {
+//   await ReactTestRenderer.act(() => {
+//     ReactTestRenderer.create(<App />);
+//   });
 // });
 
 it('is skipped', () => {

@@ -1,0 +1,13 @@
+diff --git a/settings-plugin/src/main/kotlin/com/facebook/react/ReactSettingsExtension.kt b/settings-plugin/src/main/kotlin/com/facebook/react/ReactSettingsExtension.kt
+index 9950a0b7fde1972615baeba943864953f3675a97..fa83c37aecf8400bafed32960d009b43700124e2 100644
+--- a/settings-plugin/src/main/kotlin/com/facebook/react/ReactSettingsExtension.kt
++++ b/settings-plugin/src/main/kotlin/com/facebook/react/ReactSettingsExtension.kt
+@@ -39,7 +39,7 @@ abstract class ReactSettingsExtension @Inject constructor(val settings: Settings
+    */
+   @JvmOverloads
+   public fun autolinkLibrariesFromCommand(
+-      command: List<String> = listOf("npx", "@react-native-community/cli", "config"),
++      command: List<String> = listOf("npx", "-s", "@react-native-community/cli", "config"),
+       workingDirectory: File? = settings.layout.rootDirectory.dir("../").asFile,
+       lockFiles: FileCollection =
+           settings.layout.rootDirectory
