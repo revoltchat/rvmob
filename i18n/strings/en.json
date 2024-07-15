@@ -56,8 +56,10 @@
         },
         "modals": {
             "confirm_deletion": {
+                "header_role": "Delete role?",
                 "header_message": "Delete message?",
                 "header_server": "Delete server?",
+                "body_role": "Are you sure you want to delete <2>this role</2>?",
                 "body_message": "Are you sure you want to delete <2>this message</2>?",
                 "body_server": "Are you sure you want to delete <2>{{name}}</2>?",
                 "warning": "This cannot be undone."
@@ -118,9 +120,15 @@
                     "title": "Roles",
                     "name": "Name",
                     "name_placeholder": "Set a role name…",
+                    "options_header": "Options",
+                    "options": {
+                        "hoist": "Hoist role",
+                        "hoist_body": "Display this role above others in the member list."
+                    },
                     "rank": "Rank",
                     "permissions": "Permissions",
                     "colour": "Colour",
+                    "delete": "Delete Role",
                     "set_colour": "Set role colour",
                     "open_colour_modal": "Enter colour manually",
                     "errors": {
@@ -224,6 +232,9 @@
             }
         },
         "misc": {
+            "generic_errors": {
+                "rateLimited_toast": "Slow down and try again in a minute."
+            },
             "network_indicator": {
                 "body": "Connection lost",
                 "hide": "(hide)"

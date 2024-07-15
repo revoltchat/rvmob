@@ -13,16 +13,18 @@ import ColourPicker, {
 
 import {Server} from 'revolt.js';
 
-import {app} from '@rvmob/Generic';
+import {app, setFunction} from '@rvmob/Generic';
 import {SettingsSection} from '@rvmob/lib/types';
 import {currentTheme, styles} from '@rvmob/Theme';
 import {GapView} from '@rvmob/components/layout';
 import {
   BackButton,
   Button,
+  Checkbox,
   InputWithButton,
   Text,
 } from '@rvmob/components/common/atoms';
+import {showToast} from '@rvmob/lib/utils';
 
 export const RoleSettingsSection = observer(
   ({
@@ -42,6 +44,10 @@ export const RoleSettingsSection = observer(
     const onSelectColour = ({hex}: {hex: string}) => {
       setColour(hex);
     };
+
+    setFunction('closeRoleSubsection', () => {
+      setSection({section: 'roles', subsection: undefined});
+    });
 
     return (
       <>
@@ -71,8 +77,8 @@ export const RoleSettingsSection = observer(
             <InputWithButton
               placeholder={t('app.servers.settings.roles.name_placeholder')}
               defaultValue={server.roles![section!.subsection].name}
-              onPress={(v: string) => {
-                server.editRole(section!.subsection!, {
+              onPress={async (v: string) => {
+                await server.editRole(section!.subsection!, {
                   name: v,
                 });
               }}
@@ -108,6 +114,40 @@ export const RoleSettingsSection = observer(
                     }}
                   /> */}
             <Text>{server.roles![section!.subsection].rank}</Text>
+            <GapView size={2} />
+            <Text type={'h2'}>
+              {t('app.servers.settings.roles.options_header')}
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <View style={{flex: 1, flexDirection: 'column'}}>
+                <Text style={{fontWeight: 'bold'}}>
+                  {t('app.servers.settings.roles.options.hoist')}
+                </Text>
+                <Text colour={currentTheme.foregroundSecondary}>
+                  {t('app.servers.settings.roles.options.hoist_body')}
+                </Text>
+              </View>
+              <Checkbox
+                value={server.roles![section!.subsection].hoist ?? false}
+                callback={async () => {
+                  try {
+                    await server.editRole(section!.subsection!, {
+                      hoist: !server.roles![section!.subsection!].hoist,
+                    });
+                  } catch (error) {
+                    `${error}`.match('429')
+                      ? showToast(
+                          t('app.misc.generic_errors.rateLimited_toast'),
+                        )
+                      : null;
+                  }
+                }}
+              />
+            </View>
             <GapView size={2} />
             <Text type={'h2'}>
               {t('app.servers.settings.roles.permissions')}
@@ -182,6 +222,18 @@ export const RoleSettingsSection = observer(
                 </Pressable>
               </View>
             </View>
+            <GapView size={8} />
+            <Button
+              style={{marginHorizontal: 0}}
+              backgroundColor={currentTheme.error}
+              onPress={() => {
+                app.openDeletionConfirmationModal({
+                  type: 'Role',
+                  object: {role: section!.subsection!, server},
+                });
+              }}>
+              <Text>{t('app.servers.settings.roles.delete')}</Text>
+            </Button>
             <Modal visible={showColourPicker} animationType="slide">
               <View
                 style={{

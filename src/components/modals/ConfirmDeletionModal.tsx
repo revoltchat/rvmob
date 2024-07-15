@@ -52,6 +52,11 @@ export const ConfirmDeletionModal = observer(
           <Button
             onPress={async () => {
               switch (target.type) {
+                case 'Role':
+                  app.closeRoleSubsection();
+                  target.object.server.deleteRole(target.object.role);
+                  app.openDeletionConfirmationModal(null);
+                  break;
                 case 'Server':
                   app.openServerContextMenu(null);
                   app.openServer(undefined);

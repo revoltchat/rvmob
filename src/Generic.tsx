@@ -339,6 +339,11 @@ export const app = {
       `[FUNCTIONS] Tried to run uninitialised function handleServerSettingsVisibility (args: ${stateFunction})`,
     );
   },
+  closeRoleSubsection: () => {
+    console.log(
+      '[FUNCTIONS] Tried to run uninitialised function handleServerSettingsVisibility',
+    );
+  },
 };
 
 export function setFunction(name: string, func: any) {

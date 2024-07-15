@@ -33,6 +33,14 @@ export type ReplyingMessage = {
   message: Message;
 };
 
+interface TypedRole {
+  type: 'Role';
+  object: {
+    role: string; // role ID
+    server: Server;
+  };
+}
+
 interface TypedMessage {
   type: 'Message';
   object: Message;
@@ -50,7 +58,7 @@ interface TypedUser {
 
 export type ReportedObject = TypedMessage | TypedServer | TypedUser;
 
-export type DeletableObject = TypedMessage | TypedServer;
+export type DeletableObject = TypedRole | TypedMessage | TypedServer;
 
 export type TextEditingModalProps = {
   initialString: string;
