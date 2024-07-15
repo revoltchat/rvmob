@@ -1,6 +1,7 @@
 import {Language} from '../src/lib/types';
 
 // string files
+import {default as ar} from './strings/ar.json';
 import {default as be} from './strings/be.json';
 import {default as de} from './strings/de.json';
 import {default as en} from './strings/en.json';
@@ -12,6 +13,7 @@ import {default as tr} from './strings/tr.json';
 
 // resources object passed to i18next
 export const resources = {
+  ar: {translation: ar},
   be: {translation: be},
   de: {translation: de},
   en: {translation: en},
@@ -24,6 +26,11 @@ export const resources = {
 
 // languages object, used for settings
 export const languages: Record<string, Language> = {
+  ar: {
+    name: 'العربية',
+    englishName: 'Arabic',
+    emoji: '🇸🇦',
+  },
   be: {
     name: 'беларуская',
     englishName: 'Belarusian',
