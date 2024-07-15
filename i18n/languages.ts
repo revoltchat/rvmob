@@ -23,30 +23,30 @@ export const resources = {
 };
 
 // languages object, used for settings
-export const languages = {
+export const languages: Record<string, Language> = {
   be: {
     name: 'беларуская',
     englishName: 'Belarusian',
     emoji: '🇧🇾',
-  } as Language,
+  },
   de: {
     name: 'Deutsch (Deutschland)',
     englishName: 'German (Germany)',
     emoji: '🇩🇪',
-  } as Language,
+  },
   en: {
     name: 'English (Traditional)',
     englishName: 'English (UK)',
     emoji: '🇬🇧',
-  } as Language,
+  },
   hu: {name: 'Magyar', englishName: 'Hungarian', emoji: '🇭🇺'},
   id: {
     name: 'Bahasa Indonesia',
     englishName: 'Indonesian',
     emoji: '🇮🇩',
-  } as Language,
-  // it: {name: 'Italiano', englishName: 'Italian', emoji: '🇮🇹'} as Language,
-  mwl: {name: 'Mirandés', englishName: 'Mirandese', emoji: '🇵🇹'} as Language,
-  ru: {name: 'Русский', englishName: 'Russian', emoji: '🇷🇺'} as Language,
-  tr: {name: 'Türkçe', englishName: 'Turkish', emoji: '🇹🇷'} as Language,
+  },
+  // it: {name: 'Italiano', englishName: 'Italian', emoji: '🇮🇹'},
+  mwl: {name: 'Mirandés', englishName: 'Mirandese', emoji: '🇵🇹'},
+  ru: {name: 'Русский', englishName: 'Russian', emoji: '🇷🇺'},
+  tr: {name: 'Türkçe', englishName: 'Turkish', emoji: '🇹🇷'},
 };

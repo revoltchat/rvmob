@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {languages} from '../../../../../i18n/languages';
+import {languages} from '@rvmob-i18n/languages';
 import {app} from '../../../../Generic';
 import {currentTheme, styles} from '../../../../Theme';
 import {Setting} from '../../../../lib/types';
@@ -66,16 +66,13 @@ export const StringNumberSetting = ({
                 {sRaw.key === 'app.language' ? (
                   <View style={{flex: 1, flexDirection: 'row'}}>
                     <Text style={{alignSelf: 'center', marginEnd: 8}}>
-                      {/* @ts-expect-error this will always exist */}
                       {languages[o].emoji}
                     </Text>
                     <View style={{flexDirection: 'column'}}>
                       <Text style={{fontWeight: 'bold'}}>
-                        {/* @ts-expect-error this will always exist */}
                         {languages[o].name}
                       </Text>
                       <Text colour={currentTheme.foregroundSecondary}>
-                        {/* @ts-expect-error this will always exist */}
                         {languages[o].englishName}
                       </Text>
                     </View>
