@@ -5,7 +5,6 @@ import {observer} from 'mobx-react-lite';
 
 import BottomSheetCore from '@gorhom/bottom-sheet';
 import {useBackHandler} from '@react-native-community/hooks';
-// import FastImage from 'react-native-fast-image';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -29,8 +28,6 @@ import {
 import {BottomSheet} from '../common/BottomSheet';
 import {MarkdownView} from '../common/MarkdownView';
 import {UserList} from '../navigation/UserList';
-
-// const Image = FastImage;
 
 export const ProfileSheet = observer(() => {
   const [user, setUser] = useState(null as User | null);
