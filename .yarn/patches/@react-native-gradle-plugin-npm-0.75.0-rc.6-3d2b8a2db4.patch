@@ -1,5 +1,5 @@
 diff --git a/settings-plugin/src/main/kotlin/com/facebook/react/ReactSettingsExtension.kt b/settings-plugin/src/main/kotlin/com/facebook/react/ReactSettingsExtension.kt
-index 9950a0b7fde1972615baeba943864953f3675a97..fa83c37aecf8400bafed32960d009b43700124e2 100644
+index 6d4f60e6fb48cae86610b6f72e8f915738634669..43c6f0d1ef32ed79805cbd6210ed2c927a69a146 100644
 --- a/settings-plugin/src/main/kotlin/com/facebook/react/ReactSettingsExtension.kt
 +++ b/settings-plugin/src/main/kotlin/com/facebook/react/ReactSettingsExtension.kt
 @@ -39,7 +39,7 @@ abstract class ReactSettingsExtension @Inject constructor(val settings: Settings
