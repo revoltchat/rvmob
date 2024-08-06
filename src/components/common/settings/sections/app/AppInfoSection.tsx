@@ -14,6 +14,7 @@ import ReleaseIcon from '../../../../../../assets/images/icon_release.svg';
 import DebugIcon from '../../../../../../assets/images/icon_debug.svg';
 
 const AppIcon = getBundleId().match('debug') ? DebugIcon : ReleaseIcon;
+const isFoss = getBundleId().match('foss');
 
 export const AppInfoSection = () => {
   return (
@@ -27,7 +28,10 @@ export const AppInfoSection = () => {
         <AppIcon height={250} width={250} />
       </View>
       <View style={{alignItems: 'center', marginVertical: 16}}>
-        <Text type={'header'}>RVMob v{app.version}</Text>
+        <Text type={'h1'}>RVMob v{app.version}</Text>
+        {isFoss ? (
+          <Text colour={currentTheme.foregroundSecondary}>FOSS build</Text>
+        ) : null}
         <View
           style={{
             justifyContent: 'center',

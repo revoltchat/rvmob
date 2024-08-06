@@ -13,9 +13,9 @@ import {ErrorBoundary} from 'react-error-boundary';
 import {withTranslation} from 'react-i18next';
 
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
-import notifee, {EventType} from '@notifee/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-clipboard/clipboard';
+import {getBundleId} from 'react-native-device-info';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import SideMenuBase from '@rexovolt/react-native-side-menu';
@@ -40,15 +40,7 @@ import {
 import {OFFICIAL_INSTANCE_SIGNUP_URL} from '@rvmob/lib/consts';
 import {openUrl, sleep} from '@rvmob/lib/utils';
 
-async function createChannel() {
-  const channel = (await notifee.getChannel('rvmob'))
-    ? 'rvmob'
-    : await notifee.createChannel({
-        id: 'rvmob',
-        name: 'RVMob',
-      });
-  return channel;
-}
+const isFoss = getBundleId().match('foss');
 
 class MainView extends ReactComponent {
   constructor(props) {
@@ -103,231 +95,163 @@ class MainView extends ReactComponent {
   }
   async componentDidMount() {
     console.log(`[APP] Mounted component (${new Date().getTime()})`);
-    let defaultnotif = await createChannel();
-    console.log(`[NOTIFEE] Created channel: ${defaultnotif}`);
-    console.log(app.version, app.settings.get('app.lastVersion'));
-    const lastVersion = app.settings.get('app.lastVersion');
-    if (!lastVersion || lastVersion === '') {
-      console.log(
-        `[APP] lastVersion is null (${lastVersion}), setting to app.version (${app.version})`,
-      );
-      app.settings.set('app.lastVersion', app.version);
-    } else {
-      app.version === lastVersion
-        ? console.log(
-            `[APP] lastVersion (${lastVersion}) is equal to app.version (${app.version})`,
-          )
-        : console.log(
-            `[APP] lastVersion (${lastVersion}) is different from app.version (${app.version})`,
-          );
-    }
-    client.on('connecting', () => {
-      console.log(`[APP] Connecting to instance... (${new Date().getTime()})`);
-    });
-    client.on('connected', () => {
-      console.log(`[APP] Connected to instance (${new Date().getTime()})`);
-    });
-    client.on('ready', async () => {
-      let orderedServers,
-        server,
-        channel = null;
-      try {
-        const rawSettings = await client.syncFetchSettings([
-          'ordering',
-          'notifications',
-        ]);
-        orderedServers = JSON.parse(rawSettings.ordering[1]).servers;
-        ({server, channel} = JSON.parse(rawSettings.notifications[1]));
-      } catch (err) {
-        console.log(`[APP] Error fetching settings: ${err}`);
-      }
-      this.setState({
-        status: 'loggedIn',
-        network: 'ready',
-        orderedServers,
-        serverNotifications: server,
-        channelNotifications: channel,
-      });
-      console.log(`[APP] Client is ready (${new Date().getTime()})`);
-      notifee.onBackgroundEvent(async ({type, detail}) => {
-        const {notification /*, pressAction */} = detail;
-        if (type === EventType.PRESS) {
-          console.log(
-            `[NOTIFEE] User pressed on ${notification?.data?.channel}/${notification?.data?.messageID}`,
-          );
-          const notifChannel = client.channels.get(
-            notification?.data?.channel as string,
-          );
-          this.setState({
-            currentChannel: notifChannel ?? null,
-          });
-          await notifee.cancelNotification(notification!.id!);
-        }
-      });
-
-      AsyncStorage.getItem('lastServer', async (err, lastServer) => {
-        if (!err) {
-          if (lastServer) {
-            app.openServer(client.servers.get(lastServer));
-            await AsyncStorage.getItem('serverLastChannels', (cerr, data) => {
-              if (!cerr) {
-                let serverLastChannels = JSON.parse(data || '{}') || {};
-                let lastChannel = serverLastChannels[lastServer];
-                if (lastChannel) {
-                  let fetchedLastChannel = client.channels.get(lastChannel);
-                  if (fetchedLastChannel) {
-                    app.openChannel(fetchedLastChannel);
-                  }
-                }
-              } else {
-                console.log(`[APP] Error getting last channel: ${err}`);
-              }
-            });
-          }
-        } else {
-          console.log(`[APP] Error getting last server: ${err}`);
-        }
-      });
-    });
-    client.on('dropped', async () => {
-      this.setState({network: 'dropped'});
-    });
-    client.on('message', async msg => {
-      console.log(`[APP] Handling message ${msg._id}`);
-
-      let channelNotif = this.state.channelNotifications[msg.channel?._id];
-      let serverNotif =
-        this.state.serverNotifications[msg.channel?.server?._id];
-
-      const isMuted =
-        (channelNotif && channelNotif === 'none') ||
-        channelNotif === 'muted' ||
-        (serverNotif && serverNotif === 'none') ||
-        serverNotif === 'muted';
-
-      const alwaysNotif =
-        channelNotif === 'all' || (!isMuted && serverNotif === 'all');
-
-      const mentionsUser =
-        (msg.mention_ids?.includes(client.user?._id!) &&
-          (app.settings.get('app.notifications.notifyOnSelfPing') ||
-            msg.author?._id !== client.user?._id)) ||
-        msg.channel?.channel_type === 'DirectMessage';
-
-      const shouldNotif =
-        (alwaysNotif &&
-          (app.settings.get('app.notifications.notifyOnSelfPing') ||
-            msg.author?._id !== client.user?._id)) ||
-        (!isMuted && mentionsUser);
-
-      console.log(
-        `[NOTIFICATIONS] Should notify for ${msg._id}: ${shouldNotif} (channel/server muted? ${isMuted}, notifications for all messages enabled? ${alwaysNotif}, message mentions the user? ${mentionsUser})`,
-      );
-      if (app.settings.get('app.notifications.enabled') && shouldNotif) {
+    (isFoss
+      ? import('./src/lib/notifications/foss')
+      : import('./src/lib/notifications/regular')
+    ).then(async imports => {
+      let defaultNotif = await imports.createChannel();
+      console.log(`[NOTIFEE] Created channel: ${defaultNotif}`);
+      console.log(app.version, app.settings.get('app.lastVersion'));
+      const lastVersion = app.settings.get('app.lastVersion');
+      if (!lastVersion || lastVersion === '') {
         console.log(
-          `[NOTIFICATIONS] Pushing notification for message ${msg._id}`,
+          `[APP] lastVersion is null (${lastVersion}), setting to app.version (${app.version})`,
         );
-        if (this.state.currentChannel !== msg.channel) {
-          this.setState({notificationMessage: msg});
-          await sleep(5000);
-          this.setState({notificationMessage: null});
-        }
-        let notifs = (await notifee.getDisplayedNotifications()).filter(
-          n => n.id === msg.channel?._id,
-        );
-        const title = `${
-          msg.channel?.server?.name
-            ? `#${msg.channel.name} (${msg.channel.server.name})`
-            : msg.channel?.channel_type === 'Group'
-            ? `${msg.channel.name}`
-            : `@${msg.channel?.recipient?.username}`
-        }`;
-
-        try {
-          notifee.displayNotification({
-            title: title,
-            data: {
-              channel: msg.channel?._id ?? 'UNKNOWN',
-              messageID: msg._id,
-            },
-            body:
-              `<b>${msg.author?.username}</b>: ` +
-              msg.content
-                ?.replaceAll(
-                  '<@' + client.user?._id + '>',
-                  '@' + client.user?.username,
-                )
-                .replaceAll('\\', '\\\\')
-                .replaceAll('<', '\\<')
-                .replaceAll('>', '\\>') +
-              '<br>' +
-              (msg.embeds
-                ? msg.embeds.map(_e => '[Embed]').join('<br>') + '<br>'
-                : '') +
-              (msg.attachments
-                ? msg.attachments.map(a => a.metadata.type).join('<br>') +
-                  '<br>'
-                : '') +
-              (notifs.length > 0 && notifs[0]?.notification.body
-                ? notifs[0].notification.body.split('<br>')?.length > 1
-                  ? ' <i><br>(and ' +
-                    (Number.parseInt(
-                      notifs[0]?.notification.body
-                        ?.split('<br>')[1]
-                        .split(' ')[1] ?? '',
-                      10,
-                    ) +
-                      1) +
-                    ' more messages)</i>'
-                  : ' <i><br>(and 1 more message)</i>'
-                : ''),
-            android: {
-              color: '#1AD4B2',
-              smallIcon: 'ic_launcher_monochrome',
-              largeIcon:
-                msg.channel?.server?.generateIconURL() ||
-                msg.author?.generateAvatarURL(),
-              pressAction: {
-                id: 'default',
-                launchActivity: 'site.endl.taiku.rvmob.MainActivity',
-              },
-              channelId: defaultnotif,
-            },
-            id: msg.channel?._id,
-          });
-        } catch (notifErr) {
-          console.log(`[NOTIFEE] Error sending notification: ${notifErr}`);
-        }
+        app.settings.set('app.lastVersion', app.version);
+      } else {
+        app.version === lastVersion
+          ? console.log(
+              `[APP] lastVersion (${lastVersion}) is equal to app.version (${app.version})`,
+            )
+          : console.log(
+              `[APP] lastVersion (${lastVersion}) is different from app.version (${app.version})`,
+            );
       }
-    });
-    client.on('packet', async p => {
-      if (p.type === 'UserSettingsUpdate') {
-        console.log('[WEBSOCKET] Synced settings updated');
+      client.on('connecting', () => {
+        console.log(
+          `[APP] Connecting to instance... (${new Date().getTime()})`,
+        );
+      });
+      client.on('connected', () => {
+        console.log(`[APP] Connected to instance (${new Date().getTime()})`);
+      });
+      client.on('ready', async () => {
+        let orderedServers,
+          server,
+          channel = null;
         try {
-          if ('ordering' in p.update) {
-            const orderedServers = JSON.parse(p.update.ordering[1]).servers;
-            this.setState({orderedServers});
-          }
-          if ('notifications' in p.update) {
-            const {server, channel} = JSON.parse(p.update.notifications[1]);
-            this.setState({
-              serverNotifications: server,
-              channelNotifications: channel,
-            });
-          }
+          const rawSettings = await client.syncFetchSettings([
+            'ordering',
+            'notifications',
+          ]);
+          orderedServers = JSON.parse(rawSettings.ordering[1]).servers;
+          ({server, channel} = JSON.parse(rawSettings.notifications[1]));
         } catch (err) {
           console.log(`[APP] Error fetching settings: ${err}`);
         }
-      }
+        this.setState({
+          status: 'loggedIn',
+          network: 'ready',
+          orderedServers,
+          serverNotifications: server,
+          channelNotifications: channel,
+        });
+        console.log(`[APP] Client is ready (${new Date().getTime()})`);
+        if (!isFoss) {
+          imports.setUpNotifeeListener(client, this.setState);
+        }
+
+        AsyncStorage.getItem('lastServer', async (err, lastServer) => {
+          if (!err) {
+            if (lastServer) {
+              app.openServer(client.servers.get(lastServer));
+              await AsyncStorage.getItem('serverLastChannels', (cerr, data) => {
+                if (!cerr) {
+                  let serverLastChannels = JSON.parse(data || '{}') || {};
+                  let lastChannel = serverLastChannels[lastServer];
+                  if (lastChannel) {
+                    let fetchedLastChannel = client.channels.get(lastChannel);
+                    if (fetchedLastChannel) {
+                      app.openChannel(fetchedLastChannel);
+                    }
+                  }
+                } else {
+                  console.log(`[APP] Error getting last channel: ${err}`);
+                }
+              });
+            }
+          } else {
+            console.log(`[APP] Error getting last server: ${err}`);
+          }
+        });
+      });
+      client.on('dropped', async () => {
+        this.setState({network: 'dropped'});
+      });
+      client.on('message', async msg => {
+        console.log(`[APP] Handling message ${msg._id}`);
+
+        let channelNotif = this.state.channelNotifications[msg.channel?._id];
+        let serverNotif =
+          this.state.serverNotifications[msg.channel?.server?._id];
+
+        const isMuted =
+          (channelNotif && channelNotif === 'none') ||
+          channelNotif === 'muted' ||
+          (serverNotif && serverNotif === 'none') ||
+          serverNotif === 'muted';
+
+        const alwaysNotif =
+          channelNotif === 'all' || (!isMuted && serverNotif === 'all');
+
+        const mentionsUser =
+          (msg.mention_ids?.includes(client.user?._id!) &&
+            (app.settings.get('app.notifications.notifyOnSelfPing') ||
+              msg.author?._id !== client.user?._id)) ||
+          msg.channel?.channel_type === 'DirectMessage';
+
+        const shouldNotif =
+          (alwaysNotif &&
+            (app.settings.get('app.notifications.notifyOnSelfPing') ||
+              msg.author?._id !== client.user?._id)) ||
+          (!isMuted && mentionsUser);
+
+        console.log(
+          `[NOTIFICATIONS] Should notify for ${msg._id}: ${shouldNotif} (channel/server muted? ${isMuted}, notifications for all messages enabled? ${alwaysNotif}, message mentions the user? ${mentionsUser})`,
+        );
+        if (app.settings.get('app.notifications.enabled') && shouldNotif) {
+          console.log(
+            `[NOTIFICATIONS] Pushing notification for message ${msg._id}`,
+          );
+          if (this.state.currentChannel !== msg.channel) {
+            this.setState({notificationMessage: msg});
+            await sleep(5000);
+            this.setState({notificationMessage: null});
+          }
+          if (!isFoss) {
+            await imports.sendNotifeeNotification(msg, client, defaultNotif);
+          }
+        }
+      });
+      client.on('packet', async p => {
+        if (p.type === 'UserSettingsUpdate') {
+          console.log('[WEBSOCKET] Synced settings updated');
+          try {
+            if ('ordering' in p.update) {
+              const orderedServers = JSON.parse(p.update.ordering[1]).servers;
+              this.setState({orderedServers});
+            }
+            if ('notifications' in p.update) {
+              const {server, channel} = JSON.parse(p.update.notifications[1]);
+              this.setState({
+                serverNotifications: server,
+                channelNotifications: channel,
+              });
+            }
+          } catch (err) {
+            console.log(`[APP] Error fetching settings: ${err}`);
+          }
+        }
+      });
+      client.on('server/delete', async s => {
+        const currentServer = app.getCurrentServer();
+        if (currentServer === s) {
+          app.openServer(undefined);
+          app.openChannel(null);
+        }
+      });
+      await loginWithSavedToken(this);
     });
-    client.on('server/delete', async s => {
-      const currentServer = app.getCurrentServer();
-      if (currentServer === s) {
-        app.openServer(undefined);
-        app.openChannel(null);
-      }
-    });
-    await loginWithSavedToken(this);
   }
 
   async setChannel(channel: string | Channel, server?: Server) {
