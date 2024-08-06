@@ -47,19 +47,19 @@ export const MessageReactions = observer(
                   marginRight: 4, // TODO: adapt this for future RTL support
                   marginVertical: 2,
                 }}>
-                <Text key={`message-${msg._id}-reaction-${r.emoji}-label`}>
-                  {r.emoji.length > 6 ? (
+                <View style={{flexDirection: 'row'}}>
+                  {r.emoji.length > 6 && (
                     <Image
                       style={{minHeight: 15, minWidth: 15}}
                       source={{
                         uri: `${client.configuration?.features.autumn.url}/emojis/${r.emoji}`,
                       }}
                     />
-                  ) : (
-                    r.emoji
-                  )}{' '}
-                  {r.reactors.length}
-                </Text>
+                  )}
+                  <Text key={`message-${msg._id}-reaction-${r.emoji}-label`}>
+                    {r.emoji.length <= 6 && r.emoji} {r.reactors.length}
+                  </Text>
+                </View>
               </Pressable>
             );
           })}
