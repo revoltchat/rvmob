@@ -118,11 +118,13 @@ class MainView extends ReactComponent {
             );
       }
       client.on('connecting', () => {
+        this.setState({loadingStage: 'connecting'});
         console.log(
           `[APP] Connecting to instance... (${new Date().getTime()})`,
         );
       });
       client.on('connected', () => {
+        this.setState({loadingStage: 'connected'});
         console.log(`[APP] Connected to instance (${new Date().getTime()})`);
       });
       client.on('ready', async () => {
@@ -529,7 +531,7 @@ class MainView extends ReactComponent {
             ) : (
               <View style={styles.loggingInScreen}>
                 <Text style={{fontSize: 30, fontWeight: 'bold'}}>
-                  {t('app.loading.connecting')}
+                  {this.state.loadingStage === 'connected' ? t('app.loading.generic') : t('app.loading.connecting')}
                 </Text>
                 <Text style={styles.remark}>{selectedRemark || null}</Text>
               </View>
