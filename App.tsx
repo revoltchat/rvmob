@@ -136,8 +136,12 @@ class MainView extends ReactComponent {
             'ordering',
             'notifications',
           ]);
-          orderedServers = JSON.parse(rawSettings.ordering[1]).servers;
-          ({server, channel} = JSON.parse(rawSettings.notifications[1]));
+          try {
+            orderedServers = JSON.parse(rawSettings.ordering[1]).servers;
+            ({server, channel} = JSON.parse(rawSettings.notifications[1]));
+          } catch (err) {
+            console.log(`[APP] Error parsing fetched settings: ${err}`);
+          }
         } catch (err) {
           console.log(`[APP] Error fetching settings: ${err}`);
         }
