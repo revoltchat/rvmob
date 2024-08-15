@@ -187,9 +187,9 @@ class MainView extends ReactComponent {
       client.on('message', async msg => {
         console.log(`[APP] Handling message ${msg._id}`);
 
-        let channelNotif = this.state.channelNotifications[msg.channel?._id];
+        let channelNotif = this.state.channelNotifications ? this.state.channelNotifications[msg.channel?._id] : undefined;
         let serverNotif =
-          this.state.serverNotifications[msg.channel?.server?._id];
+          this.state.serverNotifications ? this.state.serverNotifications[msg.channel?.server?._id] : undefined;
 
         const isMuted =
           (channelNotif && channelNotif === 'none') ||
