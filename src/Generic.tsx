@@ -240,7 +240,7 @@ export const app = {
       {
         key: 'ui.messaging.useNewMessageView',
         category: 'functionality',
-        default: false,
+        default: true,
         type: 'boolean',
         experimental: true,
       },
