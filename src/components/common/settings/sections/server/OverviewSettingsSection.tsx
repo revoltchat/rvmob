@@ -1,12 +1,15 @@
-import {View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
+// import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
 import {Server} from 'revolt.js';
 
-import {currentTheme} from '@rvmob/Theme';
 import {GapView} from '@rvmob/components/layout';
 import {InputWithButton, Link, Text} from '@rvmob/components/common/atoms';
+import {SYSTEM_MESSAGE_CHANNEL_TYPES} from '@rvmob/lib/consts';
+import {currentTheme, styles} from '@rvmob/Theme';
 
 export const OverviewSettingsSection = observer(
   ({server}: {server: Server}) => {
@@ -87,16 +90,43 @@ export const OverviewSettingsSection = observer(
         <Text type={'h2'}>
           {t('app.servers.settings.overview.system_messages')}
         </Text>
-        <Text>
-          When members join/leave or are kicked/banned, you can receive
-          messages. (not final copy)
+        <Text colour={currentTheme.foregroundSecondary}>
+          {t('app.servers.settings.overview.system_messages_description')}
         </Text>
-        <Text>
-          new {server.system_messages?.user_joined} leave{' '}
-          {server.system_messages?.user_left} kick{' '}
-          {server.system_messages?.user_kicked} ban{' '}
-          {server.system_messages?.user_banned}
-        </Text>
+        {SYSTEM_MESSAGE_CHANNEL_TYPES.map(type => (
+          <Pressable
+            style={styles.settingsEntry}
+            key={`overview-settings-system-channels-${type}`}
+            onPress={() => {}}>
+            <View style={{flex: 1, flexDirection: 'column'}}>
+              <Text
+                key={`overview-settings-system-channels-${type}-name`}
+                style={{fontWeight: 'bold'}}>
+                {t(
+                  `app.servers.settings.overview.system_message_channel_types.${type}`,
+                )}
+              </Text>
+              <Text colour={currentTheme.foregroundSecondary}>
+                {server.system_messages?.[type] ?? 'None'}
+              </Text>
+            </View>
+            <View
+              style={{
+                width: 30,
+                height: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              {/* <View style={styles.iconContainer}>
+              <MaterialIcon
+                name={'edit'}
+                size={20}
+                color={currentTheme.foregroundPrimary}
+              />
+            </View> */}
+            </View>
+          </Pressable>
+        ))}
       </>
     );
   },

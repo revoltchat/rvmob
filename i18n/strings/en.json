@@ -102,6 +102,13 @@
                     "description_placeholder": "Add a description…",
                     "set_description": "Set description",
                     "system_messages": "System messages",
+                    "system_messages_description": "When members join, leave or are kicked or banned, you can receive messages.",
+                    "system_message_channel_types": {
+                        "user_joined": "User joined",
+                        "user_left": "User left",
+                        "user_kicked": "User kicked",
+                        "user_banned": "User banned"
+                    },
                     "errors": {
                         "empty_server_name": "Server names cannot be empty!"
                     }

@@ -197,6 +197,14 @@ export const STATUSES = [
   'Invisible',
 ] as const;
 
+// System message channel types
+export const SYSTEM_MESSAGE_CHANNEL_TYPES = [
+  'user_joined',
+  'user_left',
+  'user_kicked',
+  'user_banned',
+] as const;
+
 // Emoji regexes
 export const RE_CUSTOM_EMOJI = /:([0123456789ABCDEFGHJKMNPQRSTVWXYZ]{26}):/g;
 // https://github.com/mathiasbynens/emoji-regex/blob/3a5f0fbf4448826eb5ac91283b504e1c68fc928e/index.jss
