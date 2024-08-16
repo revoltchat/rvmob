@@ -37,6 +37,7 @@ jobs:
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
+          name: regular-artifact
           path: |
             /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/regular/debug/RVMob-Debug-${{ github.sha }}-arm64-v8a.apk 
             /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/regular/debug/RVMob-Debug-${{ github.sha }}-armeabi-v7a.apk 
@@ -76,6 +77,7 @@ jobs:
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
+          name: foss-artifact
           path: |
             /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/foss/debug/RVMob-Debug-${{ github.sha }}-FOSS-arm64-v8a.apk 
             /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/foss/debug/RVMob-Debug-${{ github.sha }}-FOSS-armeabi-v7a.apk 
