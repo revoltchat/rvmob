@@ -2,7 +2,7 @@
 
 ## v0.7.0
 
-*This version has not been released yet.*
+_This version has not been released yet._
 
 ### What's new
 
@@ -17,7 +17,7 @@
 
 ## v0.6.0
 
-*This version was released on 14/07/2023.*
+_This version was released on 14/07/2023._
 
 ### Important info for users of 0.5.0 or earlier
 

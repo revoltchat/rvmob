@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const dir = path.resolve(__dirname);
-const appDirectory = `${dir}/../`
+const appDirectory = `${dir}/../`;
 const {webPlugins} = require(`${dir}/babel-shared`);
 const {presets} = require(`${dir}/../babel.config.js`);
 
@@ -72,7 +72,7 @@ const fontLoaderConfiguration = {
   include: [
     path.resolve(__dirname, '../assets/fonts'),
     path.resolve(__dirname, '../node_modules/react-native-vector-icons'),
-  ]
+  ],
 };
 
 module.exports = {
@@ -108,7 +108,7 @@ module.exports = {
       // See: https://github.com/necolas/react-native-web/issues/349
       __DEV__: JSON.stringify(true),
     }),
-    new webpack.EnvironmentPlugin({ JEST_WORKER_ID: null }),
-    new webpack.DefinePlugin({ process: { env: {} } }),
+    new webpack.EnvironmentPlugin({JEST_WORKER_ID: null}),
+    new webpack.DefinePlugin({process: {env: {}}}),
   ],
 };

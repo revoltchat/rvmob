@@ -1,13 +1,13 @@
 const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
 
-const { makeMetroConfig } = require("@rnx-kit/metro-config");
+const {makeMetroConfig} = require('@rnx-kit/metro-config');
 const {
   CyclicDependencies,
-} = require("@rnx-kit/metro-plugin-cyclic-dependencies-detector");
+} = require('@rnx-kit/metro-plugin-cyclic-dependencies-detector');
 const {
-    DuplicateDependencies,
-  } = require("@rnx-kit/metro-plugin-duplicates-checker");
-const { MetroSerializer } = require("@rnx-kit/metro-serializer");
+  DuplicateDependencies,
+} = require('@rnx-kit/metro-plugin-duplicates-checker');
+const {MetroSerializer} = require('@rnx-kit/metro-serializer');
 
 const defaultConfig = getDefaultConfig(__dirname);
 const {assetExts, sourceExts} = defaultConfig.resolver;
@@ -34,15 +34,15 @@ const config = {
     sourceExts: [...sourceExts, 'svg'],
   },
   serializer: {
-        customSerializer: MetroSerializer([
-          CyclicDependencies({
-            includeNodeModules: false,
-            linesOfContext: 3,
-            throwOnError: true,
-          }),
-          DuplicateDependencies,
-        ]),
-       },
+    customSerializer: MetroSerializer([
+      CyclicDependencies({
+        includeNodeModules: false,
+        linesOfContext: 3,
+        throwOnError: true,
+      }),
+      DuplicateDependencies,
+    ]),
+  },
 };
 
 module.exports = makeMetroConfig(mergeConfig(defaultConfig, config));
