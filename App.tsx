@@ -42,6 +42,30 @@ import {openUrl, sleep} from '@rvmob/lib/utils';
 
 const isFoss = getBundleId().match('foss');
 
+async function openLastChannel() {
+  try {
+    const lastServer = await AsyncStorage.getItem('lastServer');
+    if (lastServer) {
+      app.openServer(client.servers.get(lastServer));
+      try {
+        const channelData = await AsyncStorage.getItem('serverLastChannels');
+        let serverLastChannels = JSON.parse(channelData || '{}') || {};
+        let lastChannel = serverLastChannels[lastServer];
+        if (lastChannel) {
+          let fetchedLastChannel = client.channels.get(lastChannel);
+          if (fetchedLastChannel) {
+            app.openChannel(fetchedLastChannel);
+          }
+        }
+      } catch (channelErr) {
+        console.log(`[APP] Error getting last channel: ${channelErr}`);
+      }
+    }
+  } catch (serverErr) {
+    console.log(`[APP] Error getting last server: ${serverErr}`);
+  }
+}
+
 class MainView extends ReactComponent {
   constructor(props) {
     super(props);
@@ -157,39 +181,23 @@ class MainView extends ReactComponent {
           imports.setUpNotifeeListener(client, this.setState);
         }
 
-        AsyncStorage.getItem('lastServer', async (err, lastServer) => {
-          if (!err) {
-            if (lastServer) {
-              app.openServer(client.servers.get(lastServer));
-              await AsyncStorage.getItem('serverLastChannels', (cerr, data) => {
-                if (!cerr) {
-                  let serverLastChannels = JSON.parse(data || '{}') || {};
-                  let lastChannel = serverLastChannels[lastServer];
-                  if (lastChannel) {
-                    let fetchedLastChannel = client.channels.get(lastChannel);
-                    if (fetchedLastChannel) {
-                      app.openChannel(fetchedLastChannel);
-                    }
-                  }
-                } else {
-                  console.log(`[APP] Error getting last channel: ${err}`);
-                }
-              });
-            }
-          } else {
-            console.log(`[APP] Error getting last server: ${err}`);
-          }
-        });
+        if (app.settings.get('app.reopenLastChannel')) {
+          await openLastChannel();
+        }
       });
+
       client.on('dropped', async () => {
         this.setState({network: 'dropped'});
       });
       client.on('message', async msg => {
         console.log(`[APP] Handling message ${msg._id}`);
 
-        let channelNotif = this.state.channelNotifications ? this.state.channelNotifications[msg.channel?._id] : undefined;
-        let serverNotif =
-          this.state.serverNotifications ? this.state.serverNotifications[msg.channel?.server?._id] : undefined;
+        let channelNotif = this.state.channelNotifications
+          ? this.state.channelNotifications[msg.channel?._id]
+          : undefined;
+        let serverNotif = this.state.serverNotifications
+          ? this.state.serverNotifications[msg.channel?.server?._id]
+          : undefined;
 
         const isMuted =
           (channelNotif && channelNotif === 'none') ||

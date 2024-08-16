@@ -163,6 +163,12 @@ export const app = {
         type: 'boolean',
       },
       {
+        key: 'app.reopenLastChannel',
+        category: 'functionality',
+        default: true,
+        type: 'boolean',
+      },
+      {
         key: 'app.notifications.enabled',
         category: 'functionality',
         default: false,

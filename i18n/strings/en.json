@@ -170,6 +170,7 @@
             "app": {
                 "language": "Select your language",
                 "refetchOnReconnect": "Refetch messages when reconnecting",
+                "reopenLastChannel": "Reopen the last channel you were in when opening the app",
                 "notifications": {
                     "enabled": "Enable push notifications",
                     "notifyOnSelfPing": "Receive a notification when you ping yourself"
