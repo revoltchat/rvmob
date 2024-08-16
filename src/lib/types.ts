@@ -1,4 +1,4 @@
-import {Message, Server, User} from 'revolt.js';
+import type {Message, Server, User} from 'revolt.js';
 
 type StringSetting = {
   default: string;

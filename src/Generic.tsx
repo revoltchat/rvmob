@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {API, Channel, Client, Message, Server} from 'revolt.js';
+import {Client} from 'revolt.js';
+import type {API, Channel, Message, Server} from 'revolt.js';
 
 import {setLanguage} from '@rvmob-i18n/i18n';
 import {languages} from '@rvmob-i18n/languages';
@@ -308,13 +309,16 @@ export const app = {
   },
   setMessageBoxInput: (t: string | null) => {},
   setEditingMessage: (message: Message) => {},
+  getEditingMessage: (): Message | null => {
+    return null;
+  },
   setReplyingMessages: (m: ReplyingMessage[]) => {
     console.log(
       `[FUNCTIONS] Tried to run uninitialised function setReplyingMessages (args: ${m})`,
     );
   },
-  getReplyingMessages: () => {
-    return undefined as unknown as ReplyingMessage[];
+  getReplyingMessages: (): ReplyingMessage[] => {
+    return [];
   },
   /**
    * @deprecated Message queuing will be removed/reworked due to the switch of message views

@@ -7,7 +7,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import {useBackHandler} from '@react-native-community/hooks';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {Message} from 'revolt.js';
+import type {Message} from 'revolt.js';
 
 import {app, setFunction} from '../../Generic';
 import {currentTheme, styles} from '../../Theme';
