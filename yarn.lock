@@ -13083,13 +13083,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"process@npm:^0.11.10":
-  version: 0.11.10
-  resolution: "process@npm:0.11.10"
-  checksum: 10c0/40c3ce4b7e6d4b8c3355479df77aeed46f81b279818ccdc500124e6a5ab882c0cc81ff7ea16384873a95a74c4570b01b120f287abbdd4c877931460eca6084b3
-  languageName: node
-  linkType: hard
-
 "progress@npm:^2.0.3":
   version: 2.0.3
   resolution: "progress@npm:2.0.3"
@@ -14180,7 +14173,6 @@ __metadata:
     mobx: "npm:^6.13.1"
     mobx-react-lite: "npm:^4.0.7"
     prettier: "npm:^2.8.8"
-    process: "npm:^0.11.10"
     react: "npm:^18.3.1"
     react-devtools: "npm:^5.3.1"
     react-dom: "npm:^18.3.1"
