@@ -21,6 +21,8 @@ export const MessageEmbed = observer((eRaw: API.Embed) => {
             backgroundColor: currentTheme.backgroundSecondary,
             padding: 8,
             borderRadius: 8,
+            borderStartWidth: 4,
+            borderStartColor: e.colour ?? undefined,
           }}>
           {e.type === 'Website' && e.site_name ? (
             <Text
