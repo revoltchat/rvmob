@@ -1,4 +1,4 @@
-import notifee, {EventType} from '@notifee/react-native';
+import notifee, {EventType} from '@rexovolt/notifee';
 
 import type {Client, Message} from 'revolt.js';
 
