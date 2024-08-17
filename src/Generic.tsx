@@ -7,6 +7,7 @@ import {setLanguage} from '@rvmob-i18n/i18n';
 import {languages} from '@rvmob-i18n/languages';
 import {setTheme, themes} from '@rvmob/Theme';
 import {DEFAULT_API_URL, LOADING_SCREEN_REMARKS} from '@rvmob/lib/consts';
+import { checkNotificationPerms } from '@rvmob/lib/notifications';
 import {
   CreateChannelModalProps,
   DeletableObject,
@@ -174,6 +175,11 @@ export const app = {
         default: false,
         type: 'boolean',
         experimental: true,
+        onChange: (v: boolean) => {
+          if (v) {
+            checkNotificationPerms();
+          }
+        },
       },
       {
         key: 'app.notifications.notifyOnSelfPing',
