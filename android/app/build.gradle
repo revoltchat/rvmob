@@ -139,10 +139,5 @@ dependencies {
     //    implementation jscFlavor
     // }
 
-    // remove GMS from RNDI - future major release should remove it upstream
-    implementation(project(':react-native-device-info')) {
-        exclude group: 'com.google.android.gms'
-    }
-
     implementation("com.google.guava:guava:31.1-android")
 }
