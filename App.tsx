@@ -15,7 +15,6 @@ import {withTranslation} from 'react-i18next';
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-clipboard/clipboard';
-import {getBundleId} from 'react-native-device-info';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import SideMenuBase from '@rexovolt/react-native-side-menu';
@@ -38,9 +37,12 @@ import {
   loginWithToken,
 } from './src/lib/auth';
 import {OFFICIAL_INSTANCE_SIGNUP_URL} from '@rvmob/lib/consts';
+import {
+  createChannel,
+  sendNotifeeNotification,
+  setUpNotifeeListener,
+} from '@rvmob/lib/notifications';
 import {openUrl, sleep} from '@rvmob/lib/utils';
-
-const isFoss = getBundleId().match('foss');
 
 async function openLastChannel() {
   try {
@@ -138,16 +140,9 @@ class MainView extends ReactComponent {
   }
   async componentDidMount() {
     console.log(`[APP] Mounted component (${new Date().getTime()})`);
-    const imports = isFoss
-      ? await import('./src/lib/notifications/foss')
-      : await import('./src/lib/notifications/regular');
 
-    let defaultNotif = '';
-
-    if (!isFoss) {
-      defaultNotif = await imports.createChannel();
-      console.log(`[NOTIFEE] Created channel: ${defaultNotif}`);
-    }
+    let defaultNotif = await createChannel();
+    console.log(`[NOTIFEE] Created channel: ${defaultNotif}`);
 
     checkLastVersion();
 
@@ -189,9 +184,7 @@ class MainView extends ReactComponent {
       });
       console.log(`[APP] Client is ready (${new Date().getTime()})`);
 
-      if (!isFoss) {
-        imports.setUpNotifeeListener(client, this.setState);
-      }
+      setUpNotifeeListener(client, this.setState);
 
       if (app.settings.get('app.reopenLastChannel')) {
         await openLastChannel();
@@ -246,9 +239,8 @@ class MainView extends ReactComponent {
           await sleep(5000);
           this.setState({notificationMessage: null});
         }
-        if (!isFoss) {
-          await imports.sendNotifeeNotification(msg, client, defaultNotif);
-        }
+
+        await sendNotifeeNotification(msg, client, defaultNotif);
       }
     });
 
