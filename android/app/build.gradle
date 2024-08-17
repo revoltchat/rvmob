@@ -20,7 +20,7 @@ react {
     //   The list of variants to that are debuggable. For those we're going to
     //   skip the bundling of the JS bundle and the assets. By default is just 'debug'.
     //   If you add flavors like lite, prod, etc. you'll have to list your debuggableVariants.
-    debuggableVariants = ["regularDebug", "fossDebug"]
+    // debuggableVariants = ["liteDebug", "prodDebug"]
     /* Bundling */
     //   A list containing the node command and its flags. Default is just 'node'.
     // nodeExecutableAndArgs = ["node"]
@@ -125,22 +125,6 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             shrinkResources enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        }
-    }
-
-    flavorDimensions "featureSet"
-    productFlavors {
-        // regular build with non-free dependencies
-        regular {
-            versionNameSuffix "-regular"
-            buildConfigField "boolean", "IS_FOSS", "false"
-        }
-        
-        // build without non-free dependencies (no notifications)
-        foss {
-            applicationIdSuffix ".foss"
-            versionNameSuffix "-foss"
-            buildConfigField "boolean", "IS_FOSS", "true"
         }
     }
 }

@@ -61,25 +61,20 @@ npx react-native-asset
 # for web:
 yarn web
 
-# for android:
-yarn android # regular version
-# OR
-yarn android-foss # FOSS flavour
-# then start Metro:
+# for android, run the following then press `a`:
 yarn start
 ```
 
 CLI commands:
 
-| Command             | Description                               |
-| ------------------- | ----------------------------------------- |
-| `yarn start`        | Starts Metro (the dev server).            |
-| `yarn test`         | Tests to see if everything is working.    |
-| `yarn web`          | Runs the web app.                         |
-| `yarn android`      | Runs the Android app.                     |
-| `yarn android-foss` | Runs the Android app's FOSS flavour.      |
-| `yarn ios`          | Runs the iOS app (broken/requires a Mac). |
-| `yarn lint`         | Checks the code syntax using ESLint.      |
+| Command        | Description                               |
+| -------------- | ----------------------------------------- |
+| `yarn start`   | Starts Metro (the dev server).            |
+| `yarn test`    | Tests to see if everything is working.    |
+| `yarn web`     | Runs the web app.                         |
+| `yarn android` | Runs the Android app.                     |
+| `yarn ios`     | Runs the iOS app (broken/requires a Mac). |
+| `yarn lint`    | Checks the code syntax using ESLint.      |
 
 For more information, see a list of `react-native`'s commands [here](https://github.com/react-native-community/cli/blob/master/docs/commands.md). You can access them by running `yarn react-native`.
 

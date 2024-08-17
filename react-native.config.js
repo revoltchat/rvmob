@@ -1,5 +1,3 @@
-const isFoss = process.env.FOSS;
-
 module.exports = {
   project: {
     ios: {},

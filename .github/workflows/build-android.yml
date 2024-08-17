@@ -26,60 +26,19 @@ jobs:
       - name: Bundle the JS
         run: yarn react-native bundle --platform android --entry-file ./index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
       - name: Build the app
-        run: yarn react-native build-android --tasks assembleRegularDebug
+        run: yarn react-native build-android --tasks assembleDebug
       - name: Rename debug APKs
         run: |
-          mv app-regular-arm64-v8a-debug.apk RVMob-Debug-${{ github.sha }}-arm64-v8a.apk 
-          mv app-regular-armeabi-v7a-debug.apk RVMob-Debug-${{ github.sha }}-armeabi-v7a.apk 
-          mv app-regular-x86_64-debug.apk RVMob-Debug-${{ github.sha }}-x86_64.apk
-          mv app-regular-x86-debug.apk RVMob-Debug-${{ github.sha }}-x86.apk
-        working-directory: /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/regular/debug/
+          mv app-arm64-v8a-debug.apk RVMob-Debug-${{ github.sha }}-arm64-v8a.apk 
+          mv app-armeabi-v7a-debug.apk RVMob-Debug-${{ github.sha }}-armeabi-v7a.apk 
+          mv app-x86_64-debug.apk RVMob-Debug-${{ github.sha }}-x86_64.apk
+          mv app-x86-debug.apk RVMob-Debug-${{ github.sha }}-x86.apk
+        working-directory: /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: regular-artifact
           path: |
-            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/regular/debug/RVMob-Debug-${{ github.sha }}-arm64-v8a.apk 
-            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/regular/debug/RVMob-Debug-${{ github.sha }}-armeabi-v7a.apk 
-            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/regular/debug/RVMob-Debug-${{ github.sha }}-x86_64.apk 
-            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/regular/debug/RVMob-Debug-${{ github.sha }}-x86.apk
-
-  build-android-debug-foss:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: Enable Corepack
-        run: corepack enable
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'yarn'
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'microsoft'
-      - name: Install dependencies and prepare assets
-        run: yarn install && npx react-native-asset
-      - name: Bundle the JS
-        run: yarn react-native bundle --platform android --entry-file ./index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
-      - name: Build the app
-        run: yarn react-native build-android --tasks assembleFossDebug
-      - name: Rename debug APKs
-        run: |
-          mv app-foss-arm64-v8a-debug.apk RVMob-Debug-${{ github.sha }}-FOSS-arm64-v8a.apk 
-          mv app-foss-armeabi-v7a-debug.apk RVMob-Debug-${{ github.sha }}-FOSS-armeabi-v7a.apk 
-          mv app-foss-x86_64-debug.apk RVMob-Debug-${{ github.sha }}-FOSS-x86_64.apk
-          mv app-foss-x86-debug.apk RVMob-Debug-${{ github.sha }}-FOSS-x86.apk
-        working-directory: /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/foss/debug/
-      - name: Upload debug APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: foss-artifact
-          path: |
-            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/foss/debug/RVMob-Debug-${{ github.sha }}-FOSS-arm64-v8a.apk 
-            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/foss/debug/RVMob-Debug-${{ github.sha }}-FOSS-armeabi-v7a.apk 
-            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/foss/debug/RVMob-Debug-${{ github.sha }}-FOSS-x86_64.apk 
-            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/foss/debug/RVMob-Debug-${{ github.sha }}-FOSS-x86.apk
+            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/RVMob-Debug-${{ github.sha }}-arm64-v8a.apk 
+            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/RVMob-Debug-${{ github.sha }}-armeabi-v7a.apk 
+            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/RVMob-Debug-${{ github.sha }}-x86_64.apk 
+            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/RVMob-Debug-${{ github.sha }}-x86.apk

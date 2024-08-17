@@ -5,10 +5,8 @@
   "private": true,
   "scripts": {
     "clean": "react-native clean",
-    "android": "react-native run-android --active-arch-only --appIdSuffix=debug --mode=regularDebug",
-    "android-foss": "FOSS=true react-native run-android --active-arch-only --appIdSuffix=foss.debug --mode=fossDebug",
-    "android-release": "react-native build-android --tasks assembleRegularRelease",
-    "android-release-foss": "FOSS=true react-native build-android --tasks assembleFossRelease",
+    "android": "react-native run-android --active-arch-only --appIdSuffix=debug --mode=debug",
+    "android-release": "react-native build-android --tasks assembleRelease",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
