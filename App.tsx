@@ -73,17 +73,17 @@ function checkLastVersion() {
   console.log(app.version, lastVersion);
   if (!lastVersion || lastVersion === '') {
     console.log(
-      `[APP] lastVersion is null (${lastVersion}), setting to app.version (${app.version})`
+      `[APP] lastVersion is null (${lastVersion}), setting to app.version (${app.version})`,
     );
     app.settings.set('app.lastVersion', app.version);
   } else {
     app.version === lastVersion
       ? console.log(
-        `[APP] lastVersion (${lastVersion}) is equal to app.version (${app.version})`
-      )
+          `[APP] lastVersion (${lastVersion}) is equal to app.version (${app.version})`,
+        )
       : console.log(
-        `[APP] lastVersion (${lastVersion}) is different from app.version (${app.version})`
-      );
+          `[APP] lastVersion (${lastVersion}) is different from app.version (${app.version})`,
+        );
   }
 }
 
