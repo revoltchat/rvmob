@@ -25,7 +25,9 @@
                 "body_server": "Sigurado ka bang gusto mong burahin ang <2>{{name}}</2>?",
                 "header_server": "Burahin ang server?",
                 "body_message": "Sigurado kang gusto mong burahin <2>ang mensahe na ito</2>?",
-                "warning": "Hindi ito maaring bawiin."
+                "warning": "Hindi ito maaring bawiin.",
+                "header_role": "Burahin ang role?",
+                "body_role": "Sigurado ka bang gusto mong burahin <2>ang role na ito</2>?"
             },
             "edit_text": {
                 "nickname_placeholder": "Palayaw (iwanang walang laman para i-reset)",
@@ -64,6 +66,13 @@
                     "system_messages": "Mga mensaheng sistema",
                     "errors": {
                         "empty_server_name": "Hindi maaring walang laman ang mga pangalan ng server!"
+                    },
+                    "system_messages_description": "Kapag sumali, umalis o naalis o na-ban ang mga miyembro, makakatanggap ka ng mga mensahe.",
+                    "system_message_channel_types": {
+                        "user_joined": "Sumali ang user",
+                        "user_left": "Umalis ang user",
+                        "user_kicked": "Inalis ang user",
+                        "user_banned": "Na-ban ang user"
                     }
                 },
                 "channels": {
@@ -87,7 +96,13 @@
                     "open_colour_modal": "Ilagay ang kulay mano-mano",
                     "errors": {
                         "empty_role_name": "Hindi maaring walang laman ang mga pangalan ng role!"
-                    }
+                    },
+                    "options_header": "Mga Opsyon",
+                    "options": {
+                        "hoist": "I-hoist ang role",
+                        "hoist_body": "Ipakita ang role na ito sa itaas ng iba sa listahan ng miyembro."
+                    },
+                    "delete": "Burahin ang Role"
                 },
                 "members": {
                     "loading": "Kinukuha ang mga miyembro…",
@@ -123,7 +138,8 @@
                     "enabled": "Paganahin ang mga push notification"
                 },
                 "language": "Piliin ang iyong wika",
-                "showChangelogs": "Ipakita ang mga pagbabago pagkatapos i-update ang RVMob"
+                "showChangelogs": "Ipakita ang mga pagbabago pagkatapos i-update ang RVMob",
+                "reopenLastChannel": "Buksan ang huling channel kung saan ka kapag bubuksan ang app"
             },
             "ui": {
                 "theme_remark": "Kailangan mong ibuksan o isara ang side menu para mapakita ang iyong mga pagbabago sa lahat ng lugar.",
@@ -216,6 +232,9 @@
             "voice": {
                 "header": "Hindi pa sinusuportahan ang mga voice channel sa RVMob!",
                 "body": "Sa ngayon, maari mong silang i-join sa web app o Revolt Desktop."
+            },
+            "generic_errors": {
+                "rateLimited_toast": "Dahan-dahan ka at subukang muli sa isang minuto."
             }
         },
         "discover": {
