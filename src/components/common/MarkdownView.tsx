@@ -116,6 +116,7 @@ export const MarkdownView = (props: any) => {
   }
 
   newProps.style.body = {
+    fontFamily: 'Open Sans',
     color: currentTheme.foregroundPrimary,
     ...newProps.style.body,
   };
@@ -127,28 +128,54 @@ export const MarkdownView = (props: any) => {
     ...newProps.style.paragraph,
   };
 
+  newProps.style.heading1 = {
+    fontWeight: 'bold',
+    ...newProps.style.heading1,
+  };
+
+  newProps.style.heading2 = {
+    fontWeight: 'bold',
+    ...newProps.style.heading2,
+  };
+
+  newProps.style.heading3 = {
+    fontWeight: 'bold',
+    ...newProps.style.heading3,
+  };
+
+  newProps.style.heading4 = {
+    fontWeight: 'bold',
+    ...newProps.style.heading4,
+  };
+
+  newProps.style.heading5 = {
+    fontWeight: 'bold',
+    ...newProps.style.heading5,
+  };
+
+  newProps.style.heading6 = {
+    fontWeight: 'bold',
+    ...newProps.style.heading6,
+  };
+
   newProps.style.link = {
     color: currentTheme.accentColor,
     ...newProps.style.link,
   };
 
   newProps.style.code_inline = {
+    fontFamily: 'JetBrains Mono',
     backgroundColor: currentTheme.backgroundSecondary,
     ...newProps.style.code_inline,
   };
 
   newProps.style.fence = {
+    fontFamily: 'JetBrains Mono',
     backgroundColor: currentTheme.backgroundSecondary,
     borderWidth: 0,
     borderRadius: 4,
     marginBottom: 2,
     ...newProps.style.fence,
-  };
-
-  newProps.style.code_block = {
-    borderColor: currentTheme.foregroundPrimary,
-    backgroundColor: currentTheme.backgroundSecondary,
-    ...newProps.style.code_block,
   };
 
   newProps.style.blockquote = {
@@ -158,6 +185,36 @@ export const MarkdownView = (props: any) => {
     borderColor: currentTheme.foregroundPrimary,
     backgroundColor: currentTheme.blockQuoteBackground,
     ...newProps.style.blockquote,
+  };
+
+  newProps.style.table = {
+    borderTopWidth: 2,
+    borderEndWidth: 2,
+    borderColor: currentTheme.foregroundSecondary,
+    borderRadius: 4,
+    ...newProps.style.table,
+  };
+
+  newProps.style.thead = {
+    fontWeight: 'bold',
+    ...newProps.style.thead,
+  };
+
+  newProps.style.th = {
+    borderStartWidth: 1,
+    borderColor: currentTheme.foregroundSecondary,
+    ...newProps.style.th,
+  };
+
+  newProps.style.td = {
+    borderStartWidth: 1,
+    borderColor: currentTheme.foregroundSecondary,
+    ...newProps.style.td,
+  };
+
+  newProps.style.tr = {
+    borderColor: currentTheme.foregroundSecondary,
+    ...newProps.style.tr,
   };
 
   try {
