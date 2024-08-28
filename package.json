@@ -21,13 +21,12 @@
     "@react-native-community/hooks": "^3.0.0",
     "@rexovolt/notifee": "^9.0.2",
     "@rexovolt/react-native-side-menu": "^2.0.0",
-    "@traptitech/markdown-it-spoiler": "^1.1.6",
+    "@traptitech/markdown-it-spoiler": "patch:@traptitech/markdown-it-spoiler@npm%3A1.1.6#~/.yarn/patches/@traptitech-markdown-it-spoiler-npm-1.1.6-ee0dc02626.patch",
     "@xmldom/xmldom": "^0.8.10",
     "babel-plugin-module-resolver": "^5.0.2",
     "date-fns": "^3.6.0",
     "i18next": "^23.14.0",
     "intl-pluralrules": "^2.0.1",
-    "markdown-it-regexp": "^0.4.0",
     "mobx": "^6.13.1",
     "mobx-react-lite": "^4.0.7",
     "react": "^18.3.1",
@@ -94,6 +93,7 @@
   },
   "packageManager": "yarn@4.4.0",
   "resolutions": {
-    "@react-native/gradle-plugin@npm:0.75.0-rc.6": "patch:@react-native/gradle-plugin@npm%3A0.75.0-rc.6#~/.yarn/patches/@react-native-gradle-plugin-npm-0.75.0-rc.6-3d2b8a2db4.patch"
+    "@react-native/gradle-plugin@npm:0.75.0-rc.6": "patch:@react-native/gradle-plugin@npm%3A0.75.0-rc.6#~/.yarn/patches/@react-native-gradle-plugin-npm-0.75.0-rc.6-3d2b8a2db4.patch",
+    "markdown-it": "patch:markdown-it@npm%3A14.1.0#~/.yarn/patches/markdown-it-npm-14.1.0-e337d75bfe.patch"
   }
 }

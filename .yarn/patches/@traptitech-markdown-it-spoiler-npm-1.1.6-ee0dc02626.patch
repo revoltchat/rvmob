@@ -1,0 +1,36 @@
+diff --git a/index.js b/index.js
+index 601cb79ecd40dee024ee99e02da65937f1539e00..e9fbbb5f79840d0ab56586918db79f203168df92 100644
+--- a/index.js
++++ b/index.js
+@@ -24,7 +24,7 @@
+  * OTHER DEALINGS IN THE SOFTWARE.
+  */
+ 'use strict'
+-const exMark = 0x21 /* ! */
++const exMark = 0x7C /* | */
+ 
+ const tokenize = frontPriorMode => (state, silent) => {
+   if (silent) return false
+@@ -87,19 +87,19 @@ const postProcess = (state, delimiters) => {
+     tokenO.tag = "span"
+     tokenO.attrs = [["class", "spoiler"]]
+     tokenO.nesting = 1
+-    tokenO.markup = "!!"
++    tokenO.markup = "||"
+     tokenO.content = ""
+ 
+     const tokenC = state.tokens[endDelim.token]
+     tokenC.type = "spoiler_close"
+     tokenC.tag = "span"
+     tokenC.nesting = -1
+-    tokenC.markup = "!!"
++    tokenC.markup = "||"
+     tokenC.content = ""
+ 
+     if (
+       state.tokens[endDelim.token - 1].type === "text" &&
+-      state.tokens[endDelim.token - 1].content === "!"
++      state.tokens[endDelim.token - 1].content === "|"
+     ) {
+       loneMarkers.push(endDelim.token - 1)
+     }

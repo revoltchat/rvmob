@@ -1,0 +1,36 @@
+diff --git a/dist/index.cjs.js b/dist/index.cjs.js
+index 5ba2eaa14a8565465f40b453437b0226683b56e6..0df5c2690333873324da1f092427f027507e601c 100644
+--- a/dist/index.cjs.js
++++ b/dist/index.cjs.js
+@@ -3680,6 +3680,7 @@ function isTerminatorChar(ch) {
+     case 0x5F /* _ */:
+     case 0x60 /* ` */:
+     case 0x7B /* { */:
++    case 0x7C /* | */:
+     case 0x7D /* } */:
+     case 0x7E /* ~ */:
+       return true;
+diff --git a/dist/markdown-it.js b/dist/markdown-it.js
+index 3a9d89cec6e1a56ee68a68a14103c516d5e8b864..33433e8aa18955ef0814b3f8a3db0fee94fef1a4 100644
+--- a/dist/markdown-it.js
++++ b/dist/markdown-it.js
+@@ -4292,6 +4292,7 @@
+      case 95 /* _ */ :
+      case 96 /* ` */ :
+      case 123 /* { */ :
++     case 124 /* | */ :
+      case 125 /* } */ :
+      case 126 /* ~ */ :
+       return true;
+diff --git a/lib/rules_inline/text.mjs b/lib/rules_inline/text.mjs
+index 9be42274c599ad2211de862104b979af134000d4..102f53550e11e82c6821dd3cf38b85ddddd2c708 100644
+--- a/lib/rules_inline/text.mjs
++++ b/lib/rules_inline/text.mjs
+@@ -31,6 +31,7 @@ function isTerminatorChar (ch) {
+     case 0x5F/* _ */:
+     case 0x60/* ` */:
+     case 0x7B/* { */:
++    case 0x7C/* | */:
+     case 0x7D/* } */:
+     case 0x7E/* ~ */:
+       return true
