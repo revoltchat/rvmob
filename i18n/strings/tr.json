@@ -27,7 +27,9 @@
                 "header_server": "Sunucuyu sil?",
                 "body_server": "<2>{{name}}</2> silmek istediğine emin misin?",
                 "body_message": "<2>Bu mesajı</2> silmek istediğine emin misin?",
-                "warning": "Bu geri alınamaz."
+                "warning": "Bu geri alınamaz.",
+                "header_role": "Rolü sil?",
+                "body_role": "<2>Bu rolü</2> silmek istediğine emin misin?"
             },
             "create_channel": {
                 "name_placeholder": "Kanal adı",
@@ -68,7 +70,14 @@
                     "system_messages": "Sistem mesajları",
                     "errors": {
                         "empty_server_name": "Sunucu adları boş olamaz!"
-                    }
+                    },
+                    "system_message_channel_types": {
+                        "user_joined": "Kullanıcı katıldı",
+                        "user_left": "Kullanıcı ayrıldı",
+                        "user_kicked": "Kullanıcı atıldı",
+                        "user_banned": "Kullanıcı yasaklandı"
+                    },
+                    "system_messages_description": "Üyeler katıldığında, ayrıldığında ya da atıldığında veya yasaklandığında, mesaj alabilirsin."
                 },
                 "channels": {
                     "title": "Kanallar",
@@ -91,7 +100,13 @@
                     "open_colour_modal": "Rengi manuel olarak girin",
                     "errors": {
                         "empty_role_name": "Rol adları boş olamaz!"
-                    }
+                    },
+                    "options": {
+                        "hoist": "Görünen rol",
+                        "hoist_body": "Üye listesinde bu rolü diğerlerinin üzerinde göster."
+                    },
+                    "delete": "Rolü Sil",
+                    "options_header": "Seçenekler"
                 },
                 "emoji": {
                     "title": "Emoji",
@@ -125,7 +140,8 @@
                     "notifyOnSelfPing": "Kendinize ping attığınızda bildirim alın"
                 },
                 "showChangelogs": "RVMob güncellendikten sonra değişim kayıtlarını göster",
-                "refetchOnReconnect": "Yeniden bağlandığında mesajları yeniden alın"
+                "refetchOnReconnect": "Yeniden bağlandığında mesajları yeniden alın",
+                "reopenLastChannel": "Uygulamayı açtığında, en son kaldığın kanalı tekrar aç"
             },
             "ui": {
                 "home": {
@@ -166,6 +182,9 @@
             "voice": {
                 "header": "Ses kanalları şimdilik RVMob'da desteklenmiyor!",
                 "body": "Bu arada web uygulaması veya Revolt Desktop aracılığıyla onlara katılabilirsin."
+            },
+            "generic_errors": {
+                "rateLimited_toast": "Sakin ol ve bir dakika içinde tekrar dene."
             }
         },
         "login": {
