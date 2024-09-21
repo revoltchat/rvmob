@@ -6,11 +6,11 @@ import {app} from '@rvmob/Generic';
 import {currentTheme, styles} from '@rvmob/Theme';
 
 export const ChannelHeader = ({children}: {children: any}) => {
-  const {width, height} = useWindowDimensions();
+  const {height, width} = useWindowDimensions();
 
   return (
     <View style={styles.channelHeader}>
-      {width < height ? (
+      {height > width ? (
         <TouchableOpacity
           style={styles.headerIcon}
           onPress={() => {
