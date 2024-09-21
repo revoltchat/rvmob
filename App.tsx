@@ -15,6 +15,7 @@ import {withTranslation} from 'react-i18next';
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-clipboard/clipboard';
+import {useBackHandler} from '@react-native-community/hooks';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import SideMenuBase from '@rexovolt/react-native-side-menu';
@@ -95,6 +96,15 @@ const SideMenuHandler = ({
   setChannel: any;
 }) => {
   const {height, width} = useWindowDimensions();
+
+  useBackHandler(() => {
+    if (height > width && !coreObject.state.leftMenuOpen) {
+      coreObject.setState({leftMenuOpen: true});
+      return true;
+    }
+
+    return false;
+  });
 
   return height < width ? (
     <View style={{flex: 1, flexDirection: 'row'}}>
