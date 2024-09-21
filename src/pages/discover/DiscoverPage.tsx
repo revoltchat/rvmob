@@ -6,7 +6,7 @@ import {DOMParser} from '@xmldom/xmldom';
 
 import {app, client} from '@rvmob/Generic';
 import {currentTheme, styles} from '@rvmob/Theme';
-import {Button, Text} from '@rvmob/components/common/atoms';
+import {Button, GeneralAvatar, Text} from '@rvmob/components/common/atoms';
 import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
 import {SpecialChannelIcon} from '@rvmob/components/navigation/SpecialChannelIcon';
 
@@ -20,19 +20,60 @@ const parser = new DOMParser({
 
 const renderServers = (servers: any) => {
   return servers.map((server: any) => {
-    console.log(server);
+    // console.log(server);
     return (
       <View
         key={`discover-entry-${server._id}`}
         style={{
           marginBottom: 8,
           borderRadius: 8,
-          padding: 8,
+          padding: 16,
           backgroundColor: currentTheme.backgroundSecondary,
         }}>
-        <Text type={'h1'}>{server.name}</Text>
-        <Text colour={currentTheme.foregroundSecondary}>{server._id}</Text>
+        <View
+          style={{
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}>
+          {server.icon ? (
+            <View style={{marginEnd: 8}}>
+              <GeneralAvatar
+                attachment={server.icon._id}
+                size={40}
+                directory={'/icons/'}
+              />
+            </View>
+          ) : null}
+          <View>
+            <Text type={'h1'}>{server.name}</Text>
+            <Text colour={currentTheme.foregroundSecondary}>{server._id}</Text>
+          </View>
+        </View>
+        <View
+          key={`discover-entry-${server._id}-tags`}
+          style={{
+            rowGap: 4,
+            flexWrap: 'wrap',
+            flexDirection: 'row',
+            marginVertical: 8,
+          }}>
+          {server.tags.map((tag: string) => {
+            return (
+              <View
+                style={{
+                  padding: 4,
+                  borderRadius: 8,
+                  backgroundColor: currentTheme.headerSecondary,
+                  marginEnd: 4,
+                }}
+                key={`discover-entry-${server._id}-tag-${tag}`}>
+                <Text>#{tag}</Text>
+              </View>
+            );
+          })}
+        </View>
         <Button
+          style={{margin: 0}}
           onPress={async () => {
             !client.servers.get(server._id) &&
               (await client.joinInvite(server._id));
@@ -61,10 +102,16 @@ export const DiscoverPage = () => {
 
       // code based on https://codeberg.org/Doru/Discoverolt/src/branch/pages/index.html
 
-      const rawJSON = parser
+      const element = parser
         .parseFromString(unparsedText, 'text/html')
-        // @ts-expect-error hmm
-        .getElementById('__NEXT_DATA__')?.childNodes[0].data;
+        .getElementById('__NEXT_DATA__');
+
+      if (!element || !element.childNodes[0]) {
+        return setData({});
+      }
+
+      // @ts-expect-error works fine so meh
+      const rawJSON = element.childNodes[0].data;
       const json = JSON.parse(rawJSON).props.pageProps;
       setData(json);
     }
@@ -126,7 +173,9 @@ export const DiscoverPage = () => {
           </ScrollView>
         </>
       ) : (
-        <Text>{t(`app.discover.fetching_${tab}`)}</Text>
+        <View style={styles.loadingScreen}>
+          <Text type={'h1'}>{t(`app.discover.fetching_${tab}`)}</Text>
+        </View>
       )}
     </View>
   );
