@@ -57,7 +57,7 @@ export const MemberListSheet = observer(() => {
           <></>
         ) : (
           <>
-            <Text type={'header'}>{context.name ?? context._id} members</Text>
+            <Text type={'h1'}>{context.name ?? context._id} members</Text>
             <UserList users={users} />
             <View style={{marginTop: 10}} />
           </>

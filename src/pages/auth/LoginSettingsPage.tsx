@@ -68,7 +68,7 @@ export const LoginSettingsPage = ({state}: {state: any}) => {
           </>
         ) : (
           <>
-            <Text type={'header'}>Instance</Text>
+            <Text type={'h1'}>Instance</Text>
             <TextInput
               placeholderTextColor={currentTheme.foregroundSecondary}
               style={styles.loginInput}

@@ -103,7 +103,7 @@ export const ServerInfoSheet = observer(() => {
                   </TouchableOpacity>
                 ) : null}
                 <Text
-                  type={'header'}
+                  type={'h1'}
                   style={{
                     fontSize: 24,
                   }}>

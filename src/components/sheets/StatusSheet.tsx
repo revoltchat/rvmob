@@ -32,7 +32,7 @@ export const StatusSheet = observer(() => {
   return (
     <BottomSheet sheetRef={sheetRef}>
       <View style={{paddingHorizontal: 16}}>
-        <Text key={'custom-status-selector-label'} type={'header'}>
+        <Text key={'custom-status-selector-label'} type={'h1'}>
           Status
         </Text>
         <View style={{marginBottom: 10}}>
@@ -60,7 +60,7 @@ export const StatusSheet = observer(() => {
             </ContextButton>
           ))}
         </View>
-        <Text key={'custom-status-input-label'} type={'header'}>
+        <Text key={'custom-status-input-label'} type={'h1'}>
           Status text
         </Text>
         <InputWithButton

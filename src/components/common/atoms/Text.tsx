@@ -17,10 +17,9 @@ export const Text = (props: FullTextProps) => {
 
   if (props.type) {
     switch (props.type) {
-      case 'header':
       case 'h1':
         // @ts-expect-error the type error seems to be related to the various ways you can specify style props but it works so shhhh
-        newProps.style = {...styles.headerv2, ...newProps.style};
+        newProps.style = {...styles.h1, ...newProps.style};
         break;
       case 'h2':
         // @ts-expect-error ditto

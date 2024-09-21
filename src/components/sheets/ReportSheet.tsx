@@ -70,7 +70,7 @@ function SuccessScreen({reportedObject}: {reportedObject: ReportedObject}) {
         Your report has been sent to the Revolt team for review - thank you for
         helping us keep Revolt safe.
       </Text>
-      <Text type={'header'}>Next steps</Text>
+      <Text type={'h1'}>Next steps</Text>
       {reportedObject.type === 'Message' || reportedObject.type === 'User' ? (
         <>
           <Text>
@@ -277,7 +277,7 @@ export const ReportSheet = observer(() => {
         console.log(isLikelyBridged, msg.author?._id, msg.masquerade?.name);
         output = (
           <>
-            <Text type={'header'}>Report message</Text>
+            <Text type={'h1'}>Report message</Text>
             <ScrollView style={{marginBottom: 4, maxHeight: '40%'}}>
               <View style={{flexDirection: 'row'}}>
                 <Avatar
@@ -364,7 +364,7 @@ export const ReportSheet = observer(() => {
       case 'User':
         output = (
           <>
-            <Text type={'header'}>Report user</Text>
+            <Text type={'h1'}>Report user</Text>
             {reason.reason && !status.status && (
               <>
                 <Text>You can add more context to your report here.</Text>
@@ -402,7 +402,7 @@ export const ReportSheet = observer(() => {
       case 'Server':
         output = (
           <>
-            <Text type={'header'}>Report server</Text>
+            <Text type={'h1'}>Report server</Text>
             {reason.reason && !status.status && (
               <>
                 <Text>You can add more context to your report here.</Text>

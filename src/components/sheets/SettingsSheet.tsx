@@ -105,7 +105,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
         showsHorizontalScrollIndicator={false}>
         {section == null ? (
           <>
-            <Text type={'header'}>{t('app.settings_menu.groups.user')}</Text>
+            <Text type={'h1'}>{t('app.settings_menu.groups.user')}</Text>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}
@@ -136,7 +136,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               </View>
               <Text>{t('app.settings_menu.profile.title')}</Text>
             </ContextButton>
-            <Text type={'header'}>{t('app.settings_menu.groups.app')}</Text>
+            <Text type={'h1'}>{t('app.settings_menu.groups.app')}</Text>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}
@@ -182,7 +182,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               </View>
               <Text>Language</Text>
             </ContextButton>
-            <Text type={'header'}>
+            <Text type={'h1'}>
               {t('app.settings_menu.groups.advanced')}
             </Text>
             <ContextButton
@@ -200,7 +200,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               </View>
               <Text>{t('app.settings_menu.other.debug_info')}</Text>
             </ContextButton>
-            <Text type={'header'}>{t('app.settings_menu.groups.other')}</Text>
+            <Text type={'h1'}>{t('app.settings_menu.groups.other')}</Text>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}

@@ -169,7 +169,7 @@ function refreshStyles() {
       fontWeight: 'bold',
       fontSize: 16,
     },
-    headerv2: {
+    h1: {
       fontWeight: 'bold',
       fontSize: 18,
       marginBottom: 4,

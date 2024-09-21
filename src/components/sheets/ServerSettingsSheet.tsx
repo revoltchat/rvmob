@@ -123,7 +123,7 @@ export const ServerSettingsSheet = observer(
                 <GapView size={5} />
                 <Text type={'h1'}>{server.name}</Text>
               </View>
-              <Text type={'header'}>{t('app.servers.settings.general')}</Text>
+              <Text type={'h1'}>{t('app.servers.settings.general')}</Text>
               <ContextButton
                 style={{flex: 1, marginBottom: 10}}
                 backgroundColor={currentTheme.backgroundSecondary}
@@ -154,7 +154,7 @@ export const ServerSettingsSheet = observer(
                 </View>
                 <Text>{t('app.servers.settings.channels.title')}</Text>
               </ContextButton>
-              <Text type={'header'}>
+              <Text type={'h1'}>
                 {t('app.servers.settings.customisation')}
               </Text>
               <ContextButton
@@ -187,7 +187,7 @@ export const ServerSettingsSheet = observer(
                 </View>
                 <Text>{t('app.servers.settings.emoji.title')}</Text>
               </ContextButton>
-              <Text type={'header'}>
+              <Text type={'h1'}>
                 {t('app.servers.settings.user_management')}
               </Text>
               <ContextButton

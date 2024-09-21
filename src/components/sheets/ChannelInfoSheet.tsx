@@ -52,7 +52,7 @@ export const ChannelInfoSheet = observer(() => {
         ) : (
           <>
             <View style={{justifyContent: 'center'}}>
-              <Text type={'header'}>{channel.name}</Text>
+              <Text type={'h1'}>{channel.name}</Text>
               <Text
                 colour={currentTheme.foregroundSecondary}
                 style={{
