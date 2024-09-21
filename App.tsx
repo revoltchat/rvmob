@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   TextInput,
   StatusBar,
-  Dimensions,
   StatusBarStyle,
+  useWindowDimensions,
 } from 'react-native';
 import {ErrorBoundary} from 'react-error-boundary';
 import {withTranslation} from 'react-i18next';
@@ -86,6 +86,52 @@ function checkLastVersion() {
         );
   }
 }
+
+const SideMenuHandler = ({
+  coreObject,
+  setChannel,
+}: {
+  coreObject: any;
+  setChannel: any;
+}) => {
+  const {height, width} = useWindowDimensions();
+
+  return height < width ? (
+    <View style={{flex: 1, flexDirection: 'row'}}>
+      <View
+        style={{
+          width: '20%',
+          flexDirection: 'column',
+        }}>
+        <SideMenu
+          onChannelClick={setChannel}
+          currentChannel={coreObject.state.currentChannel}
+          orderedServers={coreObject.state.orderedServers}
+        />
+      </View>
+      <ChannelView state={this} channel={coreObject.state.currentChannel} />
+    </View>
+  ) : (
+    <SideMenuBase
+      openMenuOffset={width - 50}
+      overlayColor={'#00000040'}
+      edgeHitWidth={width}
+      isOpen={coreObject.state.leftMenuOpen}
+      onChange={open => coreObject.setState({leftMenuOpen: open})}
+      menu={
+        <SideMenu
+          onChannelClick={setChannel}
+          currentChannel={coreObject.state.currentChannel}
+          orderedServers={coreObject.state.orderedServers}
+        />
+      }
+      // @ts-expect-error typing issue
+      style={styles.app}
+      bounceBackOnOverdraw={false}>
+      <ChannelView state={this} channel={coreObject.state.currentChannel} />
+    </SideMenuBase>
+  );
+};
 
 class MainView extends ReactComponent {
   constructor(props) {
@@ -306,41 +352,10 @@ class MainView extends ReactComponent {
       <View style={styles.app}>
         {this.state.status === 'loggedIn' ? (
           <>
-            {Dimensions.get('window').width >
-            Dimensions.get('window').height ? (
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <View
-                  style={{
-                    width: '20%',
-                    flexDirection: 'column',
-                  }}>
-                  <SideMenu
-                    onChannelClick={this.setChannel.bind(this)}
-                    currentChannel={this.state.currentChannel}
-                    orderedServers={this.state.orderedServers}
-                  />
-                </View>
-                <ChannelView state={this} channel={this.state.currentChannel} />
-              </View>
-            ) : (
-              <SideMenuBase
-                openMenuOffset={Dimensions.get('window').width - 50}
-                overlayColor={'#00000040'}
-                edgeHitWidth={Dimensions.get('window').width}
-                isOpen={this.state.leftMenuOpen}
-                onChange={open => this.setState({leftMenuOpen: open})}
-                menu={
-                  <SideMenu
-                    onChannelClick={this.setChannel.bind(this)}
-                    currentChannel={this.state.currentChannel}
-                    orderedServers={this.state.orderedServers}
-                  />
-                }
-                style={styles.app}
-                bounceBackOnOverdraw={false}>
-                <ChannelView state={this} channel={this.state.currentChannel} />
-              </SideMenuBase>
-            )}
+            <SideMenuHandler
+              coreObject={this}
+              setChannel={this.setChannel.bind(this)}
+            />
             <Modals />
             <NetworkIndicator client={client} />
             <View
