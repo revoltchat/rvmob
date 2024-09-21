@@ -182,9 +182,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               </View>
               <Text>Language</Text>
             </ContextButton>
-            <Text type={'h1'}>
-              {t('app.settings_menu.groups.advanced')}
-            </Text>
+            <Text type={'h1'}>{t('app.settings_menu.groups.advanced')}</Text>
             <ContextButton
               style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}

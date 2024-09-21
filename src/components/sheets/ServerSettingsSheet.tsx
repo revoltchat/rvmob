@@ -154,9 +154,7 @@ export const ServerSettingsSheet = observer(
                 </View>
                 <Text>{t('app.servers.settings.channels.title')}</Text>
               </ContextButton>
-              <Text type={'h1'}>
-                {t('app.servers.settings.customisation')}
-              </Text>
+              <Text type={'h1'}>{t('app.servers.settings.customisation')}</Text>
               <ContextButton
                 style={{flex: 1, marginBottom: 10}}
                 backgroundColor={currentTheme.backgroundSecondary}
