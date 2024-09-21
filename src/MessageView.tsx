@@ -235,8 +235,7 @@ export const NewMessageView = observer(
             Error rendering messages: {error.message ?? error}
           </Text>
         ) : loading ? (
-          <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <View style={styles.loadingScreen}>
             <Text style={styles.loadingHeader}>{t('app.loading.generic')}</Text>
             <Text style={styles.remark}>{selectedRemark || null}</Text>
           </View>

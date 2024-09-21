@@ -541,7 +541,7 @@ class MainView extends ReactComponent {
             </View>
           </>
         ) : this.state.status === 'tryingLogin' ? (
-          <View style={styles.loggingInScreen}>
+          <View style={styles.loadingScreen}>
             <Text style={{fontSize: 30, fontWeight: 'bold'}}>
               {this.state.loadingStage === 'connected'
                 ? t('app.loading.generic')
@@ -552,7 +552,7 @@ class MainView extends ReactComponent {
         ) : this.state.status === 'loginSettings' ? (
           <LoginSettingsPage state={this} />
         ) : (
-          <View style={styles.loggingInScreen}>
+          <View style={styles.loadingScreen}>
             <Text style={{fontSize: 30, fontWeight: 'bold'}}>Uh oh...</Text>
             <Text style={styles.remark}>
               Please let the developers know that you saw this (value:{' '}

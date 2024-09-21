@@ -157,7 +157,7 @@ function refreshStyles() {
       backgroundColor: currentTheme.backgroundSecondary,
       color: currentTheme.foregroundPrimary,
     },
-    loggingInScreen: {
+    loadingScreen: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
