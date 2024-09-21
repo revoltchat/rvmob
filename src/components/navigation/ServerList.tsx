@@ -52,7 +52,7 @@ export const ServerList = observer(
           return -1;
         }
 
-        // if both aren't in the list, convert the server IDs to timestamps then order the by which came first
+        // if both aren't in the list, convert the server IDs to timestamps then order them by when they were created
         return decodeTime(server2._id) > decodeTime(server1._id) ? -1 : 1;
       });
     }
