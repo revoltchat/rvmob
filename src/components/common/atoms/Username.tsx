@@ -75,7 +75,10 @@ export const Username = observer(
           colour={roleColor}
           style={{
             fontWeight: 'bold',
-            fontSize: size || app.settings.get('ui.messaging.fontSize'),
+            fontSize:
+              size ||
+              (app.settings.get('ui.messaging.fontSize') as number) ||
+              14,
           }}>
           {skipDisplayName ? '@' : null}
           {masquerade ?? name}

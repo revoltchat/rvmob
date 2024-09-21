@@ -78,7 +78,9 @@ export const ChannelButton = observer(
               )}
             </View>
             <Text style={{flex: 1, fontWeight: 'bold', color, fontSize: 15}}>
-              {channel instanceof Channel ? channel.name ?? channel : channel}
+              {channel instanceof Channel
+                ? channel.name ?? `${channel}`
+                : channel}
             </Text>
             {showUnread && channel instanceof Channel && pings > 0 ? (
               <View

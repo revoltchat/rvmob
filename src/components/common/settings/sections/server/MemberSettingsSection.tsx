@@ -41,7 +41,7 @@ export const MemberSettingsSection = observer(({server}: {server: Server}) => {
                 <View style={{flex: 1, flexDirection: 'column'}}>
                   <Text
                     key={`member-settings-entry-${m._id.user}-id`}
-                    colour={m.roleColour}
+                    colour={m.roleColour ?? undefined}
                     style={{fontWeight: 'bold'}}>
                     {m.nickname ?? m.user?.display_name ?? m.user?.username}
                   </Text>

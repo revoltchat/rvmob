@@ -27,7 +27,13 @@ export const ConfirmDeletionModal = observer(
         {target.type === 'Server' ? (
           <Trans t={t} i18nKey={'app.modals.confirm_deletion.body_server'}>
             Are you sure you want to delete{' '}
-            <Text style={{fontWeight: 'bold'}}>{{name}}</Text>?
+            <Text style={{fontWeight: 'bold'}}>
+              {
+                // @ts-expect-error this is an i18next placeholder
+                {name}
+              }
+            </Text>
+            ?
           </Trans>
         ) : (
           <Trans

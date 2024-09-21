@@ -31,7 +31,7 @@ function MessageViewErrorMessage({
   console.error(`[MESSAGEVIEW] Uncaught error: ${error}`);
   return (
     <>
-      <Text color={'#ff6666'}>Error rendering messages: {error}</Text>
+      <Text colour={'#ff6666'}>Error rendering messages: {error}</Text>
       <Button
         onPress={() => {
           resetErrorBoundary();
