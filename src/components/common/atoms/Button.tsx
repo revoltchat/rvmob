@@ -1,14 +1,9 @@
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, type TouchableOpacityProps} from 'react-native';
 
 import {styles} from '@rvmob/Theme';
 
-type ButtonProps = {
-  children?: any;
+type ButtonProps = TouchableOpacityProps & {
   backgroundColor?: string;
-  onPress?: any;
-  onLongPress?: any;
-  delayLongPress?: number;
-  style?: any;
 };
 
 export function Button({
