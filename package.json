@@ -91,7 +91,7 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "yarn@4.4.0",
+  "packageManager": "yarn@4.5.0",
   "resolutions": {
     "@react-native/gradle-plugin@npm:0.75.0-rc.6": "patch:@react-native/gradle-plugin@npm%3A0.75.0-rc.6#~/.yarn/patches/@react-native-gradle-plugin-npm-0.75.0-rc.6-3d2b8a2db4.patch",
     "markdown-it": "patch:markdown-it@npm%3A14.1.0#~/.yarn/patches/markdown-it-npm-14.1.0-e337d75bfe.patch"
