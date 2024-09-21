@@ -276,26 +276,28 @@ class MainView extends ReactComponent {
     await loginWithSavedToken(this);
   }
 
-  async setChannel(channel: string | Channel, server?: Server) {
+  async setChannel(channel: string | Channel | null, server?: Server) {
     this.setState({
       currentChannel: channel,
       leftMenuOpen: false,
       messages: [],
     });
-    await AsyncStorage.getItem('serverLastChannels', async (err, data) => {
-      if (!err) {
-        let parsedData = JSON.parse(data || '{}') || {};
-        parsedData[server?._id || 'DirectMessage'] =
-          typeof channel === 'string' ? channel : channel._id;
-        console.log(parsedData);
-        await AsyncStorage.setItem(
-          'serverLastChannels',
-          JSON.stringify(parsedData),
-        );
-      } else {
-        console.log(`[APP] Error getting last channel: ${err}`);
-      }
-    });
+    if (channel) {
+      await AsyncStorage.getItem('serverLastChannels', async (err, data) => {
+        if (!err) {
+          let parsedData = JSON.parse(data || '{}') || {};
+          parsedData[server?._id || 'DirectMessage'] =
+            typeof channel === 'string' ? channel : channel._id;
+          console.log(parsedData);
+          await AsyncStorage.setItem(
+            'serverLastChannels',
+            JSON.stringify(parsedData),
+          );
+        } else {
+          console.log(`[APP] Error getting last channel: ${err}`);
+        }
+      });
+    }
   }
 
   render() {
