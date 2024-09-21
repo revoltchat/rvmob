@@ -2,22 +2,25 @@ import {useState} from 'react';
 import {Dimensions, Pressable, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
 import {formatRelative} from 'date-fns';
 import {enGB, enUS} from 'date-fns/locale';
 import {Message as RevoltMessage} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
-import {InviteEmbed} from './InviteEmbed';
-import {MessageEmbed} from './MessageEmbed';
-import {MessageReactions} from './MessageReactions';
-import {PlatformModerationMessage} from './PlatformModerationMessage';
-import {ReplyMessage} from './ReplyMessage';
-import {app, client} from '../../../Generic';
-import {currentTheme, styles} from '../../../Theme';
+import {InviteEmbed} from '@rvmob/components/common/messaging/InviteEmbed';
+import {MessageEmbed} from '@rvmob/components/common/messaging/MessageEmbed';
+import {MessageReactions} from '@rvmob/components/common/messaging/MessageReactions';
+import {PlatformModerationMessage} from '@rvmob/components/common/messaging/PlatformModerationMessage';
+import {ReplyMessage} from '@rvmob/components/common/messaging/ReplyMessage';
+import {app, client} from '@rvmob/Generic';
+import {currentTheme, styles} from '@rvmob/Theme';
 import {Image} from '@rvmob/crossplat/Image';
-import {Avatar, Text, Username} from '../atoms';
-import {MarkdownView} from '../MarkdownView';
-import {RE_INVITE, USER_IDS} from '../../../lib/consts';
+import {Avatar, Text, Username} from '@rvmob/components/common/atoms';
+import {MarkdownView} from '@rvmob/components/common/MarkdownView';
+import {RE_INVITE, USER_IDS} from '@rvmob/lib/consts';
 import {getReadableFileSize, openUrl, parseRevoltNodes} from '@rvmob/lib/utils';
 
 type MessageProps = {
@@ -79,12 +82,125 @@ export const Message = observer((props: MessageProps) => {
           />
           <View style={{flexDirection: 'row'}}>
             {props.message.system.type === 'text' ? (
-              <Text>
-                <Text style={{fontWeight: 'bold'}}>System message: </Text>
-                {props.message.system.content}
-              </Text>
+              <>
+                <MaterialIcon
+                  name="info"
+                  color={currentTheme.foregroundPrimary}
+                  size={
+                    (app.settings.get('ui.messaging.fontSize') as number) ?? 14
+                  }
+                  style={{alignSelf: 'center', paddingEnd: 4}}
+                />
+                <Text>
+                  <Text style={{fontWeight: 'bold'}}>System message: </Text>
+                  {props.message.system.content}
+                </Text>
+              </>
             ) : (
               <>
+                {props.message.system.type === 'user_joined' ? (
+                  <MaterialCommunityIcon
+                    name="format-horizontal-align-right"
+                    color={currentTheme.foregroundPrimary}
+                    size={
+                      (app.settings.get('ui.messaging.fontSize') as number) ??
+                      14
+                    }
+                    style={{alignSelf: 'center', paddingEnd: 4}}
+                  />
+                ) : props.message.system.type === 'user_left' ? (
+                  <MaterialCommunityIcon
+                    name="format-horizontal-align-left"
+                    color={currentTheme.foregroundPrimary}
+                    size={
+                      (app.settings.get('ui.messaging.fontSize') as number) ??
+                      14
+                    }
+                    style={{alignSelf: 'center', paddingEnd: 4}}
+                  />
+                ) : props.message.system.type === 'user_added' ? (
+                  <MaterialIcon
+                    name="person-add"
+                    color={currentTheme.foregroundPrimary}
+                    size={
+                      (app.settings.get('ui.messaging.fontSize') as number) ??
+                      14
+                    }
+                    style={{alignSelf: 'center', paddingEnd: 4}}
+                  />
+                ) : props.message.system.type === 'user_remove' ? (
+                  <MaterialIcon
+                    name="person-remove"
+                    color={currentTheme.foregroundPrimary}
+                    size={
+                      (app.settings.get('ui.messaging.fontSize') as number) ??
+                      14
+                    }
+                    style={{alignSelf: 'center', paddingEnd: 4}}
+                  />
+                ) : props.message.system.type === 'user_kicked' ? (
+                  <MaterialIcon
+                    name="person-add"
+                    color={currentTheme.foregroundPrimary}
+                    size={
+                      (app.settings.get('ui.messaging.fontSize') as number) ??
+                      14
+                    }
+                    style={{alignSelf: 'center', paddingEnd: 4}}
+                  />
+                ) : props.message.system.type === 'user_banned' ? (
+                  <MaterialCommunityIcon
+                    name="hammer"
+                    color={currentTheme.foregroundPrimary}
+                    size={
+                      (app.settings.get('ui.messaging.fontSize') as number) ??
+                      14
+                    }
+                    style={{alignSelf: 'center', paddingEnd: 4}}
+                  />
+                ) : props.message.system.type === 'channel_renamed' ? (
+                  <MaterialIcon
+                    name="edit"
+                    color={currentTheme.foregroundPrimary}
+                    size={
+                      (app.settings.get('ui.messaging.fontSize') as number) ??
+                      14
+                    }
+                    style={{alignSelf: 'center', paddingEnd: 4}}
+                  />
+                ) : props.message.system.type ===
+                  'channel_description_changed' ? (
+                  <MaterialIcon
+                    name="edit-note"
+                    color={currentTheme.foregroundPrimary}
+                    size={
+                      (app.settings.get('ui.messaging.fontSize') as number) ??
+                      14
+                    }
+                    style={{alignSelf: 'center', paddingEnd: 4}}
+                  />
+                ) : props.message.system.type === 'channel_icon_changed' ? (
+                  <MaterialCommunityIcon
+                    name="image-edit"
+                    color={currentTheme.foregroundPrimary}
+                    size={
+                      (app.settings.get('ui.messaging.fontSize') as number) ??
+                      14
+                    }
+                    style={{alignSelf: 'center', paddingEnd: 4}}
+                  />
+                ) : props.message.system.type ===
+                  'channel_ownership_changed' ? (
+                  <MaterialCommunityIcon
+                    name="account-key"
+                    color={currentTheme.foregroundPrimary}
+                    size={
+                      (app.settings.get('ui.messaging.fontSize') as number) ??
+                      14
+                    }
+                    style={{alignSelf: 'center', paddingEnd: 4}}
+                  />
+                ) : null}
                 <Username
                   user={client.users.get(
                     props.message.system.type === 'channel_ownership_changed'
@@ -102,9 +218,9 @@ export const Message = observer((props: MessageProps) => {
                 ) : props.message.system.type === 'user_kicked' ? (
                   <Text> was kicked</Text>
                 ) : props.message.system.type === 'user_added' ? (
-                  <Text> was added to the group.</Text>
+                  <Text> was added to the group</Text>
                 ) : props.message.system.type === 'user_remove' ? (
-                  <Text> was removed from the group.</Text>
+                  <Text> was removed from the group</Text>
                 ) : props.message.system.type === 'channel_renamed' ? (
                   <Text>
                     {' '}
@@ -112,13 +228,12 @@ export const Message = observer((props: MessageProps) => {
                     <Text style={{fontWeight: 'bold'}}>
                       {props.message.system.name}
                     </Text>
-                    .
                   </Text>
                 ) : props.message.system.type ===
                   'channel_description_changed' ? (
-                  <Text> changed the channel description.</Text>
+                  <Text> changed the channel description</Text>
                 ) : props.message.system.type === 'channel_icon_changed' ? (
-                  <Text> changed the channel icon.</Text>
+                  <Text> changed the channel icon</Text>
                 ) : props.message.system.type ===
                   'channel_ownership_changed' ? (
                   <>
