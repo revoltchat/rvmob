@@ -1,1 +1,257 @@
-{}
+{
+    "app": {
+        "actions": {
+            "cancel": "Atcelt",
+            "confirm": "Apstiprināt",
+            "create_channel": "Izveidot kanālu",
+            "delete": "Dzēst",
+            "save": "Saglabāt",
+            "close": "Aizvērt",
+            "back": "Atpakaļ"
+        },
+        "discover": {
+            "count_servers_zero": "{{count}} serveru",
+            "count_servers_one": "{{count}} serveris",
+            "count_servers_other": "{{count}} serveri",
+            "fetching_servers": "Notiek serveru ielāde…",
+            "header_bots": "Atklājiet robotus",
+            "header_servers": "Atklājiet serverus",
+            "tabs": {
+                "bots": "Boti",
+                "servers": "Serveri"
+            },
+            "count_bots_zero": "{{count}} serveru",
+            "count_bots_one": "{{count}} serveris",
+            "count_bots_other": "{{count}} serveri",
+            "fetching_bots": "Notiek bot ielāde…"
+        },
+        "loading": {
+            "generic": "Notiek ielāde…",
+            "connecting": "Notiek ieteikšanās…"
+        },
+        "login": {
+            "forms": {
+                "email_placeholder": "E-pasts",
+                "password_placeholder": "Parole",
+                "session_token_placeholder": "Token",
+                "mfa_placeholder": "Vienreizējs kods"
+            },
+            "instance_notice": "Jūs veidojat savienojumu ar {{url}}.",
+            "options": {
+                "login_regular_body": "Ieteicams lielākajai daļai lietotāju.",
+                "login_session_token": "Jā, piesakieties ar sesijas token",
+                "signup": "Nē, pieraksties",
+                "signup_body": "Jūs tiksiet novirzīts uz tīmekļa lietotni. Kad esat pierakstījies, atgriezieties un piesakieties.",
+                "login_regular": "Jā, piereģistrejaties ar manu e-pastu un paroli",
+                "login_session_token_body": "Izmantojiet to, ja jums ir problēmas ar parasto pieteikšanās sistēmu. Dažas funkcijas var nebūt pieejamas."
+            },
+            "subheader": "Vai jums ir konts?",
+            "token_info_label": "Kā es varu iegūt savu token?"
+        },
+        "home": {
+            "join_lounge": "Pievienojieties Revolt Lounge",
+            "open_lounge": "Atveriet Revolt Lounge",
+            "join_rvmob": "Pievienojieties RVMob serverim",
+            "open_rvmob": "Atveriet RVMob serveri",
+            "open_settings": "Atveriet iestatījumus",
+            "description": "Velciet no ekrāna kreisās puses vai pieskarieties trīs līniju ikonai, lai skatītu savus serverus un ziņojumus!"
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_message": "Vai dzēst ziņojumu?",
+                "header_server": "Vai dzēst serveri?",
+                "body_role": "Vai tiešām vēlaties dzēst <2>šo lomu</2>?",
+                "body_server": "Vai tiešām vēlaties izdzēst <2>{{name}}</2>?",
+                "warning": "Šo darbību nevar atsaukt.",
+                "header_role": "Vai dzēst lomu?",
+                "body_message": "Vai tiešām vēlaties dzēst <2>šo ziņojumu</2>?"
+            },
+            "create_channel": {
+                "header": "Izveidojiet jaunu kanālu",
+                "name_placeholder": "Kanāla nosaukums",
+                "type_text": "Teksta kanāls",
+                "type_voice": "Balss kanāls",
+                "nsfw_header": "NSFW",
+                "nsfw_label": "Atzīmējiet kanālu kā NSFW",
+                "name_header": "Vārds",
+                "type_header": "Tips"
+            },
+            "edit_text": {
+                "display_name_placeholder": "Parādāmais vārds",
+                "nickname_header": "Iestatiet segvārdu",
+                "nickname_placeholder": "Segvārds (atstājiet tukšu, lai atiestatītu)",
+                "nickname_other_placeholder": "Segvārds (atstājiet tukšu, lai atiestatītu)",
+                "role_colour_header": "Iestatiet lomu krāsu",
+                "role_colour_placeholder": "Lomu krāsa",
+                "session_name_header": "Iestatiet sesijas nosaukumu",
+                "display_name_header": "Iestatiet parādāmo nosaukumu",
+                "nickname_other_header": "Iestatīt dalībnieka segvārdu",
+                "session_name_placeholder": "Sesijas nosaukums"
+            }
+        },
+        "servers": {
+            "settings": {
+                "general": "Ģenerālis",
+                "customisation": "Pielāgošana",
+                "user_management": "Lietotāju pārvaldība",
+                "delete_server": "Dzēst serveri",
+                "overview": {
+                    "title": "Pārskats",
+                    "description": "Servera apraksts",
+                    "markdown_tip_link": "Uzziniet vairāk.",
+                    "set_description": "Iestatīt aprakstu",
+                    "system_messages": "Sistēmas ziņojumi",
+                    "system_message_channel_types": {
+                        "user_joined": "Lietotājs pievienojās",
+                        "user_left": "Lietotājs aizgāja",
+                        "user_kicked": "Lietotājs izmests",
+                        "user_banned": "Lietotājs ir aizliegts"
+                    },
+                    "name": "Servera nosaukums",
+                    "markdown_tip": "Serveru apraksti atbalsta Markdown formatējumu.",
+                    "description_placeholder": "Pievienojiet aprakstu…",
+                    "system_messages_description": "Kad dalībnieki pievienojas, pamet vai tiek padzīti vai padzīti, jūs varat saņemt ziņojumus.",
+                    "errors": {
+                        "empty_server_name": "Serveru nosaukumu lauks nedrīkst būt tukšs!"
+                    }
+                },
+                "channels": {
+                    "title": "Kanāli",
+                    "permissions": "Kanāla atļaujas",
+                    "no_perms_set": "Nav iestatīts",
+                    "name": "Kanāla nosaukums",
+                    "name_placeholder": "Iestatīt kanāla nosaukumu…",
+                    "errors": {
+                        "empty_channel_name": "Kanālu nosaukumu lauks nedrīkst būt tukšs!"
+                    }
+                },
+                "roles": {
+                    "title": "Lomas",
+                    "name": "Vārds",
+                    "name_placeholder": "Iestatiet lomas nosaukumu…",
+                    "options_header": "Iespējas",
+                    "options": {
+                        "hoist": "Pacēlāja loma",
+                        "hoist_body": "Parādiet šo lomu augstāk par citām dalībnieku sarakstā."
+                    },
+                    "rank": "Rangs",
+                    "colour": "Krāsa",
+                    "delete": "Dzēst lomu",
+                    "set_colour": "Iestatiet lomu krāsu",
+                    "errors": {
+                        "empty_role_name": "Lomu nosaukumu lauks nedrīkst būt tukšs!"
+                    },
+                    "permissions": "Atļaujas",
+                    "open_colour_modal": "Ievadiet krāsu manuāli"
+                },
+                "emoji": {
+                    "added_by": "Pievienoja @{{name}}",
+                    "title": "Emoji",
+                    "empty": "Nav emoji",
+                    "deleted_toast": "{{name}} ir izdzēsts"
+                },
+                "members": {
+                    "title": "Biedri",
+                    "loading": "Notiek dalībnieku iegūšana…"
+                },
+                "invites": {
+                    "title": "Aicina",
+                    "loading": "Notiek ielūgumu iegūšana…",
+                    "empty": "Nav ielūgumu"
+                },
+                "bans": {
+                    "title": "Aizliegumi",
+                    "loading": "Notiek aizliegumu iegūšana…",
+                    "empty": "Nav aizliegumu",
+                    "no_reason": "Nav norādīts iemesls"
+                }
+            }
+        },
+        "settings": {
+            "app": {
+                "refetchOnReconnect": "Atkārtoti iegūstiet ziņojumus, kad tiek izveidots savienojums",
+                "notifications": {
+                    "enabled": "Iespējot push paziņojumus",
+                    "notifyOnSelfPing": "Saņemiet paziņojumu, kad jus ietagojat sevi"
+                },
+                "showChangelogs": "Rādīt izmaiņu žurnālus pēc RVMob atjaunināšanas",
+                "language": "Izvēlieties savu valodu",
+                "reopenLastChannel": "Atkārtoti atveriet pēdējo kanālu, kurā bijāt, atverot lietotni"
+            },
+            "ui": {
+                "home": {
+                    "holidays": "Rādīt brīvdienas sākumlapā"
+                },
+                "theme": "Tēma",
+                "messaging": {
+                    "doubleTapToReply_remark": "Tas tiek atbalstīts tikai jauno ziņojumu skatā.",
+                    "emojiPack": "Emoji pakotne",
+                    "experimentalScrolling_remark": "Jūs varat ritināt tikai atpakaļ.",
+                    "fontSize": "Fonta lielums",
+                    "messageSpacing": "Ziņojumu atstarpes",
+                    "sendAttachments": "Iespējot pielikuma sūtīšanu",
+                    "showMasqAvatar": "Rādīt maskēto iemiesojumu stūrī",
+                    "showNSFWContent": "Piekrišana 18+ saturam",
+                    "showReactions": "Rādīt reakcijas zem ziņojumiem",
+                    "showReactions_remark": "Varat pievienot esošās reakcijas, bet vēl nevar pievienot jaunas.",
+                    "statusInChatAvatars": "Rādīt lietotāja statusu tērzēšanas avatāros",
+                    "use24H": "Izmantojiet 24 stundu laikspiedolus",
+                    "doubleTapToReply": "Atbildiet uz ziņojumiem, veicot dubultskārienu",
+                    "experimentalScrolling": "Iespējot kanālu ritināšanu veco ziņojumu skatam",
+                    "fontSize_remark": "Tas attieksies uz ziņojumiem un noteiktām lietotnes daļām.",
+                    "showSelfInTypingIndicator": "Parādiet sevi rakstīšanas indikatorā",
+                    "useNewMessageView": "Izmantojiet jauno ziņojumu skatu"
+                },
+                "settings": {
+                    "showExperimental": "Rādīt eksperimentālās funkcijas"
+                },
+                "showDeveloperFeatures": "Rādīt izstrādātāja rīkus",
+                "theme_remark": "Jums būs jāatver vai jāaizver sānu izvēlne, lai izmaiņas būtu redzamas visur."
+            }
+        },
+        "settings_menu": {
+            "account": {
+                "title": "Konts"
+            },
+            "appearance": {
+                "title": "Izskats"
+            },
+            "functionality": {
+                "title": "Funkcijas"
+            },
+            "groups": {
+                "app": "App",
+                "user": "Lietotājs",
+                "advanced": "Papildu",
+                "other": "Cits"
+            },
+            "i18n": {
+                "title": "Valoda"
+            },
+            "info": {
+                "title": "Par RVMob"
+            },
+            "other": {
+                "logout": "Iziet",
+                "debug_info": "Kopējiet atkļūdošanas informāciju",
+                "view_issues": "Skatīt atvērtās problēmas"
+            },
+            "profile": {
+                "title": "Profils"
+            }
+        },
+        "misc": {
+            "network_indicator": {
+                "body": "Savienojums pazudis",
+                "hide": "(slēpt)"
+            },
+            "voice": {
+                "header": "Balss kanāli vēl netiek atbalstīti pakalpojumā RVMob!",
+                "body": "Tikmēr varat tiem pievienoties, izmantojot tīmekļa lietotni vai Revolt Desktop."
+            },
+            "generic_errors": {
+                "rateLimited_toast": "Samaziniet ātrumu un pēc minūtes mēģiniet vēlreiz."
+            }
+        }
+    }
+}
