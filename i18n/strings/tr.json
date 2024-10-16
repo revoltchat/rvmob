@@ -1,11 +1,11 @@
 {
     "app": {
         "actions": {
-            "cancel": "İptal",
+            "cancel": "İptal Etmek",
             "close": "Kapat",
-            "delete": "Sil",
+            "delete": "Silmek",
             "back": "Geri",
-            "confirm": "Onayla",
+            "confirm": "Onaylamak",
             "save": "Kaydet",
             "create_channel": "Kanal oluştur"
         },
@@ -17,18 +17,18 @@
             "join_lounge": "Revolt Lounge'a katılın",
             "open_lounge": "Revolt Lounge'ı açın",
             "join_rvmob": "RVMob sunucusuna katılın",
-            "open_settings": "Ayarları açın",
+            "open_settings": "Ayarları aç",
             "description": "Sunucularınızı ve mesajlarınızı görmek için ekranın solundan kaydırın veya üç çizgi simgesine tıklayın!",
             "open_rvmob": "RVMob sunucusunu açın"
         },
         "modals": {
             "confirm_deletion": {
-                "header_message": "Mesajı sil?",
-                "header_server": "Sunucuyu sil?",
-                "body_server": "<2>{{name}}</2> silmek istediğine emin misin?",
+                "header_message": "Mesaj silinsin mi?",
+                "header_server": "Sunucu silinsin mi?",
+                "body_server": "<2>{{name}}</2> silmek istediğinizden emin misiniz?",
                 "body_message": "<2>Bu mesajı</2> silmek istediğine emin misin?",
                 "warning": "Bu geri alınamaz.",
-                "header_role": "Rolü sil?",
+                "header_role": "Rol silinsin mi?",
                 "body_role": "<2>Bu rolü</2> silmek istediğine emin misin?"
             },
             "create_channel": {
@@ -39,7 +39,7 @@
                 "nsfw_header": "NSFW",
                 "nsfw_label": "Kanalı NSFW olarak işaretle",
                 "header": "Yeni bir kanal oluştur",
-                "name_header": "Ad"
+                "name_header": "İsim"
             },
             "edit_text": {
                 "display_name_placeholder": "Görünen ad",
@@ -61,7 +61,7 @@
                 "user_management": "Kullanıcı Yönetimi",
                 "overview": {
                     "markdown_tip_link": "Daha fazla bilgi edinin.",
-                    "description_placeholder": "Bir açıklama ekleyin…",
+                    "description_placeholder": "Bir açıklama ekle…",
                     "set_description": "Açıklamayı ayarlayın",
                     "title": "Genel bakış",
                     "name": "Sunucu adı",
@@ -192,13 +192,13 @@
                 "password_placeholder": "Şifre",
                 "mfa_placeholder": "Tek seferlik kod",
                 "email_placeholder": "E-Posta",
-                "session_token_placeholder": "Jeton"
+                "session_token_placeholder": "Token"
             },
             "options": {
                 "login_session_token_body": "Normal giriş sistemiyle ilgili sorun yaşıyorsanız bunu kullanın. Bazı işlevler kullanılamayabilir.",
-                "login_session_token": "Evet, oturum belirteciyle oturum açın",
+                "login_session_token": "Evet, oturum belirteci ile giriş yapın",
                 "signup": "Hayır, kaydol",
-                "signup_body": "Web uygulamasına yönlendirileceksiniz. Kaydolduktan sonra geri gelin ve giriş yapın.",
+                "signup_body": "Web uygulamasına yönlendirileceksiniz. Kaydolduktan sonra geri dönün ve giriş yapın.",
                 "login_regular": "Evet, e-posta adresim ve şifremle giriş yapın",
                 "login_regular_body": "Çoğu kullanıcı için önerilir."
             },
@@ -214,7 +214,7 @@
             "fetching_bots": "Botlar yükleniyor…",
             "fetching_servers": "Sunucular yükleniyor…",
             "header_bots": "Botları Keşfet",
-            "header_servers": "Sunucuları Keşfet",
+            "header_servers": "Sunucuları Keşfedin",
             "tabs": {
                 "bots": "Botlar",
                 "servers": "Sunucular"
