@@ -31,7 +31,14 @@
                     "errors": {
                         "empty_server_name": "Ein Servername wird benötigt!"
                     },
-                    "set_description": "Setze eine Beschreibung"
+                    "set_description": "Setze eine Beschreibung",
+                    "system_message_channel_types": {
+                        "user_left": "Benutzer verlassen",
+                        "user_kicked": "Benutzer getreten",
+                        "user_banned": "Benutzer gesperrt",
+                        "user_joined": "Benutzer beigetreten"
+                    },
+                    "system_messages_description": "Wenn Mitglieder beitreten, gehen oder gekickt oder gesperrt werden, können Sie Nachrichten empfangen."
                 },
                 "channels": {
                     "title": "Kanäle",
@@ -54,7 +61,13 @@
                     "name": "Name",
                     "name_placeholder": "Bestimme einen Namen für die Rolle…",
                     "set_colour": "Bestimme eine Farbe für die Rolle",
-                    "open_colour_modal": "Gebe die Farbe manuell ein"
+                    "open_colour_modal": "Gebe die Farbe manuell ein",
+                    "options": {
+                        "hoist": "Hebezeug Rolle",
+                        "hoist_body": "Zeigen Sie diese Rolle über anderen in der Mitgliederliste an."
+                    },
+                    "options_header": "Optionen",
+                    "delete": "Rolle löschen"
                 },
                 "emoji": {
                     "title": "Emoji",
@@ -120,7 +133,8 @@
                     "notifyOnSelfPing": "Erhalte eine Benachrichtigung, wenn du dich selbst anpingst"
                 },
                 "showChangelogs": "Änderungsprotokolle nach der Aktualisierung von RVMob anzeigen",
-                "language": "Wähle deine Sprache aus"
+                "language": "Wähle deine Sprache aus",
+                "reopenLastChannel": "Öffne den letzten Kanal, in dem du dich beim Öffnen der App befunden hast, erneut"
             }
         },
         "loading": {
@@ -133,7 +147,9 @@
                 "header_server": "Server löschen?",
                 "body_message": "Bist du dir sicher, dass du <2>this message</2> löschen willst?",
                 "warning": "Dies kann nicht rückgängig gemacht werden.",
-                "body_server": "Bist du dir sicher, dass du <2>{{name}}</2> löschen willst?"
+                "body_server": "Bist du dir sicher, dass du <2>{{name}}</2> löschen willst?",
+                "body_role": "Sind Sie sicher, dass Sie <2>diese Rolle</2> löschen möchten?",
+                "header_role": "Rolle löschen?"
             },
             "create_channel": {
                 "header": "Neuen Kanal erstellen",
@@ -166,6 +182,9 @@
             "network_indicator": {
                 "body": "Verbindung verloren",
                 "hide": "(verstecken)"
+            },
+            "generic_errors": {
+                "rateLimited_toast": "Verlangsamen Sie und versuchen Sie es in einer Minute erneut."
             }
         },
         "login": {
