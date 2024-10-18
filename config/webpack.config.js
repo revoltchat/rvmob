@@ -12,6 +12,7 @@ const compileNodeModules = [
   // react-native packages that need compiling
   '@gorhom/bottom-sheet',
   'react-native-gesture-handler',
+  'react-native-image-pan-zoom',
   'react-native-image-zoom-viewer',
   'react-native-markdown-display',
   'react-native-vector-icons',
