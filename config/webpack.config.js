@@ -12,7 +12,6 @@ const compileNodeModules = [
   // react-native packages that need compiling
   '@gorhom/bottom-sheet',
   'react-native-gesture-handler',
-  'react-native-image-pan-zoom',
   'react-native-image-zoom-viewer',
   'react-native-markdown-display',
   'react-native-vector-icons',
@@ -21,7 +20,6 @@ const compileNodeModules = [
 const modulesToIgnore = [
   // Packages we don't need on web
   'react-native-document-picker',
-  'react-native-fast-image',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
 const babelLoaderConfiguration = {
