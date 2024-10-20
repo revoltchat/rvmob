@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Modal, Platform, Pressable, View} from 'react-native';
+import {Modal, Pressable, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import ImageViewer from 'react-native-image-zoom-viewer';
@@ -111,20 +111,13 @@ export const Modals = observer(() => {
 
   return (
     <>
-      {
-        /* FIXME: disabled on web due to RNBS crash (used to work???) */ Platform.OS !==
-          'web' && (
-          <>
-            <MessageMenuSheet />
-            <StatusSheet />
-            <ProfileSheet />
-            <ReportSheet />
-            <ChannelInfoSheet />
-            <MemberListSheet />
-            <ServerInfoSheet />
-          </>
-        )
-      }
+      <MessageMenuSheet />
+      <StatusSheet />
+      <ProfileSheet />
+      <ReportSheet />
+      <ChannelInfoSheet />
+      <MemberListSheet />
+      <ServerInfoSheet />
       <Modal
         visible={!!imageViewerState.i}
         transparent={true}
