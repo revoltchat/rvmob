@@ -2981,7 +2981,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gorhom/bottom-sheet@npm:^5.0.4":
+"@gorhom/bottom-sheet@npm:5.0.4":
   version: 5.0.4
   resolution: "@gorhom/bottom-sheet@npm:5.0.4"
   dependencies:
@@ -3000,6 +3000,28 @@ __metadata:
     "@types/react-native":
       optional: true
   checksum: 10c0/c1f8934b19f0da6182b8da9884a27680293fa544fea186d8c8e978fd680c72c1766715aad9ac3a990d7f9226fbf41f71e9e587eaa47a61e850f24462eba0416d
+  languageName: node
+  linkType: hard
+
+"@gorhom/bottom-sheet@patch:@gorhom/bottom-sheet@npm%3A5.0.4#~/.yarn/patches/@gorhom-bottom-sheet-npm-5.0.4-428594d24a.patch":
+  version: 5.0.4
+  resolution: "@gorhom/bottom-sheet@patch:@gorhom/bottom-sheet@npm%3A5.0.4#~/.yarn/patches/@gorhom-bottom-sheet-npm-5.0.4-428594d24a.patch::version=5.0.4&hash=fb4492"
+  dependencies:
+    "@gorhom/portal": "npm:1.0.14"
+    invariant: "npm:^2.2.4"
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-native": "*"
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">=2.16.1"
+    react-native-reanimated: ">=3.10.1"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-native":
+      optional: true
+  checksum: 10c0/c7dcfa68e1ed16d92a3e764a5f1bb1afe8e5aa100c4c49d30c334886beb7c0c2c0b213d302c96c6946fddd8b7891ba94d2c392ae6e3aba2126f8e85106ed4462
   languageName: node
   linkType: hard
 
@@ -3895,6 +3917,13 @@ __metadata:
   version: 0.75.4
   resolution: "@react-native/assets-registry@npm:0.75.4"
   checksum: 10c0/5669e8700cb8b1bed8878dc6d6a869a54c7157f60dc88b85556db48cabc65414b87f01995244dc5532009cc860adfa1f86b57415c810fe10806f8fc085b3673f
+  languageName: node
+  linkType: hard
+
+"@react-native/assets-registry@patch:@react-native/assets-registry@npm%3A0.75.4#~/.yarn/patches/@react-native-assets-registry-npm-0.75.4-a0e8932d42.patch":
+  version: 0.75.4
+  resolution: "@react-native/assets-registry@patch:@react-native/assets-registry@npm%3A0.75.4#~/.yarn/patches/@react-native-assets-registry-npm-0.75.4-a0e8932d42.patch::version=0.75.4&hash=ce8d45"
+  checksum: 10c0/eeeddf21311a36b29457b7c24e80e55c6264afa4f016cfb115049e0eeaed93f16d6545a6080b3a24a637814efdce359f641b9f1e1ab3a8b1a4f2229408b8e0e4
   languageName: node
   linkType: hard
 
@@ -13457,7 +13486,7 @@ __metadata:
     "@babel/plugin-transform-export-namespace-from": "npm:^7.25.8"
     "@babel/preset-env": "npm:^7.25.8"
     "@babel/runtime": "npm:^7.25.7"
-    "@gorhom/bottom-sheet": "npm:^5.0.4"
+    "@gorhom/bottom-sheet": "patch:@gorhom/bottom-sheet@npm%3A5.0.4#~/.yarn/patches/@gorhom-bottom-sheet-npm-5.0.4-428594d24a.patch"
     "@react-native-async-storage/async-storage": "npm:^2.0.0"
     "@react-native-clipboard/clipboard": "npm:^1.14.2"
     "@react-native-community/cli": "npm:15.0.0-alpha.2"
