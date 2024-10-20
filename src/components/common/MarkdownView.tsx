@@ -1,4 +1,5 @@
 import {createContext, useState} from 'react';
+import {Platform} from 'react-native';
 
 import spoilerPlugin from '@traptitech/markdown-it-spoiler';
 import Markdown, {hasParents, MarkdownIt} from 'react-native-markdown-display';
@@ -96,6 +97,8 @@ const spoilerRule = {
   },
 };
 
+const webCodeStyles = {padding: 0};
+
 export const MarkdownView = (props: any) => {
   let newProps = {...props};
 
@@ -166,6 +169,11 @@ export const MarkdownView = (props: any) => {
   newProps.style.code_inline = {
     fontFamily: 'JetBrains Mono',
     backgroundColor: currentTheme.backgroundSecondary,
+    ...(Platform.OS === 'web' && {
+      padding: 0,
+      paddingInline: '2px',
+      border: 'none',
+    }),
     ...newProps.style.code_inline,
   };
 
