@@ -46,7 +46,9 @@
                 "body_message": "Stás assegurado que quieres apagar <2>esta mensaige</2>?",
                 "body_server": "Stás assegurado que quieres apagar <2>{{name}}</2>?",
                 "header_message": "Apagar mensaige?",
-                "warning": "Esto nun puode ser çfazido."
+                "warning": "Esto nun puode ser çfazido.",
+                "body_role": "Stás cierto que quieres apagar <2>este ancargo</2>?",
+                "header_role": "Apagar ancargo?"
             },
             "edit_text": {
                 "nickname_header": "Poner nomeada",
@@ -87,7 +89,14 @@
                     "system_messages": "Mensaiges de sistema",
                     "errors": {
                         "empty_server_name": "Nomes de serbidores nun puoden star bazius!"
-                    }
+                    },
+                    "system_message_channel_types": {
+                        "user_joined": "Outelizador ajuntou-se",
+                        "user_kicked": "Outelizador fui spulso",
+                        "user_banned": "Outelizador fui banido",
+                        "user_left": "Outelizador saliu-se"
+                    },
+                    "system_messages_description": "Quando nembros s’ajuntan, salen ó son banidos ó spulsados, puodes recebir mensaiges."
                 },
                 "delete_server": "Apagar Serbidor",
                 "channels": {
@@ -111,7 +120,13 @@
                     },
                     "name": "Nome",
                     "name_placeholder": "Define un nome de ancarrego…",
-                    "open_colour_modal": "Poner quelor manualmente"
+                    "open_colour_modal": "Poner quelor manualmente",
+                    "options": {
+                        "hoist": "Çtacar ancargo",
+                        "hoist_body": "Amostrar este ancargo anriba de ls outros na lhista de nembros."
+                    },
+                    "delete": "Apagar Ancargo",
+                    "options_header": "Oupçones"
                 },
                 "emoji": {
                     "title": "Emoji",
@@ -174,7 +189,8 @@
                     "notifyOnSelfPing": "Recibe ũa notificaçon quando se t'amentas a ti",
                     "enabled": "Atibar notificaçones push"
                 },
-                "showChangelogs": "Amostrar changelogs açpuis de atualizar l RVMob"
+                "showChangelogs": "Amostrar changelogs açpuis de atualizar l RVMob",
+                "reopenLastChannel": "Reabrir l redadeiro canal an que stábas quando abres esta app"
             }
         },
         "misc": {
@@ -185,6 +201,9 @@
             "network_indicator": {
                 "body": "Coneçon perdida",
                 "hide": "(scunder)"
+            },
+            "generic_errors": {
+                "rateLimited_toast": "Para i antenta outra beç nun minuto."
             }
         },
         "settings_menu": {
@@ -217,6 +236,20 @@
             "functionality": {
                 "title": "Caratelísticas"
             }
+        },
+        "discover": {
+            "count_servers_one": "{{count}} serbidor",
+            "count_servers_other": "{{count}} serbidores",
+            "fetching_bots": "Carregando bots…",
+            "fetching_servers": "Carregando serbidores…",
+            "header_bots": "Çcobrir Bots",
+            "header_servers": "Çcobrir Serbidores",
+            "tabs": {
+                "bots": "Bots",
+                "servers": "Serbidores"
+            },
+            "count_bots_one": "{{count}} serbidor",
+            "count_bots_other": "{{count}} serbidores"
         }
     }
 }
