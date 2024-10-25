@@ -1,6 +1,6 @@
 import 'react-native-get-random-values'; // react native moment
 
-import {Component as ReactComponent} from 'react';
+import {Component as ReactComponent, useState} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -90,16 +90,24 @@ function checkLastVersion() {
 
 const SideMenuHandler = ({
   coreObject,
+  currentChannel,
   setChannel,
 }: {
   coreObject: any;
+  currentChannel: any;
   setChannel: any;
 }) => {
+  const [sideMenuOpen, setSideMenuOpen] = useState(false);
+  setFunction('openLeftMenu', async (o: boolean) => {
+    console.log(`[APP] Setting left menu open state to ${o}`);
+    setSideMenuOpen(o);
+  });
+
   const {height, width} = useWindowDimensions();
 
   useBackHandler(() => {
-    if (height > width && !coreObject.state.leftMenuOpen) {
-      coreObject.setState({leftMenuOpen: true});
+    if (height > width && !sideMenuOpen) {
+      setSideMenuOpen(true);
       return true;
     }
 
@@ -115,30 +123,30 @@ const SideMenuHandler = ({
         }}>
         <SideMenu
           onChannelClick={setChannel}
-          currentChannel={coreObject.state.currentChannel}
+          currentChannel={currentChannel}
           orderedServers={coreObject.state.orderedServers}
         />
       </View>
-      <ChannelView state={this} channel={coreObject.state.currentChannel} />
+      <ChannelView state={this} channel={currentChannel} />
     </View>
   ) : (
     <SideMenuBase
       openMenuOffset={width - 50}
       overlayColor={'#00000040'}
       edgeHitWidth={width}
-      isOpen={coreObject.state.leftMenuOpen}
-      onChange={open => coreObject.setState({leftMenuOpen: open})}
+      isOpen={sideMenuOpen}
+      onChange={open => app.openLeftMenu(open)}
       menu={
         <SideMenu
           onChannelClick={setChannel}
-          currentChannel={coreObject.state.currentChannel}
+          currentChannel={currentChannel}
           orderedServers={coreObject.state.orderedServers}
         />
       }
       // @ts-expect-error typing issue
       style={styles.app}
       bounceBackOnOverdraw={false}>
-      <ChannelView state={this} channel={coreObject.state.currentChannel} />
+      <ChannelView state={this} channel={currentChannel} />
     </SideMenuBase>
   );
 };
@@ -156,7 +164,6 @@ class MainView extends ReactComponent {
       passwordInput: '',
       tfaInput: '',
       tfaTicket: '',
-      leftMenuOpen: false,
       notificationMessage: null,
       orderedServers: [],
       serverNotifications: null,
@@ -164,14 +171,11 @@ class MainView extends ReactComponent {
     };
     setFunction('openChannel', async c => {
       // if (!this.state.currentChannel || this.state.currentChannel?.server?._id != c.server?._id) c.server?.fetchMembers()
-      this.setState({currentChannel: c, leftMenuOpen: false});
+      this.setState({currentChannel: c});
+      app.openLeftMenu(false);
     });
     setFunction('joinInvite', async (i: string) => {
       await client.joinInvite(i);
-    });
-    setFunction('openLeftMenu', async (o: boolean) => {
-      console.log(`[APP] Setting left menu open state to ${o}`);
-      this.setState({leftMenuOpen: o});
     });
     setFunction('logOut', async () => {
       console.log(
@@ -334,9 +338,9 @@ class MainView extends ReactComponent {
   async setChannel(channel: string | Channel | null, server?: Server) {
     this.setState({
       currentChannel: channel,
-      leftMenuOpen: false,
       messages: [],
     });
+    app.openLeftMenu(false);
     if (channel) {
       await AsyncStorage.getItem('serverLastChannels', async (err, data) => {
         if (!err) {
@@ -363,6 +367,7 @@ class MainView extends ReactComponent {
           <>
             <SideMenuHandler
               coreObject={this}
+              currentChannel={this.state.currentChannel}
               setChannel={this.setChannel.bind(this)}
             />
             <Modals />
