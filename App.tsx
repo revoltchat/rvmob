@@ -127,7 +127,7 @@ const SideMenuHandler = ({
           orderedServers={coreObject.state.orderedServers}
         />
       </View>
-      <ChannelView state={this} channel={currentChannel} />
+      <ChannelView channel={currentChannel} />
     </View>
   ) : (
     <SideMenuBase
@@ -146,7 +146,7 @@ const SideMenuHandler = ({
       // @ts-expect-error typing issue
       style={styles.app}
       bounceBackOnOverdraw={false}>
-      <ChannelView state={this} channel={currentChannel} />
+      <ChannelView channel={currentChannel} />
     </SideMenuBase>
   );
 };

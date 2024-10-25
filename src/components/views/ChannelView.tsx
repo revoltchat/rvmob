@@ -1,8 +1,8 @@
+import {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {ErrorBoundary} from 'react-error-boundary';
 import {observer} from 'mobx-react-lite';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Channel} from 'revolt.js';
@@ -12,7 +12,7 @@ import {Messages} from '@rvmob/LegacyMessageView';
 import {NewMessageView} from '@rvmob/MessageView';
 import {MessageBox} from '@rvmob/MessageBox';
 import {currentTheme, styles} from '@rvmob/Theme';
-import {Button, InputWithButton, Text} from '@rvmob/components/common/atoms';
+import {Button, Text} from '@rvmob/components/common/atoms';
 import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
 import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
 import {FriendsPage} from '@rvmob/components/pages/FriendsPage';
@@ -45,7 +45,9 @@ function MessageViewErrorMessage({
 type CVChannel = Channel | 'friends' | 'discover' | 'debug' | null;
 
 export const ChannelView = observer(
-  ({state, channel}: {state: any; channel: CVChannel}) => {
+  ({channel}: {channel: CVChannel}) => {
+    const [renderCount, rerender] = useState(0);
+
     const handledMessages = [] as string[];
 
     console.log(
@@ -167,7 +169,7 @@ export const ChannelView = observer(
                   <Button
                     onPress={() => {
                       app.settings.set('ui.messaging.showNSFWContent', true);
-                      state.setState({});
+                      rerender(renderCount + 1);
                     }}>
                     <Text style={styles.buttonText}>
                       I am 18 or older and wish to enter
