@@ -52,6 +52,10 @@ function renderMessage(
       grouped={grouped}
       onPress={() => onPress(msg)}
       onUserPress={() => app.openProfile(msg.author, msg.channel?.server)}
+      onUsernamePress={() => {
+        const currentText = app.getMessageBoxInput();
+        app.setMessageBoxInput(`${currentText}${currentText.length > 0 ? ' ' : ''}<@${msg.author?._id}>`);
+      }}
       onLongPress={async () => app.openMessage(msg)}
       queued={false}
     />

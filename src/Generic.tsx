@@ -320,6 +320,9 @@ export const app = {
     );
   },
   setMessageBoxInput: (t: string | null) => {},
+  getMessageBoxInput: () => {
+    return '';
+  },
   setEditingMessage: (message: Message) => {},
   getEditingMessage: (): Message | null => {
     return null;

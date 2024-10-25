@@ -161,15 +161,10 @@ export const ChannelView = observer(
                         onImagePress={a => {
                           app.openImage(a);
                         }}
-                        onUsernamePress={m =>
-                          state.setState({
-                            currentText:
-                              state.state.currentText +
-                              '<@' +
-                              m.author?._id +
-                              '>',
-                          })
-                        }
+                        onUsernamePress={m => {
+                          const currentText = app.getMessageBoxInput();
+                          app.setMessageBoxInput(`${currentText}${currentText.length > 0 ? ' ' : ''}<@${m.author?._id}>`);
+                        }}
                       />
                       <MessageBox channel={channel} />
                     </>

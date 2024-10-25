@@ -50,10 +50,15 @@ export const MessageBox = observer((props: MessageBoxProps) => {
   );
 
   setFunction('setMessageBoxInput', setCurrentText.bind(this));
+  setFunction('getMessageBoxInput', () => {
+    return currentText;
+  });
+
   setFunction('setReplyingMessages', setReplyingMessages.bind(this));
   setFunction('getReplyingMessages', () => {
     return replyingMessages;
   });
+
   setFunction('setEditingMessage', setEditingMessage.bind(this));
   setFunction('getEditingMessage', () => {
     return editingMessage;
