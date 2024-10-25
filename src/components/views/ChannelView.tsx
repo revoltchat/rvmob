@@ -158,9 +158,6 @@ export const ChannelView = observer(
                         onUserPress={m => {
                           app.openProfile(m.author, channel.server);
                         }}
-                        onImagePress={a => {
-                          app.openImage(a);
-                        }}
                         onUsernamePress={m => {
                           const currentText = app.getMessageBoxInput();
                           app.setMessageBoxInput(`${currentText}${currentText.length > 0 ? ' ' : ''}<@${m.author?._id}>`);

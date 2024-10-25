@@ -151,7 +151,6 @@ class MainView extends ReactComponent {
       loginType: '',
       askForTFACode: false,
       currentChannel: null,
-      currentText: '',
       tokenInput: '',
       emailInput: '',
       passwordInput: '',
