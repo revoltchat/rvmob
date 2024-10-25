@@ -410,6 +410,7 @@ export const Message = observer((props: MessageProps) => {
               {props.message.author && !props.grouped ? (
                 <Pressable
                   key={`message-${props.message._id}-avatar`}
+                  style={{height: 0}}
                   onPress={() => props.onUserPress()}>
                   <Avatar
                     user={props.message.author}
