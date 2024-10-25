@@ -48,12 +48,6 @@ export const ChannelView = observer(
   ({state, channel}: {state: any; channel: CVChannel}) => {
     const handledMessages = [] as string[];
 
-    const pluginTools = {
-      state,
-      saveData: AsyncStorage.setItem,
-      getData: AsyncStorage.getItem,
-    };
-
     console.log(
       `[CHANNELVIEW] Rendering channel view for ${
         channel instanceof Channel ? channel._id : channel
@@ -76,19 +70,6 @@ export const ChannelView = observer(
                 <Text style={styles.channelName}>Debug Menu</Text>
               </ChannelHeader>
               <Text type={'h1'}>howdy</Text>
-              <Button onPress={() => console.log(state.state)}>
-                <Text>Log State</Text>
-              </Button>
-              <Text type={'h2'}>testing</Text>
-              <InputWithButton
-                // @ts-expect-error passed to input component
-                multiline
-                buttonContents={{type: 'string', content: 'sussy'}}
-                onPress={(v: string) => {
-                  // eslint-disable-next-line no-new-func
-                  new Function('tools', `${v}`)(pluginTools);
-                }}
-              />
             </View>
           ) : (
             <View style={styles.flex}>
