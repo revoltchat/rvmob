@@ -264,6 +264,12 @@ export const NewMessageView = observer(
               renderItem={renderItem}
               onScroll={onScroll}
             />
+            {messages.length === 0 && (
+              <View style={{padding: 16}}>
+                <Text type={'h1'}>{t('app.messaging.no_messages')}</Text>
+                <Text>{t('app.messaging.no_messages_body')}</Text>
+              </View>
+            )}
           </View>
         )}
         <MessageBox channel={channel} />

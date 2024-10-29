@@ -54,6 +54,14 @@
             "open_rvmob": "Open the RVMob server",
             "open_settings": "Open settings"
         },
+        "messaging": {
+            "message_box_channel": "Message #{{name}}",
+            "message_box_group": "Message {{name}}",
+            "message_box_dm": "Message @{{name}}",
+            "message_box_saved_notes": "Save to your notes",
+            "no_messages": "No messages",
+            "no_messages_body": "Get the conversation started."
+        },
         "modals": {
             "confirm_deletion": {
                 "header_role": "Delete role?",

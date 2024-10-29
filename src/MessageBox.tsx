@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {Pressable, View, TextInput, Platform} from 'react-native';
+import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
 import {type DocumentPickerResponse} from 'react-native-document-picker';
@@ -26,20 +27,21 @@ type MessageBoxProps = {
 function placeholderText(channel: Channel) {
   switch (channel.channel_type) {
     case 'SavedMessages':
-      return 'Save to your notes';
+      return 'message_box_saved_notes';
     case 'DirectMessage':
-      return `@${channel.recipient?.username}`;
+      return 'message_box_dm';
     case 'TextChannel':
+      return 'message_box_channel';
     case 'Group':
-      return `${channel.channel_type === 'TextChannel' ? '#' : ''}${
-        channel.name
-      }`;
+      return 'message_box_group';
     default:
       return `${channel.channel_type}`;
   }
 }
 
 export const MessageBox = observer((props: MessageBoxProps) => {
+  const {t} = useTranslation();
+
   const [currentText, setCurrentText] = useState('');
   const [editingMessage, setEditingMessage] = useState(null as Message | null);
   const [replyingMessages, setReplyingMessages] = useState(
@@ -238,10 +240,16 @@ export const MessageBox = observer((props: MessageBoxProps) => {
             fontSize: app.settings.get('ui.messaging.fontSize'),
             ...styles.messageBox,
           }}
-          placeholder={
-            (props.channel.channel_type !== 'SavedMessages' ? 'Message ' : '') +
-            placeholderText(props.channel)
-          }
+          placeholder={t(`app.messaging.${placeholderText(props.channel)}`, {
+            name:
+              props.channel.channel_type === 'TextChannel' ||
+              props.channel.channel_type === 'Group'
+                ? props.channel.name
+                : props.channel.channel_type === 'DirectMessage'
+                ? props.channel.recipient?.username ??
+                  'User'
+                : '',
+          })}
           onChangeText={text => {
             setCurrentText(text);
             if (currentText.length === 0) {
