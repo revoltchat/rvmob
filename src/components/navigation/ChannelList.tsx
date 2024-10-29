@@ -97,7 +97,12 @@ const ServerChannelList = observer((props: ServerChannelListProps) => {
       {props.currentServer.banner ? (
         <ImageBackground
           source={{uri: props.currentServer.generateBannerURL()}}
-          style={{width: '100%', height: 110, justifyContent: 'flex-end', marginBottom: 8}}>
+          style={{
+            width: '100%',
+            height: 110,
+            justifyContent: 'flex-end',
+            marginBottom: 8,
+          }}>
           <TouchableOpacity
             onPress={() => app.openServerContextMenu(props.currentServer)}
             style={{width: '100%', paddingHorizontal: 12}}>
