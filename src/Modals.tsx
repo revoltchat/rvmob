@@ -84,7 +84,7 @@ const WrappedImageViewer = gestureHandlerRootHOC(
             onRequestClose={() => setState()}
           />
         </View>
-         <View
+        <View
           style={{
             height: '7%',
             backgroundColor: currentTheme.background,
@@ -92,8 +92,12 @@ const WrappedImageViewer = gestureHandlerRootHOC(
             justifyContent: 'center',
             zIndex: 10,
           }}>
-            <Text style={{fontWeight: 'bold'}}>{state.i.filename ?? 'Unknown filename'}</Text>
-            <Text>{state.i.size ? getReadableFileSize(state.i.size) : 'Unknown size'}</Text>
+          <Text style={{fontWeight: 'bold'}}>
+            {state.i.filename ?? 'Unknown filename'}
+          </Text>
+          <Text>
+            {state.i.size ? getReadableFileSize(state.i.size) : 'Unknown size'}
+          </Text>
         </View>
       </View>
     );
