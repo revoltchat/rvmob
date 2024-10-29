@@ -11,7 +11,7 @@ index 661afd8c4b14e9546905d51a7a02c6d2837d65a4..893093e6e853f540f568870356feb7a3
  //# sourceMappingURL=index.js.map
 \ No newline at end of file
 diff --git a/lib/module/index.js b/lib/module/index.js
-index 962ba603ab0b9ff105b5387df62550433f49151d..b3f8a45648353a7a4450ec8557af036a5f284f39 100644
+index 962ba603ab0b9ff105b5387df62550433f49151d..9e4694977c7ba6133219f1274ee2c3273ff5fcfa 100644
 --- a/lib/module/index.js
 +++ b/lib/module/index.js
 @@ -20,7 +20,7 @@ export { useScrollableSetter } from './hooks/useScrollableSetter';
@@ -19,7 +19,7 @@ index 962ba603ab0b9ff105b5387df62550433f49151d..b3f8a45648353a7a4450ec8557af036a
  
  //#region components
 -export { BottomSheetScrollView, BottomSheetSectionList, BottomSheetFlatList, BottomSheetVirtualizedList, BottomSheetFlashList } from './components/bottomSheetScrollable';
-+export { BottomSheetScrollView, BottomSheetSectionList, BottomSheetFlatList, BottomSheetVirtualizedList, /* BottomSheetFlashList */ } from './components/bottomSheetScrollable';
++export { BottomSheetScrollView, BottomSheetSectionList, BottomSheetFlatList, BottomSheetVirtualizedList/*, BottomSheetFlashList*/ } from './components/bottomSheetScrollable';
  export { default as BottomSheetHandle } from './components/bottomSheetHandle';
  export { default as BottomSheetDraggableView } from './components/bottomSheetDraggableView';
  export { default as BottomSheetView } from './components/bottomSheetView';

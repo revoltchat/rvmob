@@ -138,6 +138,4 @@ dependencies {
     // } else {
     //    implementation jscFlavor
     // }
-
-    implementation("com.google.guava:guava:31.1-android")
 }

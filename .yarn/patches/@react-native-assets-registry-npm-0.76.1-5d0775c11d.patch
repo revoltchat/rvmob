@@ -52,12 +52,15 @@ index 7d9388ad12567ba99d1c02650cb25c16a052d3de..fd6a8efad5629904bc2aceb692d1a3f1
    return basePath.startsWith('/') ? basePath.slice(1) : basePath;
  }
 diff --git a/registry.js b/registry.js
-index 02470da3c4962ad1bbdc62d9ed295c19ca4905fe..3851d923e188363b9c7c4c440d6b4ae3ecd2a028 100644
+index 64b2735d3bb5284bd2450bf0d06115c3de5dcf80..3851d923e188363b9c7c4c440d6b4ae3ecd2a028 100644
 --- a/registry.js
 +++ b/registry.js
-@@ -10,28 +10,15 @@
+@@ -10,31 +10,15 @@
  
  'use strict';
+ 
+-export type AssetDestPathResolver = 'android' | 'generic';
++const assets = [];
  
 -export type PackagerAsset = {
 -  +__packager_asset: boolean,
@@ -69,10 +72,10 @@ index 02470da3c4962ad1bbdc62d9ed295c19ca4905fe..3851d923e188363b9c7c4c440d6b4ae3
 -  +hash: string,
 -  +name: string,
 -  +type: string,
+-  +resolver?: AssetDestPathResolver,
 -  ...
 -};
-+const assets = [];
- 
+-
 -const assets: Array<PackagerAsset> = [];
 -
 -function registerAsset(asset: PackagerAsset): number {
