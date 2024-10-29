@@ -13052,28 +13052,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-image-pan-zoom@npm:^2.1.12":
-  version: 2.1.12
-  resolution: "react-native-image-pan-zoom@npm:2.1.12"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10c0/c1047da6b7eb0d8a80a810eba8dc0c74e11d0b476808c30d1bbc6285c3f8dc8140aba60fb1af35e2c8c114aa32eed64fb545214a6cf1c00d6b80dd3178bdf3f6
-  languageName: node
-  linkType: hard
-
-"react-native-image-zoom-viewer@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "react-native-image-zoom-viewer@npm:3.0.1"
-  dependencies:
-    react-native-image-pan-zoom: "npm:^2.1.12"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10c0/d7ee6ea947a10061b3b285622416dececda72be6907cfe5ab4a2680dcecb51f32adf1d250d1ce12c87178cb8c8a92d85cba89acde437ae4730e36f8e6152455b
-  languageName: node
-  linkType: hard
-
 "react-native-markdown-display@npm:^7.0.2":
   version: 7.0.2
   resolution: "react-native-markdown-display@npm:7.0.2"
@@ -13086,6 +13064,18 @@ __metadata:
     react: ">=16.2.0"
     react-native: ">=0.50.4"
   checksum: 10c0/b90b75401340cd79c42e07e6e8961551e8b98acfbc53bc0b651174aea2a86b92430be767da7c813e54b08e7bbd8af6c09dbeb4f9369d925984979cc28b6ba8fb
+  languageName: node
+  linkType: hard
+
+"react-native-reanimated-image-viewer@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "react-native-reanimated-image-viewer@npm:1.0.2"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: "*"
+    react-native-reanimated: "*"
+  checksum: 10c0/e9cc47d675e39e320bc58a2646be25509d3f04b9df26815e84a3b229397cf3b226ead44633de45f99464db8cec3d57c874b1901af2b4fff7e43b1043aed5f03a
   languageName: node
   linkType: hard
 
@@ -13841,9 +13831,9 @@ __metadata:
     react-native-document-picker: "npm:^9.3.1"
     react-native-gesture-handler: "npm:^2.20.2"
     react-native-get-random-values: "npm:^1.11.0"
-    react-native-image-zoom-viewer: "npm:^3.0.1"
     react-native-markdown-display: "npm:^7.0.2"
     react-native-reanimated: "npm:3.16.1"
+    react-native-reanimated-image-viewer: "npm:^1.0.2"
     react-native-svg: "npm:^15.8.0"
     react-native-svg-transformer: "npm:^1.5.0"
     react-native-vector-icons: "npm:^10.2.0"

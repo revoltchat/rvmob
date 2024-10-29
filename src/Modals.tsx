@@ -2,25 +2,27 @@ import {useState} from 'react';
 import {Modal, Pressable, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import ImageViewer from 'react-native-image-zoom-viewer';
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
+import ImageViewer2 from 'react-native-reanimated-image-viewer';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {API, Channel, Server, User} from 'revolt.js';
 
-import {app, client, setFunction} from './Generic';
+import {app, client, setFunction} from '@rvmob/Generic';
 import {
   CreateChannelModalProps,
   DeletableObject,
   TextEditingModalProps,
-} from './lib/types';
-import {openUrl} from '@rvmob/lib/utils';
-import {currentTheme} from './Theme';
-import {GapView} from './components/layout';
+} from '@rvmob/lib/types';
+import {getReadableFileSize, openUrl} from '@rvmob/lib/utils';
+import {currentTheme} from '@rvmob/Theme';
+import {Text} from '@rvmob/components/common/atoms';
+import {GapView} from '@rvmob/components/layout';
 import {
   ConfirmDeletionModal,
   CreateChannelModal,
   TextEditModal,
-} from './components/modals';
+} from '@rvmob/components/modals';
 import {
   BotInviteSheet,
   ChannelInfoSheet,
@@ -33,7 +35,72 @@ import {
   ServerSettingsSheet,
   SettingsSheet,
   StatusSheet,
-} from './components/sheets/';
+} from '@rvmob/components/sheets/';
+
+const WrappedImageViewer = gestureHandlerRootHOC(
+  ({state, setState}: {state: any; setState: any}) => {
+    const imageUrl = state.i?.metadata
+      ? client.generateFileURL(state.i)!
+      : state.i;
+
+    return (
+      <View style={{flex: 1, justifyContent: 'space-between'}}>
+        <View
+          style={{
+            height: '7%',
+            backgroundColor: currentTheme.background,
+            paddingHorizontal: 12,
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            zIndex: 10,
+          }}>
+          <Pressable
+            onPress={() =>
+              openUrl(
+                state.i?.metadata ? client.generateFileURL(state.i) : state.i,
+              )
+            }>
+            <MaterialCommunityIcon
+              name="web"
+              size={32}
+              color={currentTheme.foregroundSecondary}
+            />
+          </Pressable>
+          <GapView size={5} type={'horizontal'} />
+          <Pressable onPress={() => setState()}>
+            <MaterialCommunityIcon
+              name="close-circle"
+              size={32}
+              color={currentTheme.foregroundSecondary}
+            />
+          </Pressable>
+        </View>
+        <View style={{height: '86%'}}>
+          <ImageViewer2
+            imageUrl={imageUrl}
+            width={state.i.metadata?.width ?? undefined}
+            height={state.i.metadata?.height ?? undefined}
+            onRequestClose={() => setState()}
+          />
+        </View>
+         <View
+          style={{
+            height: '7%',
+            backgroundColor: currentTheme.background,
+            paddingHorizontal: 12,
+            justifyContent: 'center',
+            zIndex: 10,
+          }}>
+            <Text style={{fontWeight: 'bold'}}>{state.i.filename ?? 'Unknown filename'}</Text>
+            <Text>{state.i.size ? getReadableFileSize(state.i.size) : 'Unknown size'}</Text>
+        </View>
+      </View>
+    );
+  },
+  // if the user can see the root view something might be broken, so make it red
+  {backgroundColor: 'red'},
+);
 
 export const Modals = observer(() => {
   const [imageViewerState, setImageViewerState] = useState({
@@ -121,56 +188,11 @@ export const Modals = observer(() => {
       <Modal
         visible={!!imageViewerState.i}
         transparent={true}
-        animationType="fade">
-        <ImageViewer
-          imageUrls={
-            imageViewerState.i?.metadata
-              ? [
-                  {
-                    url: client.generateFileURL(imageViewerState.i)!,
-                    width: imageViewerState.i.metadata.width,
-                    height: imageViewerState.i.metadata.height,
-                  },
-                ]
-              : [{url: imageViewerState.i}]
-          }
-          renderHeader={() => (
-            <View
-              style={{
-                height: 50,
-                width: '100%',
-                paddingHorizontal: 10,
-                justifyContent: 'space-between',
-                paddingVertical: 9,
-                flexDirection: 'row',
-              }}>
-              <Pressable
-                onPress={() =>
-                  openUrl(
-                    imageViewerState.i?.metadata
-                      ? client.generateFileURL(imageViewerState.i)
-                      : imageViewerState.i,
-                  )
-                }>
-                <MaterialCommunityIcon
-                  name="web"
-                  size={32}
-                  color={currentTheme.foregroundSecondary}
-                />
-              </Pressable>
-              <GapView size={5} type={'horizontal'} />
-              <Pressable onPress={() => setImageViewerState({i: null})}>
-                <MaterialCommunityIcon
-                  name="close-circle"
-                  size={32}
-                  color={currentTheme.foregroundSecondary}
-                />
-              </Pressable>
-            </View>
-          )}
-          renderIndicator={(_1, _2) => <></>}
-          enableSwipeDown={true}
-          onCancel={() => setImageViewerState({i: null})}
+        animationType="fade"
+        onRequestClose={() => setImageViewerState({i: null})}>
+        <WrappedImageViewer
+          state={imageViewerState}
+          setState={() => setImageViewerState({i: null})}
         />
       </Modal>
       <Modal
