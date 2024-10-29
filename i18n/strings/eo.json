@@ -90,7 +90,8 @@
                     },
                     "name_placeholder": "Difini rolnomo…",
                     "set_colour": "Difini rolkoloron",
-                    "open_colour_modal": "Eniru koloro mane"
+                    "open_colour_modal": "Eniru koloro mane",
+                    "options_header": "Agordoj"
                 },
                 "invites": {
                     "title": "Invitoj",
@@ -217,6 +218,16 @@
             "profile": {
                 "title": "Profilo"
             }
+        },
+        "discover": {
+            "tabs": {
+                "bots": "Robotoj",
+                "servers": "Serviloj"
+            },
+            "count_servers_one": "{{count}}servilo",
+            "count_servers_other": "{{count}}serviloj",
+            "count_bots_one": "{{count}}servilo",
+            "count_bots_other": "{{count}}serviloj"
         }
     }
 }
