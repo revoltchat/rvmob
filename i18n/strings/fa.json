@@ -1,0 +1,58 @@
+{
+    "app": {
+        "actions": {
+            "cancel": "لغو",
+            "confirm": "تایید",
+            "create_channel": "ایجاد کانال",
+            "delete": "حذف",
+            "save": "ذخیره",
+            "back": "برگشت",
+            "close": "بستن"
+        },
+        "discover": {
+            "count_bots_one": "{{count}} سرور",
+            "count_bots_other": "{{count}} سرور",
+            "fetching_bots": "در حال بارگیری ربات‌ها…",
+            "fetching_servers": "در حال بارگیری سرورها…",
+            "header_servers": "سرورها را کشف کنید",
+            "tabs": {
+                "bots": "ربات ها",
+                "servers": "سرورها"
+            },
+            "count_servers_one": "{{count}} سرور",
+            "count_servers_other": "{{count}} سرور",
+            "header_bots": "ربات ها را کشف کنید"
+        },
+        "loading": {
+            "generic": "در حال بارگیری…",
+            "connecting": "ورود به سیستم…"
+        },
+        "login": {
+            "forms": {
+                "email_placeholder": "ایمیل",
+                "password_placeholder": "رمز عبور",
+                "session_token_placeholder": "توکن",
+                "mfa_placeholder": "کد یکبار مصرف"
+            },
+            "options": {
+                "login_regular": "بله، با ایمیل و رمز عبور من وارد شوید",
+                "login_regular_body": "برای اکثر کاربران توصیه می شود.",
+                "signup": "نه، ثبت نام کن",
+                "login_session_token": "بله، با یک رمز جلسه وارد شوید",
+                "login_session_token_body": "اگر با سیستم ورود به سیستم معمولی مشکل دارید از این استفاده کنید. برخی از عملکردها ممکن است در دسترس نباشد.",
+                "signup_body": "به برنامه وب هدایت خواهید شد. پس از ثبت نام، برگردید و وارد شوید."
+            },
+            "subheader": "آیا حساب کاربری دارید؟",
+            "token_info_label": "چگونه توکن خود را دریافت کنم؟",
+            "instance_notice": "شما در حال اتصال به {{url}} هستید."
+        },
+        "home": {
+            "join_lounge": "به سالن ریولت بپیوندید",
+            "open_lounge": "Revolt Lounge را باز کنید",
+            "join_rvmob": "به سرور RVMob بپیوندید",
+            "open_rvmob": "سرور RVMob را باز کنید",
+            "open_settings": "تنظیمات را باز کنید",
+            "description": "از سمت چپ صفحه بکشید یا روی نماد سه خط ضربه بزنید تا سرورها و پیام‌های خود را ببینید!"
+        }
+    }
+}
