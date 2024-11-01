@@ -19,9 +19,9 @@
     "@notifee/react-native": "^9.1.2",
     "@react-native-async-storage/async-storage": "^2.0.0",
     "@react-native-clipboard/clipboard": "^1.14.3",
-    "@react-native-community/cli": "15.0.0",
-    "@react-native-community/cli-platform-android": "15.0.0",
-    "@react-native-community/cli-platform-ios": "15.0.0",
+    "@react-native-community/cli": "15.0.1",
+    "@react-native-community/cli-platform-android": "15.0.1",
+    "@react-native-community/cli-platform-ios": "15.0.1",
     "@react-native-community/hooks": "^3.0.0",
     "@rexovolt/react-native-side-menu": "^2.0.0",
     "@traptitech/markdown-it-spoiler": "patch:@traptitech/markdown-it-spoiler@npm%3A1.1.6#~/.yarn/patches/@traptitech-markdown-it-spoiler-npm-1.1.6-ee0dc02626.patch",
@@ -74,7 +74,7 @@
     "@types/react-native-vector-icons": "^6.4.18",
     "@types/react-native-web": "^0.19.0",
     "@types/react-test-renderer": "^18.3.0",
-    "@types/readable-stream": "^4.0.16",
+    "@types/readable-stream": "^4.0.18",
     "babel-jest": "^29.7.0",
     "babel-loader": "^9.2.1",
     "babel-plugin-react-native-web": "^0.19.13",
@@ -87,14 +87,14 @@
     "react-test-renderer": "^18.3.1",
     "typescript": "^5.6.3",
     "url-loader": "^4.1.1",
-    "webpack": "^5.95.0",
+    "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0"
   },
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "yarn@4.5.0",
+  "packageManager": "yarn@4.5.1",
   "resolutions": {
     "@react-native/assets-registry@npm:0.76.1": "patch:@react-native/assets-registry@npm%3A0.76.1#~/.yarn/patches/@react-native-assets-registry-npm-0.76.1-5d0775c11d.patch",
     "markdown-it": "patch:markdown-it@npm%3A14.1.0#~/.yarn/patches/markdown-it-npm-14.1.0-e337d75bfe.patch"
