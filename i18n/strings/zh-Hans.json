@@ -1,0 +1,28 @@
+{
+    "app": {
+        "actions": {
+            "back": "返回",
+            "cancel": "取消",
+            "close": "关闭",
+            "confirm": "确认",
+            "create_channel": "创建频道",
+            "delete": "删除",
+            "save": "保存"
+        },
+        "discover": {
+            "count_bots_other": "{{count}} 个服务器",
+            "count_servers_other": "{{count}} 个服务器",
+            "fetching_bots": "正在加载机器人…",
+            "fetching_servers": "正在加载服务器…",
+            "header_bots": "发现机器人",
+            "tabs": {
+                "bots": "机器人",
+                "servers": "服务器"
+            },
+            "header_servers": "发现服务器"
+        },
+        "loading": {
+            "generic": "正在加载…"
+        }
+    }
+}
