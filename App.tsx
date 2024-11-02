@@ -16,9 +16,9 @@ import {withTranslation} from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {useBackHandler} from '@react-native-community/hooks';
+import {Drawer} from 'react-native-drawer-layout';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import SideMenuBase from '@rexovolt/react-native-side-menu';
 
 import {Channel, Server} from 'revolt.js';
 
@@ -130,24 +130,24 @@ const SideMenuHandler = ({
       <ChannelView channel={currentChannel} />
     </View>
   ) : (
-    <SideMenuBase
-      openMenuOffset={width - 50}
-      overlayColor={'#00000040'}
-      edgeHitWidth={width}
-      isOpen={sideMenuOpen}
-      onChange={open => app.openLeftMenu(open)}
-      menu={
+    <Drawer
+      swipeEdgeWidth={width * 2}
+      swipeMinVelocity={250}
+      drawerType={'slide'}
+      open={sideMenuOpen}
+      onOpen={() => setSideMenuOpen(true)}
+      onClose={() => setSideMenuOpen(false)}
+      renderDrawerContent={() =>
         <SideMenu
           onChannelClick={setChannel}
           currentChannel={currentChannel}
           orderedServers={coreObject.state.orderedServers}
         />
       }
-      // @ts-expect-error typing issue
       style={styles.app}
-      bounceBackOnOverdraw={false}>
+      drawerStyle={{backgroundColor: currentTheme.backgroundPrimary, width: width - 50}}>
       <ChannelView channel={currentChannel} />
-    </SideMenuBase>
+    </Drawer>
   );
 };
 
