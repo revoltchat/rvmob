@@ -140,7 +140,7 @@ export const Message = observer((props: MessageProps) => {
                   />
                 ) : props.message.system.type === 'user_kicked' ? (
                   <MaterialIcon
-                    name="person-add"
+                    name="person-remove"
                     color={currentTheme.foregroundPrimary}
                     size={
                       (app.settings.get('ui.messaging.fontSize') as number) ??
