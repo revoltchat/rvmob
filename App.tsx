@@ -3,8 +3,6 @@ import 'react-native-get-random-values'; // react native moment
 import {Component as ReactComponent, useState} from 'react';
 import {
   View,
-  TouchableOpacity,
-  TextInput,
   StatusBar,
   StatusBarStyle,
   useWindowDimensions,
@@ -18,7 +16,6 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import {useBackHandler} from '@react-native-community/hooks';
 import {Drawer} from 'react-native-drawer-layout';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Channel, Server} from 'revolt.js';
 
@@ -28,22 +25,18 @@ import {setFunction} from './src/Generic';
 import {SideMenu} from './src/SideMenu';
 import {Modals} from './src/Modals';
 import {NetworkIndicator} from './src/components/NetworkIndicator';
-import {BackButton, Button, Link, Text} from './src/components/common/atoms';
-import {LoginSettingsPage} from './src/pages/auth/LoginSettingsPage';
+import {Button, Text} from './src/components/common/atoms';
+import {LoginPage} from '@rvmob/pages/auth/LoginPage';
+import {LoginSettingsPage} from '@rvmob/pages/auth/LoginSettingsPage';
 import {ChannelView} from './src/components/views/ChannelView';
 import {Notification} from './src/components/Notification';
-import {
-  loginRegular,
-  loginWithSavedToken,
-  loginWithToken,
-} from './src/lib/auth';
-import {OFFICIAL_INSTANCE_SIGNUP_URL} from '@rvmob/lib/consts';
+import {loginWithSavedToken} from './src/lib/auth';
 import {
   createChannel,
   sendNotifeeNotification,
   setUpNotifeeListener,
 } from '@rvmob/lib/notifications';
-import {openUrl, sleep} from '@rvmob/lib/utils';
+import {sleep} from '@rvmob/lib/utils';
 
 async function openLastChannel() {
   try {
@@ -137,15 +130,18 @@ const SideMenuHandler = ({
       open={sideMenuOpen}
       onOpen={() => setSideMenuOpen(true)}
       onClose={() => setSideMenuOpen(false)}
-      renderDrawerContent={() =>
+      renderDrawerContent={() => (
         <SideMenu
           onChannelClick={setChannel}
           currentChannel={currentChannel}
           orderedServers={coreObject.state.orderedServers}
         />
-      }
+      )}
       style={styles.app}
-      drawerStyle={{backgroundColor: currentTheme.backgroundPrimary, width: width - 50}}>
+      drawerStyle={{
+        backgroundColor: currentTheme.backgroundPrimary,
+        width: width - 50,
+      }}>
       <ChannelView channel={currentChannel} />
     </Drawer>
   );
@@ -156,7 +152,6 @@ class MainView extends ReactComponent {
     super(props);
     this.state = {
       status: 'tryingLogin',
-      loginType: '',
       askForTFACode: false,
       currentChannel: null,
       tokenInput: '',
@@ -391,186 +386,7 @@ class MainView extends ReactComponent {
             </View>
           </>
         ) : this.state.status === 'awaitingLogin' ? (
-          <>
-            <View
-              style={{
-                marginTop: 12,
-                marginStart: 8,
-                marginEnd: 4,
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                flexDirection: 'row',
-              }}>
-              {this.state.loginType !== '' ? (
-                <BackButton
-                  callback={() => {
-                    this.setState({loginType: ''});
-                  }}
-                />
-              ) : (
-                <View />
-              )}
-              <TouchableOpacity
-                onPress={() => this.setState({status: 'loginSettings'})}>
-                <MaterialIcon
-                  name="more-vert"
-                  size={30}
-                  color={currentTheme.foregroundPrimary}
-                />
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                flex: 1,
-              }}>
-              <Text
-                style={{
-                  fontFamily: 'Inter',
-                  fontWeight: 'bold',
-                  fontSize: 48,
-                }}>
-                RVMob
-              </Text>
-              {this.state.loginType === 'email' ? (
-                <>
-                  <TextInput
-                    placeholderTextColor={currentTheme.foregroundSecondary}
-                    style={styles.loginInput}
-                    placeholder={t('app.login.forms.email_placeholder')}
-                    keyboardType={'email-address'}
-                    autoComplete={'email'}
-                    onChangeText={(text: string) => {
-                      this.setState({emailInput: text});
-                    }}
-                    value={this.state.emailInput}
-                  />
-                  <TextInput
-                    placeholderTextColor={currentTheme.foregroundSecondary}
-                    style={styles.loginInput}
-                    secureTextEntry={true}
-                    autoComplete={'password'}
-                    placeholder={t('app.login.forms.password_placeholder')}
-                    onChangeText={text => {
-                      this.setState({passwordInput: text});
-                    }}
-                    value={this.state.passwordInput}
-                  />
-                  {this.state.askForTFACode === true ? (
-                    <>
-                      <TextInput
-                        placeholderTextColor={currentTheme.foregroundSecondary}
-                        style={styles.loginInput}
-                        placeholder={t('app.login.forms.mfa_placeholder')}
-                        onChangeText={text => {
-                          this.setState({tfaInput: text});
-                        }}
-                        value={this.state.tfaInput}
-                      />
-                    </>
-                  ) : null}
-                  <Button onPress={async () => await loginRegular(this)}>
-                    <Text font={'Inter'}>Log in</Text>
-                  </Button>
-                  {this.state.logInError ? (
-                    <Text>
-                      {this.state.logInError.message ||
-                        this.state.logInError.toString()}
-                    </Text>
-                  ) : null}
-                </>
-              ) : this.state.loginType === 'token' ? (
-                <>
-                  <TextInput
-                    placeholderTextColor={currentTheme.foregroundSecondary}
-                    style={styles.loginInput}
-                    placeholder={t('app.login.forms.session_token_placeholder')}
-                    onChangeText={text => {
-                      this.setState({tokenInput: text});
-                    }}
-                    value={this.state.tokenInput}
-                  />
-                  <Link
-                    link={
-                      'https://infi.sh/posts/revolt-tokens?utm_source=rvmob'
-                    }
-                    label={t('app.login.token_info_label')}
-                    style={{fontFamily: 'Inter', fontWeight: 'bold'}}
-                  />
-                  <Button onPress={async () => await loginWithToken(this)}>
-                    <Text font={'Inter'}>Log in</Text>
-                  </Button>
-                  {this.state.logInError ? (
-                    <Text>
-                      {this.state.logInError.message ?? this.state.logInError}
-                    </Text>
-                  ) : null}
-                </>
-              ) : (
-                <>
-                  <Text
-                    font={'Inter'}
-                    style={{
-                      marginVertical: 8,
-                      fontSize: 18,
-                      fontWeight: 'bold',
-                    }}>
-                    {t('app.login.subheader')}
-                  </Text>
-                  <Button
-                    onPress={() => {
-                      this.setState({loginType: 'email'});
-                    }}
-                    style={{alignItems: 'center', width: '80%'}}>
-                    <Text
-                      font={'Inter'}
-                      style={{fontSize: 16, fontWeight: 'bold'}}>
-                      {t('app.login.options.login_regular')}
-                    </Text>
-                  </Button>
-                  <Button
-                    onPress={() => {
-                      this.setState({loginType: 'token'});
-                    }}
-                    style={{alignItems: 'center', width: '80%'}}>
-                    <Text
-                      font={'Inter'}
-                      style={{fontSize: 16, fontWeight: 'bold'}}>
-                      {t('app.login.options.login_session_token')}
-                    </Text>
-                  </Button>
-                  <Button
-                    onPress={() => {
-                      openUrl(
-                        client.configuration
-                          ? `${client.configuration.app}/login/create`
-                          : OFFICIAL_INSTANCE_SIGNUP_URL,
-                      );
-                    }}
-                    style={{width: '80%'}}>
-                    <View style={{alignItems: 'center'}}>
-                      <Text
-                        font={'Inter'}
-                        style={{fontSize: 16, fontWeight: 'bold'}}>
-                        {t('app.login.options.signup')}
-                      </Text>
-                      <Text font={'Inter'}>
-                        {t('app.login.options.signup_body')}
-                      </Text>
-                    </View>
-                  </Button>
-                  <Text
-                    font={'Inter'}
-                    colour={currentTheme.foregroundSecondary}>
-                    {t('app.login.instance_notice', {
-                      url: app.settings.get('app.instance'),
-                    })}
-                  </Text>
-                </>
-              )}
-            </View>
-          </>
+          <LoginPage state={this} />
         ) : this.state.status === 'tryingLogin' ? (
           <View style={styles.loadingScreen}>
             <Text style={{fontSize: 30, fontWeight: 'bold'}}>
