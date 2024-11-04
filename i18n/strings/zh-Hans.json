@@ -22,7 +22,14 @@
             "header_servers": "发现服务器"
         },
         "loading": {
-            "generic": "正在加载…"
+            "generic": "正在加载…",
+            "connecting": "正在登录…"
+        },
+        "login": {
+            "forms": {
+                "email_placeholder": "Email",
+                "password_placeholder": "密码"
+            }
         }
     }
 }
