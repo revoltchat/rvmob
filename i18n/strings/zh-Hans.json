@@ -28,8 +28,117 @@
         "login": {
             "forms": {
                 "email_placeholder": "Email",
-                "password_placeholder": "密码"
+                "password_placeholder": "密码",
+                "mfa_placeholder": "一次性代码",
+                "session_token_placeholder": "令牌"
+            },
+            "options": {
+                "login_session_token": "是的，使用会话令牌登录",
+                "login_regular": "是的，用我的 Email 和密码登录",
+                "login_regular_body": "建议大多数用户使用。",
+                "login_session_token_body": "如果您使用常规登录系统有问题，则用此方式。一些功能可能不可用。",
+                "signup": "不，注册",
+                "signup_body": "您会跳转到 Web 应用。请您在注册后回来登录。"
+            },
+            "instance_notice": "您正在连接到 {{url}}。",
+            "subheader": "您有账户吗？",
+            "token_info_label": "如何获取我的令牌？"
+        },
+        "messaging": {
+            "message_box_saved_notes": "保存到您的笔记",
+            "no_messages": "无消息",
+            "no_messages_body": "开始对话吧。",
+            "message_box_channel": "给 #{{name}} 发消息",
+            "message_box_group": "给 {{name}} 发消息",
+            "message_box_dm": "给 @{{name}} 发消息"
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_server": "删除服务器？",
+                "body_role": "您确定要删除<2>这个角色</2>吗？",
+                "body_message": "您确定要删除<2>这条消息</2>吗？",
+                "body_server": "您确定要删除 <2>{{name}}</2> 吗？",
+                "warning": "这无法被撤销。",
+                "header_role": "删除角色？",
+                "header_message": "删除消息？"
+            },
+            "create_channel": {
+                "header": "创建新频道",
+                "name_placeholder": "频道名称",
+                "type_header": "类型",
+                "type_voice": "语音频道",
+                "name_header": "名称",
+                "type_text": "文本频道",
+                "nsfw_header": "少儿不宜",
+                "nsfw_label": "标记频道为少儿不宜"
+            },
+            "edit_text": {
+                "session_name_header": "设置会话名称",
+                "session_name_placeholder": "会话名称",
+                "display_name_header": "设置显示名称",
+                "display_name_placeholder": "显示名称",
+                "nickname_header": "设置昵称",
+                "nickname_placeholder": "昵称（留空以重置）",
+                "nickname_other_header": "设置成员昵称",
+                "nickname_other_placeholder": "昵称（留空以重置）",
+                "role_colour_header": "设置角色颜色",
+                "role_colour_placeholder": "角色颜色"
             }
+        },
+        "servers": {
+            "settings": {
+                "overview": {
+                    "title": "概况",
+                    "markdown_tip": "服务器简介支持 Markdown 格式。",
+                    "description_placeholder": "添加简介…",
+                    "set_description": "设置简介",
+                    "system_message_channel_types": {
+                        "user_left": "用户离开",
+                        "user_banned": "用户被封禁",
+                        "user_joined": "用户加入",
+                        "user_kicked": "用户被踢出"
+                    },
+                    "name": "服务器名称",
+                    "description": "服务器简介",
+                    "markdown_tip_link": "了解更多。",
+                    "system_messages": "系统消息",
+                    "system_messages_description": "当成员加入、离开、被踢出或被封禁时，您会收到消息。",
+                    "errors": {
+                        "empty_server_name": "服务器名称不能为空！"
+                    }
+                },
+                "channels": {
+                    "title": "频道",
+                    "name": "频道名称",
+                    "permissions": "频道权限",
+                    "no_perms_set": "未设置",
+                    "name_placeholder": "设置频道名称…",
+                    "errors": {
+                        "empty_channel_name": "频道名称不能为空！"
+                    }
+                },
+                "roles": {
+                    "title": "角色",
+                    "name": "名称",
+                    "name_placeholder": "设置角色名称…",
+                    "options_header": "选项",
+                    "options": {
+                        "hoist": "提升角色"
+                    }
+                },
+                "delete_server": "删除服务器",
+                "general": "常规",
+                "customisation": "自定义",
+                "user_management": "用户管理"
+            }
+        },
+        "home": {
+            "description": "从屏幕左侧滑动或者点击三条横线图标，来查看服务器和消息！",
+            "join_lounge": "加入 Revolt Lounge",
+            "open_lounge": "打开 Revolt Lounge",
+            "join_rvmob": "加入 RVMob 服务器",
+            "open_rvmob": "打开 RVMob 服务器",
+            "open_settings": "打开设置"
         }
     }
 }
