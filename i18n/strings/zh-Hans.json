@@ -123,13 +123,44 @@
                     "name_placeholder": "设置角色名称…",
                     "options_header": "选项",
                     "options": {
-                        "hoist": "提升角色"
-                    }
+                        "hoist": "提升角色",
+                        "hoist_body": "在成员列表中，此角色显示在其他角色之上。"
+                    },
+                    "rank": "等级",
+                    "delete": "删除角色",
+                    "set_colour": "设置角色颜色",
+                    "errors": {
+                        "empty_role_name": "角色名称不能为空！"
+                    },
+                    "permissions": "权限",
+                    "colour": "颜色",
+                    "open_colour_modal": "手动输入颜色"
                 },
                 "delete_server": "删除服务器",
                 "general": "常规",
                 "customisation": "自定义",
-                "user_management": "用户管理"
+                "user_management": "用户管理",
+                "emoji": {
+                    "title": "表情",
+                    "added_by": "由 @{{name}} 添加",
+                    "empty": "无表情",
+                    "deleted_toast": "{{name}} 已删除"
+                },
+                "members": {
+                    "title": "成员",
+                    "loading": "正在获取成员…"
+                },
+                "invites": {
+                    "title": "邀请",
+                    "empty": "无邀请",
+                    "loading": "正在获取邀请…"
+                },
+                "bans": {
+                    "title": "封禁",
+                    "empty": "无封禁",
+                    "loading": "正在获取封禁…",
+                    "no_reason": "未提供原因"
+                }
             }
         },
         "home": {
@@ -139,6 +170,92 @@
             "join_rvmob": "加入 RVMob 服务器",
             "open_rvmob": "打开 RVMob 服务器",
             "open_settings": "打开设置"
+        },
+        "settings": {
+            "app": {
+                "refetchOnReconnect": "重新连接时重新获取消息",
+                "language": "选择您的语言",
+                "reopenLastChannel": "打开应用时重新打开您上次访问的频道",
+                "notifications": {
+                    "enabled": "启用推送通知",
+                    "notifyOnSelfPing": "当提及自己时接收一条通知"
+                },
+                "showChangelogs": "更新 RVMob 后显示更新记录"
+            },
+            "ui": {
+                "theme_remark": "您必须打开或关闭侧边菜单，以使更改完全生效。",
+                "messaging": {
+                    "doubleTapToReply_remark": "仅在新消息界面支持。",
+                    "fontSize_remark": "对消息和应用中的特定内容生效。",
+                    "sendAttachments": "启用附件发送",
+                    "showMasqAvatar": "在角落显示伪装头像",
+                    "showReactions": "在消息下方显示反应",
+                    "showReactions_remark": "您可以添加已有的反应，但还不能添加新反应。",
+                    "showSelfInTypingIndicator": "在输入指示器中显示您自己",
+                    "doubleTapToReply": "双击消息回复",
+                    "showNSFWContent": "允许 18+ 内容",
+                    "statusInChatAvatars": "在聊天头像上显示用户状态",
+                    "use24H": "使用 24 小时时间戳",
+                    "useNewMessageView": "使用新消息界面",
+                    "emojiPack": "表情包",
+                    "experimentalScrolling": "旧消息界面启用频道滚动",
+                    "experimentalScrolling_remark": "您只能向后滚动。",
+                    "fontSize": "字体大小",
+                    "messageSpacing": "消息间距"
+                },
+                "settings": {
+                    "showExperimental": "显示实验性功能"
+                },
+                "home": {
+                    "holidays": "在主页显示节日"
+                },
+                "theme": "主题",
+                "showDeveloperFeatures": "显示开发者工具"
+            }
+        },
+        "misc": {
+            "voice": {
+                "body": "目前，您可以通过 Web 或桌面应用加入这些频道。",
+                "header": "RVMob 暂时不支持语音频道！"
+            },
+            "generic_errors": {
+                "rateLimited_toast": "慢下来，等一分钟再试。"
+            },
+            "network_indicator": {
+                "body": "连接丢失",
+                "hide": "（隐藏）"
+            }
+        },
+        "settings_menu": {
+            "account": {
+                "title": "账户"
+            },
+            "appearance": {
+                "title": "外观"
+            },
+            "functionality": {
+                "title": "功能"
+            },
+            "groups": {
+                "advanced": "高级",
+                "app": "应用",
+                "other": "其他",
+                "user": "用户"
+            },
+            "i18n": {
+                "title": "语言"
+            },
+            "info": {
+                "title": "关于 RVMob"
+            },
+            "other": {
+                "debug_info": "复制调试信息",
+                "view_issues": "查看开放的议题",
+                "logout": "登出"
+            },
+            "profile": {
+                "title": "个人资料"
+            }
         }
     }
 }
