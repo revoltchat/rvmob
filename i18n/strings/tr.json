@@ -250,6 +250,9 @@
             "appearance": {
                 "title": "Dış görünüş"
             }
+        },
+        "messaging": {
+            "message_box_group": "Mesaj {{name}}"
         }
     }
 }
