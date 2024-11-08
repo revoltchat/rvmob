@@ -1,1 +1,13 @@
-{}
+{
+    "app": {
+        "actions": {
+            "cancel": "Anulează",
+            "confirm": "Confirmă",
+            "delete": "Șterge",
+            "save": "Salvați",
+            "back": "Înapoi",
+            "close": "Închide",
+            "create_channel": "Creează canal"
+        }
+    }
+}
