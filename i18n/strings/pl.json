@@ -1,1 +1,199 @@
-{}
+{
+    "app": {
+        "actions": {
+            "confirm": "Potwierdź",
+            "delete": "Usuń",
+            "back": "Wróć",
+            "cancel": "Anuluj",
+            "close": "Zamknij",
+            "create_channel": "Stwórz kanał",
+            "save": "Zapisz"
+        },
+        "discover": {
+            "count_bots_one": "{{count}} serwer",
+            "count_bots_few": "{{count}} serwerów",
+            "count_bots_many": "{{count}} serwery",
+            "fetching_bots": "Ładowanie botów…",
+            "header_bots": "Odkryj Boty",
+            "header_servers": "Odkryj Serwery",
+            "tabs": {
+                "servers": "Serwery",
+                "bots": "Boty"
+            },
+            "count_servers_one": "{{count}} serwer",
+            "count_servers_few": "{{count}} serwerów",
+            "count_servers_many": "{{count}} serwery",
+            "fetching_servers": "Ładowanie serwerów…"
+        },
+        "loading": {
+            "generic": "Ładowanie…",
+            "connecting": "Logowanie…"
+        },
+        "login": {
+            "forms": {
+                "password_placeholder": "Hasło",
+                "mfa_placeholder": "Jednorazowy kod",
+                "email_placeholder": "E-mail",
+                "session_token_placeholder": "Token"
+            },
+            "instance_notice": "Łączysz się z {{url}}.",
+            "options": {
+                "login_regular": "Tak, zaloguj się moim e-mailem i hasłem",
+                "login_session_token": "Tak, zaloguj się tokenem sesji",
+                "signup": "Nie, zarejestruj się",
+                "login_regular_body": "Polecane dla większości użytkowników.",
+                "login_session_token_body": "Użyj tego, jeśli masz problemy z regularnym systemem logowania. Niektóre funkcje mogą być niedostępne.",
+                "signup_body": "Zostaniesz przekierowany do aplikacji webowej Revolt. Wróć i zaloguj się po zakończeniu rejestracji."
+            },
+            "subheader": "Czy masz konto?",
+            "token_info_label": "Skąd wziąść token?"
+        },
+        "home": {
+            "open_rvmob": "Otwórz serwer RVMob",
+            "join_lounge": "Dołącz do Revolt Lounge",
+            "open_lounge": "Otwórz Revolt Lounge",
+            "open_settings": "Otwórz ustawienia",
+            "join_rvmob": "Dołącz do serwera RVMob"
+        },
+        "messaging": {
+            "message_box_group": "Wyślij wiadomość do {{name}}",
+            "message_box_channel": "Wyślij wiadomość w #{{name}}",
+            "message_box_dm": "Wyślij wiadomość do @{{name}}",
+            "no_messages": "Brak wiadomości",
+            "no_messages_body": "Zacznij konwersację.",
+            "message_box_saved_notes": "Zapisz do notatek"
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_role": "Usunąć rolę?",
+                "header_server": "Usunąć serwer?",
+                "body_server": "Czy na pewno chcesz <2>{{name}}</2>?",
+                "warning": "Tego nie można cofnąć.",
+                "header_message": "Usunąć wiadomość?",
+                "body_role": "Czy na pewno chcesz usunąć <2>tą rolę</2>?",
+                "body_message": "Czy na pewno chcesz usunąć <2>tą wiadomość</2>?"
+            },
+            "create_channel": {
+                "name_header": "Nazwa",
+                "type_header": "Typ",
+                "nsfw_header": "NSFW",
+                "nsfw_label": "Oznacz kanał jako NSFW",
+                "header": "Stwórz nowy kanał",
+                "name_placeholder": "Nazwa kanału",
+                "type_text": "Kanał tekstowy",
+                "type_voice": "Kanał głosowy"
+            },
+            "edit_text": {
+                "display_name_header": "Ustaw nazwę wyświetlaną",
+                "nickname_placeholder": "Nick (pozostaw puste aby zresetować)",
+                "nickname_other_header": "Ustaw nick członka",
+                "role_colour_placeholder": "Kolor roli",
+                "session_name_header": "Ustaw nazwę sesji",
+                "display_name_placeholder": "Nazwa wyświetlana",
+                "nickname_header": "Ustaw nick",
+                "nickname_other_placeholder": "Nick (pozostaw puste aby zresetować)",
+                "role_colour_header": "Ustaw kolor roli",
+                "session_name_placeholder": "Nazwa sesji"
+            }
+        },
+        "servers": {
+            "settings": {
+                "general": "Główne",
+                "customisation": "Personalizacja",
+                "overview": {
+                    "title": "Przegląd",
+                    "description": "Opis serwera",
+                    "markdown_tip_link": "Dowiedz się więcej.",
+                    "description_placeholder": "Dodaj opis…",
+                    "set_description": "Ustaw opis",
+                    "system_message_channel_types": {
+                        "user_left": "Użytkownik wyszedł",
+                        "user_kicked": "Użytkownik wyrzucony",
+                        "user_joined": "Użytkownik dołączył",
+                        "user_banned": "Użytkownik zbanowany"
+                    },
+                    "errors": {
+                        "empty_server_name": "Nazwy serwerów nie mogą być puste!"
+                    },
+                    "name": "Nazwa serwera",
+                    "markdown_tip": "Opisy serwerów wspierają formatowanie Markdown.",
+                    "system_messages": "Wiadomości systemowe",
+                    "system_messages_description": "Kiedy członkowie dołączają, wychodzą lub zostają wyrzucani lub zbanowani, możesz otrzymywać wiadomości."
+                },
+                "channels": {
+                    "title": "Kanały",
+                    "name": "Nazwa kanału",
+                    "name_placeholder": "Ustaw nazwę kanału…",
+                    "no_perms_set": "Nie ustawione",
+                    "errors": {
+                        "empty_channel_name": "Nazwy kanałów nie mogą być puste!"
+                    }
+                },
+                "roles": {
+                    "title": "Role",
+                    "name": "Nazwa",
+                    "options_header": "Opcje",
+                    "options": {
+                        "hoist": "Wyróżnij rolę",
+                        "hoist_body": "Wyświetlaj tą rolę ponad innymi w liście członków."
+                    },
+                    "rank": "Ranga",
+                    "colour": "Kolor",
+                    "delete": "Usuń rolę",
+                    "set_colour": "Ustaw kolor roli",
+                    "open_colour_modal": "Wprowadź kolor manualnie",
+                    "name_placeholder": "Ustaw nazwę roli…",
+                    "permissions": "Uprawnienia",
+                    "errors": {
+                        "empty_role_name": "Nazwy roli nie mogą być puste!"
+                    }
+                },
+                "emoji": {
+                    "title": "Emoji",
+                    "added_by": "Dodne przez @{{name}}",
+                    "empty": "Brak emoji",
+                    "deleted_toast": "{{name}} usunięte"
+                },
+                "members": {
+                    "title": "Członkowie",
+                    "loading": "Ładowanie członków…"
+                },
+                "invites": {
+                    "title": "Zaproszenia",
+                    "loading": "Ładowanie zaproszeń…",
+                    "empty": "Brak zaproszeń"
+                },
+                "bans": {
+                    "empty": "Brak banów",
+                    "no_reason": "Brak podanego powodu",
+                    "title": "Bany",
+                    "loading": "Ładowanie banów…"
+                },
+                "delete_server": "Usuń serwer"
+            }
+        },
+        "settings": {
+            "app": {
+                "showChangelogs": "Pokaż listę zmian po aktualizacji RVMob",
+                "language": "Wybierz język",
+                "refetchOnReconnect": "Przeładuj wiadomości podczas łączenia ponownie",
+                "notifications": {
+                    "enabled": "Włącz powiadomienia push",
+                    "notifyOnSelfPing": "Otrzymaj powiadomienie kiedy pingujesz siebie"
+                }
+            },
+            "ui": {
+                "messaging": {
+                    "experimentalScrolling_remark": "Możesz scrollować tylko do tyłu.",
+                    "fontSize": "Rozmiar czcionki",
+                    "doubleTapToReply": "Odpowiadaj na wiadomości, klikając w nie podwójnie",
+                    "doubleTapToReply_remark": "To jest wspierane tylko w widoku wiadomości.",
+                    "emojiPack": "Paczka emoji",
+                    "experimentalScrolling": "Włącz scrollowanie kanałów w starym widoku wiadomości"
+                },
+                "theme": "Motyw",
+                "theme_remark": "Będziesz musiał otworzyć lub zamknąć menu boczne aby twoje zmiany pojawiły się wszędzie."
+            }
+        }
+    }
+}
