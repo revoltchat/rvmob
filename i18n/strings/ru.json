@@ -37,7 +37,7 @@
                 "session_name_header": "Задать название сессии",
                 "session_name_placeholder": "Название сессии",
                 "nickname_other_header": "Задать никнейм участника",
-                "nickname_other_placeholder": "Никнейм(оставте пустым для сброса)"
+                "nickname_other_placeholder": "Никнейм (оставьте пустым для сброса)"
             },
             "create_channel": {
                 "header": "Создать новый канал",
