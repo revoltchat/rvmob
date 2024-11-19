@@ -208,7 +208,8 @@ export const ChannelList = observer((props: ChannelListProps) => {
 
           <ChannelButton
             onPress={async () => {
-              props.onChannelClick(await client.user?.openDM());
+              const channel = await client.user?.openDM();
+              props.onChannelClick(channel);
             }}
             key={'notes'}
             channel={'Saved Notes'}
@@ -217,8 +218,7 @@ export const ChannelList = observer((props: ChannelListProps) => {
 
           {__DEV__ ? (
             <ChannelButton
-              onPress={async () => {
-                await client.user?.openDM();
+              onPress={ () => {
                 props.onChannelClick('debug');
               }}
               key={'debugChannel'}

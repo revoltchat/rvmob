@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {Client} from 'revolt.js';
-import type {API, Channel, Message, Server} from 'revolt.js';
+import type {API, Channel, Message, Server, User} from 'revolt.js';
 
 import {setLanguage} from '@rvmob-i18n/i18n';
 import {languages} from '@rvmob-i18n/languages';
@@ -292,7 +292,11 @@ export const app = {
       },
     ] as Setting[],
   },
-  openProfile: (u, s?: Server) => {},
+  openProfile: (u?: User | null, s?: Server | null) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function openProfile (args: ${u}, ${s})`,
+    );
+  },
   openLeftMenu: (o: boolean) => {
     console.log(
       `[FUNCTIONS] Tried to run uninitialised function openLeftMenu (args: ${o})`,
@@ -305,25 +309,45 @@ export const app = {
     return undefined as string | undefined;
   },
   openChannel: c => {},
-  openDirectMessage: (c: Channel) => {},
+  openDirectMessage: (c: Channel) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function openDirectMessage (args: ${c})`,
+    );
+  },
   openImage: a => {},
-  openMessage: m => {},
+  openMessage: (m: Message | null) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function openMessage (args: ${m})`,
+    );
+  },
   openServerContextMenu: (s: Server | null) => {
     console.log(
       `[FUNCTIONS] Tried to run uninitialised function openServerContextMenu (args: ${s})`,
     );
   },
-  openSettings: o => {},
+  openSettings: (o: boolean) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function openSettings (args: ${o})`,
+    );
+  },
   openServerSettings: (s: Server | null) => {
     console.log(
       `[FUNCTIONS] Tried to run uninitialised function openServerSettings (args: ${s})`,
     );
   },
-  setMessageBoxInput: (t: string | null) => {},
+  setMessageBoxInput: (t: string | null) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function setMessageBoxInput (args: ${t})`,
+    );
+  },
   getMessageBoxInput: () => {
     return '';
   },
-  setEditingMessage: (message: Message) => {},
+  setEditingMessage: (message: Message) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function setEditingMessage (args: ${message})`,
+    );
+  },
   getEditingMessage: (): Message | null => {
     return null;
   },
@@ -360,7 +384,7 @@ export const app = {
   },
   closeRoleSubsection: () => {
     console.log(
-      '[FUNCTIONS] Tried to run uninitialised function handleServerSettingsVisibility',
+      '[FUNCTIONS] Tried to run uninitialised function closeRoleSubsection',
     );
   },
 };

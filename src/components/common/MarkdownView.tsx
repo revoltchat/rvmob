@@ -97,7 +97,11 @@ const spoilerRule = {
   },
 };
 
-const webCodeStyles = {padding: 0};
+// const webCodeStyles = {
+//   padding: 0,
+//   paddingInline: '2px',
+//   border: 'none',
+// };
 
 export const MarkdownView = (props: any) => {
   let newProps = {...props};
