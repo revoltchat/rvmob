@@ -1,10 +1,6 @@
 import {useState} from 'react';
-import {Modal, Pressable, StyleSheet, View} from 'react-native';
+import {Modal, StyleSheet, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
-
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
-import ImageViewer2 from 'react-native-reanimated-image-viewer';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {API, Channel, Server, User} from 'revolt.js';
 
@@ -14,10 +10,7 @@ import {
   DeletableObject,
   TextEditingModalProps,
 } from '@rvmob/lib/types';
-import {getReadableFileSize, openUrl} from '@rvmob/lib/utils';
-import {commonValues, currentTheme} from '@rvmob/Theme';
-import {Text} from '@rvmob/components/common/atoms';
-import {GapView} from '@rvmob/components/layout';
+import {ImageViewer} from '@rvmob/components/ImageViewer';
 import {
   ConfirmDeletionModal,
   CreateChannelModal,
@@ -36,75 +29,6 @@ import {
   SettingsSheet,
   StatusSheet,
 } from '@rvmob/components/sheets';
-
-const WrappedImageViewer = gestureHandlerRootHOC(
-  ({state, setState}: {state: any; setState: any}) => {
-    const imageUrl = state.i?.metadata
-      ? client.generateFileURL(state.i)!
-      : state.i;
-
-    return (
-      <View style={{flex: 1, justifyContent: 'space-between'}}>
-        <View
-          style={{
-            height: '7%',
-            backgroundColor: currentTheme.background,
-            paddingHorizontal: commonValues.sizes.large,
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-            zIndex: 10,
-          }}>
-          <Pressable
-            onPress={() =>
-              openUrl(
-                state.i?.metadata ? client.generateFileURL(state.i) : state.i,
-              )
-            }>
-            <MaterialCommunityIcon
-              name="web"
-              size={32}
-              color={currentTheme.foregroundSecondary}
-            />
-          </Pressable>
-          <GapView size={5} type={'horizontal'} />
-          <Pressable onPress={() => setState()}>
-            <MaterialCommunityIcon
-              name="close-circle"
-              size={32}
-              color={currentTheme.foregroundSecondary}
-            />
-          </Pressable>
-        </View>
-        <View style={{height: '86%'}}>
-          <ImageViewer2
-            imageUrl={imageUrl}
-            width={state.i.metadata?.width ?? undefined}
-            height={state.i.metadata?.height ?? undefined}
-            onRequestClose={() => setState()}
-          />
-        </View>
-        <View
-          style={{
-            height: '7%',
-            backgroundColor: currentTheme.background,
-            paddingHorizontal: commonValues.sizes.large,
-            justifyContent: 'center',
-            zIndex: 10,
-          }}>
-          <Text style={{fontWeight: 'bold'}}>
-            {state.i.filename ?? 'Unknown filename'}
-          </Text>
-          <Text>
-            {state.i.size ? getReadableFileSize(state.i.size) : 'Unknown size'}
-          </Text>
-        </View>
-      </View>
-    );
-  },
-  // if the user can see the root view something might be broken, so make it red
-  {backgroundColor: 'red'},
-);
 
 export const Modals = observer(() => {
   const [imageViewerState, setImageViewerState] = useState({
@@ -194,7 +118,7 @@ export const Modals = observer(() => {
         transparent={true}
         animationType="fade"
         onRequestClose={() => setImageViewerState({i: null})}>
-        <WrappedImageViewer
+        <ImageViewer
           state={imageViewerState}
           setState={() => setImageViewerState({i: null})}
         />
@@ -252,13 +176,7 @@ export const Modals = observer(() => {
         transparent={true}
         animationType="fade"
         onRequestClose={() => setDeletableObject(null)}>
-        <View
-          style={{
-            flex: 1,
-            alignContent: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#00000080',
-          }}>
+        <View style={localStyles.modalContainer}>
           <ConfirmDeletionModal target={deletableObject!} />
         </View>
       </Modal>
@@ -267,13 +185,7 @@ export const Modals = observer(() => {
         transparent={true}
         animationType="fade"
         onRequestClose={() => setEditingText(null)}>
-        <View
-          style={{
-            flex: 1,
-            alignContent: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#00000080',
-          }}>
+        <View style={localStyles.modalContainer}>
           <TextEditModal object={editingText!} />
         </View>
       </Modal>
@@ -282,13 +194,7 @@ export const Modals = observer(() => {
         transparent={true}
         animationType="fade"
         onRequestClose={() => setEditingText(null)}>
-        <View
-          style={{
-            flex: 1,
-            alignContent: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#00000080',
-          }}>
+        <View style={localStyles.modalContainer}>
           <CreateChannelModal object={createChannelObject!} />
         </View>
       </Modal>
@@ -297,5 +203,10 @@ export const Modals = observer(() => {
 });
 
 const localStyles = StyleSheet.create({
-
+  modalContainer: {
+    flex: 1,
+    alignContent: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#00000080',
+  },
 });
