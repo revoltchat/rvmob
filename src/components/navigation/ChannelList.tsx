@@ -105,7 +105,7 @@ const ServerChannelList = observer((props: ServerChannelListProps) => {
           }}>
           <TouchableOpacity
             onPress={() => app.openServerContextMenu(props.currentServer)}
-            style={{width: '100%', paddingHorizontal: 12}}>
+            style={{width: '100%', paddingHorizontal: 12, backgroundColor: `${currentTheme.backgroundPrimary}80`}}>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.serverName} numberOfLines={1}>
