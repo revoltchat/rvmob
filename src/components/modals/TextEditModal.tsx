@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
 import {app} from '@rvmob/Generic';
-import {currentTheme, styles} from '@rvmob/Theme';
+import {commonValues, currentTheme, styles} from '@rvmob/Theme';
 import {Button, Text} from '@rvmob/components/common/atoms';
 import {TextEditingModalProps} from '@rvmob/lib/types';
 
@@ -16,7 +16,7 @@ export const TextEditModal = observer(
       <View
         style={{
           width: '80%',
-          borderRadius: 8,
+          borderRadius: commonValues.sizes.medium,
           padding: 20,
           backgroundColor: currentTheme.backgroundPrimary,
           justifyContent: 'center',

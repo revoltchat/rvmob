@@ -5,7 +5,7 @@ import {User} from 'revolt.js';
 
 import {app} from '../../Generic';
 import {MiniProfile} from '../../Profile';
-import {currentTheme} from '../../Theme';
+import {commonValues, currentTheme} from '../../Theme';
 
 import {Button} from '../common/atoms';
 
@@ -18,7 +18,7 @@ export const UserList = observer(({users}: {users: User[]}) => {
           backgroundColor={currentTheme.backgroundPrimary}
           style={{
             marginHorizontal: 0,
-            paddingHorizontal: 8,
+            paddingHorizontal: commonValues.sizes.medium,
             justifyContent: 'flex-start',
             alignItems: 'flex-start',
           }}

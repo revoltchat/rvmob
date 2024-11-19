@@ -8,7 +8,7 @@ import {useBackHandler} from '@react-native-community/hooks';
 import {Channel, User} from 'revolt.js';
 
 import {setFunction} from '../../Generic';
-import {currentTheme} from '../../Theme';
+import {commonValues, currentTheme} from '../../Theme';
 import {Text} from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
 import {MarkdownView} from '../common/MarkdownView';
@@ -56,7 +56,7 @@ export const ChannelInfoSheet = observer(() => {
               <Text
                 colour={currentTheme.foregroundSecondary}
                 style={{
-                  marginVertical: 4,
+                  marginVertical: commonValues.sizes.small,
                 }}>
                 {channel.channel_type === 'Group'
                   ? `Group (${groupMembers.length} ${
@@ -68,8 +68,8 @@ export const ChannelInfoSheet = observer(() => {
                 <View
                   style={{
                     backgroundColor: currentTheme.background,
-                    padding: 8,
-                    borderRadius: 8,
+                    padding: commonValues.sizes.medium,
+                    borderRadius: commonValues.sizes.medium,
                   }}>
                   <MarkdownView
                     style={{

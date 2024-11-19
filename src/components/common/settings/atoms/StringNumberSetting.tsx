@@ -6,7 +6,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {languages} from '@rvmob-i18n/languages';
 import {app} from '../../../../Generic';
-import {currentTheme, styles} from '../../../../Theme';
+import {commonValues, currentTheme, styles} from '../../../../Theme';
 import {Setting} from '../../../../lib/types';
 import {Text} from '../../atoms';
 import {IndicatorIcons} from './IndicatorIcons';
@@ -33,22 +33,22 @@ export const StringNumberSetting = ({
       {sRaw.options ? (
         <View>
           <IndicatorIcons s={sRaw} />
-          <Text style={{fontWeight: 'bold', marginBottom: 8}}>
+          <Text style={{fontWeight: 'bold', marginBottom: commonValues.sizes.medium}}>
             {t(`app.settings.${sRaw.key}`)}
           </Text>
           {sRaw.remark ? (
             <Text
               colour={currentTheme.foregroundSecondary}
-              style={{marginBottom: 8}}>
+              style={{marginBottom: commonValues.sizes.medium}}>
               {t(`app.settings.${sRaw.key}_remark`)}
             </Text>
           ) : null}
           <View
             style={{
-              borderRadius: 8,
+              borderRadius: commonValues.sizes.medium,
               minWidth: '100%',
               backgroundColor: currentTheme.backgroundSecondary,
-              padding: 8,
+              padding: commonValues.sizes.medium,
             }}>
             {sRaw.options.map(o => (
               <TouchableOpacity

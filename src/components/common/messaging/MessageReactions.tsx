@@ -7,7 +7,7 @@ import {Message} from 'revolt.js';
 import {Image} from '@rvmob/crossplat/Image';
 import {client} from '../../../Generic';
 import {showToast} from '../../../lib/utils';
-import {currentTheme} from '../../../Theme';
+import {commonValues, currentTheme} from '../../../Theme';
 import {Text} from '../atoms';
 
 type ReactionPile = {
@@ -22,7 +22,7 @@ export const MessageReactions = observer(
         <View
           style={{
             flexDirection: 'row',
-            marginVertical: 4,
+            marginVertical: commonValues.sizes.small,
             flexWrap: 'wrap',
           }}>
           {reactions.map(r => {
@@ -37,15 +37,15 @@ export const MessageReactions = observer(
                     : showToast('You cannot react to this message.');
                 })}
                 style={{
-                  padding: 4,
-                  borderRadius: 4,
+                  padding: commonValues.sizes.small,
+                  borderRadius: commonValues.sizes.small,
                   borderColor: r.reactors.includes(client.user?._id!)
                     ? currentTheme.accentColor
                     : currentTheme.backgroundTertiary,
                   backgroundColor: currentTheme.backgroundSecondary,
-                  borderWidth: 2,
-                  marginRight: 4, // TODO: adapt this for future RTL support
-                  marginVertical: 2,
+                  borderWidth: commonValues.sizes.xs,
+                  marginEnd: commonValues.sizes.small,
+                  marginVertical: commonValues.sizes.xs,
                 }}>
                 <View style={{flexDirection: 'row'}}>
                   {r.emoji.length > 6 && (

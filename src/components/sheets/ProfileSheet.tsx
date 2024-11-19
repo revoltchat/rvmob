@@ -14,7 +14,7 @@ import {app, client, setFunction} from '@rvmob/Generic';
 import {BADGES, USER_IDS} from '../../lib/consts';
 import {openUrl, parseRevoltNodes, showToast} from '@rvmob/lib/utils';
 import {MiniProfile, RoleView} from '@rvmob/Profile';
-import {currentTheme, styles} from '../../Theme';
+import {commonValues, currentTheme, styles} from '../../Theme';
 import {
   Avatar,
   Button,
@@ -170,7 +170,7 @@ export const ProfileSheet = observer(() => {
               </View>
             </View>
             <View
-              style={{flexDirection: 'row', width: '80%', marginBottom: 12}}>
+              style={{flexDirection: 'row', width: '80%', marginBottom: commonValues.sizes.large}}>
               <View>
                 <Username user={user} server={server ?? undefined} size={24} />
                 {!server ? (
@@ -364,7 +364,7 @@ export const ProfileSheet = observer(() => {
                   <Button
                     backgroundColor={currentTheme.backgroundPrimary}
                     style={{
-                      padding: 8,
+                      padding: commonValues.sizes.medium,
                       margin: 3,
                       flex: 1,
                     }}
@@ -374,7 +374,7 @@ export const ProfileSheet = observer(() => {
                   <Button
                     backgroundColor={currentTheme.backgroundPrimary}
                     style={{
-                      padding: 8,
+                      padding: commonValues.sizes.medium,
                       margin: 3,
                       flex: 1,
                     }}
@@ -386,7 +386,7 @@ export const ProfileSheet = observer(() => {
                   <Button
                     backgroundColor={currentTheme.backgroundPrimary}
                     style={{
-                      padding: 8,
+                      padding: commonValues.sizes.medium,
                       margin: 3,
                       flex: 1,
                     }}
@@ -441,7 +441,7 @@ export const ProfileSheet = observer(() => {
                       style={{
                         flexDirection: 'row',
                         height: 38,
-                        marginVertical: 2,
+                        marginVertical: commonValues.sizes.xs,
                       }}
                       contentContainerStyle={{alignItems: 'center'}}
                       horizontal={true}>
@@ -455,7 +455,7 @@ export const ProfileSheet = observer(() => {
                                   width: 32,
                                   alignItems: 'center',
                                   justifyContent: 'center',
-                                  marginRight: 8,
+                                  marginRight: commonValues.sizes.medium,
                                 }}
                                 key={b}>
                                 {(() => {
@@ -631,7 +631,7 @@ export const ProfileSheet = observer(() => {
                                 width: 32,
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                marginRight: 8,
+                                marginRight: commonValues.sizes.medium,
                               }}
                               key={'lea-paw'}>
                               <MaterialCommunityIcon
@@ -651,7 +651,7 @@ export const ProfileSheet = observer(() => {
                                 width: 32,
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                marginRight: 8,
+                                marginRight: commonValues.sizes.medium,
                               }}
                               key={'insert-raccoon'}>
                               <Text style={{fontSize: 24}}>🦝</Text>
@@ -666,7 +666,7 @@ export const ProfileSheet = observer(() => {
                                 width: 32,
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                marginRight: 8,
+                                marginRight: commonValues.sizes.medium,
                               }}
                               key={'infi-octopus'}>
                               <Text style={{fontSize: 24}}>🐙</Text>

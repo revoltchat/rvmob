@@ -12,7 +12,7 @@ import {ulid} from 'ulid';
 
 import {DocumentPicker} from './crossplat/DocumentPicker';
 import {app, client, setFunction} from './Generic';
-import {styles, currentTheme} from './Theme';
+import {styles, currentTheme, commonValues} from './Theme';
 import {Avatar, Text, Username} from './components/common/atoms';
 import {USER_IDS} from './lib/consts';
 import {ReplyingMessage} from './lib/types';
@@ -74,7 +74,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
           backgroundColor: currentTheme.backgroundSecondary,
           minHeight: 50,
           paddingVertical: 20,
-          paddingHorizontal: 8,
+          paddingHorizontal: commonValues.sizes.medium,
           alignItems: 'center',
           justifyContent: 'center',
         }}>
@@ -186,7 +186,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
             style={{
               ...styles.sendButton,
               marginStart: 0,
-              marginEnd: 8,
+              marginEnd: commonValues.sizes.medium,
               backgroundColor: currentTheme.messageBox,
             }}
             onPress={async () => {
@@ -368,10 +368,10 @@ const AttachmentsBar = observer(
               <View
                 style={{
                   flexDirection: 'row',
-                  padding: 8,
-                  margin: 4,
+                  padding: commonValues.sizes.medium,
+                  margin: commonValues.sizes.small,
                   backgroundColor: currentTheme.backgroundPrimary,
-                  borderRadius: 4,
+                  borderRadius: commonValues.sizes.small,
                   alignItems: 'center',
                 }}
                 key={`message-box-attachments-bar-attachment-${a.name}`}>

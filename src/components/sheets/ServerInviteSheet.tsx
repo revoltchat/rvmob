@@ -6,7 +6,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import {API} from 'revolt.js';
 
 import {app, client} from '../../Generic';
-import {currentTheme} from '../../Theme';
+import {commonValues, currentTheme} from '../../Theme';
 import {Button, GeneralAvatar, Text} from '../common/atoms';
 import {Image} from '@rvmob/crossplat/Image';
 
@@ -73,7 +73,7 @@ export const ServerInviteSheet = observer(
                 <View
                   style={{
                     padding: 10,
-                    borderRadius: 8,
+                    borderRadius: commonValues.sizes.medium,
                     maxWidth: '80%',
                     backgroundColor: currentTheme.backgroundPrimary + 'dd',
                     justifyContent: 'center',
@@ -100,7 +100,7 @@ export const ServerInviteSheet = observer(
                   <Text
                     colour={currentTheme.foregroundSecondary}
                     style={{
-                      marginVertical: 4,
+                      marginVertical: commonValues.sizes.small,
                     }}>
                     {server?.member_count}{' '}
                     {server?.member_count === 1 ? 'member' : 'members'}

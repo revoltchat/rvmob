@@ -1,7 +1,7 @@
 import {TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {currentTheme} from '@rvmob/Theme';
+import {commonValues, currentTheme} from '@rvmob/Theme';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -14,7 +14,7 @@ export const Checkbox = observer(
         style={{
           width: 40,
           height: 40,
-          borderRadius: 8,
+          borderRadius: commonValues.sizes.medium,
           backgroundColor: value
             ? currentTheme.accentColor
             : currentTheme.backgroundSecondary,

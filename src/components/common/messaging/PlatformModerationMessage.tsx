@@ -6,7 +6,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {Message} from 'revolt.js';
 
 import {MarkdownView} from '../MarkdownView';
-import {currentTheme} from '../../../Theme';
+import {commonValues, currentTheme} from '../../../Theme';
 import {Text} from '../atoms';
 
 type Response = {
@@ -172,9 +172,9 @@ export const PlatformModerationMessage = observer(
       <View
         style={{
           backgroundColor: currentTheme.backgroundSecondary,
-          padding: 8,
-          borderRadius: 8,
-          marginVertical: 2,
+          padding: commonValues.sizes.medium,
+          borderRadius: commonValues.sizes.medium,
+          marginVertical: commonValues.sizes.xs,
         }}>
         <Text type={'h1'}>
           {isReport ? 'Report update' : isStrike ? 'Strike' : 'Alert'}

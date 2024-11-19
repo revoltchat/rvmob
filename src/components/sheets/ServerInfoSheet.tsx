@@ -12,7 +12,7 @@ import {Member, Server} from 'revolt.js';
 import {app, client, setFunction} from '../../Generic';
 import {SERVER_FLAGS, SPECIAL_SERVERS} from '../../lib/consts';
 import {showToast} from '../../lib/utils';
-import {currentTheme, styles} from '../../Theme';
+import {commonValues, currentTheme, styles} from '../../Theme';
 import {
   ContextButton,
   CopyIDButton,
@@ -123,7 +123,7 @@ export const ServerInfoSheet = observer(() => {
                   name={server.discoverable ? 'public' : 'home'}
                   color={currentTheme.foregroundSecondary}
                   size={20}
-                  style={{alignSelf: 'center', marginEnd: 4}}
+                  style={{alignSelf: 'center', marginEnd: commonValues.sizes.small}}
                 />
                 <Text
                   colour={currentTheme.foregroundSecondary}
@@ -134,7 +134,7 @@ export const ServerInfoSheet = observer(() => {
               <Text
                 colour={currentTheme.foregroundSecondary}
                 style={{
-                  marginVertical: 4,
+                  marginVertical: commonValues.sizes.small,
                 }}>
                 {server._id === SPECIAL_SERVERS.lounge.id
                   ? 'Member count disabled for this server'
@@ -148,8 +148,8 @@ export const ServerInfoSheet = observer(() => {
                 <View
                   style={{
                     backgroundColor: currentTheme.background,
-                    padding: 16,
-                    borderRadius: 8,
+                    padding: commonValues.sizes.xl,
+                    borderRadius: commonValues.sizes.medium,
                   }}>
                   <MarkdownView>{server.description}</MarkdownView>
                 </View>

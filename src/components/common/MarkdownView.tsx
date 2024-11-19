@@ -5,7 +5,7 @@ import spoilerPlugin from '@traptitech/markdown-it-spoiler';
 import Markdown, {hasParents, MarkdownIt} from 'react-native-markdown-display';
 
 import {app} from '@rvmob/Generic';
-import {currentTheme} from '@rvmob/Theme';
+import {commonValues, currentTheme} from '@rvmob/Theme';
 import {Text} from './atoms';
 import {renderEmoji} from './messaging/Emoji';
 import {openUrl} from '@rvmob/lib/utils';
@@ -126,7 +126,7 @@ export const MarkdownView = (props: any) => {
 
   newProps.style.paragraph = {
     marginTop: -3,
-    marginBottom: 2,
+    marginBottom: commonValues.sizes.xs,
     fontSize: app.settings.get('ui.messaging.fontSize'),
     ...newProps.style.paragraph,
   };
@@ -181,15 +181,15 @@ export const MarkdownView = (props: any) => {
     fontFamily: 'JetBrains Mono',
     backgroundColor: currentTheme.backgroundSecondary,
     borderWidth: 0,
-    borderRadius: 4,
-    marginBottom: 2,
+    borderRadius: commonValues.sizes.small,
+    marginBottom: commonValues.sizes.xs,
     ...newProps.style.fence,
   };
 
   newProps.style.blockquote = {
-    marginBottom: 2,
+    marginBottom: commonValues.sizes.xs,
     paddingVertical: 6,
-    borderRadius: 4,
+    borderRadius: commonValues.sizes.small,
     borderColor: currentTheme.foregroundPrimary,
     backgroundColor: currentTheme.blockQuoteBackground,
     ...newProps.style.blockquote,
@@ -199,7 +199,7 @@ export const MarkdownView = (props: any) => {
     borderTopWidth: 2,
     borderEndWidth: 2,
     borderColor: currentTheme.foregroundSecondary,
-    borderRadius: 4,
+    borderRadius: commonValues.sizes.small,
     ...newProps.style.table,
   };
 

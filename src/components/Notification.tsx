@@ -5,7 +5,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {Message} from 'revolt.js';
 
-import {currentTheme, styles} from '../Theme';
+import {commonValues, currentTheme, styles} from '../Theme';
 import {Avatar, Text, Username} from './common/atoms';
 import {MarkdownView} from './common/MarkdownView';
 import {parseRevoltNodes} from '../lib/utils';
@@ -29,9 +29,9 @@ export const Notification = observer(
             alignItems: 'center',
             width: '90%',
             backgroundColor: currentTheme.background,
-            borderRadius: 4,
+            borderRadius: commonValues.sizes.small,
             minHeight: 40,
-            padding: 8,
+            padding: commonValues.sizes.medium,
           }}
           onPress={() => openChannel()}>
           <View
@@ -42,7 +42,7 @@ export const Notification = observer(
             <Avatar user={message.author} size={35} />
             <View
               style={{
-                marginHorizontal: 8,
+                marginHorizontal: commonValues.sizes.medium,
                 maxWidth: '80%',
                 overflow: 'hidden',
               }}>

@@ -10,6 +10,16 @@ const commonColours = {
   statusInvisible: '#A5A5A5',
 };
 
+export const commonValues = {
+  sizes: {
+    xs: 2,
+    small: 4,
+    medium: 8,
+    large: 12,
+    xl: 16,
+  },
+};
+
 export const themes = {
   Light: {
     ...commonColours,
@@ -148,11 +158,11 @@ function refreshStyles() {
     },
     loginInput: {
       fontFamily: 'Inter',
-      borderRadius: 8,
+      borderRadius: commonValues.sizes.medium,
       padding: 3,
       paddingLeft: 10,
       paddingRight: 10,
-      margin: 8,
+      margin: commonValues.sizes.medium,
       width: '80%',
       backgroundColor: currentTheme.backgroundSecondary,
       color: currentTheme.foregroundPrimary,
@@ -172,12 +182,12 @@ function refreshStyles() {
     h1: {
       fontWeight: 'bold',
       fontSize: 18,
-      marginBottom: 4,
+      marginBottom: commonValues.sizes.small,
     },
     h2: {
       fontWeight: 'bold',
       fontSize: 16,
-      marginBottom: 4,
+      marginBottom: commonValues.sizes.small,
     },
     profileSubheader: {
       fontWeight: 'bold',
@@ -210,7 +220,7 @@ function refreshStyles() {
     input: {
       fontFamily: 'Open Sans',
       minWidth: '100%',
-      borderRadius: 8,
+      borderRadius: commonValues.sizes.medium,
       backgroundColor: currentTheme.backgroundSecondary,
       padding: 6,
       paddingLeft: 10,
@@ -231,35 +241,33 @@ function refreshStyles() {
     sheetBackground: {
       width: '100%',
       height: '70%',
-      padding: 12,
+      padding: commonValues.sizes.large,
       backgroundColor: currentTheme.backgroundSecondary,
-      borderTopStartRadius: 16,
-      borderTopEndRadius: 16,
+      borderTopStartRadius: commonValues.sizes.xl,
+      borderTopEndRadius: commonValues.sizes.xl,
     },
     textDefault: {
       color: currentTheme.foregroundPrimary,
     },
     message: {
-      borderRadius: 4,
+      borderRadius: commonValues.sizes.small,
       borderLeftWidth: 3,
       borderStyle: 'solid',
       borderColor: currentTheme.backgroundPrimary,
       width: '100%',
       flex: 1,
       flexDirection: 'row',
-      paddingTop: 2,
-      paddingBottom: 2,
-      paddingHorizontal: 2,
+      paddingVertical: commonValues.sizes.xs,
+      paddingHorizontal: commonValues.sizes.xs,
     },
     messageGrouped: {
-      borderRadius: 4,
+      borderRadius: commonValues.sizes.small,
       borderLeftWidth: 3,
       borderStyle: 'solid',
       borderColor: currentTheme.backgroundPrimary,
       paddingLeft: 37,
       width: '100%',
-      paddingTop: 2,
-      paddingBottom: 2,
+      paddingVertical: commonValues.sizes.xs,
     },
     messageInner: {
       flex: 1,
@@ -294,7 +302,7 @@ function refreshStyles() {
       borderRadius: 5000,
       width: 48,
       height: 48,
-      margin: 4,
+      margin: commonValues.sizes.small,
       backgroundColor: currentTheme.backgroundPrimary,
       overflow: 'hidden',
     },
@@ -320,22 +328,22 @@ function refreshStyles() {
       width: 60,
       flexShrink: 1,
       backgroundColor: currentTheme.background,
-      paddingVertical: 4,
+      paddingVertical: commonValues.sizes.small,
     },
     channelList: {
       flexGrow: 1000,
       flex: 1000,
     },
     channelButton: {
-      marginHorizontal: 8,
-      borderRadius: 8,
+      marginHorizontal: commonValues.sizes.medium,
+      borderRadius: commonValues.sizes.medium,
       flexDirection: 'row',
       alignItems: 'center',
     },
     button: {
       padding: 10,
-      paddingHorizontal: 16,
-      borderRadius: 8,
+      paddingHorizontal: commonValues.sizes.xl,
+      borderRadius: commonValues.sizes.medium,
       backgroundColor: currentTheme.headerSecondary,
       margin: 5,
       justifyContent: 'center',
@@ -344,8 +352,8 @@ function refreshStyles() {
     },
     buttonSecondary: {
       padding: 10,
-      paddingHorizontal: 16,
-      borderRadius: 8,
+      paddingHorizontal: commonValues.sizes.xl,
+      borderRadius: commonValues.sizes.medium,
       backgroundColor: currentTheme.backgroundPrimary,
       margin: 5,
       justifyContent: 'center',
@@ -354,10 +362,10 @@ function refreshStyles() {
     },
     settingsEntry: {
       flexDirection: 'row',
-      padding: 8,
-      marginVertical: 4,
+      padding: commonValues.sizes.medium,
+      marginVertical: commonValues.sizes.small,
       backgroundColor: currentTheme.backgroundSecondary,
-      borderRadius: 4,
+      borderRadius: commonValues.sizes.small,
       alignItems: 'center',
     },
     channelButtonSelected: {
@@ -368,7 +376,7 @@ function refreshStyles() {
       justifyContent: 'center',
       width: 30,
       height: 30,
-      marginRight: 8,
+      marginRight: commonValues.sizes.medium,
     },
     messagesView: {
       padding: 10,
@@ -387,11 +395,11 @@ function refreshStyles() {
       overflow: 'hidden',
     },
     sendButton: {
-      marginStart: 8,
+      marginStart: commonValues.sizes.medium,
       justifyContent: 'center',
       alignItems: 'center',
       padding: 5,
-      borderRadius: 8,
+      borderRadius: commonValues.sizes.medium,
       backgroundColor: currentTheme.accentColor,
     },
     headerIcon: {
@@ -404,7 +412,7 @@ function refreshStyles() {
       padding: 5,
       flex: 1,
       fontFamily: 'Open Sans',
-      borderRadius: 8,
+      borderRadius: commonValues.sizes.medium,
     },
     serverName: {
       marginVertical: 10,
@@ -416,13 +424,13 @@ function refreshStyles() {
       height: 50,
       backgroundColor: currentTheme.headerPrimary,
       alignItems: 'center',
-      paddingLeft: 16,
+      paddingLeft: commonValues.sizes.xl,
       padding: 10,
       flexDirection: 'row',
     },
     messageContentReply: {
       height: 20,
-      marginLeft: 4,
+      marginLeft: commonValues.sizes.small,
     },
     actionTile: {
       height: 40,
@@ -430,26 +438,26 @@ function refreshStyles() {
       alignItems: 'center',
       flexDirection: 'row',
       backgroundColor: currentTheme.backgroundPrimary,
-      borderRadius: 8,
+      borderRadius: commonValues.sizes.medium,
       paddingLeft: 10,
       paddingRight: 10,
-      marginVertical: 4,
+      marginVertical: commonValues.sizes.small,
     },
     messageBoxBar: {
-      padding: 4,
-      paddingVertical: 8,
+      padding: commonValues.sizes.small,
+      paddingVertical: commonValues.sizes.medium,
       borderBottomColor: currentTheme.backgroundPrimary,
       borderBottomWidth: 1,
       flexDirection: 'row',
     },
     attachmentsBar: {
-      padding: 8,
+      padding: commonValues.sizes.medium,
       borderBottomColor: currentTheme.backgroundPrimary,
       borderBottomWidth: 1,
       flexDirection: 'column',
     },
     repliedMessagePreviews: {
-      paddingTop: 4,
+      paddingTop: commonValues.sizes.small,
     },
     timestamp: {
       fontSize: 12,
@@ -476,7 +484,7 @@ function refreshStyles() {
     iwbInput: {
       fontFamily: 'Open Sans',
       flex: 1,
-      borderRadius: 8,
+      borderRadius: commonValues.sizes.medium,
       backgroundColor: currentTheme.backgroundSecondary,
       padding: 6,
       paddingHorizontal: 10,

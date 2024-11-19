@@ -6,7 +6,7 @@ import {useBackHandler} from '@react-native-community/hooks';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {app, client} from '@rvmob/Generic';
-import {currentTheme, styles} from '@rvmob/Theme';
+import {commonValues, currentTheme, styles} from '@rvmob/Theme';
 import {BackButton, Button, Link, Text} from '@rvmob/components/common/atoms';
 import {loginRegular, loginWithToken} from '@rvmob/lib/auth';
 import {OFFICIAL_INSTANCE_SIGNUP_URL} from '@rvmob/lib/consts';
@@ -30,9 +30,9 @@ export const LoginPage = ({state}: {state: any}) => {
     <>
       <View
         style={{
-          marginTop: 12,
-          marginStart: 8,
-          marginEnd: 4,
+          marginTop: commonValues.sizes.large,
+          marginStart: commonValues.sizes.medium,
+          marginEnd: commonValues.sizes.small,
           justifyContent: 'space-between',
           alignItems: 'center',
           flexDirection: 'row',
@@ -146,7 +146,7 @@ export const LoginPage = ({state}: {state: any}) => {
             <Text
               font={'Inter'}
               style={{
-                marginVertical: 8,
+                marginVertical: commonValues.sizes.medium,
                 fontSize: 18,
                 fontWeight: 'bold',
               }}>

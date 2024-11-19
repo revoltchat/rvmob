@@ -5,7 +5,7 @@ import {API} from 'revolt.js';
 
 import {Image} from '@rvmob/crossplat/Image';
 import {app, client} from '../../../Generic';
-import {currentTheme} from '../../../Theme';
+import {commonValues, currentTheme} from '../../../Theme';
 import {MarkdownView} from '../MarkdownView';
 import {Link, Text} from '../atoms';
 
@@ -19,9 +19,9 @@ export const MessageEmbed = observer((eRaw: API.Embed) => {
         <View
           style={{
             backgroundColor: currentTheme.backgroundSecondary,
-            padding: 8,
-            borderRadius: 8,
-            borderStartWidth: 4,
+            padding: commonValues.sizes.medium,
+            borderRadius: commonValues.sizes.medium,
+            borderStartWidth: commonValues.sizes.small,
             borderStartColor: e.colour ?? undefined,
           }}>
           {e.type === 'Website' && e.site_name ? (
@@ -63,7 +63,7 @@ export const MessageEmbed = observer((eRaw: API.Embed) => {
                     style={{
                       width: width,
                       height: height,
-                      marginTop: 4,
+                      marginTop: commonValues.sizes.small,
                       borderRadius: 3,
                     }}
                   />
@@ -89,7 +89,7 @@ export const MessageEmbed = observer((eRaw: API.Embed) => {
             style={{
               width: width,
               height: height,
-              marginBottom: 4,
+              marginBottom: commonValues.sizes.small,
               borderRadius: 3,
             }}
           />

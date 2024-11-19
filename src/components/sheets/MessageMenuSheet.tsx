@@ -10,7 +10,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import type {Message} from 'revolt.js';
 
 import {app, setFunction} from '../../Generic';
-import {currentTheme, styles} from '../../Theme';
+import {commonValues, currentTheme, styles} from '../../Theme';
 import {ContextButton, CopyIDButton, Text} from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
 import {ReplyMessage} from '../common/messaging/ReplyMessage';
@@ -42,7 +42,7 @@ export const MessageMenuSheet = observer(() => {
           <>
             <View
               style={{
-                paddingBottom: 12,
+                paddingBottom: commonValues.sizes.large,
                 overflow: 'hidden',
               }}>
               <ReplyMessage message={message} showSymbol={false} />

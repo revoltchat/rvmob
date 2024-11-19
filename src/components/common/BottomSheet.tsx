@@ -7,7 +7,7 @@ import BottomSheetCore, {
 } from '@gorhom/bottom-sheet';
 import {observer} from 'mobx-react-lite';
 
-import {currentTheme} from '../../Theme';
+import {commonValues, currentTheme} from '../../Theme';
 
 export const BottomSheet = observer(
   ({sheetRef, children}: {sheetRef: any; children: any}) => {
@@ -39,6 +39,6 @@ const localStyles = StyleSheet.create({
     backgroundColor: currentTheme.foregroundPrimary,
     width: '25%',
     padding: 3,
-    marginVertical: 8,
+    marginVertical: commonValues.sizes.medium,
   },
 });

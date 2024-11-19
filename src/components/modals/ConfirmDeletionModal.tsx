@@ -4,7 +4,7 @@ import {observer} from 'mobx-react-lite';
 
 import {app} from '@rvmob/Generic';
 import {DeletableObject} from '@rvmob/lib/types';
-import {currentTheme} from '@rvmob/Theme';
+import {commonValues, currentTheme} from '@rvmob/Theme';
 import {Button, Text} from '@rvmob/components/common/atoms';
 
 export const ConfirmDeletionModal = observer(
@@ -15,7 +15,7 @@ export const ConfirmDeletionModal = observer(
       <View
         style={{
           width: '80%',
-          borderRadius: 8,
+          borderRadius: commonValues.sizes.medium,
           padding: 20,
           backgroundColor: currentTheme.backgroundPrimary,
           justifyContent: 'center',

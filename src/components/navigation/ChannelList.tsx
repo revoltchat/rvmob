@@ -7,7 +7,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import {Channel, Server} from 'revolt.js';
 
 import {app, client} from '../../Generic';
-import {currentTheme, styles} from '../../Theme';
+import {commonValues, currentTheme, styles} from '../../Theme';
 import {ChannelButton, Text} from '../common/atoms';
 
 type ChannelListProps = {
@@ -39,8 +39,8 @@ const ServerChannelListCategory = observer(
           }}>
           <Text
             style={{
-              marginLeft: 12,
-              marginBottom: 2,
+              marginLeft: commonValues.sizes.large,
+              marginBottom: commonValues.sizes.xs,
               fontWeight: 'bold',
             }}>
             {category.title?.toUpperCase()}
@@ -101,7 +101,7 @@ const ServerChannelList = observer((props: ServerChannelListProps) => {
             width: '100%',
             height: 110,
             justifyContent: 'flex-end',
-            marginBottom: 8,
+            marginBottom: commonValues.sizes.medium,
           }}>
           <TouchableOpacity
             onPress={() => app.openServerContextMenu(props.currentServer)}
@@ -176,9 +176,9 @@ export const ChannelList = observer((props: ChannelListProps) => {
         <>
           <Text
             style={{
-              marginLeft: 12,
-              margin: 14,
-              fontSize: 16,
+              marginLeft: commonValues.sizes.large,
+              margin: commonValues.sizes.xl,
+              fontSize: 18,
               fontWeight: 'bold',
             }}>
             Direct Messages

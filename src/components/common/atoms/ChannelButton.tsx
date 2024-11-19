@@ -6,7 +6,7 @@ import {Channel} from 'revolt.js';
 import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
 import {SpecialChannelIcon} from '@rvmob/components/navigation/SpecialChannelIcon';
 import {MiniProfile} from '@rvmob/Profile';
-import {currentTheme, styles} from '@rvmob/Theme';
+import {commonValues, currentTheme, styles} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms/Text';
 
 type ChannelButtonProps = {
@@ -87,8 +87,7 @@ export const ChannelButton = observer(
                 style={{
                   width: 20,
                   height: 20,
-                  marginLeft: 4,
-                  marginRight: 4,
+                  marginHorizontal: commonValues.sizes.small,
                   borderRadius: 10000,
                   backgroundColor: currentTheme.error,
                   justifyContent: 'center',
@@ -102,10 +101,9 @@ export const ChannelButton = observer(
             ) : showUnread && channel instanceof Channel && channel.unread ? (
               <View
                 style={{
-                  width: 12,
-                  height: 12,
-                  marginLeft: 8,
-                  marginRight: 8,
+                  width: commonValues.sizes.large,
+                  height: commonValues.sizes.large,
+                  marginHorizontal: commonValues.sizes.medium,
                   borderRadius: 10000,
                   backgroundColor: currentTheme.foregroundPrimary,
                 }}

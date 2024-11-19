@@ -10,7 +10,7 @@ import {Message} from 'revolt.js';
 import {app, client, setFunction} from '../../Generic';
 import {USER_IDS} from '../../lib/consts';
 import type {ReportedObject} from '../../lib/types';
-import {currentTheme} from '../../Theme';
+import {commonValues, currentTheme} from '../../Theme';
 import {Avatar, Button, Text, Username} from '../common/atoms';
 import {MarkdownView} from '../common/MarkdownView';
 import {BottomSheet} from '../common/BottomSheet';
@@ -54,12 +54,11 @@ async function sendReport(
 // TODO: move this to the styles file?
 const inputStyles = {
   fontFamily: 'Open Sans',
-  borderRadius: 8,
+  borderRadius: commonValues.sizes.medium,
   backgroundColor: currentTheme.headerSecondary,
-  margin: 4,
+  margin: commonValues.sizes.small,
   padding: 6,
-  paddingLeft: 12,
-  paddingRight: 12,
+  paddingHorizontal: commonValues.sizes.large,
   color: currentTheme.foregroundPrimary,
 };
 
@@ -278,7 +277,7 @@ export const ReportSheet = observer(() => {
         output = (
           <>
             <Text type={'h1'}>Report message</Text>
-            <ScrollView style={{marginBottom: 4, maxHeight: '40%'}}>
+            <ScrollView style={{marginBottom: commonValues.sizes.small, maxHeight: '40%'}}>
               <View style={{flexDirection: 'row'}}>
                 <Avatar
                   user={msg.author}
@@ -288,7 +287,7 @@ export const ReportSheet = observer(() => {
                 <View
                   style={{
                     flexDirection: 'column',
-                    marginLeft: 4,
+                    marginLeft: commonValues.sizes.small,
                     width: '90%',
                   }}>
                   <Username

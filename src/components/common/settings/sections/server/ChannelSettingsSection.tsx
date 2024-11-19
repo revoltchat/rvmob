@@ -9,7 +9,7 @@ import {Channel, Server} from 'revolt.js';
 
 import {app} from '@rvmob/Generic';
 import {SettingsSection} from '@rvmob/lib/types';
-import {currentTheme, styles} from '@rvmob/Theme';
+import {commonValues, currentTheme, styles} from '@rvmob/Theme';
 import {GapView} from '@rvmob/components/layout';
 import {
   BackButton,
@@ -108,7 +108,7 @@ export const ChannelSettingsSection = observer(
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginVertical: 4,
+                marginVertical: commonValues.sizes.medium,
               }}>
               <View style={{flex: 1}}>
                 <Text type={'h1'}>
@@ -145,7 +145,7 @@ export const ChannelSettingsSection = observer(
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
-                    marginVertical: 4,
+                    marginVertical: commonValues.sizes.small,
                   }}>
                   <View style={{flex: 1}}>
                     <Text type={'h2'}>

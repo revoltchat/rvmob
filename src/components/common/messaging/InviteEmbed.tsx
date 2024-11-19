@@ -5,7 +5,7 @@ import {observer} from 'mobx-react-lite';
 import {API, Message} from 'revolt.js';
 
 import {app, client} from '../../../Generic';
-import {currentTheme} from '../../../Theme';
+import {commonValues, currentTheme} from '../../../Theme';
 import {Button, GeneralAvatar, Text} from '../atoms';
 
 const InviteBackground = observer(({children}: {children: any}) => {
@@ -13,9 +13,9 @@ const InviteBackground = observer(({children}: {children: any}) => {
     <View
       style={{
         backgroundColor: currentTheme.backgroundSecondary,
-        padding: 8,
-        borderRadius: 8,
-        marginVertical: 2,
+        padding: commonValues.sizes.medium,
+        borderRadius: commonValues.sizes.medium,
+        marginVertical: commonValues.sizes.xs,
       }}>
       {children}
     </View>
@@ -104,7 +104,7 @@ export const InviteEmbed = observer(
           <View
             style={{
               width: '60%',
-              marginLeft: 8,
+              marginLeft: commonValues.sizes.medium,
               flexDirection: 'column',
               justifyContent: 'center',
             }}>

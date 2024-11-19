@@ -15,7 +15,7 @@ import {Server} from 'revolt.js';
 
 import {app, setFunction} from '@rvmob/Generic';
 import {SettingsSection} from '@rvmob/lib/types';
-import {currentTheme, styles} from '@rvmob/Theme';
+import {commonValues, currentTheme, styles} from '@rvmob/Theme';
 import {GapView} from '@rvmob/components/layout';
 import {
   BackButton,
@@ -100,7 +100,7 @@ export const RoleSettingsSection = observer(
                     style={{
                       fontFamily: 'Open Sans',
                       minWidth: '100%',
-                      borderRadius: 8,
+                      borderRadius: commonValues.sizes.medium,
                       backgroundColor: currentTheme.backgroundSecondary,
                       padding: 6,
                       paddingLeft: 10,
@@ -161,15 +161,15 @@ export const RoleSettingsSection = observer(
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 backgroundColor: currentTheme.backgroundSecondary,
-                padding: 8,
-                borderRadius: 8,
+                padding: commonValues.sizes.medium,
+                borderRadius: commonValues.sizes.medium,
               }}>
               <View style={{alignItems: 'center', flexDirection: 'row'}}>
                 <View
                   style={{
-                    padding: 16,
-                    borderRadius: 8,
-                    marginEnd: 8,
+                    padding: commonValues.sizes.xl,
+                    borderRadius: commonValues.sizes.medium,
+                    marginEnd: commonValues.sizes.medium,
                     backgroundColor:
                       server.roles![section!.subsection].colour ?? '#00000000',
                   }}
@@ -238,7 +238,7 @@ export const RoleSettingsSection = observer(
               <View
                 style={{
                   flex: 1,
-                  padding: 12,
+                  padding: commonValues.sizes.large,
                   backgroundColor: currentTheme.backgroundPrimary,
                 }}>
                 <BackButton

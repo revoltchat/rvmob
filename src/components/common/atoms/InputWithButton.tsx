@@ -35,11 +35,10 @@ import {Text} from '@rvmob/components/common/atoms/Text';
 //       style={[
 //         {
 //           minWidth: '100%',
-//           borderRadius: 8,
+//           borderRadius: commonValues.sizes.medium,
 //           backgroundColor: currentTheme.backgroundSecondary,
 //           padding: 6,
-//           paddingLeft: 10,
-//           paddingRight: 10,
+//           paddingHorizontal: 10,
 //           color: currentTheme.foregroundPrimary,
 //         },
 //         backgroundColor ? {backgroundColor} : {},

@@ -1,6 +1,6 @@
 import {observer} from 'mobx-react-lite';
 import {client} from './Generic';
-import {currentTheme} from './Theme';
+import {commonValues, currentTheme} from './Theme';
 import {View} from 'react-native';
 import {Server, User, Channel} from 'revolt.js';
 import {Avatar} from '@rvmob/components/common/atoms/Avatar';
@@ -99,19 +99,19 @@ export const RoleView = observer(({server, user}: RoleViewProps) => {
       <Text type={'profile'}>ROLES</Text>
       <View
         key={`roleview-${server._id}-container`}
-        style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+        style={{flexDirection: 'row', flexWrap: 'wrap', rowGap: commonValues.sizes.small}}>
         {roles.map((r, i, a) => (
           <View
-            key={`roleview-${server._id}-${r.name}-${Math.random()}`}
+            key={`roleview-${server._id}-${r.name}-${i}`}
             style={{
               flexDirection: 'row',
               padding: 6,
-              paddingStart: 8,
-              paddingEnd: 8,
-              marginStart: i === 0 ? 0 : 4,
-              marginEnd: i === a.length - 1 ? 0 : 4,
+              paddingStart: commonValues.sizes.medium,
+              paddingEnd: commonValues.sizes.medium,
+              marginStart: i === 0 ? 0 : commonValues.sizes.small,
+              marginEnd: i === a.length - 1 ? 0 : commonValues.sizes.small,
               backgroundColor: currentTheme.backgroundPrimary,
-              borderRadius: 8,
+              borderRadius: commonValues.sizes.medium,
             }}>
             <View
               key={`roleview-${server._id}-${r.name}-colour`}
@@ -122,7 +122,7 @@ export const RoleView = observer(({server, user}: RoleViewProps) => {
                   : currentTheme.foregroundSecondary,
                 height: 16,
                 width: 16,
-                margin: 2,
+                margin: commonValues.sizes.xs,
                 marginRight: 6,
               }}
             />

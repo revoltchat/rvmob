@@ -5,7 +5,7 @@ import {observer} from 'mobx-react-lite';
 
 import {Client} from 'revolt.js';
 
-import {currentTheme} from '../Theme';
+import {commonValues, currentTheme} from '../Theme';
 import {Text} from './common/atoms';
 
 export const NetworkIndicator = observer(({client}: {client: Client}) => {
@@ -30,7 +30,7 @@ export const NetworkIndicator = observer(({client}: {client: Client}) => {
           style={{
             fontSize: 16,
             fontWeight: 'bold',
-            marginEnd: 4,
+            marginEnd: commonValues.sizes.small,
           }}>
           {t('app.misc.network_indicator.body')}
         </Text>

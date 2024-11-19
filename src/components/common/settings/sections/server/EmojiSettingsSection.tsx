@@ -8,7 +8,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {Server} from 'revolt.js';
 
 import {client} from '@rvmob/Generic';
-import {currentTheme, styles} from '@rvmob/Theme';
+import {commonValues, currentTheme, styles} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms';
 import {Image} from '@rvmob/crossplat/Image';
 import {showToast} from '@rvmob/lib/utils';
@@ -44,8 +44,8 @@ export const EmojiSettingsSection = observer(({server}: {server: Server}) => {
               style={{
                 minHeight: 24,
                 minWidth: 24,
-                marginStart: 4,
-                marginEnd: 8,
+                marginStart: commonValues.sizes.small,
+                marginEnd: commonValues.sizes.medium,
               }}
               source={{
                 uri: `${client.configuration?.features.autumn.url}/emojis/${e._id}`,

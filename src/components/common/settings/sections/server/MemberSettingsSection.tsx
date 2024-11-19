@@ -8,7 +8,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Member, Server} from 'revolt.js';
 
-import {currentTheme, styles} from '@rvmob/Theme';
+import {commonValues, currentTheme, styles} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms';
 import {app} from '@rvmob/Generic';
 
@@ -81,7 +81,7 @@ export const MemberSettingsSection = observer(({server}: {server: Server}) => {
                 <View
                   style={{
                     flex: 1,
-                    paddingVertical: 16,
+                    paddingVertical: commonValues.sizes.xl,
                     flexDirection: 'row',
                   }}>
                   {server.havePermission('ManageNicknames') && m.inferior ? (

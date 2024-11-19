@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Modal, Pressable, View} from 'react-native';
+import {Modal, Pressable, StyleSheet, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
@@ -15,7 +15,7 @@ import {
   TextEditingModalProps,
 } from '@rvmob/lib/types';
 import {getReadableFileSize, openUrl} from '@rvmob/lib/utils';
-import {currentTheme} from '@rvmob/Theme';
+import {commonValues, currentTheme} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms';
 import {GapView} from '@rvmob/components/layout';
 import {
@@ -35,7 +35,7 @@ import {
   ServerSettingsSheet,
   SettingsSheet,
   StatusSheet,
-} from '@rvmob/components/sheets/';
+} from '@rvmob/components/sheets';
 
 const WrappedImageViewer = gestureHandlerRootHOC(
   ({state, setState}: {state: any; setState: any}) => {
@@ -49,7 +49,7 @@ const WrappedImageViewer = gestureHandlerRootHOC(
           style={{
             height: '7%',
             backgroundColor: currentTheme.background,
-            paddingHorizontal: 12,
+            paddingHorizontal: commonValues.sizes.large,
             alignItems: 'center',
             justifyContent: 'space-between',
             flexDirection: 'row',
@@ -88,7 +88,7 @@ const WrappedImageViewer = gestureHandlerRootHOC(
           style={{
             height: '7%',
             backgroundColor: currentTheme.background,
-            paddingHorizontal: 12,
+            paddingHorizontal: commonValues.sizes.large,
             justifyContent: 'center',
             zIndex: 10,
           }}>
@@ -294,4 +294,8 @@ export const Modals = observer(() => {
       </Modal>
     </>
   );
+});
+
+const localStyles = StyleSheet.create({
+
 });

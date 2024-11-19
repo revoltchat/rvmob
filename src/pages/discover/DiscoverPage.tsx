@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {DOMParser} from '@xmldom/xmldom';
 
 import {app, client} from '@rvmob/Generic';
-import {currentTheme, styles} from '@rvmob/Theme';
+import {commonValues, currentTheme, styles} from '@rvmob/Theme';
 import {Button, GeneralAvatar, Text} from '@rvmob/components/common/atoms';
 import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
 import {SpecialChannelIcon} from '@rvmob/components/navigation/SpecialChannelIcon';
@@ -25,9 +25,9 @@ const renderServers = (servers: any) => {
       <View
         key={`discover-entry-${server._id}`}
         style={{
-          marginBottom: 8,
-          borderRadius: 8,
-          padding: 16,
+          marginBottom: commonValues.sizes.medium,
+          borderRadius: commonValues.sizes.medium,
+          padding: commonValues.sizes.xl,
           backgroundColor: currentTheme.backgroundSecondary,
         }}>
         <View
@@ -52,19 +52,19 @@ const renderServers = (servers: any) => {
         <View
           key={`discover-entry-${server._id}-tags`}
           style={{
-            rowGap: 4,
+            rowGap: commonValues.sizes.small,
             flexWrap: 'wrap',
             flexDirection: 'row',
-            marginVertical: 8,
+            marginVertical: commonValues.sizes.medium,
           }}>
           {server.tags.map((tag: string) => {
             return (
               <View
                 style={{
-                  padding: 4,
-                  borderRadius: 8,
+                  padding: commonValues.sizes.small,
+                  borderRadius: commonValues.sizes.medium,
                   backgroundColor: currentTheme.headerSecondary,
-                  marginEnd: 4,
+                  marginEnd: commonValues.sizes.small,
                 }}
                 key={`discover-entry-${server._id}-tag-${tag}`}>
                 <Text>#{tag}</Text>
@@ -154,9 +154,9 @@ export const DiscoverPage = () => {
       {data ? (
         <>
           <ScrollView
-            style={{flex: 1, padding: 8}}
+            style={{flex: 1, padding: commonValues.sizes.medium}}
             contentContainerStyle={{
-              paddingBottom: Platform.OS === 'web' ? 0 : 8,
+              paddingBottom: Platform.OS === 'web' ? 0 : commonValues.sizes.medium,
             }}>
             {tab === 'servers' ? (
               <>

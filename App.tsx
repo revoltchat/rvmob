@@ -19,7 +19,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 import {Channel, Server} from 'revolt.js';
 
-import {currentTheme, styles} from './src/Theme';
+import {commonValues, currentTheme, styles} from './src/Theme';
 import {client, app, selectedRemark, randomizeRemark} from './src/Generic';
 import {setFunction} from './src/Generic';
 import {SideMenu} from './src/SideMenu';
@@ -423,7 +423,7 @@ function ErrorMessage({
 }) {
   console.error(`[APP] Uncaught error: ${error}`);
   return (
-    <View style={{flex: 1, padding: 16, justifyContent: 'center'}}>
+    <View style={{flex: 1, padding: commonValues.sizes.xl, justifyContent: 'center'}}>
       <Text
         style={{
           alignItems: 'center',
@@ -441,9 +441,9 @@ function ErrorMessage({
       <View
         style={{
           backgroundColor: currentTheme.background,
-          borderRadius: 8,
-          marginVertical: 16,
-          padding: 16,
+          borderRadius: commonValues.sizes.medium,
+          marginVertical: commonValues.sizes.xl,
+          padding: commonValues.sizes.xl,
         }}>
         <Text font={'JetBrains Mono'} colour={'#ff5555'}>
           {error.toString()}

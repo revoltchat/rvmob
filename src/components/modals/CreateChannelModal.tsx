@@ -6,7 +6,7 @@ import {observer} from 'mobx-react-lite';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {app} from '@rvmob/Generic';
-import {currentTheme, styles} from '@rvmob/Theme';
+import {commonValues, currentTheme, styles} from '@rvmob/Theme';
 import {Button, Checkbox, Text} from '@rvmob/components/common/atoms';
 import {CreateChannelModalProps} from '@rvmob/lib/types';
 
@@ -22,7 +22,7 @@ export const CreateChannelModal = observer(
       <View
         style={{
           width: '80%',
-          borderRadius: 8,
+          borderRadius: commonValues.sizes.medium,
           padding: 20,
           backgroundColor: currentTheme.backgroundPrimary,
           justifyContent: 'center',
@@ -47,11 +47,11 @@ export const CreateChannelModal = observer(
           <Text type={'h2'}>{t('app.modals.create_channel.type_header')}</Text>
           <View
             style={{
-              marginVertical: 4,
-              borderRadius: 8,
+              marginVertical: commonValues.sizes.small,
+              borderRadius: commonValues.sizes.medium,
               minWidth: '100%',
               backgroundColor: currentTheme.backgroundSecondary,
-              padding: 8,
+              padding: commonValues.sizes.medium,
             }}>
             {['Text', 'Voice'].map(ct => (
               <Pressable
@@ -77,7 +77,7 @@ export const CreateChannelModal = observer(
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginVertical: 4,
+              marginVertical: commonValues.sizes.small,
             }}>
             <Text>{t('app.modals.create_channel.nsfw_label')}</Text>
             <Checkbox

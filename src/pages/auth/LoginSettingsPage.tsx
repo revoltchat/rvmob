@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Platform, TextInput, View} from 'react-native';
 
 import {app} from '../../Generic';
-import {currentTheme, styles} from '../../Theme';
+import {commonValues, currentTheme, styles} from '../../Theme';
 import {BackButton, Button, Text} from '../../components/common/atoms';
 
 export const LoginSettingsPage = ({state}: {state: any}) => {
@@ -54,7 +54,7 @@ export const LoginSettingsPage = ({state}: {state: any}) => {
           state.setState({status: 'awaitingLogin'});
         }}
         type={'close'}
-        style={{padding: 12}}
+        style={{padding: commonValues.sizes.large}}
       />
       <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
         {saved ? (

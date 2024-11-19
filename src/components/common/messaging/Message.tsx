@@ -16,7 +16,7 @@ import {MessageReactions} from '@rvmob/components/common/messaging/MessageReacti
 import {PlatformModerationMessage} from '@rvmob/components/common/messaging/PlatformModerationMessage';
 import {ReplyMessage} from '@rvmob/components/common/messaging/ReplyMessage';
 import {app, client} from '@rvmob/Generic';
-import {currentTheme, styles} from '@rvmob/Theme';
+import {commonValues, currentTheme, styles} from '@rvmob/Theme';
 import {Image} from '@rvmob/crossplat/Image';
 import {Avatar, Text, Username} from '@rvmob/components/common/atoms';
 import {MarkdownView} from '@rvmob/components/common/MarkdownView';
@@ -358,7 +358,7 @@ export const Message = observer((props: MessageProps) => {
             <View
               key={`message-${props.message._id}-blocked-divider-top`}
               style={{
-                marginBottom: 4,
+                marginBottom: commonValues.sizes.small,
                 height: 1,
                 backgroundColor: currentTheme.foregroundTertiary,
               }}
@@ -367,7 +367,7 @@ export const Message = observer((props: MessageProps) => {
               key={`message-${props.message._id}-blocked`}
               style={{
                 backgroundColor: currentTheme.background,
-                borderRadius: 4,
+                borderRadius: commonValues.sizes.small,
                 padding: 6,
               }}>
               <Text style={{marginLeft: 40}}>Blocked message</Text>
@@ -375,7 +375,7 @@ export const Message = observer((props: MessageProps) => {
             <View
               key={`message-${props.message._id}-blocked-divider-bottom`}
               style={{
-                marginTop: 4,
+                marginTop: commonValues.sizes.small,
                 height: 1,
                 backgroundColor: currentTheme.foregroundTertiary,
               }}
@@ -508,7 +508,7 @@ export const Message = observer((props: MessageProps) => {
                           style={{
                             width: width,
                             height: height,
-                            marginBottom: 4,
+                            marginBottom: commonValues.sizes.small,
                             borderRadius: 3,
                           }}
                         />
@@ -521,10 +521,10 @@ export const Message = observer((props: MessageProps) => {
                         onPress={() => openUrl(client.generateFileURL(a)!)}>
                         <View
                           style={{
-                            padding: 12,
-                            borderRadius: 4,
+                            padding: commonValues.sizes.large,
+                            borderRadius: commonValues.sizes.small,
                             backgroundColor: currentTheme.backgroundSecondary,
-                            marginBottom: 15,
+                            marginBottom: commonValues.sizes.small,
                           }}>
                           <Text style={{fontWeight: 'bold'}}>{a.filename}</Text>
                           <Text>{getReadableFileSize(a.size)}</Text>
