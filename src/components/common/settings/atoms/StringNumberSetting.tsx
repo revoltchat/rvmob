@@ -33,7 +33,11 @@ export const StringNumberSetting = ({
       {sRaw.options ? (
         <View>
           <IndicatorIcons s={sRaw} />
-          <Text style={{fontWeight: 'bold', marginBottom: commonValues.sizes.medium}}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              marginBottom: commonValues.sizes.medium,
+            }}>
             {t(`app.settings.${sRaw.key}`)}
           </Text>
           {sRaw.remark ? (

@@ -286,29 +286,29 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                 let uploaded = [];
                 const token = await AsyncStorage.getItem('token');
                 if (token) {
-                for (let a of attachments) {
-                  const formdata = new FormData();
-                  formdata.append('file', a);
-                  console.log(`[MESSAGEBOX] formdata: ${formdata}`);
-                  const result = await fetch(
-                    `${client.configuration?.features.autumn.url}/attachments`,
-                    {
-                      method: 'POST',
-                      headers: {
-                        'X-Session-Token': token,
+                  for (let a of attachments) {
+                    const formdata = new FormData();
+                    formdata.append('file', a);
+                    console.log(`[MESSAGEBOX] formdata: ${formdata}`);
+                    const result = await fetch(
+                      `${client.configuration?.features.autumn.url}/attachments`,
+                      {
+                        method: 'POST',
+                        headers: {
+                          'X-Session-Token': token,
+                        },
+                        body: formdata,
                       },
-                      body: formdata,
-                    },
-                  ).then(res => res.json());
-                  if (result.type) {
-                    console.error(
-                      `[MESSAGEBOX] Error uploading attachment: ${result.type}`,
-                    );
-                  } else {
-                    uploaded.push(result.id);
+                    ).then(res => res.json());
+                    if (result.type) {
+                      console.error(
+                        `[MESSAGEBOX] Error uploading attachment: ${result.type}`,
+                      );
+                    } else {
+                      uploaded.push(result.id);
+                    }
                   }
                 }
-              }
                 if (replyingMessages.length > 0) {
                   console.log(replyingMessages);
                 }

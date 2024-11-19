@@ -277,7 +277,11 @@ export const ReportSheet = observer(() => {
         output = (
           <>
             <Text type={'h1'}>Report message</Text>
-            <ScrollView style={{marginBottom: commonValues.sizes.small, maxHeight: '40%'}}>
+            <ScrollView
+              style={{
+                marginBottom: commonValues.sizes.small,
+                maxHeight: '40%',
+              }}>
               <View style={{flexDirection: 'row'}}>
                 <Avatar
                   user={msg.author}

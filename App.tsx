@@ -423,7 +423,12 @@ function ErrorMessage({
 }) {
   console.error(`[APP] Uncaught error: ${error}`);
   return (
-    <View style={{flex: 1, padding: commonValues.sizes.xl, justifyContent: 'center'}}>
+    <View
+      style={{
+        flex: 1,
+        padding: commonValues.sizes.xl,
+        justifyContent: 'center',
+      }}>
       <Text
         style={{
           alignItems: 'center',

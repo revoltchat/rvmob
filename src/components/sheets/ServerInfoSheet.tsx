@@ -123,7 +123,10 @@ export const ServerInfoSheet = observer(() => {
                   name={server.discoverable ? 'public' : 'home'}
                   color={currentTheme.foregroundSecondary}
                   size={20}
-                  style={{alignSelf: 'center', marginEnd: commonValues.sizes.small}}
+                  style={{
+                    alignSelf: 'center',
+                    marginEnd: commonValues.sizes.small,
+                  }}
                 />
                 <Text
                   colour={currentTheme.foregroundSecondary}

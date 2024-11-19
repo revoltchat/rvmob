@@ -99,7 +99,11 @@ export const RoleView = observer(({server, user}: RoleViewProps) => {
       <Text type={'profile'}>ROLES</Text>
       <View
         key={`roleview-${server._id}-container`}
-        style={{flexDirection: 'row', flexWrap: 'wrap', rowGap: commonValues.sizes.small}}>
+        style={{
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          rowGap: commonValues.sizes.small,
+        }}>
         {roles.map((r, i, a) => (
           <View
             key={`roleview-${server._id}-${r.name}-${i}`}

@@ -170,7 +170,11 @@ export const ProfileSheet = observer(() => {
               </View>
             </View>
             <View
-              style={{flexDirection: 'row', width: '80%', marginBottom: commonValues.sizes.large}}>
+              style={{
+                flexDirection: 'row',
+                width: '80%',
+                marginBottom: commonValues.sizes.large,
+              }}>
               <View>
                 <Username user={user} server={server ?? undefined} size={24} />
                 {!server ? (

@@ -156,7 +156,8 @@ export const DiscoverPage = () => {
           <ScrollView
             style={{flex: 1, padding: commonValues.sizes.medium}}
             contentContainerStyle={{
-              paddingBottom: Platform.OS === 'web' ? 0 : commonValues.sizes.medium,
+              paddingBottom:
+                Platform.OS === 'web' ? 0 : commonValues.sizes.medium,
             }}>
             {tab === 'servers' ? (
               <>

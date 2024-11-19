@@ -128,7 +128,9 @@ export const LoginPage = ({state}: {state: any}) => {
               value={state.state.tokenInput}
             />
             <Link
-              link={'https://web.archive.org/web/20231204052541/https://infi.sh/posts/revolt-tokens'}
+              link={
+                'https://web.archive.org/web/20231204052541/https://infi.sh/posts/revolt-tokens'
+              }
               label={t('app.login.token_info_label')}
               style={{fontFamily: 'Inter', fontWeight: 'bold'}}
             />
