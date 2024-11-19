@@ -3,6 +3,7 @@ import {Pressable, View, TextInput, Platform} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {type DocumentPickerResponse} from 'react-native-document-picker';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -283,6 +284,8 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                   ),
                 });
                 let uploaded = [];
+                const token = await AsyncStorage.getItem('token');
+                if (token) {
                 for (let a of attachments) {
                   const formdata = new FormData();
                   formdata.append('file', a);
@@ -291,6 +294,9 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                     `${client.configuration?.features.autumn.url}/attachments`,
                     {
                       method: 'POST',
+                      headers: {
+                        'X-Session-Token': token,
+                      },
                       body: formdata,
                     },
                   ).then(res => res.json());
@@ -302,6 +308,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                     uploaded.push(result.id);
                   }
                 }
+              }
                 if (replyingMessages.length > 0) {
                   console.log(replyingMessages);
                 }
