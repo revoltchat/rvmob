@@ -12,14 +12,76 @@ import {loginRegular, loginWithToken} from '@rvmob/lib/auth';
 import {OFFICIAL_INSTANCE_SIGNUP_URL} from '@rvmob/lib/consts';
 import {openUrl} from '@rvmob/lib/utils';
 
-export const LoginPage = ({state}: {state: any}) => {
+export const LoginPage = ({
+  openLoginSettings,
+  markAsLoggedIn,
+}: {
+  openLoginSettings: () => void;
+  markAsLoggedIn: () => void;
+}) => {
   const {t} = useTranslation();
 
+  const [localStatus, setLocalStatus] = useState<
+    'awaitingInput' | 'checkingCredentials'
+  >('awaitingInput');
   const [loginType, setLoginType] = useState<'email' | 'token' | ''>('');
+
+  const [emailInput, setEmailInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
+  const [tfaInput, setTFAInput] = useState('');
+
+  const [askForTFACode, setAskForTFACode] = useState(false);
+  const [tfaTicket, setTFATicket] = useState('');
+
+  const [tokenInput, setTokenInput] = useState('');
+
+  const [loginError, setLoginError] = useState<any>(null);
+
+  function backFromTFA() {
+    setAskForTFACode(false);
+    setTFAInput('');
+    setTFATicket('');
+  }
+
+  function backFromRegularInputs() {
+    setLoginType('');
+    setEmailInput('');
+    setPasswordInput('');
+    setTokenInput('');
+  }
+
+  function setStatus(
+    newStatus:
+      | 'awaitingInput'
+      | 'awaitingLogin'
+      | 'checkingCredentials'
+      | 'tryingLogin'
+      | 'loggedIn',
+  ) {
+    // sent back to the login page (e.g. if a TFA code is needed)
+    if (newStatus === 'awaitingInput' || newStatus === 'awaitingLogin') {
+      setLocalStatus('awaitingInput');
+      if (newStatus === 'awaitingLogin') {
+        app.setLoggedOutScreen('loginPage');
+      }
+    }
+    // connecting/loading
+    else if (newStatus === 'tryingLogin') {
+      app.setLoggedOutScreen('loadingPage');
+    }
+    // loaded; render main app
+    else if (newStatus === 'loggedIn') {
+      markAsLoggedIn();
+    }
+    // attempting to log in with new credentials
+    else {
+      setLocalStatus('checkingCredentials');
+    }
+  }
 
   useBackHandler(() => {
     if (loginType !== '') {
-      setLoginType('');
+      askForTFACode ? backFromTFA() : backFromRegularInputs();
       return true;
     }
 
@@ -40,20 +102,23 @@ export const LoginPage = ({state}: {state: any}) => {
         {loginType !== '' ? (
           <BackButton
             callback={() => {
-              setLoginType('');
+              askForTFACode ? backFromTFA() : backFromRegularInputs();
             }}
           />
         ) : (
           <View />
         )}
-        <TouchableOpacity
-          onPress={() => state.setState({status: 'loginSettings'})}>
-          <MaterialIcon
-            name="more-vert"
-            size={30}
-            color={currentTheme.foregroundPrimary}
-          />
-        </TouchableOpacity>
+        {loginType === '' ? (
+          <TouchableOpacity onPress={() => openLoginSettings()}>
+            <MaterialIcon
+              name="more-vert"
+              size={30}
+              color={currentTheme.foregroundPrimary}
+            />
+          </TouchableOpacity>
+        ) : (
+          <View />
+        )}
       </View>
       <View
         style={{
@@ -69,51 +134,71 @@ export const LoginPage = ({state}: {state: any}) => {
           }}>
           RVMob
         </Text>
-        {state.state.askForTFACode || loginType === 'email' ? (
+        {askForTFACode || loginType === 'email' ? (
           <>
-            <TextInput
-              placeholderTextColor={currentTheme.foregroundSecondary}
-              style={styles.loginInput}
-              placeholder={t('app.login.forms.email_placeholder')}
-              keyboardType={'email-address'}
-              autoComplete={'email'}
-              onChangeText={(text: string) => {
-                state.setState({emailInput: text});
-              }}
-              value={state.state.emailInput}
-            />
-            <TextInput
-              placeholderTextColor={currentTheme.foregroundSecondary}
-              style={styles.loginInput}
-              secureTextEntry={true}
-              autoComplete={'password'}
-              placeholder={t('app.login.forms.password_placeholder')}
-              onChangeText={text => {
-                state.setState({passwordInput: text});
-              }}
-              value={state.state.passwordInput}
-            />
-            {state.state.askForTFACode === true ? (
+            {!askForTFACode ? (
+              <>
+                <TextInput
+                  placeholderTextColor={currentTheme.foregroundSecondary}
+                  style={styles.loginInput}
+                  placeholder={t('app.login.forms.email_placeholder')}
+                  keyboardType={'email-address'}
+                  autoComplete={'email'}
+                  onChangeText={(text: string) => {
+                    setEmailInput(text);
+                  }}
+                  value={emailInput}
+                  editable={localStatus === 'awaitingInput' && !askForTFACode}
+                />
+                <TextInput
+                  placeholderTextColor={currentTheme.foregroundSecondary}
+                  style={styles.loginInput}
+                  secureTextEntry={true}
+                  autoComplete={'password'}
+                  placeholder={t('app.login.forms.password_placeholder')}
+                  onChangeText={text => {
+                    setPasswordInput(text);
+                  }}
+                  value={passwordInput}
+                  editable={localStatus === 'awaitingInput' && !askForTFACode}
+                />
+              </>
+            ) : (
               <>
                 <TextInput
                   placeholderTextColor={currentTheme.foregroundSecondary}
                   style={styles.loginInput}
                   placeholder={t('app.login.forms.mfa_placeholder')}
                   onChangeText={text => {
-                    state.setState({tfaInput: text});
+                    setTFAInput(text);
                   }}
-                  value={state.state.tfaInput}
+                  value={tfaInput}
                 />
               </>
-            ) : null}
-            <Button onPress={async () => await loginRegular(state)}>
-              <Text font={'Inter'}>Log in</Text>
-            </Button>
-            {state.state.logInError ? (
-              <Text>
-                {state.state.logInError.message ||
-                  state.state.logInError.toString()}
-              </Text>
+            )}
+            {localStatus === 'awaitingInput' ? (
+              <Button
+                onPress={async () =>
+                  await loginRegular(
+                    {
+                      email: emailInput,
+                      password: passwordInput,
+                      tfaCode: tfaInput,
+                      tfaTicket: tfaTicket,
+                    },
+                    setStatus,
+                    setTFATicket,
+                    setAskForTFACode,
+                    setLoginError,
+                  )
+                }>
+                <Text font={'Inter'}>Log in</Text>
+              </Button>
+            ) : (
+              <></>
+            )}
+            {loginError ? (
+              <Text>{loginError.message || loginError.toString()}</Text>
             ) : null}
           </>
         ) : loginType === 'token' ? (
@@ -123,9 +208,9 @@ export const LoginPage = ({state}: {state: any}) => {
               style={styles.loginInput}
               placeholder={t('app.login.forms.session_token_placeholder')}
               onChangeText={text => {
-                state.setState({tokenInput: text});
+                setTokenInput(text);
               }}
-              value={state.state.tokenInput}
+              value={tokenInput}
             />
             <Link
               link={
@@ -134,13 +219,14 @@ export const LoginPage = ({state}: {state: any}) => {
               label={t('app.login.token_info_label')}
               style={{fontFamily: 'Inter', fontWeight: 'bold'}}
             />
-            <Button onPress={async () => await loginWithToken(state)}>
+            <Button
+              onPress={async () =>
+                await loginWithToken(tokenInput, setStatus, setLoginError)
+              }>
               <Text font={'Inter'}>Log in</Text>
             </Button>
-            {state.state.logInError ? (
-              <Text>
-                {state.state.logInError.message ?? state.state.logInError}
-              </Text>
+            {loginError ? (
+              <Text>{loginError.message ?? loginError}</Text>
             ) : null}
           </>
         ) : (

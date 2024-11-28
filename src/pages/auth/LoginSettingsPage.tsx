@@ -5,7 +5,7 @@ import {app} from '../../Generic';
 import {commonValues, currentTheme, styles} from '../../Theme';
 import {BackButton, Button, Text} from '../../components/common/atoms';
 
-export const LoginSettingsPage = ({state}: {state: any}) => {
+export const LoginSettingsPage = ({callback}: {callback: () => void}) => {
   const [instanceURL, setInstanceURL] = useState(
     (app.settings.get('app.instance') as string) ?? '',
   );
@@ -50,9 +50,7 @@ export const LoginSettingsPage = ({state}: {state: any}) => {
   return (
     <>
       <BackButton
-        callback={() => {
-          state.setState({status: 'awaitingLogin'});
-        }}
+        callback={() => callback()}
         type={'close'}
         style={{padding: commonValues.sizes.large}}
       />

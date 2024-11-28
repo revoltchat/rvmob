@@ -4,19 +4,65 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {decodeTime} from 'ulid';
 
-import {client} from '@rvmob/Generic';
+import {app, client} from '@rvmob/Generic';
+import {API} from 'revolt.js';
 
-export async function loginRegular(state: any) {
+async function connectAndSave(
+  session: API.ResponseLogin,
+  setStatus: (arg0: 'awaitingLogin' | 'tryingLogin' | 'loggedIn') => void,
+  setLoginError: (arg0: any) => void,
+) {
+  try {
+    // this won't happen, but I'm not sure how to tell TypeScript in the param types that session.result will always be Success in the param types and expect-error seems messy here
+    if (session.result !== 'Success') {
+      throw Error;
+    }
+    setStatus('tryingLogin');
+    const token = session.token;
+    console.log('[AUTH] Logging in with a new token...');
+    await client.useExistingSession({token: token});
+    await AsyncStorage.multiSet([
+      ['token', token],
+      ['sessionID', session._id],
+    ]);
+    console.log('[AUTH] Successfuly logged in and saved the token/session ID!');
+    setStatus('loggedIn');
+  } catch (err) {
+    setStatus('awaitingLogin');
+    setLoginError(err);
+  }
+}
+
+export async function loginRegular(
+  credentials: {
+    email: string;
+    password: string;
+    tfaCode: string;
+    tfaTicket: string;
+  },
+  setStatus: (
+    arg0:
+      | 'awaitingInput'
+      | 'awaitingLogin'
+      | 'checkingCredentials'
+      | 'tryingLogin'
+      | 'loggedIn',
+  ) => void,
+  setTicket: (arg0: string) => void,
+  setTFAStatus: (arg0: boolean) => void,
+  setLoginError: (arg0: any) => void,
+) {
   const friendlyName = `RVMob for ${Platform.OS.charAt(
     0,
   ).toUpperCase()}${Platform.OS.slice(1)}`;
 
-  state.setState({status: 'tryingLogin'});
+  setStatus('checkingCredentials');
+
   try {
     console.log('[AUTH] Attempting login with email and password...');
     let session = await client.api.post('/auth/session/login', {
-      email: state.state.emailInput,
-      password: state.state.passwordInput,
+      email: credentials.email,
+      password: credentials.password,
       friendly_name: friendlyName,
     });
 
@@ -25,132 +71,86 @@ export async function loginRegular(state: any) {
       console.log(
         '[AUTH] Account is disabled; need to add a proper handler for state',
       );
+      setLoginError('Your account has been disabled');
+      return setStatus('awaitingInput');
     } else if (session.result === 'MFA') {
-      if (state.state.tfaTicket === '') {
+      if (credentials.tfaTicket === '') {
         console.log(
           `[AUTH] MFA required; prompting for code... (ticket: ${session.ticket})`,
         );
-        return state.setState({
-          status: 'awaitingLogin',
-          askForTFACode: true,
-          tfaTicket: session.ticket,
-        });
+        setTicket(session.ticket);
+        setTFAStatus(true);
+        return setStatus('awaitingInput');
       } else {
         try {
           console.log(
-            `[AUTH] Attempting to log in with MFA (code: ${state.state.tfaInput})`,
+            `[AUTH] Attempting to log in with MFA (code: ${credentials.tfaCode}, ${credentials.tfaTicket})`,
           );
-          const isRecovery = state.state.tfaInput.length > 7;
+          const isRecovery = credentials.tfaCode.length > 7;
           console.log(`[AUTH] Using recovery code: ${isRecovery}`);
           session = await client.api.post('/auth/session/login', {
             mfa_response: isRecovery
-              ? {recovery_code: state.state.tfaInput}
-              : {totp_code: state.state.tfaInput},
-            mfa_ticket: state.state.tfaTicket,
+              ? {recovery_code: credentials.tfaCode}
+              : {totp_code: credentials.tfaCode},
+            mfa_ticket: credentials.tfaTicket,
             friendly_name: friendlyName,
           });
           console.log(`[AUTH] Result: ${session.result}`);
           if (session.result !== 'Success') {
             throw Error;
           }
-          const token = session.token;
-          console.log('[AUTH] Logging in with a new token...');
-          await client.useExistingSession({
-            token: token,
-          });
-          await AsyncStorage.multiSet([
-            ['token', token],
-            ['sessionID', session._id],
-          ]);
-          console.log(
-            '[AUTH] Successfuly logged in and saved the token/session ID!',
-          );
-          state.setState({
-            status: 'loggedIn',
-            tokenInput: '',
-            passwordInput: '',
-            emailInput: '',
-            tfaInput: '',
-            logInError: null,
-            tfaTicket: '',
-            askForTFACode: false,
-          });
+          await connectAndSave(session, setStatus, setLoginError);
         } catch (err) {
-          state.setState({logInError: err});
+          setLoginError(err);
         }
       }
     } else {
-      const token = session.token;
-      console.log('[AUTH] Logging in with a new token...');
-      await client.useExistingSession({token: token});
-      await AsyncStorage.multiSet([
-        ['token', token],
-        ['sessionID', session._id],
-      ]);
-      console.log(
-        '[AUTH] Successfuly logged in and saved the token/session ID!',
-      );
-      state.setState({
-        status: 'loggedIn',
-        tokenInput: '',
-        passwordInput: '',
-        emailInput: '',
-        tfaInput: '',
-        logInError: null,
-        tfaTicket: '',
-        askForTFACode: false,
-      });
+      await connectAndSave(session, setStatus, setLoginError);
     }
   } catch (e) {
     console.error(e);
-    state.setState({
-      logInError: e,
-      status: 'awaitingLogin',
-    });
+    setLoginError(e);
+    setStatus('awaitingLogin');
   }
 }
 
-export async function loginWithToken(state: any) {
-  state.setState({status: 'tryingLogin'});
+export async function loginWithToken(
+  token: string,
+  setStatus: (
+    arg0: 'awaitingLogin' | 'checkingCredentials' | 'tryingLogin' | 'loggedIn',
+  ) => void,
+  setLoginError: (arg0: any) => void,
+) {
+  setStatus('checkingCredentials');
   try {
     // check if this is *actually* the user's ID before doing anything
-    console.log(decodeTime(state.state.tokenInput));
-    state.setState({
-      logInError: 'That is a user ID, not a token.',
-      status: 'awaitingLogin',
-    });
+    console.log(decodeTime(token));
+    setLoginError('That is a user ID, not a token.');
+    setStatus('awaitingLogin');
   } catch (e) {
     try {
       await client.useExistingSession({
-        token: state.state.tokenInput,
+        token,
       });
-      console.log(`[AUTH] Setting saved token to ${state.state.tokenInput}`);
-      AsyncStorage.setItem('token', state.state.tokenInput);
-      state.setState({
-        status: 'loggedIn',
-        tokenInput: '',
-        passwordInput: '',
-        emailInput: '',
-        logInError: null,
-      });
+      console.log(`[AUTH] Setting saved token to ${token}`);
+      AsyncStorage.setItem('token', token);
+      setStatus('loggedIn');
     } catch (tokenErr) {
       console.error(tokenErr);
-      state.setState({
-        logInError: tokenErr,
-        status: 'awaitingLogin',
-      });
+      setLoginError(tokenErr);
+      setStatus('awaitingLogin');
     }
   }
 }
 
-export async function loginWithSavedToken(state: any) {
+export async function loginWithSavedToken(status: any) {
   AsyncStorage.getItem('token', async (err, res) => {
     if (!err) {
       if (typeof res !== 'string') {
         console.log(
           `[AUTH] Saved token was not a string: ${typeof res}, ${res}`,
         );
-        state.setState({status: 'awaitingLogin'});
+        app.setLoggedOutScreen('loginPage');
         return;
       }
       try {
@@ -160,14 +160,14 @@ export async function loginWithSavedToken(state: any) {
         !(
           e.message?.startsWith('Read error') || e.message === 'Network Error'
         ) && client.user
-          ? state.setState({logInError: e, status: 'awaitingLogin'})
-          : state.state.status === 'loggedIn'
-          ? state.setState({logInError: e})
-          : state.setState({logInError: e, status: 'awaitingLogin'});
+          ? app.setLoggedOutScreen('loginPage')
+          : status === 'loggedIn'
+          ? null
+          : app.setLoggedOutScreen('loginPage');
       }
     } else {
       console.log(err);
-      state.setState({status: 'awaitingLogin'});
+      app.setLoggedOutScreen('loginPage');
     }
   });
 }

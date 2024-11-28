@@ -20,14 +20,12 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Channel, Server} from 'revolt.js';
 
 import {commonValues, currentTheme, styles} from './src/Theme';
-import {client, app, selectedRemark, randomizeRemark} from './src/Generic';
+import {client, app, randomizeRemark} from './src/Generic';
 import {setFunction} from './src/Generic';
 import {SideMenu} from './src/SideMenu';
 import {Modals} from './src/Modals';
 import {NetworkIndicator} from './src/components/NetworkIndicator';
 import {Button, Text} from './src/components/common/atoms';
-import {LoginPage} from '@rvmob/pages/auth/LoginPage';
-import {LoginSettingsPage} from '@rvmob/pages/auth/LoginSettingsPage';
 import {ChannelView} from './src/components/views/ChannelView';
 import {Notification} from './src/components/Notification';
 import {loginWithSavedToken} from './src/lib/auth';
@@ -37,6 +35,7 @@ import {
   setUpNotifeeListener,
 } from '@rvmob/lib/notifications';
 import {sleep} from '@rvmob/lib/utils';
+import {LoginViews} from '@rvmob/pages/LoginViews';
 
 async function openLastChannel() {
   try {
@@ -151,14 +150,8 @@ class MainView extends ReactComponent {
   constructor(props) {
     super(props);
     this.state = {
-      status: 'tryingLogin',
-      askForTFACode: false,
+      status: 'loggedOut',
       currentChannel: null,
-      tokenInput: '',
-      emailInput: '',
-      passwordInput: '',
-      tfaInput: '',
-      tfaTicket: '',
       notificationMessage: null,
       orderedServers: [],
       serverNotifications: null,
@@ -181,14 +174,11 @@ class MainView extends ReactComponent {
         ['sessionID', ''],
       ]);
       client.logout();
-      this.setState({status: 'awaitingLogin'});
+      this.setState({status: 'loggedOut'});
     });
   }
   componentDidUpdate(_, prevState) {
-    if (
-      prevState.status !== this.state.status &&
-      this.state.status === 'tryingLogin'
-    ) {
+    if (prevState.status !== this.state.status) {
       randomizeRemark();
     }
   }
@@ -201,12 +191,12 @@ class MainView extends ReactComponent {
     checkLastVersion();
 
     client.on('connecting', () => {
-      this.setState({loadingStage: 'connecting'});
+      app.setLoadingStage('connecting');
       console.log(`[APP] Connecting to instance... (${new Date().getTime()})`);
     });
 
     client.on('connected', () => {
-      this.setState({loadingStage: 'connected'});
+      app.setLoadingStage('connected');
       console.log(`[APP] Connected to instance (${new Date().getTime()})`);
     });
 
@@ -327,7 +317,7 @@ class MainView extends ReactComponent {
       }
     });
 
-    await loginWithSavedToken(this);
+    await loginWithSavedToken(this.state.status);
   }
 
   async setChannel(channel: string | Channel | null, server?: Server) {
@@ -385,19 +375,10 @@ class MainView extends ReactComponent {
               />
             </View>
           </>
-        ) : this.state.status === 'awaitingLogin' ? (
-          <LoginPage state={this} />
-        ) : this.state.status === 'tryingLogin' ? (
-          <View style={styles.loadingScreen}>
-            <Text style={{fontSize: 30, fontWeight: 'bold'}}>
-              {this.state.loadingStage === 'connected'
-                ? t('app.loading.generic')
-                : t('app.loading.connecting')}
-            </Text>
-            <Text style={styles.remark}>{selectedRemark || null}</Text>
-          </View>
-        ) : this.state.status === 'loginSettings' ? (
-          <LoginSettingsPage state={this} />
+        ) : this.state.status === 'loggedOut' ? (
+          <LoginViews
+            markAsLoggedIn={() => this.setState({status: 'loggedIn'})}
+          />
         ) : (
           <View style={styles.loadingScreen}>
             <Text style={{fontSize: 30, fontWeight: 'bold'}}>Uh oh...</Text>

@@ -292,6 +292,16 @@ export const app = {
       },
     ] as Setting[],
   },
+  setLoggedOutScreen: (screen: 'loginPage' | 'loadingPage') => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function setLoggedOutScreen (args: ${screen})`,
+    );
+  },
+  setLoadingStage: (stage: string) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function setLoadingStage (args: ${stage})`,
+    );
+  },
   openProfile: (u?: User | null, s?: Server | null) => {
     console.log(
       `[FUNCTIONS] Tried to run uninitialised function openProfile (args: ${u}, ${s})`,
