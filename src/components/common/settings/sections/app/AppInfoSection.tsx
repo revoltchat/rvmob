@@ -28,55 +28,42 @@ export const AppInfoSection = () => {
       </View>
       <View style={{alignItems: 'center', marginVertical: 16}}>
         <Text type={'h1'}>RVMob v{app.version}</Text>
-        <View
-          style={{
-            justifyContent: 'center',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-          }}>
-          <Text>Powered by </Text>
-          <Link link={'https://reactnative.dev'} label={'React Native'} />
-          <Text>
-            {' v'}
-            {Platform.OS === 'web'
-              ? AppInfo.dependencies['react-native'].replace('^', '')
-              : `${Platform.constants.reactNativeVersion.major}.${
-                  Platform.constants.reactNativeVersion.minor
-                }.${Platform.constants.reactNativeVersion.patch}${
-                  Platform.constants.reactNativeVersion.prerelease
-                    ? `-${Platform.constants.reactNativeVersion.prerelease}`
-                    : ''
-                }`}
-            {' and '}
-          </Text>
+        <Text>
+          Powered by{' '}
+          <Link link={'https://reactnative.dev'} label={'React Native'} /> v
+          {Platform.OS === 'web'
+            ? AppInfo.dependencies['react-native'].replace('^', '')
+            : `${Platform.constants.reactNativeVersion.major}.${
+                Platform.constants.reactNativeVersion.minor
+              }.${Platform.constants.reactNativeVersion.patch}${
+                Platform.constants.reactNativeVersion.prerelease
+                  ? `-${Platform.constants.reactNativeVersion.prerelease}`
+                  : ''
+              }`}
+          {' and '}
           <Link
             link={'https://github.com/rexogamer/revolt.js'}
             label={'revolt.js'}
-          />
-          <Text>
-            {' '}
-            v
-            {AppInfo.dependencies['revolt.js'].replace(
-              'npm:@rexovolt/revolt.js@^',
-              '',
-            )}
-          </Text>
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <Text>Made by </Text>
-          <Link link={'https://github.com/TaiAurori'} label={'TaiAurori'} />
-          <Text>, </Text>
-          <Link link={'https://github.com/Rexogamer'} label={'Rexogamer'} />
-          <Text> and </Text>
+          />{' '}
+          v
+          {AppInfo.dependencies['revolt.js'].replace(
+            'npm:@rexovolt/revolt.js@^',
+            '',
+          )}
+        </Text>
+        <Text>
+          Made by{' '}
+          <Link link={'https://github.com/TaiAurori'} label={'TaiAurori'} />,{' '}
+          <Link link={'https://github.com/Rexogamer'} label={'Rexogamer'} /> and{' '}
           <Link link={CONTRIBUTORS_LIST} label={'other contributors'} />
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <Text>Licensed under the </Text>
+        </Text>
+        <Text>
+          Licensed under the{' '}
           <Link
             link={`${GITHUB_REPO}/blob/main/LICENSE`}
             label={'GNU GPL v3.0'}
           />
-        </View>
+        </Text>
       </View>
       <View style={{flexDirection: 'row', marginBottom: 16}}>
         <Pressable onPress={() => openUrl(GITHUB_REPO)} style={{marginEnd: 16}}>

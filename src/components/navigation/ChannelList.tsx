@@ -218,7 +218,7 @@ export const ChannelList = observer((props: ChannelListProps) => {
 
           {__DEV__ ? (
             <ChannelButton
-              onPress={ () => {
+              onPress={() => {
                 props.onChannelClick('debug');
               }}
               key={'debugChannel'}

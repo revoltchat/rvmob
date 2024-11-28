@@ -432,15 +432,15 @@ export const ProfileSheet = observer(() => {
                 {server && <RoleView user={user} server={server} />}
                 {user.badges ? (
                   <>
-                    <View style={{flexDirection: 'row'}}>
-                      <Text type={'profile'}>BADGES {'('}</Text>
+                    <Text type={'profile'}>
+                      BADGES {'('}
                       <Link
                         link={'https://support.revolt.chat/kb/account/badges'}
                         label={'learn more'}
                         style={{marginVertical: 5, fontWeight: 'bold'}}
                       />
-                      <Text type={'profile'}>{')'}</Text>
-                    </View>
+                      {')'}
+                    </Text>
                     <ScrollView
                       style={{
                         flexDirection: 'row',

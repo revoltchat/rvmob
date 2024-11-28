@@ -1,6 +1,6 @@
-import {TouchableOpacity} from 'react-native';
+import {StyleSheet} from 'react-native';
 
-import {styles} from '@rvmob/Theme';
+import {currentTheme} from '@rvmob/Theme';
 import {Text} from './Text';
 import {openUrl} from '@rvmob/lib/utils';
 
@@ -17,8 +17,15 @@ export const Link = ({link, label, style}: LinkProps) => {
   }
 
   return (
-    <TouchableOpacity onPress={() => openUrl(link)}>
-      <Text style={finalStyle}>{label}</Text>
-    </TouchableOpacity>
+    <Text onPress={() => openUrl(link)} style={finalStyle}>
+      {label}
+    </Text>
   );
 };
+
+const styles = StyleSheet.create({
+  link: {
+    color: currentTheme.accentColor,
+    textDecorationLine: 'underline',
+  },
+});

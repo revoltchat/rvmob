@@ -227,11 +227,6 @@ function refreshStyles() {
       paddingRight: 10,
       color: currentTheme.foregroundPrimary,
     },
-    link: {
-      color: currentTheme.accentColor,
-      textDecorationLine: 'underline',
-      // fontWeight: 'bold',
-    },
     leftView: {
       flex: 1,
       backgroundColor: currentTheme.backgroundSecondary,
