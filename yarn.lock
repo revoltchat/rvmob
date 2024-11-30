@@ -3610,7 +3610,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli-platform-android@npm:15.1.2":
+"@react-native-community/cli-platform-android@npm:15.1.2, @react-native-community/cli-platform-android@npm:^15.1.2":
   version: 15.1.2
   resolution: "@react-native-community/cli-platform-android@npm:15.1.2"
   dependencies:
@@ -3636,7 +3636,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli-platform-ios@npm:15.1.2":
+"@react-native-community/cli-platform-ios@npm:15.1.2, @react-native-community/cli-platform-ios@npm:^15.1.2":
   version: 15.1.2
   resolution: "@react-native-community/cli-platform-ios@npm:15.1.2"
   dependencies:
@@ -3690,7 +3690,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli@npm:15.1.2":
+"@react-native-community/cli@npm:^15.1.2":
   version: 15.1.2
   resolution: "@react-native-community/cli@npm:15.1.2"
   dependencies:
@@ -6536,7 +6536,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"compressible@npm:~2.0.16":
+"compressible@npm:~2.0.16, compressible@npm:~2.0.18":
   version: 2.0.18
   resolution: "compressible@npm:2.0.18"
   dependencies:
@@ -6545,7 +6545,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"compression@npm:^1.7.1, compression@npm:^1.7.4":
+"compression@npm:^1.7.1":
+  version: 1.7.5
+  resolution: "compression@npm:1.7.5"
+  dependencies:
+    bytes: "npm:3.1.2"
+    compressible: "npm:~2.0.18"
+    debug: "npm:2.6.9"
+    negotiator: "npm:~0.6.4"
+    on-headers: "npm:~1.0.2"
+    safe-buffer: "npm:5.2.1"
+    vary: "npm:~1.1.2"
+  checksum: 10c0/35c9d2d57c86d8107eab5e637f2146fcefec8475a2ff3e162f5eb0982ff856d385fb5d8c9823c3d50e075f2d9304bc622dac3df27bfef0355309c0a5307861c5
+  languageName: node
+  linkType: hard
+
+"compression@npm:^1.7.4":
   version: 1.7.4
   resolution: "compression@npm:1.7.4"
   dependencies:
@@ -11319,6 +11334,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"negotiator@npm:~0.6.4":
+  version: 0.6.4
+  resolution: "negotiator@npm:0.6.4"
+  checksum: 10c0/3e677139c7fb7628a6f36335bf11a885a62c21d5390204590a1a214a5631fcbe5ea74ef6a610b60afe84b4d975cbe0566a23f20ee17c77c73e74b80032108dea
+  languageName: node
+  linkType: hard
+
 "neo-async@npm:^2.5.0, neo-async@npm:^2.6.2":
   version: 2.6.2
   resolution: "neo-async@npm:2.6.2"
@@ -13037,9 +13059,9 @@ __metadata:
     "@notifee/react-native": "npm:^9.1.3"
     "@react-native-async-storage/async-storage": "npm:^2.1.0"
     "@react-native-clipboard/clipboard": "npm:^1.15.0"
-    "@react-native-community/cli": "npm:15.1.2"
-    "@react-native-community/cli-platform-android": "npm:15.1.2"
-    "@react-native-community/cli-platform-ios": "npm:15.1.2"
+    "@react-native-community/cli": "npm:^15.1.2"
+    "@react-native-community/cli-platform-android": "npm:^15.1.2"
+    "@react-native-community/cli-platform-ios": "npm:^15.1.2"
     "@react-native-community/hooks": "npm:^3.0.0"
     "@react-native/babel-preset": "npm:^0.76.3"
     "@react-native/eslint-config": "npm:^0.76.3"
@@ -13377,10 +13399,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shell-quote@npm:^1.6.1, shell-quote@npm:^1.7.3, shell-quote@npm:^1.8.1":
+"shell-quote@npm:^1.6.1, shell-quote@npm:^1.8.1":
   version: 1.8.1
   resolution: "shell-quote@npm:1.8.1"
   checksum: 10c0/8cec6fd827bad74d0a49347057d40dfea1e01f12a6123bf82c4649f3ef152fc2bc6d6176e6376bffcd205d9d0ccb4f1f9acae889384d20baff92186f01ea455a
+  languageName: node
+  linkType: hard
+
+"shell-quote@npm:^1.7.3":
+  version: 1.8.2
+  resolution: "shell-quote@npm:1.8.2"
+  checksum: 10c0/85fdd44f2ad76e723d34eb72c753f04d847ab64e9f1f10677e3f518d0e5b0752a176fd805297b30bb8c3a1556ebe6e77d2288dbd7b7b0110c7e941e9e9c20ce1
   languageName: node
   linkType: hard
 
@@ -14878,11 +14907,11 @@ __metadata:
   linkType: hard
 
 "yaml@npm:^2.2.1":
-  version: 2.5.1
-  resolution: "yaml@npm:2.5.1"
+  version: 2.6.1
+  resolution: "yaml@npm:2.6.1"
   bin:
     yaml: bin.mjs
-  checksum: 10c0/40fba5682898dbeeb3319e358a968fe886509fab6f58725732a15f8dda3abac509f91e76817c708c9959a15f786f38ff863c1b88062d7c1162c5334a7d09cb4a
+  checksum: 10c0/aebf07f61c72b38c74d2b60c3a3ccf89ee4da45bcd94b2bfb7899ba07a5257625a7c9f717c65a6fc511563d48001e01deb1d9e55f0133f3e2edf86039c8c1be7
   languageName: node
   linkType: hard
 
