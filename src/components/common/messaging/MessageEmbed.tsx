@@ -18,6 +18,7 @@ export const MessageEmbed = observer((eRaw: API.Embed) => {
       return (
         <View
           style={{
+            marginTop: commonValues.sizes.small,
             backgroundColor: currentTheme.backgroundSecondary,
             padding: commonValues.sizes.medium,
             borderRadius: commonValues.sizes.medium,

@@ -15,7 +15,7 @@ const InviteBackground = observer(({children}: {children: any}) => {
         backgroundColor: currentTheme.backgroundSecondary,
         padding: commonValues.sizes.medium,
         borderRadius: commonValues.sizes.medium,
-        marginVertical: commonValues.sizes.xs,
+        marginVertical: commonValues.sizes.small,
       }}>
       {children}
     </View>
