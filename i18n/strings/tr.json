@@ -252,7 +252,12 @@
             }
         },
         "messaging": {
-            "message_box_group": "Mesaj {{name}}"
+            "message_box_group": "Mesaj {{name}}",
+            "message_box_dm": "@{{name}}'a Mesaj gönder",
+            "message_box_saved_notes": "Notlarını kaydet",
+            "no_messages": "Mesaj yok",
+            "no_messages_body": "Konuşmayı başlatın.",
+            "message_box_channel": "#{{name}} Mesaj gönder"
         }
     }
 }
