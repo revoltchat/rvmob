@@ -1,63 +1,125 @@
-import {createContext, useState} from 'react';
-import {Platform} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 import spoilerPlugin from '@traptitech/markdown-it-spoiler';
-import Markdown, {hasParents, MarkdownIt} from 'react-native-markdown-display';
+import Markdown, {
+  hasParents,
+  MarkdownIt,
+} from '@rexovolt/react-native-markdown-display';
 
 import {app} from '@rvmob/Generic';
 import {commonValues, currentTheme} from '@rvmob/Theme';
 import {Text} from './atoms';
+import {Spoiler, SpoilerContext, SpoilerWrapper} from './markdown/Spoiler';
 import {renderEmoji} from './messaging/Emoji';
 import {openUrl} from '@rvmob/lib/utils';
 
-const defaultMarkdownIt = MarkdownIt({typographer: true, linkify: true})
+const defaultMarkdownIt = MarkdownIt({linkify: true})
   .disable(['image'])
   .use(spoilerPlugin);
 
-const spoilerStyle = {
-  hiddenSpoiler: {
-    backgroundColor: '#000',
-    color: 'transparent',
-  },
-  revealedSpoiler: {
-    backgroundColor: currentTheme.backgroundSecondary,
+const defaultStyles = StyleSheet.create({
+  body: {
+    fontFamily: 'Open Sans',
     color: currentTheme.foregroundPrimary,
   },
-};
-
-const SpoilerContext = createContext(false);
-const Spoiler = ({content}) => {
-  const [revealed, setRevealed] = useState(false);
-  return (
-    <SpoilerContext.Provider value={revealed}>
-      <Text onPress={() => setRevealed(!revealed)}>{content}</Text>
-    </SpoilerContext.Provider>
-  );
-};
+  paragraph: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginTop: -3,
+    marginBottom: commonValues.sizes.xs,
+    fontSize: app.settings.get('ui.messaging.fontSize') as number,
+  },
+  heading1: {
+    fontWeight: 'bold',
+  },
+  heading2: {
+    fontWeight: 'bold',
+  },
+  heading3: {
+    fontWeight: 'bold',
+  },
+  heading4: {
+    fontWeight: 'bold',
+  },
+  heading5: {
+    fontWeight: 'bold',
+  },
+  heading6: {
+    fontWeight: 'bold',
+  },
+  link: {
+    color: currentTheme.accentColor,
+  },
+  code_inline: {
+    fontFamily: 'JetBrains Mono',
+    backgroundColor: 'transparent',
+    padding: 0,
+    borderWidth: 0,
+  },
+  code_inline_container: {
+    // align it properly (see also https://github.com/facebook/react-native/issues/31955)
+    transform: [
+      {
+        translateY: 6,
+      },
+    ],
+    backgroundColor: currentTheme.backgroundSecondary,
+    paddingHorizontal: commonValues.sizes.xs,
+    borderRadius: commonValues.sizes.small,
+  },
+  fence: {
+    fontFamily: 'JetBrains Mono',
+    backgroundColor: currentTheme.backgroundSecondary,
+    borderWidth: 0,
+    borderRadius: commonValues.sizes.small,
+    marginBottom: commonValues.sizes.xs,
+  },
+  blockquote: {
+    marginBottom: commonValues.sizes.xs,
+    paddingVertical: 6,
+    borderRadius: commonValues.sizes.small,
+    borderColor: currentTheme.foregroundPrimary,
+    backgroundColor: currentTheme.blockQuoteBackground,
+  },
+  table: {
+    borderTopWidth: 2,
+    borderEndWidth: 2,
+    borderColor: currentTheme.foregroundSecondary,
+    borderRadius: commonValues.sizes.small,
+  },
+  thead: {
+    fontWeight: 'bold',
+  },
+  th: {
+    borderStartWidth: 1,
+    borderColor: currentTheme.foregroundSecondary,
+  },
+  td: {
+    borderStartWidth: 1,
+    borderColor: currentTheme.foregroundSecondary,
+  },
+  tr: {
+    borderColor: currentTheme.foregroundSecondary,
+  },
+});
 
 // the text and code_inline rules are the same as the built-in ones,
-// except with spoiler support
+// except with spoiler/emoji support
 const spoilerRule = {
-  spoiler: (node, children) => <Spoiler key={node.key} content={children} />,
+  spoiler: (node, children) => (
+    <SpoilerWrapper key={node.key} content={children} />
+  ),
   text: (node, children, parent, styles, inheritedStyles = {}) => {
     if (hasParents(parent, 'spoiler')) {
       return (
         <SpoilerContext.Consumer key={node.key}>
           {isRevealed => (
-            <Text
-              style={{
-                ...inheritedStyles,
-                ...styles.text,
-                ...(isRevealed
-                  ? spoilerStyle.revealedSpoiler
-                  : spoilerStyle.hiddenSpoiler),
-              }}>
-              {
-                /* FIXME: Rendering emoji reveals spoiler markdown
-                renderEmoji(node.content)*/
-                node.content
-              }
-            </Text>
+            <Spoiler
+              node={node}
+              isRevealed={isRevealed}
+              styles={styles.text}
+              inheritedStyles={inheritedStyles}
+            />
           )}
         </SpoilerContext.Consumer>
       );
@@ -74,34 +136,26 @@ const spoilerRule = {
       return (
         <SpoilerContext.Consumer key={node.key}>
           {isRevealed => (
-            <Text
-              style={{
-                ...inheritedStyles,
-                ...styles.code_inline,
-                ...(isRevealed
-                  ? spoilerStyle.revealedSpoiler
-                  : spoilerStyle.hiddenSpoiler),
-              }}>
-              {node.content}
-            </Text>
+            <Spoiler
+              node={node}
+              isRevealed={isRevealed}
+              styles={styles.code_inline}
+              inheritedStyles={inheritedStyles}
+            />
           )}
         </SpoilerContext.Consumer>
       );
     }
 
     return (
-      <Text key={node.key} style={{...inheritedStyles, ...styles.code_inline}}>
-        {node.content}
-      </Text>
+      <View key={node.key} style={{...styles.code_inline_container}}>
+        <Text style={{...inheritedStyles, ...styles.code_inline}}>
+          {node.content}
+        </Text>
+      </View>
     );
   },
 };
-
-// const webCodeStyles = {
-//   padding: 0,
-//   paddingInline: '2px',
-//   border: 'none',
-// };
 
 export const MarkdownView = (props: any) => {
   let newProps = {...props};
@@ -123,109 +177,92 @@ export const MarkdownView = (props: any) => {
   }
 
   newProps.style.body = {
-    fontFamily: 'Open Sans',
-    color: currentTheme.foregroundPrimary,
+    ...defaultStyles.body,
     ...newProps.style.body,
   };
 
   newProps.style.paragraph = {
-    marginTop: -3,
-    marginBottom: commonValues.sizes.xs,
-    fontSize: app.settings.get('ui.messaging.fontSize'),
+    ...defaultStyles.paragraph,
     ...newProps.style.paragraph,
   };
 
   newProps.style.heading1 = {
-    fontWeight: 'bold',
+    ...defaultStyles.heading1,
     ...newProps.style.heading1,
   };
 
   newProps.style.heading2 = {
-    fontWeight: 'bold',
+    ...defaultStyles.heading2,
     ...newProps.style.heading2,
   };
 
   newProps.style.heading3 = {
-    fontWeight: 'bold',
+    ...defaultStyles.heading3,
     ...newProps.style.heading3,
   };
 
   newProps.style.heading4 = {
-    fontWeight: 'bold',
+    ...defaultStyles.heading4,
     ...newProps.style.heading4,
   };
 
   newProps.style.heading5 = {
-    fontWeight: 'bold',
+    ...defaultStyles.heading5,
     ...newProps.style.heading5,
   };
 
   newProps.style.heading6 = {
-    fontWeight: 'bold',
+    ...defaultStyles.heading6,
     ...newProps.style.heading6,
   };
 
   newProps.style.link = {
-    color: currentTheme.accentColor,
+    ...defaultStyles.link,
     ...newProps.style.link,
   };
 
   newProps.style.code_inline = {
-    fontFamily: 'JetBrains Mono',
-    backgroundColor: currentTheme.backgroundSecondary,
-    ...(Platform.OS === 'web' && {
-      padding: 0,
-      paddingInline: '2px',
-      border: 'none',
-    }),
+    ...defaultStyles.code_inline,
     ...newProps.style.code_inline,
   };
 
+  newProps.style.code_inline_container = {
+    ...defaultStyles.code_inline_container,
+    ...newProps.style.code_inline_container,
+  };
+
   newProps.style.fence = {
-    fontFamily: 'JetBrains Mono',
-    backgroundColor: currentTheme.backgroundSecondary,
-    borderWidth: 0,
-    borderRadius: commonValues.sizes.small,
-    marginBottom: commonValues.sizes.xs,
+    ...defaultStyles.fence,
     ...newProps.style.fence,
   };
 
   newProps.style.blockquote = {
-    marginBottom: commonValues.sizes.xs,
-    paddingVertical: 6,
-    borderRadius: commonValues.sizes.small,
-    borderColor: currentTheme.foregroundPrimary,
-    backgroundColor: currentTheme.blockQuoteBackground,
+    ...defaultStyles.blockquote,
     ...newProps.style.blockquote,
   };
 
   newProps.style.table = {
-    borderTopWidth: 2,
-    borderEndWidth: 2,
-    borderColor: currentTheme.foregroundSecondary,
-    borderRadius: commonValues.sizes.small,
+    ...defaultStyles.table,
     ...newProps.style.table,
   };
 
   newProps.style.thead = {
-    fontWeight: 'bold',
+    ...defaultStyles.thead,
     ...newProps.style.thead,
   };
 
   newProps.style.th = {
-    borderStartWidth: 1,
-    borderColor: currentTheme.foregroundSecondary,
+    ...defaultStyles.th,
     ...newProps.style.th,
   };
 
   newProps.style.td = {
-    borderStartWidth: 1,
-    borderColor: currentTheme.foregroundSecondary,
+    ...defaultStyles.td,
     ...newProps.style.td,
   };
 
   newProps.style.tr = {
-    borderColor: currentTheme.foregroundSecondary,
+    ...defaultStyles.tr,
     ...newProps.style.tr,
   };
 
