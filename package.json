@@ -2,17 +2,19 @@
   "name": "rvmob",
   "version": "0.7.0-beta1",
   "homepage": "https://revoltchat.github.io/rvmob",
+  "license": "AGPL-3.0-only",
   "private": true,
   "scripts": {
     "clean": "react-native clean",
-    "android": "react-native run-android --active-arch-only --appIdSuffix=debug --mode=debug",
-    "android-release": "react-native build-android --tasks assembleRelease",
+    "android": "yarn license-list -prod && react-native run-android --active-arch-only --appIdSuffix=debug --mode=debug",
+    "android-release": "yarn license-list -prod && react-native build-android --tasks assembleRelease",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "web": "webpack-dev-server --config config/webpack.config.js --hot --mode=development",
-    "web-release": "webpack --config config/webpack.config.js --mode=production"
+    "license-list": "yarn licenses list --production --json --recursive > assets/data/licenses.json && node scripts/licenseListProcessor.mjs -silent",
+    "web": "yarn license-list -prod && webpack-dev-server --config config/webpack.config.js --hot --mode=development",
+    "web-release": "yarn license-list -prod && webpack --config config/webpack.config.js --mode=production"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "patch:@gorhom/bottom-sheet@npm%3A5.0.6#~/.yarn/patches/@gorhom-bottom-sheet-npm-5.0.6-ee2c6d5dad.patch",

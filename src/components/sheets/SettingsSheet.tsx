@@ -24,6 +24,7 @@ import {SettingsCategory} from '../common/settings';
 import {
   AppInfoSection,
   AccountSettingsSection,
+  LicenseListSection,
   ProfileSettingsSection,
 } from '@rvmob/components/common/settings/sections/app';
 
@@ -82,28 +83,65 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
       }}>
-      {section == null ? (
-        <BackButton callback={() => setState()} type={'close'} margin />
-      ) : (
-        <BackButton callback={() => setSection(null)} margin />
-      )}
-      {section !== null ? (
-        <Text type={'h1'}>
-          {t(`app.settings_menu.${section.section}.title`)}
-        </Text>
-      ) : null}
-      <ScrollView
-        style={{flex: 1}}
-        contentContainerStyle={
-          section && section.section === 'info'
-            ? {
+      <BackButton
+        callback={() => (section === null ? setState() : setSection(null))}
+        type={section === null ? 'close' : 'back'}
+        margin
+      />
+      {section ? (
+        <>
+          <Text type={'h1'}>
+            {t(`app.settings_menu.${section.section}.title`)}
+          </Text>
+          {section.section === 'licenses' ? (
+            <LicenseListSection />
+          ) : (
+            <ScrollView
+              style={{
                 flex: 1,
+              }}
+              contentContainerStyle={
+                section.section === 'info'
+                  ? {
+                      flex: 1,
+                    }
+                  : null
               }
-            : null
-        }
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}>
-        {section == null ? (
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}>
+              {section.section === 'appearance' ? (
+                <SettingsCategory
+                  category={'appearance'}
+                  renderCount={renderCount}
+                  rerender={rerender}
+                />
+              ) : section.section === 'functionality' ? (
+                <SettingsCategory
+                  category={'functionality'}
+                  renderCount={renderCount}
+                  rerender={rerender}
+                />
+              ) : section.section === 'i18n' ? (
+                <SettingsCategory
+                  category={'i18n'}
+                  renderCount={renderCount}
+                  rerender={rerender}
+                />
+              ) : section.section === 'account' ? (
+                <AccountSettingsSection />
+              ) : section.section === 'profile' ? (
+                <ProfileSettingsSection />
+              ) : (
+                <AppInfoSection />
+              )}
+            </ScrollView>
+          )}
+        </>
+      ) : (
+        <ScrollView
+          style={{flex: 1}}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}>
           <>
             <Text type={'h1'}>{t('app.settings_menu.groups.user')}</Text>
             <ContextButton
@@ -218,6 +256,21 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               style={{flex: 1, marginBottom: 10}}
               backgroundColor={currentTheme.backgroundSecondary}
               onPress={() => {
+                setSection({section: 'licenses'});
+              }}>
+              <View style={styles.iconContainer}>
+                <MaterialCommunityIcon
+                  name={'license'}
+                  color={currentTheme.foregroundPrimary}
+                  size={24}
+                />
+              </View>
+              <Text>{t('app.settings_menu.licenses.title')}</Text>
+            </ContextButton>
+            <ContextButton
+              style={{flex: 1, marginBottom: 10}}
+              backgroundColor={currentTheme.backgroundSecondary}
+              onPress={() => {
                 openUrl(OPEN_ISSUES);
               }}>
               <View style={styles.iconContainer}>
@@ -246,32 +299,8 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               <Text>{t('app.settings_menu.other.logout')}</Text>
             </ContextButton>
           </>
-        ) : section.section === 'appearance' ? (
-          <SettingsCategory
-            category={'appearance'}
-            renderCount={renderCount}
-            rerender={rerender}
-          />
-        ) : section.section === 'functionality' ? (
-          <SettingsCategory
-            category={'functionality'}
-            renderCount={renderCount}
-            rerender={rerender}
-          />
-        ) : section.section === 'i18n' ? (
-          <SettingsCategory
-            category={'i18n'}
-            renderCount={renderCount}
-            rerender={rerender}
-          />
-        ) : section.section === 'account' ? (
-          <AccountSettingsSection />
-        ) : section.section === 'profile' ? (
-          <ProfileSettingsSection />
-        ) : section.section === 'info' ? (
-          <AppInfoSection />
-        ) : null}
-      </ScrollView>
+        </ScrollView>
+      )}
     </View>
   );
 });

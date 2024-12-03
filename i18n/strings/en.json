@@ -238,6 +238,9 @@
             "info": {
                 "title": "About RVMob"
             },
+            "licenses": {
+                "title": "Open Source Licences"
+            },
             "other": {
                 "debug_info": "Copy Debug Info",
                 "view_issues": "View Open Issues",

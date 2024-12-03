@@ -37,7 +37,7 @@ export const AccountSettingsSection = observer(() => {
   }, []);
 
   return (
-    <View>
+    <>
       <View style={styles.settingsEntry} key={'username-settings'}>
         <View style={{flex: 1, flexDirection: 'column'}}>
           <Text key={'username-label'} style={{fontWeight: 'bold'}}>
@@ -234,6 +234,6 @@ export const AccountSettingsSection = observer(() => {
           ) : null}
         </View>
       ))}
-    </View>
+    </>
   );
 });

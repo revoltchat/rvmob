@@ -10,7 +10,7 @@ import {Text} from '@rvmob/components/common/atoms';
 
 export const ProfileSettingsSection = observer(() => {
   return (
-    <View>
+    <>
       <View style={styles.settingsEntry} key={'display-name-settings'}>
         <View style={{flex: 1, flexDirection: 'column'}}>
           <Text key={'display-name-label'} style={{fontWeight: 'bold'}}>
@@ -71,6 +71,6 @@ export const ProfileSettingsSection = observer(() => {
           </View>
         </Pressable>
       </View>
-    </View>
+    </>
   );
 });
