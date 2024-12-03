@@ -252,6 +252,14 @@
             "count_servers_few": "{{count}} сервера",
             "count_servers_many": "{{count}} сервераў",
             "fetching_servers": "Загрузка сервераў…"
+        },
+        "messaging": {
+            "message_box_channel": "Напісаць у #{{name}}",
+            "message_box_dm": "Напісаць @{{name}}",
+            "message_box_group": "Напісаць {{name}}",
+            "message_box_saved_notes": "Захаваць у нататкі",
+            "no_messages": "Няма паведамленняў",
+            "no_messages_body": "Пачніце гутарку."
         }
     }
 }
