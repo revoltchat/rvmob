@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {Platform, ScrollView, View} from 'react-native';
+import {FlatList, Platform, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 import {DOMParser} from '@xmldom/xmldom';
@@ -18,75 +18,72 @@ const parser = new DOMParser({
   },
 });
 
-const renderServers = (servers: any) => {
-  return servers.map((server: any) => {
-    // console.log(server);
-    return (
+const renderServer = (server: any) => {
+  return (
+    <View
+      key={`discover-entry-server-${server._id}`}
+      style={{
+        marginBottom: commonValues.sizes.medium,
+        borderRadius: commonValues.sizes.medium,
+        padding: commonValues.sizes.xl,
+        backgroundColor: currentTheme.backgroundSecondary,
+      }}>
       <View
-        key={`discover-entry-${server._id}`}
         style={{
-          marginBottom: commonValues.sizes.medium,
-          borderRadius: commonValues.sizes.medium,
-          padding: commonValues.sizes.xl,
-          backgroundColor: currentTheme.backgroundSecondary,
+          alignItems: 'center',
+          flexDirection: 'row',
         }}>
-        <View
-          style={{
-            alignItems: 'center',
-            flexDirection: 'row',
-          }}>
-          {server.icon ? (
-            <View style={{marginEnd: 8}}>
-              <GeneralAvatar
-                attachment={server.icon._id}
-                size={40}
-                directory={'/icons/'}
-              />
-            </View>
-          ) : null}
-          <View>
-            <Text type={'h1'}>{server.name}</Text>
-            <Text colour={currentTheme.foregroundSecondary}>{server._id}</Text>
+        {server.icon ? (
+          <View style={{marginEnd: 8}}>
+            <GeneralAvatar
+              attachment={server.icon._id}
+              size={40}
+              directory={'/icons/'}
+            />
           </View>
+        ) : null}
+        <View>
+          <Text type={'h1'}>{server.name}</Text>
+          <Text colour={currentTheme.foregroundSecondary}>{server._id}</Text>
         </View>
-        <View
-          key={`discover-entry-${server._id}-tags`}
-          style={{
-            rowGap: commonValues.sizes.small,
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            marginVertical: commonValues.sizes.medium,
-          }}>
-          {server.tags.map((tag: string) => {
-            return (
-              <View
-                style={{
-                  padding: commonValues.sizes.small,
-                  borderRadius: commonValues.sizes.medium,
-                  backgroundColor: currentTheme.headerSecondary,
-                  marginEnd: commonValues.sizes.small,
-                }}
-                key={`discover-entry-${server._id}-tag-${tag}`}>
-                <Text>#{tag}</Text>
-              </View>
-            );
-          })}
-        </View>
-        <Button
-          style={{margin: 0}}
-          onPress={async () => {
-            !client.servers.get(server._id) &&
-              (await client.joinInvite(server._id));
-            app.openServer(client.servers.get(server._id));
-            app.openLeftMenu(true);
-          }}>
-          <Text>
-            {client.servers.get(server._id) ? 'Go to Server' : 'Join Server'}
-          </Text>
-        </Button>
       </View>
-    );
-  });
+      <View
+        key={`discover-entry-${server._id}-tags`}
+        style={{
+          rowGap: commonValues.sizes.small,
+          flexWrap: 'wrap',
+          flexDirection: 'row',
+          marginVertical: commonValues.sizes.medium,
+        }}>
+        {server.tags.map((tag: string) => {
+          return (
+            <View
+              style={{
+                padding: commonValues.sizes.small,
+                borderRadius: commonValues.sizes.medium,
+                backgroundColor: currentTheme.headerSecondary,
+                marginEnd: commonValues.sizes.small,
+              }}
+              key={`discover-entry-${server._id}-tag-${tag}`}>
+              <Text>#{tag}</Text>
+            </View>
+          );
+        })}
+      </View>
+      <Button
+        style={{margin: 0}}
+        onPress={async () => {
+          !client.servers.get(server._id) &&
+            (await client.joinInvite(server._id));
+          app.openServer(client.servers.get(server._id));
+          app.openLeftMenu(true);
+        }}>
+        <Text>
+          {client.servers.get(server._id) ? 'Go to Server' : 'Join Server'}
+        </Text>
+      </Button>
+    </View>
+  );
 };
 
 export const DiscoverPage = () => {
@@ -94,6 +91,14 @@ export const DiscoverPage = () => {
 
   const [tab, setTab] = useState<'servers' | 'bots'>('servers');
   const [data, setData] = useState<any>(null);
+
+  const renderItem = ({item}: {item: any}) => {
+    return tab === 'servers' ? renderServer(item) : renderServer(item);
+  };
+
+  const keyExtractor = (item: any) => {
+    return `discover-entry-${item._id}`;
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -153,25 +158,30 @@ export const DiscoverPage = () => {
       </View>
       {data ? (
         <>
-          <ScrollView
-            style={{flex: 1, padding: commonValues.sizes.medium}}
-            contentContainerStyle={{
-              paddingBottom:
-                Platform.OS === 'web' ? 0 : commonValues.sizes.medium,
-            }}>
-            {tab === 'servers' ? (
-              <>
+          {tab === 'servers' ? (
+            <>
+              <View style={{paddingHorizontal: commonValues.sizes.medium}}>
                 <Text type={'h2'}>
                   {t('app.discover.count_servers', {
                     count: data.servers.length,
                   })}
                 </Text>
-                {renderServers(data.servers)}
-              </>
-            ) : (
-              <></>
-            )}
-          </ScrollView>
+              </View>
+              <FlatList
+                key={'messageview-scrollview'}
+                keyExtractor={keyExtractor}
+                data={data.servers}
+                style={{flex: 1, padding: commonValues.sizes.medium}}
+                contentContainerStyle={{
+                  paddingBottom:
+                    Platform.OS === 'web' ? 0 : commonValues.sizes.medium,
+                }}
+                renderItem={renderItem}
+              />
+            </>
+          ) : (
+            <></>
+          )}
         </>
       ) : (
         <View style={styles.loadingScreen}>
