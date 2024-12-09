@@ -75,6 +75,7 @@ const defaultStyles = StyleSheet.create({
     marginBottom: commonValues.sizes.xs,
   },
   blockquote: {
+    marginLeft: 2,
     marginBottom: commonValues.sizes.xs,
     paddingVertical: 6,
     borderRadius: commonValues.sizes.small,
@@ -103,14 +104,51 @@ const defaultStyles = StyleSheet.create({
   },
 });
 
+const shouldRenderTextAsSpoilerText = (parents: any) => {
+  if (!hasParents(parents, 'spoiler')) {
+    return false;
+  }
+
+  // ignore spoilers in links per revite/(mostly) the fact they're borked
+  if (hasParents(parents, 'link')) {
+    return false;
+  }
+
+  let shouldRender = true;
+  // check if the spoiler container contains links; if so, mark this as not a spoiler to prevent invisible text
+  parents.forEach((parentNode: any) => {
+    // skip if we already know if there's a link sibling
+    if (shouldRender) {
+      if (parentNode.attributes?.class === 'spoiler') {
+        const hasLinkSibling =
+          parentNode.children.findIndex(
+            (childNode: any) => childNode.type === 'link',
+          ) !== -1;
+        if (hasLinkSibling) {
+          shouldRender = false;
+        }
+      }
+    }
+  });
+
+  return shouldRender;
+};
+
 // the text and code_inline rules are the same as the built-in ones,
 // except with spoiler/emoji support
 const spoilerRule = {
-  spoiler: (node, children) => (
-    <SpoilerWrapper key={node.key} content={children} />
-  ),
+  spoiler: (node, children, parent) => {
+    // ignore spoilers in/containing links per revite/(mostly) the fact they're borked
+    const containsLink =
+      children.findIndex(el => el.props.accessibilityRole === 'link') !== -1;
+    if (!hasParents(parent, 'link') && !containsLink) {
+      return <SpoilerWrapper key={node.key} content={children} />;
+    }
+    return children;
+  },
   text: (node, children, parent, styles, inheritedStyles = {}) => {
-    if (hasParents(parent, 'spoiler')) {
+    const isSpoiler = shouldRenderTextAsSpoilerText(parent);
+    if (isSpoiler) {
       return (
         <SpoilerContext.Consumer key={node.key}>
           {isRevealed => (
@@ -132,7 +170,8 @@ const spoilerRule = {
     );
   },
   code_inline: (node, children, parent, styles, inheritedStyles = {}) => {
-    if (hasParents(parent, 'spoiler')) {
+    const isSpoiler = shouldRenderTextAsSpoilerText(parent);
+    if (isSpoiler) {
       return (
         <SpoilerContext.Consumer key={node.key}>
           {isRevealed => (
@@ -176,94 +215,9 @@ export const MarkdownView = (props: any) => {
     newProps = Object.assign({style: {}}, newProps);
   }
 
-  newProps.style.body = {
-    ...defaultStyles.body,
-    ...newProps.style.body,
-  };
-
-  newProps.style.paragraph = {
-    ...defaultStyles.paragraph,
-    ...newProps.style.paragraph,
-  };
-
-  newProps.style.heading1 = {
-    ...defaultStyles.heading1,
-    ...newProps.style.heading1,
-  };
-
-  newProps.style.heading2 = {
-    ...defaultStyles.heading2,
-    ...newProps.style.heading2,
-  };
-
-  newProps.style.heading3 = {
-    ...defaultStyles.heading3,
-    ...newProps.style.heading3,
-  };
-
-  newProps.style.heading4 = {
-    ...defaultStyles.heading4,
-    ...newProps.style.heading4,
-  };
-
-  newProps.style.heading5 = {
-    ...defaultStyles.heading5,
-    ...newProps.style.heading5,
-  };
-
-  newProps.style.heading6 = {
-    ...defaultStyles.heading6,
-    ...newProps.style.heading6,
-  };
-
-  newProps.style.link = {
-    ...defaultStyles.link,
-    ...newProps.style.link,
-  };
-
-  newProps.style.code_inline = {
-    ...defaultStyles.code_inline,
-    ...newProps.style.code_inline,
-  };
-
-  newProps.style.code_inline_container = {
-    ...defaultStyles.code_inline_container,
-    ...newProps.style.code_inline_container,
-  };
-
-  newProps.style.fence = {
-    ...defaultStyles.fence,
-    ...newProps.style.fence,
-  };
-
-  newProps.style.blockquote = {
-    ...defaultStyles.blockquote,
-    ...newProps.style.blockquote,
-  };
-
-  newProps.style.table = {
-    ...defaultStyles.table,
-    ...newProps.style.table,
-  };
-
-  newProps.style.thead = {
-    ...defaultStyles.thead,
-    ...newProps.style.thead,
-  };
-
-  newProps.style.th = {
-    ...defaultStyles.th,
-    ...newProps.style.th,
-  };
-
-  newProps.style.td = {
-    ...defaultStyles.td,
-    ...newProps.style.td,
-  };
-
-  newProps.style.tr = {
-    ...defaultStyles.tr,
-    ...newProps.style.tr,
+  newProps.style = {
+    ...defaultStyles,
+    ...newProps.style,
   };
 
   try {

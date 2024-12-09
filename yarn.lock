@@ -4172,16 +4172,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rexovolt/react-native-markdown-display@npm:^9.0.2":
-  version: 9.0.2
-  resolution: "@rexovolt/react-native-markdown-display@npm:9.0.2"
+"@rexovolt/react-native-markdown-display@npm:^9.0.3":
+  version: 9.0.3
+  resolution: "@rexovolt/react-native-markdown-display@npm:9.0.3"
   dependencies:
     css-to-react-native: "npm:^3.2.0"
     markdown-it: "patch:markdown-it@npm%3A14.1.0#~/.yarn/patches/markdown-it-npm-14.1.0-e337d75bfe.patch"
   peerDependencies:
     react: ">=16.2.0"
     react-native: ">=0.50.4"
-  checksum: 10c0/528e338b53639a1e784412ae4ab7b9660e7d565ae6247cfe8255160138e8a8a7cbb7f7b9305a128a73cd46ab77f3a63e20717928590788925dbb6771b037d4f1
+  checksum: 10c0/d9533d71372623e65ecfa31a3c3cf500559ab80ee1bb9724995236044fe3dbca7ddb9c76e287e89445868cab979462a269713e97c91246301ed6de615ecd5339
   languageName: node
   linkType: hard
 
@@ -13056,7 +13056,7 @@ __metadata:
     "@react-native/eslint-config": "npm:^0.76.3"
     "@react-native/metro-config": "npm:^0.76.3"
     "@react-native/typescript-config": "npm:^0.76.3"
-    "@rexovolt/react-native-markdown-display": "npm:^9.0.2"
+    "@rexovolt/react-native-markdown-display": "npm:^9.0.3"
     "@rnx-kit/metro-config": "npm:^2.0.1"
     "@rnx-kit/metro-plugin-cyclic-dependencies-detector": "npm:^2.0.0"
     "@rnx-kit/metro-plugin-duplicates-checker": "npm:^3.0.0"

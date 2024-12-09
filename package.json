@@ -22,7 +22,7 @@
     "@react-native-async-storage/async-storage": "^2.1.0",
     "@react-native-clipboard/clipboard": "^1.15.0",
     "@react-native-community/hooks": "^3.0.0",
-    "@rexovolt/react-native-markdown-display": "^9.0.2",
+    "@rexovolt/react-native-markdown-display": "^9.0.3",
     "@traptitech/markdown-it-spoiler": "patch:@traptitech/markdown-it-spoiler@npm%3A1.1.6#~/.yarn/patches/@traptitech-markdown-it-spoiler-npm-1.1.6-ee0dc02626.patch",
     "@xmldom/xmldom": "^0.9.5",
     "date-fns": "^4.1.0",
