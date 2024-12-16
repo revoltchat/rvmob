@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {Modal, Pressable, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
@@ -15,8 +15,7 @@ import {Server} from 'revolt.js';
 
 import {app, setFunction} from '@rvmob/Generic';
 import {SettingsSection} from '@rvmob/lib/types';
-import {commonValues, currentTheme, styles} from '@rvmob/Theme';
-import {GapView} from '@rvmob/components/layout';
+import {styles} from '@rvmob/Theme';
 import {
   BackButton,
   Button,
@@ -24,6 +23,9 @@ import {
   InputWithButton,
   Text,
 } from '@rvmob/components/common/atoms';
+import {PressableSettingsEntry} from '@rvmob/components/common/settings/atoms';
+import {GapView} from '@rvmob/components/layout';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 import {showToast} from '@rvmob/lib/utils';
 
 export const RoleSettingsSection = observer(
@@ -36,6 +38,8 @@ export const RoleSettingsSection = observer(
     section: SettingsSection;
     setSection: Function;
   }) => {
+    const {currentTheme} = useContext(ThemeContext);
+
     const {t} = useTranslation();
 
     const [colour, setColour] = useState('');
@@ -312,8 +316,7 @@ export const RoleSettingsSection = observer(
           <>
             <Text type={'h1'}>{t('app.servers.settings.roles.title')}</Text>
             {server.orderedRoles.map(r => (
-              <Pressable
-                style={styles.settingsEntry}
+              <PressableSettingsEntry
                 key={`role-settings-entry-${r.id}`}
                 onPress={() => {
                   setSection({section: 'roles', subsection: r.id});
@@ -342,7 +345,7 @@ export const RoleSettingsSection = observer(
                     />
                   </View>
                 </View>
-              </Pressable>
+              </PressableSettingsEntry>
             ))}
           </>
         )}

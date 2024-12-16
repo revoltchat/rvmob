@@ -1,17 +1,19 @@
-import {useRef, useState} from 'react';
+import {useContext, useRef, useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import BottomSheetCore from '@gorhom/bottom-sheet';
 import {useBackHandler} from '@react-native-community/hooks';
 
-import {client, setFunction} from '../../Generic';
-import {STATUSES} from '../../lib/consts';
-import {currentTheme} from '../../Theme';
+import {client, setFunction} from '@rvmob/Generic';
 import {ContextButton, InputWithButton, Text} from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
+import {STATUSES} from '@rvmob/lib/consts';
+import {ThemeContext} from '@rvmob/lib/themes';
 
 export const StatusSheet = observer(() => {
+  const {currentTheme} = useContext(ThemeContext);
+
   const [isOpen, setIsOpen] = useState(false);
   const sheetRef = useRef<BottomSheetCore>(null);
 

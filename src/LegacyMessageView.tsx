@@ -1,4 +1,4 @@
-import {Component as ReactComponent} from 'react';
+import {Component as ReactComponent, useContext} from 'react';
 import {
   View,
   ScrollView,
@@ -10,20 +10,35 @@ import {autorun} from 'mobx';
 
 import {Message as RevoltMessage} from 'revolt.js';
 
-import {
-  client,
-  app,
-  setFunction,
-  selectedRemark,
-  randomizeRemark,
-} from './Generic';
-import {styles, currentTheme} from './Theme';
+import {client, app, setFunction, randomizeRemark} from './Generic';
+import {styles} from './Theme';
 import {Text} from './components/common/atoms';
 import {Message} from './components/common/messaging';
+import {LoadingScreen} from './components/views/LoadingScreen';
 import {DEFAULT_MESSAGE_LOAD_COUNT} from './lib/consts';
+import { ThemeContext } from './lib/themes';
 import {calculateGrouped} from './lib/utils';
 
 let didUpdateFirstTime = false;
+
+function JumpToBottomBar ({callback}: {callback: () => void}) {
+  const {currentTheme} = useContext(ThemeContext);
+
+  return (
+    <TouchableOpacity
+    style={{
+      height: 32,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: currentTheme.accentColor,
+    }}
+    onPress={callback}>
+    <Text colour={currentTheme.accentColorForeground}>
+      Go to latest messages
+    </Text>
+  </TouchableOpacity>
+  );
+}
 
 export class Messages extends ReactComponent {
   constructor(props) {
@@ -271,10 +286,7 @@ export class Messages extends ReactComponent {
       );
     }
     return this.state.loading ? (
-      <View style={styles.loadingScreen}>
-        <Text style={styles.loadingHeader}>Loading...</Text>
-        <Text style={styles.remark}>{selectedRemark || null}</Text>
-      </View>
+      <LoadingScreen />
     ) : (
       <View style={{flex: 1}}>
         <ScrollView
@@ -360,21 +372,10 @@ export class Messages extends ReactComponent {
           </View>
         </ScrollView>
         {!this.state.atLatestMessages ? (
-          <TouchableOpacity
-            style={{
-              height: 32,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: currentTheme.accentColor,
-            }}
-            onPress={() => {
-              this.fetchMessages();
-              this.scrollView.scrollToEnd({animated: true});
-            }}>
-            <Text colour={currentTheme.accentColorForeground}>
-              Go to latest messages
-            </Text>
-          </TouchableOpacity>
+          <JumpToBottomBar callback={() => {
+            this.fetchMessages();
+            this.scrollView.scrollToEnd({animated: true});
+          }} />
         ) : null}
       </View>
     );

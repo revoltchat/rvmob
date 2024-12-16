@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {ImageBackground, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -6,9 +6,10 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {Channel, Server} from 'revolt.js';
 
-import {app, client} from '../../Generic';
-import {commonValues, currentTheme, styles} from '../../Theme';
+import {app, client} from '@rvmob/Generic';
+import {styles} from '@rvmob/Theme';
 import {ChannelButton, Text} from '../common/atoms';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 
 type ChannelListProps = {
   onChannelClick: Function;
@@ -68,6 +69,8 @@ const ServerChannelListCategory = observer(
 );
 
 const ServerChannelList = observer((props: ServerChannelListProps) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   const [processedChannels, setProcessedChannels] = useState([] as string[]);
   const [res, setRes] = useState([] as React.JSX.Element[] | undefined);
 

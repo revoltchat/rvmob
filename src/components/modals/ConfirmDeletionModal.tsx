@@ -1,14 +1,17 @@
+import {useContext} from 'react';
 import {View} from 'react-native';
 import {Trans, useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
 import {app} from '@rvmob/Generic';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 import {DeletableObject} from '@rvmob/lib/types';
-import {commonValues, currentTheme} from '@rvmob/Theme';
 import {Button, Text} from '@rvmob/components/common/atoms';
 
 export const ConfirmDeletionModal = observer(
   ({target}: {target: DeletableObject}) => {
+    const {currentTheme} = useContext(ThemeContext);
+
     const {t} = useTranslation();
     const name = target.type === 'Server' ? target.object.name : '';
     return (

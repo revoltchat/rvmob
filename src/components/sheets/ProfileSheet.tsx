@@ -1,5 +1,5 @@
 /* eslint-disable no-bitwise */
-import {useEffect, useRef, useState} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import {Pressable, ScrollView, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -11,10 +11,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import {User, Server} from 'revolt.js';
 
 import {app, client, setFunction} from '@rvmob/Generic';
-import {BADGES, USER_IDS} from '../../lib/consts';
-import {openUrl, parseRevoltNodes, showToast} from '@rvmob/lib/utils';
-import {MiniProfile, RoleView} from '@rvmob/Profile';
-import {commonValues, currentTheme, styles} from '../../Theme';
+import {styles} from '@rvmob/Theme';
 import {
   Avatar,
   Button,
@@ -24,12 +21,18 @@ import {
   Link,
   Text,
   Username,
-} from '../common/atoms';
-import {BottomSheet} from '../common/BottomSheet';
-import {MarkdownView} from '../common/MarkdownView';
-import {UserList} from '../navigation/UserList';
+} from '@rvmob/components/common/atoms';
+import {BottomSheet} from '@rvmob/components/common/BottomSheet';
+import {MarkdownView} from '@rvmob/components/common/MarkdownView';
+import {MiniProfile, RoleView} from '@rvmob/components/common/profile';
+import {UserList} from '@rvmob/components/navigation/UserList';
+import {BADGES, USER_IDS} from '@rvmob/lib/consts';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {openUrl, parseRevoltNodes, showToast} from '@rvmob/lib/utils';
 
 export const ProfileSheet = observer(() => {
+  const {currentTheme} = useContext(ThemeContext);
+
   const [user, setUser] = useState(null as User | null);
   const [server, setServer] = useState(null as Server | null);
 

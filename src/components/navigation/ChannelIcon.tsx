@@ -1,3 +1,5 @@
+import {useContext} from 'react';
+
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -5,7 +7,7 @@ import {Channel} from 'revolt.js';
 
 import {Image} from '@rvmob/crossplat/Image';
 import {DEFAULT_MAX_SIDE} from '@rvmob/lib/consts';
-import {currentTheme} from '@rvmob/Theme';
+import {ThemeContext} from '@rvmob/lib/themes';
 
 export const ChannelIcon = ({
   channel,
@@ -14,6 +16,8 @@ export const ChannelIcon = ({
   channel: Channel;
   showUnread?: boolean;
 }) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   let color =
     showUnread && channel.unread
       ? currentTheme.foregroundPrimary

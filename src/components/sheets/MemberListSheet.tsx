@@ -7,7 +7,7 @@ import {useBackHandler} from '@react-native-community/hooks';
 
 import {Channel, Server, User} from 'revolt.js';
 
-import {setFunction} from '../../Generic';
+import {setFunction} from '@rvmob/Generic';
 import {Text} from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
 import {UserList} from '../navigation/UserList';

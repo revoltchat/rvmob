@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {Pressable, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
@@ -8,12 +8,16 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {Server} from 'revolt.js';
 
 import {client} from '@rvmob/Generic';
-import {commonValues, currentTheme, styles} from '@rvmob/Theme';
+import {styles} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms';
+import {SettingsEntry} from '@rvmob/components/common/settings/atoms';
 import {Image} from '@rvmob/crossplat/Image';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 import {showToast} from '@rvmob/lib/utils';
 
 export const EmojiSettingsSection = observer(({server}: {server: Server}) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   const {t} = useTranslation();
 
   const [emoji, setEmoji] = useState(
@@ -37,9 +41,7 @@ export const EmojiSettingsSection = observer(({server}: {server: Server}) => {
       <Text type={'h1'}>{t('app.servers.settings.emoji.title')}</Text>
       {emoji.length ? (
         emoji.map(e => (
-          <View
-            style={styles.settingsEntry}
-            key={`emoji-settings-entry-${e._id}`}>
+          <SettingsEntry key={`emoji-settings-entry-${e._id}`}>
             <Image
               style={{
                 minHeight: 24,
@@ -89,7 +91,7 @@ export const EmojiSettingsSection = observer(({server}: {server: Server}) => {
                 </View>
               </Pressable>
             ) : null}
-          </View>
+          </SettingsEntry>
         ))
       ) : (
         <Text>{t('app.servers.settings.emoji.empty')}</Text>

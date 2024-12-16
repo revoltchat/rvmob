@@ -1,15 +1,18 @@
+import {useContext} from 'react';
 import {Dimensions, Pressable, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {API} from 'revolt.js';
 
 import {Image} from '@rvmob/crossplat/Image';
-import {app, client} from '../../../Generic';
-import {commonValues, currentTheme} from '../../../Theme';
+import {app, client} from '@rvmob/Generic';
 import {MarkdownView} from '../MarkdownView';
 import {Link, Text} from '../atoms';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 
 export const MessageEmbed = observer((eRaw: API.Embed) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   // @ts-expect-error This seems to be necessary even though it clashses with the API types
   const e = eRaw.embed;
   switch (e.type) {

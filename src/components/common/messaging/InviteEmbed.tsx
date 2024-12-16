@@ -1,14 +1,16 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {API, Message} from 'revolt.js';
 
-import {app, client} from '../../../Generic';
-import {commonValues, currentTheme} from '../../../Theme';
+import {app, client} from '@rvmob/Generic';
 import {Button, GeneralAvatar, Text} from '../atoms';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 
 const InviteBackground = observer(({children}: {children: any}) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   return (
     <View
       style={{
@@ -24,6 +26,8 @@ const InviteBackground = observer(({children}: {children: any}) => {
 
 export const InviteEmbed = observer(
   ({message, invite}: {message: Message; invite: string}) => {
+    const {currentTheme} = useContext(ThemeContext);
+
     const [invObject, setInvObject] = useState({} as API.InviteResponse);
     const [error, setError] = useState('');
 

@@ -1,13 +1,15 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Platform, Pressable, SectionList, View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {commonValues, currentTheme, styles} from '@rvmob/Theme';
+import {styles} from '@rvmob/Theme';
 import {Link, Text} from '@rvmob/components/common/atoms';
+import {openUrl} from '@rvmob/lib/utils';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 
 import licenseList from '../../../../../../assets/data/licenses.json';
-import {openUrl} from '@rexovolt/react-native-markdown-display';
 
 type Package = {
   name: string;
@@ -22,7 +24,9 @@ interface SectionListLicenses {
   data: Package[];
 }
 
-const renderPackage = (packageInfo: Package) => {
+const PackageEntry = ({packageInfo}: {packageInfo: Package}) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   return (
     <View
       key={`license-list-license-${packageInfo.name}`}
@@ -42,26 +46,27 @@ const renderPackage = (packageInfo: Package) => {
             {' '}
             v{packageInfo.version}
           </Text>
+        </Text>
+        {packageInfo.vendorName ? (
+          <Text colour={currentTheme.foregroundSecondary}>
+            by{' '}
+            {packageInfo.vendorUrl ? (
+              <Link
+                link={packageInfo.vendorUrl}
+                label={packageInfo.vendorName}
+              />
+            ) : (
+              packageInfo.vendorName
+            )}
           </Text>
-          {packageInfo.vendorName ? (
-            <Text colour={currentTheme.foregroundSecondary}>
-              by{' '}
-              {packageInfo.vendorUrl ? (
-                <Link
-                  link={packageInfo.vendorUrl}
-                  label={packageInfo.vendorName}
-                />
-              ) : (
-                packageInfo.vendorName
-              )}
-            </Text>
-          ) : null}
+        ) : null}
       </View>
       {packageInfo.url ? (
-        <Pressable onPress={() =>
-          // @ts-expect-error there's a null check literally right above this???
-         openUrl(packageInfo.url)
-         }>
+        <Pressable
+          onPress={() =>
+            // @ts-expect-error there's a null check literally right above this???
+            openUrl(packageInfo.url)
+          }>
           <MaterialCommunityIcon
             name={'open-in-new'}
             color={currentTheme.foregroundPrimary}
@@ -76,10 +81,14 @@ const renderPackage = (packageInfo: Package) => {
 };
 
 export const LicenseListSection = () => {
+  const {currentTheme} = useContext(ThemeContext);
+
+  const {t} = useTranslation();
+
   const [data, setData] = useState<SectionListLicenses[] | null>(null);
 
   const renderItem = ({item}: {item: Package}) => {
-    return renderPackage(item);
+    return <PackageEntry packageInfo={item} />;
   };
 
   const renderHeader = ({section: {title}}: {section: {title: string}}) => {
@@ -126,7 +135,7 @@ export const LicenseListSection = () => {
         />
       ) : (
         <View style={styles.loadingScreen}>
-          <Text type={'h1'}>sus</Text>
+          <Text type={'h1'}>{t('app.settings_menu.licenses.loading')}</Text>
         </View>
       )}
     </View>

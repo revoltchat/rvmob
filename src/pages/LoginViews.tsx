@@ -1,16 +1,11 @@
 import {useState} from 'react';
-import {View} from 'react-native';
-import {useTranslation} from 'react-i18next';
 
-import {setFunction, selectedRemark} from '@rvmob/Generic';
-import {styles} from '@rvmob/Theme';
-import {Text} from '@rvmob/components/common/atoms';
+import {setFunction} from '@rvmob/Generic';
+import {LoadingScreen} from '@rvmob/components/views/LoadingScreen';
 import {LoginPage} from '@rvmob/pages/auth/LoginPage';
 import {LoginSettingsPage} from '@rvmob/pages/auth/LoginSettingsPage';
 
 export const LoginViews = ({markAsLoggedIn}: {markAsLoggedIn: any}) => {
-  const {t} = useTranslation();
-
   const [currentPage, setCurrentPage] = useState<
     'loginSettings' | 'loginPage' | 'loadingPage'
   >('loadingPage');
@@ -35,13 +30,12 @@ export const LoginViews = ({markAsLoggedIn}: {markAsLoggedIn: any}) => {
       markAsLoggedIn={markAsLoggedIn}
     />
   ) : (
-    <View style={styles.loadingScreen}>
-      <Text style={{fontSize: 30, fontWeight: 'bold'}}>
-        {loadingStage === 'connected'
-          ? t('app.loading.generic')
-          : t('app.loading.connecting')}
-      </Text>
-      <Text style={styles.remark}>{selectedRemark || null}</Text>
-    </View>
+    <LoadingScreen
+      header={
+        loadingStage === 'connected'
+          ? 'app.loading.generic'
+          : 'app.loading.connecting'
+      }
+    />
   );
 };

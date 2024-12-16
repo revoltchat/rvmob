@@ -15,11 +15,12 @@ import {ErrorBoundary} from 'react-error-boundary';
 
 import {Channel, Message as RevoltMessage} from 'revolt.js';
 
-import {client, app, selectedRemark} from './Generic';
+import {client, app} from './Generic';
 import {MessageBox} from './MessageBox';
 import {styles} from './Theme';
 import {Button, Text} from './components/common/atoms';
 import {Message} from './components/common/messaging';
+import {LoadingScreen} from './components/views/LoadingScreen';
 import {calculateGrouped, fetchMessages} from './lib/utils';
 
 type DoubleTapState = {
@@ -103,12 +104,14 @@ function MessageViewErrorMessage({
   resetErrorBoundary,
 }: {
   error: any;
-  resetErrorBoundary: Function;
+  resetErrorBoundary: () => void;
 }) {
-  // console.error(`[MESSAGEVIEW] Uncaught error: ${error}`);
+  const errorMessage = `${error}`;
+
+  console.error(`[MESSAGEVIEW] Uncaught error: ${errorMessage}`);
   return (
     <>
-      <Text colour={'#ff6666'}>Error rendering messages: {error}</Text>
+      <Text colour={'#ff6666'}>Error rendering messages: {errorMessage}</Text>
       <Button
         onPress={() => {
           resetErrorBoundary();
@@ -243,10 +246,7 @@ export const NewMessageView = observer(
             Error rendering messages: {error.message ?? error}
           </Text>
         ) : loading ? (
-          <View style={styles.loadingScreen}>
-            <Text style={styles.loadingHeader}>{t('app.loading.generic')}</Text>
-            <Text style={styles.remark}>{selectedRemark || null}</Text>
-          </View>
+          <LoadingScreen />
         ) : (
           <View key={'messageview-outer-container'} style={{flex: 1}}>
             <FlatList

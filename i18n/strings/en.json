@@ -25,7 +25,9 @@
         },
         "loading": {
             "generic": "Loading…",
-            "connecting": "Logging in…"
+            "connecting": "Logging in…",
+            "unknown_state": "Uh oh…",
+            "unknown_state_body": "Please let the developers know that you saw this (value: {{state}})"
         },
         "login": {
             "forms": {
@@ -42,6 +44,10 @@
                 "login_session_token_body": "Use this if you're having issues with the regular login system. Some functionality may not be available.",
                 "signup": "No, sign up",
                 "signup_body": "You'll be redirected to the web app. Once you've signed up, come back and log in."
+            },
+            "settings": {
+                "saved": "Saved!",
+                "saved_body": "For now, you'll have to close and reopen the app for your changes to apply. We know this isn't ideal - we'll fix this at a later date."
             },
             "subheader": "Do you have an account?",
             "token_info_label": "How do I get my token?"
@@ -239,7 +245,8 @@
                 "title": "About RVMob"
             },
             "licenses": {
-                "title": "Open Source Licences"
+                "title": "Open Source Licences",
+                "loading": "Loading licence data…"
             },
             "other": {
                 "debug_info": "Copy Debug Info",

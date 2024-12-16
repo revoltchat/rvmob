@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useContext, useRef, useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -9,13 +9,16 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import type {Message} from 'revolt.js';
 
-import {app, setFunction} from '../../Generic';
-import {commonValues, currentTheme, styles} from '../../Theme';
-import {ContextButton, CopyIDButton, Text} from '../common/atoms';
-import {BottomSheet} from '../common/BottomSheet';
-import {ReplyMessage} from '../common/messaging/ReplyMessage';
+import {app, setFunction} from '@rvmob/Generic';
+import {styles} from '@rvmob/Theme';
+import {ContextButton, CopyIDButton, Text} from '@rvmob/components/common/atoms';
+import {BottomSheet} from '@rvmob/components/common/BottomSheet';
+import {ReplyMessage} from '@rvmob/components/common/messaging/ReplyMessage';
+import { commonValues, ThemeContext } from '@rvmob/lib/themes';
 
 export const MessageMenuSheet = observer(() => {
+  const {currentTheme} = useContext(ThemeContext);
+
   const [message, setMessage] = useState(null as Message | null);
 
   const sheetRef = useRef<BottomSheetCore>(null);

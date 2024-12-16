@@ -1,43 +1,49 @@
-import {createContext, useState} from 'react';
+import {createContext, useContext, useState} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
 
-import {commonValues, currentTheme} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms';
+import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
 
-const spoilerStyles = StyleSheet.create({
-  commonStyles: {
-    flexDirection: 'row',
-    // align it properly (see also https://github.com/facebook/react-native/issues/31955)
-    transform: [
-      {
-        translateY: 6,
-      },
-    ],
+const generateLocalStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
+    commonStyles: {
+      flexDirection: 'row',
+      // align it properly (see also https://github.com/facebook/react-native/issues/31955)
+      transform: [
+        {
+          translateY: 6,
+        },
+      ],
 
-    paddingHorizontal: commonValues.sizes.xs,
-    borderRadius: commonValues.sizes.small,
-  },
-  hiddenSpoiler: {
-    backgroundColor: currentTheme.background,
-  },
-  revealedSpoiler: {
-    backgroundColor: currentTheme.backgroundSecondary,
-  },
-  commonTextStyles: {
-    backgroundColor: 'transparent',
-  },
-  hiddenSpoilerText: {
-    color: 'transparent',
-  },
-  revealedSpoilerText: {
-    color: currentTheme.foregroundPrimary,
-  },
-});
+      paddingHorizontal: commonValues.sizes.xs,
+      borderRadius: commonValues.sizes.small,
+    },
+    hiddenSpoiler: {
+      backgroundColor: currentTheme.background,
+    },
+    revealedSpoiler: {
+      backgroundColor: currentTheme.backgroundSecondary,
+    },
+    commonTextStyles: {
+      backgroundColor: 'transparent',
+    },
+    hiddenSpoilerText: {
+      color: 'transparent',
+    },
+    revealedSpoilerText: {
+      color: currentTheme.foregroundPrimary,
+    },
+  });
+};
 
 export const SpoilerContext = createContext(false);
 
 export const SpoilerWrapper = ({content}: {content: any}) => {
+  const {currentTheme} = useContext(ThemeContext);
+  const spoilerStyles = generateLocalStyles(currentTheme);
+
   const [revealed, setRevealed] = useState(false);
+
   return (
     <SpoilerContext.Provider value={revealed}>
       <Pressable
@@ -65,6 +71,9 @@ export const Spoiler = ({
   styles: any;
   inheritedStyles: any;
 }) => {
+  const {currentTheme} = useContext(ThemeContext);
+  const spoilerStyles = generateLocalStyles(currentTheme);
+
   return (
     <Text
       accessibilityLabel={isRevealed ? node.content : 'Hidden spoiler'}

@@ -1,14 +1,15 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {FlatList, Platform, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 import {DOMParser} from '@xmldom/xmldom';
 
 import {app, client} from '@rvmob/Generic';
-import {commonValues, currentTheme, styles} from '@rvmob/Theme';
+import {styles} from '@rvmob/Theme';
 import {Button, GeneralAvatar, Text} from '@rvmob/components/common/atoms';
 import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
 import {SpecialChannelIcon} from '@rvmob/components/navigation/SpecialChannelIcon';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 
 const parser = new DOMParser({
   errorHandler: (level, message) => {
@@ -18,7 +19,9 @@ const parser = new DOMParser({
   },
 });
 
-const renderServer = (server: any) => {
+const ServerEntry = ({server}: {server: any}) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   return (
     <View
       key={`discover-entry-server-${server._id}`}
@@ -93,7 +96,11 @@ export const DiscoverPage = () => {
   const [data, setData] = useState<any>(null);
 
   const renderItem = ({item}: {item: any}) => {
-    return tab === 'servers' ? renderServer(item) : renderServer(item);
+    return tab === 'servers' ? (
+      <ServerEntry server={item} />
+    ) : (
+      <ServerEntry server={item} />
+    );
   };
 
   const keyExtractor = (item: any) => {

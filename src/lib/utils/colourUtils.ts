@@ -1,23 +1,23 @@
-import {currentTheme} from '@rvmob/Theme';
+import { Theme } from '@rvmob/lib/themes';
 
 /**
  * Returns the correct colour as a HEX string/theme variable. Supports regular HEX colours, client variables (e.g. `var(--accent)`)
  * and gradient roles (which, for now, will return as the first colour from the gradient - this will change if React Native adds support for gradients).
  * @param c The string to check over
  */
-export function getColour(c: string) {
+export function getColour(c: string, theme: Theme) {
   // first check for css variables...
   const isVariable = c.match('var');
   if (isVariable) {
     switch (c) {
       case 'var(--error)':
-        return currentTheme.error;
+        return theme.error;
       case 'var(--accent)':
-        return currentTheme.accentColorForeground;
+        return theme.accentColorForeground;
       case 'var(--foreground)':
-        return currentTheme.foregroundPrimary;
+        return theme.foregroundPrimary;
       case 'var(--background)':
-        return currentTheme.backgroundPrimary;
+        return theme.backgroundPrimary;
       default:
         break;
     }

@@ -1,13 +1,17 @@
+import {useContext} from 'react';
 import {View} from 'react-native';
 
 import Clipboard from '@react-native-clipboard/clipboard';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {currentTheme, styles} from '@rvmob/Theme';
+import {styles} from '@rvmob/Theme';
 import {ContextButton} from './ContextButton';
 import {Text} from './Text';
+import {ThemeContext} from '@rvmob/lib/themes';
 
 export const CopyIDButton = ({id}: {id: string}) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   return (
     <ContextButton
       key={`copy-id-button-${id}`}

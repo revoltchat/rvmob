@@ -1,53 +1,13 @@
-import {useState} from 'react';
-import {TextInput, View, ViewStyle} from 'react-native';
+import {useContext, useState} from 'react';
+import {StyleSheet, TextInput, View, ViewStyle} from 'react-native';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {showToast} from '@rvmob/lib/utils';
-import {currentTheme, styles} from '@rvmob/Theme';
 import {Button} from '@rvmob/components/common/atoms/Button';
 import {Text} from '@rvmob/components/common/atoms/Text';
-
-// TODO: move these once i figure out what to do with the plain Input component/where it'll be useful
-
-// type InputProps = {
-//   value?: string;
-//   onChangeText?: any;
-//   placeholder?: string;
-//   style?: any;
-//   backgroundColor: ViewStyle['backgroundColor'];
-// };
-
-// export function Input({
-//   value,
-//   onChangeText,
-//   placeholder,
-//   style,
-//   backgroundColor,
-//   ...props
-// }: InputProps) {
-//   return (
-//     <TextInput
-//       value={value}
-//       onChangeText={onChangeText}
-//       placeholder={placeholder}
-//       style={[
-//         {
-//           minWidth: '100%',
-//           borderRadius: commonValues.sizes.medium,
-//           backgroundColor: currentTheme.backgroundSecondary,
-//           padding: 6,
-//           paddingHorizontal: 10,
-//           color: currentTheme.foregroundPrimary,
-//         },
-//         backgroundColor ? {backgroundColor} : {},
-//         style,
-//       ]}
-//       {...props}
-//     />
-//   );
-// }
+import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {showToast} from '@rvmob/lib/utils';
 
 export function InputWithButton({
   defaultValue,
@@ -74,10 +34,13 @@ export function InputWithButton({
   cannotBeEmpty?: boolean;
   emptyError?: string;
 }) {
+  const {currentTheme} = useContext(ThemeContext);
+  const localStyles = generateLocalStyles(currentTheme);
+
   let [value, setValue] = useState(defaultValue);
   return (
     // style.input and style.button are applied to the input and button respectively
-    <View style={[styles.iwbContainer, extraStyles?.container]}>
+    <View style={[localStyles.iwbContainer, extraStyles?.container]}>
       <TextInput
         value={value}
         onChangeText={v => {
@@ -85,7 +48,7 @@ export function InputWithButton({
         }}
         placeholder={placeholder}
         style={[
-          styles.iwbInput,
+          localStyles.iwbInput,
           backgroundColor ? {backgroundColor} : undefined,
           extraStyles?.input,
         ]}
@@ -102,7 +65,6 @@ export function InputWithButton({
           }
         }}
         style={[
-          styles.button,
           {marginRight: 0},
           backgroundColor ? {backgroundColor} : {},
           extraStyles?.button,
@@ -128,3 +90,23 @@ export function InputWithButton({
     </View>
   );
 }
+
+const generateLocalStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
+    iwbContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minWidth: '100%',
+    },
+    iwbInput: {
+      fontFamily: 'Open Sans',
+      flex: 1,
+      borderRadius: commonValues.sizes.medium,
+      backgroundColor: currentTheme.backgroundSecondary,
+      padding: 6,
+      paddingHorizontal: 10,
+      color: currentTheme.foregroundPrimary,
+    },
+  });
+};

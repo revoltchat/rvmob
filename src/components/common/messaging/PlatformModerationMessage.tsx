@@ -1,3 +1,4 @@
+import {useContext} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -5,9 +6,9 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Message} from 'revolt.js';
 
-import {MarkdownView} from '../MarkdownView';
-import {commonValues, currentTheme} from '../../../Theme';
-import {Text} from '../atoms';
+import {Text} from '@rvmob/components/common/atoms';
+import {MarkdownView} from '@rvmob/components/common/MarkdownView';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 
 type Response = {
   response: string;
@@ -16,6 +17,8 @@ type Response = {
 
 export const PlatformModerationMessage = observer(
   ({message}: {message: Message}) => {
+    const {currentTheme} = useContext(ThemeContext);
+
     const REPORT_ID_REGEX = /[A-Z0-9]{6}/;
     const REPORT_TARGET_REGEX = /(@)?[^,]*/;
     const REPORT_REASON_REGEX = /[^,]*/;

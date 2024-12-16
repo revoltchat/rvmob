@@ -1,10 +1,10 @@
 import {useState} from 'react';
+import {StyleSheet} from 'react-native';
 
 import {SvgUri} from 'react-native-svg';
 
 import {Image} from '@rvmob/crossplat/Image';
 import {client, app} from '@rvmob/Generic';
-import {styles} from '@rvmob/Theme';
 import {Text} from '../atoms';
 import {
   RE_CUSTOM_EMOJI,
@@ -25,15 +25,16 @@ const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
   }
   return (
     <SvgUri
-      width={styles.emoji.width}
-      height={styles.emoji.height}
-      style={styles.emoji}
+      width={localStyles.emoji.width}
+      height={localStyles.emoji.height}
+      style={localStyles.emoji}
       uri={unicodeEmojiURL(id, pack)}
       onError={() => setError(true)}
       fallback={<Text>{`:${id}:`}</Text>}
     />
   );
 };
+
 const CustomEmoji = ({id}: {id: string}) => {
   const [error, setError] = useState(false);
   if (error) {
@@ -41,7 +42,7 @@ const CustomEmoji = ({id}: {id: string}) => {
   }
   return (
     <Image
-      style={styles.emoji}
+      style={localStyles.emoji}
       source={{
         uri: `${client.configuration?.features.autumn.url}/emojis/${id}`,
       }}
@@ -106,3 +107,15 @@ export function renderEmoji(content: string) {
   });
   return elements.length > 1 ? elements : elements[0];
 }
+
+const localStyles = StyleSheet.create({
+  emoji: {
+    objectFit: 'contain',
+    height: 14,
+    width: 14,
+    marginRight: 5,
+    marginLeft: 1,
+    // display: 'block',
+    position: 'absolute',
+  },
+});

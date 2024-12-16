@@ -1,17 +1,28 @@
-import {useState} from 'react';
-import {Platform, TextInput, View} from 'react-native';
+import {useContext, useState} from 'react';
+import {View} from 'react-native';
 
-import {app} from '../../Generic';
-import {commonValues, currentTheme, styles} from '../../Theme';
-import {BackButton, Button, Text} from '../../components/common/atoms';
+import {useBackHandler} from '@react-native-community/hooks';
+
+import {app} from '@rvmob/Generic';
+import {BackButton, Button, Input, Text} from '@rvmob/components/common/atoms';
+import {LoadingScreen} from '@rvmob/components/views/LoadingScreen';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 
 export const LoginSettingsPage = ({callback}: {callback: () => void}) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   const [instanceURL, setInstanceURL] = useState(
     (app.settings.get('app.instance') as string) ?? '',
   );
   const [testResponse, setTestResponse] = useState(null as string | null);
 
   const [saved, setSaved] = useState(false);
+
+  useBackHandler(() => {
+    callback();
+
+    return true;
+  });
 
   async function testURL(url: string, returnIfSuccessful: boolean) {
     try {
@@ -56,20 +67,17 @@ export const LoginSettingsPage = ({callback}: {callback: () => void}) => {
       />
       <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
         {saved ? (
-          <>
-            <Text style={styles.loadingHeader}>Saved!</Text>
-            <Text style={{textAlign: 'center', marginHorizontal: 30}}>
-              {Platform.OS === 'web'
-                ? 'You can now close this menu and log in.'
-                : "For now, you'll have to close and reopen the app for your changes to apply. We know this isn't ideal - we'll fix this at a later date."}
-            </Text>
-          </>
+          <LoadingScreen
+            header={'app.login.settings.saved'}
+            body={'app.login.settings.saved_body'}
+            styles={{remark: {color: currentTheme.foregroundPrimary}}}
+          />
         ) : (
           <>
             <Text type={'h1'}>Instance</Text>
-            <TextInput
+            <Input
+              isLoginInput
               placeholderTextColor={currentTheme.foregroundSecondary}
-              style={styles.loginInput}
               placeholder={'Instance URL'}
               onChangeText={text => {
                 setInstanceURL(text);
@@ -100,7 +108,7 @@ export const LoginSettingsPage = ({callback}: {callback: () => void}) => {
                 const isValid = await testURL(instanceURL, true);
                 if (isValid) {
                   console.log(`[AUTH] Setting instance URL to ${instanceURL}`);
-                  app.settings.set('app.instance', instanceURL);
+                  await app.settings.set('app.instance', instanceURL);
                   setSaved(true);
                 }
               }}>

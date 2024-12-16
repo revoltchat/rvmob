@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {Platform, ScrollView, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
@@ -14,11 +14,12 @@ import {
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {app, client, setFunction} from '../../Generic';
+import {app, client, setFunction} from '@rvmob/Generic';
 import {OPEN_ISSUES} from '@rvmob/lib/consts';
+import {ThemeContext} from '@rvmob/lib/themes';
 import {SettingsSection} from '@rvmob/lib/types';
 import {openUrl} from '@rvmob/lib/utils';
-import {currentTheme, styles} from '@rvmob/Theme';
+import {styles} from '@rvmob/Theme';
 import {BackButton, ContextButton, Text} from '../common/atoms';
 import {SettingsCategory} from '../common/settings';
 import {
@@ -58,9 +59,10 @@ function copyDebugInfoWrapper() {
 }
 
 export const SettingsSheet = observer(({setState}: {setState: Function}) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   const {t} = useTranslation();
 
-  const [renderCount, rerender] = useState(0);
   const [section, setSection] = useState(null as SettingsSection);
 
   setFunction(
@@ -110,23 +112,11 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}>
               {section.section === 'appearance' ? (
-                <SettingsCategory
-                  category={'appearance'}
-                  renderCount={renderCount}
-                  rerender={rerender}
-                />
+                <SettingsCategory category={'appearance'} />
               ) : section.section === 'functionality' ? (
-                <SettingsCategory
-                  category={'functionality'}
-                  renderCount={renderCount}
-                  rerender={rerender}
-                />
+                <SettingsCategory category={'functionality'} />
               ) : section.section === 'i18n' ? (
-                <SettingsCategory
-                  category={'i18n'}
-                  renderCount={renderCount}
-                  rerender={rerender}
-                />
+                <SettingsCategory category={'i18n'} />
               ) : section.section === 'account' ? (
                 <AccountSettingsSection />
               ) : section.section === 'profile' ? (

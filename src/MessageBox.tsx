@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {Pressable, View, TextInput, Platform} from 'react-native';
+import {useContext, useState} from 'react';
+import {Platform, Pressable, StyleSheet, TextInput, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
@@ -13,11 +13,12 @@ import {ulid} from 'ulid';
 
 import {DocumentPicker} from './crossplat/DocumentPicker';
 import {app, client, setFunction} from './Generic';
-import {styles, currentTheme, commonValues} from './Theme';
+import {styles} from './Theme';
 import {Avatar, Text, Username} from './components/common/atoms';
 import {USER_IDS} from './lib/consts';
 import {ReplyingMessage} from './lib/types';
 import {getReadableFileSize, showToast} from './lib/utils';
+import {commonValues, Theme, ThemeContext} from './lib/themes';
 
 let typing = false;
 
@@ -41,6 +42,9 @@ function placeholderText(channel: Channel) {
 }
 
 export const MessageBox = observer((props: MessageBoxProps) => {
+  const {currentTheme} = useContext(ThemeContext);
+  const localStyles = generateLocalStyles(currentTheme);
+
   const {t} = useTranslation();
 
   const [currentText, setCurrentText] = useState('');
@@ -70,15 +74,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
   // let memberObject = client.members.getKey({server: this.props.channel?.server, user: client.user?._id})
   if (!props.channel.havePermission('SendMessage')) {
     return (
-      <View
-        style={{
-          backgroundColor: currentTheme.backgroundSecondary,
-          minHeight: 50,
-          paddingVertical: 20,
-          paddingHorizontal: commonValues.sizes.medium,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+      <View style={localStyles.noPermissionBox}>
         <Text style={{textAlign: 'center'}}>
           {props.channel.channel_type === 'DirectMessage' &&
           props.channel.recipient?._id === USER_IDS.platformModeration
@@ -89,11 +85,11 @@ export const MessageBox = observer((props: MessageBoxProps) => {
     );
   }
   return (
-    <View style={styles.messageBoxOuter}>
+    <View style={localStyles.messageBoxOuter}>
       <TypingIndicator channel={props.channel} />
       {replyingMessages
         ? replyingMessages.map((m, i) => (
-            <View key={m.message._id} style={styles.messageBoxBar}>
+            <View key={m.message._id} style={localStyles.messageBoxBar}>
               <Pressable
                 style={{
                   width: 30,
@@ -156,7 +152,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         setAttachments={setAttachments}
       />
       {editingMessage ? (
-        <View key={'editing'} style={styles.messageBoxBar}>
+        <View key={'editing'} style={localStyles.messageBoxBar}>
           <Pressable
             style={{
               width: 30,
@@ -179,16 +175,14 @@ export const MessageBox = observer((props: MessageBoxProps) => {
           <Text style={{marginTop: -1}}> Editing message</Text>
         </View>
       ) : null}
-      <View style={styles.messageBoxInner}>
+      <View style={localStyles.messageBoxInner}>
         {Platform.OS !== 'web' &&
         app.settings.get('ui.messaging.sendAttachments') &&
         attachments.length < 5 ? (
           <Pressable
             style={{
-              ...styles.sendButton,
-              marginStart: 0,
-              marginEnd: commonValues.sizes.medium,
-              backgroundColor: currentTheme.messageBox,
+              ...localStyles.sendButton,
+              ...localStyles.attachmentsButton,
             }}
             onPress={async () => {
               try {
@@ -237,9 +231,8 @@ export const MessageBox = observer((props: MessageBoxProps) => {
           multiline
           placeholderTextColor={currentTheme.foregroundSecondary}
           style={{
-            backgroundColor: currentTheme.messageBoxInput,
-            fontSize: app.settings.get('ui.messaging.fontSize'),
-            ...styles.messageBox,
+            ...localStyles.messageBox,
+            fontSize: app.settings.get('ui.messaging.fontSize') as number,
           }}
           placeholder={t(`app.messaging.${placeholderText(props.channel)}`, {
             name:
@@ -266,7 +259,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
         />
         {currentText.trim().length > 0 || attachments.length > 0 ? (
           <Pressable
-            style={styles.sendButton}
+            style={localStyles.sendButton}
             onPress={async () => {
               let thisCurrentText = currentText;
               setCurrentText('');
@@ -356,10 +349,15 @@ const AttachmentsBar = observer(
     attachments: DocumentPickerResponse[];
     setAttachments: Function;
   }) => {
+    const {currentTheme} = useContext(ThemeContext);
+    const localStyles = generateLocalStyles(currentTheme);
+
     // TODO: add file previews?
     if (attachments?.length > 0) {
       return (
-        <View key={'message-box-attachments-bar'} style={styles.attachmentsBar}>
+        <View
+          key={'message-box-attachments-bar'}
+          style={localStyles.attachmentsBar}>
           <Text
             key={'message-box-attachments-bar-header'}
             style={{fontWeight: 'bold'}}>
@@ -423,6 +421,9 @@ const AttachmentsBar = observer(
 );
 
 const TypingIndicator = observer(({channel}: {channel: Channel}) => {
+  const {currentTheme} = useContext(ThemeContext);
+  const localStyles = generateLocalStyles(currentTheme);
+
   if (channel) {
     let users = channel.typing?.filter(entry => !!entry) || undefined;
     !app.settings.get('ui.messaging.showSelfInTypingIndicator') &&
@@ -466,7 +467,7 @@ const TypingIndicator = observer(({channel}: {channel: Channel}) => {
     }
     if (users?.length > 0) {
       return (
-        <View style={styles.typingBar}>
+        <View style={localStyles.typingBar}>
           {users.map(u => {
             return (
               <View key={u?._id} style={{marginRight: -10}}>
@@ -483,3 +484,79 @@ const TypingIndicator = observer(({channel}: {channel: Channel}) => {
 
   return <View />;
 });
+
+const generateLocalStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
+    messageBoxBar: {
+      padding: commonValues.sizes.small,
+      paddingVertical: commonValues.sizes.medium,
+      borderBottomColor: currentTheme.backgroundPrimary,
+      borderBottomWidth: 1,
+      flexDirection: 'row',
+    },
+    messageBox: {
+      backgroundColor: currentTheme.messageBoxInput,
+      color: currentTheme.foregroundPrimary,
+      paddingLeft: 10,
+      padding: 5,
+      flex: 1,
+      fontFamily: 'Open Sans',
+      borderRadius: commonValues.sizes.medium,
+    },
+    messageBoxInner: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      minHeight: 50,
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+    },
+    messageBoxOuter: {
+      backgroundColor: currentTheme.messageBox,
+      overflow: 'hidden',
+    },
+    sendButton: {
+      marginStart: commonValues.sizes.medium,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 5,
+      borderRadius: commonValues.sizes.medium,
+      backgroundColor: currentTheme.accentColor,
+    },
+    attachmentsButton: {
+      marginStart: 0,
+      marginEnd: commonValues.sizes.medium,
+      backgroundColor: currentTheme.messageBox,
+    },
+    noPermissionBox: {
+      backgroundColor: currentTheme.backgroundSecondary,
+      minHeight: 50,
+      paddingVertical: 20,
+      paddingHorizontal: commonValues.sizes.medium,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    typingBar: {
+      height: 26,
+      paddingLeft: 6,
+      padding: 3,
+      backgroundColor: currentTheme.backgroundSecondary,
+      borderBottomColor: currentTheme.backgroundPrimary,
+      borderBottomWidth: 1,
+      flexDirection: 'row',
+    },
+    attachmentsBar: {
+      padding: commonValues.sizes.medium,
+      borderBottomColor: currentTheme.backgroundPrimary,
+      borderBottomWidth: 1,
+      flexDirection: 'column',
+    },
+    attachment: {
+      flexDirection: 'row',
+      padding: commonValues.sizes.medium,
+      margin: commonValues.sizes.small,
+      backgroundColor: currentTheme.backgroundPrimary,
+      borderRadius: commonValues.sizes.small,
+      alignItems: 'center',
+    },
+  });
+};

@@ -1,7 +1,9 @@
+import {useContext} from 'react';
+
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {currentTheme} from '@rvmob/Theme';
+import {ThemeContext} from '@rvmob/lib/themes';
 
 type SpecialCIChannel =
   | 'Home'
@@ -11,7 +13,9 @@ type SpecialCIChannel =
   | 'Debug';
 
 export const SpecialChannelIcon = ({channel}: {channel: SpecialCIChannel}) => {
-  let color = currentTheme.foregroundSecondary;
+  const {currentTheme} = useContext(ThemeContext);
+
+  const color = currentTheme.foregroundSecondary;
   switch (channel) {
     case 'Home':
       return <MaterialIcon name="home" size={24} color={color} />;

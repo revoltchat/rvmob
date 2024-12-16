@@ -1,16 +1,103 @@
-import {useState} from 'react';
-import {TextInput, TouchableOpacity, View} from 'react-native';
+import {useContext, useState} from 'react';
+import {TouchableOpacity, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 import {useBackHandler} from '@react-native-community/hooks';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {app, client} from '@rvmob/Generic';
-import {commonValues, currentTheme, styles} from '@rvmob/Theme';
-import {BackButton, Button, Link, Text} from '@rvmob/components/common/atoms';
+import {
+  BackButton,
+  Button,
+  Input,
+  Link,
+  Text,
+} from '@rvmob/components/common/atoms';
 import {loginRegular, loginWithToken} from '@rvmob/lib/auth';
 import {OFFICIAL_INSTANCE_SIGNUP_URL} from '@rvmob/lib/consts';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 import {openUrl} from '@rvmob/lib/utils';
+
+function LoginTypeSelector({
+  setLoginType,
+}: {
+  setLoginType: (type: 'email' | 'token') => void;
+}) {
+  const {currentTheme} = useContext(ThemeContext);
+
+  const {t} = useTranslation();
+
+  return (
+    <>
+      <Text
+        font={'Inter'}
+        style={{
+          marginVertical: commonValues.sizes.medium,
+          fontSize: 18,
+          fontWeight: 'bold',
+        }}>
+        {t('app.login.subheader')}
+      </Text>
+      <Button
+        onPress={() => {
+          setLoginType('email');
+        }}
+        style={{alignItems: 'flex-start', width: '80%'}}>
+        <View style={{alignItems: 'center'}}>
+          <Text
+            font={'Inter'}
+            style={{textAlign: 'center', fontSize: 16, fontWeight: 'bold'}}>
+            {t('app.login.options.login_regular')}
+          </Text>
+          <Text font={'Inter'} style={{textAlign: 'center'}}>
+            {t('app.login.options.login_regular_body')}
+          </Text>
+        </View>
+      </Button>
+      <Button
+        onPress={() => {
+          setLoginType('token');
+        }}
+        style={{width: '80%'}}>
+        <View style={{alignItems: 'center'}}>
+          <Text
+            font={'Inter'}
+            style={{textAlign: 'center', fontSize: 16, fontWeight: 'bold'}}>
+            {t('app.login.options.login_session_token')}
+          </Text>
+          <Text font={'Inter'} style={{textAlign: 'center'}}>
+            {t('app.login.options.login_session_token_body')}
+          </Text>
+        </View>
+      </Button>
+      <Button
+        onPress={() => {
+          openUrl(
+            client.configuration
+              ? `${client.configuration.app}/login/create`
+              : OFFICIAL_INSTANCE_SIGNUP_URL,
+          );
+        }}
+        style={{width: '80%'}}>
+        <View style={{alignItems: 'center'}}>
+          <Text
+            font={'Inter'}
+            style={{textAlign: 'center', fontSize: 16, fontWeight: 'bold'}}>
+            {t('app.login.options.signup')}
+          </Text>
+          <Text font={'Inter'} style={{textAlign: 'center'}}>
+            {t('app.login.options.signup_body')}
+          </Text>
+        </View>
+      </Button>
+      <Text font={'Inter'} colour={currentTheme.foregroundSecondary}>
+        {t('app.login.instance_notice', {
+          url: app.settings.get('app.instance'),
+        })}
+      </Text>
+    </>
+  );
+}
 
 export const LoginPage = ({
   openLoginSettings,
@@ -19,6 +106,8 @@ export const LoginPage = ({
   openLoginSettings: () => void;
   markAsLoggedIn: () => void;
 }) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   const {t} = useTranslation();
 
   const [localStatus, setLocalStatus] = useState<
@@ -138,9 +227,9 @@ export const LoginPage = ({
           <>
             {!askForTFACode ? (
               <>
-                <TextInput
+                <Input
+                  isLoginInput
                   placeholderTextColor={currentTheme.foregroundSecondary}
-                  style={styles.loginInput}
                   placeholder={t('app.login.forms.email_placeholder')}
                   keyboardType={'email-address'}
                   autoComplete={'email'}
@@ -150,9 +239,9 @@ export const LoginPage = ({
                   value={emailInput}
                   editable={localStatus === 'awaitingInput' && !askForTFACode}
                 />
-                <TextInput
+                <Input
+                  isLoginInput
                   placeholderTextColor={currentTheme.foregroundSecondary}
-                  style={styles.loginInput}
                   secureTextEntry={true}
                   autoComplete={'password'}
                   placeholder={t('app.login.forms.password_placeholder')}
@@ -165,9 +254,9 @@ export const LoginPage = ({
               </>
             ) : (
               <>
-                <TextInput
+                <Input
+                  isLoginInput
                   placeholderTextColor={currentTheme.foregroundSecondary}
-                  style={styles.loginInput}
                   placeholder={t('app.login.forms.mfa_placeholder')}
                   onChangeText={text => {
                     setTFAInput(text);
@@ -203,9 +292,9 @@ export const LoginPage = ({
           </>
         ) : loginType === 'token' ? (
           <>
-            <TextInput
+            <Input
+              isLoginInput
               placeholderTextColor={currentTheme.foregroundSecondary}
-              style={styles.loginInput}
               placeholder={t('app.login.forms.session_token_placeholder')}
               onChangeText={text => {
                 setTokenInput(text);
@@ -230,56 +319,7 @@ export const LoginPage = ({
             ) : null}
           </>
         ) : (
-          <>
-            <Text
-              font={'Inter'}
-              style={{
-                marginVertical: commonValues.sizes.medium,
-                fontSize: 18,
-                fontWeight: 'bold',
-              }}>
-              {t('app.login.subheader')}
-            </Text>
-            <Button
-              onPress={() => {
-                setLoginType('email');
-              }}
-              style={{alignItems: 'center', width: '80%'}}>
-              <Text font={'Inter'} style={{fontSize: 16, fontWeight: 'bold'}}>
-                {t('app.login.options.login_regular')}
-              </Text>
-            </Button>
-            <Button
-              onPress={() => {
-                setLoginType('token');
-              }}
-              style={{alignItems: 'center', width: '80%'}}>
-              <Text font={'Inter'} style={{fontSize: 16, fontWeight: 'bold'}}>
-                {t('app.login.options.login_session_token')}
-              </Text>
-            </Button>
-            <Button
-              onPress={() => {
-                openUrl(
-                  client.configuration
-                    ? `${client.configuration.app}/login/create`
-                    : OFFICIAL_INSTANCE_SIGNUP_URL,
-                );
-              }}
-              style={{width: '80%'}}>
-              <View style={{alignItems: 'center'}}>
-                <Text font={'Inter'} style={{fontSize: 16, fontWeight: 'bold'}}>
-                  {t('app.login.options.signup')}
-                </Text>
-                <Text font={'Inter'}>{t('app.login.options.signup_body')}</Text>
-              </View>
-            </Button>
-            <Text font={'Inter'} colour={currentTheme.foregroundSecondary}>
-              {t('app.login.instance_notice', {
-                url: app.settings.get('app.instance'),
-              })}
-            </Text>
-          </>
+          <LoginTypeSelector setLoginType={setLoginType} />
         )}
       </View>
     </>

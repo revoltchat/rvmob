@@ -1,4 +1,5 @@
-import {TouchableOpacity, View} from 'react-native';
+import {useContext} from 'react';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -6,10 +7,10 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import {decodeTime} from 'ulid';
 
 import {app, client} from '@rvmob/Generic';
-import {currentTheme, styles} from '../../Theme';
 import {Text} from '../common/atoms';
 import {Image} from '@rvmob/crossplat/Image';
-import {DEFAULT_MAX_SIDE} from '../../lib/consts';
+import {DEFAULT_MAX_SIDE} from '@rvmob/lib/consts';
+import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
 
 export const ServerList = observer(
   ({
@@ -27,6 +28,9 @@ export const ServerList = observer(
     showUnread?: boolean;
     showDiscover?: boolean;
   }) => {
+    const {currentTheme} = useContext(ThemeContext);
+    const localStyles = generateLocalStyles(currentTheme);
+
     let servers = [...client.servers.values()];
     if (filter) {
       servers = servers.filter(filter);
@@ -75,17 +79,17 @@ export const ServerList = observer(
                   onServerLongPress(s);
                 }}
                 key={s._id}
-                style={styles.serverButton}>
+                style={localStyles.serverButton}>
                 {iconURL ? (
                   <Image
                     key={`${s._id}-icon`}
                     source={{uri: iconURL + '?max_side=' + DEFAULT_MAX_SIDE}}
-                    style={styles.serverIcon}
+                    style={localStyles.serverIcon}
                   />
                 ) : (
                   <Text
                     key={`${s._id}-initials`}
-                    style={styles.serverButtonInitials}>
+                    style={localStyles.serverButtonInitials}>
                     {initials}
                   </Text>
                 )}
@@ -93,37 +97,17 @@ export const ServerList = observer(
               {showUnread && s.getMentions().length > 0 ? (
                 <View
                   key={`${s._id}-mentions-indicator`}
-                  style={{
-                    borderRadius: 10000,
-                    backgroundColor: currentTheme.error,
-                    height: 20,
-                    width: 20,
-                    marginBottom: -20,
-                    left: 36,
-                    position: 'absolute',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
+                  style={localStyles.mentionsIndicator}>
                   <Text
                     key={`${s._id}-mentions-indicator-count`}
-                    style={{color: '#FFFFFF', marginRight: 1, marginBottom: 2}}>
+                    style={localStyles.mentionsIndicatorText}>
                     {pings > 9 ? '9+' : pings}
                   </Text>
                 </View>
               ) : showUnread && s.isUnread() ? (
                 <View
                   key={`${s._id}-unreads-indicator`}
-                  style={{
-                    borderRadius: 10000,
-                    borderWidth: 3,
-                    borderColor: currentTheme.background,
-                    backgroundColor: currentTheme.foregroundPrimary,
-                    height: 20,
-                    width: 20,
-                    marginBottom: -20,
-                    left: 36,
-                    position: 'absolute',
-                  }}
+                  style={localStyles.unreadsIndicator}
                 />
               ) : null}
             </View>
@@ -144,7 +128,7 @@ export const ServerList = observer(
                 app.openChannel('discover');
               }}
               key={'serverlist-discover'}
-              style={styles.serverButton}>
+              style={localStyles.serverButton}>
               <View style={{alignItems: 'center', marginVertical: '22.5%'}}>
                 <MaterialCommunityIcon
                   name={'compass'}
@@ -159,3 +143,51 @@ export const ServerList = observer(
     );
   },
 );
+const generateLocalStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
+    serverButton: {
+      borderRadius: 5000,
+      width: 48,
+      height: 48,
+      margin: commonValues.sizes.small,
+      backgroundColor: currentTheme.backgroundPrimary,
+      overflow: 'hidden',
+    },
+    serverIcon: {
+      width: 48,
+      height: 48,
+    },
+    serverButtonInitials: {
+      fontWeight: 'bold',
+      textAlign: 'center',
+      marginTop: '30%',
+    },
+    mentionsIndicator: {
+      borderRadius: 10000,
+      backgroundColor: currentTheme.error,
+      height: 20,
+      width: 20,
+      marginBottom: -20,
+      left: 36,
+      position: 'absolute',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    mentionsIndicatorText: {
+      color: '#FFFFFF',
+      marginRight: 1,
+      marginBottom: 2,
+    },
+    unreadsIndicator: {
+      borderRadius: 10000,
+      borderWidth: 3,
+      borderColor: currentTheme.background,
+      backgroundColor: currentTheme.foregroundPrimary,
+      height: 20,
+      width: 20,
+      marginBottom: -20,
+      left: 36,
+      position: 'absolute',
+    },
+  });
+};

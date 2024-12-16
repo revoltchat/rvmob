@@ -1,12 +1,16 @@
+import {useContext} from 'react';
 import {View} from 'react-native';
 
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {Setting} from '../../../../lib/types';
-import {currentTheme, styles} from '../../../../Theme';
+import {styles} from '@rvmob/Theme';
+import {ThemeContext} from '@rvmob/lib/themes';
+import {Setting} from '@rvmob/lib/types';
 
 export const IndicatorIcons = ({s}: {s: Setting}) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   return (
     <>
       {s.experimental ? (

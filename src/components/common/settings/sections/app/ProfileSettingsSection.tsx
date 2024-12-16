@@ -1,3 +1,4 @@
+import {useContext} from 'react';
 import {Pressable, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -5,13 +6,17 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {app, client} from '@rvmob/Generic';
-import {currentTheme, styles} from '@rvmob/Theme';
+import {styles} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms';
+import {SettingsEntry} from '@rvmob/components/common/settings/atoms';
+import {ThemeContext} from '@rvmob/lib/themes';
 
 export const ProfileSettingsSection = observer(() => {
+  const {currentTheme} = useContext(ThemeContext);
+
   return (
     <>
-      <View style={styles.settingsEntry} key={'display-name-settings'}>
+      <SettingsEntry key={'display-name-settings'}>
         <View style={{flex: 1, flexDirection: 'column'}}>
           <Text key={'display-name-label'} style={{fontWeight: 'bold'}}>
             Display name
@@ -70,7 +75,7 @@ export const ProfileSettingsSection = observer(() => {
             />
           </View>
         </Pressable>
-      </View>
+      </SettingsEntry>
     </>
   );
 });

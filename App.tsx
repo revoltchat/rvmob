@@ -1,32 +1,21 @@
 import 'react-native-get-random-values'; // react native moment
 
-import {Component as ReactComponent, useState} from 'react';
-import {
-  View,
-  StatusBar,
-  StatusBarStyle,
-  useWindowDimensions,
-} from 'react-native';
+import {Component as ReactComponent, useContext, useState} from 'react';
+import {View, StatusBar, StatusBarStyle, StyleSheet} from 'react-native';
 import {ErrorBoundary} from 'react-error-boundary';
-import {withTranslation} from 'react-i18next';
 
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Clipboard from '@react-native-clipboard/clipboard';
-import {useBackHandler} from '@react-native-community/hooks';
-import {Drawer} from 'react-native-drawer-layout';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 import {Channel, Server} from 'revolt.js';
 
-import {commonValues, currentTheme, styles} from './src/Theme';
 import {client, app, randomizeRemark} from './src/Generic';
 import {setFunction} from './src/Generic';
-import {SideMenu} from './src/SideMenu';
+import {SideMenuHandler} from './src/SideMenu';
 import {Modals} from './src/Modals';
+import {ErrorMessage} from '@rvmob/components/ErrorMessage';
 import {NetworkIndicator} from './src/components/NetworkIndicator';
-import {Button, Text} from './src/components/common/atoms';
-import {ChannelView} from './src/components/views/ChannelView';
 import {Notification} from './src/components/Notification';
 import {loginWithSavedToken} from './src/lib/auth';
 import {
@@ -36,6 +25,8 @@ import {
 } from '@rvmob/lib/notifications';
 import {sleep} from '@rvmob/lib/utils';
 import {LoginViews} from '@rvmob/pages/LoginViews';
+import {themes, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {LoadingScreen} from '@rvmob/components/views/LoadingScreen';
 
 async function openLastChannel() {
   try {
@@ -61,14 +52,14 @@ async function openLastChannel() {
   }
 }
 
-function checkLastVersion() {
+async function checkLastVersion() {
   const lastVersion = app.settings.get('app.lastVersion');
   console.log(app.version, lastVersion);
   if (!lastVersion || lastVersion === '') {
     console.log(
       `[APP] lastVersion is null (${lastVersion}), setting to app.version (${app.version})`,
     );
-    app.settings.set('app.lastVersion', app.version);
+    await app.settings.set('app.lastVersion', app.version);
   } else {
     app.version === lastVersion
       ? console.log(
@@ -80,71 +71,58 @@ function checkLastVersion() {
   }
 }
 
-const SideMenuHandler = ({
-  coreObject,
-  currentChannel,
-  setChannel,
-}: {
-  coreObject: any;
-  currentChannel: any;
-  setChannel: any;
-}) => {
-  const [sideMenuOpen, setSideMenuOpen] = useState(false);
-  setFunction('openLeftMenu', async (o: boolean) => {
-    console.log(`[APP] Setting left menu open state to ${o}`);
-    setSideMenuOpen(o);
-  });
-
-  const {height, width} = useWindowDimensions();
-
-  useBackHandler(() => {
-    if (height > width && !sideMenuOpen) {
-      setSideMenuOpen(true);
-      return true;
-    }
-
-    return false;
-  });
-
-  return height < width ? (
-    <View style={{flex: 1, flexDirection: 'row'}}>
-      <View
-        style={{
-          width: '20%',
-          flexDirection: 'column',
-        }}>
-        <SideMenu
-          onChannelClick={setChannel}
-          currentChannel={currentChannel}
-          orderedServers={coreObject.state.orderedServers}
+function LoggedInViews({state, setChannel}: {state: any; setChannel: any}) {
+  return (
+    <>
+      <SideMenuHandler
+        coreObject={state}
+        currentChannel={state.state.currentChannel}
+        setChannel={setChannel}
+      />
+      <Modals />
+      <NetworkIndicator client={client} />
+      <View style={{position: 'absolute', top: 20, left: 0, width: '100%'}}>
+        <Notification
+          message={state.state.notificationMessage}
+          dismiss={() =>
+            state.setState({
+              notificationMessage: null,
+            })
+          }
+          openChannel={() =>
+            state.setState({
+              notificationMessage: null,
+              currentChannel: state.state.notificationMessage.channel,
+            })
+          }
         />
       </View>
-      <ChannelView channel={currentChannel} />
-    </View>
-  ) : (
-    <Drawer
-      swipeEdgeWidth={width * 2}
-      swipeMinVelocity={250}
-      drawerType={'slide'}
-      open={sideMenuOpen}
-      onOpen={() => setSideMenuOpen(true)}
-      onClose={() => setSideMenuOpen(false)}
-      renderDrawerContent={() => (
-        <SideMenu
-          onChannelClick={setChannel}
-          currentChannel={currentChannel}
-          orderedServers={coreObject.state.orderedServers}
+    </>
+  );
+}
+
+function AppViews({state, setChannel}: {state: any; setChannel: any}) {
+  const {currentTheme} = useContext(ThemeContext);
+  const localStyles = generateAppViewStyles(currentTheme);
+
+  return (
+    <View style={localStyles.app}>
+      {state.state.status === 'loggedIn' ? (
+        <LoggedInViews state={state} setChannel={setChannel} />
+      ) : state.state.status === 'loggedOut' ? (
+        <LoginViews
+          markAsLoggedIn={() => state.setState({status: 'loggedIn'})}
+        />
+      ) : (
+        <LoadingScreen
+          header={'app.loading.unknown_state'}
+          body={'app.loading.unknown_state_body'}
+          bodyParams={{state: state.state.status}}
         />
       )}
-      style={styles.app}
-      drawerStyle={{
-        backgroundColor: currentTheme.backgroundPrimary,
-        width: width - 50,
-      }}>
-      <ChannelView channel={currentChannel} />
-    </Drawer>
+    </View>
   );
-};
+}
 
 class MainView extends ReactComponent {
   constructor(props) {
@@ -173,8 +151,9 @@ class MainView extends ReactComponent {
         ['token', ''],
         ['sessionID', ''],
       ]);
-      client.logout();
-      this.setState({status: 'loggedOut'});
+      this.setState({status: 'loggedOut', currentChannel: null});
+      await client.logout();
+      app.setLoggedOutScreen('loginPage');
     });
   }
   componentDidUpdate(_, prevState) {
@@ -188,7 +167,7 @@ class MainView extends ReactComponent {
     let defaultNotif = await createChannel();
     console.log(`[NOTIFEE] Created channel: ${defaultNotif}`);
 
-    checkLastVersion();
+    await checkLastVersion();
 
     client.on('connecting', () => {
       app.setLoadingStage('connecting');
@@ -345,123 +324,51 @@ class MainView extends ReactComponent {
   }
 
   render() {
-    const {t} = this.props;
-    return (
-      <View style={styles.app}>
-        {this.state.status === 'loggedIn' ? (
-          <>
-            <SideMenuHandler
-              coreObject={this}
-              currentChannel={this.state.currentChannel}
-              setChannel={this.setChannel.bind(this)}
-            />
-            <Modals />
-            <NetworkIndicator client={client} />
-            <View
-              style={{position: 'absolute', top: 20, left: 0, width: '100%'}}>
-              <Notification
-                message={this.state.notificationMessage}
-                dismiss={() =>
-                  this.setState({
-                    notificationMessage: null,
-                  })
-                }
-                openChannel={() =>
-                  this.setState({
-                    notificationMessage: null,
-                    currentChannel: this.state.notificationMessage.channel,
-                  })
-                }
-              />
-            </View>
-          </>
-        ) : this.state.status === 'loggedOut' ? (
-          <LoginViews
-            markAsLoggedIn={() => this.setState({status: 'loggedIn'})}
-          />
-        ) : (
-          <View style={styles.loadingScreen}>
-            <Text style={{fontSize: 30, fontWeight: 'bold'}}>Uh oh...</Text>
-            <Text style={styles.remark}>
-              Please let the developers know that you saw this (value:{' '}
-              {this.state.status})
-            </Text>
-          </View>
-        )}
-      </View>
-    );
+    return <AppViews state={this} setChannel={this.setChannel.bind(this)} />;
   }
 }
 
-const MainViewi18n = withTranslation()(MainView);
-
-function ErrorMessage({
-  error,
-  resetErrorBoundary,
-}: {
-  error: any;
-  resetErrorBoundary: Function;
-}) {
-  console.error(`[APP] Uncaught error: ${error}`);
-  return (
-    <View
-      style={{
-        flex: 1,
-        padding: commonValues.sizes.xl,
-        justifyContent: 'center',
-      }}>
-      <Text
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-        }}>
-        <Text style={{fontSize: 30, fontWeight: 'bold'}}>
-          OOPSIE WOOPSIE!! {'UwU\n'}
-        </Text>
-        We made a fucky wucky!! A wittle fucko boingo! The code monkeys at our
-        headquarters are working VEWY HAWD to fix this! {'>w<\n\n'}
-        On a more serious note, please let us know that you experienced the
-        following error:
-      </Text>
-      <View
-        style={{
-          backgroundColor: currentTheme.background,
-          borderRadius: commonValues.sizes.medium,
-          marginVertical: commonValues.sizes.xl,
-          padding: commonValues.sizes.xl,
-        }}>
-        <Text font={'JetBrains Mono'} colour={'#ff5555'}>
-          {error.toString()}
-        </Text>
-      </View>
-      <Button
-        onPress={() => {
-          Clipboard.setString(error.toString());
-        }}>
-        <Text>Copy error message</Text>
-      </Button>
-      <Button
-        onPress={() => {
-          resetErrorBoundary();
-        }}>
-        <Text>Reload app</Text>
-      </Button>
-    </View>
-  );
-}
-
 export const App = () => {
+  const [theme, setTheme] = useState<Theme>(themes.Dark);
+
+  setFunction('setTheme', (themeName: string) => {
+    const newTheme = themes[themeName] ?? themes.Dark;
+    setTheme(newTheme);
+  });
+
+  const localStyles = generateLocalStyles(theme);
+
   return (
-    <GestureHandlerRootView style={styles.outer}>
-      <StatusBar
-        animated={true}
-        backgroundColor={currentTheme.backgroundSecondary}
-        barStyle={(currentTheme.contentType + '-content') as StatusBarStyle}
-      />
-      <ErrorBoundary fallbackRender={ErrorMessage}>
-        <MainViewi18n />
-      </ErrorBoundary>
+    <GestureHandlerRootView style={localStyles.outer}>
+      <ThemeContext.Provider
+        value={{currentTheme: theme, setCurrentTheme: setTheme}}>
+        <StatusBar
+          animated={true}
+          backgroundColor={theme.backgroundSecondary}
+          barStyle={(theme.contentType + '-content') as StatusBarStyle}
+        />
+        <ErrorBoundary fallbackRender={ErrorMessage}>
+          <MainView />
+        </ErrorBoundary>
+      </ThemeContext.Provider>
     </GestureHandlerRootView>
   );
+};
+
+const generateLocalStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
+    outer: {
+      flex: 1,
+      backgroundColor: currentTheme.backgroundSecondary,
+    },
+  });
+};
+
+const generateAppViewStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
+    app: {
+      flex: 1,
+      backgroundColor: currentTheme.backgroundPrimary,
+    },
+  });
 };

@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -7,13 +7,15 @@ import {useBackHandler} from '@react-native-community/hooks';
 
 import {Channel, User} from 'revolt.js';
 
-import {setFunction} from '../../Generic';
-import {commonValues, currentTheme} from '../../Theme';
-import {Text} from '../common/atoms';
-import {BottomSheet} from '../common/BottomSheet';
-import {MarkdownView} from '../common/MarkdownView';
+import {setFunction} from '@rvmob/Generic';
+import {Text} from '@rvmob/components/common/atoms';
+import {BottomSheet} from '@rvmob/components/common/BottomSheet';
+import {MarkdownView} from '@rvmob/components/common/MarkdownView';
+import {commonValues, ThemeContext } from '@rvmob/lib/themes';
 
 export const ChannelInfoSheet = observer(() => {
+  const {currentTheme} = useContext(ThemeContext);
+
   const [channel, setChannel] = useState(null as Channel | null);
   const [groupMembers, setGroupMembers] = useState([] as User[]);
 
@@ -46,7 +48,7 @@ export const ChannelInfoSheet = observer(() => {
   }, [channel]);
   return (
     <BottomSheet sheetRef={sheetRef}>
-      <View style={{paddingHorizontal: 16}}>
+      <View style={{paddingHorizontal: commonValues.sizes.xl}}>
         {!channel ? (
           <></>
         ) : (

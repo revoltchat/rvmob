@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {useContext, useState} from 'react';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {ErrorBoundary} from 'react-error-boundary';
 import {observer} from 'mobx-react-lite';
 
@@ -11,15 +11,16 @@ import {app} from '@rvmob/Generic';
 import {Messages} from '@rvmob/LegacyMessageView';
 import {NewMessageView} from '@rvmob/MessageView';
 import {MessageBox} from '@rvmob/MessageBox';
-import {currentTheme, styles} from '@rvmob/Theme';
+import {styles} from '@rvmob/Theme';
 import {Button, Text} from '@rvmob/components/common/atoms';
 import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
 import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
+import {SpecialChannelIcon} from '@rvmob/components/navigation/SpecialChannelIcon';
 import {FriendsPage} from '@rvmob/components/pages/FriendsPage';
 import {HomePage} from '@rvmob/components/pages/HomePage';
 import {VoiceChannel} from '@rvmob/components/pages/VoiceChannel';
 import {DiscoverPage} from '@rvmob/pages/discover/DiscoverPage';
-import {SpecialChannelIcon} from '../navigation/SpecialChannelIcon';
+import {Theme, ThemeContext} from '@rvmob/lib/themes';
 
 function MessageViewErrorMessage({
   error,
@@ -45,6 +46,9 @@ function MessageViewErrorMessage({
 type CVChannel = Channel | 'friends' | 'discover' | 'debug' | null;
 
 export const ChannelView = observer(({channel}: {channel: CVChannel}) => {
+  const {currentTheme} = useContext(ThemeContext);
+  const localStyles = generateLocalStyles(currentTheme);
+
   const [renderCount, rerender] = useState(0);
 
   const handledMessages = [] as string[];
@@ -56,7 +60,7 @@ export const ChannelView = observer(({channel}: {channel: CVChannel}) => {
   );
 
   return (
-    <View style={styles.mainView}>
+    <View style={localStyles.mainView}>
       {channel ? (
         channel === 'friends' ? (
           <FriendsPage />
@@ -84,7 +88,7 @@ export const ChannelView = observer(({channel}: {channel: CVChannel}) => {
               </View>
               <Text
                 style={{
-                  fontSize: app.settings.get('ui.messaging.fontSize'),
+                  fontSize: app.settings.get('ui.messaging.fontSize') as number,
                   ...styles.channelName,
                 }}>
                 {channel.channel_type === 'DirectMessage'
@@ -168,8 +172,11 @@ export const ChannelView = observer(({channel}: {channel: CVChannel}) => {
                   (This can be reversed in Settings.)
                 </Text>
                 <Button
-                  onPress={() => {
-                    app.settings.set('ui.messaging.showNSFWContent', true);
+                  onPress={async () => {
+                    await app.settings.set(
+                      'ui.messaging.showNSFWContent',
+                      true,
+                    );
                     rerender(renderCount + 1);
                   }}>
                   <Text style={styles.buttonText}>
@@ -186,3 +193,12 @@ export const ChannelView = observer(({channel}: {channel: CVChannel}) => {
     </View>
   );
 });
+
+const generateLocalStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
+    mainView: {
+      flex: 1,
+      backgroundColor: currentTheme.backgroundPrimary,
+    },
+  });
+};

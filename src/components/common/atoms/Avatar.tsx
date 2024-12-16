@@ -1,3 +1,4 @@
+import {useContext} from 'react';
 import {Pressable, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -5,8 +6,8 @@ import {Server, User, Channel} from 'revolt.js';
 
 import {Image} from '@rvmob/crossplat/Image';
 import {app, client} from '@rvmob/Generic';
-import {currentTheme} from '@rvmob/Theme';
 import {DEFAULT_MAX_SIDE} from '@rvmob/lib/consts';
+import {ThemeContext} from '@rvmob/lib/themes';
 
 type AvatarProps = {
   channel?: Channel;
@@ -30,6 +31,8 @@ export const Avatar = observer(
     masquerade,
     pressable,
   }: AvatarProps) => {
+    const {currentTheme} = useContext(ThemeContext);
+
     let memberObject =
       server && user
         ? client.members.getKey({

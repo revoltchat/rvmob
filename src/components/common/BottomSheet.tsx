@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {useContext, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 
 import BottomSheetCore, {
@@ -7,10 +7,13 @@ import BottomSheetCore, {
 } from '@gorhom/bottom-sheet';
 import {observer} from 'mobx-react-lite';
 
-import {commonValues, currentTheme} from '../../Theme';
+import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
 
 export const BottomSheet = observer(
   ({sheetRef, children}: {sheetRef: any; children: any}) => {
+    const {currentTheme} = useContext(ThemeContext);
+    const localStyles = useMemo(() => generateLocalStyles(currentTheme), [currentTheme]);
+
     const snapPoints = useMemo(() => ['50%', '70%', '90%'], []);
 
     return (
@@ -20,10 +23,8 @@ export const BottomSheet = observer(
         snapPoints={snapPoints}
         enablePanDownToClose
         backdropComponent={BottomSheetBackdrop}
-        style={{margin: 'auto', maxWidth: 800}}
-        backgroundStyle={{
-          backgroundColor: currentTheme.backgroundSecondary,
-        }}
+        style={localStyles.sheet}
+        backgroundStyle={localStyles.sheetBackground}
         handleIndicatorStyle={localStyles.handleIndicator}>
         <BottomSheetScrollView>{children}</BottomSheetScrollView>
       </BottomSheetCore>
@@ -31,14 +32,20 @@ export const BottomSheet = observer(
   },
 );
 
-const localStyles = StyleSheet.create({
-  sheetBackground: {
-    backgroundColor: currentTheme.backgroundSecondary,
-  },
-  handleIndicator: {
-    backgroundColor: currentTheme.foregroundPrimary,
-    width: '25%',
-    padding: 3,
-    marginVertical: commonValues.sizes.medium,
-  },
-});
+const generateLocalStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
+    sheet: {
+      margin: 'auto',
+      maxWidth: 800,
+    },
+    sheetBackground: {
+      backgroundColor: currentTheme.backgroundSecondary,
+    },
+    handleIndicator: {
+      backgroundColor: currentTheme.foregroundPrimary,
+      width: '25%',
+      padding: 3,
+      marginVertical: commonValues.sizes.medium,
+    },
+  });
+};

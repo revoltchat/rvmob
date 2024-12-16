@@ -5,9 +5,9 @@ import type {API, Channel, Message, Server, User} from 'revolt.js';
 
 import {setLanguage} from '@rvmob-i18n/i18n';
 import {languages} from '@rvmob-i18n/languages';
-import {setTheme, themes} from '@rvmob/Theme';
 import {DEFAULT_API_URL, LOADING_SCREEN_REMARKS} from '@rvmob/lib/consts';
 import {checkNotificationPerms} from '@rvmob/lib/notifications';
+import {themes} from '@rvmob/lib/themes';
 import {
   CreateChannelModalProps,
   DeletableObject,
@@ -65,7 +65,7 @@ export const app = {
         setting.type === 'number' ? parseInt(raw as string, 10) || 0 : raw;
       return toreturn;
     },
-    set: (k: string, v: string | boolean | undefined) => {
+    set: async (k: string, v: string | boolean | undefined) => {
       try {
         const setting = app.settings._fetch(k);
         if (!setting) {
@@ -74,12 +74,12 @@ export const app = {
         }
         setting.value = v;
         setting.onChange && setting.onChange(v);
-        app.settings.save();
+        await app.settings.save();
       } catch (err) {
         console.log(`[SETTINGS] Error setting setting ${k} to ${v}: ${err}`);
       }
     },
-    save: () => {
+    save: async () => {
       try {
         let out: object[] = [];
         for (const s of app.settings.list) {
@@ -87,7 +87,7 @@ export const app = {
             out.push({key: s.key, value: s.value});
           }
         }
-        AsyncStorage.setItem('settings', JSON.stringify(out));
+        await AsyncStorage.setItem('settings', JSON.stringify(out));
       } catch (err) {
         console.log(`[SETTINGS] Error saving settings: ${err}`);
       }
@@ -125,10 +125,10 @@ export const app = {
         type: 'string',
         options: Object.keys(themes),
         onChange: (v: any) => {
-          setTheme(v);
+          app.setTheme(v);
         },
         onInitialize: (v: any) => {
-          setTheme(v);
+          app.setTheme(v);
         },
         remark: true,
       },
@@ -292,6 +292,11 @@ export const app = {
       },
     ] as Setting[],
   },
+  setTheme: (themeName: string) => {
+    console.log(
+      `[FUNCTIONS] Tried to run uninitialised function setTheme (args: ${themeName})`,
+    );
+  },
   setLoggedOutScreen: (screen: 'loginPage' | 'loadingPage') => {
     console.log(
       `[FUNCTIONS] Tried to run uninitialised function setLoggedOutScreen (args: ${screen})`,
@@ -405,6 +410,7 @@ export function setFunction(name: string, func: any) {
 
 async function initialiseSettings() {
   const s = await AsyncStorage.getItem('settings');
+  console.log(s);
   if (s) {
     try {
       const settings = JSON.parse(s) as {key: string; value: any}[];

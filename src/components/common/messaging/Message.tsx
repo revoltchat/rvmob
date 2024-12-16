@@ -1,5 +1,11 @@
-import {useState} from 'react';
-import {Dimensions, Pressable, TouchableOpacity, View} from 'react-native';
+import {useContext, useState} from 'react';
+import {
+  Dimensions,
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,11 +22,11 @@ import {MessageReactions} from '@rvmob/components/common/messaging/MessageReacti
 import {PlatformModerationMessage} from '@rvmob/components/common/messaging/PlatformModerationMessage';
 import {ReplyMessage} from '@rvmob/components/common/messaging/ReplyMessage';
 import {app, client} from '@rvmob/Generic';
-import {commonValues, currentTheme, styles} from '@rvmob/Theme';
 import {Image} from '@rvmob/crossplat/Image';
 import {Avatar, Text, Username} from '@rvmob/components/common/atoms';
 import {MarkdownView} from '@rvmob/components/common/MarkdownView';
 import {RE_INVITE, USER_IDS} from '@rvmob/lib/consts';
+import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
 import {getReadableFileSize, openUrl, parseRevoltNodes} from '@rvmob/lib/utils';
 
 type MessageProps = {
@@ -39,6 +45,9 @@ type ReactionPile = {
 };
 
 export const Message = observer((props: MessageProps) => {
+  const {currentTheme} = useContext(ThemeContext);
+  const localStyles = generateLocalStyles(currentTheme);
+
   const locale = app.settings.get('ui.messaging.use24H') ? enGB : enUS;
   const mentionsUser = props.message.mention_ids?.includes(client.user?._id!);
 
@@ -72,7 +81,7 @@ export const Message = observer((props: MessageProps) => {
   try {
     if (!props.message.content && props.message.system) {
       return (
-        <View key={props.message._id} style={styles.messsageInner}>
+        <View key={props.message._id} style={localStyles.messageInner}>
           <View
             style={{
               marginTop: app.settings.get(
@@ -384,7 +393,7 @@ export const Message = observer((props: MessageProps) => {
         ) : (
           <>
             {props.message.reply_ids !== null ? (
-              <View style={styles.repliedMessagePreviews}>
+              <View style={localStyles.repliedMessagePreviews}>
                 {props.message.reply_ids.map(id => (
                   <ReplyMessage
                     key={id}
@@ -399,7 +408,9 @@ export const Message = observer((props: MessageProps) => {
             ) : null}
             <View
               style={{
-                ...(props.grouped ? styles.messageGrouped : styles.message),
+                ...(props.grouped
+                  ? localStyles.messageGrouped
+                  : localStyles.message),
                 ...(mentionsUser
                   ? {
                       borderColor: currentTheme.mentionBorder,
@@ -425,7 +436,7 @@ export const Message = observer((props: MessageProps) => {
               ) : null}
               <View
                 key={`message-${props.message._id}-inner`}
-                style={styles.messageInner}>
+                style={localStyles.messageInner}>
                 {props.grouped && props.message.edited ? (
                   <Text
                     key={`message-${props.message._id}-edited`}
@@ -456,7 +467,7 @@ export const Message = observer((props: MessageProps) => {
                     </Pressable>
                     <Text
                       key={`message-${props.message._id}-timestamp`}
-                      style={styles.timestamp}>
+                      style={localStyles.timestamp}>
                       {' '}
                       {formatRelative(
                         decodeTime(props.message._id),
@@ -567,3 +578,42 @@ export const Message = observer((props: MessageProps) => {
   }
   return null;
 });
+
+const generateLocalStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
+    message: {
+      borderRadius: commonValues.sizes.small,
+      borderLeftWidth: 3,
+      borderStyle: 'solid',
+      borderColor: currentTheme.backgroundPrimary,
+      width: '100%',
+      flex: 1,
+      flexDirection: 'row',
+      paddingVertical: commonValues.sizes.xs,
+      paddingHorizontal: commonValues.sizes.xs,
+    },
+    messageGrouped: {
+      borderRadius: commonValues.sizes.small,
+      borderLeftWidth: 3,
+      borderStyle: 'solid',
+      borderColor: currentTheme.backgroundPrimary,
+      paddingLeft: 37,
+      width: '100%',
+      paddingVertical: commonValues.sizes.xs,
+    },
+    messageInner: {
+      flex: 1,
+      paddingLeft: 10,
+    },
+    timestamp: {
+      fontSize: 12,
+      color: currentTheme.foregroundTertiary,
+      position: 'relative',
+      top: 2,
+      left: 2,
+    },
+    repliedMessagePreviews: {
+      paddingTop: commonValues.sizes.small,
+    },
+  });
+};

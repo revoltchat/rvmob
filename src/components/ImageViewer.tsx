@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
@@ -5,13 +6,16 @@ import ImageViewerCore from 'react-native-reanimated-image-viewer';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {client} from '@rvmob/Generic';
-import {getReadableFileSize, openUrl} from '@rvmob/lib/utils';
-import {commonValues, currentTheme} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms';
 import {GapView} from '@rvmob/components/layout';
+import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {getReadableFileSize, openUrl} from '@rvmob/lib/utils';
 
 export const ImageViewer = gestureHandlerRootHOC(
   ({state, setState}: {state: any; setState: any}) => {
+    const {currentTheme} = useContext(ThemeContext);
+    const localStyles = generateLocalStyles(currentTheme);
+
     const imageUrl = state.i?.metadata
       ? client.generateFileURL(state.i)!
       : state.i;
@@ -63,7 +67,8 @@ export const ImageViewer = gestureHandlerRootHOC(
   {backgroundColor: 'red'},
 );
 
-const localStyles = StyleSheet.create({
+const generateLocalStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
@@ -88,3 +93,4 @@ const localStyles = StyleSheet.create({
     zIndex: 10,
   },
 });
+};

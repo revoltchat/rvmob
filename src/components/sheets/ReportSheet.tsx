@@ -1,5 +1,5 @@
-import {useMemo, useRef, useState} from 'react';
-import {ScrollView, TextInput, View} from 'react-native';
+import {useContext, useMemo, useRef, useState} from 'react';
+import {ScrollView, StyleSheet, TextInput, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import BottomSheetCore from '@gorhom/bottom-sheet';
@@ -7,13 +7,13 @@ import {useBackHandler} from '@react-native-community/hooks';
 
 import {Message} from 'revolt.js';
 
-import {app, client, setFunction} from '../../Generic';
-import {USER_IDS} from '../../lib/consts';
-import type {ReportedObject} from '../../lib/types';
-import {commonValues, currentTheme} from '../../Theme';
-import {Avatar, Button, Text, Username} from '../common/atoms';
-import {MarkdownView} from '../common/MarkdownView';
-import {BottomSheet} from '../common/BottomSheet';
+import {app, client, setFunction} from '@rvmob/Generic';
+import {Avatar, Button, Text, Username} from '@rvmob/components/common/atoms';
+import {BottomSheet} from '@rvmob/components/common/BottomSheet';
+import {MarkdownView} from '@rvmob/components/common/MarkdownView';
+import {USER_IDS} from '@rvmob/lib/consts';
+import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import type {ReportedObject} from '@rvmob/lib/types';
 
 type Reason = {
   label: string;
@@ -51,18 +51,23 @@ async function sendReport(
   }
 }
 
-// TODO: move this to the styles file?
-const inputStyles = {
-  fontFamily: 'Open Sans',
-  borderRadius: commonValues.sizes.medium,
-  backgroundColor: currentTheme.headerSecondary,
-  margin: commonValues.sizes.small,
-  padding: 6,
-  paddingHorizontal: commonValues.sizes.large,
-  color: currentTheme.foregroundPrimary,
+const generateLocalStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
+    input: {
+      fontFamily: 'Open Sans',
+      borderRadius: commonValues.sizes.medium,
+      backgroundColor: currentTheme.headerSecondary,
+      margin: commonValues.sizes.small,
+      padding: 6,
+      paddingHorizontal: commonValues.sizes.large,
+      color: currentTheme.foregroundPrimary,
+    },
+  });
 };
 
 function SuccessScreen({reportedObject}: {reportedObject: ReportedObject}) {
+  const {currentTheme} = useContext(ThemeContext);
+
   return (
     <>
       <Text style={{marginBottom: 10}}>
@@ -140,6 +145,8 @@ function ReasonsSelector({
   reasons: Reason[];
   setReason: Function;
 }) {
+  const {currentTheme} = useContext(ThemeContext);
+
   return (
     <>
       <Text>
@@ -173,6 +180,9 @@ function ReasonsSelector({
 }
 
 export const ReportSheet = observer(() => {
+  const {currentTheme} = useContext(ThemeContext);
+  const localStyles = generateLocalStyles(currentTheme);
+
   const [obj, setObj] = useState(null as ReportedObject | null);
 
   const sheetRef = useRef<BottomSheetCore>(null);
@@ -330,7 +340,7 @@ export const ReportSheet = observer(() => {
               <>
                 <Text>You can add more context to your report here.</Text>
                 <TextInput
-                  style={inputStyles}
+                  style={localStyles.input}
                   value={additionalContext}
                   onChangeText={(c: string) => {
                     setAdditionalContext(c);
@@ -372,7 +382,7 @@ export const ReportSheet = observer(() => {
               <>
                 <Text>You can add more context to your report here.</Text>
                 <TextInput
-                  style={inputStyles}
+                  style={localStyles.input}
                   value={additionalContext}
                   onChangeText={(c: string) => {
                     setAdditionalContext(c);
@@ -410,7 +420,7 @@ export const ReportSheet = observer(() => {
               <>
                 <Text>You can add more context to your report here.</Text>
                 <TextInput
-                  style={inputStyles}
+                  style={localStyles.input}
                   value={additionalContext}
                   onChangeText={(c: string) => {
                     setAdditionalContext(c);

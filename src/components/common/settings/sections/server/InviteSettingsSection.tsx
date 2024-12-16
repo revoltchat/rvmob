@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Pressable, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
@@ -7,10 +7,14 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {API, Server} from 'revolt.js';
 
-import {currentTheme, styles} from '@rvmob/Theme';
+import {styles} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms';
+import {SettingsEntry} from '@rvmob/components/common/settings/atoms';
+import {ThemeContext} from '@rvmob/lib/themes';
 
 export const InviteSettingsSection = observer(({server}: {server: Server}) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   const {t} = useTranslation();
 
   const [reload, triggerReload] = useState(0);
@@ -30,9 +34,7 @@ export const InviteSettingsSection = observer(({server}: {server: Server}) => {
       {invites ? (
         invites.length ? (
           invites.map(i => (
-            <View
-              style={styles.settingsEntry}
-              key={`invite-settings-entry-${i._id}`}>
+            <SettingsEntry key={`invite-settings-entry-${i._id}`}>
               <View style={{flex: 1, flexDirection: 'column'}}>
                 <Text
                   key={`invite-settings-entry-${i._id}-id`}
@@ -64,7 +66,7 @@ export const InviteSettingsSection = observer(({server}: {server: Server}) => {
                   </View>
                 </Pressable>
               ) : null}
-            </View>
+            </SettingsEntry>
           ))
         ) : (
           <Text>{t('app.servers.settings.invites.empty')}</Text>

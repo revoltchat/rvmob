@@ -1,7 +1,8 @@
+import { useContext } from 'react';
 import {StyleSheet} from 'react-native';
 
-import {currentTheme} from '@rvmob/Theme';
 import {Text} from './Text';
+import { Theme, ThemeContext } from '@rvmob/lib/themes';
 import {openUrl} from '@rvmob/lib/utils';
 
 type LinkProps = {
@@ -11,21 +12,30 @@ type LinkProps = {
 };
 
 export const Link = ({link, label, style}: LinkProps) => {
+  const {currentTheme} = useContext(ThemeContext);
+  const styles = generateLocalStyles(currentTheme);
+
   let finalStyle = styles.link;
   if (style) {
     finalStyle = {...finalStyle, ...style};
   }
 
   return (
-    <Text onPress={() => openUrl(link)} style={finalStyle}>
+    <Text
+      accessibilityRole={'link'}
+      onPress={() => openUrl(link)}
+      style={finalStyle}>
       {label}
     </Text>
   );
 };
 
-const styles = StyleSheet.create({
+const generateLocalStyles = (currentTheme: Theme) => {
+
+return StyleSheet.create({
   link: {
     color: currentTheme.accentColor,
     textDecorationLine: 'underline',
   },
 });
+};

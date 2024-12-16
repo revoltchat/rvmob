@@ -1,3 +1,4 @@
+import {useContext} from 'react';
 import {Pressable, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -5,9 +6,10 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {Message} from 'revolt.js';
 
-import {commonValues, currentTheme, styles} from '../Theme';
+import {styles} from '../Theme';
 import {Avatar, Text, Username} from './common/atoms';
 import {MarkdownView} from './common/MarkdownView';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 import {parseRevoltNodes} from '../lib/utils';
 
 export const Notification = observer(
@@ -20,6 +22,7 @@ export const Notification = observer(
     dismiss: Function;
     openChannel: Function;
   }) => {
+    const {currentTheme} = useContext(ThemeContext);
     if (message) {
       return (
         <TouchableOpacity

@@ -1,19 +1,28 @@
-import {useState} from 'react';
-import {Pressable, ScrollView, View} from 'react-native';
+import {useContext, useState} from 'react';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useBackHandler} from '@react-native-community/hooks';
+import {Drawer} from 'react-native-drawer-layout';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Server} from 'revolt.js';
 
 import {app, setFunction, client} from './Generic';
-import {styles, currentTheme} from './Theme';
 import {Avatar, Button} from './components/common/atoms';
 import {ChannelList} from './components/navigation/ChannelList';
 import {ServerList} from './components/navigation/ServerList';
+import {ChannelView} from './components/views/ChannelView';
 import {DEFAULT_API_URL} from './lib/consts';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
 
-export const SideMenu = ({
+const SideMenu = ({
   currentChannel,
   onChannelClick,
   orderedServers,
@@ -22,6 +31,9 @@ export const SideMenu = ({
   onChannelClick: Function;
   orderedServers: string[];
 }) => {
+  const {currentTheme} = useContext(ThemeContext);
+  const localStyles = generateLocalStyles(currentTheme);
+
   const [currentServer, setCurrentServerInner] = useState(
     null as Server | null,
   );
@@ -37,8 +49,8 @@ export const SideMenu = ({
   });
   return (
     <>
-      <View style={styles.leftView}>
-        <ScrollView key={'server-list'} style={styles.serverList}>
+      <View style={localStyles.sideView}>
+        <ScrollView key={'server-list'} style={localStyles.serverList}>
           <Pressable
             onPress={() => {
               currentServer ? setCurrentServer(null) : app.openStatusMenu(true);
@@ -57,14 +69,7 @@ export const SideMenu = ({
               status
             />
           </Pressable>
-          <View
-            style={{
-              margin: 6,
-              height: 2,
-              width: '80%',
-              backgroundColor: currentTheme.backgroundPrimary,
-            }}
-          />
+          <View style={localStyles.separator} />
           <ServerList
             onServerPress={(s: Server) => setCurrentServer(s)}
             onServerLongPress={(s: Server) => app.openServerContextMenu(s)}
@@ -74,7 +79,7 @@ export const SideMenu = ({
         </ScrollView>
         <ScrollView
           key={'channel-list'}
-          style={styles.channelList}
+          style={localStyles.channelList}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}>
           <ChannelList
@@ -86,16 +91,7 @@ export const SideMenu = ({
           />
         </ScrollView>
       </View>
-      <View
-        style={{
-          height: 50,
-          width: '100%',
-          backgroundColor: currentTheme.background,
-          borderTopWidth: currentTheme.generalBorderWidth,
-          borderColor: currentTheme.generalBorderColor,
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-        }}>
+      <View style={localStyles.bottomBar}>
         <Button
           key={'bottom-nav-friends'}
           onPress={() => onChannelClick('friends', currentServer)}
@@ -119,4 +115,113 @@ export const SideMenu = ({
       </View>
     </>
   );
+};
+
+export const SideMenuHandler = ({
+  coreObject,
+  currentChannel,
+  setChannel,
+}: {
+  coreObject: any;
+  currentChannel: any;
+  setChannel: any;
+}) => {
+  const {currentTheme} = useContext(ThemeContext);
+  const localStyles = generateLocalStyles(currentTheme);
+
+  const [sideMenuOpen, setSideMenuOpen] = useState(false);
+  setFunction('openLeftMenu', async (o: boolean) => {
+    console.log(`[APP] Setting left menu open state to ${o}`);
+    setSideMenuOpen(o);
+  });
+
+  const {height, width} = useWindowDimensions();
+
+  useBackHandler(() => {
+    if (height > width && !sideMenuOpen) {
+      setSideMenuOpen(true);
+      return true;
+    }
+
+    return false;
+  });
+
+  return height < width ? (
+    <View style={{flex: 1, flexDirection: 'row'}}>
+      <View
+        style={{
+          width: '20%',
+          flexDirection: 'column',
+        }}>
+        <SideMenu
+          onChannelClick={setChannel}
+          currentChannel={currentChannel}
+          orderedServers={coreObject.state.orderedServers}
+        />
+      </View>
+      <ChannelView channel={currentChannel} />
+    </View>
+  ) : (
+    <Drawer
+      swipeEdgeWidth={width * 2}
+      swipeMinVelocity={250}
+      drawerType={'slide'}
+      open={sideMenuOpen}
+      onOpen={() => setSideMenuOpen(true)}
+      onClose={() => setSideMenuOpen(false)}
+      renderDrawerContent={() => (
+        <SideMenu
+          onChannelClick={setChannel}
+          currentChannel={currentChannel}
+          orderedServers={coreObject.state.orderedServers}
+        />
+      )}
+      style={localStyles.drawer}
+      drawerStyle={{
+        backgroundColor: currentTheme.backgroundPrimary,
+        width: width - 50,
+      }}>
+      <ChannelView channel={currentChannel} />
+    </Drawer>
+  );
+};
+
+const generateLocalStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
+    drawer: {
+      flex: 1,
+      backgroundColor: currentTheme.backgroundPrimary,
+    },
+    sideView: {
+      flex: 1,
+      backgroundColor: currentTheme.backgroundSecondary,
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+    },
+    serverList: {
+      width: 60,
+      flexShrink: 1,
+      backgroundColor: currentTheme.background,
+      paddingVertical: commonValues.sizes.small,
+    },
+    channelList: {
+      flexGrow: 1000,
+      flex: 1000,
+    },
+    separator: {
+      margin: 6,
+      height: 2,
+      width: '80%',
+      backgroundColor: currentTheme.backgroundPrimary,
+    },
+    bottomBar: {
+      height: 50,
+      width: '100%',
+      backgroundColor: currentTheme.background,
+      borderTopWidth: currentTheme.generalBorderWidth,
+      borderColor: currentTheme.generalBorderColor,
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+    },
+  });
 };

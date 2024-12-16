@@ -1,4 +1,5 @@
-import {Pressable, View} from 'react-native';
+import {useContext} from 'react';
+import {View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
@@ -8,11 +9,14 @@ import {Server} from 'revolt.js';
 
 import {GapView} from '@rvmob/components/layout';
 import {InputWithButton, Link, Text} from '@rvmob/components/common/atoms';
+import {PressableSettingsEntry} from '@rvmob/components/common/settings/atoms';
 import {SYSTEM_MESSAGE_CHANNEL_TYPES} from '@rvmob/lib/consts';
-import {currentTheme, styles} from '@rvmob/Theme';
+import {ThemeContext} from '@rvmob/lib/themes';
 
 export const OverviewSettingsSection = observer(
   ({server}: {server: Server}) => {
+    const {currentTheme} = useContext(ThemeContext);
+
     const {t} = useTranslation();
 
     return (
@@ -94,8 +98,7 @@ export const OverviewSettingsSection = observer(
           {t('app.servers.settings.overview.system_messages_description')}
         </Text>
         {SYSTEM_MESSAGE_CHANNEL_TYPES.map(type => (
-          <Pressable
-            style={styles.settingsEntry}
+          <PressableSettingsEntry
             key={`overview-settings-system-channels-${type}`}
             onPress={() => {}}>
             <View style={{flex: 1, flexDirection: 'column'}}>
@@ -125,7 +128,7 @@ export const OverviewSettingsSection = observer(
               />
             </View> */}
             </View>
-          </Pressable>
+          </PressableSettingsEntry>
         ))}
       </>
     );

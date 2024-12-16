@@ -1,6 +1,7 @@
-import {TouchableOpacity} from 'react-native';
+import {useContext} from 'react';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 
-import {styles} from '@rvmob/Theme';
+import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
 
 type ButtonProps = {
   children?: any;
@@ -20,13 +21,16 @@ export function ContextButton({
   style,
   ...props
 }: ButtonProps) {
+  const {currentTheme} = useContext(ThemeContext);
+  const localStyles = generateLocalStyles(currentTheme);
+
   return (
     <TouchableOpacity
       onPress={onPress}
       onLongPress={onLongPress}
       delayLongPress={delayLongPress}
       style={[
-        styles.actionTile,
+        localStyles.contextButton,
         backgroundColor ? {backgroundColor} : {},
         style,
       ]}
@@ -35,3 +39,19 @@ export function ContextButton({
     </TouchableOpacity>
   );
 }
+
+const generateLocalStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
+    contextButton: {
+      height: 40,
+      width: '100%',
+      alignItems: 'center',
+      flexDirection: 'row',
+      backgroundColor: currentTheme.backgroundPrimary,
+      borderRadius: commonValues.sizes.medium,
+      paddingLeft: 10,
+      paddingRight: 10,
+      marginVertical: commonValues.sizes.small,
+    },
+  });
+};

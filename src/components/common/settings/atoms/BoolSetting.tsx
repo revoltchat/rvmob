@@ -1,12 +1,12 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
-import {app} from '../../../../Generic';
-import {currentTheme} from '../../../../Theme';
-import {Setting} from '../../../../lib/types';
+import {app} from '@rvmob/Generic';
+import {Setting} from '@rvmob/lib/types';
 import {Checkbox, Text} from '../../atoms';
 import {IndicatorIcons} from './IndicatorIcons';
+import {ThemeContext} from '@rvmob/lib/themes';
 
 export const BoolSetting = ({
   sRaw,
@@ -17,7 +17,10 @@ export const BoolSetting = ({
   experimentalFunction: any;
   devFunction: any;
 }) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   const {t} = useTranslation();
+
   const [value, setValue] = useState(app.settings.get(sRaw.key) as boolean);
   return (
     <View
@@ -41,9 +44,9 @@ export const BoolSetting = ({
       <Checkbox
         key={`checkbox-${sRaw.key}`}
         value={value}
-        callback={() => {
+        callback={async () => {
           const newValue = !value;
-          app.settings.set(sRaw.key, newValue);
+          await app.settings.set(sRaw.key, newValue);
           setValue(newValue);
           sRaw.key === 'ui.settings.showExperimental'
             ? experimentalFunction(newValue)

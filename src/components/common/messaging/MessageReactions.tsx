@@ -1,14 +1,15 @@
+import {useContext} from 'react';
 import {Pressable, View} from 'react-native';
 import {action} from 'mobx';
 import {observer} from 'mobx-react-lite';
 
 import {Message} from 'revolt.js';
 
+import {client} from '@rvmob/Generic';
+import {Text} from '@rvmob/components/common/atoms';
 import {Image} from '@rvmob/crossplat/Image';
-import {client} from '../../../Generic';
-import {showToast} from '../../../lib/utils';
-import {commonValues, currentTheme} from '../../../Theme';
-import {Text} from '../atoms';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {showToast} from '@rvmob/lib/utils';
 
 type ReactionPile = {
   emoji: string;
@@ -17,6 +18,8 @@ type ReactionPile = {
 
 export const MessageReactions = observer(
   ({msg, reactions}: {msg: Message; reactions: ReactionPile[]}) => {
+    const {currentTheme} = useContext(ThemeContext);
+
     if (reactions.length > 0) {
       return (
         <View

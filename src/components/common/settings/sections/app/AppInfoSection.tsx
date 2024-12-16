@@ -1,3 +1,4 @@
+import {useContext} from 'react';
 import {Platform, Pressable, View} from 'react-native';
 
 import {getBundleId} from 'react-native-device-info';
@@ -6,8 +7,8 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import AppInfo from '../../../../../../package.json';
 import {app} from '@rvmob/Generic';
 import {CONTRIBUTORS_LIST, FEDI_PROFILE, GITHUB_REPO} from '@rvmob/lib/consts';
+import {ThemeContext} from '@rvmob/lib/themes';
 import {openUrl} from '@rvmob/lib/utils';
-import {currentTheme} from '@rvmob/Theme';
 import {ContextButton, Link, Text} from '@rvmob/components/common/atoms';
 
 import ReleaseIcon from '../../../../../../assets/images/icon_release.svg';
@@ -16,6 +17,8 @@ import DebugIcon from '../../../../../../assets/images/icon_debug.svg';
 const AppIcon = getBundleId().match('debug') ? DebugIcon : ReleaseIcon;
 
 export const AppInfoSection = () => {
+  const {currentTheme} = useContext(ThemeContext);
+
   return (
     <View
       style={{

@@ -5,8 +5,8 @@ import {observer} from 'mobx-react-lite';
 import {User} from 'revolt.js';
 
 import {app, client} from '@rvmob/Generic';
-import {MiniProfile} from '@rvmob/Profile';
 import {styles} from '@rvmob/Theme';
+import {MiniProfile} from '@rvmob/components/common/profile';
 import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
 import {SpecialChannelIcon} from '@rvmob/components/navigation/SpecialChannelIcon';
 import {Button, Text} from '@rvmob/components/common/atoms';

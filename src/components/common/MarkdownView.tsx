@@ -1,3 +1,4 @@
+import {useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import spoilerPlugin from '@traptitech/markdown-it-spoiler';
@@ -7,102 +8,104 @@ import Markdown, {
 } from '@rexovolt/react-native-markdown-display';
 
 import {app} from '@rvmob/Generic';
-import {commonValues, currentTheme} from '@rvmob/Theme';
 import {Text} from './atoms';
 import {Spoiler, SpoilerContext, SpoilerWrapper} from './markdown/Spoiler';
 import {renderEmoji} from './messaging/Emoji';
 import {openUrl} from '@rvmob/lib/utils';
+import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
 
 const defaultMarkdownIt = MarkdownIt({linkify: true})
   .disable(['image'])
   .use(spoilerPlugin);
 
-const defaultStyles = StyleSheet.create({
-  body: {
-    fontFamily: 'Open Sans',
-    color: currentTheme.foregroundPrimary,
-  },
-  paragraph: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginTop: -3,
-    marginBottom: commonValues.sizes.xs,
-    fontSize: app.settings.get('ui.messaging.fontSize') as number,
-  },
-  heading1: {
-    fontWeight: 'bold',
-  },
-  heading2: {
-    fontWeight: 'bold',
-  },
-  heading3: {
-    fontWeight: 'bold',
-  },
-  heading4: {
-    fontWeight: 'bold',
-  },
-  heading5: {
-    fontWeight: 'bold',
-  },
-  heading6: {
-    fontWeight: 'bold',
-  },
-  link: {
-    color: currentTheme.accentColor,
-  },
-  code_inline: {
-    fontFamily: 'JetBrains Mono',
-    backgroundColor: 'transparent',
-    padding: 0,
-    borderWidth: 0,
-  },
-  code_inline_container: {
-    // align it properly (see also https://github.com/facebook/react-native/issues/31955)
-    transform: [
-      {
-        translateY: 6,
-      },
-    ],
-    backgroundColor: currentTheme.backgroundSecondary,
-    paddingHorizontal: commonValues.sizes.xs,
-    borderRadius: commonValues.sizes.small,
-  },
-  fence: {
-    fontFamily: 'JetBrains Mono',
-    backgroundColor: currentTheme.backgroundSecondary,
-    borderWidth: 0,
-    borderRadius: commonValues.sizes.small,
-    marginBottom: commonValues.sizes.xs,
-  },
-  blockquote: {
-    marginLeft: 2,
-    marginBottom: commonValues.sizes.xs,
-    paddingVertical: 6,
-    borderRadius: commonValues.sizes.small,
-    borderColor: currentTheme.foregroundPrimary,
-    backgroundColor: currentTheme.blockQuoteBackground,
-  },
-  table: {
-    borderTopWidth: 2,
-    borderEndWidth: 2,
-    borderColor: currentTheme.foregroundSecondary,
-    borderRadius: commonValues.sizes.small,
-  },
-  thead: {
-    fontWeight: 'bold',
-  },
-  th: {
-    borderStartWidth: 1,
-    borderColor: currentTheme.foregroundSecondary,
-  },
-  td: {
-    borderStartWidth: 1,
-    borderColor: currentTheme.foregroundSecondary,
-  },
-  tr: {
-    borderColor: currentTheme.foregroundSecondary,
-  },
-});
+const generateDefaultStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
+    body: {
+      fontFamily: 'Open Sans',
+      color: currentTheme.foregroundPrimary,
+    },
+    paragraph: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      marginTop: -3,
+      marginBottom: commonValues.sizes.xs,
+      fontSize: app.settings.get('ui.messaging.fontSize') as number,
+    },
+    heading1: {
+      fontWeight: 'bold',
+    },
+    heading2: {
+      fontWeight: 'bold',
+    },
+    heading3: {
+      fontWeight: 'bold',
+    },
+    heading4: {
+      fontWeight: 'bold',
+    },
+    heading5: {
+      fontWeight: 'bold',
+    },
+    heading6: {
+      fontWeight: 'bold',
+    },
+    link: {
+      color: currentTheme.accentColor,
+    },
+    code_inline: {
+      fontFamily: 'JetBrains Mono',
+      backgroundColor: 'transparent',
+      padding: 0,
+      borderWidth: 0,
+    },
+    code_inline_container: {
+      // align it properly (see also https://github.com/facebook/react-native/issues/31955)
+      transform: [
+        {
+          translateY: 6,
+        },
+      ],
+      backgroundColor: currentTheme.backgroundSecondary,
+      paddingHorizontal: commonValues.sizes.xs,
+      borderRadius: commonValues.sizes.small,
+    },
+    fence: {
+      fontFamily: 'JetBrains Mono',
+      backgroundColor: currentTheme.backgroundSecondary,
+      borderWidth: 0,
+      borderRadius: commonValues.sizes.small,
+      marginBottom: commonValues.sizes.xs,
+    },
+    blockquote: {
+      marginLeft: 2,
+      marginBottom: commonValues.sizes.xs,
+      paddingVertical: 6,
+      borderRadius: commonValues.sizes.small,
+      borderColor: currentTheme.foregroundPrimary,
+      backgroundColor: currentTheme.blockQuoteBackground,
+    },
+    table: {
+      borderTopWidth: 2,
+      borderEndWidth: 2,
+      borderColor: currentTheme.foregroundSecondary,
+      borderRadius: commonValues.sizes.small,
+    },
+    thead: {
+      fontWeight: 'bold',
+    },
+    th: {
+      borderStartWidth: 1,
+      borderColor: currentTheme.foregroundSecondary,
+    },
+    td: {
+      borderStartWidth: 1,
+      borderColor: currentTheme.foregroundSecondary,
+    },
+    tr: {
+      borderColor: currentTheme.foregroundSecondary,
+    },
+  });
+};
 
 const shouldRenderTextAsSpoilerText = (parents: any) => {
   if (!hasParents(parents, 'spoiler')) {
@@ -197,6 +200,9 @@ const spoilerRule = {
 };
 
 export const MarkdownView = (props: any) => {
+  const {currentTheme} = useContext(ThemeContext);
+  const defaultStyles = generateDefaultStyles(currentTheme);
+
   let newProps = {...props};
 
   if (!newProps.onLinkPress) {

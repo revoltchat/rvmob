@@ -1,15 +1,17 @@
+import { useContext } from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {User} from 'revolt.js';
 
-import {app} from '../../Generic';
-import {MiniProfile} from '../../Profile';
-import {commonValues, currentTheme} from '../../Theme';
-
-import {Button} from '../common/atoms';
+import {app} from '@rvmob/Generic';
+import {Button} from '@rvmob/components/common/atoms';
+import {MiniProfile} from '@rvmob/components/common/profile';
+import {commonValues, ThemeContext } from '@rvmob/lib/themes';
 
 export const UserList = observer(({users}: {users: User[]}) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   return (
     <>
       {users.map(u => (

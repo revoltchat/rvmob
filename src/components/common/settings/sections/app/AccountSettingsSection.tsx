@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Pressable, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -7,11 +7,15 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {app, client} from '@rvmob/Generic';
-import {currentTheme, styles} from '@rvmob/Theme';
+import {styles} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms';
 import {GapView} from '@rvmob/components/layout';
+import {SettingsEntry} from '@rvmob/components/common/settings/atoms';
+import {ThemeContext} from '@rvmob/lib/themes';
 
 export const AccountSettingsSection = observer(() => {
+  const {currentTheme} = useContext(ThemeContext);
+
   const [authInfo, setAuthInfo] = useState({
     email: '',
     mfaEnabled: false,
@@ -38,7 +42,7 @@ export const AccountSettingsSection = observer(() => {
 
   return (
     <>
-      <View style={styles.settingsEntry} key={'username-settings'}>
+      <SettingsEntry key={'username-settings'}>
         <View style={{flex: 1, flexDirection: 'column'}}>
           <Text key={'username-label'} style={{fontWeight: 'bold'}}>
             Username{' '}
@@ -84,8 +88,8 @@ export const AccountSettingsSection = observer(() => {
           />
         </View>
       </Pressable> */}
-      </View>
-      <View style={styles.settingsEntry} key={'email-settings'}>
+      </SettingsEntry>
+      <SettingsEntry key={'email-settings'}>
         <View style={{flex: 1, flexDirection: 'column'}}>
           <Text key={'email-label'} style={{fontWeight: 'bold'}}>
             Email
@@ -146,7 +150,7 @@ export const AccountSettingsSection = observer(() => {
           />
         </View>
       </Pressable> */}
-      </View>
+      </SettingsEntry>
       <GapView size={4} />
       <Text type={'h1'}>Multi-factor authentication</Text>
       <Text
@@ -170,7 +174,7 @@ export const AccountSettingsSection = observer(() => {
         Review your logged-in sessions.
       </Text>
       {authInfo.sessions.map(s => (
-        <View style={styles.settingsEntry} key={`sessions-${s._id}`}>
+        <SettingsEntry key={`sessions-${s._id}`}>
           <View style={{flex: 1, flexDirection: 'column'}}>
             <Text key={`sessions-${s._id}-name`} style={{fontWeight: 'bold'}}>
               {s.name} {s.name.match(/RVMob/) ? '✨' : ''}
@@ -232,7 +236,7 @@ export const AccountSettingsSection = observer(() => {
               </View>
             </Pressable>
           ) : null}
-        </View>
+        </SettingsEntry>
       ))}
     </>
   );

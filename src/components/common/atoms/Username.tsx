@@ -1,12 +1,13 @@
+import {useContext} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {Server, User} from 'revolt.js';
 
 import {app, client} from '@rvmob/Generic';
-import {currentTheme, styles} from '@rvmob/Theme';
 import {Text} from './Text';
 import {USER_IDS} from '@rvmob/lib/consts';
+import {ThemeContext} from '@rvmob/lib/themes';
 import {getColour} from '@rvmob/lib/utils';
 
 type UsernameProps = {
@@ -29,6 +30,8 @@ export const Username = observer(
     color,
     skipDisplayName,
   }: UsernameProps) => {
+    const {currentTheme} = useContext(ThemeContext);
+
     if (!user || typeof user !== 'object') {
       return (
         <Text style={size ? {fontSize: size} : {}}>{'<Unknown User>'}</Text>
@@ -40,7 +43,7 @@ export const Username = observer(
           user: user._id,
         })
       : undefined;
-    let roleColor = color ? getColour(color) : styles.textDefault.color;
+    let roleColor = color ? getColour(color, currentTheme) : currentTheme.foregroundPrimary;
     const name =
       server && memberObject?.nickname
         ? memberObject?.nickname
@@ -52,6 +55,7 @@ export const Username = observer(
       if (srv?.roles) {
         roleColor = getColour(
           memberObject.roleColour ?? currentTheme.foregroundPrimary,
+          currentTheme
         );
       }
     }

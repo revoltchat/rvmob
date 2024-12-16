@@ -1,3 +1,4 @@
+import {useContext} from 'react';
 import {Pressable, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -5,10 +6,10 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {API} from 'revolt.js';
 
-import {app, client} from '../../Generic';
-import {commonValues, currentTheme} from '../../Theme';
-import {Button, GeneralAvatar, Text} from '../common/atoms';
+import {app, client} from '@rvmob/Generic';
+import {Button, GeneralAvatar, Text} from '@rvmob/components/common/atoms';
 import {Image} from '@rvmob/crossplat/Image';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 
 export const ServerInviteSheet = observer(
   ({
@@ -20,6 +21,8 @@ export const ServerInviteSheet = observer(
     server: API.InviteResponse;
     inviteCode: string;
   }) => {
+    const {currentTheme} = useContext(ThemeContext);
+
     return (
       <View style={{flex: 1, backgroundColor: currentTheme.backgroundPrimary}}>
         <Pressable

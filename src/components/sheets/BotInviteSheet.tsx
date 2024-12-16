@@ -1,17 +1,20 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {Pressable, ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {Server, User} from 'revolt.js';
 
-import {client} from '../../Generic';
-import {currentTheme} from '../../Theme';
-import {Button, GeneralAvatar, Text} from '../common/atoms';
-import {ServerList} from '../navigation/ServerList';
+import {client} from '@rvmob/Generic';
+import {Button, GeneralAvatar, Text} from '@rvmob/components/common/atoms';
+import {ServerList} from '@rvmob/components/navigation/ServerList';
+import { ThemeContext } from '@rvmob/lib/themes';
 
 export const BotInviteSheet = observer(
   ({setState, bot}: {setState: Function; bot: User}) => {
+    const {currentTheme} = useContext(ThemeContext);
+
     const [destination, setDestination] = useState(null as Server | null);
+
     return (
       <View
         style={{

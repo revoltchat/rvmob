@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
@@ -9,10 +9,11 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {Member, Server} from 'revolt.js';
 
-import {app, client, setFunction} from '../../Generic';
-import {SERVER_FLAGS, SPECIAL_SERVERS} from '../../lib/consts';
-import {showToast} from '../../lib/utils';
-import {commonValues, currentTheme, styles} from '../../Theme';
+import {app, client, setFunction} from '@rvmob/Generic';
+import {styles} from '@rvmob/Theme';
+import {SERVER_FLAGS, SPECIAL_SERVERS} from '@rvmob/lib/consts';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {showToast} from '@rvmob/lib/utils';
 import {
   ContextButton,
   CopyIDButton,
@@ -24,6 +25,8 @@ import {MarkdownView} from '../common/MarkdownView';
 import {Image} from '@rvmob/crossplat/Image';
 
 export const ServerInfoSheet = observer(() => {
+  const {currentTheme} = useContext(ThemeContext);
+
   const [server, setServer] = useState(null as Server | null);
   const [members, setMembers] = useState(null as Member[] | null);
 

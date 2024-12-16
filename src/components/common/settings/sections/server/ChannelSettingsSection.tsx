@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {Pressable, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
@@ -8,8 +8,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {Channel, Server} from 'revolt.js';
 
 import {app} from '@rvmob/Generic';
-import {SettingsSection} from '@rvmob/lib/types';
-import {commonValues, currentTheme, styles} from '@rvmob/Theme';
+import {styles} from '@rvmob/Theme';
 import {GapView} from '@rvmob/components/layout';
 import {
   BackButton,
@@ -17,6 +16,12 @@ import {
   Text,
 } from '@rvmob/components/common/atoms';
 import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
+import {
+  PressableSettingsEntry,
+  SettingsEntry,
+} from '@rvmob/components/common/settings/atoms';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {SettingsSection} from '@rvmob/lib/types';
 
 export const ChannelSettingsSection = observer(
   ({
@@ -28,6 +33,8 @@ export const ChannelSettingsSection = observer(
     section: SettingsSection;
     setSection: Function;
   }) => {
+    const {currentTheme} = useContext(ThemeContext);
+
     const {t} = useTranslation();
 
     const [channel, setChannel] = useState<Channel | null>(null);
@@ -74,8 +81,7 @@ export const ChannelSettingsSection = observer(
               {t('app.servers.settings.channels.permissions')}
             </Text>
             {server.orderedRoles.map(r => (
-              <View
-                style={styles.settingsEntry}
+              <SettingsEntry
                 key={`channel-settings-${channel._id}-perms-${r.id}`}>
                 <View style={{flex: 1}}>
                   <View>
@@ -99,7 +105,7 @@ export const ChannelSettingsSection = observer(
                       : 'Not set'}
                   </Text>
                 </View>
-              </View>
+              </SettingsEntry>
             ))}
           </>
         ) : (
@@ -199,8 +205,7 @@ export const ChannelSettingsSection = observer(
                   </Pressable>
                 </View>
                 {cat.channels.map(c => (
-                  <Pressable
-                    style={styles.settingsEntry}
+                  <PressableSettingsEntry
                     key={`channel-settings-entry-${c._id}`}
                     onPress={() => {
                       setChannel(c);
@@ -236,7 +241,7 @@ export const ChannelSettingsSection = observer(
                         />
                       </View>
                     </View>
-                  </Pressable>
+                  </PressableSettingsEntry>
                 ))}
               </View>
             ))}

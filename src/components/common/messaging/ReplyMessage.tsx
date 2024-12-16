@@ -1,9 +1,9 @@
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 import {Message} from 'revolt.js';
 
-import {styles} from '../../../Theme';
-import {Avatar, Text, Username} from '../atoms';
+import {Avatar, Text, Username} from '@rvmob/components/common/atoms';
+import {commonValues} from '@rvmob/lib/themes';
 
 type ReplyProps = {
   message?: Message;
@@ -40,13 +40,15 @@ export const ReplyMessage = (props: ReplyProps) => {
                 server={props.message.channel?.server}
                 masquerade={props.message.masquerade?.name}
               />
-              <Text style={styles.messageContentReply}>
+              <Text style={localStyles.messageContentReply}>
                 {props.message.content?.split('\n').join(' ')}
               </Text>
             </>
           ) : null
         ) : (
-          <Text style={styles.messageContentReply}>Message not loaded</Text>
+          <Text style={localStyles.messageContentReply}>
+            Message not loaded
+          </Text>
         )}
       </View>
     );
@@ -54,3 +56,10 @@ export const ReplyMessage = (props: ReplyProps) => {
     return <></>;
   }
 };
+
+const localStyles = StyleSheet.create({
+  messageContentReply: {
+    height: 20,
+    marginLeft: commonValues.sizes.small,
+  },
+});

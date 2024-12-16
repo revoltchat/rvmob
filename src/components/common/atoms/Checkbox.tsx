@@ -1,14 +1,15 @@
+import {useContext} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react-lite';
-
-import {commonValues, currentTheme} from '@rvmob/Theme';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Text} from './Text';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 
 export const Checkbox = observer(
   ({value, callback}: {value: boolean; callback: any}) => {
+    const {currentTheme} = useContext(ThemeContext);
     return (
       <TouchableOpacity
         style={{

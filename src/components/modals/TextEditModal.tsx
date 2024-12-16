@@ -1,16 +1,19 @@
-import {useState} from 'react';
-import {TextInput, View} from 'react-native';
+import {useContext, useState} from 'react';
+import {View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
 import {app} from '@rvmob/Generic';
-import {commonValues, currentTheme, styles} from '@rvmob/Theme';
-import {Button, Text} from '@rvmob/components/common/atoms';
+import {Button, Input, Text} from '@rvmob/components/common/atoms';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 import {TextEditingModalProps} from '@rvmob/lib/types';
 
 export const TextEditModal = observer(
   ({object}: {object: TextEditingModalProps}) => {
+    const {currentTheme} = useContext(ThemeContext);
+
     const {t} = useTranslation();
+
     const [string, setString] = useState(object.initialString);
     return (
       <View
@@ -30,8 +33,7 @@ export const TextEditModal = observer(
             justifyContent: 'center',
             marginTop: 10,
           }}>
-          <TextInput
-            style={styles.input}
+          <Input
             value={string}
             placeholder={t(`app.modals.edit_text.${object.id}_placeholder`)}
             onChangeText={v => {

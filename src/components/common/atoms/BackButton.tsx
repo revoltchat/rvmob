@@ -1,3 +1,4 @@
+import {useContext} from 'react';
 import {Pressable, type ViewStyle} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
@@ -5,7 +6,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Text} from './Text';
-import {currentTheme} from '@rvmob/Theme';
+import {ThemeContext} from '@rvmob/lib/themes';
 
 export function BackButton({
   callback,
@@ -20,6 +21,8 @@ export function BackButton({
   label?: string;
   style?: ViewStyle;
 }) {
+  const {currentTheme} = useContext(ThemeContext);
+
   const {t} = useTranslation();
   return (
     <Pressable

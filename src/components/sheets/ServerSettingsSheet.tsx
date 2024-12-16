@@ -1,5 +1,5 @@
-import {useMemo, useState} from 'react';
-import {Pressable, ScrollView, View} from 'react-native';
+import {useContext, useMemo, useState} from 'react';
+import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
@@ -8,11 +8,12 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Server} from 'revolt.js';
 
-import {app, client, setFunction} from '../../Generic';
+import {app, client, setFunction} from '@rvmob/Generic';
 import {Image} from '@rvmob/crossplat/Image';
-import {MAX_SIDE_HQ} from '../../lib/consts';
-import {SettingsSection} from '../../lib/types';
-import {currentTheme, styles} from '../../Theme';
+import {MAX_SIDE_HQ} from '@rvmob/lib/consts';
+import {Theme, ThemeContext} from '@rvmob/lib/themes';
+import {SettingsSection} from '@rvmob/lib/types';
+import {styles} from '@rvmob/Theme';
 import {BackButton, ContextButton, Text} from '../common/atoms';
 import {
   BanSettingsSection,
@@ -27,6 +28,9 @@ import {GapView} from '../layout';
 
 export const ServerSettingsSheet = observer(
   ({server, setState}: {server: Server; setState: Function}) => {
+    const {currentTheme} = useContext(ThemeContext);
+    const localStyles = generateLocalStyles(currentTheme);
+
     const {t} = useTranslation();
 
     // const [renderCount, rerender] = useState(0);
@@ -53,14 +57,7 @@ export const ServerSettingsSheet = observer(
     );
 
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: currentTheme.backgroundPrimary,
-          padding: 15,
-          borderTopLeftRadius: 15,
-          borderTopRightRadius: 15,
-        }}>
+      <View style={localStyles.background}>
         {section == null ? (
           <Pressable
             style={{
@@ -112,7 +109,7 @@ export const ServerSettingsSheet = observer(
                     }}
                   />
                 ) : (
-                  <View style={styles.serverSettingsInitials}>
+                  <View style={localStyles.serverNameInitials}>
                     <Text
                       key={`server-settings-${server._id}-initials`}
                       style={{fontWeight: 'bold', fontSize: 20}}>
@@ -282,3 +279,24 @@ export const ServerSettingsSheet = observer(
     );
   },
 );
+
+const generateLocalStyles = (currentTheme: Theme) => {
+  return StyleSheet.create({
+    background: {
+      flex: 1,
+      backgroundColor: currentTheme.backgroundPrimary,
+      padding: 15,
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
+    },
+    serverNameInitials: {
+      borderRadius: 5000,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 80,
+      height: 80,
+      backgroundColor: currentTheme.backgroundSecondary,
+      overflow: 'hidden',
+    },
+  });
+};
