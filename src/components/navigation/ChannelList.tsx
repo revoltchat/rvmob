@@ -111,7 +111,7 @@ const ServerChannelList = observer((props: ServerChannelListProps) => {
             style={{
               width: '100%',
               paddingHorizontal: 12,
-              backgroundColor: `${currentTheme.backgroundPrimary}80`,
+              backgroundColor: currentTheme.serverNameBackground,
             }}>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
