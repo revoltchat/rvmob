@@ -66,7 +66,8 @@
             "message_box_dm": "Message @{{name}}",
             "message_box_saved_notes": "Save to your notes",
             "no_messages": "No messages",
-            "no_messages_body": "Get the conversation started."
+            "no_messages_body": "Get the conversation started.",
+            "reply_not_loaded": "Message not loaded"
         },
         "modals": {
             "confirm_deletion": {
