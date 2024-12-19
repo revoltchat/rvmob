@@ -2,6 +2,7 @@ import {useContext, useState} from 'react';
 import {
   Pressable,
   ScrollView,
+  StatusBar,
   StyleSheet,
   useWindowDimensions,
   View,
@@ -148,43 +149,56 @@ export const SideMenuHandler = ({
     return false;
   });
 
-  return height < width ? (
-    <View style={{flex: 1, flexDirection: 'row'}}>
-      <View
-        style={{
-          width: '20%',
-          flexDirection: 'column',
-        }}>
-        <SideMenu
-          onChannelClick={setChannel}
-          currentChannel={currentChannel}
-          orderedServers={coreObject.state.orderedServers}
-        />
-      </View>
-      <ChannelView channel={currentChannel} />
-    </View>
-  ) : (
-    <Drawer
-      swipeEdgeWidth={width * 2}
-      swipeMinVelocity={250}
-      drawerType={'slide'}
-      open={sideMenuOpen}
-      onOpen={() => setSideMenuOpen(true)}
-      onClose={() => setSideMenuOpen(false)}
-      renderDrawerContent={() => (
-        <SideMenu
-          onChannelClick={setChannel}
-          currentChannel={currentChannel}
-          orderedServers={coreObject.state.orderedServers}
-        />
+  return (
+    <>
+      <StatusBar
+        animated={true}
+        backgroundColor={
+          sideMenuOpen
+            ? currentTheme.backgroundSecondary
+            : currentTheme.headerBackground
+        }
+        barStyle={`${currentTheme.contentType}-content`}
+      />
+      {height < width ? (
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <View
+            style={{
+              width: '20%',
+              flexDirection: 'column',
+            }}>
+            <SideMenu
+              onChannelClick={setChannel}
+              currentChannel={currentChannel}
+              orderedServers={coreObject.state.orderedServers}
+            />
+          </View>
+          <ChannelView channel={currentChannel} />
+        </View>
+      ) : (
+        <Drawer
+          swipeEdgeWidth={width * 2}
+          swipeMinVelocity={250}
+          drawerType={'slide'}
+          open={sideMenuOpen}
+          onOpen={() => setSideMenuOpen(true)}
+          onClose={() => setSideMenuOpen(false)}
+          renderDrawerContent={() => (
+            <SideMenu
+              onChannelClick={setChannel}
+              currentChannel={currentChannel}
+              orderedServers={coreObject.state.orderedServers}
+            />
+          )}
+          style={localStyles.drawer}
+          drawerStyle={{
+            backgroundColor: currentTheme.backgroundPrimary,
+            width: width - 50,
+          }}>
+          <ChannelView channel={currentChannel} />
+        </Drawer>
       )}
-      style={localStyles.drawer}
-      drawerStyle={{
-        backgroundColor: currentTheme.backgroundPrimary,
-        width: width - 50,
-      }}>
-      <ChannelView channel={currentChannel} />
-    </Drawer>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import 'react-native-get-random-values'; // react native moment
 
 import {Component as ReactComponent, useContext, useState} from 'react';
-import {View, StatusBar, StatusBarStyle, StyleSheet} from 'react-native';
+import {StatusBar, StyleSheet, View} from 'react-native';
 import {ErrorBoundary} from 'react-error-boundary';
 
 // import ConfirmHcaptcha from '@hcaptcha/react-native-hcaptcha';
@@ -106,21 +106,32 @@ function AppViews({state, setChannel}: {state: any; setChannel: any}) {
   const localStyles = generateAppViewStyles(currentTheme);
 
   return (
-    <View style={localStyles.app}>
-      {state.state.status === 'loggedIn' ? (
-        <LoggedInViews state={state} setChannel={setChannel} />
-      ) : state.state.status === 'loggedOut' ? (
-        <LoginViews
-          markAsLoggedIn={() => state.setState({status: 'loggedIn'})}
-        />
-      ) : (
-        <LoadingScreen
-          header={'app.loading.unknown_state'}
-          body={'app.loading.unknown_state_body'}
-          bodyParams={{state: state.state.status}}
-        />
-      )}
-    </View>
+    <>
+      <StatusBar
+        animated={true}
+        backgroundColor={
+          state.state.status !== 'loggedIn'
+            ? currentTheme.backgroundPrimary
+            : currentTheme.backgroundSecondary
+        }
+        barStyle={`${currentTheme.contentType}-content`}
+      />
+      <View style={localStyles.app}>
+        {state.state.status === 'loggedIn' ? (
+          <LoggedInViews state={state} setChannel={setChannel} />
+        ) : state.state.status === 'loggedOut' ? (
+          <LoginViews
+            markAsLoggedIn={() => state.setState({status: 'loggedIn'})}
+          />
+        ) : (
+          <LoadingScreen
+            header={'app.loading.unknown_state'}
+            body={'app.loading.unknown_state_body'}
+            bodyParams={{state: state.state.status}}
+          />
+        )}
+      </View>
+    </>
   );
 }
 
@@ -342,11 +353,6 @@ export const App = () => {
     <GestureHandlerRootView style={localStyles.outer}>
       <ThemeContext.Provider
         value={{currentTheme: theme, setCurrentTheme: setTheme}}>
-        <StatusBar
-          animated={true}
-          backgroundColor={theme.backgroundSecondary}
-          barStyle={(theme.contentType + '-content') as StatusBarStyle}
-        />
         <ErrorBoundary fallbackRender={ErrorMessage}>
           <MainView />
         </ErrorBoundary>
