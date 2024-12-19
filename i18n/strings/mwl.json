@@ -250,6 +250,14 @@
             },
             "count_bots_one": "{{count}} serbidor",
             "count_bots_other": "{{count}} serbidores"
+        },
+        "messaging": {
+            "no_messages_body": "Ampeça ũa cumbersa.",
+            "message_box_channel": "Quemunicar cun #{{name}}",
+            "message_box_group": "Quemunicar cun {{name}}",
+            "message_box_dm": "Quemunicar an @{{name}}",
+            "message_box_saved_notes": "Salbar an tues notas",
+            "no_messages": "Sien mensaiges"
         }
     }
 }
