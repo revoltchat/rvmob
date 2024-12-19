@@ -56,7 +56,7 @@ const generateLocalStyles = (currentTheme: Theme) => {
     input: {
       fontFamily: 'Open Sans',
       borderRadius: commonValues.sizes.medium,
-      backgroundColor: currentTheme.headerSecondary,
+      backgroundColor: currentTheme.buttonBackground,
       margin: commonValues.sizes.small,
       padding: commonValues.sizes.large,
       paddingHorizontal: commonValues.sizes.large,

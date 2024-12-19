@@ -45,7 +45,7 @@ const generateLocalStyles = (currentTheme: Theme) => {
       padding: commonValues.sizes.large,
       paddingHorizontal: commonValues.sizes.xl,
       borderRadius: commonValues.sizes.medium,
-      backgroundColor: currentTheme.headerSecondary,
+      backgroundColor: currentTheme.buttonBackground,
       margin: 5,
       justifyContent: 'center',
       alignItems: 'center',

@@ -64,7 +64,7 @@ const ServerEntry = ({server}: {server: any}) => {
               style={{
                 padding: commonValues.sizes.small,
                 borderRadius: commonValues.sizes.medium,
-                backgroundColor: currentTheme.headerSecondary,
+                backgroundColor: currentTheme.buttonBackground,
                 marginEnd: commonValues.sizes.small,
               }}
               key={`discover-entry-${server._id}-tag-${tag}`}>

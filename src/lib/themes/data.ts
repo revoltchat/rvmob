@@ -39,16 +39,18 @@ export type Theme = {
   foregroundSecondary: string;
   foregroundTertiary: string;
 
-  // channel headers
-  headerPrimary: string;
-  headerSecondary: string;
-
   // colour used for selected buttons (e.g. the currently selected channel button)
   hover: string;
 
   // colours used for messages mentioning the user
   mentionBorder: string;
   mentionBackground: string;
+
+  // background colour for the channel header
+  headerBackground: string;
+
+  // background colour for buttons
+  buttonBackground: string;
 
   // colours used for the message box
   messageBox: string;
@@ -65,7 +67,7 @@ export type Theme = {
   generalBorderColor: string;
   generalBorderWidth: number;
 
-  // misc colours
+  // misc colours/values
   contentType: 'light' | 'dark';
   error: string;
 };
@@ -80,11 +82,11 @@ export const themes: Record<string, Theme> = {
     foregroundPrimary: '#000000',
     foregroundSecondary: '#6E6E6E',
     foregroundTertiary: '#4D4D4D',
-    headerPrimary: '#F1F1F1',
-    headerSecondary: '#F1F1F1',
     hover: '#0000002B',
     mentionBorder: '#E3D049',
     mentionBackground: '#EBEBB5',
+    headerBackground: '#F1F1F1',
+    buttonBackground: '#F1F1F1',
     messageBox: '#F1F1F1',
     messageBoxInput: '#FFFFFF',
     blockQuoteBackground: '#11111166',
@@ -104,11 +106,11 @@ export const themes: Record<string, Theme> = {
     foregroundPrimary: '#F6F6F6',
     foregroundSecondary: '#C8C8C8',
     foregroundTertiary: '#848484',
-    headerPrimary: '#363636',
-    headerSecondary: '#2D2D2D',
     hover: '#0000001A',
     mentionBorder: '#BEAF41',
     mentionBackground: '#383827',
+    headerBackground: '#363636',
+    buttonBackground: '#2D2D2D',
     messageBox: '#363636',
     messageBoxInput: '#242424',
     blockQuoteBackground: '#11111166',
@@ -151,11 +153,11 @@ export const themes: Record<string, Theme> = {
     foregroundPrimary: '#F6F6F6',
     foregroundSecondary: '#C8C8C8',
     foregroundTertiary: '#848484',
-    headerPrimary: '#000000',
-    headerSecondary: '#111111',
     hover: '#0000001A',
     mentionBorder: '#BEAF41',
     mentionBackground: '#383827',
+    headerBackground: '#000000',
+    buttonBackground: '#111111',
     messageBox: '#000000',
     messageBoxInput: '#111111',
     blockQuoteBackground: '#111111',
