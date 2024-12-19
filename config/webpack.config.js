@@ -12,9 +12,8 @@ const compileNodeModules = [
   // react-native packages that need compiling
   '@gorhom/bottom-sheet',
   'react-native-gesture-handler',
-  'react-native-image-pan-zoom',
-  'react-native-image-zoom-viewer',
   'react-native-markdown-display',
+  'react-native-reanimated-image-viewer',
   'react-native-vector-icons',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
@@ -83,7 +82,7 @@ module.exports = {
     path: path.resolve(appDirectory, 'dist'),
   },
   resolve: {
-    extensions: ['.web.tsx', '.web.ts', '.tsx', '.ts', '.web.js', '.js'],
+    extensions: ['.web.tsx', '.web.ts', '.web.js', '.tsx', '.ts', '.js'],
     alias: {
       'react-native$': 'react-native-web',
     },
