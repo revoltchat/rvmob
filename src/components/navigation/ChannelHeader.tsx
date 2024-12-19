@@ -44,7 +44,7 @@ const generateLocalStyles = (currentTheme: Theme) => {
   return StyleSheet.create({
     channelHeader: {
       height: 50,
-      backgroundColor: currentTheme.messageBox,
+      backgroundColor: currentTheme.headerBackground,
       alignItems: 'center',
       paddingLeft: commonValues.sizes.xl,
       padding: 10,
