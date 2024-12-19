@@ -7,7 +7,7 @@ import {Server, User} from 'revolt.js';
 import {client} from '@rvmob/Generic';
 import {Button, GeneralAvatar, Text} from '@rvmob/components/common/atoms';
 import {ServerList} from '@rvmob/components/navigation/ServerList';
-import { ThemeContext } from '@rvmob/lib/themes';
+import {ThemeContext} from '@rvmob/lib/themes';
 
 export const BotInviteSheet = observer(
   ({setState, bot}: {setState: Function; bot: User}) => {

@@ -1,4 +1,4 @@
-import { Theme } from '@rvmob/lib/themes';
+import {Theme} from '@rvmob/lib/themes';
 
 /**
  * Returns the correct colour as a HEX string/theme variable. Supports regular HEX colours, client variables (e.g. `var(--accent)`)

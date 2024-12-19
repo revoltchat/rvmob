@@ -11,7 +11,7 @@ import {setFunction} from '@rvmob/Generic';
 import {Text} from '@rvmob/components/common/atoms';
 import {BottomSheet} from '@rvmob/components/common/BottomSheet';
 import {MarkdownView} from '@rvmob/components/common/MarkdownView';
-import {commonValues, ThemeContext } from '@rvmob/lib/themes';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 
 export const ChannelInfoSheet = observer(() => {
   const {currentTheme} = useContext(ThemeContext);

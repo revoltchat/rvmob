@@ -12,7 +12,10 @@ import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
 export const BottomSheet = observer(
   ({sheetRef, children}: {sheetRef: any; children: any}) => {
     const {currentTheme} = useContext(ThemeContext);
-    const localStyles = useMemo(() => generateLocalStyles(currentTheme), [currentTheme]);
+    const localStyles = useMemo(
+      () => generateLocalStyles(currentTheme),
+      [currentTheme],
+    );
 
     const snapPoints = useMemo(() => ['50%', '70%', '90%'], []);
 

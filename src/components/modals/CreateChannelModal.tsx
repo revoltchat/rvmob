@@ -14,7 +14,10 @@ import {CreateChannelModalProps} from '@rvmob/lib/types';
 export const CreateChannelModal = observer(
   ({object}: {object: CreateChannelModalProps}) => {
     const {currentTheme} = useContext(ThemeContext);
-    const localStyles = useMemo(() => generateLocalStyles(currentTheme), [currentTheme]);
+    const localStyles = useMemo(
+      () => generateLocalStyles(currentTheme),
+      [currentTheme],
+    );
 
     const {t} = useTranslation();
 
@@ -23,8 +26,7 @@ export const CreateChannelModal = observer(
     const [nsfw, setNSFW] = useState(false);
 
     return (
-      <View
-        style={localStyles.container}>
+      <View style={localStyles.container}>
         <Text type={'h1'}>{t('app.modals.create_channel.header')}</Text>
         <View
           style={{
@@ -41,8 +43,7 @@ export const CreateChannelModal = observer(
             }}
           />
           <Text type={'h2'}>{t('app.modals.create_channel.type_header')}</Text>
-          <View
-            style={localStyles.typeSelector}>
+          <View style={localStyles.typeSelector}>
             {(['Text', 'Voice'] as const).map(ct => (
               <Pressable
                 key={`channel-type-${ct}`}
@@ -61,8 +62,7 @@ export const CreateChannelModal = observer(
               </Pressable>
             ))}
           </View>
-          <View
-            style={localStyles.checkboxRow}>
+          <View style={localStyles.checkboxRow}>
             <Text>{t('app.modals.create_channel.nsfw_label')}</Text>
             <Checkbox
               key={'checkbox-channel-nsfw'}
@@ -112,7 +112,7 @@ const generateLocalStyles = (currentTheme: Theme) => {
       backgroundColor: currentTheme.backgroundSecondary,
       padding: commonValues.sizes.medium,
     },
-    channelType:  {
+    channelType: {
       height: 40,
       width: '100%',
       alignItems: 'center',

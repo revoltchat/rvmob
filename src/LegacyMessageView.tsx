@@ -16,27 +16,27 @@ import {Text} from './components/common/atoms';
 import {Message} from './components/common/messaging';
 import {LoadingScreen} from './components/views/LoadingScreen';
 import {DEFAULT_MESSAGE_LOAD_COUNT} from './lib/consts';
-import { ThemeContext } from './lib/themes';
+import {ThemeContext} from './lib/themes';
 import {calculateGrouped} from './lib/utils';
 
 let didUpdateFirstTime = false;
 
-function JumpToBottomBar ({callback}: {callback: () => void}) {
+function JumpToBottomBar({callback}: {callback: () => void}) {
   const {currentTheme} = useContext(ThemeContext);
 
   return (
     <TouchableOpacity
-    style={{
-      height: 32,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: currentTheme.accentColor,
-    }}
-    onPress={callback}>
-    <Text colour={currentTheme.accentColorForeground}>
-      Go to latest messages
-    </Text>
-  </TouchableOpacity>
+      style={{
+        height: 32,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: currentTheme.accentColor,
+      }}
+      onPress={callback}>
+      <Text colour={currentTheme.accentColorForeground}>
+        Go to latest messages
+      </Text>
+    </TouchableOpacity>
   );
 }
 
@@ -372,10 +372,12 @@ export class Messages extends ReactComponent {
           </View>
         </ScrollView>
         {!this.state.atLatestMessages ? (
-          <JumpToBottomBar callback={() => {
-            this.fetchMessages();
-            this.scrollView.scrollToEnd({animated: true});
-          }} />
+          <JumpToBottomBar
+            callback={() => {
+              this.fetchMessages();
+              this.scrollView.scrollToEnd({animated: true});
+            }}
+          />
         ) : null}
       </View>
     );

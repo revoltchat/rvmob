@@ -1,8 +1,8 @@
-import { useContext } from 'react';
+import {useContext} from 'react';
 import {StyleSheet} from 'react-native';
 
 import {Text} from './Text';
-import { Theme, ThemeContext } from '@rvmob/lib/themes';
+import {Theme, ThemeContext} from '@rvmob/lib/themes';
 import {openUrl} from '@rvmob/lib/utils';
 
 type LinkProps = {
@@ -31,11 +31,10 @@ export const Link = ({link, label, style}: LinkProps) => {
 };
 
 const generateLocalStyles = (currentTheme: Theme) => {
-
-return StyleSheet.create({
-  link: {
-    color: currentTheme.accentColor,
-    textDecorationLine: 'underline',
-  },
-});
+  return StyleSheet.create({
+    link: {
+      color: currentTheme.accentColor,
+      textDecorationLine: 'underline',
+    },
+  });
 };

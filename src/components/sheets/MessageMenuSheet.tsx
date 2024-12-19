@@ -11,10 +11,14 @@ import type {Message} from 'revolt.js';
 
 import {app, setFunction} from '@rvmob/Generic';
 import {styles} from '@rvmob/Theme';
-import {ContextButton, CopyIDButton, Text} from '@rvmob/components/common/atoms';
+import {
+  ContextButton,
+  CopyIDButton,
+  Text,
+} from '@rvmob/components/common/atoms';
 import {BottomSheet} from '@rvmob/components/common/BottomSheet';
 import {ReplyMessage} from '@rvmob/components/common/messaging/ReplyMessage';
-import { commonValues, ThemeContext } from '@rvmob/lib/themes';
+import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 
 export const MessageMenuSheet = observer(() => {
   const {currentTheme} = useContext(ThemeContext);

@@ -43,7 +43,9 @@ export const Username = observer(
           user: user._id,
         })
       : undefined;
-    let roleColor = color ? getColour(color, currentTheme) : currentTheme.foregroundPrimary;
+    let roleColor = color
+      ? getColour(color, currentTheme)
+      : currentTheme.foregroundPrimary;
     const name =
       server && memberObject?.nickname
         ? memberObject?.nickname
@@ -55,7 +57,7 @@ export const Username = observer(
       if (srv?.roles) {
         roleColor = getColour(
           memberObject.roleColour ?? currentTheme.foregroundPrimary,
-          currentTheme
+          currentTheme,
         );
       }
     }

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import {useContext} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
@@ -69,28 +69,28 @@ export const ImageViewer = gestureHandlerRootHOC(
 
 const generateLocalStyles = (currentTheme: Theme) => {
   return StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  topBar: {
-    height: '7%',
-    backgroundColor: currentTheme.background,
-    paddingHorizontal: commonValues.sizes.large,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    zIndex: 10,
-  },
-  image: {
-    height: '86%',
-  },
-  fileInfo: {
-    height: '7%',
-    backgroundColor: currentTheme.background,
-    paddingHorizontal: commonValues.sizes.large,
-    justifyContent: 'center',
-    zIndex: 10,
-  },
-});
+    container: {
+      flex: 1,
+      justifyContent: 'space-between',
+    },
+    topBar: {
+      height: '7%',
+      backgroundColor: currentTheme.background,
+      paddingHorizontal: commonValues.sizes.large,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexDirection: 'row',
+      zIndex: 10,
+    },
+    image: {
+      height: '86%',
+    },
+    fileInfo: {
+      height: '7%',
+      backgroundColor: currentTheme.background,
+      paddingHorizontal: commonValues.sizes.large,
+      justifyContent: 'center',
+      zIndex: 10,
+    },
+  });
 };
