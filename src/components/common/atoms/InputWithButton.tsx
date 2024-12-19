@@ -104,7 +104,7 @@ const generateLocalStyles = (currentTheme: Theme) => {
       flex: 1,
       borderRadius: commonValues.sizes.medium,
       backgroundColor: currentTheme.backgroundSecondary,
-      padding: 6,
+      padding: commonValues.sizes.large,
       paddingHorizontal: 10,
       color: currentTheme.foregroundPrimary,
     },

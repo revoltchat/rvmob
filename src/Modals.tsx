@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Modal, StyleSheet, View} from 'react-native';
+import {Modal, type ModalProps, StyleSheet, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {API, Channel, Server, User} from 'revolt.js';
@@ -29,6 +29,15 @@ import {
   SettingsSheet,
   StatusSheet,
 } from '@rvmob/components/sheets';
+
+// Modals appear to break on the new architecture unless you wrap them in a View. see also https://github.com/react-navigation/react-navigation/issues/12301#issuecomment-2501692557
+const FixedModal = observer((props: ModalProps) => {
+  return (
+    <View>
+      <Modal {...props} />
+    </View>
+  );
+});
 
 export const Modals = observer(() => {
   const [imageViewerState, setImageViewerState] = useState({
@@ -113,7 +122,7 @@ export const Modals = observer(() => {
       <ChannelInfoSheet />
       <MemberListSheet />
       <ServerInfoSheet />
-      <Modal
+      <FixedModal
         visible={!!imageViewerState.i}
         transparent={true}
         animationType="fade"
@@ -122,8 +131,8 @@ export const Modals = observer(() => {
           state={imageViewerState}
           setState={() => setImageViewerState({i: null})}
         />
-      </Modal>
-      <Modal
+      </FixedModal>
+      <FixedModal
         visible={settingsVisibility}
         transparent={true}
         animationType="slide"
@@ -131,8 +140,8 @@ export const Modals = observer(() => {
           app.handleSettingsVisibility(setSettingsVisibility)
         }>
         <SettingsSheet setState={() => setSettingsVisibility(false)} />
-      </Modal>
-      <Modal
+      </FixedModal>
+      <FixedModal
         visible={!!inviteServer.inviteServer}
         transparent={true}
         animationType="fade"
@@ -150,16 +159,16 @@ export const Modals = observer(() => {
           server={inviteServer.inviteServer}
           inviteCode={inviteServer.inviteServerCode}
         />
-      </Modal>
-      <Modal visible={!!inviteBot} transparent={true} animationType="fade">
+      </FixedModal>
+      <FixedModal visible={!!inviteBot} transparent={true} animationType="fade">
         <BotInviteSheet
           setState={() => {
             setInviteBot(null);
           }}
           bot={inviteBot!}
         />
-      </Modal>
-      <Modal
+      </FixedModal>
+      <FixedModal
         visible={!!serverSettingsServer}
         transparent={true}
         animationType="slide"
@@ -170,8 +179,8 @@ export const Modals = observer(() => {
           server={serverSettingsServer!}
           setState={() => setServerSettingsServer(null)}
         />
-      </Modal>
-      <Modal
+      </FixedModal>
+      <FixedModal
         visible={!!deletableObject}
         transparent={true}
         animationType="fade"
@@ -179,8 +188,8 @@ export const Modals = observer(() => {
         <View style={localStyles.modalContainer}>
           <ConfirmDeletionModal target={deletableObject!} />
         </View>
-      </Modal>
-      <Modal
+      </FixedModal>
+      <FixedModal
         visible={!!editingText}
         transparent={true}
         animationType="fade"
@@ -188,8 +197,8 @@ export const Modals = observer(() => {
         <View style={localStyles.modalContainer}>
           <TextEditModal object={editingText!} />
         </View>
-      </Modal>
-      <Modal
+      </FixedModal>
+      <FixedModal
         visible={!!createChannelObject}
         transparent={true}
         animationType="fade"
@@ -197,7 +206,7 @@ export const Modals = observer(() => {
         <View style={localStyles.modalContainer}>
           <CreateChannelModal object={createChannelObject!} />
         </View>
-      </Modal>
+      </FixedModal>
     </>
   );
 });

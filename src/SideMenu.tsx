@@ -95,7 +95,8 @@ const SideMenu = ({
         <Button
           key={'bottom-nav-friends'}
           onPress={() => onChannelClick('friends', currentServer)}
-          backgroundColor={currentTheme.background}>
+          backgroundColor={currentTheme.background}
+          style={{paddingVertical: 10}}>
           <MaterialIcon
             name="group"
             size={20}
@@ -105,7 +106,8 @@ const SideMenu = ({
         <Button
           key={'bottom-nav-settings'}
           onPress={() => app.openSettings(true)}
-          backgroundColor={currentTheme.background}>
+          backgroundColor={currentTheme.background}
+          style={{paddingVertical: 10}}>
           <MaterialIcon
             name="settings"
             size={20}

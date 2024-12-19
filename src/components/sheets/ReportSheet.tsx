@@ -58,7 +58,7 @@ const generateLocalStyles = (currentTheme: Theme) => {
       borderRadius: commonValues.sizes.medium,
       backgroundColor: currentTheme.headerSecondary,
       margin: commonValues.sizes.small,
-      padding: 6,
+      padding: commonValues.sizes.large,
       paddingHorizontal: commonValues.sizes.large,
       color: currentTheme.foregroundPrimary,
     },

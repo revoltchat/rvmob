@@ -20,7 +20,7 @@ export const OptionSetting = ({sRaw}: {sRaw: Setting}) => {
 
   const [value, setValue] = useState(app.settings.getRaw(sRaw.key));
   return (
-    <View>
+    <View style={{marginTop: 10}}>
       <IndicatorIcons s={sRaw} />
       <Text
         style={{

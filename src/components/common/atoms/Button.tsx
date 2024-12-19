@@ -42,7 +42,7 @@ export function Button({
 const generateLocalStyles = (currentTheme: Theme) => {
   return StyleSheet.create({
     button: {
-      padding: 10,
+      padding: commonValues.sizes.large,
       paddingHorizontal: commonValues.sizes.xl,
       borderRadius: commonValues.sizes.medium,
       backgroundColor: currentTheme.headerSecondary,

@@ -497,8 +497,8 @@ const generateLocalStyles = (currentTheme: Theme) => {
     messageBox: {
       backgroundColor: currentTheme.messageBoxInput,
       color: currentTheme.foregroundPrimary,
-      paddingLeft: 10,
-      padding: 5,
+      paddingLeft: commonValues.sizes.large,
+      padding: commonValues.sizes.medium,
       flex: 1,
       fontFamily: 'Open Sans',
       borderRadius: commonValues.sizes.medium,
