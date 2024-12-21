@@ -99,7 +99,7 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "yarn@4.5.1",
+  "packageManager": "yarn@4.5.3",
   "resolutions": {
     "@react-native/assets-registry@npm:0.76.2": "patch:@react-native/assets-registry@npm%3A0.76.2#~/.yarn/patches/@react-native-assets-registry-npm-0.76.2-7f3b1c49cf.patch",
     "markdown-it": "patch:markdown-it@npm%3A14.1.0#~/.yarn/patches/markdown-it-npm-14.1.0-e337d75bfe.patch"
