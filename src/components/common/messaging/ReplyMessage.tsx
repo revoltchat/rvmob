@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 import {Message} from 'revolt.js';
 
@@ -15,6 +15,7 @@ type ReplyProps = {
 
 export const ReplyMessage = (props: ReplyProps) => {
   const {t} = useTranslation();
+
   if (!props.message?.system) {
     return (
       <View style={{alignItems: 'center', flexDirection: 'row'}}>

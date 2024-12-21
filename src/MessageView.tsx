@@ -67,21 +67,18 @@ function renderMessage(
   );
 }
 
-let doubleTapStatus:DoubleTapState = {
+let doubleTapStatus: DoubleTapState = {
   count: 0,
   message: '',
 };
 
-function handleTap(
-  message: RevoltMessage,
-) {
+function handleTap(message: RevoltMessage) {
   if (message._id === doubleTapStatus.message) {
     if (doubleTapStatus.count === 1) {
       if (app.settings.get('ui.messaging.doubleTapToReply')) {
         const existingReplies = [...app.getReplyingMessages()];
         if (
-          existingReplies.filter(m => m.message._id === message._id).length >
-          0
+          existingReplies.filter(m => m.message._id === message._id).length > 0
         ) {
           doubleTapStatus = {count: 0, message: ''};
           return;
@@ -135,10 +132,12 @@ export const NewMessageView = observer(
   }) => {
     const {t} = useTranslation();
     console.log(`[NEWMESSAGEVIEW] Creating message view for ${channel._id}...`);
+
     const [messages, setMessages] = useState([] as RevoltMessage[]);
     const [loading, setLoading] = useState(true);
     const [atEndOfPage, setAtEndOfPage] = useState(false);
     const [error, setError] = useState(null as any);
+
     const scrollViewRef = useRef<FlatList>(null);
 
     useEffect(() => {
