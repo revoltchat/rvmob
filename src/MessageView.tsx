@@ -67,35 +67,38 @@ function renderMessage(
   );
 }
 
+let doubleTapStatus:DoubleTapState = {
+  count: 0,
+  message: '',
+};
+
 function handleTap(
-  oldState: DoubleTapState,
-  newMessage: RevoltMessage,
-  setState: (s: DoubleTapState) => void,
+  message: RevoltMessage,
 ) {
-  if (newMessage._id === oldState.message) {
-    if (oldState.count === 1) {
+  if (message._id === doubleTapStatus.message) {
+    if (doubleTapStatus.count === 1) {
       if (app.settings.get('ui.messaging.doubleTapToReply')) {
         const existingReplies = [...app.getReplyingMessages()];
         if (
-          existingReplies.filter(m => m.message._id === newMessage._id).length >
+          existingReplies.filter(m => m.message._id === message._id).length >
           0
         ) {
-          setState({count: 0, message: ''});
+          doubleTapStatus = {count: 0, message: ''};
           return;
         }
         if (existingReplies.length >= 5) {
-          setState({count: 0, message: ''});
+          doubleTapStatus = {count: 0, message: ''};
           return;
         }
         app.setReplyingMessages([
           ...existingReplies,
-          {message: newMessage, mentions: false},
+          {message: message, mentions: false},
         ]);
       }
-      setState({count: 0, message: ''});
+      doubleTapStatus = {count: 0, message: ''};
     }
   } else {
-    setState({count: 1, message: newMessage._id});
+    doubleTapStatus = {count: 1, message: message._id};
   }
 }
 
@@ -134,10 +137,6 @@ export const NewMessageView = observer(
     console.log(`[NEWMESSAGEVIEW] Creating message view for ${channel._id}...`);
     const [messages, setMessages] = useState([] as RevoltMessage[]);
     const [loading, setLoading] = useState(true);
-    const [doubleTapStatus, setDoubleTapStatus] = useState({
-      count: 0,
-      message: '',
-    });
     const [atEndOfPage, setAtEndOfPage] = useState(false);
     const [error, setError] = useState(null as any);
     const scrollViewRef = useRef<FlatList>(null);
@@ -193,7 +192,7 @@ export const NewMessageView = observer(
 
     // set functions here so they don't get recreated
     const onPress = (m: RevoltMessage) => {
-      handleTap(doubleTapStatus, m, setDoubleTapStatus);
+      handleTap(m);
     };
 
     const renderItem = ({item}: {item: RevoltMessage}) => {
