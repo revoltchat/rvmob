@@ -44,7 +44,7 @@ export const DEFAULT_MESSAGE_LOAD_COUNT = 50;
 export const OFFICIAL_INSTANCE_SIGNUP_URL = 'https://revolt.chat/login/create';
 
 // server invite paths for the official instance
-export const INVITE_PATHS = [
+const INVITE_PATHS = [
   'app.revolt.chat/invite',
   'nightly.revolt.chat/invite',
   'local.revolt.chat/invite',
@@ -60,7 +60,7 @@ export const RE_INVITE = new RegExp(
 );
 
 // bot invite paths for the official instance
-export const BOT_INVITE_PATHS = [
+const BOT_INVITE_PATHS = [
   'app.revolt.chat/bot',
   'nightly.revolt.chat/bot',
   'local.revolt.chat/bot',
