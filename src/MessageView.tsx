@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   NativeSyntheticEvent,
@@ -21,6 +21,7 @@ import {styles} from './Theme';
 import {Button, Text} from './components/common/atoms';
 import {Message} from './components/common/messaging';
 import {LoadingScreen} from './components/views/LoadingScreen';
+import { ThemeContext } from './lib/themes';
 import {calculateGrouped, fetchMessages} from './lib/utils';
 
 type DoubleTapState = {
@@ -106,12 +107,14 @@ function MessageViewErrorMessage({
   error: any;
   resetErrorBoundary: () => void;
 }) {
+  const {currentTheme} = useContext(ThemeContext);
+
   const errorMessage = `${error}`;
 
   console.error(`[MESSAGEVIEW] Uncaught error: ${errorMessage}`);
   return (
     <>
-      <Text colour={'#ff6666'}>Error rendering messages: {errorMessage}</Text>
+      <Text colour={currentTheme.error}>Error rendering messages: {errorMessage}</Text>
       <Button
         onPress={() => {
           resetErrorBoundary();
@@ -130,8 +133,10 @@ export const NewMessageView = observer(
     channel: Channel;
     handledMessages: string[];
   }) => {
-    const {t} = useTranslation();
     console.log(`[NEWMESSAGEVIEW] Creating message view for ${channel._id}...`);
+    const {currentTheme} = useContext(ThemeContext);
+
+    const {t} = useTranslation();
 
     const [messages, setMessages] = useState([] as RevoltMessage[]);
     const [loading, setLoading] = useState(true);
@@ -240,7 +245,7 @@ export const NewMessageView = observer(
     return (
       <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
         {error ? (
-          <Text colour={'#ff6666'}>
+          <Text colour={currentTheme.error}>
             Error rendering messages: {error.message ?? error}
           </Text>
         ) : loading ? (
