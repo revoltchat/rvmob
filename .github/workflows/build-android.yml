@@ -22,7 +22,7 @@ jobs:
           java-version: '17'
           distribution: 'microsoft'
       - name: Install dependencies and prepare assets
-        run: yarn install && npx react-native-asset
+        run: yarn install && npx react-native-asset && yarn license-list
       - name: Bundle the JS
         run: yarn react-native bundle --platform android --entry-file ./index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
       - name: Build the app
@@ -34,7 +34,7 @@ jobs:
           mv app-x86_64-debug.apk RVMob-Debug-${{ github.sha }}-x86_64.apk
           mv app-x86-debug.apk RVMob-Debug-${{ github.sha }}-x86.apk
         working-directory: /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/
-      - name: Upload debug APK
+      - name: Upload debug APKs
         uses: actions/upload-artifact@v4
         with:
           path: |
