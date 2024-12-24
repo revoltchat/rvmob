@@ -11,8 +11,8 @@ const {presets} = require(`${dir}/../babel.config.js`);
 const compileNodeModules = [
   // react-native packages that need compiling
   '@gorhom/bottom-sheet',
+  '@rexovolt/react-native-markdown-display',
   'react-native-gesture-handler',
-  'react-native-markdown-display',
   'react-native-reanimated-image-viewer',
   'react-native-vector-icons',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
