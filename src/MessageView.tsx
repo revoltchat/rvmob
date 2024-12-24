@@ -21,7 +21,7 @@ import {styles} from './Theme';
 import {Button, Text} from './components/common/atoms';
 import {Message} from './components/common/messaging';
 import {LoadingScreen} from './components/views/LoadingScreen';
-import { ThemeContext } from './lib/themes';
+import {ThemeContext} from './lib/themes';
 import {calculateGrouped, fetchMessages} from './lib/utils';
 
 type DoubleTapState = {
@@ -63,7 +63,6 @@ function renderMessage(
         );
       }}
       onLongPress={async () => app.openMessage(msg)}
-      queued={false}
     />
   );
 }
@@ -114,7 +113,9 @@ function MessageViewErrorMessage({
   console.error(`[MESSAGEVIEW] Uncaught error: ${errorMessage}`);
   return (
     <>
-      <Text colour={currentTheme.error}>Error rendering messages: {errorMessage}</Text>
+      <Text colour={currentTheme.error}>
+        Error rendering messages: {errorMessage}
+      </Text>
       <Button
         onPress={() => {
           resetErrorBoundary();
