@@ -12027,14 +12027,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-error-boundary@npm:^4.1.2":
-  version: 4.1.2
-  resolution: "react-error-boundary@npm:4.1.2"
+"react-error-boundary@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "react-error-boundary@npm:5.0.0"
   dependencies:
     "@babel/runtime": "npm:^7.12.5"
   peerDependencies:
     react: ">=16.13.1"
-  checksum: 10c0/0737e5259bed40ce14eb0823b3c7b152171921f2179e604f48f3913490cdc594d6c22d43d7abb4ffb1512c832850228db07aa69d3b941db324953a5e393cb399
+  checksum: 10c0/38da5e7e81016a4750d3b090e3c740c2c1125c0bb9de14e1ab92ee3b5190d34517c199935302718a24aa35d3f89081412b3444edc23f63729bde2e862a2fbfec
   languageName: node
   linkType: hard
 
@@ -12786,9 +12786,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"revolt.js@npm:@rexovolt/revolt.js@^6.4.0":
-  version: 6.4.0
-  resolution: "@rexovolt/revolt.js@npm:6.4.0"
+"revolt.js@npm:@rexovolt/revolt.js@^6.6.0":
+  version: 6.6.0
+  resolution: "@rexovolt/revolt.js@npm:6.6.0"
   dependencies:
     "@insertish/exponential-backoff": "npm:3.1.0-patch.2"
     "@insertish/isomorphic-ws": "npm:^4.0.1"
@@ -12800,7 +12800,7 @@ __metadata:
     revolt-api: "npm:0.7.16"
     ulid: "npm:^2.3.0"
     ws: "npm:^8.18.0"
-  checksum: 10c0/3e60009f83b11edeb48f9c5d9a762ae1380e01063bfa5d592bcd4c3bd4a4636647f96f95f16fc0141657f83d14f05b97d87acb13320b50cf7b06131432bfebd6
+  checksum: 10c0/dad9d448e4a84a061129f2ea0c74b6129990f9effd12b42dc6e9e3c7bb79536895d3a3da3b21c69e756da9018335df82bb09d748d16659ce594c8593e5f9af34
   languageName: node
   linkType: hard
 
@@ -12894,7 +12894,7 @@ __metadata:
     prettier: "npm:^2.8.8"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    react-error-boundary: "npm:^4.1.2"
+    react-error-boundary: "npm:^5.0.0"
     react-i18next: "npm:^15.2.0"
     react-native: "npm:^0.76.5"
     react-native-device-info: "npm:^14.0.2"
@@ -12910,7 +12910,7 @@ __metadata:
     react-native-web: "npm:^0.19.13"
     react-test-renderer: "npm:^18.3.1"
     reanimated-color-picker: "npm:^3.0.6"
-    revolt.js: "npm:@rexovolt/revolt.js@^6.4.0"
+    revolt.js: "npm:@rexovolt/revolt.js@^6.6.0"
     typescript: "npm:^5.7.2"
     url-loader: "npm:^4.1.1"
     webpack: "npm:^5.97.1"
