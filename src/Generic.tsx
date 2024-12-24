@@ -382,6 +382,7 @@ export const app = {
   logOut: () => {},
   openMemberList: (data: Channel | Server | null) => {},
   openChannelContextMenu: (c: Channel | null) => {},
+  openPinnedMessagesMenu: (c: Channel | null) => {},
   openStatusMenu: (state: boolean) => {},
   openReportMenu: (object: ReportedObject | null) => {},
   openDeletionConfirmationModal: (object: DeletableObject | null) => {},

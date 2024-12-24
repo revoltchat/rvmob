@@ -2,6 +2,7 @@ export {BotInviteSheet} from './BotInviteSheet';
 export {ChannelInfoSheet} from './ChannelInfoSheet';
 export {MemberListSheet} from './MemberListSheet';
 export {MessageMenuSheet} from './MessageMenuSheet';
+export {PinnedMessagesSheet} from './PinnedMessagesSheet';
 export {ProfileSheet} from './ProfileSheet';
 export {ReportSheet} from './ReportSheet';
 export {ServerInfoSheet} from './ServerInfoSheet';

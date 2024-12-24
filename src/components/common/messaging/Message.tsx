@@ -30,6 +30,7 @@ import {getReadableFileSize, openUrl, parseRevoltNodes} from '@rvmob/lib/utils';
 type MessageProps = {
   message: RevoltMessage;
   grouped: boolean;
+  noTopMargin?: boolean;
   queued?: boolean;
   onUserPress?: any;
   onUsernamePress?: any;
@@ -189,9 +190,10 @@ export const Message = observer((props: MessageProps) => {
         }>
         <View
           style={{
-            marginTop: props.grouped
-              ? 0
-              : (app.settings.get('ui.messaging.messageSpacing') as number),
+            marginTop:
+              props.grouped || props.noTopMargin
+                ? 0
+                : (app.settings.get('ui.messaging.messageSpacing') as number),
           }}
         />
         {props.message.author?.relationship === 'Blocked' ? (

@@ -21,6 +21,7 @@ import {
   ChannelInfoSheet,
   MemberListSheet,
   MessageMenuSheet,
+  PinnedMessagesSheet,
   ProfileSheet,
   ReportSheet,
   ServerInfoSheet,
@@ -121,6 +122,7 @@ export const Modals = observer(() => {
       <ReportSheet />
       <ChannelInfoSheet />
       <MemberListSheet />
+      <PinnedMessagesSheet />
       <ServerInfoSheet />
       <FixedModal
         visible={!!imageViewerState.i}

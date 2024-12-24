@@ -3,6 +3,7 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {ErrorBoundary} from 'react-error-boundary';
 import {observer} from 'mobx-react-lite';
 
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Channel} from 'revolt.js';
@@ -103,6 +104,18 @@ export const ChannelView = observer(({channel}: {channel: CVChannel}) => {
                   ? 'Saved Notes'
                   : channel.name}
               </Text>
+              {channel.channel_type !== 'VoiceChannel' ? (
+                <View style={{marginEnd: 16}}>
+                  <TouchableOpacity
+                    onPress={async () => app.openPinnedMessagesMenu(channel)}>
+                    <MaterialCommunityIcon
+                      name="pin"
+                      size={24}
+                      color={currentTheme.foregroundPrimary}
+                    />
+                  </TouchableOpacity>
+                </View>
+              ) : null}
               {channel.channel_type === 'Group' || channel.server ? (
                 <View style={{marginEnd: 16}}>
                   <TouchableOpacity
