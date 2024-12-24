@@ -5,6 +5,7 @@ import {observer} from 'mobx-react-lite';
 import BottomSheetCore from '@gorhom/bottom-sheet';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {useBackHandler} from '@react-native-community/hooks';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import type {Message} from 'revolt.js';
@@ -40,6 +41,7 @@ export const MessageMenuSheet = observer(() => {
     setMessage(m);
     m ? sheetRef.current?.expand() : sheetRef.current?.close();
   });
+
   return (
     <BottomSheet sheetRef={sheetRef}>
       <View style={{paddingHorizontal: 16}}>
@@ -54,7 +56,7 @@ export const MessageMenuSheet = observer(() => {
               }}>
               <ReplyMessage message={message} showSymbol={false} />
             </View>
-            {message?.channel?.havePermission('SendMessage') ? (
+            {message.channel?.havePermission('SendMessage') ? (
               <ContextButton
                 onPress={() => {
                   let replyingMessages = [...app.getReplyingMessages()];
@@ -118,10 +120,10 @@ export const MessageMenuSheet = observer(() => {
               </View>
               <Text>Copy message link</Text>
             </ContextButton>
-            {message?.author?.relationship === 'User' ? (
+            {message.author?.relationship === 'User' ? (
               <ContextButton
                 onPress={() => {
-                  app.setMessageBoxInput(message?.content);
+                  app.setMessageBoxInput(message.content);
                   app.setEditingMessage(message);
                   app.setReplyingMessages([]);
                   app.openMessage(null);
@@ -136,8 +138,24 @@ export const MessageMenuSheet = observer(() => {
                 <Text>Edit</Text>
               </ContextButton>
             ) : null}
-            {message?.channel?.havePermission('ManageMessages') ||
-            message?.author?.relationship === 'User' ? (
+            {message.channel?.havePermission('ManageMessages') ? (
+              <ContextButton
+                onPress={() => {
+                  message.pinned ? message.unpin() : message.pin();
+                  app.openMessage(null);
+                }}>
+                <View style={styles.iconContainer}>
+                  <MaterialCommunityIcon
+                    name={message.pinned ? 'pin-off' : 'pin'}
+                    size={20}
+                    color={currentTheme.foregroundPrimary}
+                  />
+                </View>
+                <Text>{message.pinned ? 'Unpin' : 'Pin'}</Text>
+              </ContextButton>
+            ) : null}
+            {message.channel?.havePermission('ManageMessages') ||
+            message.author?.relationship === 'User' ? (
               <ContextButton
                 onPress={() => {
                   app.openDeletionConfirmationModal({
@@ -156,7 +174,7 @@ export const MessageMenuSheet = observer(() => {
                 <Text colour={currentTheme.error}>Delete</Text>
               </ContextButton>
             ) : null}
-            {message?.author?.relationship !== 'User' ? (
+            {message.author?.relationship !== 'User' ? (
               <ContextButton
                 onPress={() => {
                   app.openReportMenu({object: message, type: 'Message'});
