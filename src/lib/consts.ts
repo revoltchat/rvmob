@@ -29,7 +29,7 @@ export const SPECIAL_SERVERS = {
 };
 
 // default API URL - used unless the user specifies another instance
-export const DEFAULT_API_URL = 'https://api.revolt.chat'; // TODO: switch to https://revolt.chat/api when it's available
+export const DEFAULT_API_URL = 'https://api.revolt.chat/0.8';
 
 // default max side param - used to specify the size of images
 export const DEFAULT_MAX_SIDE = '128';
