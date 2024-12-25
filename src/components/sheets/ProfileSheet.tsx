@@ -38,7 +38,26 @@ export const ProfileSheet = observer(() => {
 
   const sheetRef = useRef<BottomSheetCore>(null);
 
+  const [section, setSection] = useState('Profile');
+  const [profile, setProfile] = useState(
+    {} as {content?: string | null | undefined},
+  );
+  const [mutual, setMutual] = useState(
+    {} as {users: User[]; servers: Server[]},
+  );
+  const [showMenu, setShowMenu] = useState(false);
+
   useBackHandler(() => {
+    if (showMenu) {
+      setShowMenu(false);
+      return true;
+    }
+
+    if (section !== 'Profile') {
+      setSection('Profile');
+      return true;
+    }
+
     if (user) {
       sheetRef.current?.close();
       return true;
@@ -51,20 +70,13 @@ export const ProfileSheet = observer(() => {
     if (u !== user) {
       setProfile({});
       setMutual({users: [], servers: []});
+      setSection('Profile');
+      setShowMenu(false);
       setUser(u);
     }
     setServer(s);
     u ? sheetRef.current?.expand() : sheetRef.current?.close();
   });
-
-  const [section, setSection] = useState('Profile');
-  const [profile, setProfile] = useState(
-    {} as {content?: string | null | undefined},
-  );
-  const [mutual, setMutual] = useState(
-    {} as {users: User[]; servers: Server[]},
-  );
-  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     async function getInfo() {
