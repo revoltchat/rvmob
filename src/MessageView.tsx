@@ -16,7 +16,7 @@ import {ErrorBoundary} from 'react-error-boundary';
 import {Channel, Message as RevoltMessage} from 'revolt.js';
 
 import {client, app} from './Generic';
-import {MessageBox} from './MessageBox';
+import {MessageBox} from './components/MessageBox';
 import {styles} from './Theme';
 import {Button, Text} from './components/common/atoms';
 import {Message} from './components/common/messaging';

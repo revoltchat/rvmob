@@ -11,7 +11,7 @@ import {Channel} from 'revolt.js';
 import {app} from '@rvmob/Generic';
 import {Messages} from '@rvmob/LegacyMessageView';
 import {NewMessageView} from '@rvmob/MessageView';
-import {MessageBox} from '@rvmob/MessageBox';
+import {MessageBox} from '@rvmob/components/MessageBox';
 import {styles} from '@rvmob/Theme';
 import {Button, Text} from '@rvmob/components/common/atoms';
 import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
