@@ -23,7 +23,9 @@
         },
         "loading": {
             "generic": "正在加载…",
-            "connecting": "正在登录…"
+            "connecting": "正在登录…",
+            "unknown_state": "啊哦…",
+            "unknown_state_body": "请告诉开发者您看到了这个（值：{{state}}）"
         },
         "login": {
             "forms": {
@@ -42,7 +44,11 @@
             },
             "instance_notice": "您正在连接到 {{url}}。",
             "subheader": "您有账户吗？",
-            "token_info_label": "如何获取我的令牌？"
+            "token_info_label": "如何获取我的令牌？",
+            "settings": {
+                "saved": "已保存！",
+                "saved_body": "目前，您必须关闭并重新打开应用程序才能应用更改。我们知道这样的体验并不好——我们将在未来修复此问题。"
+            }
         },
         "messaging": {
             "message_box_saved_notes": "保存到您的笔记",
@@ -50,7 +56,8 @@
             "no_messages_body": "开始对话吧。",
             "message_box_channel": "给 #{{name}} 发消息",
             "message_box_group": "给 {{name}} 发消息",
-            "message_box_dm": "给 @{{name}} 发消息"
+            "message_box_dm": "给 @{{name}} 发消息",
+            "reply_not_loaded": "消息未加载"
         },
         "modals": {
             "confirm_deletion": {
@@ -255,6 +262,10 @@
             },
             "profile": {
                 "title": "个人资料"
+            },
+            "licenses": {
+                "title": "开放源代码许可",
+                "loading": "正在加载许可数据…"
             }
         }
     }
