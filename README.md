@@ -61,8 +61,9 @@ npx react-native-asset
 # for web:
 yarn web
 
-# for android, run the following then press `a`:
-yarn start
+# for android:
+yarn android
+yarn start # if metro doesn't start
 ```
 
 CLI commands:
