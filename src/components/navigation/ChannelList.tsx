@@ -1,19 +1,36 @@
 import {useContext, useEffect, useState} from 'react';
-import {ImageBackground, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  ImageBackground,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {Channel, Server} from 'revolt.js';
+import type {Channel, Server} from 'revolt.js';
 
 import {app, client} from '@rvmob/Generic';
-import {styles} from '@rvmob/Theme';
 import {ChannelButton, Text} from '../common/atoms';
 import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 
-type ChannelListProps = {
+type UserChannelListChannel =
+  | Channel
+  | 'Home'
+  | 'Friends'
+  | 'Saved Notes'
+  | 'Debug';
+
+type CoreChannelListProps = {
   onChannelClick: Function;
   currentChannel: Channel;
+};
+
+type ChannelListProps = CoreChannelListProps & {
   currentServer: Server | null;
 };
 
@@ -115,7 +132,7 @@ const ServerChannelList = observer((props: ServerChannelListProps) => {
             }}>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.serverName} numberOfLines={1}>
+              <Text style={localStyles.serverName} numberOfLines={1}>
                 {props.currentServer.name}
               </Text>
               <View
@@ -137,7 +154,7 @@ const ServerChannelList = observer((props: ServerChannelListProps) => {
           onPress={() => app.openServerContextMenu(props.currentServer)}
           style={{width: '100%', paddingHorizontal: 10}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.serverName} numberOfLines={1}>
+            <Text style={localStyles.serverName} numberOfLines={1}>
               {props.currentServer.name}
             </Text>
             <View
@@ -176,90 +193,136 @@ const ServerChannelList = observer((props: ServerChannelListProps) => {
   );
 });
 
-export const ChannelList = observer((props: ChannelListProps) => {
+const UserChannelList = observer((props: CoreChannelListProps) => {
+  const renderItem = ({item}: {item: UserChannelListChannel}) => {
+    return typeof item === 'string' ? (
+      item === 'Home' ? (
+        <ChannelButton
+          onPress={() => {
+            props.onChannelClick(null);
+          }}
+          key={'home'}
+          channel={'Home'}
+          selected={props.currentChannel === null}
+        />
+      ) : item === 'Friends' ? (
+        <ChannelButton
+          onPress={() => {
+            props.onChannelClick('friends');
+          }}
+          key={'friends'}
+          channel={'Friends'}
+          selected={(props.currentChannel as Channel | string) === 'friends'}
+        />
+      ) : item === 'Saved Notes' ? (
+        <ChannelButton
+          onPress={async () => {
+            const channel = await client.user?.openDM();
+            props.onChannelClick(channel);
+          }}
+          key={'notes'}
+          channel={'Saved Notes'}
+          selected={props.currentChannel?.channel_type === 'SavedMessages'}
+        />
+      ) : __DEV__ ? (
+        <ChannelButton
+          onPress={() => {
+            props.onChannelClick('debug');
+          }}
+          key={'debugChannel'}
+          channel={'Debug'}
+          selected={(props.currentChannel as Channel | string) === 'debug'}
+        />
+      ) : null
+    ) : (
+      <ChannelButton
+        onPress={() => {
+          props.onChannelClick(item);
+        }}
+        onLongPress={() => {
+          app.openProfile(item.recipient);
+        }}
+        delayLongPress={750}
+        channel={item}
+        selected={props.currentChannel?._id === item._id}
+      />
+    );
+  };
+
+  const keyExtractor = (item: UserChannelListChannel) => {
+    return `connversation-${typeof item === 'string' ? item : item._id}`;
+  };
+
+  const conversations = [...client.channels.values()]
+    .filter(
+      c => c.channel_type === 'DirectMessage' || c.channel_type === 'Group',
+    )
+    .sort((c1, c2) => c2.updatedAt - c1.updatedAt);
+
+  const channels = [
+    'Home',
+    'Friends',
+    'Saved Notes',
+    'Debug',
+    ...conversations,
+  ] as const;
+
   return (
     <>
-      {!props.currentServer ? (
-        <>
-          <Text
-            style={{
-              marginLeft: commonValues.sizes.large,
-              margin: commonValues.sizes.xl,
-              fontSize: 18,
-              fontWeight: 'bold',
-            }}>
-            Direct Messages
-          </Text>
-
-          <ChannelButton
-            onPress={async () => {
-              props.onChannelClick(null);
-            }}
-            key={'home'}
-            channel={'Home'}
-            selected={props.currentChannel === null}
-          />
-
-          <ChannelButton
-            onPress={() => {
-              props.onChannelClick('friends');
-            }}
-            key={'friends'}
-            channel={'Friends'}
-            selected={(props.currentChannel as Channel | string) === 'friends'}
-          />
-
-          <ChannelButton
-            onPress={async () => {
-              const channel = await client.user?.openDM();
-              props.onChannelClick(channel);
-            }}
-            key={'notes'}
-            channel={'Saved Notes'}
-            selected={props.currentChannel?.channel_type === 'SavedMessages'}
-          />
-
-          {__DEV__ ? (
-            <ChannelButton
-              onPress={() => {
-                props.onChannelClick('debug');
-              }}
-              key={'debugChannel'}
-              channel={'Debug'}
-              selected={(props.currentChannel as Channel | string) === 'debug'}
-            />
-          ) : null}
-
-          {[...client.channels.values()]
-            .filter(
-              c =>
-                c.channel_type === 'DirectMessage' ||
-                c.channel_type === 'Group',
-            )
-            .sort((c1, c2) => c2.updatedAt - c1.updatedAt)
-            .map(dm => (
-              <ChannelButton
-                onPress={() => {
-                  props.onChannelClick(dm);
-                }}
-                onLongPress={() => {
-                  app.openProfile(dm.recipient);
-                }}
-                delayLongPress={750}
-                key={dm._id}
-                channel={dm}
-                selected={props.currentChannel?._id === dm._id}
-              />
-            ))}
-        </>
-      ) : null}
-      {props.currentServer ? (
-        <ServerChannelList
-          onChannelClick={props.onChannelClick}
-          currentChannel={props.currentChannel}
-          currentServer={props.currentServer}
-        />
-      ) : null}
+      <Text style={localStyles.userChannelListHeader}>Direct Messages</Text>
+      <FlatList
+        key={'user-channel-list-conversations'}
+        keyExtractor={keyExtractor}
+        data={channels}
+        contentContainerStyle={{
+          paddingBottom: Platform.OS === 'web' ? 0 : commonValues.sizes.medium,
+        }}
+        renderItem={renderItem}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      />
     </>
   );
+});
+
+export const ChannelList = observer((props: ChannelListProps) => {
+  return props.currentServer ? (
+    <ScrollView
+      key={'channel-list'}
+      style={localStyles.channelList}
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}>
+      <ServerChannelList
+        onChannelClick={props.onChannelClick}
+        currentChannel={props.currentChannel}
+        currentServer={props.currentServer}
+      />
+    </ScrollView>
+  ) : (
+    <View key={'channel-list'} style={localStyles.channelList}>
+      <UserChannelList
+        onChannelClick={props.onChannelClick}
+        currentChannel={props.currentChannel}
+      />
+    </View>
+  );
+});
+
+const localStyles = StyleSheet.create({
+  channelList: {
+    flexGrow: 1000,
+    flex: 1000,
+  },
+  userChannelListHeader: {
+    marginLeft: commonValues.sizes.large,
+    margin: commonValues.sizes.xl,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  serverName: {
+    marginVertical: 10,
+    maxWidth: '90%',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 });

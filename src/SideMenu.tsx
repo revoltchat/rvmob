@@ -78,19 +78,13 @@ const SideMenu = ({
             showDiscover={app.settings.get('app.instance') === DEFAULT_API_URL}
           />
         </ScrollView>
-        <ScrollView
-          key={'channel-list'}
-          style={localStyles.channelList}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}>
-          <ChannelList
-            onChannelClick={(channel: any) =>
-              onChannelClick(channel, currentServer)
-            }
-            currentChannel={currentChannel}
-            currentServer={currentServer}
-          />
-        </ScrollView>
+        <ChannelList
+          onChannelClick={(channel: any) =>
+            onChannelClick(channel, currentServer)
+          }
+          currentChannel={currentChannel}
+          currentServer={currentServer}
+        />
       </View>
       <View style={localStyles.bottomBar}>
         <Button
@@ -219,10 +213,6 @@ const generateLocalStyles = (currentTheme: Theme) => {
       flexShrink: 1,
       backgroundColor: currentTheme.background,
       paddingVertical: commonValues.sizes.small,
-    },
-    channelList: {
-      flexGrow: 1000,
-      flex: 1000,
     },
     separator: {
       margin: 6,
