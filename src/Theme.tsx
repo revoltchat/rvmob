@@ -15,15 +15,6 @@ export var styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  loadingHeader: {
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 30,
-  },
-  channelName: {
-    flex: 1,
-    fontWeight: 'bold',
-  },
   iconContainer: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -35,21 +26,5 @@ export var styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 5,
     flex: 1,
-  },
-  headerIcon: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  serverName: {
-    marginVertical: 10,
-    maxWidth: '90%',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  friendsListHeader: {
-    fontWeight: 'bold',
-    margin: 5,
-    marginLeft: 10,
-    marginTop: 10,
   },
 });

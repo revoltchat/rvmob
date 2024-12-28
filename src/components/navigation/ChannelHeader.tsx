@@ -10,9 +10,18 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {app} from '@rvmob/Generic';
 import {styles} from '@rvmob/Theme';
+import {Text} from '@rvmob/components/common/atoms';
 import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
 
-export const ChannelHeader = ({children}: {children: any}) => {
+export const ChannelHeader = ({
+  children,
+  icon,
+  name,
+}: {
+  children?: any;
+  icon?: React.JSX.Element;
+  name?: string;
+}) => {
   const {currentTheme} = useContext(ThemeContext);
   const localStyles = generateLocalStyles(currentTheme);
 
@@ -22,7 +31,7 @@ export const ChannelHeader = ({children}: {children: any}) => {
     <View style={localStyles.channelHeader}>
       {height > width ? (
         <TouchableOpacity
-          style={styles.headerIcon}
+          style={localStyles.headerIcon}
           onPress={() => {
             app.openLeftMenu(true);
           }}>
@@ -35,6 +44,8 @@ export const ChannelHeader = ({children}: {children: any}) => {
           </View>
         </TouchableOpacity>
       ) : null}
+      {icon && <View style={styles.iconContainer}>{icon}</View>}
+      {name && <Text style={localStyles.channelName}>{name}</Text>}
       {children}
     </View>
   );
@@ -49,6 +60,14 @@ const generateLocalStyles = (currentTheme: Theme) => {
       paddingLeft: commonValues.sizes.xl,
       padding: 10,
       flexDirection: 'row',
+    },
+    headerIcon: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    channelName: {
+      flex: 1,
+      fontWeight: 'bold',
     },
   });
 };

@@ -1,5 +1,5 @@
 import {useMemo, useState} from 'react';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {User} from 'revolt.js';
@@ -112,12 +112,10 @@ export const FriendsPage = observer(() => {
 
   return (
     <View style={styles.flex}>
-      <ChannelHeader>
-        <View style={styles.iconContainer}>
-          <SpecialChannelIcon channel={'Friends'} />
-        </View>
-        <Text style={styles.channelName}>Friends</Text>
-      </ChannelHeader>
+      <ChannelHeader
+        icon={<SpecialChannelIcon channel={'Friends'} />}
+        name={'Friends'}
+      />
       <ScrollView style={{flex: 1}}>
         {/* incoming requests */}
         <TouchableOpacity
@@ -127,7 +125,7 @@ export const FriendsPage = observer(() => {
               incoming: !displayState.incoming,
             })
           }>
-          <Text style={styles.friendsListHeader}>
+          <Text style={localStyles.friendsListHeader}>
             INCOMING REQUESTS - {groups.incoming.length}
           </Text>
         </TouchableOpacity>
@@ -149,7 +147,7 @@ export const FriendsPage = observer(() => {
               outgoing: !displayState.outgoing,
             })
           }>
-          <Text style={styles.friendsListHeader}>
+          <Text style={localStyles.friendsListHeader}>
             OUTGOING REQUESTS - {groups.outgoing.length}
           </Text>
         </TouchableOpacity>
@@ -172,7 +170,7 @@ export const FriendsPage = observer(() => {
               onlineFriends: !displayState.onlineFriends,
             });
           }}>
-          <Text style={styles.friendsListHeader}>
+          <Text style={localStyles.friendsListHeader}>
             ONLINE FRIENDS - {groups.onlineFriends.length}
           </Text>
         </TouchableOpacity>
@@ -194,7 +192,7 @@ export const FriendsPage = observer(() => {
               offlineFriends: !displayState.offlineFriends,
             })
           }>
-          <Text style={styles.friendsListHeader}>
+          <Text style={localStyles.friendsListHeader}>
             OFFLINE FRIENDS - {groups.offlineFriends.length}
           </Text>
         </TouchableOpacity>
@@ -216,7 +214,7 @@ export const FriendsPage = observer(() => {
               blocked: !displayState.blocked,
             })
           }>
-          <Text style={styles.friendsListHeader}>
+          <Text style={localStyles.friendsListHeader}>
             BLOCKED - {groups.blocked.length}
           </Text>
         </TouchableOpacity>
@@ -232,4 +230,13 @@ export const FriendsPage = observer(() => {
       </ScrollView>
     </View>
   );
+});
+
+const localStyles = StyleSheet.create({
+  friendsListHeader: {
+    fontWeight: 'bold',
+    margin: 5,
+    marginLeft: 10,
+    marginTop: 10,
+  },
 });

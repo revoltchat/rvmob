@@ -47,12 +47,10 @@ export const HomePage = observer(() => {
 
   return (
     <>
-      <ChannelHeader>
-        <View style={styles.iconContainer}>
-          <SpecialChannelIcon channel={'Home'} />
-        </View>
-        <Text style={styles.channelName}>Home</Text>
-      </ChannelHeader>
+      <ChannelHeader
+        icon={<SpecialChannelIcon channel={'Home'} />}
+        name={'Home'}
+      />
       <View
         style={{
           flex: 1,

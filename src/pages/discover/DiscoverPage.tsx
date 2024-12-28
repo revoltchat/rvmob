@@ -133,14 +133,10 @@ export const DiscoverPage = () => {
 
   return (
     <View style={{flex: 1}}>
-      <ChannelHeader>
-        <View style={styles.iconContainer}>
-          <SpecialChannelIcon channel={'Discover'} />
-        </View>
-        <Text style={styles.channelName}>
-          {t(`app.discover.header_${tab}`)}
-        </Text>
-      </ChannelHeader>
+      <ChannelHeader
+        icon={<SpecialChannelIcon channel={'Discover'} />}
+        name={t(`app.discover.header_${tab}`)}
+      />
       <View style={{flexDirection: 'row', margin: 8}}>
         <Button
           style={{flex: 1}}
@@ -175,7 +171,7 @@ export const DiscoverPage = () => {
                 </Text>
               </View>
               <FlatList
-                key={'messageview-scrollview'}
+                key={'discover-scrollview'}
                 keyExtractor={keyExtractor}
                 data={data.servers}
                 style={{flex: 1, padding: commonValues.sizes.medium}}

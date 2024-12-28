@@ -75,35 +75,29 @@ export const ChannelView = observer(({channel}: {channel: CVChannel}) => {
           <DiscoverPage />
         ) : channel === 'debug' ? (
           <View style={styles.flex}>
-            <ChannelHeader>
-              <View style={styles.iconContainer}>
-                <SpecialChannelIcon channel={'Debug'} />
-              </View>
-              <Text style={styles.channelName}>Debug Menu</Text>
-            </ChannelHeader>
+            <ChannelHeader
+              icon={<SpecialChannelIcon channel={'Debug'} />}
+              name={'Debug Menu'}
+            />
             <Text type={'h1'}>howdy</Text>
           </View>
         ) : (
           <View style={styles.flex}>
-            <ChannelHeader>
-              <View style={styles.iconContainer}>
-                {channel.channel_type === 'SavedMessages' ? (
+            <ChannelHeader
+              icon={
+                channel.channel_type === 'SavedMessages' ? (
                   <SpecialChannelIcon channel={'Saved Notes'} />
                 ) : (
                   <ChannelIcon channel={channel} />
-                )}
-              </View>
-              <Text
-                style={{
-                  fontSize: app.settings.get('ui.messaging.fontSize') as number,
-                  ...styles.channelName,
-                }}>
-                {channel.channel_type === 'DirectMessage'
+                )
+              }
+              name={
+                channel.channel_type === 'DirectMessage'
                   ? channel.recipient?.username
                   : channel.channel_type === 'SavedMessages'
                   ? 'Saved Notes'
-                  : channel.name}
-              </Text>
+                  : channel.name ?? ''
+              }>
               {channel.channel_type !== 'VoiceChannel' ? (
                 <View style={{marginEnd: 16}}>
                   <TouchableOpacity
