@@ -139,7 +139,9 @@
         },
         "loading": {
             "generic": "Lädt…",
-            "connecting": "Loggt ein…"
+            "connecting": "Loggt ein…",
+            "unknown_state_body": "Bitte teilen Sie den Entwicklern mit, dass Sie dies gesehen haben (Inhalt: {{state}})",
+            "unknown_state": "Oh oh"
         },
         "modals": {
             "confirm_deletion": {
@@ -204,7 +206,11 @@
                 "session_token_placeholder": "Token"
             },
             "subheader": "Hast du einen Account?",
-            "token_info_label": "Wie komme ich an mein Token?"
+            "token_info_label": "Wie komme ich an mein Token?",
+            "settings": {
+                "saved": "Gespeichert!",
+                "saved_body": "Im Moment müssen Sie die App schließen und erneut öffnen, damit Ihre Änderungen wirksam werden. Wir wissen, dass dies nicht ideal ist – wir werden dies zu einem späteren Zeitpunkt beheben."
+            }
         },
         "settings_menu": {
             "account": {
@@ -235,6 +241,10 @@
             },
             "profile": {
                 "title": "Profil"
+            },
+            "licenses": {
+                "loading": "Lizenzdaten werden geladen…",
+                "title": "Open Source Lizenzen"
             }
         },
         "discover": {
@@ -250,6 +260,15 @@
             },
             "count_bots_one": "{{count}} Server",
             "count_bots_other": "{{count}} Server"
+        },
+        "messaging": {
+            "reply_not_loaded": "Nachricht Konnte nicht geladen werden",
+            "message_box_channel": "Nachricht #{{name}}",
+            "message_box_group": "Nachricht {{name}}",
+            "message_box_dm": "Nachricht @{{name}}",
+            "message_box_saved_notes": "In „Meine Notizen“ gespeichert",
+            "no_messages": "Keine Nachrichten",
+            "no_messages_body": "Starte ein Gespräch."
         }
     }
 }
