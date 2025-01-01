@@ -6,7 +6,8 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {API} from 'revolt.js';
 
-import {app, client} from '@rvmob/Generic';
+import {app} from '@rvmob/Generic';
+import { client } from '@rvmob/lib/client';
 import {Button, GeneralAvatar, Text} from '@rvmob/components/common/atoms';
 import {Image} from '@rvmob/crossplat/Image';
 import {commonValues, ThemeContext} from '@rvmob/lib/themes';

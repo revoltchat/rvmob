@@ -8,19 +8,20 @@ import {
   View,
 } from 'react-native';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useBackHandler} from '@react-native-community/hooks';
 import {Drawer} from 'react-native-drawer-layout';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Server} from 'revolt.js';
 
-import {app, setFunction, client} from './Generic';
+import {app, setFunction} from './Generic';
+import { client } from './lib/client';
 import {Avatar, Button} from './components/common/atoms';
 import {ChannelList} from './components/navigation/ChannelList';
 import {ServerList} from './components/navigation/ServerList';
 import {ChannelView} from './components/views/ChannelView';
 import {DEFAULT_API_URL} from './lib/consts';
+import {storage} from '@rvmob/lib/storage';
 import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
 
 const SideMenu = ({
@@ -40,7 +41,7 @@ const SideMenu = ({
   );
   function setCurrentServer(s: Server | null) {
     setCurrentServerInner(s);
-    AsyncStorage.setItem('lastServer', s?._id || 'DirectMessage');
+    storage.set('lastServer', s?._id || 'DirectMessage');
   }
   setFunction('getCurrentServer', () => {
     return currentServer?._id ?? undefined;

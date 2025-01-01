@@ -4,7 +4,8 @@ import {differenceInMinutes, isSameDay} from 'date-fns';
 import {Channel, Message} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
-import {app, client} from '@rvmob/Generic';
+import {app} from '@rvmob/Generic';
+import { client } from '@rvmob/lib/client';
 import {
   DEFAULT_MESSAGE_LOAD_COUNT,
   DISCOVER_URL,

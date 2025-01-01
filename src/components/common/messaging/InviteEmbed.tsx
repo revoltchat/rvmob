@@ -4,7 +4,8 @@ import {observer} from 'mobx-react-lite';
 
 import {API, Message} from 'revolt.js';
 
-import {app, client} from '@rvmob/Generic';
+import {app} from '@rvmob/Generic';
+import { client } from '@rvmob/lib/client';
 import {Button, GeneralAvatar, Text} from '../atoms';
 import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 

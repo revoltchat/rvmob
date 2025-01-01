@@ -7,7 +7,8 @@ import {useBackHandler} from '@react-native-community/hooks';
 
 import {Message} from 'revolt.js';
 
-import {app, client, setFunction} from '@rvmob/Generic';
+import {app, setFunction} from '@rvmob/Generic';
+import { client } from '@rvmob/lib/client';
 import {Avatar, Button, Text, Username} from '@rvmob/components/common/atoms';
 import {BottomSheet} from '@rvmob/components/common/BottomSheet';
 import {MarkdownView} from '@rvmob/components/common/MarkdownView';

@@ -3,7 +3,6 @@ import {Platform, ScrollView, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {
   getApiLevel,
@@ -14,14 +13,16 @@ import {
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {app, client, setFunction} from '@rvmob/Generic';
+import {app, setFunction} from '@rvmob/Generic';
+import { client } from '@rvmob/lib/client';
 import {OPEN_ISSUES} from '@rvmob/lib/consts';
+import {storage} from '@rvmob/lib/storage';
 import {ThemeContext} from '@rvmob/lib/themes';
 import {SettingsSection} from '@rvmob/lib/types';
 import {openUrl} from '@rvmob/lib/utils';
 import {styles} from '@rvmob/Theme';
-import {BackButton, ContextButton, Text} from '../common/atoms';
-import {SettingsCategory} from '../common/settings';
+import {BackButton, ContextButton, Text} from '@rvmob/components/common/atoms';
+import {SettingsCategory} from '@rvmob/components/common/settings';
 import {
   AppInfoSection,
   AccountSettingsSection,
@@ -44,7 +45,7 @@ async function copyDebugInfo() {
 
     appInfo: {
       userID: client.user?._id ?? 'ERR_ID_UNDEFINED',
-      settings: await AsyncStorage.getItem('settings'),
+      settings: storage.getString('settings'),
       version: app.version,
     },
   };

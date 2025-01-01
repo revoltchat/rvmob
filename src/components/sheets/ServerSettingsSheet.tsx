@@ -8,7 +8,8 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Server} from 'revolt.js';
 
-import {app, client, setFunction} from '@rvmob/Generic';
+import {app, setFunction} from '@rvmob/Generic';
+import { client } from '@rvmob/lib/client';
 import {Image} from '@rvmob/crossplat/Image';
 import {MAX_SIDE_HQ} from '@rvmob/lib/consts';
 import {Theme, ThemeContext} from '@rvmob/lib/themes';

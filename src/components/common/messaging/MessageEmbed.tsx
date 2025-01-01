@@ -5,7 +5,8 @@ import {observer} from 'mobx-react-lite';
 import {API} from 'revolt.js';
 
 import {Image} from '@rvmob/crossplat/Image';
-import {app, client} from '@rvmob/Generic';
+import {app} from '@rvmob/Generic';
+import { client } from '@rvmob/lib/client';
 import {MarkdownView} from '../MarkdownView';
 import {Link, Text} from '../atoms';
 import {commonValues, ThemeContext} from '@rvmob/lib/themes';

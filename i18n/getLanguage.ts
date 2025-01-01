@@ -1,30 +1,39 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import type {ModuleType} from 'i18next';
+
+import { storage } from '@rvmob/lib/storage';
 
 const STORE_LANGUAGE_KEY = 'app.language';
 
 export const languageDetectorPlugin = {
   type: 'languageDetector' as ModuleType,
-  async: true,
   init: () => {},
-  detect: async function (callback: (lang: string) => void) {
+  detect: function () {
     try {
-      await AsyncStorage.getItem(STORE_LANGUAGE_KEY).then(language => {
-        if (language) {
-          return callback(language);
-        } else {
-          // TODO: use the device's locale
-          return 'en';
+      const settings = JSON.parse(storage.getString('settings') ?? '[]');
+      for (const setting of settings) {
+        if (setting.key === STORE_LANGUAGE_KEY) {
+          return setting.value;
         }
-      });
+      }
+      // TODO: use device language
+      return 'en';
     } catch (error) {
       console.warn(`[APP] Error reading language: ${error}`);
+      return 'en';
     }
   },
-  cacheUserLanguage: async function (language: string) {
+  cacheUserLanguage: function (language: string) {
     try {
-      //save a user's language choice in Async storage
-      await AsyncStorage.setItem(STORE_LANGUAGE_KEY, language);
-    } catch (error) {}
+      const settings = JSON.parse(storage.getString('settings') ?? '[]');
+      for (const setting of settings) {
+        if (setting.key === STORE_LANGUAGE_KEY) {
+          const index = settings.indexOf(setting);
+          settings.splice(index, 1);
+        }
+      }
+      settings.push({key: STORE_LANGUAGE_KEY, value: language});
+      const newData = JSON.stringify(settings);
+      storage.set('settings', newData);
+        } catch (error) {}
   },
 };

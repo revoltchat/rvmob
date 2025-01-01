@@ -5,7 +5,8 @@ import {useTranslation} from 'react-i18next';
 import {useBackHandler} from '@react-native-community/hooks';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {app, client} from '@rvmob/Generic';
+import {app} from '@rvmob/Generic';
+import { client } from '@rvmob/lib/client';
 import {
   BackButton,
   Button,

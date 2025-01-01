@@ -3,7 +3,6 @@ import {Platform, Pressable, StyleSheet, TextInput, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {type DocumentPickerResponse} from 'react-native-document-picker';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -11,11 +10,13 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import {Channel, Message} from 'revolt.js';
 import {ulid} from 'ulid';
 
-import {app, client, setFunction} from '@rvmob/Generic';
+import {app, setFunction} from '@rvmob/Generic';
+import { client } from '@rvmob/lib/client';
 import {styles} from '@rvmob/Theme';
 import {DocumentPicker} from '@rvmob/crossplat/DocumentPicker';
 import {Avatar, Text, Username} from '@rvmob/components/common/atoms';
 import {USER_IDS} from '@rvmob/lib/consts';
+import {storage} from '@rvmob/lib/storage';
 import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
 import {ReplyingMessage} from '@rvmob/lib/types';
 import {getReadableFileSize, showToast} from '@rvmob/lib/utils';
@@ -277,7 +278,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
                   ),
                 });
                 let uploaded = [];
-                const token = await AsyncStorage.getItem('token');
+                const token = storage.getString('token');
                 if (token) {
                   for (let a of attachments) {
                     const formdata = new FormData();

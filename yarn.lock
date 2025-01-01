@@ -12142,6 +12142,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-mmkv@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "react-native-mmkv@npm:3.2.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/41abc5b46d61de7bf0f6af0ed66fab19a391d3fdc30b011cc49ba4dce65ab7c7b1c53eda768bc71f718543e89c7d46848dab2cd537b2af39afd624a8b4f0fec4
+  languageName: node
+  linkType: hard
+
 "react-native-reanimated-image-viewer@npm:^1.0.2":
   version: 1.0.2
   resolution: "react-native-reanimated-image-viewer@npm:1.0.2"
@@ -12902,6 +12912,7 @@ __metadata:
     react-native-drawer-layout: "npm:^4.1.1"
     react-native-gesture-handler: "npm:^2.21.2"
     react-native-get-random-values: "npm:^1.11.0"
+    react-native-mmkv: "npm:^3.2.0"
     react-native-reanimated: "npm:3.16.6"
     react-native-reanimated-image-viewer: "npm:^1.0.2"
     react-native-svg: "npm:^15.10.1"

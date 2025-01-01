@@ -1,11 +1,12 @@
 import {Platform} from 'react-native';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {API} from 'revolt.js';
+
+import {app} from '@rvmob/Generic';
+import { client } from '@rvmob/lib/client';
+import {storage} from '@rvmob/lib/storage';
 
 import {decodeTime} from 'ulid';
-
-import {app, client} from '@rvmob/Generic';
-import {API} from 'revolt.js';
 
 async function connectAndSave(
   session: API.ResponseLogin,
@@ -21,10 +22,8 @@ async function connectAndSave(
     const token = session.token;
     console.log('[AUTH] Logging in with a new token...');
     await client.useExistingSession({token: token});
-    await AsyncStorage.multiSet([
-      ['token', token],
-      ['sessionID', session._id],
-    ]);
+    storage.set('token', token);
+    storage.set('sessionID', session._id);
     console.log('[AUTH] Successfuly logged in and saved the token/session ID!');
     setStatus('loggedIn');
   } catch (err) {
@@ -133,7 +132,7 @@ export async function loginWithToken(
         token,
       });
       console.log(`[AUTH] Setting saved token to ${token}`);
-      AsyncStorage.setItem('token', token);
+      storage.set('token', token);
       setStatus('loggedIn');
     } catch (tokenErr) {
       console.error(tokenErr);
@@ -144,30 +143,26 @@ export async function loginWithToken(
 }
 
 export async function loginWithSavedToken(status: any) {
-  AsyncStorage.getItem('token', async (err, res) => {
-    if (!err) {
-      if (typeof res !== 'string') {
-        console.log(
-          `[AUTH] Saved token was not a string: ${typeof res}, ${res}`,
-        );
-        app.setLoggedOutScreen('loginPage');
-        return;
-      }
-      try {
-        await client.useExistingSession({token: res});
-      } catch (e: any) {
-        console.log(e);
-        !(
-          e.message?.startsWith('Read error') || e.message === 'Network Error'
-        ) && client.user
-          ? app.setLoggedOutScreen('loginPage')
-          : status === 'loggedIn'
-          ? null
-          : app.setLoggedOutScreen('loginPage');
-      }
-    } else {
-      console.log(err);
+  try {
+    const res = storage.getString('token');
+    if (typeof res !== 'string') {
+      console.log(`[AUTH] Saved token was not a string: ${typeof res}, ${res}`);
       app.setLoggedOutScreen('loginPage');
+      return;
     }
-  });
+    try {
+      await client.useExistingSession({token: res});
+    } catch (e: any) {
+      console.log(e);
+      !(e.message?.startsWith('Read error') || e.message === 'Network Error') &&
+      client.user
+        ? app.setLoggedOutScreen('loginPage')
+        : status === 'loggedIn'
+        ? null
+        : app.setLoggedOutScreen('loginPage');
+    }
+  } catch (err) {
+    console.log(err);
+    app.setLoggedOutScreen('loginPage');
+  }
 }

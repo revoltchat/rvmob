@@ -8,7 +8,8 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {Message as RevoltMessage} from 'revolt.js';
 
 import {Text, Username} from '@rvmob/components/common/atoms';
-import {app, client} from '@rvmob/Generic';
+import {app} from '@rvmob/Generic';
+import { client } from '@rvmob/lib/client';
 import {Theme, ThemeContext} from '@rvmob/lib/themes';
 
 const SYSTEM_MESSAGE_ICONS = {

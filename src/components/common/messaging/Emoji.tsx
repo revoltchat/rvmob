@@ -4,7 +4,8 @@ import {StyleSheet} from 'react-native';
 import {SvgUri} from 'react-native-svg';
 
 import {Image} from '@rvmob/crossplat/Image';
-import {client, app} from '@rvmob/Generic';
+import {app} from '@rvmob/Generic';
+import { client } from '@rvmob/lib/client';
 import {Text} from '../atoms';
 import {
   RE_CUSTOM_EMOJI,

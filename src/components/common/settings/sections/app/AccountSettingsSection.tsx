@@ -2,15 +2,16 @@ import {useContext, useEffect, useState} from 'react';
 import {Pressable, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-clipboard/clipboard';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {app, client} from '@rvmob/Generic';
+import {app} from '@rvmob/Generic';
+import { client } from '@rvmob/lib/client';
 import {styles} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms';
 import {GapView} from '@rvmob/components/layout';
 import {SettingsEntry} from '@rvmob/components/common/settings/atoms';
+import {storage} from '@rvmob/lib/storage';
 import {ThemeContext} from '@rvmob/lib/themes';
 
 export const AccountSettingsSection = observer(() => {
@@ -20,7 +21,7 @@ export const AccountSettingsSection = observer(() => {
     email: '',
     mfaEnabled: false,
     sessions: [] as {_id: string; name: string}[],
-    sessionID: '' as string | null,
+    sessionID: '' as string | undefined,
   });
   const [showEmail, setShowEmail] = useState(false);
 
@@ -29,7 +30,7 @@ export const AccountSettingsSection = observer(() => {
       const e = await client.api.get('/auth/account/');
       const m = await client.api.get('/auth/mfa/');
       const s = await client.api.get('/auth/session/all');
-      const i = await AsyncStorage.getItem('sessionID');
+      const i = storage.getString('sessionID');
       setAuthInfo({
         email: e.email,
         mfaEnabled: m.totp_mfa ?? m.security_key_mfa ?? false,

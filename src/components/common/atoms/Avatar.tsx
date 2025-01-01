@@ -5,7 +5,8 @@ import {observer} from 'mobx-react-lite';
 import {Server, User, Channel} from 'revolt.js';
 
 import {Image} from '@rvmob/crossplat/Image';
-import {app, client} from '@rvmob/Generic';
+import {app} from '@rvmob/Generic';
+import { client } from '@rvmob/lib/client';
 import {DEFAULT_MAX_SIDE} from '@rvmob/lib/consts';
 import {ThemeContext} from '@rvmob/lib/themes';
 

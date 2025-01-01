@@ -26,6 +26,7 @@
         "loading": {
             "generic": "Loading…",
             "connecting": "Logging in…",
+            "migrating_settings": "Migrating settings…",
             "unknown_state": "Uh oh…",
             "unknown_state_body": "Please let the developers know that you saw this (value: {{state}})"
         },

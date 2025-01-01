@@ -1,12 +1,10 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import {Client} from 'revolt.js';
 import type {API, Channel, Message, Server, User} from 'revolt.js';
 
 import {setLanguage} from '@rvmob-i18n/i18n';
 import {languages} from '@rvmob-i18n/languages';
 import {DEFAULT_API_URL, LOADING_SCREEN_REMARKS} from '@rvmob/lib/consts';
 import {checkNotificationPerms} from '@rvmob/lib/notifications';
+import {storage} from '@rvmob/lib/storage';
 import {themes} from '@rvmob/lib/themes';
 import {
   CreateChannelModalProps,
@@ -65,7 +63,7 @@ export const app = {
         setting.type === 'number' ? parseInt(raw as string, 10) || 0 : raw;
       return toreturn;
     },
-    set: async (k: string, v: string | boolean | undefined) => {
+    set: (k: string, v: string | boolean | undefined) => {
       try {
         const setting = app.settings._fetch(k);
         if (!setting) {
@@ -74,12 +72,12 @@ export const app = {
         }
         setting.value = v;
         setting.onChange && setting.onChange(v);
-        await app.settings.save();
+        app.settings.save();
       } catch (err) {
         console.log(`[SETTINGS] Error setting setting ${k} to ${v}: ${err}`);
       }
     },
-    save: async () => {
+    save: () => {
       try {
         let out: object[] = [];
         for (const s of app.settings.list) {
@@ -87,19 +85,18 @@ export const app = {
             out.push({key: s.key, value: s.value});
           }
         }
-        await AsyncStorage.setItem('settings', JSON.stringify(out));
+        storage.set('settings', JSON.stringify(out));
       } catch (err) {
         console.log(`[SETTINGS] Error saving settings: ${err}`);
       }
     },
-    clear: async () => {
+    clear: () => {
       try {
-        AsyncStorage.setItem('settings', '{}').then(() => {
-          for (const s of app.settings.list) {
-            delete s.value;
-            s.onChange && s.onChange(s.default);
-          }
-        });
+        storage.set('settings', '{}');
+        for (const s of app.settings.list) {
+          delete s.value;
+          s.onChange && s.onChange(s.default);
+        }
       } catch (err) {
         console.log(`[SETTINGS] Error saving settings: ${err}`);
       }
@@ -408,69 +405,6 @@ export const app = {
 export function setFunction(name: string, func: any) {
   app[name] = func;
 }
-
-async function initialiseSettings() {
-  const s = await AsyncStorage.getItem('settings');
-  console.log(s);
-  if (s) {
-    try {
-      const settings = JSON.parse(s) as {key: string; value: any}[];
-      settings.forEach(key => {
-        let st: Setting | undefined;
-        for (const setting of app.settings.list) {
-          if (setting.key === key.key) {
-            st = setting;
-          }
-        }
-        if (st) {
-          st.value = key.value;
-          st.onInitialize && st.onInitialize(key.value);
-        } else {
-          // ignore known good key
-          if (key.key !== 'app.lastVersion') {
-            console.warn(
-              `[SETTINGS] Unknown setting in AsyncStorage settings: ${key}`,
-            );
-          }
-        }
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  }
-}
-
-async function getAPIURL() {
-  await initialiseSettings();
-  console.log(`[APP] Initialised settings (${new Date().getTime()})`);
-  let url: string = '';
-  console.log('[AUTH] Getting API URL...');
-  const instance = app.settings.get('app.instance') as
-    | string
-    | null
-    | undefined;
-  if (!instance) {
-    console.log(
-      '[AUTH] Unable to fetch app.instance; setting apiURL to default',
-    );
-    url = DEFAULT_API_URL;
-  } else {
-    console.log(`[AUTH] Fetched app.instance; setting apiURL to ${instance}`);
-    url = instance;
-  }
-  return url;
-}
-
-export let client = undefined as unknown as Client;
-
-getAPIURL().then(url => {
-  const apiURL = url;
-  console.log(`[AUTH] Creating client... (instance: ${apiURL})`);
-  client = new Client({
-    unreads: true,
-    apiURL: apiURL,
-  });
-});
 
 export var selectedRemark =
   LOADING_SCREEN_REMARKS[
