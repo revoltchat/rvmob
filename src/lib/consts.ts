@@ -106,7 +106,7 @@ export const SPECIAL_DATE_OBJECTS: Record<string, SpecialDateObject> = {
     name: "New Year's Day",
     key: 'app-home-holiday-nyd',
     emoji: '🎉',
-    link: "https://en.wikipedia.org/wiki/New_Year's_Eve",
+    link: "https://en.wikipedia.org/wiki/New_Year's_Day",
   },
   '14/2': {
     name: "Valentine's Day",
