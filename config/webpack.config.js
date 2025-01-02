@@ -17,13 +17,8 @@ const compileNodeModules = [
   'react-native-vector-icons',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
-const modulesToIgnore = [
-  // Packages we don't need on web
-  'react-native-document-picker',
-].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
-
 const babelLoaderConfiguration = {
-  test: /\.js$|tsx?$/,
+  test: /\.(js|ts)x?$/,
   // Add every directory that needs to be compiled by Babel during the build.
   include: [
     path.resolve(__dirname, '../index.web.js'),
@@ -32,8 +27,6 @@ const babelLoaderConfiguration = {
     path.resolve(__dirname, '../i18n'),
     ...compileNodeModules,
   ],
-  // FIXME: why doesn't this work quite right
-  exclude: modulesToIgnore,
   use: {
     loader: 'babel-loader',
     options: {
@@ -78,13 +71,15 @@ module.exports = {
     app: path.join(__dirname, '../index.web.js'),
   },
   output: {
-    filename: 'bundle.web.js',
+    filename: 'bundle-[name].web.js',
     path: path.resolve(appDirectory, 'dist'),
   },
   resolve: {
     extensions: ['.web.tsx', '.web.ts', '.web.js', '.tsx', '.ts', '.js'],
     alias: {
       'react-native$': 'react-native-web',
+      // the ESM version of MMKV breaks Webpack
+      'react-native-mmkv': 'react-native-mmkv/lib/commonjs',
     },
     symlinks: false,
     fallback: {crypto: require.resolve('react-native-get-random-values')},
@@ -109,4 +104,9 @@ module.exports = {
     new webpack.EnvironmentPlugin({JEST_WORKER_ID: null}),
     new webpack.DefinePlugin({process: {env: {}}}),
   ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
 };
