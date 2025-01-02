@@ -9,7 +9,7 @@ import {Message as RevoltMessage} from 'revolt.js';
 
 import {Text, Username} from '@rvmob/components/common/atoms';
 import {app} from '@rvmob/Generic';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {Theme, ThemeContext} from '@rvmob/lib/themes';
 
 const SYSTEM_MESSAGE_ICONS = {

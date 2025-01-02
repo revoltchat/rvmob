@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {DOMParser} from '@xmldom/xmldom';
 
 import {app} from '@rvmob/Generic';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {styles} from '@rvmob/Theme';
 import {Button, GeneralAvatar, Text} from '@rvmob/components/common/atoms';
 import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';

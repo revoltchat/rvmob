@@ -4,7 +4,7 @@ import {StatusBar, StyleSheet, View} from 'react-native';
 import {Channel, Server} from 'revolt.js';
 
 import {app, randomizeRemark, setFunction} from '@rvmob/Generic';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {Modals} from '@rvmob/Modals';
 import {SideMenuHandler} from '@rvmob/SideMenu';
 import {NetworkIndicator} from '@rvmob/components/NetworkIndicator';

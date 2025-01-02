@@ -4,7 +4,7 @@ import {observer} from 'mobx-react-lite';
 
 import {Server, User} from 'revolt.js';
 
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {Button, GeneralAvatar, Text} from '@rvmob/components/common/atoms';
 import {ServerList} from '@rvmob/components/navigation/ServerList';
 import {ThemeContext} from '@rvmob/lib/themes';

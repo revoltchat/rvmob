@@ -1,7 +1,7 @@
 import {View} from 'react-native';
 
 import {Image} from '@rvmob/crossplat/Image';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {DEFAULT_MAX_SIDE} from '@rvmob/lib/consts';
 
 export const GeneralAvatar = ({

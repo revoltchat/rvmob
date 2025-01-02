@@ -6,7 +6,7 @@ import {useBackHandler} from '@react-native-community/hooks';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {app} from '@rvmob/Generic';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {
   BackButton,
   Button,

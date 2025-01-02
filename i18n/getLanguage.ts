@@ -1,6 +1,6 @@
 import type {ModuleType} from 'i18next';
 
-import { storage } from '@rvmob/lib/storage';
+import {storage} from '@rvmob/lib/storage';
 
 const STORE_LANGUAGE_KEY = 'app.language';
 
@@ -34,6 +34,6 @@ export const languageDetectorPlugin = {
       settings.push({key: STORE_LANGUAGE_KEY, value: language});
       const newData = JSON.stringify(settings);
       storage.set('settings', newData);
-        } catch (error) {}
+    } catch (error) {}
   },
 };

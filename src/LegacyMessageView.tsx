@@ -11,7 +11,7 @@ import {autorun} from 'mobx';
 import {Message as RevoltMessage} from 'revolt.js';
 
 import {app, setFunction, randomizeRemark} from './Generic';
-import { client } from './lib/client';
+import {client} from './lib/client';
 import {styles} from './Theme';
 import {Text} from './components/common/atoms';
 import {Message} from './components/common/messaging';

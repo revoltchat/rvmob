@@ -6,7 +6,7 @@ import BottomSheetCore from '@gorhom/bottom-sheet';
 import {useBackHandler} from '@react-native-community/hooks';
 
 import {setFunction} from '@rvmob/Generic';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {ContextButton, InputWithButton, Text} from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
 import {STATUSES} from '@rvmob/lib/consts';

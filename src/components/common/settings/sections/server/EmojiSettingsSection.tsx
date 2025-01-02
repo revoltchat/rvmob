@@ -7,7 +7,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Server} from 'revolt.js';
 
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {styles} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms';
 import {SettingsEntry} from '@rvmob/components/common/settings/atoms';

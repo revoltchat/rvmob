@@ -3,7 +3,7 @@ import {Platform} from 'react-native';
 import {API} from 'revolt.js';
 
 import {app} from '@rvmob/Generic';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {storage} from '@rvmob/lib/storage';
 
 import {decodeTime} from 'ulid';

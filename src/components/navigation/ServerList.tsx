@@ -7,7 +7,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import {decodeTime} from 'ulid';
 
 import {app} from '@rvmob/Generic';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {Text} from '../common/atoms';
 import {Image} from '@rvmob/crossplat/Image';
 import {DEFAULT_MAX_SIDE} from '@rvmob/lib/consts';

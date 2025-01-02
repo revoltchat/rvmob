@@ -11,7 +11,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import {User, Server} from 'revolt.js';
 
 import {app, setFunction} from '@rvmob/Generic';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {styles} from '@rvmob/Theme';
 import {
   Avatar,

@@ -14,7 +14,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {app, setFunction} from '@rvmob/Generic';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {OPEN_ISSUES} from '@rvmob/lib/consts';
 import {storage} from '@rvmob/lib/storage';
 import {ThemeContext} from '@rvmob/lib/themes';

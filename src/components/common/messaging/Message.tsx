@@ -14,7 +14,7 @@ import {Message as RevoltMessage} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
 import {app} from '@rvmob/Generic';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {Avatar, Text, Username} from '@rvmob/components/common/atoms';
 import {MarkdownView} from '@rvmob/components/common/MarkdownView';
 import {InviteEmbed} from '@rvmob/components/common/messaging/InviteEmbed';

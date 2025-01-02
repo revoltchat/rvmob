@@ -15,7 +15,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import type {Channel, Server} from 'revolt.js';
 
 import {app} from '@rvmob/Generic';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {ChannelButton, Text} from '../common/atoms';
 import {commonValues, ThemeContext} from '@rvmob/lib/themes';
 

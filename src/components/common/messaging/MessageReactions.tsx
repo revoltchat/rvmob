@@ -5,7 +5,7 @@ import {observer} from 'mobx-react-lite';
 
 import {Message} from 'revolt.js';
 
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {Text} from '@rvmob/components/common/atoms';
 import {Image} from '@rvmob/crossplat/Image';
 import {commonValues, ThemeContext} from '@rvmob/lib/themes';

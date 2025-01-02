@@ -5,7 +5,7 @@ import {observer} from 'mobx-react-lite';
 import {API, Channel, Server, User} from 'revolt.js';
 
 import {app, setFunction} from '@rvmob/Generic';
-import { client } from './lib/client';
+import {client} from './lib/client';
 import {
   CreateChannelModalProps,
   DeletableObject,

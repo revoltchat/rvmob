@@ -11,7 +11,7 @@ import {Channel, Message} from 'revolt.js';
 import {ulid} from 'ulid';
 
 import {app, setFunction} from '@rvmob/Generic';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {styles} from '@rvmob/Theme';
 import {DocumentPicker} from '@rvmob/crossplat/DocumentPicker';
 import {Avatar, Text, Username} from '@rvmob/components/common/atoms';

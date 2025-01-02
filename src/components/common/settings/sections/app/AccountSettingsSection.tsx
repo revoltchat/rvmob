@@ -6,7 +6,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {app} from '@rvmob/Generic';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {styles} from '@rvmob/Theme';
 import {Text} from '@rvmob/components/common/atoms';
 import {GapView} from '@rvmob/components/layout';

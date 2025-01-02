@@ -5,7 +5,7 @@ import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import ImageViewerCore from 'react-native-reanimated-image-viewer';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {Text} from '@rvmob/components/common/atoms';
 import {GapView} from '@rvmob/components/layout';
 import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';

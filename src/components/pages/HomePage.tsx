@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
 import {app} from '@rvmob/Generic';
-import { client } from '@rvmob/lib/client';
+import {client} from '@rvmob/lib/client';
 import {
   SPECIAL_DATES,
   SPECIAL_DATE_OBJECTS,
