@@ -10,9 +10,9 @@
             "save": "Save"
         },
         "discover": {
-            "count_bots_one": "{{count}} servers",
-            "count_bots_other": "{{count}} servers",
-            "count_servers_one": "{{count}} servers",
+            "count_bots_one": "{{count}} bot",
+            "count_bots_other": "{{count}} bots",
+            "count_servers_one": "{{count}} server",
             "count_servers_other": "{{count}} servers",
             "fetching_bots": "Loading bots…",
             "fetching_servers": "Loading servers…",
@@ -157,7 +157,6 @@
                     "errors": {
                         "empty_role_name": "Role names cannot be empty!"
                     }
-
                 },
                 "emoji": {
                     "title": "Emoji",
