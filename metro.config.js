@@ -24,16 +24,6 @@ const config = {
     assetExts: assetExts.filter(ext => ext !== 'svg'),
     sourceExts: [...sourceExts, 'svg'],
   },
-  // serializer: {
-  //   customSerializer: MetroSerializer([
-  //     CyclicDependencies({
-  //       includeNodeModules: false,
-  //       linesOfContext: 3,
-  //       throwOnError: true,
-  //     }),
-  //     DuplicateDependencies,
-  //   ]),
-  // },
 };
 
 module.exports = makeMetroConfig(mergeConfig(defaultConfig, config));

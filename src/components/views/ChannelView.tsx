@@ -6,7 +6,7 @@ import {observer} from 'mobx-react-lite';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {Channel} from 'revolt.js';
+import type {Channel} from 'revolt.js';
 
 import {app} from '@rvmob/Generic';
 import {Messages} from '@rvmob/LegacyMessageView';
@@ -62,7 +62,7 @@ export const ChannelView = observer(({channel}: {channel: CVChannel}) => {
 
   console.log(
     `[CHANNELVIEW] Rendering channel view for ${
-      channel instanceof Channel ? channel._id : channel
+      channel ? typeof channel !== 'string' ? channel._id : channel : channel
     }...`,
   );
 

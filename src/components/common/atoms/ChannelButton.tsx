@@ -2,7 +2,7 @@ import {useContext} from 'react';
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {Channel} from 'revolt.js';
+import type {Channel} from 'revolt.js';
 
 import {MiniProfile} from '@rvmob/components/common/profile';
 import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
@@ -33,11 +33,11 @@ export const ChannelButton = observer(
     const localStyles = generateLocalStyles(currentTheme);
 
     let color =
-      showUnread && channel instanceof Channel && channel.unread
+      showUnread && typeof channel !== 'string' && channel.unread
         ? currentTheme.foregroundPrimary
         : currentTheme.foregroundTertiary;
 
-    let pings = channel instanceof Channel ? channel.mentions?.length : 0;
+    let pings = typeof channel !== 'string' ? channel.mentions?.length : 0;
 
     let classes: ViewStyle[] = [localStyles.channelButton];
 
@@ -51,7 +51,7 @@ export const ChannelButton = observer(
         onLongPress={() => onLongPress()}
         delayLongPress={delayLongPress}
         key={
-          channel instanceof Channel
+          typeof channel !== 'string'
             ? channel._id
             : `channel-special-${channel}`
         }
@@ -59,7 +59,7 @@ export const ChannelButton = observer(
           ...localStyles.channelButton,
           ...(selected && localStyles.channelButtonSelected),
         }}>
-        {channel instanceof Channel &&
+        {typeof channel !== 'string' &&
         channel.channel_type === 'DirectMessage' ? (
           <View
             style={{
@@ -69,29 +69,29 @@ export const ChannelButton = observer(
             }}>
             <MiniProfile user={channel.recipient} color={color} />
           </View>
-        ) : channel instanceof Channel && channel.channel_type === 'Group' ? (
+        ) : typeof channel !== 'string' && channel.channel_type === 'Group' ? (
           <MiniProfile channel={channel} color={color} />
         ) : (
           <>
             <View style={styles.iconContainer}>
-              {channel instanceof Channel ? (
+              {typeof channel !== 'string' ? (
                 <ChannelIcon channel={channel} />
               ) : (
                 <SpecialChannelIcon channel={channel} />
               )}
             </View>
             <Text style={{flex: 1, fontWeight: 'bold', color, fontSize: 15}}>
-              {channel instanceof Channel
+              {typeof channel !== 'string'
                 ? channel.name ?? `${channel}`
                 : channel}
             </Text>
-            {showUnread && channel instanceof Channel && pings > 0 ? (
+            {showUnread && typeof channel !== 'string' && pings > 0 ? (
               <View style={localStyles.mentionIndicator}>
                 <Text style={localStyles.mentionCount}>
                   {pings > 9 ? '9+' : pings}
                 </Text>
               </View>
-            ) : showUnread && channel instanceof Channel && channel.unread ? (
+            ) : showUnread && typeof channel !== 'string' && channel.unread ? (
               <View style={localStyles.unreadIndicator} />
             ) : null}
           </>
