@@ -49,8 +49,7 @@ export const StatusSheet = observer(() => {
               }}>
               <View
                 style={{
-                  // @ts-expect-error every status has a colour (TODO: find a solution?)
-                  backgroundColor: currentTheme['status' + s],
+                  backgroundColor: currentTheme[`status${s}`],
                   height: 16,
                   width: 16,
                   borderRadius: 10000,
