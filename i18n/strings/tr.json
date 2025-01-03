@@ -11,7 +11,10 @@
         },
         "loading": {
             "generic": "Yükleniyor…",
-            "connecting": "Giriş yapılıyor…"
+            "connecting": "Giriş yapılıyor…",
+            "migrating_settings": "Ayarlar taşınıyor…",
+            "unknown_state": "Ah oh…",
+            "unknown_state_body": "Lütfen geliştiricilere bunu gördüğünüzü bildirin (value: {{state}})"
         },
         "home": {
             "join_lounge": "Revolt Lounge'a katılın",
@@ -204,7 +207,11 @@
             },
             "instance_notice": "{{url}} bağlanıyorsunuz.",
             "subheader": "Hesabın var mı?",
-            "token_info_label": "Jetonumu nasıl alabilirim?"
+            "token_info_label": "Jetonumu nasıl alabilirim?",
+            "settings": {
+                "saved": "Kaydedildi!",
+                "saved_body": "Şimdilik, değişikliklerinizin geçerli olması için uygulamayı kapatıp yeniden açmanız gerekecek. Bunun ideal olmadığını biliyoruz - bunu daha sonra düzelteceğiz."
+            }
         },
         "discover": {
             "count_bots_one": "{{count}} sunucu",
@@ -249,6 +256,10 @@
             },
             "appearance": {
                 "title": "Dış görünüş"
+            },
+            "licenses": {
+                "loading": "Lisans verileri yükleniyor…",
+                "title": "Açık Kaynak Lisansları"
             }
         },
         "messaging": {
@@ -257,7 +268,8 @@
             "message_box_saved_notes": "Notlarını kaydet",
             "no_messages": "Mesaj yok",
             "no_messages_body": "Konuşmayı başlatın.",
-            "message_box_channel": "#{{name}} Mesaj gönder"
+            "message_box_channel": "#{{name}} Mesaj gönder",
+            "reply_not_loaded": "Mesaj yüklenmedi"
         }
     }
 }
