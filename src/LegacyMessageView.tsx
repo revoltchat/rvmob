@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {autorun} from 'mobx';
 
-import {Message as RevoltMessage} from 'revolt.js';
+import type {Message as RevoltMessage} from 'revolt.js';
 
 import {app, setFunction, randomizeRemark} from './Generic';
 import {client} from './lib/client';

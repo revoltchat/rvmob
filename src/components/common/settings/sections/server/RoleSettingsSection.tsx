@@ -11,7 +11,7 @@ import ColourPicker, {
   Panel1,
 } from 'reanimated-color-picker';
 
-import {Server} from 'revolt.js';
+import type {Server} from 'revolt.js';
 
 import {app, setFunction} from '@rvmob/Generic';
 import {SettingsSection} from '@rvmob/lib/types';

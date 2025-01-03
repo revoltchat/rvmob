@@ -4,7 +4,7 @@ import {observer} from 'mobx-react-lite';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {Message} from 'revolt.js';
+import type {Message} from 'revolt.js';
 
 import {Text} from '@rvmob/components/common/atoms';
 import {MarkdownView} from '@rvmob/components/common/MarkdownView';

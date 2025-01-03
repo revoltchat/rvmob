@@ -148,3 +148,12 @@ dependencies {
     //    implementation jscFlavor
     // }
 }
+
+// we don't want the React plugin to bundle - this is rnx-kit's job
+tasks.whenTaskAdded { task ->
+    // the task name can be found in `react-native-gradle-plugin`:
+    // https://github.com/facebook/react-native/blob/0.77-stable/packages/gradle-plugin/react-native-gradle-plugin/src/main/kotlin/com/facebook/react/TaskConfiguration.kt#L54
+    if (task.name.startsWith("createBundle") && task.name.endsWith("JsAndAssets")) {
+        task.enabled = false
+    }
+}

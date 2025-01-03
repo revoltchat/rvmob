@@ -1,7 +1,7 @@
 import {StyleSheet, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
-import {Message} from 'revolt.js';
+import type {Message} from 'revolt.js';
 
 import {Avatar, Text, Username} from '@rvmob/components/common/atoms';
 import {SystemMessage} from './SystemMessage';

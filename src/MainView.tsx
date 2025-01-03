@@ -1,7 +1,7 @@
 import {Component as ReactComponent, useCallback, useContext} from 'react';
 import {StatusBar, StyleSheet, View} from 'react-native';
 
-import {Channel, Server} from 'revolt.js';
+import type {Channel, Server} from 'revolt.js';
 
 import {app, randomizeRemark, setFunction} from '@rvmob/Generic';
 import {client} from '@rvmob/lib/client';

@@ -1,7 +1,7 @@
 import {useContext, useState} from 'react';
 import {View} from 'react-native';
 
-import {useBackHandler} from '@react-native-community/hooks';
+import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 
 import {app} from '@rvmob/Generic';
 import {BackButton, Button, Input, Text} from '@rvmob/components/common/atoms';

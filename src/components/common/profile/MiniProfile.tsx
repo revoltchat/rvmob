@@ -2,7 +2,7 @@ import {useContext} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {Server, User, Channel} from 'revolt.js';
+import type {Server, User, Channel} from 'revolt.js';
 
 import {Avatar} from '@rvmob/components/common/atoms/Avatar';
 import {Text} from '@rvmob/components/common/atoms/Text';

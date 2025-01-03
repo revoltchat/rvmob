@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {formatRelative} from 'date-fns';
+import {formatRelative} from 'date-fns/formatRelative';
 import {enGB, enUS} from 'date-fns/locale';
-import {Message as RevoltMessage} from 'revolt.js';
+import type {Message as RevoltMessage} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
 import {app} from '@rvmob/Generic';

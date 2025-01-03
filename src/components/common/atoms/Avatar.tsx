@@ -2,7 +2,7 @@ import {useContext} from 'react';
 import {Pressable, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {Server, User, Channel} from 'revolt.js';
+import type {Server, User, Channel} from 'revolt.js';
 
 import {Image} from '@rvmob/crossplat/Image';
 import {app} from '@rvmob/Generic';

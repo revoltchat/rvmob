@@ -72,7 +72,7 @@ module.exports = {
   },
   output: {
     filename: 'bundle-[name].web.js',
-    path: path.resolve(appDirectory, 'dist'),
+    path: path.resolve(appDirectory, 'dist/web'),
   },
   resolve: {
     extensions: ['.web.tsx', '.web.ts', '.web.js', '.tsx', '.ts', '.js'],

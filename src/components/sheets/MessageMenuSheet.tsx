@@ -2,9 +2,9 @@ import {useContext, useRef, useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import BottomSheetCore from '@gorhom/bottom-sheet';
+import type BottomSheetCore from '@gorhom/bottom-sheet';
 import Clipboard from '@react-native-clipboard/clipboard';
-import {useBackHandler} from '@react-native-community/hooks';
+import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 

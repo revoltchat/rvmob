@@ -5,7 +5,7 @@ import {observer} from 'mobx-react-lite';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {Message as RevoltMessage} from 'revolt.js';
+import type {Message as RevoltMessage} from 'revolt.js';
 
 import {Text, Username} from '@rvmob/components/common/atoms';
 import {app} from '@rvmob/Generic';

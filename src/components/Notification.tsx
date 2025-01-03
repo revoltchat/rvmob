@@ -4,7 +4,7 @@ import {observer} from 'mobx-react-lite';
 
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {Message} from 'revolt.js';
+import type {Message} from 'revolt.js';
 
 import {styles} from '../Theme';
 import {Avatar, Text, Username} from './common/atoms';

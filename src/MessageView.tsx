@@ -13,7 +13,7 @@ import {observer} from 'mobx-react-lite';
 
 import {ErrorBoundary} from 'react-error-boundary';
 
-import {Channel, Message as RevoltMessage} from 'revolt.js';
+import type {Channel, Message as RevoltMessage} from 'revolt.js';
 
 import {app} from './Generic';
 import {client} from './lib/client';

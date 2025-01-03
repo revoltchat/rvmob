@@ -2,10 +2,10 @@ import {useContext, useMemo, useRef, useState} from 'react';
 import {ScrollView, StyleSheet, TextInput, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import BottomSheetCore from '@gorhom/bottom-sheet';
-import {useBackHandler} from '@react-native-community/hooks';
+import type BottomSheetCore from '@gorhom/bottom-sheet';
+import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 
-import {Message} from 'revolt.js';
+import type {Message} from 'revolt.js';
 
 import {app, setFunction} from '@rvmob/Generic';
 import {client} from '@rvmob/lib/client';

@@ -2,8 +2,8 @@ import {useContext, useEffect, useRef, useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import BottomSheetCore from '@gorhom/bottom-sheet';
-import {useBackHandler} from '@react-native-community/hooks';
+import type BottomSheetCore from '@gorhom/bottom-sheet';
+import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 
 import type {Channel, Message as RevoltMessage} from 'revolt.js';
 

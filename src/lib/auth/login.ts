@@ -1,6 +1,6 @@
 import {Platform} from 'react-native';
 
-import {API} from 'revolt.js';
+import type {API} from 'revolt.js';
 
 import {app} from '@rvmob/Generic';
 import {client} from '@rvmob/lib/client';

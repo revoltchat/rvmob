@@ -3,7 +3,7 @@ import {Pressable, View} from 'react-native';
 import {action} from 'mobx';
 import {observer} from 'mobx-react-lite';
 
-import {Message} from 'revolt.js';
+import type {Message} from 'revolt.js';
 
 import {client} from '@rvmob/lib/client';
 import {Text} from '@rvmob/components/common/atoms';

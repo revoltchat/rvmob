@@ -7,9 +7,9 @@
   "scripts": {
     "clean": "react-native clean",
     "android": "yarn license-list -prod && react-native run-android --active-arch-only --appIdSuffix=debug --mode=debug",
-    "android-release": "yarn license-list -prod && react-native build-android --tasks assembleRelease",
+    "android-release": "yarn license-list -prod && react-native rnx-bundle --dev false && react-native build-android --tasks assembleRelease",
     "ios": "react-native run-ios",
-    "start": "react-native start",
+    "start": "react-native rnx-start",
     "test": "jest",
     "lint": "eslint .",
     "license-list": "yarn licenses list --production --json --recursive > assets/data/licenses.json && node scripts/licenseListProcessor.mjs -silent",
@@ -61,9 +61,12 @@
     "@react-native/eslint-config": "^0.76.5",
     "@react-native/metro-config": "^0.76.5",
     "@react-native/typescript-config": "^0.76.5",
+    "@rnx-kit/babel-preset-metro-react-native": "^2.0.0",
+    "@rnx-kit/cli": "^0.18.4",
     "@rnx-kit/metro-config": "^2.0.1",
     "@rnx-kit/metro-plugin-cyclic-dependencies-detector": "^2.0.0",
     "@rnx-kit/metro-plugin-duplicates-checker": "^3.0.0",
+    "@rnx-kit/metro-resolver-symlinks": "^0.2.1",
     "@rnx-kit/metro-serializer": "^2.0.0",
     "@svgr/webpack": "^8.1.0",
     "@types/babel__core": "^7.20.5",
@@ -99,5 +102,39 @@
   "resolutions": {
     "@react-native/assets-registry@npm:0.76.2": "patch:@react-native/assets-registry@npm%3A0.76.2#~/.yarn/patches/@react-native-assets-registry-npm-0.76.2-7f3b1c49cf.patch",
     "markdown-it": "patch:markdown-it@npm%3A14.1.0#~/.yarn/patches/markdown-it-npm-14.1.0-e337d75bfe.patch"
+  },
+  "rnx-kit": {
+    "bundle": {
+      "entryFile": "index.js",
+      "targets": [
+        "android"
+      ],
+      "platforms": {
+        "android": {
+          "bundleOutput": "android/app/src/main/assets/index.android.bundle",
+          "sourcemapOutput": "android/app/build/intermediates/sourcemaps/react/release/index.android.bundle.map",
+          "assetsDest": "android/app/src/main/res"
+        }
+      },
+      "plugins": [
+        [
+          "@rnx-kit/metro-plugin-cyclic-dependencies-detector",
+          {
+            "includeNodeModules": false,
+            "linesOfContext": 3,
+            "throwOnError": true
+          }
+        ],
+        [
+          "@rnx-kit/metro-plugin-duplicates-checker",
+          {
+            "ignoredModules": [
+              "react-is"
+            ]
+          }
+        ]
+      ],
+      "treeShake": true
+    }
   }
 }

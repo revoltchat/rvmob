@@ -2,7 +2,7 @@ import {useContext, useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {API, Message} from 'revolt.js';
+import type {API, Message} from 'revolt.js';
 
 import {app} from '@rvmob/Generic';
 import {client} from '@rvmob/lib/client';

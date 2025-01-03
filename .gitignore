@@ -32,7 +32,8 @@ build/
 .gradle
 local.properties
 *.iml
-index.android.bundle
+*.android.bundle
+*.android.bundle.map
 .cxx
 link-assets-manifest.json
 drawable-mdpi

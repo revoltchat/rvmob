@@ -1,7 +1,8 @@
 import {Linking, Platform, ToastAndroid} from 'react-native';
 
-import {differenceInMinutes, isSameDay} from 'date-fns';
-import {Channel, Message} from 'revolt.js';
+import {differenceInMinutes} from 'date-fns/differenceInMinutes';
+import {isSameDay} from 'date-fns/isSameDay';
+import type {Channel, Message} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
 import {app} from '@rvmob/Generic';

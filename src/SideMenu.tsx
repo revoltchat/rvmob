@@ -8,11 +8,11 @@ import {
   View,
 } from 'react-native';
 
-import {useBackHandler} from '@react-native-community/hooks';
+import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 import {Drawer} from 'react-native-drawer-layout';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {Server} from 'revolt.js';
+import type {Server} from 'revolt.js';
 
 import {app, setFunction} from './Generic';
 import {client} from './lib/client';

@@ -5,7 +5,7 @@ import {observer} from 'mobx-react-lite';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {Channel, Server} from 'revolt.js';
+import type {Channel, Server} from 'revolt.js';
 
 import {app} from '@rvmob/Generic';
 import {styles} from '@rvmob/Theme';

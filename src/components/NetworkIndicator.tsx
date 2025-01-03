@@ -3,7 +3,7 @@ import {TouchableOpacity, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
-import {Client} from 'revolt.js';
+import type {Client} from 'revolt.js';
 
 import {Text} from './common/atoms';
 import {commonValues, ThemeContext} from '@rvmob/lib/themes';

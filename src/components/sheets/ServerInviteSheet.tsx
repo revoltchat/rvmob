@@ -4,7 +4,7 @@ import {observer} from 'mobx-react-lite';
 
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {API} from 'revolt.js';
+import type {API} from 'revolt.js';
 
 import {app} from '@rvmob/Generic';
 import {client} from '@rvmob/lib/client';

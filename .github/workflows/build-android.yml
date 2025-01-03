@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies and prepare assets
         run: yarn install && npx react-native-asset && yarn license-list
       - name: Bundle the JS
-        run: yarn react-native bundle --platform android --entry-file ./index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+        run: yarn react-native rnx-bundle
       - name: Build the app
         run: yarn react-native build-android --tasks assembleDebug
       - name: Rename debug APKs

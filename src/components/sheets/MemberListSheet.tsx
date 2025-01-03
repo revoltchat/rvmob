@@ -2,10 +2,10 @@ import {useEffect, useRef, useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import BottomSheetCore from '@gorhom/bottom-sheet';
-import {useBackHandler} from '@react-native-community/hooks';
+import type BottomSheetCore from '@gorhom/bottom-sheet';
+import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 
-import {Channel, Server, User} from 'revolt.js';
+import {Server, type Channel, type User} from 'revolt.js';
 
 import {setFunction} from '@rvmob/Generic';
 import {Text} from '../common/atoms';

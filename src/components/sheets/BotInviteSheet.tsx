@@ -2,7 +2,7 @@ import {useContext, useState} from 'react';
 import {Pressable, ScrollView, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {Server, User} from 'revolt.js';
+import type {Server, User} from 'revolt.js';
 
 import {client} from '@rvmob/lib/client';
 import {Button, GeneralAvatar, Text} from '@rvmob/components/common/atoms';

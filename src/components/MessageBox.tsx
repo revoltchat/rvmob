@@ -7,7 +7,7 @@ import {type DocumentPickerResponse} from 'react-native-document-picker';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {Channel, Message} from 'revolt.js';
+import type {Channel, Message} from 'revolt.js';
 import {ulid} from 'ulid';
 
 import {app, setFunction} from '@rvmob/Generic';

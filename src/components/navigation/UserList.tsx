@@ -2,7 +2,7 @@ import {useContext} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {User} from 'revolt.js';
+import type {User} from 'revolt.js';
 
 import {app} from '@rvmob/Generic';
 import {Button} from '@rvmob/components/common/atoms';

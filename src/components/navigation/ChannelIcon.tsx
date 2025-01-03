@@ -3,7 +3,7 @@ import {useContext} from 'react';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {Channel} from 'revolt.js';
+import type {Channel} from 'revolt.js';
 
 import {Image} from '@rvmob/crossplat/Image';
 import {DEFAULT_MAX_SIDE} from '@rvmob/lib/consts';

@@ -2,7 +2,7 @@ import {useContext, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
-import {useBackHandler} from '@react-native-community/hooks';
+import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {app} from '@rvmob/Generic';

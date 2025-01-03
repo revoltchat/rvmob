@@ -5,7 +5,7 @@ import {observer} from 'mobx-react-lite';
 
 // import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {Server} from 'revolt.js';
+import type {Server} from 'revolt.js';
 
 import {GapView} from '@rvmob/components/layout';
 import {InputWithButton, Link, Text} from '@rvmob/components/common/atoms';
