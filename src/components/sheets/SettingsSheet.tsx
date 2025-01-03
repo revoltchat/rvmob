@@ -209,7 +209,7 @@ export const SettingsSheet = observer(({setState}: {setState: Function}) => {
                   size={24}
                 />
               </View>
-              <Text>Language</Text>
+              <Text>{t('app.settings_menu.i18n.title')}</Text>
             </ContextButton>
             <Text type={'h1'}>{t('app.settings_menu.groups.advanced')}</Text>
             <ContextButton
