@@ -141,7 +141,8 @@
             "generic": "Lädt…",
             "connecting": "Loggt ein…",
             "unknown_state_body": "Bitte teilen Sie den Entwicklern mit, dass Sie dies gesehen haben (Inhalt: {{state}})",
-            "unknown_state": "Oh oh"
+            "unknown_state": "Oh oh…",
+            "migrating_settings": "Einstellungen werden migriert…"
         },
         "modals": {
             "confirm_deletion": {
