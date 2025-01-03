@@ -254,7 +254,7 @@
             }
         },
         "messaging": {
-            "message_box_channel": "Ziņojums {{name}}",
+            "message_box_channel": "Ziņojums #{{name}}",
             "message_box_group": "Ziņojums {{name}}",
             "message_box_dm": "Ziņojums @{{name}}",
             "message_box_saved_notes": "Saglabājiet savās piezīmēs",
