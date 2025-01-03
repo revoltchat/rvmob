@@ -182,7 +182,7 @@
                 "login_session_token": "Igen, munkameneti tokennel bejelentkezem",
                 "login_session_token_body": "Ezt az általános bejelentkezőrendszer gondjai esetén használd. Néhány dolog így lehet, nem lesz elérhető.",
                 "signup": "Nem, regisztrálni akarok",
-                "signup_body": "Átirányítunk a web apphoz, ahol regisztrálhatsz. Miután regisztráltál, jelentkezz be!"
+                "signup_body": "Átirányítunk a web apphoz, ahol regisztrálhatsz. Miután regisztráltál, jelentkezz be."
             },
             "subheader": "Van már fiókod?",
             "token_info_label": "Hogyan kapok tokent?"
