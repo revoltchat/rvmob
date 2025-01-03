@@ -236,13 +236,13 @@ export const ProfileSheet = observer(() => {
             </View>
             {user.flags ? (
               user.flags & 1 ? (
-                <Text style={{color: '#ff3333'}}>User is suspended</Text>
+                <Text colour={currentTheme.error}>User is suspended</Text>
               ) : user.flags & 2 ? (
-                <Text style={{color: '#ff3333'}}>
+                <Text colour={currentTheme.error}>
                   User deleted their account
                 </Text>
               ) : user.flags & 4 ? (
-                <Text style={{color: '#ff3333'}}>User is banned</Text>
+                <Text colour={currentTheme.error}>User is banned</Text>
               ) : null
             ) : null}
             {user.relationship !== 'User' ? (
