@@ -1,4 +1,9 @@
-import {Component as ReactComponent, useCallback, useContext} from 'react';
+import {
+  Component as ReactComponent,
+  useCallback,
+  useContext,
+  useEffect,
+} from 'react';
 import {StatusBar, StyleSheet, View} from 'react-native';
 
 import type {Channel, Server} from 'revolt.js';
@@ -25,19 +30,23 @@ function openLastChannel() {
   try {
     const lastServer = storage.getString('lastServer');
     if (lastServer) {
-      app.openServer(client.servers.get(lastServer));
-      try {
-        const channelData = storage.getString('lastOpenedChannels');
-        let lastOpenedChannels = JSON.parse(channelData || '{}') || {};
-        let lastChannel = lastOpenedChannels[lastServer];
-        if (lastChannel) {
-          let fetchedLastChannel = client.channels.get(lastChannel);
-          if (fetchedLastChannel) {
-            app.openChannel(fetchedLastChannel);
+      const server = client.servers.get(lastServer);
+      // if the server is undefined, either something hasn't loaded or the user left it at some point
+      if (server) {
+        app.openServer(server);
+        try {
+          const channelData = storage.getString('lastOpenedChannels');
+          let lastOpenedChannels = JSON.parse(channelData || '{}') || {};
+          let lastChannel = lastOpenedChannels[lastServer];
+          if (lastChannel) {
+            let fetchedLastChannel = client.channels.get(lastChannel);
+            if (fetchedLastChannel) {
+              app.openChannel(fetchedLastChannel);
+            }
           }
+        } catch (channelErr) {
+          console.log(`[APP] Error getting last channel: ${channelErr}`);
         }
-      } catch (channelErr) {
-        console.log(`[APP] Error getting last channel: ${channelErr}`);
       }
     }
   } catch (serverErr) {
@@ -53,18 +62,23 @@ function checkLastVersion() {
       `[APP] lastVersion is null (${lastVersion}), setting to app.version (${app.version})`,
     );
     app.settings.set('app.lastVersion', app.version);
+  } else if (app.version !== lastVersion) {
+    console.log(
+      `[APP] lastVersion (${lastVersion}) is different from app.version (${app.version})`,
+    );
   } else {
-    app.version === lastVersion
-      ? console.log(
-          `[APP] lastVersion (${lastVersion}) is equal to app.version (${app.version})`,
-        )
-      : console.log(
-          `[APP] lastVersion (${lastVersion}) is different from app.version (${app.version})`,
-        );
+    console.log(
+      `[APP] lastVersion (${lastVersion}) is equal to app.version (${app.version})`,
+    );
   }
 }
 
 function LoggedInViews({state, setChannel}: {state: any; setChannel: any}) {
+  useEffect(() => {
+    if (app.settings.get('app.reopenLastChannel')) {
+      openLastChannel();
+    }
+  }, []);
   return (
     <>
       <SideMenuHandler
@@ -233,10 +247,6 @@ export class MainView extends ReactComponent {
       console.log(`[APP] Client is ready (${new Date().getTime()})`);
 
       setUpNotifeeListener(client, this.setState);
-
-      if (app.settings.get('app.reopenLastChannel')) {
-        openLastChannel();
-      }
     });
 
     client.on('dropped', async () => {
