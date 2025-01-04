@@ -13,7 +13,8 @@
             "connecting": "Ідзе аўтарызацыя…",
             "generic": "Загрузка…",
             "unknown_state": "Ой-ёй…",
-            "unknown_state_body": "Калі ласка, паведаміце распрацоўшчыкам аб тым, што вы гэта ўбачылі (значэнне: {{state}})"
+            "unknown_state_body": "Калі ласка, паведаміце распрацоўшчыкам аб тым, што вы гэта ўбачылі (значэнне: {{state}})",
+            "migrating_settings": "Міграцыя налад…"
         },
         "home": {
             "join_lounge": "Далучыцца да Revolt Lounge",
@@ -255,9 +256,9 @@
                 "bots": "Боты",
                 "servers": "Серверы"
             },
-            "count_bots_one": "на {{count}} серверы",
-            "count_bots_few": "на {{count}} серверах",
-            "count_bots_many": "на {{count}} сервераў",
+            "count_bots_one": "{{count}} бот",
+            "count_bots_few": "{{count}} бота",
+            "count_bots_many": "{{count}} ботаў",
             "count_servers_one": "{{count}} сервер",
             "count_servers_few": "{{count}} сервера",
             "count_servers_many": "{{count}} сервераў",
