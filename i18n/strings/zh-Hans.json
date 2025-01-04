@@ -10,7 +10,7 @@
             "save": "保存"
         },
         "discover": {
-            "count_bots_other": "{{count}} 个服务器",
+            "count_bots_other": "{{count}} 个机器人",
             "count_servers_other": "{{count}} 个服务器",
             "fetching_bots": "正在加载机器人…",
             "fetching_servers": "正在加载服务器…",
@@ -25,7 +25,8 @@
             "generic": "正在加载…",
             "connecting": "正在登录…",
             "unknown_state": "啊哦…",
-            "unknown_state_body": "请告诉开发者您看到了这个（值：{{state}}）"
+            "unknown_state_body": "请告诉开发者您看到了这个（值：{{state}}）",
+            "migrating_settings": "正在迁移设置…"
         },
         "login": {
             "forms": {
