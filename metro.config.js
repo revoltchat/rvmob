@@ -2,11 +2,14 @@ const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
 
 const {makeMetroConfig} = require('@rnx-kit/metro-config');
 const {
+  MetroSerializer,
   esbuildTransformerConfig,
 } = require('@rnx-kit/metro-serializer-esbuild');
 
 const defaultConfig = getDefaultConfig(__dirname);
 const {assetExts, sourceExts} = defaultConfig.resolver;
+
+const env = process.env.BABEL_ENV || process.env.NODE_ENV;
 
 /**
  * Metro configuration
@@ -18,12 +21,16 @@ const {assetExts, sourceExts} = defaultConfig.resolver;
 const config = {
   transformer: {
     babelTransformerPath: require.resolve('react-native-svg-transformer'),
-    ...esbuildTransformerConfig,
+    ...(env === 'production' && esbuildTransformerConfig),
   },
   resolver: {
     assetExts: assetExts.filter(ext => ext !== 'svg'),
     sourceExts: [...sourceExts, 'svg'],
   },
+    serializer: {
+    customSerializer: MetroSerializer([], {target: 'hermes0.12.0'}),
+  },
+
 };
 
 module.exports = makeMetroConfig(mergeConfig(defaultConfig, config));
