@@ -259,8 +259,8 @@
                 "bots": "Bots",
                 "servers": "Server"
             },
-            "count_bots_one": "{{count}} Server",
-            "count_bots_other": "{{count}} Server"
+            "count_bots_one": "{{count}} bot",
+            "count_bots_other": "{{count}} bots"
         },
         "messaging": {
             "reply_not_loaded": "Nachricht Konnte nicht geladen werden",
