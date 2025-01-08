@@ -25,6 +25,8 @@ jobs:
         run: yarn install && npx react-native-asset && yarn license-list
       - name: Bundle the JS
         run: yarn react-native rnx-bundle
+      - name: Move the assets
+        run: mkdir -p android/app/build/generated/assets/createBundleDebugJsAndAssets && mkdir -p android/app/build/generated/res/createBundleDebugJsAndAssets && cp dist/android/index.android.bundle.hbc android/app/build/generated/assets/createBundleDebugJsAndAssets/index.android.bundle && cp -r dist/android/res android/app/build/generated/res/createBundleDebugJsAndAssets
       - name: Build the app
         run: yarn react-native build-android --tasks assembleDebug
       - name: Rename debug APKs

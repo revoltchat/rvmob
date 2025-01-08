@@ -1,15 +1,9 @@
 const {mobilePlugins} = require('./config/babel-shared');
 
-const env = process.env.BABEL_ENV || process.env.NODE_ENV;
-
 module.exports = {
   presets: [
     [
-      'module:@rnx-kit/babel-preset-metro-react-native',
-      {
-        disableImportExportTransform:
-          env === 'production' && process.env.RNX_METRO_SERIALIZER_ESBUILD,
-      },
+      '@rnx-kit/babel-preset-metro-react-native',
     ],
   ],
   env: {

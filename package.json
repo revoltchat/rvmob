@@ -6,8 +6,10 @@
   "private": true,
   "scripts": {
     "clean": "react-native clean",
-    "android": "yarn license-list -prod && react-native run-android --active-arch-only --appIdSuffix=debug --mode=debug",
-    "android-release": "yarn license-list -prod && react-native rnx-bundle --dev false && react-native build-android --tasks assembleRelease",
+    "android": "yarn license-list -prod && rnx-cli run-android --active-arch-only --appIdSuffix=debug --mode=debug",
+    "android-release": "yarn license-list -prod && yarn android-release:bundle && rnx-cli build-android --tasks assembleRelease",
+    "android-release:bundle": "rnx-cli bundle --dev false && yarn android-release:copy-assets",
+    "android-release:copy-assets": "mkdir -p android/app/build/generated/assets/createBundleReleaseJsAndAssets && mkdir -p android/app/build/generated/res/createBundleReleaseJsAndAssets && cp dist/android/index.android.bundle.hbc android/app/build/generated/assets/createBundleReleaseJsAndAssets/index.android.bundle && cp -r dist/android/res android/app/build/generated/res/createBundleReleaseJsAndAssets",
     "ios": "react-native run-ios",
     "start": "react-native rnx-start",
     "test": "jest",
@@ -111,11 +113,13 @@
       ],
       "platforms": {
         "android": {
-          "bundleOutput": "android/app/src/main/assets/index.android.bundle",
-          "sourcemapOutput": "android/app/build/intermediates/sourcemaps/react/release/index.android.bundle.map",
-          "assetsDest": "android/app/src/main/res"
+          "bundleOutput": "dist/android/index.android.bundle",
+          "sourcemapOutput": "dist/android/index.android.bundle.map",
+          "assetsDest": "dist/android/res"
         }
       },
+      "treeShake": true,
+      "hermes": true,
       "plugins": [
         [
           "@rnx-kit/metro-plugin-cyclic-dependencies-detector",
