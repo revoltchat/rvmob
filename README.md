@@ -27,9 +27,9 @@ Debug builds are also produced for every commit. These are unoptimised - they're
 
 Also note that, from v0.7.0, RVMob's APKs are **split by architecture**. This helps to reduce file and app sizes - however, you'll need to make sure that you **download the APK that matches your device's architecture**, or **it won't install!**
 
-**If you're using an app store, this should be handled for you.** 
+**If you're using an app store, this should be handled for you.**
 
-If not, however, you'll need to check your device's architecture. I'd recommend using [Treble Info](https://gitlab.com/TrebleInfo/TrebleInfo/-/blob/dev/README.md) for this. 
+If not, however, you'll need to check your device's architecture. I'd recommend using [Treble Info](https://gitlab.com/TrebleInfo/TrebleInfo/-/blob/dev/README.md) for this.
 
 Install and open the app - **don't worry about what it says on the home page!** - then open the Details tab and check the CPU architecture entry. Depending on what it says:
 

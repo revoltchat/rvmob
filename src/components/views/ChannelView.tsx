@@ -62,7 +62,7 @@ export const ChannelView = observer(({channel}: {channel: CVChannel}) => {
 
   console.log(
     `[CHANNELVIEW] Rendering channel view for ${
-      channel ? typeof channel !== 'string' ? channel._id : channel : channel
+      channel ? (typeof channel !== 'string' ? channel._id : channel) : channel
     }...`,
   );
 
