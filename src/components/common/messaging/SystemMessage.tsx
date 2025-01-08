@@ -22,7 +22,7 @@ const SYSTEM_MESSAGE_ICONS = {
     iconSet: 'community',
   },
   user_left: {
-    name: 'format-horizontal-align-right',
+    name: 'format-horizontal-align-left',
     iconSet: 'community',
   },
   user_added: {
