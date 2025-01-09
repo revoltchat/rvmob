@@ -1,10 +1,10 @@
-import {useContext} from 'react';
+import {useContext, useMemo} from 'react';
 import {Platform, Pressable, View} from 'react-native';
 
 import {getBundleId} from 'react-native-device-info';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import AppInfo from '../../../../../../package.json';
+import {dependencies} from '../../../../../../package.json';
 import {app} from '@rvmob/Generic';
 import {CONTRIBUTORS_LIST, FEDI_PROFILE, GITHUB_REPO} from '@rvmob/lib/consts';
 import {ThemeContext} from '@rvmob/lib/themes';
@@ -18,6 +18,15 @@ const AppIcon = getBundleId().match('debug') ? DebugIcon : ReleaseIcon;
 
 export const AppInfoSection = () => {
   const {currentTheme} = useContext(ThemeContext);
+  const reactNativeVersion = useMemo(() => Platform.OS === 'web'
+  ? dependencies['react-native'].replace('^', '')
+  : `${Platform.constants.reactNativeVersion.major}.${
+      Platform.constants.reactNativeVersion.minor
+    }.${Platform.constants.reactNativeVersion.patch}${
+      Platform.constants.reactNativeVersion.prerelease
+        ? `-${Platform.constants.reactNativeVersion.prerelease}`
+        : ''
+    }`, []);
 
   return (
     <View
@@ -33,23 +42,14 @@ export const AppInfoSection = () => {
         <Text type={'h1'}>RVMob v{app.version}</Text>
         <Text>
           Powered by{' '}
-          <Link link={'https://reactnative.dev'} label={'React Native'} /> v
-          {Platform.OS === 'web'
-            ? AppInfo.dependencies['react-native'].replace('^', '')
-            : `${Platform.constants.reactNativeVersion.major}.${
-                Platform.constants.reactNativeVersion.minor
-              }.${Platform.constants.reactNativeVersion.patch}${
-                Platform.constants.reactNativeVersion.prerelease
-                  ? `-${Platform.constants.reactNativeVersion.prerelease}`
-                  : ''
-              }`}
+          <Link link={'https://reactnative.dev'} label={'React Native'} /> v{reactNativeVersion}
           {' and '}
           <Link
             link={'https://github.com/rexogamer/revolt.js'}
             label={'revolt.js'}
           />{' '}
           v
-          {AppInfo.dependencies['revolt.js'].replace(
+          {dependencies['revolt.js'].replace(
             'npm:@rexovolt/revolt.js@^',
             '',
           )}
