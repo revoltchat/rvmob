@@ -263,7 +263,12 @@ const spoilerRule = {
 
     const isInList = hasParents(parent, 'list_item');
     return (
-      <View key={node.key} style={{...styles.code_inline_container, ...(isInList && {transform: []})}}>
+      <View
+        key={node.key}
+        style={{
+          ...styles.code_inline_container,
+          ...(isInList && {transform: []}),
+        }}>
         <Text style={{...inheritedStyles, ...styles.code_inline}}>
           {node.content}
         </Text>

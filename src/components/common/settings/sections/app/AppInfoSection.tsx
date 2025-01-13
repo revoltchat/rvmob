@@ -18,15 +18,19 @@ const AppIcon = getBundleId().match('debug') ? DebugIcon : ReleaseIcon;
 
 export const AppInfoSection = () => {
   const {currentTheme} = useContext(ThemeContext);
-  const reactNativeVersion = useMemo(() => Platform.OS === 'web'
-  ? dependencies['react-native'].replace('^', '')
-  : `${Platform.constants.reactNativeVersion.major}.${
-      Platform.constants.reactNativeVersion.minor
-    }.${Platform.constants.reactNativeVersion.patch}${
-      Platform.constants.reactNativeVersion.prerelease
-        ? `-${Platform.constants.reactNativeVersion.prerelease}`
-        : ''
-    }`, []);
+  const reactNativeVersion = useMemo(
+    () =>
+      Platform.OS === 'web'
+        ? dependencies['react-native'].replace('^', '')
+        : `${Platform.constants.reactNativeVersion.major}.${
+            Platform.constants.reactNativeVersion.minor
+          }.${Platform.constants.reactNativeVersion.patch}${
+            Platform.constants.reactNativeVersion.prerelease
+              ? `-${Platform.constants.reactNativeVersion.prerelease}`
+              : ''
+          }`,
+    [],
+  );
 
   return (
     <View
@@ -42,17 +46,14 @@ export const AppInfoSection = () => {
         <Text type={'h1'}>RVMob v{app.version}</Text>
         <Text>
           Powered by{' '}
-          <Link link={'https://reactnative.dev'} label={'React Native'} /> v{reactNativeVersion}
+          <Link link={'https://reactnative.dev'} label={'React Native'} /> v
+          {reactNativeVersion}
           {' and '}
           <Link
             link={'https://github.com/rexogamer/revolt.js'}
             label={'revolt.js'}
           />{' '}
-          v
-          {dependencies['revolt.js'].replace(
-            'npm:@rexovolt/revolt.js@^',
-            '',
-          )}
+          v{dependencies['revolt.js'].replace('npm:@rexovolt/revolt.js@^', '')}
         </Text>
         <Text>
           Made by{' '}
