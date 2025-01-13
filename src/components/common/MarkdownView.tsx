@@ -29,10 +29,10 @@ const generateDefaultStyles = (currentTheme: Theme) => {
       flexDirection: 'row',
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
-      width: '100%',
       marginTop: -3,
       marginBottom: commonValues.sizes.xs,
       fontSize: app.settings.get('ui.messaging.fontSize') as number,
+      backgroundColor: 'transparent',
     },
     hardbreak: {
       width: '100%',
@@ -42,31 +42,37 @@ const generateDefaultStyles = (currentTheme: Theme) => {
       flexDirection: 'row',
       fontSize: 32,
       fontWeight: 'bold',
+      backgroundColor: 'transparent',
     },
     heading2: {
       flexDirection: 'row',
       fontSize: 24,
       fontWeight: 'bold',
+      backgroundColor: 'transparent',
     },
     heading3: {
       flexDirection: 'row',
       fontSize: 18,
       fontWeight: 'bold',
+      backgroundColor: 'transparent',
     },
     heading4: {
       flexDirection: 'row',
       fontSize: 16,
       fontWeight: 'bold',
+      backgroundColor: 'transparent',
     },
     heading5: {
       flexDirection: 'row',
       fontSize: 13,
       fontWeight: 'bold',
+      backgroundColor: 'transparent',
     },
     heading6: {
       flexDirection: 'row',
       fontSize: 11,
       fontWeight: 'bold',
+      backgroundColor: 'transparent',
     },
     strong: {
       fontWeight: 'bold',
@@ -86,6 +92,8 @@ const generateDefaultStyles = (currentTheme: Theme) => {
       backgroundColor: 'transparent',
       padding: 0,
       borderWidth: 0,
+      marginTop: 0,
+      marginBottom: 0,
     },
     code_inline_container: {
       // align it properly (see also https://github.com/facebook/react-native/issues/31955)
@@ -116,9 +124,14 @@ const generateDefaultStyles = (currentTheme: Theme) => {
       paddingHorizontal: 8,
       paddingVertical: 4,
     },
+    spoiler: {
+      marginTop: 0,
+      marginBottom: 0,
+    },
     list_item: {
       flexDirection: 'row',
       justifyContent: 'flex-start',
+      backgroundColor: 'transparent',
     },
     bullet_list_icon: {
       marginHorizontal: 10,
@@ -248,8 +261,9 @@ const spoilerRule = {
       );
     }
 
+    const isInList = hasParents(parent, 'list_item');
     return (
-      <View key={node.key} style={{...styles.code_inline_container}}>
+      <View key={node.key} style={{...styles.code_inline_container, ...(isInList && {transform: []})}}>
         <Text style={{...inheritedStyles, ...styles.code_inline}}>
           {node.content}
         </Text>
