@@ -29,7 +29,7 @@
             },
             "edit_text": {
                 "nickname_header": "Задать никнейм",
-                "nickname_placeholder": "Никнейм(оставте пустым для сброса)",
+                "nickname_placeholder": "Никнейм (оставьте пустым для сброса)",
                 "display_name_header": "Задать отображаемое имя",
                 "display_name_placeholder": "Отображаемое имя",
                 "role_colour_header": "Задать цвет роли",
