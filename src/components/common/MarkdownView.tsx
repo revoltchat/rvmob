@@ -25,32 +25,61 @@ const generateDefaultStyles = (currentTheme: Theme) => {
       color: currentTheme.foregroundPrimary,
     },
     paragraph: {
+      flexWrap: 'wrap',
       flexDirection: 'row',
       alignItems: 'flex-start',
+      justifyContent: 'flex-start',
+      width: '100%',
       marginTop: -3,
       marginBottom: commonValues.sizes.xs,
       fontSize: app.settings.get('ui.messaging.fontSize') as number,
     },
+    hardbreak: {
+      width: '100%',
+      height: 1,
+    },
     heading1: {
+      flexDirection: 'row',
+      fontSize: 32,
       fontWeight: 'bold',
     },
     heading2: {
+      flexDirection: 'row',
+      fontSize: 24,
       fontWeight: 'bold',
     },
     heading3: {
+      flexDirection: 'row',
+      fontSize: 18,
       fontWeight: 'bold',
     },
     heading4: {
+      flexDirection: 'row',
+      fontSize: 16,
       fontWeight: 'bold',
     },
     heading5: {
+      flexDirection: 'row',
+      fontSize: 13,
       fontWeight: 'bold',
     },
     heading6: {
+      flexDirection: 'row',
+      fontSize: 11,
       fontWeight: 'bold',
+    },
+    strong: {
+      fontWeight: 'bold',
+    },
+    em: {
+      fontStyle: 'italic',
+    },
+    s: {
+      textDecorationLine: 'line-through',
     },
     link: {
       color: currentTheme.accentColor,
+      textDecorationLine: 'underline',
     },
     code_inline: {
       fontFamily: 'JetBrains Mono',
@@ -75,16 +104,36 @@ const generateDefaultStyles = (currentTheme: Theme) => {
       borderWidth: 0,
       borderRadius: commonValues.sizes.small,
       marginBottom: commonValues.sizes.xs,
+      padding: 10,
     },
     blockquote: {
-      marginLeft: 2,
+      marginLeft: 0,
       marginBottom: commonValues.sizes.xs,
-      paddingVertical: 6,
-      borderRadius: commonValues.sizes.small,
+      borderLeftWidth: 4,
       borderColor: currentTheme.foregroundPrimary,
+      borderRadius: commonValues.sizes.small,
       backgroundColor: currentTheme.blockQuoteBackground,
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+    },
+    list_item: {
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+    },
+    bullet_list_icon: {
+      marginHorizontal: 10,
+    },
+    bullet_list_content: {
+      flex: 1,
+    },
+    ordered_list_icon: {
+      marginHorizontal: 10,
+    },
+    ordered_list_content: {
+      flex: 1,
     },
     table: {
+      borderWidth: 1,
       borderTopWidth: 2,
       borderEndWidth: 2,
       borderColor: currentTheme.foregroundSecondary,
@@ -94,15 +143,25 @@ const generateDefaultStyles = (currentTheme: Theme) => {
       fontWeight: 'bold',
     },
     th: {
+      flex: 1,
+      padding: 5,
       borderStartWidth: 1,
       borderColor: currentTheme.foregroundSecondary,
     },
     td: {
+      flex: 1,
+      padding: 5,
       borderStartWidth: 1,
       borderColor: currentTheme.foregroundSecondary,
     },
     tr: {
+      borderBottomWidth: 1,
+      flexDirection: 'row',
       borderColor: currentTheme.foregroundSecondary,
+    },
+    hr: {
+      backgroundColor: currentTheme.foregroundSecondary,
+      height: 1,
     },
   });
 };
