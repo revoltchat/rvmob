@@ -61,6 +61,11 @@
             "open_rvmob": "Open the RVMob server",
             "open_settings": "Open settings"
         },
+        "profile": {
+            "roles": {
+                "copied_role_id_toast": "Copied role ID"
+            }
+        },
         "messaging": {
             "message_box_channel": "Message #{{name}}",
             "message_box_group": "Message {{name}}",
