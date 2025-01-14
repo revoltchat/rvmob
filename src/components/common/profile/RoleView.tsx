@@ -39,10 +39,8 @@ export const RoleView = observer(({server, user}: RoleViewProps) => {
             style={{
               flexDirection: 'row',
               padding: 6,
-              paddingStart: commonValues.sizes.medium,
-              paddingEnd: commonValues.sizes.medium,
-              marginStart: i === 0 ? 0 : commonValues.sizes.small,
-              marginEnd: i === a.length - 1 ? 0 : commonValues.sizes.small,
+              paddingInline: commonValues.sizes.medium,
+              marginEnd: commonValues.sizes.small,
               backgroundColor: currentTheme.backgroundPrimary,
               borderRadius: commonValues.sizes.medium,
             }}>
