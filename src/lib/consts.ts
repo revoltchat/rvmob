@@ -2072,7 +2072,7 @@ export const RevoltEmojiDictionary: Record<string, string> = {
 // Links used in the settings menu
 export const FEDI_PROFILE = 'https://lea.pet/@rvmob';
 
-export const GITHUB_REPO = 'https://github.com/revoltchat/rvmob';
+export const GITHUB_REPO = 'https://github.com/upryzing/clerotri';
 
 export const CONTRIBUTORS_LIST = `${GITHUB_REPO}/graphs/contributors`;
 

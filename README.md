@@ -17,7 +17,7 @@ For development updates and other news, join [Clerotri's support server][support
 
 ## Installing
 
-If you want to install Clerotri for Android, simply go to [the releases tab](https://github.com/revoltchat/rvmob/releases) and download the latest version. We plan on publishing Clerotri to app stores in the future.
+If you want to install Clerotri for Android, simply go to [the releases tab](https://github.com/upryzing/clerotri/releases) and download the latest version. We plan on publishing Clerotri to app stores in the future.
 
 <!-- You can try Clerotri for web [here](). Note that, as the web version is still under development, some features are only available on Android or may not work as smoothly. You may also see some layout issues. -->
 
@@ -83,10 +83,10 @@ For more information, see a list of `react-native`'s commands [here](https://git
 
 If you encounter bugs, first check if you're able to [open Revolt in your browser](https://app.revolt.chat); also, check if you have any firewall settings that may block the Revolt API.
 
-If you're still experiencing issues, and there aren't any open issues for the bug(s) you're facing, please [open an issue](https://github.com/revoltchat/rvmob/issues).
+If you're still experiencing issues, and there aren't any open issues for the bug(s) you're facing, please [open an issue](https://github.com/upryzing/clerotri/issues).
 
 ## License
 
-Clerotri is licensed under the [GNU Affero General Public License v3.0](https://github.com/revoltchat/rvmob/blob/main/LICENSE).
+Clerotri is licensed under the [GNU Affero General Public License v3.0](https://github.com/upryzing/clerotri/blob/main/LICENSE).
 
 [support-server]: https://rvlt.gg/rvmob
