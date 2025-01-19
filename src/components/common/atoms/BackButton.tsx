@@ -55,7 +55,9 @@ export function BackButton({
           marginLeft: 5,
         }}>
         {t(
-          label ?? type === 'close' ? 'app.actions.close' : 'app.actions.back',
+          (label ?? type === 'close')
+            ? 'app.actions.close'
+            : 'app.actions.back',
         )}
       </Text>
     </Pressable>

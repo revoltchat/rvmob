@@ -61,8 +61,8 @@ export function getReadableFileSize(size: number | null) {
     ? size / 1000000 >= 0.01
       ? `${(size / 1000000).toFixed(2)} MB`
       : size / 10000 >= 0.01
-      ? `${(size / 1000).toFixed(2)} KB`
-      : `${size} bytes`
+        ? `${(size / 1000).toFixed(2)} KB`
+        : `${size} bytes`
     : 'Unknown';
 }
 
@@ -129,8 +129,8 @@ export async function fetchMessages(
     input.type === 'before'
       ? messages.concat(oldMessages)
       : input.type === 'after'
-      ? oldMessages.concat(messages)
-      : messages;
+        ? oldMessages.concat(messages)
+        : messages;
   console.log(
     `[FETCHEDMESSAGES] Finished preparing fetched messages for ${channel._id}`,
   );

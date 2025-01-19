@@ -21,7 +21,11 @@ import {ThemeContext} from '@clerotri/lib/themes';
 import {SettingsSection} from '@clerotri/lib/types';
 import {openUrl} from '@clerotri/lib/utils';
 import {styles} from '@clerotri/Theme';
-import {BackButton, ContextButton, Text} from '@clerotri/components/common/atoms';
+import {
+  BackButton,
+  ContextButton,
+  Text,
+} from '@clerotri/components/common/atoms';
 import {SettingsCategory} from '@clerotri/components/common/settings';
 import {
   AppInfoSection,

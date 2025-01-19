@@ -11,7 +11,12 @@ import {
 } from '@clerotri/lib/consts';
 import {openUrl} from '@clerotri/lib/utils';
 import {styles} from '@clerotri/Theme';
-import {Avatar, Button, Text, Username} from '@clerotri/components/common/atoms';
+import {
+  Avatar,
+  Button,
+  Text,
+  Username,
+} from '@clerotri/components/common/atoms';
 import {ChannelHeader} from '@clerotri/components/navigation/ChannelHeader';
 import {SpecialChannelIcon} from '@clerotri/components/navigation/SpecialChannelIcon';
 

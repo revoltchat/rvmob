@@ -146,10 +146,10 @@ export const ServerInfoSheet = observer(() => {
                 {server._id === SPECIAL_SERVERS.lounge.id
                   ? 'Member count disabled for this server'
                   : members
-                  ? `${members.length} ${
-                      members.length === 1 ? 'member' : 'members'
-                    }`
-                  : 'Fetching member count...'}
+                    ? `${members.length} ${
+                        members.length === 1 ? 'member' : 'members'
+                      }`
+                    : 'Fetching member count...'}
               </Text>
               {server.description ? (
                 <View

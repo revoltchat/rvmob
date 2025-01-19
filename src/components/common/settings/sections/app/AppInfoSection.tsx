@@ -6,7 +6,11 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {dependencies} from '../../../../../../package.json';
 import {app} from '@clerotri/Generic';
-import {CONTRIBUTORS_LIST, FEDI_PROFILE, GITHUB_REPO} from '@clerotri/lib/consts';
+import {
+  CONTRIBUTORS_LIST,
+  FEDI_PROFILE,
+  GITHUB_REPO,
+} from '@clerotri/lib/consts';
 import {ThemeContext} from '@clerotri/lib/themes';
 import {openUrl} from '@clerotri/lib/utils';
 import {ContextButton, Link, Text} from '@clerotri/components/common/atoms';
@@ -43,7 +47,10 @@ export const AppInfoSection = () => {
         <AppIcon height={250} width={250} />
       </View>
       <View style={{alignItems: 'center', marginVertical: 16}}>
-        <Text type={'h1'}>Clerotri <Text colour={currentTheme.foregroundSecondary}>v{app.version}</Text></Text>
+        <Text type={'h1'}>
+          Clerotri{' '}
+          <Text colour={currentTheme.foregroundSecondary}>v{app.version}</Text>
+        </Text>
         <Text>
           Powered by{' '}
           <Link link={'https://reactnative.dev'} label={'React Native'} /> v

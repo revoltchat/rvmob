@@ -101,7 +101,7 @@ export function renderEmoji(content: string) {
         });
     } else {
       renderedSubparts = subparts.map((id, i) =>
-        i % 2 === 1 ? RevoltEmojiDictionary[id] ?? `:${id}:` : id,
+        i % 2 === 1 ? (RevoltEmojiDictionary[id] ?? `:${id}:`) : id,
       );
     }
     return renderedSubparts;

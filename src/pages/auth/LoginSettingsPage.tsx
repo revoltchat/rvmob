@@ -4,7 +4,12 @@ import {View} from 'react-native';
 import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 
 import {app} from '@clerotri/Generic';
-import {BackButton, Button, Input, Text} from '@clerotri/components/common/atoms';
+import {
+  BackButton,
+  Button,
+  Input,
+  Text,
+} from '@clerotri/components/common/atoms';
 import {LoadingScreen} from '@clerotri/components/views/LoadingScreen';
 import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
@@ -89,12 +94,12 @@ export const LoginSettingsPage = ({callback}: {callback: () => void}) => {
                 {testResponse === 'valid'
                   ? 'This looks like a Revolt instance!'
                   : testResponse === 'invalid'
-                  ? "This doesn't look like a Revolt instance..."
-                  : testResponse === 'notJSON'
-                  ? "Could not parse response. Make sure you're linking to the API URL!"
-                  : testResponse === 'requestFailed'
-                  ? 'Could not fetch that URL.'
-                  : 'Something went wrong!'}
+                    ? "This doesn't look like a Revolt instance..."
+                    : testResponse === 'notJSON'
+                      ? "Could not parse response. Make sure you're linking to the API URL!"
+                      : testResponse === 'requestFailed'
+                        ? 'Could not fetch that URL.'
+                        : 'Something went wrong!'}
               </Text>
             ) : null}
             <Button

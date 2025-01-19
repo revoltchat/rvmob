@@ -64,10 +64,10 @@ export const Avatar = observer(
                 (masquerade
                   ? masquerade
                   : server &&
-                    memberObject?.generateAvatarURL &&
-                    memberObject?.generateAvatarURL()
-                  ? memberObject?.generateAvatarURL()
-                  : user?.generateAvatarURL()) +
+                      memberObject?.generateAvatarURL &&
+                      memberObject?.generateAvatarURL()
+                    ? memberObject?.generateAvatarURL()
+                    : user?.generateAvatarURL()) +
                 '?max_side=' +
                 DEFAULT_MAX_SIDE,
             }}

@@ -26,7 +26,11 @@ import {SystemMessage} from '@clerotri/components/common/messaging/SystemMessage
 import {Image} from '@clerotri/crossplat/Image';
 import {RE_INVITE, USER_IDS} from '@clerotri/lib/consts';
 import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
-import {getReadableFileSize, openUrl, parseRevoltNodes} from '@clerotri/lib/utils';
+import {
+  getReadableFileSize,
+  openUrl,
+  parseRevoltNodes,
+} from '@clerotri/lib/utils';
 
 type MessageProps = {
   message: RevoltMessage;

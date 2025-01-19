@@ -95,8 +95,8 @@ export const ChannelView = observer(({channel}: {channel: CVChannel}) => {
                 channel.channel_type === 'DirectMessage'
                   ? channel.recipient?.username
                   : channel.channel_type === 'SavedMessages'
-                  ? 'Saved Notes'
-                  : channel.name ?? ''
+                    ? 'Saved Notes'
+                    : (channel.name ?? '')
               }>
               {channel.channel_type !== 'VoiceChannel' ? (
                 <View style={{marginEnd: 16}}>

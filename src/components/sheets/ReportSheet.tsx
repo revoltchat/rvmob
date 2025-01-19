@@ -9,7 +9,12 @@ import type {Message} from 'revolt.js';
 
 import {app, setFunction} from '@clerotri/Generic';
 import {client} from '@clerotri/lib/client';
-import {Avatar, Button, Text, Username} from '@clerotri/components/common/atoms';
+import {
+  Avatar,
+  Button,
+  Text,
+  Username,
+} from '@clerotri/components/common/atoms';
 import {BottomSheet} from '@clerotri/components/common/BottomSheet';
 import {MarkdownView} from '@clerotri/components/common/MarkdownView';
 import {USER_IDS} from '@clerotri/lib/consts';
