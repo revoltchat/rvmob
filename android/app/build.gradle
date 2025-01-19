@@ -80,9 +80,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "site.endl.taiku.rvmob"
+    namespace "app.upryzing.clerotri"
     defaultConfig {
-        applicationId "site.endl.taiku.rvmob"
+        applicationId "app.upryzing.clerotri"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 10

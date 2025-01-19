@@ -1,4 +1,4 @@
-package site.endl.taiku.rvmob;
+package app.upryzing.clerotri;
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

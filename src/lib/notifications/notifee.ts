@@ -3,13 +3,8 @@ import notifee, {EventType} from '@notifee/react-native';
 import type {Client, Message} from 'revolt.js';
 
 export async function createChannel() {
-  const legacyChannel = (await notifee.getChannel('rvmob'));
-  if (legacyChannel) {
-    await notifee.deleteChannel('rvmob');
-  }
-
   const channel = (await notifee.getChannel('clerotri'))
-    ? 'rvmob'
+    ? 'clerotri'
     : await notifee.createChannel({
         id: 'clerotri',
         name: 'Clerotri',
@@ -96,7 +91,7 @@ export async function sendNotifeeNotification(
           msg.author?.generateAvatarURL(),
         pressAction: {
           id: 'default',
-          launchActivity: 'site.endl.taiku.rvmob.MainActivity',
+          launchActivity: 'app.upryzing.clerotri.MainActivity',
         },
         channelId: defaultNotif,
       },

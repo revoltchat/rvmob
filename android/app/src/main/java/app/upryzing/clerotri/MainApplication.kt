@@ -1,4 +1,4 @@
-package site.endl.taiku.rvmob
+package app.upryzing.clerotri
 
 import android.app.Application
 import com.facebook.react.PackageList
