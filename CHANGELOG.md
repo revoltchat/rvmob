@@ -1,4 +1,4 @@
-# RVMob's changelog
+# Clerotri's changelog
 
 ## v0.7.0
 

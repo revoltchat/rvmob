@@ -76,7 +76,7 @@ export const HomePage = observer(() => {
           <Username size={20} user={client.user} />
         </TouchableOpacity>
         <Text key={'app-name'} style={{fontWeight: 'bold', fontSize: 48}}>
-          RVMob
+          Clerotri
         </Text>
         <Text
           key={'no-channel-selected'}

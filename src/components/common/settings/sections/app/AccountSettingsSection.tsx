@@ -178,7 +178,7 @@ export const AccountSettingsSection = observer(() => {
         <SettingsEntry key={`sessions-${s._id}`}>
           <View style={{flex: 1, flexDirection: 'column'}}>
             <Text key={`sessions-${s._id}-name`} style={{fontWeight: 'bold'}}>
-              {s.name} {s.name.match(/RVMob/) ? '✨' : ''}
+              {s.name} {s.name.match(/(RVMob|Clerotri)/) ? '✨' : ''}
             </Text>
             <Text key={`sessions-${s._id}-id`}>{s._id}</Text>
             {authInfo.sessionID === s._id ? (

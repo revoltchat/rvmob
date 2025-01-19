@@ -222,7 +222,7 @@ export const LoginPage = ({
             fontWeight: 'bold',
             fontSize: 48,
           }}>
-          RVMob
+          Clerotri
         </Text>
         {askForTFACode || loginType === 'email' ? (
           <>

@@ -51,7 +51,7 @@ export async function loginRegular(
   setTFAStatus: (arg0: boolean) => void,
   setLoginError: (arg0: any) => void,
 ) {
-  const friendlyName = `RVMob for ${Platform.OS.charAt(
+  const friendlyName = `Clerotri for ${Platform.OS.charAt(
     0,
   ).toUpperCase()}${Platform.OS.slice(1)}`;
 

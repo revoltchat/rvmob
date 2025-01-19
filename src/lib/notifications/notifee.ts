@@ -3,12 +3,18 @@ import notifee, {EventType} from '@notifee/react-native';
 import type {Client, Message} from 'revolt.js';
 
 export async function createChannel() {
-  const channel = (await notifee.getChannel('rvmob'))
+  const legacyChannel = (await notifee.getChannel('rvmob'));
+  if (legacyChannel) {
+    await notifee.deleteChannel('rvmob');
+  }
+
+  const channel = (await notifee.getChannel('clerotri'))
     ? 'rvmob'
     : await notifee.createChannel({
-        id: 'rvmob',
-        name: 'RVMob',
+        id: 'clerotri',
+        name: 'Clerotri',
       });
+
   return channel;
 }
 

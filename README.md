@@ -1,4 +1,4 @@
-# RVMob
+# Clerotri
 
 <div style="flex-direction: row;">
   <a href="https://translate.revolt.chat/engage/rvmorb/">
@@ -9,23 +9,23 @@
   </a>
 </div>
 
-**RVMob** is a Revolt client made with React Native. It is currently available for Android and will be available for web in the future.
+**Clerotri** is a Revolt client made with React Native. It is currently available for Android and will be available for web in the future.
 
-**Please note that RVMob is currently in beta.** It contains several bugs and incomplete features - use at your own discretion.
+**Please note that Clerotri is currently in beta.** It contains several bugs and incomplete features - use at your own discretion.
 
-For development updates and other news, join [RVMob's support server][support-server].
+For development updates and other news, join [Clerotri's support server][support-server].
 
 ## Installing
 
-If you want to install RVMob for Android, simply go to [the releases tab](https://github.com/revoltchat/rvmob/releases) and download the latest version. We plan on publishing RVMob to app stores in the future.
+If you want to install Clerotri for Android, simply go to [the releases tab](https://github.com/revoltchat/rvmob/releases) and download the latest version. We plan on publishing Clerotri to app stores in the future.
 
-<!-- You can try RVMob for web [here](). Note that, as the web version is still under development, some features are only available on Android or may not work as smoothly. You may also see some layout issues. -->
+<!-- You can try Clerotri for web [here](). Note that, as the web version is still under development, some features are only available on Android or may not work as smoothly. You may also see some layout issues. -->
 
 Debug builds are also produced for every commit. These are unoptimised - they're much larger and noticeably slower than the release builds, but you can try out new features early.
 
 ### Info about split builds
 
-Also note that, from v0.7.0, RVMob's APKs are **split by architecture**. This helps to reduce file and app sizes - however, you'll need to make sure that you **download the APK that matches your device's architecture**, or **it won't install!**
+Also note that, from v0.7.0, Clerotri's APKs are **split by architecture**. This helps to reduce file and app sizes - however, you'll need to make sure that you **download the APK that matches your device's architecture**, or **it won't install!**
 
 **If you're using an app store, this should be handled for you.**
 
@@ -42,12 +42,12 @@ If it says `Unknown`, please ask for help in [our support server][support-server
 
 ## Building
 
-If you want to build RVMob for web, you'll need:
+If you want to build Clerotri for web, you'll need:
 
 - [Node](https://nodejs.org/en/) (v18+) and
 - [Yarn Classic](https://classic.yarnpkg.com).
 
-If you want to build RVMob for Android, you'll also need:
+If you want to build Clerotri for Android, you'll also need:
 
 - JDK 17 ([Microsoft's build](https://learn.microsoft.com/en-gb/java/openjdk/download) works well) and
 - the latest Android SDK (preferably via [Android Studio](https://developer.android.com/studio)'s SDK Manager).
@@ -87,6 +87,6 @@ If you're still experiencing issues, and there aren't any open issues for the bu
 
 ## License
 
-RVMob is licensed under the [GNU Affero General Public License v3.0](https://github.com/revoltchat/rvmob/blob/main/LICENSE).
+Clerotri is licensed under the [GNU Affero General Public License v3.0](https://github.com/revoltchat/rvmob/blob/main/LICENSE).
 
 [support-server]: https://rvlt.gg/rvmob

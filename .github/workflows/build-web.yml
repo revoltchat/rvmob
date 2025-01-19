@@ -1,4 +1,4 @@
-name: Build and deploy RVMob for web
+name: Build and deploy Clerotri for web
 
 on:
   push:

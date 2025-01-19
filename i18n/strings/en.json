@@ -57,8 +57,8 @@
             "description": "Swipe from the left of the screen or tap the three lines icon to see your servers and messages!",
             "join_lounge": "Join the Revolt Lounge",
             "open_lounge": "Open the Revolt Lounge",
-            "join_rvmob": "Join the RVMob server",
-            "open_rvmob": "Open the RVMob server",
+            "join_rvmob": "Join the Clerotri server",
+            "open_rvmob": "Open the Clerotri server",
             "open_settings": "Open settings"
         },
         "profile": {
@@ -195,7 +195,7 @@
                     "enabled": "Enable push notifications",
                     "notifyOnSelfPing": "Receive a notification when you ping yourself"
                 },
-                "showChangelogs": "Show changelogs after updating RVMob"
+                "showChangelogs": "Show changelogs after updating Clerotri"
             },
             "ui": {
                 "home": {
@@ -248,7 +248,7 @@
                 "title": "Language"
             },
             "info": {
-                "title": "About RVMob"
+                "title": "About Clerotri"
             },
             "licenses": {
                 "title": "Open Source Licences",
@@ -272,7 +272,7 @@
                 "hide": "(hide)"
             },
             "voice": {
-                "header": "Voice channels aren't supported in RVMob yet!",
+                "header": "Voice channels aren't supported in Clerotri yet!",
                 "body": "In the meantime, you can join them via the web app or Revolt Desktop."
             }
         }

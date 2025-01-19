@@ -621,7 +621,7 @@ export const ProfileSheet = observer(() => {
                         })}
                         {USER_IDS.developers.includes(user._id) ? (
                           <TouchableOpacity
-                            onPress={() => showToast('RVMob Developer')}>
+                            onPress={() => showToast('Clerotri Developer')}>
                             <View
                               style={{
                                 borderRadius: 3,

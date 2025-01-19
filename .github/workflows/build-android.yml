@@ -1,4 +1,4 @@
-name: Build RVMob for Android (debug)
+name: Build Clerotri for Android (debug)
 
 on:
   push:
@@ -31,16 +31,16 @@ jobs:
         run: yarn react-native build-android --tasks assembleDebug
       - name: Rename debug APKs
         run: |
-          mv app-arm64-v8a-debug.apk RVMob-Debug-${{ github.sha }}-arm64-v8a.apk 
-          mv app-armeabi-v7a-debug.apk RVMob-Debug-${{ github.sha }}-armeabi-v7a.apk 
-          mv app-x86_64-debug.apk RVMob-Debug-${{ github.sha }}-x86_64.apk
-          mv app-x86-debug.apk RVMob-Debug-${{ github.sha }}-x86.apk
-        working-directory: /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/
+          mv app-arm64-v8a-debug.apk Clerotri-Debug-${{ github.sha }}-arm64-v8a.apk 
+          mv app-armeabi-v7a-debug.apk Clerotri-Debug-${{ github.sha }}-armeabi-v7a.apk 
+          mv app-x86_64-debug.apk Clerotri-Debug-${{ github.sha }}-x86_64.apk
+          mv app-x86-debug.apk Clerotri-Debug-${{ github.sha }}-x86.apk
+        working-directory: /home/runner/work/Clerotri/Clerotri/android/app/build/outputs/apk/debug/
       - name: Upload debug APKs
         uses: actions/upload-artifact@v4
         with:
           path: |
-            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/RVMob-Debug-${{ github.sha }}-arm64-v8a.apk 
-            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/RVMob-Debug-${{ github.sha }}-armeabi-v7a.apk 
-            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/RVMob-Debug-${{ github.sha }}-x86_64.apk 
-            /home/runner/work/rvmob/rvmob/android/app/build/outputs/apk/debug/RVMob-Debug-${{ github.sha }}-x86.apk
+            /home/runner/work/Clerotri/Clerotri/android/app/build/outputs/apk/debug/Clerotri-Debug-${{ github.sha }}-arm64-v8a.apk 
+            /home/runner/work/Clerotri/Clerotri/android/app/build/outputs/apk/debug/Clerotri-Debug-${{ github.sha }}-armeabi-v7a.apk 
+            /home/runner/work/Clerotri/Clerotri/android/app/build/outputs/apk/debug/Clerotri-Debug-${{ github.sha }}-x86_64.apk 
+            /home/runner/work/Clerotri/Clerotri/android/app/build/outputs/apk/debug/Clerotri-Debug-${{ github.sha }}-x86.apk
