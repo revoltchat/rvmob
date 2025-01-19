@@ -4,13 +4,13 @@ import {useTranslation} from 'react-i18next';
 
 import {DOMParser} from '@xmldom/xmldom';
 
-import {app} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
-import {styles} from '@rvmob/Theme';
-import {Button, GeneralAvatar, Text} from '@rvmob/components/common/atoms';
-import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
-import {SpecialChannelIcon} from '@rvmob/components/navigation/SpecialChannelIcon';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {app} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
+import {styles} from '@clerotri/Theme';
+import {Button, GeneralAvatar, Text} from '@clerotri/components/common/atoms';
+import {ChannelHeader} from '@clerotri/components/navigation/ChannelHeader';
+import {SpecialChannelIcon} from '@clerotri/components/navigation/SpecialChannelIcon';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
 const parser = new DOMParser({
   errorHandler: (level, message) => {

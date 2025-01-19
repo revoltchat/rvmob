@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-import {commonValues} from '@rvmob/lib/themes';
+import {commonValues} from '@clerotri/lib/themes';
 
 export var styles = StyleSheet.create({
   loadingScreen: {

@@ -7,13 +7,13 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import type {Server} from 'revolt.js';
 
-import {client} from '@rvmob/lib/client';
-import {styles} from '@rvmob/Theme';
-import {Text} from '@rvmob/components/common/atoms';
-import {SettingsEntry} from '@rvmob/components/common/settings/atoms';
-import {Image} from '@rvmob/crossplat/Image';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
-import {showToast} from '@rvmob/lib/utils';
+import {client} from '@clerotri/lib/client';
+import {styles} from '@clerotri/Theme';
+import {Text} from '@clerotri/components/common/atoms';
+import {SettingsEntry} from '@clerotri/components/common/settings/atoms';
+import {Image} from '@clerotri/crossplat/Image';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {showToast} from '@clerotri/lib/utils';
 
 export const EmojiSettingsSection = observer(({server}: {server: Server}) => {
   const {currentTheme} = useContext(ThemeContext);

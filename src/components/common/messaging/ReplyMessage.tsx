@@ -3,9 +3,9 @@ import {useTranslation} from 'react-i18next';
 
 import type {Message} from 'revolt.js';
 
-import {Avatar, Text, Username} from '@rvmob/components/common/atoms';
+import {Avatar, Text, Username} from '@clerotri/components/common/atoms';
 import {SystemMessage} from './SystemMessage';
-import {commonValues} from '@rvmob/lib/themes';
+import {commonValues} from '@clerotri/lib/themes';
 
 type ReplyProps = {
   message?: Message;

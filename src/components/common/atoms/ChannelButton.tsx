@@ -4,12 +4,12 @@ import {observer} from 'mobx-react-lite';
 
 import type {Channel} from 'revolt.js';
 
-import {MiniProfile} from '@rvmob/components/common/profile';
-import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
-import {SpecialChannelIcon} from '@rvmob/components/navigation/SpecialChannelIcon';
-import {styles} from '@rvmob/Theme';
-import {Text} from '@rvmob/components/common/atoms/Text';
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {MiniProfile} from '@clerotri/components/common/profile';
+import {ChannelIcon} from '@clerotri/components/navigation/ChannelIcon';
+import {SpecialChannelIcon} from '@clerotri/components/navigation/SpecialChannelIcon';
+import {styles} from '@clerotri/Theme';
+import {Text} from '@clerotri/components/common/atoms/Text';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 
 type ChannelButtonProps = {
   channel: Channel | 'Home' | 'Friends' | 'Saved Notes' | 'Debug';

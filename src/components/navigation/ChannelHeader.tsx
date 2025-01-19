@@ -8,10 +8,10 @@ import {
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {app} from '@rvmob/Generic';
-import {styles} from '@rvmob/Theme';
-import {Text} from '@rvmob/components/common/atoms';
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {app} from '@clerotri/Generic';
+import {styles} from '@clerotri/Theme';
+import {Text} from '@clerotri/components/common/atoms';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 
 export const ChannelHeader = ({
   children,

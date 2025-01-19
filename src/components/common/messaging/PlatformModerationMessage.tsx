@@ -6,9 +6,9 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import type {Message} from 'revolt.js';
 
-import {Text} from '@rvmob/components/common/atoms';
-import {MarkdownView} from '@rvmob/components/common/MarkdownView';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {Text} from '@clerotri/components/common/atoms';
+import {MarkdownView} from '@clerotri/components/common/MarkdownView';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
 type Response = {
   response: string;

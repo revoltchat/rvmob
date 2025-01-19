@@ -2,8 +2,8 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "paths": {
-      "@rvmob/*": ["./src/*"],
-      "@rvmob-i18n/*": ["./i18n/*"]
+      "@clerotri/*": ["./src/*"],
+      "@clerotri-i18n/*": ["./i18n/*"]
     },
     "types": ["react-native-web"]
   },

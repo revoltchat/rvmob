@@ -13,20 +13,20 @@ import ColourPicker, {
 
 import type {Server} from 'revolt.js';
 
-import {app, setFunction} from '@rvmob/Generic';
-import {SettingsSection} from '@rvmob/lib/types';
-import {styles} from '@rvmob/Theme';
+import {app, setFunction} from '@clerotri/Generic';
+import {SettingsSection} from '@clerotri/lib/types';
+import {styles} from '@clerotri/Theme';
 import {
   BackButton,
   Button,
   Checkbox,
   InputWithButton,
   Text,
-} from '@rvmob/components/common/atoms';
-import {PressableSettingsEntry} from '@rvmob/components/common/settings/atoms';
-import {GapView} from '@rvmob/components/layout';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
-import {showToast} from '@rvmob/lib/utils';
+} from '@clerotri/components/common/atoms';
+import {PressableSettingsEntry} from '@clerotri/components/common/settings/atoms';
+import {GapView} from '@clerotri/components/layout';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {showToast} from '@clerotri/lib/utils';
 
 export const RoleSettingsSection = observer(
   ({

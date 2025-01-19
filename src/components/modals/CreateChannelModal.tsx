@@ -5,11 +5,11 @@ import {observer} from 'mobx-react-lite';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {app} from '@rvmob/Generic';
-import {styles} from '@rvmob/Theme';
-import {Button, Checkbox, Input, Text} from '@rvmob/components/common/atoms';
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
-import {CreateChannelModalProps} from '@rvmob/lib/types';
+import {app} from '@clerotri/Generic';
+import {styles} from '@clerotri/Theme';
+import {Button, Checkbox, Input, Text} from '@clerotri/components/common/atoms';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
+import {CreateChannelModalProps} from '@clerotri/lib/types';
 
 export const CreateChannelModal = observer(
   ({object}: {object: CreateChannelModalProps}) => {

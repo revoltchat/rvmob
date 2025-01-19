@@ -1,6 +1,6 @@
 module.exports = {
   preset: 'react-native',
   moduleNameMapper: {
-    '@rvmob/(.*)': '<rootDir>/src/$1',
+    '@clerotri/(.*)': '<rootDir>/src/$1',
   },
 };

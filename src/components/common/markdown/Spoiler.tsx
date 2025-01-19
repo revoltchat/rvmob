@@ -1,8 +1,8 @@
 import {createContext, useContext, useState} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
 
-import {Text} from '@rvmob/components/common/atoms';
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {Text} from '@clerotri/components/common/atoms';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 
 const generateLocalStyles = (currentTheme: Theme) => {
   return StyleSheet.create({

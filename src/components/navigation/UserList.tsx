@@ -4,10 +4,10 @@ import {observer} from 'mobx-react-lite';
 
 import type {User} from 'revolt.js';
 
-import {app} from '@rvmob/Generic';
-import {Button} from '@rvmob/components/common/atoms';
-import {MiniProfile} from '@rvmob/components/common/profile';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {app} from '@clerotri/Generic';
+import {Button} from '@clerotri/components/common/atoms';
+import {MiniProfile} from '@clerotri/components/common/profile';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
 export const UserList = observer(({users}: {users: User[]}) => {
   const {currentTheme} = useContext(ThemeContext);

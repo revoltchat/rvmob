@@ -4,10 +4,10 @@ import {observer} from 'mobx-react-lite';
 
 import type {Server, User, Channel} from 'revolt.js';
 
-import {Avatar} from '@rvmob/components/common/atoms/Avatar';
-import {Text} from '@rvmob/components/common/atoms/Text';
-import {Username} from '@rvmob/components/common/atoms/Username';
-import {ThemeContext} from '@rvmob/lib/themes';
+import {Avatar} from '@clerotri/components/common/atoms/Avatar';
+import {Text} from '@clerotri/components/common/atoms/Text';
+import {Username} from '@clerotri/components/common/atoms/Username';
+import {ThemeContext} from '@clerotri/lib/themes';
 
 type MiniProfileProps = {
   user?: User;

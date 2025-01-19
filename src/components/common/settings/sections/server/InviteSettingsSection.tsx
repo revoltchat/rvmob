@@ -7,10 +7,10 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import type {API, Server} from 'revolt.js';
 
-import {styles} from '@rvmob/Theme';
-import {Text} from '@rvmob/components/common/atoms';
-import {SettingsEntry} from '@rvmob/components/common/settings/atoms';
-import {ThemeContext} from '@rvmob/lib/themes';
+import {styles} from '@clerotri/Theme';
+import {Text} from '@clerotri/components/common/atoms';
+import {SettingsEntry} from '@clerotri/components/common/settings/atoms';
+import {ThemeContext} from '@clerotri/lib/themes';
 
 export const InviteSettingsSection = observer(({server}: {server: Server}) => {
   const {currentTheme} = useContext(ThemeContext);

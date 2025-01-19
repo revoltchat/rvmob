@@ -4,10 +4,10 @@ import {useTranslation} from 'react-i18next';
 
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {styles} from '@rvmob/Theme';
-import {Link, Text} from '@rvmob/components/common/atoms';
-import {openUrl} from '@rvmob/lib/utils';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {styles} from '@clerotri/Theme';
+import {Link, Text} from '@clerotri/components/common/atoms';
+import {openUrl} from '@clerotri/lib/utils';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
 import licenseList from '../../../../../../assets/data/licenses.json';
 

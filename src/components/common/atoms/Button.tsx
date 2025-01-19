@@ -5,7 +5,7 @@ import {
   type TouchableOpacityProps,
 } from 'react-native';
 
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 
 type ButtonProps = TouchableOpacityProps & {
   backgroundColor?: string;

@@ -10,9 +10,9 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import type {User, Server} from 'revolt.js';
 
-import {app, setFunction} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
-import {styles} from '@rvmob/Theme';
+import {app, setFunction} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
+import {styles} from '@clerotri/Theme';
 import {
   Avatar,
   Button,
@@ -22,14 +22,14 @@ import {
   Link,
   Text,
   Username,
-} from '@rvmob/components/common/atoms';
-import {BottomSheet} from '@rvmob/components/common/BottomSheet';
-import {MarkdownView} from '@rvmob/components/common/MarkdownView';
-import {MiniProfile, RoleView} from '@rvmob/components/common/profile';
-import {UserList} from '@rvmob/components/navigation/UserList';
-import {BADGES, USER_IDS} from '@rvmob/lib/consts';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
-import {openUrl, parseRevoltNodes, showToast} from '@rvmob/lib/utils';
+} from '@clerotri/components/common/atoms';
+import {BottomSheet} from '@clerotri/components/common/BottomSheet';
+import {MarkdownView} from '@clerotri/components/common/MarkdownView';
+import {MiniProfile, RoleView} from '@clerotri/components/common/profile';
+import {UserList} from '@clerotri/components/navigation/UserList';
+import {BADGES, USER_IDS} from '@clerotri/lib/consts';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {openUrl, parseRevoltNodes, showToast} from '@clerotri/lib/utils';
 
 export const ProfileSheet = observer(() => {
   const {currentTheme} = useContext(ThemeContext);

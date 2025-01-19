@@ -10,16 +10,16 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import type {Channel, Message} from 'revolt.js';
 import {ulid} from 'ulid';
 
-import {app, setFunction} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
-import {styles} from '@rvmob/Theme';
-import {DocumentPicker} from '@rvmob/crossplat/DocumentPicker';
-import {Avatar, Text, Username} from '@rvmob/components/common/atoms';
-import {USER_IDS} from '@rvmob/lib/consts';
-import {storage} from '@rvmob/lib/storage';
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
-import {ReplyingMessage} from '@rvmob/lib/types';
-import {getReadableFileSize, showToast} from '@rvmob/lib/utils';
+import {app, setFunction} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
+import {styles} from '@clerotri/Theme';
+import {DocumentPicker} from '@clerotri/crossplat/DocumentPicker';
+import {Avatar, Text, Username} from '@clerotri/components/common/atoms';
+import {USER_IDS} from '@clerotri/lib/consts';
+import {storage} from '@clerotri/lib/storage';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
+import {ReplyingMessage} from '@clerotri/lib/types';
+import {getReadableFileSize, showToast} from '@clerotri/lib/utils';
 
 let typing = false;
 

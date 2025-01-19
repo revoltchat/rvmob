@@ -6,7 +6,7 @@ import {observer} from 'mobx-react-lite';
 import type {Client} from 'revolt.js';
 
 import {Text} from './common/atoms';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
 export const NetworkIndicator = observer(({client}: {client: Client}) => {
   const {currentTheme} = useContext(ThemeContext);

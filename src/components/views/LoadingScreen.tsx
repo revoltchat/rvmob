@@ -2,9 +2,9 @@ import {useContext} from 'react';
 import {StyleSheet, type TextStyle, View, type ViewStyle} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
-import {selectedRemark} from '@rvmob/Generic';
-import {Text} from '@rvmob/components/common/atoms';
-import {Theme, ThemeContext} from '@rvmob/lib/themes';
+import {selectedRemark} from '@clerotri/Generic';
+import {Text} from '@clerotri/components/common/atoms';
+import {Theme, ThemeContext} from '@clerotri/lib/themes';
 
 export function LoadingScreen({
   header,

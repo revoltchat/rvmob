@@ -7,11 +7,11 @@ import {observer} from 'mobx-react-lite';
 
 import type {Server} from 'revolt.js';
 
-import {GapView} from '@rvmob/components/layout';
-import {InputWithButton, Link, Text} from '@rvmob/components/common/atoms';
-import {PressableSettingsEntry} from '@rvmob/components/common/settings/atoms';
-import {SYSTEM_MESSAGE_CHANNEL_TYPES} from '@rvmob/lib/consts';
-import {ThemeContext} from '@rvmob/lib/themes';
+import {GapView} from '@clerotri/components/layout';
+import {InputWithButton, Link, Text} from '@clerotri/components/common/atoms';
+import {PressableSettingsEntry} from '@clerotri/components/common/settings/atoms';
+import {SYSTEM_MESSAGE_CHANNEL_TYPES} from '@clerotri/lib/consts';
+import {ThemeContext} from '@clerotri/lib/themes';
 
 export const OverviewSettingsSection = observer(
   ({server}: {server: Server}) => {

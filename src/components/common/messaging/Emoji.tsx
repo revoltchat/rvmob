@@ -3,18 +3,18 @@ import {StyleSheet} from 'react-native';
 
 import {SvgUri} from 'react-native-svg';
 
-import {Image} from '@rvmob/crossplat/Image';
-import {app} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
+import {Image} from '@clerotri/crossplat/Image';
+import {app} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
 import {Text} from '../atoms';
 import {
   RE_CUSTOM_EMOJI,
   RE_DEFAULT_EMOJI,
   RE_UNICODE_EMOJI,
   RevoltEmojiDictionary,
-} from '@rvmob/lib/consts';
-import {EmojiPacks} from '@rvmob/lib/types';
-import {unicodeEmojiURL} from '@rvmob/lib/utils';
+} from '@clerotri/lib/consts';
+import {EmojiPacks} from '@clerotri/lib/types';
+import {unicodeEmojiURL} from '@clerotri/lib/utils';
 
 const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
   const [error, setError] = useState(false);

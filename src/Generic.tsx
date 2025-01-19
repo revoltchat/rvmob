@@ -1,11 +1,11 @@
 import type {API, Channel, Message, Server, User} from 'revolt.js';
 
-import {setLanguage} from '@rvmob-i18n/i18n';
-import {languages} from '@rvmob-i18n/languages';
-import {DEFAULT_API_URL, LOADING_SCREEN_REMARKS} from '@rvmob/lib/consts';
-import {checkNotificationPerms} from '@rvmob/lib/notifications';
-import {storage} from '@rvmob/lib/storage';
-import {themes} from '@rvmob/lib/themes';
+import {setLanguage} from '@clerotri-i18n/i18n';
+import {languages} from '@clerotri-i18n/languages';
+import {DEFAULT_API_URL, LOADING_SCREEN_REMARKS} from '@clerotri/lib/consts';
+import {checkNotificationPerms} from '@clerotri/lib/notifications';
+import {storage} from '@clerotri/lib/storage';
+import {themes} from '@clerotri/lib/themes';
 import {
   CreateChannelModalProps,
   DeletableObject,
@@ -13,7 +13,7 @@ import {
   ReportedObject,
   Setting,
   TextEditingModalProps,
-} from '@rvmob/lib/types';
+} from '@clerotri/lib/types';
 
 export const app = {
   version: '0.6.0',

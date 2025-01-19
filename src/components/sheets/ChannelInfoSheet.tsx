@@ -7,11 +7,11 @@ import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 
 import type {Channel, User} from 'revolt.js';
 
-import {setFunction} from '@rvmob/Generic';
-import {Text} from '@rvmob/components/common/atoms';
-import {BottomSheet} from '@rvmob/components/common/BottomSheet';
-import {MarkdownView} from '@rvmob/components/common/MarkdownView';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {setFunction} from '@clerotri/Generic';
+import {Text} from '@clerotri/components/common/atoms';
+import {BottomSheet} from '@clerotri/components/common/BottomSheet';
+import {MarkdownView} from '@clerotri/components/common/MarkdownView';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
 export const ChannelInfoSheet = observer(() => {
   const {currentTheme} = useContext(ThemeContext);

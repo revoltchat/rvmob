@@ -2,11 +2,11 @@ import {useContext, useState} from 'react';
 import {View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
-import {app} from '@rvmob/Generic';
-import {Setting} from '@rvmob/lib/types';
+import {app} from '@clerotri/Generic';
+import {Setting} from '@clerotri/lib/types';
 import {Checkbox, Text} from '../../atoms';
 import {IndicatorIcons} from './IndicatorIcons';
-import {ThemeContext} from '@rvmob/lib/themes';
+import {ThemeContext} from '@clerotri/lib/themes';
 
 export const BoolSetting = ({
   sRaw,

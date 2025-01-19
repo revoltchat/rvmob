@@ -8,13 +8,13 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import type {Server} from 'revolt.js';
 
-import {app, setFunction} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
-import {Image} from '@rvmob/crossplat/Image';
-import {MAX_SIDE_HQ} from '@rvmob/lib/consts';
-import {Theme, ThemeContext} from '@rvmob/lib/themes';
-import {SettingsSection} from '@rvmob/lib/types';
-import {styles} from '@rvmob/Theme';
+import {app, setFunction} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
+import {Image} from '@clerotri/crossplat/Image';
+import {MAX_SIDE_HQ} from '@clerotri/lib/consts';
+import {Theme, ThemeContext} from '@clerotri/lib/themes';
+import {SettingsSection} from '@clerotri/lib/types';
+import {styles} from '@clerotri/Theme';
 import {BackButton, ContextButton, Text} from '../common/atoms';
 import {
   BanSettingsSection,

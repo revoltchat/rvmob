@@ -2,9 +2,9 @@ import {Platform} from 'react-native';
 
 import type {API} from 'revolt.js';
 
-import {app} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
-import {storage} from '@rvmob/lib/storage';
+import {app} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
+import {storage} from '@clerotri/lib/storage';
 
 import {decodeTime} from 'ulid';
 

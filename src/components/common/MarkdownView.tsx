@@ -7,12 +7,12 @@ import Markdown, {
   MarkdownIt,
 } from '@rexovolt/react-native-markdown-display';
 
-import {app} from '@rvmob/Generic';
+import {app} from '@clerotri/Generic';
 import {Text} from './atoms';
 import {Spoiler, SpoilerContext, SpoilerWrapper} from './markdown/Spoiler';
 import {renderEmoji} from './messaging/Emoji';
-import {openUrl} from '@rvmob/lib/utils';
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {openUrl} from '@clerotri/lib/utils';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 
 const defaultMarkdownIt = MarkdownIt({linkify: true})
   .disable(['image'])

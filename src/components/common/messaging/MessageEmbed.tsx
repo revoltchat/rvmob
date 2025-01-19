@@ -4,12 +4,12 @@ import {observer} from 'mobx-react-lite';
 
 import type {API} from 'revolt.js';
 
-import {Image} from '@rvmob/crossplat/Image';
-import {app} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
+import {Image} from '@clerotri/crossplat/Image';
+import {app} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
 import {MarkdownView} from '../MarkdownView';
 import {Link, Text} from '../atoms';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
 export const MessageEmbed = observer((eRaw: API.Embed) => {
   const {currentTheme} = useContext(ThemeContext);

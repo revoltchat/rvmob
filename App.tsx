@@ -6,14 +6,14 @@ import {ErrorBoundary} from 'react-error-boundary';
 
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
-import {setFunction} from '@rvmob/Generic';
-import {MainView} from '@rvmob/MainView';
-import {ErrorMessage} from '@rvmob/components/ErrorMessage';
-import {LoadingScreen} from '@rvmob/components/views/LoadingScreen';
-import {storage} from '@rvmob/lib/storage';
-import {migrateToMMKV} from '@rvmob/lib/storage/migration';
-import {initialiseSettings} from '@rvmob/lib/storage/utils';
-import {themes, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {setFunction} from '@clerotri/Generic';
+import {MainView} from '@clerotri/MainView';
+import {ErrorMessage} from '@clerotri/components/ErrorMessage';
+import {LoadingScreen} from '@clerotri/components/views/LoadingScreen';
+import {storage} from '@clerotri/lib/storage';
+import {migrateToMMKV} from '@clerotri/lib/storage/migration';
+import {initialiseSettings} from '@clerotri/lib/storage/utils';
+import {themes, Theme, ThemeContext} from '@clerotri/lib/themes';
 
 export const App = () => {
   const [checkedMigration, setCheckedMigration] = useState(false);

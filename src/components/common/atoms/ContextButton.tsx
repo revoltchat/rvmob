@@ -1,7 +1,7 @@
 import {useContext} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 
 type ButtonProps = {
   children?: any;

@@ -4,10 +4,10 @@ import {StyleSheet, TextInput, View, ViewStyle} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {Button} from '@rvmob/components/common/atoms/Button';
-import {Text} from '@rvmob/components/common/atoms/Text';
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
-import {showToast} from '@rvmob/lib/utils';
+import {Button} from '@clerotri/components/common/atoms/Button';
+import {Text} from '@clerotri/components/common/atoms/Text';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
+import {showToast} from '@clerotri/lib/utils';
 
 export function InputWithButton({
   defaultValue,

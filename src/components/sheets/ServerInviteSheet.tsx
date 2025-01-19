@@ -6,11 +6,11 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import type {API} from 'revolt.js';
 
-import {app} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
-import {Button, GeneralAvatar, Text} from '@rvmob/components/common/atoms';
-import {Image} from '@rvmob/crossplat/Image';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {app} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
+import {Button, GeneralAvatar, Text} from '@clerotri/components/common/atoms';
+import {Image} from '@clerotri/crossplat/Image';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
 export const ServerInviteSheet = observer(
   ({

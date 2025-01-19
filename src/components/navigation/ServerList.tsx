@@ -6,12 +6,12 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import {decodeTime} from 'ulid';
 
-import {app} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
+import {app} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
 import {Text} from '../common/atoms';
-import {Image} from '@rvmob/crossplat/Image';
-import {DEFAULT_MAX_SIDE} from '@rvmob/lib/consts';
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {Image} from '@clerotri/crossplat/Image';
+import {DEFAULT_MAX_SIDE} from '@clerotri/lib/consts';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 
 export const ServerList = observer(
   ({

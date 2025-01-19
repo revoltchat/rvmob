@@ -7,10 +7,10 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import type {Message as RevoltMessage} from 'revolt.js';
 
-import {Text, Username} from '@rvmob/components/common/atoms';
-import {app} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
-import {Theme, ThemeContext} from '@rvmob/lib/themes';
+import {Text, Username} from '@clerotri/components/common/atoms';
+import {app} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
+import {Theme, ThemeContext} from '@clerotri/lib/themes';
 
 const SYSTEM_MESSAGE_ICONS = {
   text: {

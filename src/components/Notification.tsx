@@ -9,7 +9,7 @@ import type {Message} from 'revolt.js';
 import {styles} from '../Theme';
 import {Avatar, Text, Username} from './common/atoms';
 import {MarkdownView} from './common/MarkdownView';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 import {parseRevoltNodes} from '../lib/utils';
 
 export const Notification = observer(

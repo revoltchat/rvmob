@@ -6,7 +6,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Text} from './Text';
-import {ThemeContext} from '@rvmob/lib/themes';
+import {ThemeContext} from '@clerotri/lib/themes';
 
 export function BackButton({
   callback,

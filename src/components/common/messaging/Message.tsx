@@ -13,20 +13,20 @@ import {enGB, enUS} from 'date-fns/locale';
 import type {Message as RevoltMessage} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
-import {app} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
-import {Avatar, Text, Username} from '@rvmob/components/common/atoms';
-import {MarkdownView} from '@rvmob/components/common/MarkdownView';
-import {InviteEmbed} from '@rvmob/components/common/messaging/InviteEmbed';
-import {MessageEmbed} from '@rvmob/components/common/messaging/MessageEmbed';
-import {MessageReactions} from '@rvmob/components/common/messaging/MessageReactions';
-import {PlatformModerationMessage} from '@rvmob/components/common/messaging/PlatformModerationMessage';
-import {ReplyMessage} from '@rvmob/components/common/messaging/ReplyMessage';
-import {SystemMessage} from '@rvmob/components/common/messaging/SystemMessage';
-import {Image} from '@rvmob/crossplat/Image';
-import {RE_INVITE, USER_IDS} from '@rvmob/lib/consts';
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
-import {getReadableFileSize, openUrl, parseRevoltNodes} from '@rvmob/lib/utils';
+import {app} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
+import {Avatar, Text, Username} from '@clerotri/components/common/atoms';
+import {MarkdownView} from '@clerotri/components/common/MarkdownView';
+import {InviteEmbed} from '@clerotri/components/common/messaging/InviteEmbed';
+import {MessageEmbed} from '@clerotri/components/common/messaging/MessageEmbed';
+import {MessageReactions} from '@clerotri/components/common/messaging/MessageReactions';
+import {PlatformModerationMessage} from '@clerotri/components/common/messaging/PlatformModerationMessage';
+import {ReplyMessage} from '@clerotri/components/common/messaging/ReplyMessage';
+import {SystemMessage} from '@clerotri/components/common/messaging/SystemMessage';
+import {Image} from '@clerotri/crossplat/Image';
+import {RE_INVITE, USER_IDS} from '@clerotri/lib/consts';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
+import {getReadableFileSize, openUrl, parseRevoltNodes} from '@clerotri/lib/utils';
 
 type MessageProps = {
   message: RevoltMessage;

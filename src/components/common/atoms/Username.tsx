@@ -4,12 +4,12 @@ import {observer} from 'mobx-react-lite';
 
 import type {Server, User} from 'revolt.js';
 
-import {app} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
+import {app} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
 import {Text} from './Text';
-import {USER_IDS} from '@rvmob/lib/consts';
-import {ThemeContext} from '@rvmob/lib/themes';
-import {getColour} from '@rvmob/lib/utils';
+import {USER_IDS} from '@clerotri/lib/consts';
+import {ThemeContext} from '@clerotri/lib/themes';
+import {getColour} from '@clerotri/lib/utils';
 
 type UsernameCoreProps = {
   user: User;

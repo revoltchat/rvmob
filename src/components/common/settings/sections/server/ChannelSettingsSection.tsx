@@ -7,21 +7,21 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import type {Channel, Server} from 'revolt.js';
 
-import {app} from '@rvmob/Generic';
-import {styles} from '@rvmob/Theme';
-import {GapView} from '@rvmob/components/layout';
+import {app} from '@clerotri/Generic';
+import {styles} from '@clerotri/Theme';
+import {GapView} from '@clerotri/components/layout';
 import {
   BackButton,
   InputWithButton,
   Text,
-} from '@rvmob/components/common/atoms';
-import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
+} from '@clerotri/components/common/atoms';
+import {ChannelIcon} from '@clerotri/components/navigation/ChannelIcon';
 import {
   PressableSettingsEntry,
   SettingsEntry,
-} from '@rvmob/components/common/settings/atoms';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
-import {SettingsSection} from '@rvmob/lib/types';
+} from '@clerotri/components/common/settings/atoms';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {SettingsSection} from '@clerotri/lib/types';
 
 export const ChannelSettingsSection = observer(
   ({

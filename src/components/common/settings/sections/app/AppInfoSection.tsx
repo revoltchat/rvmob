@@ -5,11 +5,11 @@ import {getBundleId} from 'react-native-device-info';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {dependencies} from '../../../../../../package.json';
-import {app} from '@rvmob/Generic';
-import {CONTRIBUTORS_LIST, FEDI_PROFILE, GITHUB_REPO} from '@rvmob/lib/consts';
-import {ThemeContext} from '@rvmob/lib/themes';
-import {openUrl} from '@rvmob/lib/utils';
-import {ContextButton, Link, Text} from '@rvmob/components/common/atoms';
+import {app} from '@clerotri/Generic';
+import {CONTRIBUTORS_LIST, FEDI_PROFILE, GITHUB_REPO} from '@clerotri/lib/consts';
+import {ThemeContext} from '@clerotri/lib/themes';
+import {openUrl} from '@clerotri/lib/utils';
+import {ContextButton, Link, Text} from '@clerotri/components/common/atoms';
 
 import ReleaseIcon from '../../../../../../assets/images/icon_release.svg';
 import DebugIcon from '../../../../../../assets/images/icon_debug.svg';

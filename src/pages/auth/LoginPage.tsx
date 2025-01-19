@@ -5,19 +5,19 @@ import {useTranslation} from 'react-i18next';
 import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {app} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
+import {app} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
 import {
   BackButton,
   Button,
   Input,
   Link,
   Text,
-} from '@rvmob/components/common/atoms';
-import {loginRegular, loginWithToken} from '@rvmob/lib/auth';
-import {OFFICIAL_INSTANCE_SIGNUP_URL} from '@rvmob/lib/consts';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
-import {openUrl} from '@rvmob/lib/utils';
+} from '@clerotri/components/common/atoms';
+import {loginRegular, loginWithToken} from '@clerotri/lib/auth';
+import {OFFICIAL_INSTANCE_SIGNUP_URL} from '@clerotri/lib/consts';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {openUrl} from '@clerotri/lib/utils';
 
 function LoginTypeSelector({
   setLoginType,

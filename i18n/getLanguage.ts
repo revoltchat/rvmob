@@ -1,6 +1,6 @@
 import type {ModuleType} from 'i18next';
 
-import {storage} from '@rvmob/lib/storage';
+import {storage} from '@clerotri/lib/storage';
 
 const STORE_LANGUAGE_KEY = 'app.language';
 

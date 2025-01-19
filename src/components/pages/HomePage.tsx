@@ -2,18 +2,18 @@ import {TouchableOpacity, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
-import {app} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
+import {app} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
 import {
   SPECIAL_DATES,
   SPECIAL_DATE_OBJECTS,
   SPECIAL_SERVERS,
-} from '@rvmob/lib/consts';
-import {openUrl} from '@rvmob/lib/utils';
-import {styles} from '@rvmob/Theme';
-import {Avatar, Button, Text, Username} from '@rvmob/components/common/atoms';
-import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
-import {SpecialChannelIcon} from '@rvmob/components/navigation/SpecialChannelIcon';
+} from '@clerotri/lib/consts';
+import {openUrl} from '@clerotri/lib/utils';
+import {styles} from '@clerotri/Theme';
+import {Avatar, Button, Text, Username} from '@clerotri/components/common/atoms';
+import {ChannelHeader} from '@clerotri/components/navigation/ChannelHeader';
+import {SpecialChannelIcon} from '@clerotri/components/navigation/SpecialChannelIcon';
 
 export const HomePage = observer(() => {
   const {t} = useTranslation();
@@ -95,7 +95,7 @@ export const HomePage = observer(() => {
         </Button>
         <Button
           style={{width: '65%'}}
-          key={'home-rvmob-server'}
+          key={'home-clerotri-server'}
           onPress={() => app.openInvite(SPECIAL_SERVERS.supportServer.invite)}>
           <Text style={styles.buttonText}>
             {client.servers.get(SPECIAL_SERVERS.supportServer.id)

@@ -5,12 +5,12 @@ import {observer} from 'mobx-react-lite';
 import type BottomSheetCore from '@gorhom/bottom-sheet';
 import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 
-import {setFunction} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
+import {setFunction} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
 import {ContextButton, InputWithButton, Text} from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
-import {STATUSES} from '@rvmob/lib/consts';
-import {ThemeContext} from '@rvmob/lib/themes';
+import {STATUSES} from '@clerotri/lib/consts';
+import {ThemeContext} from '@clerotri/lib/themes';
 
 export const StatusSheet = observer(() => {
   const {currentTheme} = useContext(ThemeContext);

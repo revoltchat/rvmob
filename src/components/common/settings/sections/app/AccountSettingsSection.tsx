@@ -5,14 +5,14 @@ import {observer} from 'mobx-react-lite';
 import Clipboard from '@react-native-clipboard/clipboard';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {app} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
-import {styles} from '@rvmob/Theme';
-import {Text} from '@rvmob/components/common/atoms';
-import {GapView} from '@rvmob/components/layout';
-import {SettingsEntry} from '@rvmob/components/common/settings/atoms';
-import {storage} from '@rvmob/lib/storage';
-import {ThemeContext} from '@rvmob/lib/themes';
+import {app} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
+import {styles} from '@clerotri/Theme';
+import {Text} from '@clerotri/components/common/atoms';
+import {GapView} from '@clerotri/components/layout';
+import {SettingsEntry} from '@clerotri/components/common/settings/atoms';
+import {storage} from '@clerotri/lib/storage';
+import {ThemeContext} from '@clerotri/lib/themes';
 
 export const AccountSettingsSection = observer(() => {
   const {currentTheme} = useContext(ThemeContext);

@@ -1,7 +1,7 @@
 import {Client} from 'revolt.js';
 
-import {app} from '@rvmob/Generic';
-import {DEFAULT_API_URL} from '@rvmob/lib/consts';
+import {app} from '@clerotri/Generic';
+import {DEFAULT_API_URL} from '@clerotri/lib/consts';
 
 function getAPIURL() {
   console.log(`[APP] Initialised settings (${new Date().getTime()})`);

@@ -1,7 +1,7 @@
 import {useContext} from 'react';
 import {Text as NativeText, StyleSheet, type TextProps} from 'react-native';
 
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 
 type FullTextProps = TextProps & {
   font?: 'JetBrains Mono' | 'Inter' | 'Open Sans';

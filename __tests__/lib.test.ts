@@ -1,7 +1,7 @@
 import {expect, it} from '@jest/globals';
 
-import {themes} from '@rvmob/lib/themes';
-import {getColour} from '@rvmob/lib/utils/colourUtils';
+import {themes} from '@clerotri/lib/themes';
+import {getColour} from '@clerotri/lib/utils/colourUtils';
 
 // TODO: add more gradient tests
 it('returns the right colour values', () => {

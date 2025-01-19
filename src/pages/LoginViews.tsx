@@ -1,9 +1,9 @@
 import {useState} from 'react';
 
-import {setFunction} from '@rvmob/Generic';
-import {LoadingScreen} from '@rvmob/components/views/LoadingScreen';
-import {LoginPage} from '@rvmob/pages/auth/LoginPage';
-import {LoginSettingsPage} from '@rvmob/pages/auth/LoginSettingsPage';
+import {setFunction} from '@clerotri/Generic';
+import {LoadingScreen} from '@clerotri/components/views/LoadingScreen';
+import {LoginPage} from '@clerotri/pages/auth/LoginPage';
+import {LoginSettingsPage} from '@clerotri/pages/auth/LoginSettingsPage';
 
 export const LoginViews = ({markAsLoggedIn}: {markAsLoggedIn: any}) => {
   const [currentPage, setCurrentPage] = useState<

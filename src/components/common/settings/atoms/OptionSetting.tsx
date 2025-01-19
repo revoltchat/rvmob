@@ -4,12 +4,12 @@ import {useTranslation} from 'react-i18next';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {languages} from '@rvmob-i18n/languages';
-import {app} from '@rvmob/Generic';
-import {styles} from '@rvmob/Theme';
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
-import {Setting} from '@rvmob/lib/types';
-import {Text} from '@rvmob/components/common/atoms';
+import {languages} from '@clerotri-i18n/languages';
+import {app} from '@clerotri/Generic';
+import {styles} from '@clerotri/Theme';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
+import {Setting} from '@clerotri/lib/types';
+import {Text} from '@clerotri/components/common/atoms';
 import {IndicatorIcons} from './IndicatorIcons';
 
 export const OptionSetting = ({sRaw}: {sRaw: Setting}) => {

@@ -3,10 +3,10 @@ import {View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
-import {app} from '@rvmob/Generic';
-import {Button, Input, Text} from '@rvmob/components/common/atoms';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
-import {TextEditingModalProps} from '@rvmob/lib/types';
+import {app} from '@clerotri/Generic';
+import {Button, Input, Text} from '@clerotri/components/common/atoms';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {TextEditingModalProps} from '@clerotri/lib/types';
 
 export const TextEditModal = observer(
   ({object}: {object: TextEditingModalProps}) => {

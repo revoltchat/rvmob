@@ -5,9 +5,9 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import type {Channel} from 'revolt.js';
 
-import {Image} from '@rvmob/crossplat/Image';
-import {DEFAULT_MAX_SIDE} from '@rvmob/lib/consts';
-import {ThemeContext} from '@rvmob/lib/themes';
+import {Image} from '@clerotri/crossplat/Image';
+import {DEFAULT_MAX_SIDE} from '@clerotri/lib/consts';
+import {ThemeContext} from '@clerotri/lib/themes';
 
 export const ChannelIcon = ({
   channel,

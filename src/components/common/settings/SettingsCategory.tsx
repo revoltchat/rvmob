@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {app} from '@rvmob/Generic';
+import {app} from '@clerotri/Generic';
 import {BoolSetting, OptionSetting, StringNumberSetting} from './atoms';
 
 export const SettingsCategory = observer(({category}: {category: string}) => {

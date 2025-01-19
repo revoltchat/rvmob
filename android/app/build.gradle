@@ -106,11 +106,11 @@ android {
             keyPassword 'android'
         }
         release {
-            if (project.hasProperty('RVMOB_UPLOAD_STORE_FILE')) {
-                storeFile file(RVMOB_UPLOAD_STORE_FILE)
-                storePassword RVMOB_UPLOAD_STORE_PASSWORD
-                keyAlias RVMOB_UPLOAD_KEY_ALIAS
-                keyPassword RVMOB_UPLOAD_KEY_PASSWORD
+            if (project.hasProperty('CLEROTRI_UPLOAD_STORE_FILE')) {
+                storeFile file(CLEROTRI_UPLOAD_STORE_FILE)
+                storePassword CLEROTRI_UPLOAD_STORE_PASSWORD
+                keyAlias CLEROTRI_UPLOAD_KEY_ALIAS
+                keyPassword CLEROTRI_UPLOAD_KEY_PASSWORD
             }
         }
     }

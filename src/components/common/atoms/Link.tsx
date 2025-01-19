@@ -2,8 +2,8 @@ import {useContext} from 'react';
 import {StyleSheet} from 'react-native';
 
 import {Text} from './Text';
-import {Theme, ThemeContext} from '@rvmob/lib/themes';
-import {openUrl} from '@rvmob/lib/utils';
+import {Theme, ThemeContext} from '@clerotri/lib/themes';
+import {openUrl} from '@clerotri/lib/utils';
 
 type LinkProps = {
   link: string;

@@ -7,7 +7,7 @@ import BottomSheetCore, {
 } from '@gorhom/bottom-sheet';
 import {observer} from 'mobx-react-lite';
 
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 
 export const BottomSheet = observer(
   ({sheetRef, children}: {sheetRef: any; children: any}) => {

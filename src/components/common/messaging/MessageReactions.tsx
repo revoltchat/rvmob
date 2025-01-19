@@ -5,11 +5,11 @@ import {observer} from 'mobx-react-lite';
 
 import type {Message} from 'revolt.js';
 
-import {client} from '@rvmob/lib/client';
-import {Text} from '@rvmob/components/common/atoms';
-import {Image} from '@rvmob/crossplat/Image';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
-import {showToast} from '@rvmob/lib/utils';
+import {client} from '@clerotri/lib/client';
+import {Text} from '@clerotri/components/common/atoms';
+import {Image} from '@clerotri/crossplat/Image';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {showToast} from '@clerotri/lib/utils';
 
 type ReactionPile = {
   emoji: string;

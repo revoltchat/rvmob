@@ -7,14 +7,14 @@ import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 
 import type {Message} from 'revolt.js';
 
-import {app, setFunction} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
-import {Avatar, Button, Text, Username} from '@rvmob/components/common/atoms';
-import {BottomSheet} from '@rvmob/components/common/BottomSheet';
-import {MarkdownView} from '@rvmob/components/common/MarkdownView';
-import {USER_IDS} from '@rvmob/lib/consts';
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
-import type {ReportedObject} from '@rvmob/lib/types';
+import {app, setFunction} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
+import {Avatar, Button, Text, Username} from '@clerotri/components/common/atoms';
+import {BottomSheet} from '@clerotri/components/common/BottomSheet';
+import {MarkdownView} from '@clerotri/components/common/MarkdownView';
+import {USER_IDS} from '@clerotri/lib/consts';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
+import type {ReportedObject} from '@clerotri/lib/types';
 
 type Reason = {
   label: string;

@@ -1,6 +1,6 @@
-import {app} from '@rvmob/Generic';
-import {storage} from '@rvmob/lib/storage';
-import {Setting} from '@rvmob/lib/types';
+import {app} from '@clerotri/Generic';
+import {storage} from '@clerotri/lib/storage';
+import {Setting} from '@clerotri/lib/types';
 
 export function initialiseSettings() {
   const s = storage.getString('settings');

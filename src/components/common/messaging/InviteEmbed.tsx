@@ -4,10 +4,10 @@ import {observer} from 'mobx-react-lite';
 
 import type {API, Message} from 'revolt.js';
 
-import {app} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
+import {app} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
 import {Button, GeneralAvatar, Text} from '../atoms';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
 const InviteBackground = observer(({children}: {children: any}) => {
   const {currentTheme} = useContext(ThemeContext);

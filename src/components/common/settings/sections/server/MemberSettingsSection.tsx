@@ -8,11 +8,11 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import type {Member, Server} from 'revolt.js';
 
-import {app} from '@rvmob/Generic';
-import {styles} from '@rvmob/Theme';
-import {Text} from '@rvmob/components/common/atoms';
-import {SettingsEntry} from '@rvmob/components/common/settings/atoms';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {app} from '@clerotri/Generic';
+import {styles} from '@clerotri/Theme';
+import {Text} from '@clerotri/components/common/atoms';
+import {SettingsEntry} from '@clerotri/components/common/settings/atoms';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
 export const MemberSettingsSection = observer(({server}: {server: Server}) => {
   const {currentTheme} = useContext(ThemeContext);

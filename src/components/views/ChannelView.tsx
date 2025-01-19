@@ -8,20 +8,20 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import type {Channel} from 'revolt.js';
 
-import {app} from '@rvmob/Generic';
-import {Messages} from '@rvmob/LegacyMessageView';
-import {NewMessageView} from '@rvmob/MessageView';
-import {MessageBox} from '@rvmob/components/MessageBox';
-import {styles} from '@rvmob/Theme';
-import {Button, Text} from '@rvmob/components/common/atoms';
-import {ChannelIcon} from '@rvmob/components/navigation/ChannelIcon';
-import {ChannelHeader} from '@rvmob/components/navigation/ChannelHeader';
-import {SpecialChannelIcon} from '@rvmob/components/navigation/SpecialChannelIcon';
-import {FriendsPage} from '@rvmob/components/pages/FriendsPage';
-import {HomePage} from '@rvmob/components/pages/HomePage';
-import {VoiceChannel} from '@rvmob/components/pages/VoiceChannel';
-import {DiscoverPage} from '@rvmob/pages/discover/DiscoverPage';
-import {Theme, ThemeContext} from '@rvmob/lib/themes';
+import {app} from '@clerotri/Generic';
+import {Messages} from '@clerotri/LegacyMessageView';
+import {NewMessageView} from '@clerotri/MessageView';
+import {MessageBox} from '@clerotri/components/MessageBox';
+import {styles} from '@clerotri/Theme';
+import {Button, Text} from '@clerotri/components/common/atoms';
+import {ChannelIcon} from '@clerotri/components/navigation/ChannelIcon';
+import {ChannelHeader} from '@clerotri/components/navigation/ChannelHeader';
+import {SpecialChannelIcon} from '@clerotri/components/navigation/SpecialChannelIcon';
+import {FriendsPage} from '@clerotri/components/pages/FriendsPage';
+import {HomePage} from '@clerotri/components/pages/HomePage';
+import {VoiceChannel} from '@clerotri/components/pages/VoiceChannel';
+import {DiscoverPage} from '@clerotri/pages/discover/DiscoverPage';
+import {Theme, ThemeContext} from '@clerotri/lib/themes';
 
 function MessageViewErrorMessage({
   error,

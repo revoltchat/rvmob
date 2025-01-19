@@ -1,6 +1,6 @@
 const regularAlias = {
-  '@rvmob': './src',
-  '@rvmob-i18n': './i18n',
+  '@clerotri': './src',
+  '@clerotri-i18n': './i18n',
 };
 
 const webAlias = {

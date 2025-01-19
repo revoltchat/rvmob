@@ -9,12 +9,12 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import type {Member, Server} from 'revolt.js';
 
-import {app, setFunction} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
-import {styles} from '@rvmob/Theme';
-import {SERVER_FLAGS, SPECIAL_SERVERS} from '@rvmob/lib/consts';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
-import {showToast} from '@rvmob/lib/utils';
+import {app, setFunction} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
+import {styles} from '@clerotri/Theme';
+import {SERVER_FLAGS, SPECIAL_SERVERS} from '@clerotri/lib/consts';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {showToast} from '@clerotri/lib/utils';
 import {
   ContextButton,
   CopyIDButton,
@@ -23,7 +23,7 @@ import {
 } from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
 import {MarkdownView} from '../common/MarkdownView';
-import {Image} from '@rvmob/crossplat/Image';
+import {Image} from '@clerotri/crossplat/Image';
 
 export const ServerInfoSheet = observer(() => {
   const {currentTheme} = useContext(ThemeContext);

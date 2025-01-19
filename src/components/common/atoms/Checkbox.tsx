@@ -5,7 +5,7 @@ import {observer} from 'mobx-react-lite';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Text} from './Text';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
 export const Checkbox = observer(
   ({value, callback}: {value: boolean; callback: any}) => {

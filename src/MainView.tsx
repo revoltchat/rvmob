@@ -8,23 +8,23 @@ import {StatusBar, StyleSheet, View} from 'react-native';
 
 import type {Channel, Server} from 'revolt.js';
 
-import {app, randomizeRemark, setFunction} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
-import {Modals} from '@rvmob/Modals';
-import {SideMenuHandler} from '@rvmob/SideMenu';
-import {NetworkIndicator} from '@rvmob/components/NetworkIndicator';
-import {Notification} from '@rvmob/components/Notification';
-import {LoadingScreen} from '@rvmob/components/views/LoadingScreen';
-import {loginWithSavedToken} from '@rvmob/lib/auth';
+import {app, randomizeRemark, setFunction} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
+import {Modals} from '@clerotri/Modals';
+import {SideMenuHandler} from '@clerotri/SideMenu';
+import {NetworkIndicator} from '@clerotri/components/NetworkIndicator';
+import {Notification} from '@clerotri/components/Notification';
+import {LoadingScreen} from '@clerotri/components/views/LoadingScreen';
+import {loginWithSavedToken} from '@clerotri/lib/auth';
 import {
   createChannel,
   sendNotifeeNotification,
   setUpNotifeeListener,
-} from '@rvmob/lib/notifications';
-import {storage} from '@rvmob/lib/storage';
-import {Theme, ThemeContext} from '@rvmob/lib/themes';
-import {sleep} from '@rvmob/lib/utils';
-import {LoginViews} from '@rvmob/pages/LoginViews';
+} from '@clerotri/lib/notifications';
+import {storage} from '@clerotri/lib/storage';
+import {Theme, ThemeContext} from '@clerotri/lib/themes';
+import {sleep} from '@clerotri/lib/utils';
+import {LoginViews} from '@clerotri/pages/LoginViews';
 
 function openLastChannel() {
   try {

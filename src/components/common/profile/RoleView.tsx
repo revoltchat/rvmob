@@ -7,10 +7,10 @@ import Clipboard from '@react-native-clipboard/clipboard';
 
 import type {Server, User} from 'revolt.js';
 
-import {client} from '@rvmob/lib/client';
-import {Text} from '@rvmob/components/common/atoms/Text';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
-import {getColour, showToast} from '@rvmob/lib/utils';
+import {client} from '@clerotri/lib/client';
+import {Text} from '@clerotri/components/common/atoms/Text';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {getColour, showToast} from '@clerotri/lib/utils';
 
 type RoleViewProps = {
   server: Server;

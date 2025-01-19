@@ -7,7 +7,7 @@ import {
   type ViewProps,
 } from 'react-native';
 
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 
 export function SettingsEntry(props: ViewProps) {
   const {currentTheme} = useContext(ThemeContext);

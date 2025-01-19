@@ -3,8 +3,8 @@ import {StyleSheet, View} from 'react-native';
 
 import Clipboard from '@react-native-clipboard/clipboard';
 
-import {Button, Text} from '@rvmob/components/common/atoms';
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {Button, Text} from '@clerotri/components/common/atoms';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 
 export function ErrorMessage({
   error,

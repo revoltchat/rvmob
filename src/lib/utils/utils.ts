@@ -5,16 +5,16 @@ import {isSameDay} from 'date-fns/isSameDay';
 import type {Channel, Message} from 'revolt.js';
 import {decodeTime} from 'ulid';
 
-import {app} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
+import {app} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
 import {
   DEFAULT_MESSAGE_LOAD_COUNT,
   DISCOVER_URL,
   RE_BOT_INVITE,
   RE_INVITE,
   WIKI_URL,
-} from '@rvmob/lib/consts';
-import {EmojiPacks} from '@rvmob/lib/types';
+} from '@clerotri/lib/consts';
+import {EmojiPacks} from '@clerotri/lib/types';
 
 /**
  * Sleep for the specified amount of milliseconds before continuing.

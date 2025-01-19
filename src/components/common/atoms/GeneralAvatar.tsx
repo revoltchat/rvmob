@@ -1,8 +1,8 @@
 import {View} from 'react-native';
 
-import {Image} from '@rvmob/crossplat/Image';
-import {client} from '@rvmob/lib/client';
-import {DEFAULT_MAX_SIDE} from '@rvmob/lib/consts';
+import {Image} from '@clerotri/crossplat/Image';
+import {client} from '@clerotri/lib/client';
+import {DEFAULT_MAX_SIDE} from '@clerotri/lib/consts';
 
 export const GeneralAvatar = ({
   attachment,

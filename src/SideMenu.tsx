@@ -21,8 +21,8 @@ import {ChannelList} from './components/navigation/ChannelList';
 import {ServerList} from './components/navigation/ServerList';
 import {ChannelView} from './components/views/ChannelView';
 import {DEFAULT_API_URL} from './lib/consts';
-import {storage} from '@rvmob/lib/storage';
-import {commonValues, Theme, ThemeContext} from '@rvmob/lib/themes';
+import {storage} from '@clerotri/lib/storage';
+import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 
 const SideMenu = ({
   currentChannel,

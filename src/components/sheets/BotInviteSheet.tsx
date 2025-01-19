@@ -4,10 +4,10 @@ import {observer} from 'mobx-react-lite';
 
 import type {Server, User} from 'revolt.js';
 
-import {client} from '@rvmob/lib/client';
-import {Button, GeneralAvatar, Text} from '@rvmob/components/common/atoms';
-import {ServerList} from '@rvmob/components/navigation/ServerList';
-import {ThemeContext} from '@rvmob/lib/themes';
+import {client} from '@clerotri/lib/client';
+import {Button, GeneralAvatar, Text} from '@clerotri/components/common/atoms';
+import {ServerList} from '@clerotri/components/navigation/ServerList';
+import {ThemeContext} from '@clerotri/lib/themes';
 
 export const BotInviteSheet = observer(
   ({setState, bot}: {setState: Function; bot: User}) => {

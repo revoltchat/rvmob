@@ -3,10 +3,10 @@ import {View} from 'react-native';
 
 import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 
-import {app} from '@rvmob/Generic';
-import {BackButton, Button, Input, Text} from '@rvmob/components/common/atoms';
-import {LoadingScreen} from '@rvmob/components/views/LoadingScreen';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {app} from '@clerotri/Generic';
+import {BackButton, Button, Input, Text} from '@clerotri/components/common/atoms';
+import {LoadingScreen} from '@clerotri/components/views/LoadingScreen';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
 export const LoginSettingsPage = ({callback}: {callback: () => void}) => {
   const {currentTheme} = useContext(ThemeContext);

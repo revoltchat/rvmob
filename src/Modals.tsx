@@ -4,19 +4,19 @@ import {observer} from 'mobx-react-lite';
 
 import type {API, Channel, Server, User} from 'revolt.js';
 
-import {app, setFunction} from '@rvmob/Generic';
+import {app, setFunction} from '@clerotri/Generic';
 import {client} from './lib/client';
 import {
   CreateChannelModalProps,
   DeletableObject,
   TextEditingModalProps,
-} from '@rvmob/lib/types';
-import {ImageViewer} from '@rvmob/components/ImageViewer';
+} from '@clerotri/lib/types';
+import {ImageViewer} from '@clerotri/components/ImageViewer';
 import {
   ConfirmDeletionModal,
   CreateChannelModal,
   TextEditModal,
-} from '@rvmob/components/modals';
+} from '@clerotri/components/modals';
 import {
   BotInviteSheet,
   ChannelInfoSheet,
@@ -30,7 +30,7 @@ import {
   ServerSettingsSheet,
   SettingsSheet,
   StatusSheet,
-} from '@rvmob/components/sheets';
+} from '@clerotri/components/sheets';
 
 // Modals appear to break on the new architecture unless you wrap them in a View. see also https://github.com/react-navigation/react-navigation/issues/12301#issuecomment-2501692557
 const FixedModal = observer((props: ModalProps) => {

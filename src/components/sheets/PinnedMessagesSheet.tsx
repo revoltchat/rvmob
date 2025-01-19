@@ -7,11 +7,11 @@ import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 
 import type {Channel, Message as RevoltMessage} from 'revolt.js';
 
-import {setFunction} from '@rvmob/Generic';
-import {Text} from '@rvmob/components/common/atoms';
-import {BottomSheet} from '@rvmob/components/common/BottomSheet';
-import {Message} from '@rvmob/components/common/messaging';
-import {commonValues, ThemeContext} from '@rvmob/lib/themes';
+import {setFunction} from '@clerotri/Generic';
+import {Text} from '@clerotri/components/common/atoms';
+import {BottomSheet} from '@clerotri/components/common/BottomSheet';
+import {Message} from '@clerotri/components/common/messaging';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
 export const PinnedMessagesSheet = observer(() => {
   const {currentTheme} = useContext(ThemeContext);

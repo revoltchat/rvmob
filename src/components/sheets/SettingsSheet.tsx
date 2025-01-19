@@ -13,22 +13,22 @@ import {
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {app, setFunction} from '@rvmob/Generic';
-import {client} from '@rvmob/lib/client';
-import {OPEN_ISSUES} from '@rvmob/lib/consts';
-import {storage} from '@rvmob/lib/storage';
-import {ThemeContext} from '@rvmob/lib/themes';
-import {SettingsSection} from '@rvmob/lib/types';
-import {openUrl} from '@rvmob/lib/utils';
-import {styles} from '@rvmob/Theme';
-import {BackButton, ContextButton, Text} from '@rvmob/components/common/atoms';
-import {SettingsCategory} from '@rvmob/components/common/settings';
+import {app, setFunction} from '@clerotri/Generic';
+import {client} from '@clerotri/lib/client';
+import {OPEN_ISSUES} from '@clerotri/lib/consts';
+import {storage} from '@clerotri/lib/storage';
+import {ThemeContext} from '@clerotri/lib/themes';
+import {SettingsSection} from '@clerotri/lib/types';
+import {openUrl} from '@clerotri/lib/utils';
+import {styles} from '@clerotri/Theme';
+import {BackButton, ContextButton, Text} from '@clerotri/components/common/atoms';
+import {SettingsCategory} from '@clerotri/components/common/settings';
 import {
   AppInfoSection,
   AccountSettingsSection,
   LicenseListSection,
   ProfileSettingsSection,
-} from '@rvmob/components/common/settings/sections/app';
+} from '@clerotri/components/common/settings/sections/app';
 
 async function copyDebugInfo() {
   const obj = {

@@ -3,7 +3,7 @@ import {useContext} from 'react';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {ThemeContext} from '@rvmob/lib/themes';
+import {ThemeContext} from '@clerotri/lib/themes';
 
 type SpecialCIChannel =
   | 'Home'

@@ -4,9 +4,9 @@ import {View} from 'react-native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {styles} from '@rvmob/Theme';
-import {ThemeContext} from '@rvmob/lib/themes';
-import {Setting} from '@rvmob/lib/types';
+import {styles} from '@clerotri/Theme';
+import {ThemeContext} from '@clerotri/lib/themes';
+import {Setting} from '@clerotri/lib/types';
 
 export const IndicatorIcons = ({s}: {s: Setting}) => {
   const {currentTheme} = useContext(ThemeContext);
