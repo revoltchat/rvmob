@@ -25,8 +25,7 @@
             "generic": "正在加载…",
             "connecting": "正在登录…",
             "unknown_state": "啊哦…",
-            "unknown_state_body": "请告诉开发者您看到了这个（值：{{state}}）",
-            "migrating_settings": "正在迁移设置…"
+            "unknown_state_body": "请告诉开发者您看到了这个（值：{{state}}）"
         },
         "login": {
             "forms": {

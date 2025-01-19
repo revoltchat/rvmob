@@ -22,7 +22,6 @@
   "dependencies": {
     "@gorhom/bottom-sheet": "patch:@gorhom/bottom-sheet@npm%3A5.0.6#~/.yarn/patches/@gorhom-bottom-sheet-npm-5.0.6-ee2c6d5dad.patch",
     "@notifee/react-native": "^9.1.8",
-    "@react-native-async-storage/async-storage": "^2.1.0",
     "@react-native-clipboard/clipboard": "1.15.0",
     "@react-native-community/hooks": "^3.0.0",
     "@rexovolt/react-native-markdown-display": "^9.0.5",

@@ -12,7 +12,6 @@
         "loading": {
             "generic": "Yükleniyor…",
             "connecting": "Giriş yapılıyor…",
-            "migrating_settings": "Ayarlar taşınıyor…",
             "unknown_state": "Ah oh…",
             "unknown_state_body": "Lütfen geliştiricilere bunu gördüğünüzü bildirin (value: {{state}})"
         },

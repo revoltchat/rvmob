@@ -20,8 +20,6 @@ target 'Revvy' do
 
   pod 'react-native-get-random-values', :path => '../node_modules/react-native-get-random-values'
 
-  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
-
   pod 'RNNotifee', :path => '../node_modules/@notifee/react-native'
 
   target 'RevvyTests' do
