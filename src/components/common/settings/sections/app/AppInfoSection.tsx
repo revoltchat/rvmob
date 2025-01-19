@@ -43,7 +43,8 @@ export const AppInfoSection = () => {
         <AppIcon height={250} width={250} />
       </View>
       <View style={{alignItems: 'center', marginVertical: 16}}>
-        <Text type={'h1'}>RVMob v{app.version}</Text>
+        <Text type={'h1'}>RVMob</Text>
+        <Text colour={currentTheme.foregroundSecondary}>v{app.version}</Text>
         <Text>
           Powered by{' '}
           <Link link={'https://reactnative.dev'} label={'React Native'} /> v
