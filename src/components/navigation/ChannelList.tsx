@@ -12,7 +12,7 @@ import {observer} from 'mobx-react-lite';
 
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import type {Channel, Server} from 'revolt.js';
+import {API, Channel, Server} from 'revolt.js';
 
 import {app} from '@clerotri/Generic';
 import {client} from '@clerotri/lib/client';
@@ -39,15 +39,8 @@ type ServerChannelListProps = ChannelListProps & {
   currentServer: Server;
 };
 
-// thanks a lot, revolt.js 🙄
-type Category = {
-  id: string;
-  title: string;
-  channels: string[];
-};
-
 const ServerChannelListCategory = observer(
-  ({category, props}: {category: Category; props: ChannelListProps}) => {
+  ({category, props}: {category: API.Category; props: ChannelListProps}) => {
     const [isVisible, setIsVisible] = useState(true);
     return (
       <View key={category.id} style={{marginVertical: 8}}>
