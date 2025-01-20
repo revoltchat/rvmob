@@ -174,8 +174,8 @@
             "description": "从屏幕左侧滑动或者点击三条横线图标，来查看服务器和消息！",
             "join_lounge": "加入 Revolt Lounge",
             "open_lounge": "打开 Revolt Lounge",
-            "join_rvmob": "加入 RVMob 服务器",
-            "open_rvmob": "打开 RVMob 服务器",
+            "join_rvmob": "加入 Clerotri 服务器",
+            "open_rvmob": "打开 Clerotri 服务器",
             "open_settings": "打开设置"
         },
         "settings": {
@@ -187,7 +187,7 @@
                     "enabled": "启用推送通知",
                     "notifyOnSelfPing": "当提及自己时接收一条通知"
                 },
-                "showChangelogs": "更新 RVMob 后显示更新记录"
+                "showChangelogs": "更新 Clerotri 后显示更新记录"
             },
             "ui": {
                 "theme_remark": "您必须打开或关闭侧边菜单，以使更改完全生效。",
@@ -223,7 +223,7 @@
         "misc": {
             "voice": {
                 "body": "目前，您可以通过 Web 或桌面应用加入这些频道。",
-                "header": "RVMob 暂时不支持语音频道！"
+                "header": "Clerotri 暂时不支持语音频道！"
             },
             "generic_errors": {
                 "rateLimited_toast": "慢下来，等一分钟再试。"
@@ -253,7 +253,7 @@
                 "title": "语言"
             },
             "info": {
-                "title": "关于 RVMob"
+                "title": "关于 Clerotri"
             },
             "other": {
                 "debug_info": "复制调试信息",
@@ -266,6 +266,11 @@
             "licenses": {
                 "title": "开放源代码许可",
                 "loading": "正在加载许可数据…"
+            }
+        },
+        "profile": {
+            "roles": {
+                "copied_role_id_toast": "已复制角色 ID"
             }
         }
     }
