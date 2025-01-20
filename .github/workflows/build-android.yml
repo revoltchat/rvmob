@@ -31,11 +31,7 @@ jobs:
       - name: Build the app
         run: yarn react-native build-android --tasks assembleDebug
       - name: test
-        run: ls android/app/build
-      - name: test2
-        run: ls android/app/build/outputs
-      - name: test3
-        run: ls android/app/build/outputs/apk
+        run: ls android/app/build/outputs/apk/debug
       - name: Rename debug APKs
         run: |
           mv app-arm64-v8a-debug.apk Clerotri-Debug-${{ github.sha }}-arm64-v8a.apk 
