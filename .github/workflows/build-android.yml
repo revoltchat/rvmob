@@ -21,6 +21,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'microsoft'
+          cache: gradle
       - name: Install dependencies and prepare assets
         run: yarn install && npx react-native-asset && yarn license-list
       - name: Bundle the JS
