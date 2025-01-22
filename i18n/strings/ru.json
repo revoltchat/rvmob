@@ -4,8 +4,8 @@
             "description": "Проведите пальцем от левого края экрана или нажмите на значок с тремя линиями, чтобы увидеть свои серверы и сообщения!",
             "join_lounge": "Присоединиться к Revolt Lounge",
             "open_lounge": "Открыть Revolt Lounge",
-            "join_rvmob": "Присоединиться к серверу RVMob",
-            "open_rvmob": "Открыть сервер RVMob",
+            "join_rvmob": "Присоединиться к серверу Clerotri",
+            "open_rvmob": "Открыть сервер Clerotri",
             "open_settings": "Открыть настройки"
         },
         "actions": {
@@ -64,7 +64,7 @@
                     "enabled": "Включить push-уведомления",
                     "notifyOnSelfPing": "Получать уведомление при упоминании самого себя"
                 },
-                "showChangelogs": "Показывать список изменений после обновления RVMob",
+                "showChangelogs": "Показывать список изменений после обновления Clerotri",
                 "reopenLastChannel": "Открывать последний канал, в котором вы были, когда вы заново открываете приложение"
             },
             "ui": {
@@ -104,7 +104,7 @@
                 "hide": "(скрыть)"
             },
             "voice": {
-                "header": "Голосовые каналы пока не поддерживаются в RVMob!",
+                "header": "Голосовые каналы пока не поддерживаются в Clerotri!",
                 "body": "А пока вы можете присоединяться к ним через веб-приложение или Revolt Desktop."
             },
             "generic_errors": {
@@ -235,7 +235,7 @@
                 "title": "Язык"
             },
             "info": {
-                "title": "Об RVMob"
+                "title": "О Clerotri"
             },
             "other": {
                 "debug_info": "Скопировать информацию с отладки",
@@ -258,9 +258,9 @@
                 "bots": "Боты",
                 "servers": "Серверы"
             },
-            "count_bots_one": "На {{count}} сервере",
-            "count_bots_few": "На {{count}} серверах",
-            "count_bots_many": "На {{count}} серверах",
+            "count_bots_one": "{{count}} бот",
+            "count_bots_few": "{{count}} бота",
+            "count_bots_many": "{{count}} ботов",
             "header_servers": "Найти серверы"
         },
         "messaging": {
@@ -271,6 +271,11 @@
             "no_messages": "Нет сообщений",
             "no_messages_body": "Начать конференцию.",
             "reply_not_loaded": "Сообщение не загружено"
+        },
+        "profile": {
+            "roles": {
+                "copied_role_id_toast": "Идентификатор роли был скопирован"
+            }
         }
     }
 }
