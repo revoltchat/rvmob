@@ -110,7 +110,6 @@ function LoggedInViews({state, setChannel}: {state: any; setChannel: any}) {
 
 function AppViews({state}: {state: any}) {
   const {currentTheme} = useContext(ThemeContext);
-  const localStyles = generateLocalStyles(currentTheme);
 
   const setChannel = useCallback(
     (channel: string | Channel | null, server?: Server) => {
@@ -146,7 +145,6 @@ function AppViews({state}: {state: any}) {
         }
         barStyle={`${currentTheme.contentType}-content`}
       />
-      <View style={localStyles.app}>
         {state.state.status === 'loggedIn' ? (
           <LoggedInViews state={state} setChannel={setChannel} />
         ) : state.state.status === 'loggedOut' ? (
@@ -160,7 +158,6 @@ function AppViews({state}: {state: any}) {
             bodyParams={{state: state.state.status}}
           />
         )}
-      </View>
     </>
   );
 }
@@ -338,12 +335,3 @@ export class MainView extends ReactComponent {
     return <AppViews state={this} />;
   }
 }
-
-const generateLocalStyles = (currentTheme: Theme) => {
-  return StyleSheet.create({
-    app: {
-      flex: 1,
-      backgroundColor: currentTheme.backgroundPrimary,
-    },
-  });
-};

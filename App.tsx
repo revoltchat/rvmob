@@ -9,7 +9,6 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {setFunction} from '@clerotri/Generic';
 import {MainView} from '@clerotri/MainView';
 import {ErrorMessage} from '@clerotri/components/ErrorMessage';
-import {LoadingScreen} from '@clerotri/components/views/LoadingScreen';
 import {initialiseSettings} from '@clerotri/lib/storage/utils';
 import {themes, Theme, ThemeContext} from '@clerotri/lib/themes';
 
@@ -41,7 +40,7 @@ const generateLocalStyles = (currentTheme: Theme) => {
   return StyleSheet.create({
     outer: {
       flex: 1,
-      backgroundColor: currentTheme.backgroundSecondary,
+      backgroundColor: currentTheme.backgroundPrimary,
     },
   });
 };
