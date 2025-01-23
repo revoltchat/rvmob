@@ -18,10 +18,10 @@
         "home": {
             "join_lounge": "Далучыцца да Revolt Lounge",
             "open_lounge": "Адкрыць Revolt Lounge",
-            "open_rvmob": "Адкрыць сервер RVMob",
+            "open_rvmob": "Адкрыць сервер Clerotri",
             "open_settings": "Адкрыць налады",
             "description": "Правядзіце пальцам ад левага краю экрана або націсніце на значок з трымя лініямі, каб убачыць свае серверы і паведамленні!",
-            "join_rvmob": "Далучыцца да серверу RVMob"
+            "join_rvmob": "Далучыцца да сервера Clerotri"
         },
         "modals": {
             "confirm_deletion": {
@@ -141,7 +141,7 @@
                     "enabled": "Уключыць push паведамленні",
                     "notifyOnSelfPing": "Атрымліваць апавяшчэнне пры згадванні саміх сябе"
                 },
-                "showChangelogs": "Паказваць спіс змен пасля абнаўлення RVMob",
+                "showChangelogs": "Паказваць спіс змен пасля абнаўлення Clerotri",
                 "refetchOnReconnect": "Атрамліваць паведамленні пасля перападлучэння",
                 "reopenLastChannel": "Адкрываць апошні канал, у якім вы былі, пры адкрыцці праграмы"
             },
@@ -182,7 +182,7 @@
                 "hide": "(схаваць)"
             },
             "voice": {
-                "header": "Галасавыя каналы пакуль што не патрымліваюцца ў RVMob!",
+                "header": "Галасавыя каналы пакуль што не падтрымліваюцца ў Clerotri!",
                 "body": "Але вы можаце далучыцца да іх праз вэбсайт або Revolt на ПК."
             },
             "generic_errors": {
@@ -229,7 +229,7 @@
                 "title": "Мова"
             },
             "info": {
-                "title": "Аб RVMob"
+                "title": "Аб Clerotri"
             },
             "other": {
                 "debug_info": "Скапіяваць інфармацыю з адладкі",
@@ -271,6 +271,11 @@
             "no_messages": "Няма паведамленняў",
             "no_messages_body": "Пачніце гутарку.",
             "reply_not_loaded": "Паведамленне не загружана"
+        },
+        "profile": {
+            "roles": {
+                "copied_role_id_toast": "Ідэнтыфікатар ролі скапіраваны"
+            }
         }
     }
 }
