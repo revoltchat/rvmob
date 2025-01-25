@@ -149,7 +149,7 @@ export const DiscoverPage = () => {
           }}>
           <Text>{t('app.discover.tabs.servers')}</Text>
         </Button>
-        <Button
+        {/* TODO: unhide when bot support has been added <Button
           style={{flex: 1}}
           onPress={() => {
             if (tab !== 'bots') {
@@ -158,7 +158,7 @@ export const DiscoverPage = () => {
             }
           }}>
           <Text>{t('app.discover.tabs.bots')}</Text>
-        </Button>
+        </Button> */}
       </View>
       {data ? (
         <>
