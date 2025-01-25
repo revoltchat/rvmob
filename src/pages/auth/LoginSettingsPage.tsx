@@ -94,12 +94,12 @@ export const LoginSettingsPage = ({callback}: {callback: () => void}) => {
                 {testResponse === 'valid'
                   ? 'This looks like a Revolt instance!'
                   : testResponse === 'invalid'
-                    ? "This doesn't look like a Revolt instance..."
-                    : testResponse === 'notJSON'
-                      ? "Could not parse response. Make sure you're linking to the API URL!"
-                      : testResponse === 'requestFailed'
-                        ? 'Could not fetch that URL.'
-                        : 'Something went wrong!'}
+                  ? "This doesn't look like a Revolt instance..."
+                  : testResponse === 'notJSON'
+                  ? "Could not parse response. Make sure you're linking to the API URL!"
+                  : testResponse === 'requestFailed'
+                  ? 'Could not fetch that URL.'
+                  : 'Something went wrong!'}
               </Text>
             ) : null}
             <Button

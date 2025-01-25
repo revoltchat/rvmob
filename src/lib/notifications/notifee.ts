@@ -43,8 +43,8 @@ export async function sendNotifeeNotification(
     msg.channel?.server?.name
       ? `#${msg.channel.name} (${msg.channel.server.name})`
       : msg.channel?.channel_type === 'Group'
-        ? `${msg.channel.name}`
-        : `@${msg.channel?.recipient?.username}`
+      ? `${msg.channel.name}`
+      : `@${msg.channel?.recipient?.username}`
   }`;
 
   try {

@@ -251,8 +251,8 @@ export class Messages extends ReactComponent {
         input.type === 'before'
           ? messages.concat(oldMessages)
           : input.type === 'after'
-            ? oldMessages.concat(messages)
-            : messages;
+          ? oldMessages.concat(messages)
+          : messages;
       // const lastResultID = result[result.length - 1]._id;
       // console.log(`result last message id: ${lastResultID}`);
       this.setState({

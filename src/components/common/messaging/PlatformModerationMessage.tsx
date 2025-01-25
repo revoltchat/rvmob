@@ -162,7 +162,7 @@ export const PlatformModerationMessage = observer(
 
     try {
       reportReason = rawReportReason
-        ? (rawReportReason[0] ?? 'UNKNOWN')
+        ? rawReportReason[0] ?? 'UNKNOWN'
         : 'UNKNOWN';
     } catch (error) {
       console.log(
@@ -205,19 +205,19 @@ export const PlatformModerationMessage = observer(
                     responseType === 'POSITIVE'
                       ? currentTheme.statusOnline
                       : responseType === 'MIXED'
-                        ? currentTheme.statusIdle
-                        : responseType === 'NEGATIVE'
-                          ? currentTheme.statusBusy
-                          : currentTheme.statusInvisible
+                      ? currentTheme.statusIdle
+                      : responseType === 'NEGATIVE'
+                      ? currentTheme.statusBusy
+                      : currentTheme.statusInvisible
                   }
                   name={
                     responseType === 'POSITIVE'
                       ? 'check'
                       : responseType === 'MIXED'
-                        ? 'warning'
-                        : responseType === 'NEGATIVE'
-                          ? 'not-interested'
-                          : 'question-mark'
+                      ? 'warning'
+                      : responseType === 'NEGATIVE'
+                      ? 'not-interested'
+                      : 'question-mark'
                   }
                   size={16}
                 />

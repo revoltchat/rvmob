@@ -241,8 +241,8 @@ export const MessageBox = observer((props: MessageBoxProps) => {
               props.channel.channel_type === 'Group'
                 ? props.channel.name
                 : props.channel.channel_type === 'DirectMessage'
-                  ? (props.channel.recipient?.username ?? 'User')
-                  : '',
+                ? props.channel.recipient?.username ?? 'User'
+                : '',
           })}
           onChangeText={text => {
             setCurrentText(text);

@@ -123,8 +123,8 @@ export const Username = observer(
       server && memberObject?.nickname
         ? memberObject?.nickname
         : !skipDisplayName
-          ? (user.display_name ?? user.username)
-          : user.username;
+        ? user.display_name ?? user.username
+        : user.username;
 
     if (server && memberObject?.roles && memberObject?.roles?.length > 0) {
       let srv = client.servers.get(memberObject._id.server);

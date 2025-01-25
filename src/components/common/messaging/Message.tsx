@@ -392,16 +392,15 @@ export const Message = observer((props: MessageProps) => {
                     />
                   );
                 })}
-                {props.message.embeds && props.message.embeds.map((e, i) => {
-                  return (
-                    <MessageEmbed
-                      key={`message-${
-                        props.message._id
-                      }-embed-${i}`}
-                      embed={e}
-                    />
-                  );
-                })}
+                {props.message.embeds &&
+                  props.message.embeds.map((e, i) => {
+                    return (
+                      <MessageEmbed
+                        key={`message-${props.message._id}-embed-${i}`}
+                        embed={e}
+                      />
+                    );
+                  })}
                 {app.settings.get('ui.messaging.showReactions') ? (
                   <MessageReactions msg={props.message} reactions={reactions} />
                 ) : null}

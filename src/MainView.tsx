@@ -145,19 +145,19 @@ function AppViews({state}: {state: any}) {
         }
         barStyle={`${currentTheme.contentType}-content`}
       />
-        {state.state.status === 'loggedIn' ? (
-          <LoggedInViews state={state} setChannel={setChannel} />
-        ) : state.state.status === 'loggedOut' ? (
-          <LoginViews
-            markAsLoggedIn={() => state.setState({status: 'loggedIn'})}
-          />
-        ) : (
-          <LoadingScreen
-            header={'app.loading.unknown_state'}
-            body={'app.loading.unknown_state_body'}
-            bodyParams={{state: state.state.status}}
-          />
-        )}
+      {state.state.status === 'loggedIn' ? (
+        <LoggedInViews state={state} setChannel={setChannel} />
+      ) : state.state.status === 'loggedOut' ? (
+        <LoginViews
+          markAsLoggedIn={() => state.setState({status: 'loggedIn'})}
+        />
+      ) : (
+        <LoadingScreen
+          header={'app.loading.unknown_state'}
+          body={'app.loading.unknown_state_body'}
+          bodyParams={{state: state.state.status}}
+        />
+      )}
     </>
   );
 }
