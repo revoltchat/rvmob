@@ -4,8 +4,8 @@
   <a href="https://translate.revolt.chat/engage/rvmorb/">
     <img src="https://translate.revolt.chat/widgets/rvmorb/-/app/svg-badge.svg" alt="Translation status on Weblate" />
   </a>
-  <a href="https://lea.pet/@rvmob">
-    <img src="https://img.shields.io/badge/fedi-@rvmob@lea.pet-teal" alt="Fediverse badge from shields.io"/>
+  <a href="https://lea.pet/@clerotri">
+    <img src="https://img.shields.io/badge/fedi-@clerotri@lea.pet-teal" alt="Fediverse badge from shields.io"/>
   </a>
 </div>
 
