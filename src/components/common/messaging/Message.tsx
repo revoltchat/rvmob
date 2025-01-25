@@ -392,12 +392,12 @@ export const Message = observer((props: MessageProps) => {
                     />
                   );
                 })}
-                {props.message.embeds?.map(e => {
+                {props.message.embeds && props.message.embeds.map((e, i) => {
                   return (
                     <MessageEmbed
                       key={`message-${
                         props.message._id
-                      }-embed-${Math.random()}`}
+                      }-embed-${i}`}
                       embed={e}
                     />
                   );

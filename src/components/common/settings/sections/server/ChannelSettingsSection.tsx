@@ -188,7 +188,7 @@ export const ChannelSettingsSection = observer(
                       </View>
                     </Pressable>
                   ) : null} */}
-                  <Pressable
+                  {/* TODO: add category settings <Pressable
                     style={{
                       width: 30,
                       height: 20,
@@ -202,7 +202,7 @@ export const ChannelSettingsSection = observer(
                         color={currentTheme.foregroundPrimary}
                       />
                     </View>
-                  </Pressable>
+                  </Pressable> */}
                 </View>
                 {cat.channels.map(c => (
                   <PressableSettingsEntry
