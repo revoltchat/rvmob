@@ -85,8 +85,8 @@ android {
         applicationId "app.upryzing.clerotri"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10
-        versionName "0.7.0-beta1"
+        versionCode 11
+        versionName "0.7.0"
     }
 
     splits {

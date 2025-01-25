@@ -2,18 +2,47 @@
 
 ## v0.7.0
 
-_This version has not been released yet._
+Please note that the changelog for this version is incomplete. It's been over a year since v0.6.0, and [with over 500 commits][commits] I can't bring myself to sift through everything right now. I might at some point - alternatively, community contributions are more than welcome :3
 
-### What's new
+​### Important notes
 
-- RVMob now uses React Native 0.73.
-- fill out other features closer to completion
+- You might've noticed something different: **the app has a new name and icon!** RVMob is now known as **Clerotri**, inspired by the [_Clerodendrum trichotomum_][flower].
+- **Breaking change:** the app's bundle identifier has changed to `app.upryzing.clerotri`, meaning that **this update will install as a new app**, your settings **won't migrate** and **you'll need to log back in**. I sincerely apologise for the inconvenience, but I swear this will be the last time for the foreseeable future that you'll need to do anything major when updating.
+- **Breaking change:** the app now _actually_ requires Android 7. It was the listed minimum version for v0.6.0, but the minimum SDK was set to Android 5 - this has now been fixed. (This isn't really much of a breaking change, though - Android 5/6 were never _officially_ supported, and I doubt anyone was using RVMob on them... if it even worked :eye::eye:)
+- Clerotri is **now on the Fediverse!** I'll be posting updates and proving some amount of support at [`@clerotri@lea.pet`][fedi].
 
-### Experimental/WIP features
+​### What's new
 
-### Bug fixes
+- As promised when I released v0.6.0: Clerotri now has **server settings!** Edit your server's info, revoke bans and invites, kick that one person who never seems to read the channel topic despite repeated warnings when it's literally _RIGHT THERE_- and much more.
+  ​￼- Now for a fun surprise... **translations!** Yes, you read that correctly - **Clerotri now has support for other languages**. v0.7.0 includes support for a few languages, and more will be added in future updates.
+  - Speaking of which... if you speak another language well, **you can get involved!** Go to [Revolt's Weblate instance][weblate] and create an account there, then select your language (or start a new translation if it isn't already listed) and get translating!
+  - If you need any help, have questions about a particular translation or just want to chat with other translators, I'd also recommend joining the **official [Revolt Translators server][revolt_translators]**. You don't need to be a translator to join, either - if you're just curious about how it works or want to see what's going on, feel free to stop by!
+- The app now lets you browse servers on [Discover][discover]! Support for bots will be added in the future.
+- Clerotri has added support for **pinned messages**! They were added relatively recently to Revolt, but to my knowledge they aren't available in any other clients yet 👀
+  ​￼- Now for some smaller tweaks and improvements:
+  - uh some other things
+  - The server info sheet now lets you know whether a server is publicly joinable via Discover and shows badges for verified/official servers.
+    ​￼- Clerotri now uses React Native 0.76 and targets Android 14. Not quite as exciting as the rest of these, but it's nice to be up to date :3
+  - (The app should be smaller and faster as a result, though.)
 
-### Known issues
+​### Experimental/WIP features
+
+TBD
+
+​### Bug fixes
+
+- Servers that aren't explicitly ordered in the synced server list will now correctly show at the bottom - in other words, you won't have to drag them about on the web app first.
+
+​### Known issues
+
+TBD
+
+[commits]: https://github.com/upryzing/clerotri/compare/v0.6.0...v0.7.0
+[flower]: https://en.wikipedia.org/wiki/Clerodendrum_trichotomum
+[fedi]: https://lea.pet/@clerotri
+[weblate]: https://translate.revolt.chat/projects/rvmorb/
+[revolt_translators]: https://rvlt.gg/i18n
+[discover]: https://rvlt.gg
 
 ## v0.6.0
 
