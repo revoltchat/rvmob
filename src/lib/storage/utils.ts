@@ -18,10 +18,7 @@ export function initialiseSettings() {
           st.value = key.value;
           st.onInitialize && st.onInitialize(key.value);
         } else {
-          // ignore known good key
-          if (key.key !== 'app.lastVersion') {
-            console.warn(`[SETTINGS] Unknown setting in MMKV settings: ${key}`);
-          }
+          console.warn(`[SETTINGS] Unknown setting in MMKV settings: ${key}`);
         }
       });
     } catch (e) {

@@ -280,13 +280,6 @@ export const app = {
         default: DEFAULT_API_URL,
         type: 'string',
       },
-      // last ver
-      {
-        key: 'app.lastVersion',
-        category: 'donotshow',
-        default: '',
-        type: 'string',
-      },
     ] as Setting[],
   },
   setTheme: (themeName: string) => {

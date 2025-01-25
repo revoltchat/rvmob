@@ -55,13 +55,13 @@ function openLastChannel() {
 }
 
 function checkLastVersion() {
-  const lastVersion = app.settings.get('app.lastVersion');
+  const lastVersion = storage.getString('lastVersion');
   console.log(app.version, lastVersion);
   if (!lastVersion || lastVersion === '') {
     console.log(
       `[APP] lastVersion is null (${lastVersion}), setting to app.version (${app.version})`,
     );
-    app.settings.set('app.lastVersion', app.version);
+    storage.set('lastVersion', app.version);
   } else if (app.version !== lastVersion) {
     console.log(
       `[APP] lastVersion (${lastVersion}) is different from app.version (${app.version})`,
