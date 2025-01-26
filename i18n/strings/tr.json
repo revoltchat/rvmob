@@ -18,10 +18,10 @@
         "home": {
             "join_lounge": "Revolt Lounge'a katılın",
             "open_lounge": "Revolt Lounge'ı açın",
-            "join_rvmob": "RVMob sunucusuna katılın",
+            "join_rvmob": "Clerotri sunucusuna katılın",
             "open_settings": "Ayarları aç",
             "description": "Sunucularınızı ve mesajlarınızı görmek için ekranın solundan kaydırın veya üç çizgi simgesine tıklayın!",
-            "open_rvmob": "RVMob sunucusunu açın"
+            "open_rvmob": "Clerotri sunucusunu açın"
         },
         "modals": {
             "confirm_deletion": {
@@ -141,7 +141,7 @@
                     "enabled": "Bildirimleri açın",
                     "notifyOnSelfPing": "Kendinize ping attığınızda bildirim alın"
                 },
-                "showChangelogs": "RVMob güncellendikten sonra değişim kayıtlarını göster",
+                "showChangelogs": "Clerotri güncellendikten sonra değişim kayıtlarını göster",
                 "refetchOnReconnect": "Yeniden bağlandığında mesajları yeniden alın",
                 "reopenLastChannel": "Uygulamayı açtığında, en son kaldığın kanalı tekrar aç"
             },
@@ -182,7 +182,7 @@
                 "hide": "(gizle)"
             },
             "voice": {
-                "header": "Ses kanalları şimdilik RVMob'da desteklenmiyor!",
+                "header": "Ses kanalları şimdilik Clerotri'de desteklenmiyor!",
                 "body": "Bu arada web uygulaması veya Revolt Desktop aracılığıyla onlara katılabilirsin."
             },
             "generic_errors": {
@@ -213,8 +213,8 @@
             }
         },
         "discover": {
-            "count_bots_one": "{{count}} sunucu",
-            "count_bots_other": "{{count}} sunucu",
+            "count_bots_one": "{{count}} bot",
+            "count_bots_other": "{{count}} botlar",
             "count_servers_one": "{{count}} sunucu",
             "count_servers_other": "{{count}} sunucular",
             "fetching_bots": "Botlar yükleniyor…",
@@ -237,7 +237,7 @@
                 "title": "Dil"
             },
             "info": {
-                "title": "RVMob Hakkında"
+                "title": "Clerotri Hakkında"
             },
             "other": {
                 "debug_info": "Hata Ayıklama Bilgilerini Kopyala",
@@ -269,6 +269,11 @@
             "no_messages_body": "Konuşmayı başlatın.",
             "message_box_channel": "#{{name}} Mesaj gönder",
             "reply_not_loaded": "Mesaj yüklenmedi"
+        },
+        "profile": {
+            "roles": {
+                "copied_role_id_toast": "Rol ID'si kopyalandı"
+            }
         }
     }
 }
