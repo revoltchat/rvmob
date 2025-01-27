@@ -16,7 +16,7 @@ import {
 } from '@clerotri/lib/types';
 
 export const app = {
-  version: '0.7.0',
+  version: '0.7.1',
   settings: {
     _fetch: (k: string) => {
       let s;

@@ -1,6 +1,21 @@
 # Clerotri's changelog
 
+## v0.7.1
+
+_This version was released on 27/01/2025._
+
+​￼### What's new
+
+- In-app notifications now look better, with proper alignment and shadows.
+
+​￼### Bug fixes
+
+- Switching between themes will no longer cause the app to crash.
+- Messages should no longer duplicate/appear in the wrong channels.
+
 ## v0.7.0
+
+_This version was released on 25/01/2025._
 
 Please note that the changelog for this version is incomplete. It's been over a year since v0.6.0, and [with over 500 commits][commits] I can't bring myself to sift through everything right now. I might at some point - alternatively, community contributions are more than welcome :3
 
