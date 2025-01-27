@@ -113,7 +113,7 @@ export const LoginSettingsPage = ({callback}: {callback: () => void}) => {
                 const isValid = await testURL(instanceURL, true);
                 if (isValid) {
                   console.log(`[AUTH] Setting instance URL to ${instanceURL}`);
-                  await app.settings.set('app.instance', instanceURL);
+                  app.settings.set('app.instance', instanceURL);
                   setSaved(true);
                 }
               }}>

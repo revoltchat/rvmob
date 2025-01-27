@@ -44,9 +44,9 @@ export const BoolSetting = ({
       <Checkbox
         key={`checkbox-${sRaw.key}`}
         value={value}
-        callback={async () => {
+        callback={() => {
           const newValue = !value;
-          await app.settings.set(sRaw.key, newValue);
+          app.settings.set(sRaw.key, newValue);
           setValue(newValue);
           sRaw.key === 'ui.settings.showExperimental'
             ? experimentalFunction(newValue)

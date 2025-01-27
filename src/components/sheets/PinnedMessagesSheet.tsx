@@ -31,7 +31,7 @@ export const PinnedMessagesSheet = observer(() => {
     return false;
   });
 
-  setFunction('openPinnedMessagesMenu', async (c: Channel | null) => {
+  setFunction('openPinnedMessagesMenu', (c: Channel | null) => {
     setChannel(c);
     c ? sheetRef.current?.expand() : sheetRef.current?.close();
   });

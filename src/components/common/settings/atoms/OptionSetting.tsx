@@ -41,8 +41,8 @@ export const OptionSetting = ({sRaw}: {sRaw: Setting}) => {
           <TouchableOpacity
             key={o}
             style={localStyles.option}
-            onPress={async () => {
-              await app.settings.set(sRaw.key, o);
+            onPress={() => {
+              app.settings.set(sRaw.key, o);
               setValue(o);
             }}>
             {sRaw.key === 'app.language' ? (
