@@ -27,7 +27,8 @@
         },
         "loading": {
             "generic": "Ładowanie…",
-            "connecting": "Logowanie…"
+            "connecting": "Logowanie…",
+            "unknown_state_body": "Proszę, przekaż deweloperom, że to widziałeś (value: {{state}})"
         },
         "login": {
             "forms": {
@@ -46,7 +47,11 @@
                 "signup_body": "Zostaniesz przekierowany do aplikacji webowej Revolt. Wróć i zaloguj się po zakończeniu rejestracji."
             },
             "subheader": "Czy masz konto?",
-            "token_info_label": "Skąd wziąść token?"
+            "token_info_label": "Skąd wziąść token?",
+            "settings": {
+                "saved": "Zapisano!",
+                "saved_body": "Aktualnie, musisz otworzyć apliklację ponownie, by twoje zmiany się zapisały. Wiemy, że nie jest to idealne rozwiązanie - naprawimy to..kiedyś."
+            }
         },
         "home": {
             "open_rvmob": "Otwórz serwer RVMob",
