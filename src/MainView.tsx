@@ -99,7 +99,7 @@ function LoggedInViews({state, setChannel}: {state: any; setChannel: any}) {
           openChannel={() =>
             state.setState({
               notificationMessage: null,
-              currentChannel: state.state.notificationMessage.channel,
+              currentChannel: client.channels.get(state.state.notificationMessage.channel),
             })
           }
         />
@@ -207,7 +207,7 @@ async function handleMessageNotification(
 
   if (app.settings.get('app.notifications.enabled') && shouldNotif) {
     console.log(`[NOTIFICATIONS] Pushing notification for message ${msg._id}`);
-    if (state.state.currentChannel !== msg.channel) {
+    if (state.state.currentChannel !== channel) {
       state.setState({notificationMessage: msg});
       await sleep(5000);
       state.setState({notificationMessage: null});

@@ -4,13 +4,14 @@ import {observer} from 'mobx-react-lite';
 
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import type {Message} from 'revolt.js';
+import type {API} from 'revolt.js';
 
 import {styles} from '../Theme';
 import {Avatar, Text, Username} from './common/atoms';
 import {MarkdownView} from './common/MarkdownView';
 import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 import {parseRevoltNodes} from '../lib/utils';
+import { client } from '@clerotri/lib/client';
 
 export const Notification = observer(
   ({
@@ -18,12 +19,15 @@ export const Notification = observer(
     dismiss,
     openChannel,
   }: {
-    message: Message | null;
+    message: API.Message | null;
     dismiss: Function;
     openChannel: Function;
   }) => {
     const {currentTheme} = useContext(ThemeContext);
     if (message) {
+      const author = client.users.get(message.author);
+      const channel = client.channels.get(message.channel);
+
       return (
         <TouchableOpacity
           style={{
@@ -42,7 +46,7 @@ export const Notification = observer(
               flexDirection: 'row',
               overflow: 'hidden',
             }}>
-            <Avatar user={message.author} size={35} />
+            <Avatar user={author} size={35} />
             <View
               style={{
                 marginHorizontal: commonValues.sizes.medium,
@@ -54,12 +58,12 @@ export const Notification = observer(
                   flexDirection: 'row',
                 }}>
                 <Username
-                  user={message.author}
-                  server={message.channel?.server}
+                  user={author}
+                  server={channel?.server}
                 />
                 <Text style={{fontWeight: 'bold'}}>
                   {' '}
-                  ({message.channel?.name ?? message.channel?._id})
+                  ({channel?.name ?? channel?._id})
                 </Text>
               </View>
               {message.content ? (
