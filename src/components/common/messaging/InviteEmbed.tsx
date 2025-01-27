@@ -42,8 +42,8 @@ export const InviteEmbed = observer(
           const errorType = stringE.match('404')
             ? 'notFound'
             : stringE.match('429')
-            ? 'rateLimited'
-            : 'otherError';
+              ? 'rateLimited'
+              : 'otherError';
           if (errorType === 'otherError') {
             console.warn(
               `[INVITEEMBED] Unrecognised error fetching invite: ${e}`,
@@ -75,15 +75,15 @@ export const InviteEmbed = observer(
           {error === 'notFound'
             ? "This invite doesn't exist"
             : error === 'rateLimited'
-            ? 'Too many requests'
-            : 'An error occurred'}
+              ? 'Too many requests'
+              : 'An error occurred'}
         </Text>
         <Text>
           {error === 'notFound'
             ? `The invite may have expired or been deleted. Ask ${message.author?.username} for a new one.`
             : error === 'rateLimited'
-            ? "You've fetched too many invites in a short period of time. Wait a few minutes and try again."
-            : 'Something went wrong. Please try again later.'}
+              ? "You've fetched too many invites in a short period of time. Wait a few minutes and try again."
+              : 'Something went wrong. Please try again later.'}
         </Text>
       </InviteBackground>
     ) : invObject.type === 'Server' ? (

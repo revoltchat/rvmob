@@ -158,8 +158,8 @@ export async function loginWithSavedToken(status: any) {
       client.user
         ? app.setLoggedOutScreen('loginPage')
         : status === 'loggedIn'
-        ? null
-        : app.setLoggedOutScreen('loginPage');
+          ? null
+          : app.setLoggedOutScreen('loginPage');
     }
   } catch (err) {
     console.log(err);
