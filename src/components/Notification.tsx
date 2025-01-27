@@ -11,7 +11,7 @@ import {Avatar, Text, Username} from './common/atoms';
 import {MarkdownView} from './common/MarkdownView';
 import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 import {parseRevoltNodes} from '../lib/utils';
-import { client } from '@clerotri/lib/client';
+import {client} from '@clerotri/lib/client';
 
 export const Notification = observer(
   ({
@@ -57,10 +57,7 @@ export const Notification = observer(
                 style={{
                   flexDirection: 'row',
                 }}>
-                <Username
-                  user={author}
-                  server={channel?.server}
-                />
+                <Username user={author} server={channel?.server} />
                 <Text style={{fontWeight: 'bold'}}>
                   {' '}
                   ({channel?.name ?? channel?._id})

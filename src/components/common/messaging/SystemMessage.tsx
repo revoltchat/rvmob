@@ -10,7 +10,7 @@ import type {Message as RevoltMessage} from 'revolt.js';
 import {Text, Username} from '@clerotri/components/common/atoms';
 import {app} from '@clerotri/Generic';
 import {client} from '@clerotri/lib/client';
-import {Theme, ThemeContext} from '@clerotri/lib/themes';
+import {ThemeContext} from '@clerotri/lib/themes';
 
 const SYSTEM_MESSAGE_ICONS = {
   text: {
@@ -86,9 +86,6 @@ const SystemMessageIcon = observer(
 
 export const SystemMessage = observer(
   ({message, isReply}: {message: RevoltMessage; isReply?: boolean}) => {
-    const {currentTheme} = useContext(ThemeContext);
-    const localStyles = generateLocalStyles(currentTheme);
-
     if (!message.system) {
       return <></>;
     }
@@ -176,17 +173,15 @@ export const SystemMessage = observer(
   },
 );
 
-const generateLocalStyles = (currentTheme: Theme) => {
-  return StyleSheet.create({
-    containerCommon: {
-      flex: 1,
-      flexDirection: 'row',
-    },
-    containerPadding: {
-      paddingInlineStart: 10,
-      paddingBlockStart: app.settings.get(
-        'ui.messaging.messageSpacing',
-      ) as number,
-    },
-  });
-};
+const localStyles = StyleSheet.create({
+  containerCommon: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  containerPadding: {
+    paddingInlineStart: 10,
+    paddingBlockStart: app.settings.get(
+      'ui.messaging.messageSpacing',
+    ) as number,
+  },
+});

@@ -4,7 +4,7 @@ import {
   useContext,
   useEffect,
 } from 'react';
-import {StatusBar, StyleSheet, View} from 'react-native';
+import {StatusBar, View} from 'react-native';
 
 import type {API, Channel, Server} from 'revolt.js';
 
@@ -22,7 +22,7 @@ import {
   setUpNotifeeListener,
 } from '@clerotri/lib/notifications';
 import {storage} from '@clerotri/lib/storage';
-import {Theme, ThemeContext} from '@clerotri/lib/themes';
+import {ThemeContext} from '@clerotri/lib/themes';
 import {sleep} from '@clerotri/lib/utils';
 import {LoginViews} from '@clerotri/pages/LoginViews';
 
@@ -99,7 +99,9 @@ function LoggedInViews({state, setChannel}: {state: any; setChannel: any}) {
           openChannel={() =>
             state.setState({
               notificationMessage: null,
-              currentChannel: client.channels.get(state.state.notificationMessage.channel),
+              currentChannel: client.channels.get(
+                state.state.notificationMessage.channel,
+              ),
             })
           }
         />

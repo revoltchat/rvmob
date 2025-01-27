@@ -128,7 +128,7 @@ function MessageViewErrorMessage({
   );
 }
 
-export const NewMessageView = observer(
+const NewMessageView = observer(
   ({
     channel,
     messages,
@@ -226,7 +226,7 @@ function handleNewMessage(
   setError: (error: any) => void,
   msg: RevoltMessage,
 ) {
-  console.log(`[NEWMESSAGEVIEW] Handling new message ${msg._id}`,  );
+  console.log(`[NEWMESSAGEVIEW] Handling new message ${msg._id}`);
 
   if (msg.channel !== channel || handledMessages.includes(msg._id)) {
     return;
@@ -339,7 +339,9 @@ export const MessageView = observer(({channel}: {channel: Channel}) => {
 
     function setUpListeners() {
       client.addListener('message', msg => onNewMessage(msg));
-      client.addListener('message/delete', (id, msg) => onMessageDeletion(id, msg));
+      client.addListener('message/delete', (id, msg) =>
+        onMessageDeletion(id, msg),
+      );
     }
 
     function cleanupListeners() {
