@@ -1,6 +1,6 @@
 import 'react-native-get-random-values'; // react native moment
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {ErrorBoundary} from 'react-error-boundary';
 
@@ -22,7 +22,9 @@ export const App = () => {
     setTheme(newTheme);
   });
 
-  initialiseSettings();
+  useEffect(() => {
+    initialiseSettings();
+  }, []);
 
   return (
     <GestureHandlerRootView style={localStyles.outer}>
