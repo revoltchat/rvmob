@@ -6,7 +6,7 @@ import {
 } from 'react';
 import {StatusBar, StyleSheet, View} from 'react-native';
 
-import type {Channel, Server} from 'revolt.js';
+import type {API, Channel, Server} from 'revolt.js';
 
 import {app, randomizeRemark, setFunction} from '@clerotri/Generic';
 import {client} from '@clerotri/lib/client';
@@ -162,6 +162,60 @@ function AppViews({state}: {state: any}) {
   );
 }
 
+async function handleMessageNotification(
+  state: any,
+  msg: API.Message,
+  notifeeChannel: string,
+) {
+  console.log(`[APP] Handling message ${msg._id}`);
+
+  const channel = client.channels.get(msg.channel);
+
+  let channelNotif =
+    state.state.channelNotifications && channel
+      ? state.state.channelNotifications[channel?._id]
+      : undefined;
+  let serverNotif =
+    state.state.serverNotifications && channel?.server
+      ? state.state.serverNotifications[channel?.server?._id]
+      : undefined;
+
+  const isMuted =
+    (channelNotif && channelNotif === 'none') ||
+    channelNotif === 'muted' ||
+    (serverNotif && serverNotif === 'none') ||
+    serverNotif === 'muted';
+
+  const alwaysNotif =
+    channelNotif === 'all' || (!isMuted && serverNotif === 'all');
+
+  const mentionsUser =
+    (msg.mentions?.includes(client.user?._id!) &&
+      (app.settings.get('app.notifications.notifyOnSelfPing') ||
+        msg.author !== client.user?._id)) ||
+    channel?.channel_type === 'DirectMessage';
+
+  const shouldNotif =
+    (alwaysNotif &&
+      (app.settings.get('app.notifications.notifyOnSelfPing') ||
+        msg.author !== client.user?._id)) ||
+    (!isMuted && mentionsUser);
+
+  console.log(
+    `[NOTIFICATIONS] Should notify for ${msg._id}: ${shouldNotif} (channel/server muted? ${isMuted}, notifications for all messages enabled? ${alwaysNotif}, message mentions the user? ${mentionsUser})`,
+  );
+
+  if (app.settings.get('app.notifications.enabled') && shouldNotif) {
+    console.log(`[NOTIFICATIONS] Pushing notification for message ${msg._id}`);
+    if (state.state.currentChannel !== msg.channel) {
+      state.setState({notificationMessage: msg});
+      await sleep(5000);
+      state.setState({notificationMessage: null});
+    }
+
+    await sendNotifeeNotification(msg, client, notifeeChannel);
+  }
+}
 export class MainView extends ReactComponent {
   constructor(props) {
     super(props);
@@ -250,56 +304,10 @@ export class MainView extends ReactComponent {
       this.setState({network: 'dropped'});
     });
 
-    client.on('message', async msg => {
-      console.log(`[APP] Handling message ${msg._id}`);
-
-      let channelNotif = this.state.channelNotifications
-        ? this.state.channelNotifications[msg.channel?._id]
-        : undefined;
-      let serverNotif = this.state.serverNotifications
-        ? this.state.serverNotifications[msg.channel?.server?._id]
-        : undefined;
-
-      const isMuted =
-        (channelNotif && channelNotif === 'none') ||
-        channelNotif === 'muted' ||
-        (serverNotif && serverNotif === 'none') ||
-        serverNotif === 'muted';
-
-      const alwaysNotif =
-        channelNotif === 'all' || (!isMuted && serverNotif === 'all');
-
-      const mentionsUser =
-        (msg.mention_ids?.includes(client.user?._id!) &&
-          (app.settings.get('app.notifications.notifyOnSelfPing') ||
-            msg.author?._id !== client.user?._id)) ||
-        msg.channel?.channel_type === 'DirectMessage';
-
-      const shouldNotif =
-        (alwaysNotif &&
-          (app.settings.get('app.notifications.notifyOnSelfPing') ||
-            msg.author?._id !== client.user?._id)) ||
-        (!isMuted && mentionsUser);
-
-      console.log(
-        `[NOTIFICATIONS] Should notify for ${msg._id}: ${shouldNotif} (channel/server muted? ${isMuted}, notifications for all messages enabled? ${alwaysNotif}, message mentions the user? ${mentionsUser})`,
-      );
-
-      if (app.settings.get('app.notifications.enabled') && shouldNotif) {
-        console.log(
-          `[NOTIFICATIONS] Pushing notification for message ${msg._id}`,
-        );
-        if (this.state.currentChannel !== msg.channel) {
-          this.setState({notificationMessage: msg});
-          await sleep(5000);
-          this.setState({notificationMessage: null});
-        }
-
-        await sendNotifeeNotification(msg, client, defaultNotif);
-      }
-    });
-
     client.on('packet', async p => {
+      if (p.type === 'Message') {
+        await handleMessageNotification(this, p, defaultNotif);
+      }
       if (p.type === 'UserSettingsUpdate') {
         console.log('[WEBSOCKET] Synced settings updated');
         try {

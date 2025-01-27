@@ -1,6 +1,6 @@
 import notifee, {EventType} from '@notifee/react-native';
 
-import type {Client, Message} from 'revolt.js';
+import type {API, Client} from 'revolt.js';
 
 export async function createChannel() {
   const channel = (await notifee.getChannel('clerotri'))
@@ -32,30 +32,33 @@ export function setUpNotifeeListener(client: Client, setState: any) {
 }
 
 export async function sendNotifeeNotification(
-  msg: Message,
+  msg: API.Message,
   client: Client,
   defaultNotif: string,
 ) {
+  const channel = client.channels.get(msg.channel);
+  const author = client.users.get(msg.author);
+
   let notifs = (await notifee.getDisplayedNotifications()).filter(
-    n => n.id === msg.channel?._id,
+    n => n.id === msg.channel,
   );
   const title = `${
-    msg.channel?.server?.name
-      ? `#${msg.channel.name} (${msg.channel.server.name})`
-      : msg.channel?.channel_type === 'Group'
-        ? `${msg.channel.name}`
-        : `@${msg.channel?.recipient?.username}`
+    channel?.server?.name
+      ? `#${channel.name} (${channel.server.name})`
+      : channel?.channel_type === 'Group'
+        ? `${channel.name}`
+        : `@${channel?.recipient?.username}`
   }`;
 
   try {
     notifee.displayNotification({
       title: title,
       data: {
-        channel: msg.channel?._id ?? 'UNKNOWN',
+        channel: channel?._id ?? 'UNKNOWN',
         messageID: msg._id,
       },
       body:
-        `<b>${msg.author?.username}</b>: ` +
+        `<b>${author?.username}</b>: ` +
         msg.content
           ?.replaceAll(
             '<@' + client.user?._id + '>',
@@ -87,15 +90,14 @@ export async function sendNotifeeNotification(
         color: '#1AD4B2',
         smallIcon: 'ic_launcher_monochrome',
         largeIcon:
-          msg.channel?.server?.generateIconURL() ||
-          msg.author?.generateAvatarURL(),
+          channel?.server?.generateIconURL() || author?.generateAvatarURL(),
         pressAction: {
           id: 'default',
           launchActivity: 'app.upryzing.clerotri.MainActivity',
         },
         channelId: defaultNotif,
       },
-      id: msg.channel?._id,
+      id: channel?._id,
     });
   } catch (notifErr) {
     console.log(`[NOTIFEE] Error sending notification: ${notifErr}`);
