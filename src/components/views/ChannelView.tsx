@@ -10,7 +10,7 @@ import type {Channel} from 'revolt.js';
 
 import {app} from '@clerotri/Generic';
 import {Messages} from '@clerotri/LegacyMessageView';
-import {NewMessageView} from '@clerotri/MessageView';
+import {MessageView} from '@clerotri/MessageView';
 import {MessageBox} from '@clerotri/components/MessageBox';
 import {styles} from '@clerotri/Theme';
 import {Button, Text} from '@clerotri/components/common/atoms';
@@ -77,8 +77,6 @@ const RegularChannelView = observer(({channel}: {channel: Channel}) => {
 
   const [renderCount, rerender] = useState(0);
 
-  const handledMessages = [] as string[];
-
   return (
     <View style={styles.flex}>
       <ChannelHeader
@@ -140,10 +138,7 @@ const RegularChannelView = observer(({channel}: {channel: Channel}) => {
       ) : !channel?.nsfw || app.settings.get('ui.messaging.showNSFWContent') ? (
         <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
           {app.settings.get('ui.messaging.useNewMessageView') ? (
-            <NewMessageView
-              channel={channel}
-              handledMessages={handledMessages}
-            />
+            <MessageView channel={channel} />
           ) : (
             <>
               <Messages

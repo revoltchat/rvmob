@@ -1,4 +1,5 @@
 import {useContext, useEffect, useRef, useState} from 'react';
+import type {Dispatch, RefObject, SetStateAction} from 'react';
 import {
   FlatList,
   NativeSyntheticEvent,
@@ -13,7 +14,7 @@ import {observer} from 'mobx-react-lite';
 
 import {ErrorBoundary} from 'react-error-boundary';
 
-import type {Channel, Message as RevoltMessage} from 'revolt.js';
+import {Channel, Message as RevoltMessage} from 'revolt.js';
 
 import {app} from './Generic';
 import {client} from './lib/client';
@@ -130,71 +131,20 @@ function MessageViewErrorMessage({
 export const NewMessageView = observer(
   ({
     channel,
-    handledMessages,
+    messages,
+    atEndOfPage,
+    fetchMoreMessages,
+    scrollViewRef,
   }: {
     channel: Channel;
-    handledMessages: string[];
+    messages: RevoltMessage[];
+    atEndOfPage: {current: boolean};
+    fetchMoreMessages: (before: string) => void;
+    scrollViewRef: RefObject<FlatList>;
   }) => {
     console.log(`[NEWMESSAGEVIEW] Creating message view for ${channel._id}...`);
-    const {currentTheme} = useContext(ThemeContext);
 
     const {t} = useTranslation();
-
-    const [messages, setMessages] = useState([] as RevoltMessage[]);
-    const [loading, setLoading] = useState(true);
-    const [atEndOfPage, setAtEndOfPage] = useState(false);
-    const [error, setError] = useState(null as any);
-
-    const scrollViewRef = useRef<FlatList>(null);
-
-    useEffect(() => {
-      console.log(`[NEWMESSAGEVIEW] Fetching messages for ${channel._id}...`);
-      async function getMessages() {
-        const msgs = await fetchMessages(channel, {}, []);
-        console.log(
-          `[NEWMESSAGEVIEW] Pushing ${msgs.length} initial message(s) for ${channel._id}...`,
-        );
-        setMessages(msgs);
-        setLoading(false);
-      }
-      try {
-        getMessages();
-      } catch (err) {
-        console.log(
-          `[NEWMESSAGEVIEW] Error fetching initial messages for ${channel._id}: ${err}`,
-        );
-        setError(err);
-      }
-    }, [channel]);
-
-    client.on('message', async msg => {
-      // set this before anything happens that might change it
-      const shouldScroll = atEndOfPage;
-      if (msg.channel === channel && !handledMessages.includes(msg._id)) {
-        try {
-          console.log(atEndOfPage);
-          handledMessages.push(msg._id);
-          console.log(
-            `[NEWMESSAGEVIEW] New message ${msg._id} is in current channel; pushing it to the message list... (debug: will scroll = ${atEndOfPage})`,
-          );
-          setMessages(oldMessages => [...oldMessages, msg]);
-          if (shouldScroll) {
-            scrollViewRef.current?.scrollToEnd();
-          }
-        } catch (err) {
-          console.log(
-            `[NEWMESSAGEVIEW] Error pushing new message (${msg._id}): ${err}`,
-          );
-          setError(err);
-        }
-      }
-    });
-
-    client.on('message/delete', async (id, msg) => {
-      if (msg?.channel?._id === channel._id) {
-        setMessages(messages.filter(m => m._id !== id));
-      }
-    });
 
     // set functions here so they don't get recreated
     const onPress = (m: RevoltMessage) => {
@@ -210,6 +160,7 @@ export const NewMessageView = observer(
     };
 
     const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      console.log(client.listenerCount('message'));
       const position = e.nativeEvent.contentOffset.y;
       const viewHeight =
         e.nativeEvent.contentSize.height -
@@ -217,25 +168,16 @@ export const NewMessageView = observer(
       // account for decimal weirdness by assuming that if the position is this close to the height that the user is at the bottom
       if (viewHeight - position <= 1) {
         console.log('bonk!');
-        setAtEndOfPage(true);
+        atEndOfPage.current = true;
         channel.ack(channel.last_message_id ?? '01ANOMESSAGES', true);
       } else {
-        if (atEndOfPage) {
-          setAtEndOfPage(false);
+        if (atEndOfPage.current) {
+          atEndOfPage.current = false;
         }
       }
       if (e.nativeEvent.contentOffset.y <= 0) {
         console.log('bonk2!');
-        fetchMessages(
-          channel,
-          {
-            type: 'before',
-            id: messages[0]._id,
-          },
-          messages,
-        ).then(newMsgs => {
-          setMessages(newMsgs);
-        });
+        fetchMoreMessages(messages[0]._id);
       }
       // console.log(
       //   e.nativeEvent.contentOffset.y,
@@ -246,39 +188,195 @@ export const NewMessageView = observer(
 
     return (
       <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
-        {error ? (
-          <Text colour={currentTheme.error}>
-            Error rendering messages: {error.message ?? error}
-          </Text>
-        ) : loading ? (
-          <LoadingScreen />
-        ) : (
-          <View key={'messageview-outer-container'} style={{flex: 1}}>
-            <FlatList
-              key={'messageview-scrollview'}
-              keyExtractor={keyExtractor}
-              data={messages}
-              style={styles.messagesView}
-              contentContainerStyle={{
-                paddingBottom: Platform.OS === 'web' ? 0 : 20,
-                flexGrow: 1,
-                justifyContent: 'flex-end',
-                flexDirection: 'column',
-              }}
-              ref={scrollViewRef}
-              renderItem={renderItem}
-              onScroll={onScroll}
-            />
-            {messages.length === 0 && (
-              <View style={{padding: 16}}>
-                <Text type={'h1'}>{t('app.messaging.no_messages')}</Text>
-                <Text>{t('app.messaging.no_messages_body')}</Text>
-              </View>
-            )}
-          </View>
-        )}
+        <View key={'messageview-outer-container'} style={{flex: 1}}>
+          <FlatList
+            key={'messageview-scrollview'}
+            keyExtractor={keyExtractor}
+            data={messages}
+            style={styles.messagesView}
+            contentContainerStyle={{
+              paddingBottom: Platform.OS === 'web' ? 0 : 20,
+              flexGrow: 1,
+              justifyContent: 'flex-end',
+              flexDirection: 'column',
+            }}
+            ref={scrollViewRef}
+            renderItem={renderItem}
+            onScroll={onScroll}
+          />
+          {messages.length === 0 && (
+            <View style={{padding: 16}}>
+              <Text type={'h1'}>{t('app.messaging.no_messages')}</Text>
+              <Text>{t('app.messaging.no_messages_body')}</Text>
+            </View>
+          )}
+        </View>
         <MessageBox channel={channel} />
       </ErrorBoundary>
     );
   },
 );
+
+function handleNewMessage(
+  channel: Channel,
+  handledMessages: string[],
+  atEndOfPage: boolean,
+  setMessages: Dispatch<SetStateAction<RevoltMessage[]>>,
+  scrollViewRef: RefObject<FlatList>,
+  setError: (error: any) => void,
+  msg: RevoltMessage,
+) {
+  console.log(`[NEWMESSAGEVIEW] Handling new message ${msg._id}`,  );
+
+  if (msg.channel !== channel || handledMessages.includes(msg._id)) {
+    return;
+  }
+
+  // set this before anything happens that might change it
+  const shouldScroll = atEndOfPage;
+  try {
+    console.log(atEndOfPage);
+    handledMessages.push(msg._id);
+    console.log(
+      `[NEWMESSAGEVIEW] New message ${msg._id} is in current channel; pushing it to the message list... (debug: will scroll = ${atEndOfPage})`,
+    );
+    setMessages(oldMessages => [...oldMessages, msg]);
+    if (shouldScroll) {
+      scrollViewRef.current?.scrollToEnd();
+    }
+  } catch (err) {
+    console.log(
+      `[NEWMESSAGEVIEW] Error pushing new message (${msg._id}): ${err}`,
+    );
+    setError(err);
+  }
+}
+
+function handleMessageDeletion(
+  channel: Channel,
+  setMessages: Dispatch<SetStateAction<RevoltMessage[]>>,
+  id: string,
+  msg?: RevoltMessage,
+) {
+  if (msg?.channel?._id === channel._id) {
+    setMessages(oldMessages => oldMessages.filter(m => m._id !== id));
+  }
+}
+
+export const MessageView = observer(({channel}: {channel: Channel}) => {
+  const {currentTheme} = useContext(ThemeContext);
+
+  const handledMessages = useRef<string[]>([]);
+
+  const [messages, setMessages] = useState<RevoltMessage[]>([]);
+
+  const [loading, setLoading] = useState(true);
+  const atEndOfPage = useRef(false);
+  const [error, setError] = useState(null as any);
+
+  const scrollViewRef = useRef<FlatList>(null);
+
+  function fetchMoreMessages(messageID: string) {
+    fetchMessages(
+      channel,
+      {
+        type: 'before',
+        id: messageID,
+      },
+      messages,
+    ).then(newMsgs => {
+      setMessages(newMsgs);
+    });
+  }
+
+  useEffect(() => {
+    console.log(`[NEWMESSAGEVIEW] Fetching messages for ${channel._id}...`);
+    async function getMessages() {
+      const msgs = await fetchMessages(channel, {}, []);
+      console.log(
+        `[NEWMESSAGEVIEW] Pushing ${msgs.length} initial message(s) for ${channel._id}...`,
+      );
+      setMessages(msgs);
+      setLoading(false);
+    }
+
+    function cleanupMessages() {
+      setLoading(true);
+      setMessages([]);
+    }
+
+    try {
+      getMessages();
+    } catch (err) {
+      console.log(
+        `[NEWMESSAGEVIEW] Error fetching initial messages for ${channel._id}: ${err}`,
+      );
+      setError(err);
+    }
+
+    // called when switching channels
+    return () => cleanupMessages();
+  }, [channel]);
+
+  useEffect(() => {
+    console.log(`[NEWMESSAGEVIEW] Setting up listeners for ${channel._id}...`);
+
+    function onNewMessage(msg: RevoltMessage) {
+      handleNewMessage(
+        channel,
+        handledMessages.current,
+        atEndOfPage.current,
+        setMessages,
+        scrollViewRef,
+        setError,
+        msg,
+      );
+    }
+
+    function onMessageDeletion(id: string, msg?: RevoltMessage) {
+      handleMessageDeletion(channel, setMessages, id, msg);
+    }
+
+    function setUpListeners() {
+      client.addListener('message', msg => onNewMessage(msg));
+      client.addListener('message/delete', (id, msg) => onMessageDeletion(id, msg));
+    }
+
+    function cleanupListeners() {
+      client.removeListener('message');
+      client.removeListener('message/delete');
+    }
+
+    try {
+      setUpListeners();
+    } catch (err) {
+      console.log(
+        `[NEWMESSAGEVIEW] Error seting up listeners for ${channel._id}: ${err}`,
+      );
+      setError(err);
+    }
+
+    // called when switching channels
+    return () => cleanupListeners();
+  }, [channel]);
+
+  return (
+    <ErrorBoundary fallbackRender={MessageViewErrorMessage}>
+      {error ? (
+        <Text colour={currentTheme.error}>
+          Error rendering messages: {error.message ?? error}
+        </Text>
+      ) : loading ? (
+        <LoadingScreen />
+      ) : (
+        <NewMessageView
+          channel={channel}
+          atEndOfPage={atEndOfPage}
+          messages={messages}
+          fetchMoreMessages={fetchMoreMessages}
+          scrollViewRef={scrollViewRef}
+        />
+      )}
+    </ErrorBoundary>
+  );
+});
