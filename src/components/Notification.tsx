@@ -34,15 +34,23 @@ export const Notification = observer(
             flexDirection: 'row',
             alignSelf: 'center',
             alignItems: 'center',
+            justifyContent: 'space-between',
             width: '90%',
             backgroundColor: currentTheme.background,
             borderRadius: commonValues.sizes.small,
             minHeight: 40,
             padding: commonValues.sizes.medium,
+            boxShadow: [
+              {
+                color: '#00000060',
+                blurRadius: commonValues.sizes.large,
+              },
+            ],
           }}
           onPress={() => openChannel()}>
           <View
             style={{
+              alignItems: 'center',
               flexDirection: 'row',
               overflow: 'hidden',
             }}>

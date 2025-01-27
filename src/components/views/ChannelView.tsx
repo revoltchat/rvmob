@@ -152,9 +152,9 @@ const RegularChannelView = observer(({channel}: {channel: Channel}) => {
                 onUsernamePress={m => {
                   const currentText = app.getMessageBoxInput();
                   app.setMessageBoxInput(
-                    `${currentText}${
-                      currentText.length > 0 ? ' ' : ''
-                    }<@${m.author?._id}>`,
+                    `${currentText}${currentText.length > 0 ? ' ' : ''}<@${
+                      m.author?._id
+                    }>`,
                   );
                 }}
               />
