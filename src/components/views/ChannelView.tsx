@@ -21,7 +21,7 @@ import {FriendsPage} from '@clerotri/components/pages/FriendsPage';
 import {HomePage} from '@clerotri/components/pages/HomePage';
 import {VoiceChannel} from '@clerotri/components/pages/VoiceChannel';
 import {DiscoverPage} from '@clerotri/pages/discover/DiscoverPage';
-import {Theme, ThemeContext} from '@clerotri/lib/themes';
+import {ThemeContext} from '@clerotri/lib/themes';
 
 function MessageViewErrorMessage({
   error,
@@ -197,9 +197,6 @@ const RegularChannelView = observer(({channel}: {channel: Channel}) => {
 });
 
 export const ChannelView = observer(({channel}: {channel: CVChannel}) => {
-  const {currentTheme} = useContext(ThemeContext);
-  const localStyles = generateLocalStyles(currentTheme);
-
   console.log(
     `[CHANNELVIEW] Rendering channel view for ${
       channel ? (typeof channel !== 'string' ? channel._id : channel) : channel
@@ -217,11 +214,8 @@ export const ChannelView = observer(({channel}: {channel: CVChannel}) => {
   );
 });
 
-const generateLocalStyles = (currentTheme: Theme) => {
-  return StyleSheet.create({
-    mainView: {
-      flex: 1,
-      backgroundColor: currentTheme.backgroundPrimary,
-    },
-  });
-};
+const localStyles = StyleSheet.create({
+  mainView: {
+    flex: 1,
+  },
+});
