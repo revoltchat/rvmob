@@ -171,6 +171,13 @@ async function handleMessageNotification(
 ) {
   console.log(`[APP] Handling message ${msg._id}`);
 
+  const pushNotifsEnabled = app.settings.get('app.notifications.enabled');
+  const inAppNotifsEnabled = app.settings.get('app.notifications.enabledInApp');
+
+  if (!pushNotifsEnabled && !inAppNotifsEnabled) {
+    return;
+  }
+
   const channel = client.channels.get(msg.channel);
 
   let channelNotif =
@@ -207,15 +214,18 @@ async function handleMessageNotification(
     `[NOTIFICATIONS] Should notify for ${msg._id}: ${shouldNotif} (channel/server muted? ${isMuted}, notifications for all messages enabled? ${alwaysNotif}, message mentions the user? ${mentionsUser})`,
   );
 
-  if (app.settings.get('app.notifications.enabled') && shouldNotif) {
+  if (shouldNotif) {
     console.log(`[NOTIFICATIONS] Pushing notification for message ${msg._id}`);
-    if (state.state.currentChannel !== channel) {
+
+    if (inAppNotifsEnabled && state.state.currentChannel !== channel) {
       state.setState({notificationMessage: msg});
       await sleep(5000);
       state.setState({notificationMessage: null});
     }
 
-    await sendNotifeeNotification(msg, client, notifeeChannel);
+    if (pushNotifsEnabled) {
+      await sendNotifeeNotification(msg, client, notifeeChannel);
+    }
   }
 }
 export class MainView extends ReactComponent {

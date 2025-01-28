@@ -179,6 +179,12 @@ export const app = {
         },
       },
       {
+        key: 'app.notifications.enabledInApp',
+        category: 'functionality',
+        default: true,
+        type: 'boolean',
+      },
+      {
         key: 'app.notifications.notifyOnSelfPing',
         category: 'functionality',
         default: false,

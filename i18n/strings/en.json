@@ -192,6 +192,7 @@
                 "reopenLastChannel": "Reopen the last channel you were in when opening the app",
                 "notifications": {
                     "enabled": "Enable push notifications",
+                    "enabledInApp": "Enable in-app notifications",
                     "notifyOnSelfPing": "Receive a notification when you ping yourself"
                 },
                 "showChangelogs": "Show changelogs after updating Clerotri"
