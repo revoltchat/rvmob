@@ -160,7 +160,6 @@ const NewMessageView = observer(
     };
 
     const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-      console.log(client.listenerCount('message'));
       const position = e.nativeEvent.contentOffset.y;
       const viewHeight =
         e.nativeEvent.contentSize.height -
