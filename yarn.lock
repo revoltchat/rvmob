@@ -2909,9 +2909,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rnx-kit/cli@npm:^0.18.4":
-  version: 0.18.4
-  resolution: "@rnx-kit/cli@npm:0.18.4"
+"@rnx-kit/cli@npm:^0.18.5":
+  version: 0.18.5
+  resolution: "@rnx-kit/cli@npm:0.18.5"
   dependencies:
     "@rnx-kit/align-deps": "npm:^3.0.1"
     "@rnx-kit/config": "npm:^0.7.0"
@@ -2921,7 +2921,7 @@ __metadata:
     "@rnx-kit/metro-plugin-typescript": "npm:^0.5.0"
     "@rnx-kit/metro-serializer": "npm:^2.0.0"
     "@rnx-kit/metro-serializer-esbuild": "npm:^0.2.1"
-    "@rnx-kit/metro-service": "npm:^4.0.1"
+    "@rnx-kit/metro-service": "npm:^4.0.2"
     "@rnx-kit/third-party-notices": "npm:^2.0.0"
     "@rnx-kit/tools-android": "npm:^0.2.0"
     "@rnx-kit/tools-apple": "npm:^0.2.1"
@@ -2941,7 +2941,7 @@ __metadata:
       optional: true
   bin:
     rnx-cli: bin/rnx-cli.cjs
-  checksum: 10c0/f6763e66862d1b068fa1674d29f023fe25f8dfc89b400a49faea4d864d5e8633d97efc9f28e4d1559a904c364a4d2bf1ee7c4486a288c4ae7c6c266726457aca
+  checksum: 10c0/115de9e87ad186e0973697656db6b521ee6487b1a23ea516bd8e45a605c7e7f566ae9080e5730ef9ab1d4e24f6ca0345f57081d0ef2e97e94491373920886b7f
   languageName: node
   linkType: hard
 
@@ -3054,9 +3054,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rnx-kit/metro-service@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "@rnx-kit/metro-service@npm:4.0.1"
+"@rnx-kit/metro-service@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "@rnx-kit/metro-service@npm:4.0.2"
   dependencies:
     "@rnx-kit/console": "npm:^2.0.0"
     "@rnx-kit/tools-node": "npm:^3.0.0"
@@ -3073,7 +3073,7 @@ __metadata:
       optional: true
     metro-react-native-babel-transformer:
       optional: true
-  checksum: 10c0/70918a3c00e3b00a905de0f705e6016b63f44b6ab9a86aa3242ac4863f5ce9d4f67f33ae7136b60d322c25675e02021300ce372d0966e61a54bcf9d40caa5485
+  checksum: 10c0/2e3d8e9475f92dcead8586b63dc1693d9884a5aa6932b9d6a58f7ce3034d249ec96e4fba6307ed64b3acd642a14ef8df1f1742c647722df88fab75dc13f72627
   languageName: node
   linkType: hard
 
@@ -3628,12 +3628,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^22.10.10":
+"@types/node@npm:*":
   version: 22.10.10
   resolution: "@types/node@npm:22.10.10"
   dependencies:
     undici-types: "npm:~6.20.0"
   checksum: 10c0/3425772d4513cd5dbdd87c00acda088113c03a97445f84f6a89744c60a66990b56c9d3a7213d09d57b6b944ae8ff45f985565e0c1846726112588e33a22dd12b
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^22.12.0":
+  version: 22.12.0
+  resolution: "@types/node@npm:22.12.0"
+  dependencies:
+    undici-types: "npm:~6.20.0"
+  checksum: 10c0/be220706732d95db2ed1c441c1e64cab90bf9a47519ce6f4c79cc5a9ec9d5c517131a149a9ac30afac1a30103e67e3a00d453ba7c1b0141608a3a7ba6397c303
   languageName: node
   linkType: hard
 
@@ -9066,9 +9075,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:^5.43.3":
-  version: 5.43.3
-  resolution: "knip@npm:5.43.3"
+"knip@npm:^5.43.6":
+  version: 5.43.6
+  resolution: "knip@npm:5.43.6"
   dependencies:
     "@nodelib/fs.walk": "npm:3.0.1"
     "@snyk/github-codeowners": "npm:1.1.0"
@@ -9092,7 +9101,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10c0/26ffefc723457b399ba30e13b1b60c2e65b21dd894ab0b7bce8a26bdc128e90ab1cf4ca5b3aae9bed1d111449c5df303cb37d1b04465f6343814887f2e9774b5
+  checksum: 10c0/fb8d2be32c6ac21997c78b77cbf67c1c9bb8e525f9838811b80e6a32b57723c2a1f7cb8a86621bd81c9e28582839732f79b1005628e3bc8991f5848777075630
   languageName: node
   linkType: hard
 
@@ -11676,7 +11685,7 @@ __metadata:
     "@react-native/typescript-config": "npm:^0.76.6"
     "@rexovolt/react-native-markdown-display": "npm:^9.0.5"
     "@rnx-kit/babel-preset-metro-react-native": "npm:^2.0.0"
-    "@rnx-kit/cli": "npm:^0.18.4"
+    "@rnx-kit/cli": "npm:^0.18.5"
     "@rnx-kit/metro-config": "npm:^2.0.1"
     "@rnx-kit/metro-plugin-cyclic-dependencies-detector": "npm:^2.0.0"
     "@rnx-kit/metro-plugin-duplicates-checker": "npm:^3.0.0"
@@ -11686,7 +11695,7 @@ __metadata:
     "@traptitech/markdown-it-spoiler": "patch:@traptitech/markdown-it-spoiler@npm%3A1.1.6#~/.yarn/patches/@traptitech-markdown-it-spoiler-npm-1.1.6-ee0dc02626.patch"
     "@types/babel__core": "npm:^7.20.5"
     "@types/eslint": "npm:^8.56.12"
-    "@types/node": "npm:^22.10.10"
+    "@types/node": "npm:^22.12.0"
     "@types/react": "npm:^18.3.18"
     "@types/react-dom": "npm:^18.3.5"
     "@types/react-native-vector-icons": "npm:^6.4.18"
@@ -11704,7 +11713,7 @@ __metadata:
     i18next: "npm:^24.2.2"
     intl-pluralrules: "npm:^2.0.1"
     jest: "npm:^29.7.0"
-    knip: "npm:^5.43.3"
+    knip: "npm:^5.43.6"
     mobx: "npm:^6.13.5"
     mobx-react-lite: "npm:^4.1.0"
     prettier: "npm:^3.4.2"
