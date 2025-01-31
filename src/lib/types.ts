@@ -78,6 +78,17 @@ export type Language = {
   emoji: string;
 };
 
+export type MessageProps = {
+  message: Message;
+  grouped: boolean;
+  noTopMargin?: boolean;
+  queued?: boolean;
+  onUserPress?: any;
+  onUsernamePress?: any;
+  onPress?: any;
+  onLongPress?: any;
+};
+
 // <from src=https://github.com/Revolt-Unofficial-Clients/revkit/blob/0af5ab5fea68eba89661685be4fe8a60ca72f90a/core/src/utils/Emojis.ts>
 export type EmojiPacks = 'mutant' | 'twemoji' | 'noto' | 'openmoji';
 // </from>
