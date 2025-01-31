@@ -3628,16 +3628,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
-  version: 22.10.10
-  resolution: "@types/node@npm:22.10.10"
-  dependencies:
-    undici-types: "npm:~6.20.0"
-  checksum: 10c0/3425772d4513cd5dbdd87c00acda088113c03a97445f84f6a89744c60a66990b56c9d3a7213d09d57b6b944ae8ff45f985565e0c1846726112588e33a22dd12b
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^22.12.0":
+"@types/node@npm:*, @types/node@npm:^22.12.0":
   version: 22.12.0
   resolution: "@types/node@npm:22.12.0"
   dependencies:
@@ -9957,10 +9948,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mobx@npm:^6.13.5":
-  version: 6.13.5
-  resolution: "mobx@npm:6.13.5"
-  checksum: 10c0/43691c836363aa1f13c44e43c86ab89fc8f4b83ef408bc6c68d799260e74b4ff08ebba2ef16bda447c6b7bca3558768e15927c0b21ffbb10e99b610783f28859
+"mobx@npm:^6.13.5, mobx@npm:^6.13.6":
+  version: 6.13.6
+  resolution: "mobx@npm:6.13.6"
+  checksum: 10c0/4419003efdcc7ce964c5a20d5630987b936c60202d782ffe6b34f57848418a2b7f33ea2a5038d4e004c25758c4cf474c20a894c52d4234dd7cfda76887a3e4fd
   languageName: node
   linkType: hard
 
@@ -11714,7 +11705,7 @@ __metadata:
     intl-pluralrules: "npm:^2.0.1"
     jest: "npm:^29.7.0"
     knip: "npm:^5.43.6"
-    mobx: "npm:^6.13.5"
+    mobx: "npm:^6.13.6"
     mobx-react-lite: "npm:^4.1.0"
     prettier: "npm:^3.4.2"
     react: "npm:^18.3.1"
