@@ -7,10 +7,11 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import {decodeTime} from 'ulid';
 
 import {app} from '@clerotri/Generic';
-import {client} from '@clerotri/lib/client';
-import {Text} from '../common/atoms';
+import {Text} from '@clerotri/components/common/atoms';
 import {Image} from '@clerotri/crossplat/Image';
+import {client} from '@clerotri/lib/client';
 import {DEFAULT_MAX_SIDE} from '@clerotri/lib/consts';
+import {OrderedServersContext} from '@clerotri/lib/state';
 import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 
 export const ServerList = observer(
@@ -18,13 +19,11 @@ export const ServerList = observer(
     onServerPress,
     onServerLongPress,
     filter,
-    ordered,
     showUnread = true,
     showDiscover = true,
   }: {
     onServerPress: any;
     onServerLongPress?: any;
-    ordered?: string[];
     filter?: any;
     showUnread?: boolean;
     showDiscover?: boolean;
@@ -32,19 +31,24 @@ export const ServerList = observer(
     const {currentTheme} = useContext(ThemeContext);
     const localStyles = generateLocalStyles(currentTheme);
 
+    const {orderedServers} = useContext(OrderedServersContext);
+
     let servers = [...client.servers.values()];
     if (filter) {
       servers = servers.filter(filter);
     }
-    if (ordered) {
+    if (orderedServers.length > 0) {
       servers.sort((server1, server2) => {
         // get the positions of both servers in the synced list
-        const s1index = ordered.indexOf(server1._id);
-        const s2index = ordered.indexOf(server2._id);
+        const s1index = orderedServers.indexOf(server1._id);
+        const s2index = orderedServers.indexOf(server2._id);
 
         // if they're both in the list, subtract server 2's position from server 1's
         if (s1index > -1 && s2index > -1) {
-          return ordered.indexOf(server1._id) - ordered.indexOf(server2._id);
+          return (
+            orderedServers.indexOf(server1._id) -
+            orderedServers.indexOf(server2._id)
+          );
         }
 
         // if server 1 isn't in the list and server 2 is, return 1 (server 2 then 1)

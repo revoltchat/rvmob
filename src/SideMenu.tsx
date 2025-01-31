@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {
   Pressable,
   ScrollView,
@@ -15,26 +15,21 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import type {Server} from 'revolt.js';
 
 import {app, setFunction} from './Generic';
-import {client} from './lib/client';
 import {Avatar, Button} from './components/common/atoms';
 import {ChannelList} from './components/navigation/ChannelList';
 import {ServerList} from './components/navigation/ServerList';
 import {ChannelView} from './components/views/ChannelView';
-import {DEFAULT_API_URL} from './lib/consts';
+import {client} from '@clerotri/lib/client';
+import {DEFAULT_API_URL} from '@clerotri/lib/consts';
+import {ChannelContext, SideMenuContext} from '@clerotri/lib/state';
 import {storage} from '@clerotri/lib/storage';
 import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 
-const SideMenu = ({
-  currentChannel,
-  onChannelClick,
-  orderedServers,
-}: {
-  currentChannel: any;
-  onChannelClick: Function;
-  orderedServers: string[];
-}) => {
+const SideMenu = () => {
   const {currentTheme} = useContext(ThemeContext);
   const localStyles = generateLocalStyles(currentTheme);
+
+  const {setCurrentChannel} = useContext(ChannelContext);
 
   const [currentServer, setCurrentServerInner] = useState(
     null as Server | null,
@@ -43,12 +38,14 @@ const SideMenu = ({
     setCurrentServerInner(s);
     storage.set('lastServer', s?._id || 'DirectMessage');
   }
+
   setFunction('getCurrentServer', () => {
     return currentServer?._id ?? undefined;
   });
   setFunction('openServer', (s: Server | null) => {
     setCurrentServer(s);
   });
+
   return (
     <>
       <View style={localStyles.sideView}>
@@ -75,22 +72,15 @@ const SideMenu = ({
           <ServerList
             onServerPress={(s: Server) => setCurrentServer(s)}
             onServerLongPress={(s: Server) => app.openServerContextMenu(s)}
-            ordered={orderedServers}
             showDiscover={app.settings.get('app.instance') === DEFAULT_API_URL}
           />
         </ScrollView>
-        <ChannelList
-          onChannelClick={(channel: any) =>
-            onChannelClick(channel, currentServer)
-          }
-          currentChannel={currentChannel}
-          currentServer={currentServer}
-        />
+        <ChannelList currentServer={currentServer} />
       </View>
       <View style={localStyles.bottomBar}>
         <Button
           key={'bottom-nav-friends'}
-          onPress={() => onChannelClick('friends', currentServer)}
+          onPress={() => setCurrentChannel('friends')}
           backgroundColor={currentTheme.background}
           style={{paddingVertical: 10}}>
           <MaterialIcon
@@ -115,23 +105,18 @@ const SideMenu = ({
   );
 };
 
-export const SideMenuHandler = ({
-  coreObject,
-  currentChannel,
-  setChannel,
-}: {
-  coreObject: any;
-  currentChannel: any;
-  setChannel: any;
-}) => {
+export const SideMenuHandler = () => {
   const {currentTheme} = useContext(ThemeContext);
   const localStyles = generateLocalStyles(currentTheme);
 
-  const [sideMenuOpen, setSideMenuOpen] = useState(false);
-  setFunction('openLeftMenu', async (o: boolean) => {
-    console.log(`[APP] Setting left menu open state to ${o}`);
-    setSideMenuOpen(o);
-  });
+  const {sideMenuOpen, setSideMenuOpen} = useContext(SideMenuContext);
+
+  const {currentChannel} = useContext(ChannelContext);
+
+  useEffect(() => {
+    console.log('hiii');
+    setSideMenuOpen(false);
+  }, [currentChannel, setSideMenuOpen]);
 
   const {height, width} = useWindowDimensions();
 
@@ -162,13 +147,9 @@ export const SideMenuHandler = ({
               width: '20%',
               flexDirection: 'column',
             }}>
-            <SideMenu
-              onChannelClick={setChannel}
-              currentChannel={currentChannel}
-              orderedServers={coreObject.state.orderedServers}
-            />
+            <SideMenu />
           </View>
-          <ChannelView channel={currentChannel} />
+          <ChannelView />
         </View>
       ) : (
         <Drawer
@@ -178,19 +159,13 @@ export const SideMenuHandler = ({
           open={sideMenuOpen}
           onOpen={() => setSideMenuOpen(true)}
           onClose={() => setSideMenuOpen(false)}
-          renderDrawerContent={() => (
-            <SideMenu
-              onChannelClick={setChannel}
-              currentChannel={currentChannel}
-              orderedServers={coreObject.state.orderedServers}
-            />
-          )}
+          renderDrawerContent={() => <SideMenu />}
           style={localStyles.drawer}
           drawerStyle={{
             backgroundColor: currentTheme.backgroundPrimary,
             width: width - 50,
           }}>
-          <ChannelView channel={currentChannel} />
+          <ChannelView />
         </Drawer>
       )}
     </>

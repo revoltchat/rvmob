@@ -3,11 +3,12 @@ import type {API, Channel, Message, Server, User} from 'revolt.js';
 import {setLanguage} from '@clerotri-i18n/i18n';
 import {languages} from '@clerotri-i18n/languages';
 import {DEFAULT_API_URL, LOADING_SCREEN_REMARKS} from '@clerotri/lib/consts';
-import {checkNotificationPerms} from '@clerotri/lib/notifications';
+import {checkNotificationPerms} from '@clerotri/lib/notifications/permissions';
 import {storage} from '@clerotri/lib/storage';
 import {themes} from '@clerotri/lib/themes';
 import {
   CreateChannelModalProps,
+  CVChannel,
   DeletableObject,
   ReplyingMessage,
   ReportedObject,
@@ -319,7 +320,10 @@ export const app = {
   getCurrentServer: () => {
     return undefined as string | undefined;
   },
-  openChannel: c => {},
+  openChannel: (c: CVChannel) => {},
+  getCurrentChannel: (): CVChannel => {
+    return null;
+  },
   openDirectMessage: (c: Channel) => {
     console.log(
       `[FUNCTIONS] Tried to run uninitialised function openDirectMessage (args: ${c})`,

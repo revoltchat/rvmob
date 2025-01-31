@@ -6,7 +6,7 @@ import {observer} from 'mobx-react-lite';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import type {Channel} from 'revolt.js';
+import type {Channel, Message} from 'revolt.js';
 
 import {app} from '@clerotri/Generic';
 import {Messages} from '@clerotri/LegacyMessageView';
@@ -20,8 +20,10 @@ import {SpecialChannelIcon} from '@clerotri/components/navigation/SpecialChannel
 import {FriendsPage} from '@clerotri/components/pages/FriendsPage';
 import {HomePage} from '@clerotri/components/pages/HomePage';
 import {VoiceChannel} from '@clerotri/components/pages/VoiceChannel';
-import {DiscoverPage} from '@clerotri/pages/discover/DiscoverPage';
+import {ChannelContext} from '@clerotri/lib/state';
 import {ThemeContext} from '@clerotri/lib/themes';
+import {SpecialChannel} from '@clerotri/lib/types';
+import {DiscoverPage} from '@clerotri/pages/discover/DiscoverPage';
 
 function MessageViewErrorMessage({
   error,
@@ -49,10 +51,6 @@ function MessageViewErrorMessage({
     </>
   );
 }
-
-type SpecialChannel = 'friends' | 'discover' | 'debug' | null;
-
-type CVChannel = Channel | SpecialChannel;
 
 const SpecialChannelViews = observer(({channel}: {channel: SpecialChannel}) => {
   return channel === 'friends' ? (
@@ -142,14 +140,15 @@ const RegularChannelView = observer(({channel}: {channel: Channel}) => {
           ) : (
             <>
               <Messages
+                // @ts-expect-error the legacy message view is going to be removed, not going to fix this
                 channel={channel}
-                onLongPress={m => {
+                onLongPress={(m: Message) => {
                   app.openMessage(m);
                 }}
-                onUserPress={m => {
+                onUserPress={(m: Message) => {
                   app.openProfile(m.author, channel.server);
                 }}
-                onUsernamePress={m => {
+                onUsernamePress={(m: Message) => {
                   const currentText = app.getMessageBoxInput();
                   app.setMessageBoxInput(
                     `${currentText}${currentText.length > 0 ? ' ' : ''}<@${
@@ -191,19 +190,24 @@ const RegularChannelView = observer(({channel}: {channel: Channel}) => {
   );
 });
 
-export const ChannelView = observer(({channel}: {channel: CVChannel}) => {
+export const ChannelView = observer(() => {
+  const {currentChannel} = useContext(ChannelContext);
   console.log(
     `[CHANNELVIEW] Rendering channel view for ${
-      channel ? (typeof channel !== 'string' ? channel._id : channel) : channel
+      currentChannel
+        ? typeof currentChannel !== 'string'
+          ? currentChannel._id
+          : currentChannel
+        : currentChannel
     }...`,
   );
 
   return (
     <View style={localStyles.mainView}>
-      {!channel || typeof channel === 'string' ? (
-        <SpecialChannelViews channel={channel} />
+      {!currentChannel || typeof currentChannel === 'string' ? (
+        <SpecialChannelViews channel={currentChannel} />
       ) : (
-        <RegularChannelView channel={channel} />
+        <RegularChannelView channel={currentChannel} />
       )}
     </View>
   );

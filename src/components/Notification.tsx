@@ -4,26 +4,26 @@ import {observer} from 'mobx-react-lite';
 
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import type {API} from 'revolt.js';
+import type {API, Channel} from 'revolt.js';
 
 import {styles} from '../Theme';
 import {Avatar, Text, Username} from './common/atoms';
 import {MarkdownView} from './common/MarkdownView';
-import {commonValues, ThemeContext} from '@clerotri/lib/themes';
-import {parseRevoltNodes} from '../lib/utils';
 import {client} from '@clerotri/lib/client';
+import {ChannelContext} from '@clerotri/lib/state';
+import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {parseRevoltNodes} from '@clerotri/lib/utils';
 
 export const Notification = observer(
-  ({
-    message,
-    dismiss,
-    openChannel,
-  }: {
-    message: API.Message | null;
-    dismiss: Function;
-    openChannel: Function;
-  }) => {
+  ({message, dismiss}: {message: API.Message | null; dismiss: Function}) => {
     const {currentTheme} = useContext(ThemeContext);
+    const {setCurrentChannel} = useContext(ChannelContext);
+
+    const openChannel = (channel: Channel | undefined) => {
+      dismiss();
+      setCurrentChannel(channel ?? null);
+    };
+
     if (message) {
       const author = client.users.get(message.author);
       const channel = client.channels.get(message.channel);
@@ -47,7 +47,7 @@ export const Notification = observer(
               },
             ],
           }}
-          onPress={() => openChannel()}>
+          onPress={() => openChannel(channel)}>
           <View
             style={{
               alignItems: 'center',

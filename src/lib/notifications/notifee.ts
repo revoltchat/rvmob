@@ -2,6 +2,8 @@ import notifee, {EventType} from '@notifee/react-native';
 
 import type {API, Client} from 'revolt.js';
 
+import {app} from '@clerotri/Generic';
+
 export async function createChannel() {
   const channel = (await notifee.getChannel('clerotri'))
     ? 'clerotri'
@@ -13,7 +15,7 @@ export async function createChannel() {
   return channel;
 }
 
-export function setUpNotifeeListener(client: Client, setState: any) {
+export function setUpNotifeeListener(client: Client) {
   notifee.onBackgroundEvent(async ({type, detail}) => {
     const {notification /*, pressAction */} = detail;
     if (type === EventType.PRESS) {
@@ -23,9 +25,7 @@ export function setUpNotifeeListener(client: Client, setState: any) {
       const notifChannel = client.channels.get(
         notification?.data?.channel as string,
       );
-      setState({
-        currentChannel: notifChannel ?? null,
-      });
+      app.openChannel(notifChannel ?? null);
       await notifee.cancelNotification(notification!.id!);
     }
   });

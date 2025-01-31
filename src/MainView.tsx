@@ -1,12 +1,13 @@
 import {
-  Component as ReactComponent,
-  useCallback,
+  type MutableRefObject,
   useContext,
   useEffect,
+  useRef,
+  useState,
 } from 'react';
 import {StatusBar, View} from 'react-native';
 
-import type {API, Channel, Server} from 'revolt.js';
+import type {API} from 'revolt.js';
 
 import {app, randomizeRemark, setFunction} from '@clerotri/Generic';
 import {client} from '@clerotri/lib/client';
@@ -18,340 +19,316 @@ import {LoadingScreen} from '@clerotri/components/views/LoadingScreen';
 import {loginWithSavedToken} from '@clerotri/lib/auth';
 import {
   createChannel,
-  sendNotifeeNotification,
+  handleMessageNotification,
   setUpNotifeeListener,
 } from '@clerotri/lib/notifications';
+import {
+  ChannelContext,
+  OrderedServersContext,
+  SideMenuContext,
+} from '@clerotri/lib/state';
 import {storage} from '@clerotri/lib/storage';
 import {ThemeContext} from '@clerotri/lib/themes';
-import {sleep} from '@clerotri/lib/utils';
+import {CVChannel} from '@clerotri/lib/types';
+import {checkLastVersion, openLastChannel} from '@clerotri/lib/utils';
 import {LoginViews} from '@clerotri/pages/LoginViews';
 
-function openLastChannel() {
+function handleUserSettingsPacket(
+  packet: any,
+  setOrderedServers: (servers: any) => void,
+  channelNotificationSettings: any,
+  serverNotificationSettings: any,
+) {
+  console.log('[WEBSOCKET] Synced settings updated');
+  const newSettings = packet.update;
   try {
-    const lastServer = storage.getString('lastServer');
-    if (lastServer) {
-      const server = client.servers.get(lastServer);
-      // if the server is undefined, either something hasn't loaded or the user left it at some point
-      if (server) {
-        app.openServer(server);
-        try {
-          const channelData = storage.getString('lastOpenedChannels');
-          let lastOpenedChannels = JSON.parse(channelData || '{}') || {};
-          let lastChannel = lastOpenedChannels[lastServer];
-          if (lastChannel) {
-            let fetchedLastChannel = client.channels.get(lastChannel);
-            if (fetchedLastChannel) {
-              app.openChannel(fetchedLastChannel);
-            }
-          }
-        } catch (channelErr) {
-          console.log(`[APP] Error getting last channel: ${channelErr}`);
-        }
-      }
+    if ('ordering' in newSettings) {
+      const newOrderedServers = JSON.parse(newSettings.ordering[1]).servers;
+      setOrderedServers(newOrderedServers);
     }
-  } catch (serverErr) {
-    console.log(`[APP] Error getting last server: ${serverErr}`);
+    if ('notifications' in newSettings) {
+      const {server, channel} = JSON.parse(newSettings.notifications[1]);
+      channelNotificationSettings.current = channel;
+      serverNotificationSettings.current = server;
+    }
+  } catch (err) {
+    console.log(`[APP] Error fetching settings: ${err}`);
   }
 }
 
-function checkLastVersion() {
-  const lastVersion = storage.getString('lastVersion');
-  console.log(app.version, lastVersion);
-  if (!lastVersion || lastVersion === '') {
-    console.log(
-      `[APP] lastVersion is null (${lastVersion}), setting to app.version (${app.version})`,
-    );
-    storage.set('lastVersion', app.version);
-  } else if (app.version !== lastVersion) {
-    console.log(
-      `[APP] lastVersion (${lastVersion}) is different from app.version (${app.version})`,
-    );
-  } else {
-    console.log(
-      `[APP] lastVersion (${lastVersion}) is equal to app.version (${app.version})`,
-    );
-  }
-}
+function LoggedInViews({
+  channelNotificationSettings,
+  serverNotificationSettings,
+}: {
+  channelNotificationSettings: MutableRefObject<any>;
+  serverNotificationSettings: MutableRefObject<any>;
+}) {
+  const [currentChannel, setCurrentChannel] = useState<CVChannel>(null);
 
-function LoggedInViews({state, setChannel}: {state: any; setChannel: any}) {
+  setFunction('openChannel', async (c: CVChannel) => {
+    setCurrentChannel(c);
+  });
+
+  setFunction('getCurrentChannel', () => {
+    return currentChannel;
+  });
+
+  const [sideMenuOpen, setSideMenuOpen] = useState(false);
+
+  setFunction('openLeftMenu', async (o: boolean) => {
+    console.log(`[APP] Setting left menu open state to ${o}`);
+    setSideMenuOpen(o);
+  });
+
+  const {setOrderedServers} = useContext(OrderedServersContext);
+
+  const [notificationMessage, setNotificationMessage] =
+    useState<API.Message | null>(null);
+
   useEffect(() => {
     if (app.settings.get('app.reopenLastChannel')) {
       openLastChannel();
     }
   }, []);
+
+  useEffect(() => {
+    if (currentChannel) {
+      const lastOpenedChannels = storage.getString('lastOpenedChannels');
+      try {
+        let parsedData = JSON.parse(lastOpenedChannels || '{}') || {};
+        parsedData[
+          typeof currentChannel === 'string' || !currentChannel.server
+            ? 'DirectMessage'
+            : currentChannel.server._id
+        ] =
+          typeof currentChannel === 'string'
+            ? currentChannel
+            : currentChannel._id;
+        console.log(parsedData);
+        storage.set('lastOpenedChannels', JSON.stringify(parsedData));
+      } catch (err) {
+        console.log(`[APP] Error getting last channel: ${err}`);
+      }
+    }
+  }, [currentChannel]);
+
+  useEffect(() => {
+    console.log('[APP] Setting up packet listener...');
+
+    async function onMessagePacket(msg: API.Message) {
+      await handleMessageNotification(
+        msg,
+        channelNotificationSettings.current,
+        serverNotificationSettings.current,
+        setNotificationMessage,
+        'clerotri',
+      );
+    }
+
+    function onUserSettingsPacket(p: any) {
+      handleUserSettingsPacket(
+        p,
+        setOrderedServers,
+        channelNotificationSettings,
+        serverNotificationSettings,
+      );
+    }
+
+    async function onNewPacket(p: any) {
+      if (p.type === 'Message') {
+        await onMessagePacket(p);
+      }
+      if (p.type === 'UserSettingsUpdate') {
+        onUserSettingsPacket(p);
+      }
+    }
+
+    function setUpPacketListener() {
+      client.on('packet', async p => await onNewPacket(p));
+    }
+
+    function cleanupPacketListener() {
+      client.removeListener('packet');
+    }
+
+    try {
+      setUpPacketListener();
+    } catch (err) {
+      console.log(`[NEWMESSAGEVIEW] Error seting up global listeners: ${err}`);
+    }
+
+    return () => cleanupPacketListener();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <>
-      <SideMenuHandler
-        coreObject={state}
-        currentChannel={state.state.currentChannel}
-        setChannel={setChannel}
-      />
-      <Modals />
-      <NetworkIndicator client={client} />
-      <View style={{position: 'absolute', top: 20, left: 0, width: '100%'}}>
-        <Notification
-          message={state.state.notificationMessage}
-          dismiss={() =>
-            state.setState({
-              notificationMessage: null,
-            })
-          }
-          openChannel={() =>
-            state.setState({
-              notificationMessage: null,
-              currentChannel: client.channels.get(
-                state.state.notificationMessage.channel,
-              ),
-            })
-          }
-        />
-      </View>
-    </>
+    <ChannelContext.Provider value={{currentChannel, setCurrentChannel}}>
+      <SideMenuContext.Provider value={{sideMenuOpen, setSideMenuOpen}}>
+        <SideMenuHandler />
+        <Modals />
+        <NetworkIndicator client={client} />
+        <View style={{position: 'absolute', top: 20, left: 0, width: '100%'}}>
+          <Notification
+            message={notificationMessage}
+            dismiss={() => setNotificationMessage(null)}
+          />
+        </View>
+      </SideMenuContext.Provider>
+    </ChannelContext.Provider>
   );
 }
 
-function AppViews({state}: {state: any}) {
+export function MainView() {
   const {currentTheme} = useContext(ThemeContext);
 
-  const setChannel = useCallback(
-    (channel: string | Channel | null, server?: Server) => {
-      state.setState({
-        currentChannel: channel,
-        messages: [],
-      });
-      app.openLeftMenu(false);
-      if (channel) {
-        const lastOpenedChannels = storage.getString('lastOpenedChannels');
-        try {
-          let parsedData = JSON.parse(lastOpenedChannels || '{}') || {};
-          parsedData[server?._id || 'DirectMessage'] =
-            typeof channel === 'string' ? channel : channel._id;
-          console.log(parsedData);
-          storage.set('lastOpenedChannels', JSON.stringify(parsedData));
-        } catch (err) {
-          console.log(`[APP] Error getting last channel: ${err}`);
-        }
-      }
-    },
-    [state],
-  );
+  const [status, setStatus] = useState('loggedOut');
 
-  return (
-    <>
-      <StatusBar
-        animated={true}
-        backgroundColor={
-          state.state.status !== 'loggedIn'
-            ? currentTheme.backgroundPrimary
-            : currentTheme.backgroundSecondary
-        }
-        barStyle={`${currentTheme.contentType}-content`}
-      />
-      {state.state.status === 'loggedIn' ? (
-        <LoggedInViews state={state} setChannel={setChannel} />
-      ) : state.state.status === 'loggedOut' ? (
-        <LoginViews
-          markAsLoggedIn={() => state.setState({status: 'loggedIn'})}
-        />
-      ) : (
-        <LoadingScreen
-          header={'app.loading.unknown_state'}
-          body={'app.loading.unknown_state_body'}
-          bodyParams={{state: state.state.status}}
-        />
-      )}
-    </>
-  );
-}
+  const [orderedServers, setOrderedServers] = useState<string[]>([]);
 
-async function handleMessageNotification(
-  state: any,
-  msg: API.Message,
-  notifeeChannel: string,
-) {
-  console.log(`[APP] Handling message ${msg._id}`);
+  const channelNotificationSettings = useRef<any>();
+  const serverNotificationSettings = useRef<any>();
 
-  const pushNotifsEnabled = app.settings.get('app.notifications.enabled');
-  const inAppNotifsEnabled = app.settings.get('app.notifications.enabledInApp');
+  useEffect(() => {
+    console.log('[APP] Setting up global functions...');
 
-  if (!pushNotifsEnabled && !inAppNotifsEnabled) {
-    return;
-  }
-
-  const channel = client.channels.get(msg.channel);
-
-  let channelNotif =
-    state.state.channelNotifications && channel
-      ? state.state.channelNotifications[channel?._id]
-      : undefined;
-  let serverNotif =
-    state.state.serverNotifications && channel?.server
-      ? state.state.serverNotifications[channel?.server?._id]
-      : undefined;
-
-  const isMuted =
-    (channelNotif && channelNotif === 'none') ||
-    channelNotif === 'muted' ||
-    (serverNotif && serverNotif === 'none') ||
-    serverNotif === 'muted';
-
-  const alwaysNotif =
-    channelNotif === 'all' || (!isMuted && serverNotif === 'all');
-
-  const mentionsUser =
-    (msg.mentions?.includes(client.user?._id!) &&
-      (app.settings.get('app.notifications.notifyOnSelfPing') ||
-        msg.author !== client.user?._id)) ||
-    channel?.channel_type === 'DirectMessage';
-
-  const shouldNotif =
-    (alwaysNotif &&
-      (app.settings.get('app.notifications.notifyOnSelfPing') ||
-        msg.author !== client.user?._id)) ||
-    (!isMuted && mentionsUser);
-
-  console.log(
-    `[NOTIFICATIONS] Should notify for ${msg._id}: ${shouldNotif} (channel/server muted? ${isMuted}, notifications for all messages enabled? ${alwaysNotif}, message mentions the user? ${mentionsUser})`,
-  );
-
-  if (shouldNotif) {
-    console.log(`[NOTIFICATIONS] Pushing notification for message ${msg._id}`);
-
-    if (inAppNotifsEnabled && state.state.currentChannel !== channel) {
-      state.setState({notificationMessage: msg});
-      await sleep(5000);
-      state.setState({notificationMessage: null});
-    }
-
-    if (pushNotifsEnabled) {
-      await sendNotifeeNotification(msg, client, notifeeChannel);
-    }
-  }
-}
-export class MainView extends ReactComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      status: 'loggedOut',
-      currentChannel: null,
-      notificationMessage: null,
-      orderedServers: [],
-      serverNotifications: null,
-      channelNotifications: null,
-    };
-    setFunction('openChannel', async c => {
-      // if (!this.state.currentChannel || this.state.currentChannel?.server?._id != c.server?._id) c.server?.fetchMembers()
-      this.setState({currentChannel: c});
-      app.openLeftMenu(false);
-    });
     setFunction('joinInvite', async (i: string) => {
       await client.joinInvite(i);
     });
+
     setFunction('logOut', async () => {
       console.log(
         `[AUTH] Logging out of current session... (user: ${client.user?._id})`,
       );
       storage.set('token', '');
       storage.set('sessionID', '');
-      this.setState({status: 'loggedOut', currentChannel: null});
+      app.openChannel(null);
+      setStatus('loggedOut');
       await client.logout();
       app.setLoggedOutScreen('loginPage');
     });
-  }
-  componentDidUpdate(_, prevState) {
-    if (prevState.status !== this.state.status) {
-      randomizeRemark();
-    }
-  }
-  async componentDidMount() {
-    console.log(`[APP] Mounted component (${new Date().getTime()})`);
+  }, []);
 
-    let defaultNotif = await createChannel();
-    console.log(`[NOTIFEE] Created channel: ${defaultNotif}`);
+  useEffect(() => {
+    console.log('[APP] Setting up global listeners...');
 
-    checkLastVersion();
-
-    client.on('connecting', () => {
-      app.setLoadingStage('connecting');
-      console.log(`[APP] Connecting to instance... (${new Date().getTime()})`);
-    });
-
-    client.on('connected', () => {
-      app.setLoadingStage('connected');
-      console.log(`[APP] Connected to instance (${new Date().getTime()})`);
-    });
-
-    client.on('ready', async () => {
-      let orderedServers,
-        server,
-        channel = null;
-      try {
-        const rawSettings = await client.syncFetchSettings([
-          'ordering',
-          'notifications',
-        ]);
-        try {
-          orderedServers = JSON.parse(rawSettings.ordering[1]).servers;
-          ({server, channel} = JSON.parse(rawSettings.notifications[1]));
-        } catch (err) {
-          console.log(`[APP] Error parsing fetched settings: ${err}`);
-        }
-      } catch (err) {
-        console.log(`[APP] Error fetching settings: ${err}`);
-      }
-
-      this.setState({
-        status: 'loggedIn',
-        network: 'ready',
-        orderedServers,
-        serverNotifications: server,
-        channelNotifications: channel,
+    function setUpListeners() {
+      client.on('connecting', () => {
+        app.setLoadingStage('connecting');
+        console.log(
+          `[APP] Connecting to instance... (${new Date().getTime()})`,
+        );
       });
-      console.log(`[APP] Client is ready (${new Date().getTime()})`);
 
-      setUpNotifeeListener(client, this.setState);
-    });
+      client.on('connected', () => {
+        app.setLoadingStage('connected');
+        console.log(`[APP] Connected to instance (${new Date().getTime()})`);
+      });
 
-    client.on('dropped', async () => {
-      this.setState({network: 'dropped'});
-    });
+      client.on('ready', async () => {
+        let fetchedOrderedServers = [];
+        let fetchedChannelNotificationSettings = {};
+        let fetchedServerNotificationSettings = {};
 
-    client.on('packet', async p => {
-      if (p.type === 'Message') {
-        await handleMessageNotification(this, p, defaultNotif);
-      }
-      if (p.type === 'UserSettingsUpdate') {
-        console.log('[WEBSOCKET] Synced settings updated');
         try {
-          if ('ordering' in p.update) {
-            const orderedServers = JSON.parse(p.update.ordering[1]).servers;
-            this.setState({orderedServers});
-          }
-          if ('notifications' in p.update) {
-            const {server, channel} = JSON.parse(p.update.notifications[1]);
-            this.setState({
-              serverNotifications: server,
-              channelNotifications: channel,
-            });
+          const rawSettings = await client.syncFetchSettings([
+            'ordering',
+            'notifications',
+          ]);
+          try {
+            fetchedOrderedServers = JSON.parse(rawSettings.ordering[1]).servers;
+            const notificationSettings = JSON.parse(
+              rawSettings.notifications[1],
+            );
+            fetchedChannelNotificationSettings = notificationSettings.channel;
+            fetchedServerNotificationSettings = notificationSettings.server;
+          } catch (err) {
+            console.log(`[APP] Error parsing fetched settings: ${err}`);
           }
         } catch (err) {
           console.log(`[APP] Error fetching settings: ${err}`);
         }
-      }
-    });
 
-    client.on('server/delete', async s => {
-      const currentServer = app.getCurrentServer();
-      if (currentServer === s) {
-        app.openServer(undefined);
-        app.openChannel(null);
-      }
-    });
+        setOrderedServers(fetchedOrderedServers);
+        channelNotificationSettings.current =
+          fetchedChannelNotificationSettings;
+        serverNotificationSettings.current = fetchedServerNotificationSettings;
+        setStatus('loggedIn');
 
-    await loginWithSavedToken(this.state.status);
-  }
+        console.log(`[APP] Client is ready (${new Date().getTime()})`);
 
-  render() {
-    return <AppViews state={this} />;
-  }
+        setUpNotifeeListener(client);
+      });
+
+      client.on('server/delete', async s => {
+        const currentServer = app.getCurrentServer();
+        if (currentServer === s) {
+          app.openServer(undefined);
+          app.openChannel(null);
+        }
+      });
+    }
+
+    function cleanupListeners() {
+      client.removeListener('connecting');
+      client.removeListener('connected');
+      client.removeListener('ready');
+      client.removeListener('server/delete');
+    }
+
+    try {
+      setUpListeners();
+    } catch (err) {
+      console.log(`[NEWMESSAGEVIEW] Error seting up global listeners: ${err}`);
+    }
+
+    return () => cleanupListeners();
+  }, []);
+
+  useEffect(() => {
+    randomizeRemark();
+  }, [status]);
+
+  useEffect(() => {
+    async function login() {
+      console.log(`[APP] Mounted component (${new Date().getTime()})`);
+
+      let defaultNotif = await createChannel();
+      console.log(`[NOTIFEE] Created channel: ${defaultNotif}`);
+
+      checkLastVersion();
+
+      await loginWithSavedToken(status);
+    }
+
+    login();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <OrderedServersContext.Provider value={{orderedServers, setOrderedServers}}>
+      <StatusBar
+        animated={true}
+        backgroundColor={
+          status !== 'loggedIn'
+            ? currentTheme.backgroundPrimary
+            : currentTheme.backgroundSecondary
+        }
+        barStyle={`${currentTheme.contentType}-content`}
+      />
+      {status === 'loggedIn' ? (
+        <LoggedInViews
+          channelNotificationSettings={channelNotificationSettings}
+          serverNotificationSettings={serverNotificationSettings}
+        />
+      ) : status === 'loggedOut' ? (
+        <LoginViews markAsLoggedIn={() => setStatus('loggedIn')} />
+      ) : (
+        <LoadingScreen
+          header={'app.loading.unknown_state'}
+          body={'app.loading.unknown_state_body'}
+          bodyParams={{state: status}}
+        />
+      )}
+    </OrderedServersContext.Provider>
+  );
 }

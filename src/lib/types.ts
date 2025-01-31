@@ -1,4 +1,4 @@
-import type {Message, Server, User} from 'revolt.js';
+import type {Channel, Message, Server, User} from 'revolt.js';
 
 type StringSetting = {
   default: string;
@@ -81,3 +81,7 @@ export type Language = {
 // <from src=https://github.com/Revolt-Unofficial-Clients/revkit/blob/0af5ab5fea68eba89661685be4fe8a60ca72f90a/core/src/utils/Emojis.ts>
 export type EmojiPacks = 'mutant' | 'twemoji' | 'noto' | 'openmoji';
 // </from>
+
+export type SpecialChannel = 'friends' | 'discover' | 'debug' | null;
+
+export type CVChannel = Channel | SpecialChannel;

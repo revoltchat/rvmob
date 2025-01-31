@@ -17,6 +17,7 @@ import {API, Channel, Server} from 'revolt.js';
 import {app} from '@clerotri/Generic';
 import {client} from '@clerotri/lib/client';
 import {ChannelButton, Text} from '../common/atoms';
+import {ChannelContext, SideMenuContext} from '@clerotri/lib/state';
 import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 
 type UserChannelListChannel =
@@ -26,12 +27,7 @@ type UserChannelListChannel =
   | 'Saved Notes'
   | 'Debug';
 
-type CoreChannelListProps = {
-  onChannelClick: Function;
-  currentChannel: Channel;
-};
-
-type ChannelListProps = CoreChannelListProps & {
+type ChannelListProps = {
   currentServer: Server | null;
 };
 
@@ -40,8 +36,11 @@ type ServerChannelListProps = ChannelListProps & {
 };
 
 const ServerChannelListCategory = observer(
-  ({category, props}: {category: API.Category; props: ChannelListProps}) => {
+  ({category}: {category: API.Category}) => {
+    const {currentChannel, setCurrentChannel} = useContext(ChannelContext);
+
     const [isVisible, setIsVisible] = useState(true);
+
     return (
       <View key={category.id} style={{marginVertical: 8}}>
         <TouchableOpacity
@@ -67,9 +66,12 @@ const ServerChannelListCategory = observer(
                   key={c._id}
                   channel={c}
                   onPress={() => {
-                    props.onChannelClick(c);
+                    setCurrentChannel(c);
                   }}
-                  selected={props.currentChannel?._id === c._id}
+                  selected={
+                    typeof currentChannel !== 'string' &&
+                    currentChannel?._id === c._id
+                  }
                 />
               );
             }
@@ -82,17 +84,16 @@ const ServerChannelListCategory = observer(
 const ServerChannelList = observer((props: ServerChannelListProps) => {
   const {currentTheme} = useContext(ThemeContext);
 
+  const {currentChannel, setCurrentChannel} = useContext(ChannelContext);
+  const {setSideMenuOpen} = useContext(SideMenuContext);
+
   const [processedChannels, setProcessedChannels] = useState([] as string[]);
   const [res, setRes] = useState([] as React.JSX.Element[] | undefined);
 
   useEffect(() => {
     let categories = props.currentServer.categories?.map(c => {
       const element = (
-        <ServerChannelListCategory
-          key={`wrapper-${c.id}`}
-          category={c}
-          props={props}
-        />
+        <ServerChannelListCategory key={`wrapper-${c.id}`} category={c} />
       );
       for (const cnl of c.channels) {
         if (!processedChannels.includes(cnl)) {
@@ -174,9 +175,13 @@ const ServerChannelList = observer((props: ServerChannelListProps) => {
                 key={c._id}
                 channel={c}
                 onPress={() => {
-                  props.onChannelClick(c);
+                  setCurrentChannel(c);
+                  setSideMenuOpen(false);
                 }}
-                selected={props.currentChannel?._id === c._id}
+                selected={
+                  typeof currentChannel !== 'string' &&
+                  currentChannel?._id === c._id
+                }
               />
             );
           }
@@ -187,58 +192,71 @@ const ServerChannelList = observer((props: ServerChannelListProps) => {
   );
 });
 
-const UserChannelList = observer((props: CoreChannelListProps) => {
+const UserChannelList = observer(() => {
+  const {currentChannel, setCurrentChannel} = useContext(ChannelContext);
+  const {setSideMenuOpen} = useContext(SideMenuContext);
+
   const renderItem = ({item}: {item: UserChannelListChannel}) => {
     return typeof item === 'string' ? (
       item === 'Home' ? (
         <ChannelButton
           onPress={() => {
-            props.onChannelClick(null);
+            setCurrentChannel(null);
+            setSideMenuOpen(false);
           }}
           key={'home'}
           channel={'Home'}
-          selected={props.currentChannel === null}
+          selected={currentChannel === null}
         />
       ) : item === 'Friends' ? (
         <ChannelButton
           onPress={() => {
-            props.onChannelClick('friends');
+            setCurrentChannel('friends');
+            setSideMenuOpen(false);
           }}
           key={'friends'}
           channel={'Friends'}
-          selected={(props.currentChannel as Channel | string) === 'friends'}
+          selected={currentChannel === 'friends'}
         />
       ) : item === 'Saved Notes' ? (
         <ChannelButton
           onPress={async () => {
             const channel = await client.user?.openDM();
-            props.onChannelClick(channel);
+            setCurrentChannel(channel ?? null);
+            setSideMenuOpen(false);
           }}
           key={'notes'}
           channel={'Saved Notes'}
-          selected={props.currentChannel?.channel_type === 'SavedMessages'}
+          selected={
+            typeof currentChannel !== 'string' &&
+            currentChannel?.channel_type === 'SavedMessages'
+          }
         />
       ) : __DEV__ ? (
         <ChannelButton
           onPress={() => {
-            props.onChannelClick('debug');
+            setCurrentChannel('debug');
+            setSideMenuOpen(false);
           }}
           key={'debugChannel'}
           channel={'Debug'}
-          selected={(props.currentChannel as Channel | string) === 'debug'}
+          selected={currentChannel === 'debug'}
         />
       ) : null
     ) : (
       <ChannelButton
         onPress={() => {
-          props.onChannelClick(item);
+          setCurrentChannel(item);
+          setSideMenuOpen(false);
         }}
         onLongPress={() => {
           app.openProfile(item.recipient);
         }}
         delayLongPress={750}
         channel={item}
-        selected={props.currentChannel?._id === item._id}
+        selected={
+          typeof currentChannel !== 'string' && currentChannel?._id === item._id
+        }
       />
     );
   };
@@ -286,18 +304,11 @@ export const ChannelList = observer((props: ChannelListProps) => {
       style={localStyles.channelList}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}>
-      <ServerChannelList
-        onChannelClick={props.onChannelClick}
-        currentChannel={props.currentChannel}
-        currentServer={props.currentServer}
-      />
+      <ServerChannelList currentServer={props.currentServer} />
     </ScrollView>
   ) : (
     <View key={'channel-list'} style={localStyles.channelList}>
-      <UserChannelList
-        onChannelClick={props.onChannelClick}
-        currentChannel={props.currentChannel}
-      />
+      <UserChannelList />
     </View>
   );
 });

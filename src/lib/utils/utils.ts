@@ -14,6 +14,7 @@ import {
   RE_INVITE,
   WIKI_URL,
 } from '@clerotri/lib/consts';
+import {storage} from '@clerotri/lib/storage';
 import {EmojiPacks} from '@clerotri/lib/types';
 
 /**
@@ -54,6 +55,53 @@ export function parseRevoltNodes(text: string) {
     return ping;
   });
   return text;
+}
+
+export function openLastChannel() {
+  try {
+    const lastServer = storage.getString('lastServer');
+    if (lastServer) {
+      const server = client.servers.get(lastServer);
+      // if the server is undefined, either something hasn't loaded or the user left it at some point
+      if (server) {
+        app.openServer(server);
+        try {
+          const channelData = storage.getString('lastOpenedChannels');
+          let lastOpenedChannels = JSON.parse(channelData || '{}') || {};
+          let lastChannel = lastOpenedChannels[lastServer];
+          if (lastChannel) {
+            let fetchedLastChannel = client.channels.get(lastChannel);
+            if (fetchedLastChannel) {
+              app.openChannel(fetchedLastChannel);
+            }
+          }
+        } catch (channelErr) {
+          console.log(`[APP] Error getting last channel: ${channelErr}`);
+        }
+      }
+    }
+  } catch (serverErr) {
+    console.log(`[APP] Error getting last server: ${serverErr}`);
+  }
+}
+
+export function checkLastVersion() {
+  const lastVersion = storage.getString('lastVersion');
+  console.log(app.version, lastVersion);
+  if (!lastVersion || lastVersion === '') {
+    console.log(
+      `[APP] lastVersion is null (${lastVersion}), setting to app.version (${app.version})`,
+    );
+    storage.set('lastVersion', app.version);
+  } else if (app.version !== lastVersion) {
+    console.log(
+      `[APP] lastVersion (${lastVersion}) is different from app.version (${app.version})`,
+    );
+  } else {
+    console.log(
+      `[APP] lastVersion (${lastVersion}) is equal to app.version (${app.version})`,
+    );
+  }
 }
 
 export function getReadableFileSize(size: number | null) {

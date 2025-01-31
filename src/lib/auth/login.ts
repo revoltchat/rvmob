@@ -142,7 +142,7 @@ export async function loginWithToken(
   }
 }
 
-export async function loginWithSavedToken(status: any) {
+export async function loginWithSavedToken(status: string) {
   try {
     const res = storage.getString('token');
     if (typeof res !== 'string') {
