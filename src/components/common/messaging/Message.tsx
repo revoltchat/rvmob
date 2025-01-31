@@ -1,21 +1,24 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import {app} from '@clerotri/Generic';
 import {Text} from '@clerotri/components/common/atoms';
 import {PlatformModerationMessage} from '@clerotri/components/common/messaging/PlatformModerationMessage';
+import {RegularMessage} from '@clerotri/components/common/messaging/RegularMessage';
 import {SystemMessage} from '@clerotri/components/common/messaging/SystemMessage';
 import {USER_IDS} from '@clerotri/lib/consts';
+import { ThemeContext } from '@clerotri/lib/themes';
 import {MessageProps} from '@clerotri/lib/types';
-import {RegularMessage} from './RegularMessage';
 
 export const Message = observer((props: MessageProps) => {
+  const {currentTheme} = useContext(ThemeContext);
+
   let [error, setError] = useState(null as any);
   if (error) {
     return (
       <View key={props.message._id}>
-        <Text colour={'#ff4444'}>
+        <Text colour={currentTheme.error}>
           Failed to render message:{'\n'}
           {error?.message}
         </Text>

@@ -87,7 +87,7 @@ export async function sendNotifeeNotification(
             : ' <i><br>(and 1 more message)</i>'
           : ''),
       android: {
-        color: '#1AD4B2',
+        color: '#0ad3c1',
         smallIcon: 'ic_launcher_monochrome',
         largeIcon:
           channel?.server?.generateIconURL() || author?.generateAvatarURL(),

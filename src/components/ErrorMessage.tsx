@@ -29,7 +29,7 @@ export function ErrorMessage({
         following error:
       </Text>
       <View style={localStyles.errorMessageBox}>
-        <Text font={'JetBrains Mono'} colour={'#ff5555'}>
+        <Text font={'JetBrains Mono'} colour={currentTheme.error}>
           {errorMessage}
         </Text>
       </View>
