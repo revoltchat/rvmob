@@ -1,5 +1,6 @@
 import {useContext, useEffect, useState} from 'react';
 import {
+  Platform,
   Pressable,
   ScrollView,
   StatusBar,
@@ -8,7 +9,6 @@ import {
   View,
 } from 'react-native';
 
-import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 import {Drawer} from 'react-native-drawer-layout';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -24,6 +24,7 @@ import {DEFAULT_API_URL} from '@clerotri/lib/consts';
 import {ChannelContext, SideMenuContext} from '@clerotri/lib/state';
 import {storage} from '@clerotri/lib/storage';
 import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
+import {useBackHandler} from '@clerotri/lib/ui';
 
 const SideMenu = () => {
   const {currentTheme} = useContext(ThemeContext);
@@ -189,6 +190,7 @@ const generateLocalStyles = (currentTheme: Theme) => {
       flexShrink: 1,
       backgroundColor: currentTheme.background,
       paddingVertical: commonValues.sizes.small,
+      ...(Platform.OS === 'web' && {scrollbarWidth: 'none'}),
     },
     separator: {
       margin: 6,

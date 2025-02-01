@@ -43,9 +43,11 @@ export const AppInfoSection = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <View style={{alignItems: 'center'}}>
-        <AppIcon height={250} width={250} />
-      </View>
+      {Platform.OS !== 'web' && (
+        <View style={{alignItems: 'center'}}>
+          <AppIcon height={250} width={250} />
+        </View>
+      )}
       <View style={{alignItems: 'center', marginVertical: 16}}>
         <Text type={'h1'}>
           Clerotri{' '}

@@ -1,0 +1,62 @@
+@font-face {
+  src: url('../assets/fonts/Inter/Inter.ttf');
+  font-family: 'Inter';
+}
+
+@font-face {
+  src: url('../assets/fonts/Inter/Inter_bold.ttf');
+  font-family: 'Inter';
+  font-weight: bold;
+}
+
+@font-face {
+  src: url('../assets/fonts/JetBrains Mono/JetBrains Mono.ttf');
+  font-family: 'JetBrains Mono';
+}
+
+@font-face {
+  src: url('../assets/fonts/JetBrains Mono/JetBrains Mono_bold.ttf');
+  font-family: 'JetBrains Mono';
+  font-weight: bold;
+}
+
+@font-face {
+  src: url('../assets/fonts/Open Sans/Open Sans.ttf');
+  font-family: 'Open Sans';
+  font-weight: normal;
+}
+
+@font-face {
+  src: url('../assets/fonts/Open Sans/Open Sans_bold.ttf');
+  font-family: 'Open Sans';
+  font-weight: bold;
+}
+
+@font-face {
+  src: url('../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf');
+  font-family: MaterialCommunityIcons;
+}
+
+@font-face {
+  src: url('../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf');
+  font-family: MaterialIcons;
+}
+
+/* don't flashbang the user while loading */
+html {
+  background-color: #242424;
+}
+/* These styles make the body full-height */
+html,
+body {
+  height: 100%;
+}
+/* These styles disable body scrolling if you are using <ScrollView> */
+body {
+  overflow: hidden;
+}
+/* These styles make the root element full-height */
+#root {
+  display: flex;
+  height: 100%;
+}

@@ -2,7 +2,6 @@ import {useContext, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
-import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {app} from '@clerotri/Generic';
@@ -17,6 +16,7 @@ import {
 import {loginRegular, loginWithToken} from '@clerotri/lib/auth';
 import {OFFICIAL_INSTANCE_SIGNUP_URL} from '@clerotri/lib/consts';
 import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {useBackHandler} from '@clerotri/lib/ui';
 import {openUrl} from '@clerotri/lib/utils';
 
 function LoginTypeSelector({

@@ -1,4 +1,5 @@
 export {getColour} from './colourUtils';
+export {showToast} from './nativeUtils';
 export {
   calculateGrouped,
   checkLastVersion,
@@ -7,7 +8,6 @@ export {
   openLastChannel,
   openUrl,
   parseRevoltNodes,
-  showToast,
   sleep,
   unicodeEmojiURL,
 } from './utils';

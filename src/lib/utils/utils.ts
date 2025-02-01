@@ -186,16 +186,6 @@ export async function fetchMessages(
   return result;
 }
 
-export function showToast(badgeName: string) {
-  if (Platform.OS === 'android') {
-    ToastAndroid.show(badgeName, ToastAndroid.SHORT);
-  } else {
-    console.warn(
-      `[UTILS] attempted to show toast outside android (${badgeName}) - implement this !!!`,
-    );
-  }
-}
-
 export const openUrl = (url: string) => {
   console.log(`[FUNCTIONS] Handling URL: ${url}`);
   if (url.startsWith('/@')) {

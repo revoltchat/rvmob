@@ -15,8 +15,9 @@
     "test": "jest",
     "lint": "eslint .",
     "license-list": "yarn licenses list --production --json --recursive > assets/data/licenses.json && node scripts/licenseListProcessor.mjs -silent",
-    "web": "yarn license-list -prod && webpack-dev-server --config config/webpack.config.js --hot --mode=development",
-    "web-release": "yarn license-list -prod && webpack --config config/webpack.config.js --mode=production",
+    "web": "yarn license-list -prod && vite -c config/vite.config.ts",
+    "web-release": "yarn license-list -prod && vite build -c config/vite.config.ts",
+    "web-preview": "yarn license-list -prod && vite preview -c config/vite.config.ts",
     "knip": "knip"
   },
   "dependencies": {
@@ -69,7 +70,7 @@
     "@rnx-kit/metro-plugin-duplicates-checker": "^3.0.0",
     "@rnx-kit/metro-resolver-symlinks": "^0.2.1",
     "@rnx-kit/metro-serializer": "^2.0.0",
-    "@svgr/webpack": "^8.1.0",
+    "@svgr/rollup": "^8.1.0",
     "@types/babel__core": "^7.20.5",
     "@types/eslint": "^8.56.12",
     "@types/jest": "^29.5.14",
@@ -79,6 +80,7 @@
     "@types/react-native-vector-icons": "^6.4.18",
     "@types/react-native-web": "^0.19.0",
     "@types/react-test-renderer": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
     "babel-loader": "^9.2.1",
     "babel-plugin-module-resolver": "^5.0.2",
     "babel-plugin-react-native-web": "^0.19.13",
@@ -92,9 +94,8 @@
     "react-test-renderer": "^18.3.1",
     "typescript": "^5.7.3",
     "url-loader": "^4.1.1",
-    "webpack": "^5.97.1",
-    "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.0"
+    "vite": "^6.0.11",
+    "vite-plugin-react-native-web": "^2.1.1"
   },
   "engines": {
     "node": ">=18"
