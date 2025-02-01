@@ -29,4 +29,5 @@ export default defineConfig({
       jsx: 'automatic',
     },
   },
+  server: {allowedHosts: ['local.revolt.chat']},
 });

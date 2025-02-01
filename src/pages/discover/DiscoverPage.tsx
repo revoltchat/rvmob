@@ -2,23 +2,16 @@ import {useContext, useEffect, useState} from 'react';
 import {FlatList, Platform, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
-import {DOMParser} from '@xmldom/xmldom';
-
 import {app} from '@clerotri/Generic';
-import {client} from '@clerotri/lib/client';
 import {styles} from '@clerotri/Theme';
 import {Button, GeneralAvatar, Text} from '@clerotri/components/common/atoms';
 import {ChannelHeader} from '@clerotri/components/navigation/ChannelHeader';
 import {SpecialChannelIcon} from '@clerotri/components/navigation/SpecialChannelIcon';
+import {client} from '@clerotri/lib/client';
 import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {DOMParserFunction} from '@clerotri/lib/utils';
 
-const parser = new DOMParser({
-  errorHandler: (level, message) => {
-    if (level === 'error') {
-      throw new Error(message);
-    }
-  },
-});
+const parser = DOMParserFunction();
 
 const ServerEntry = ({server}: {server: any}) => {
   const {currentTheme} = useContext(ThemeContext);

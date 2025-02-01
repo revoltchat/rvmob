@@ -1,5 +1,5 @@
 export {getColour} from './colourUtils';
-export {showToast} from './nativeUtils';
+export {DOMParserFunction, showToast} from './nativeUtils';
 export {
   calculateGrouped,
   checkLastVersion,

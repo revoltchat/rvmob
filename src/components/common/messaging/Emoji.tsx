@@ -1,8 +1,7 @@
 import {useState} from 'react';
 import {StyleSheet} from 'react-native';
 
-import {SvgUri} from 'react-native-svg';
-
+import { SVGEmoji } from './SVGEmoji';
 import {Image} from '@clerotri/crossplat/Image';
 import {app} from '@clerotri/Generic';
 import {client} from '@clerotri/lib/client';
@@ -14,27 +13,6 @@ import {
   RevoltEmojiDictionary,
 } from '@clerotri/lib/consts';
 import {EmojiPacks} from '@clerotri/lib/types';
-import {unicodeEmojiURL} from '@clerotri/lib/utils';
-
-const SvgEmoji = ({id, pack}: {id: string; pack: EmojiPacks}) => {
-  const [error, setError] = useState(false);
-  if (error) {
-    return <Text>{`:${id}:`}</Text>;
-  }
-  if (Object.hasOwn(RevoltEmojiDictionary, id)) {
-    id = RevoltEmojiDictionary[id];
-  }
-  return (
-    <SvgUri
-      width={localStyles.emoji.width}
-      height={localStyles.emoji.height}
-      style={localStyles.emoji}
-      uri={unicodeEmojiURL(id, pack)}
-      onError={() => setError(true)}
-      fallback={<Text>{`:${id}:`}</Text>}
-    />
-  );
-};
 
 const CustomEmoji = ({id}: {id: string}) => {
   const [error, setError] = useState(false);
@@ -72,7 +50,7 @@ export function renderEmoji(content: string) {
       renderedSubparts = subparts
         .map((id, i) =>
           i % 2 === 1 ? (
-            <SvgEmoji key={`${id}-${i}`} id={id} pack={emojiPack} />
+            <SVGEmoji key={`${id}-${i}`} id={id} pack={emojiPack} />
           ) : (
             id
           ),
@@ -86,7 +64,7 @@ export function renderEmoji(content: string) {
           if (emojis) {
             let text = s.split(RE_UNICODE_EMOJI);
             emojis = emojis.map((u, i) => (
-              <SvgEmoji
+              <SVGEmoji
                 key={`unicode-emoji-${i}-${Math.random()}`}
                 id={u}
                 pack={emojiPack}
