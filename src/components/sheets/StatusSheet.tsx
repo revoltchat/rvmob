@@ -3,7 +3,6 @@ import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import type BottomSheetCore from '@gorhom/bottom-sheet';
-import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 
 import {setFunction} from '@clerotri/Generic';
 import {client} from '@clerotri/lib/client';
@@ -11,6 +10,7 @@ import {ContextButton, InputWithButton, Text} from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
 import {STATUSES} from '@clerotri/lib/consts';
 import {ThemeContext} from '@clerotri/lib/themes';
+import {useBackHandler} from '@clerotri/lib/ui';
 
 export const StatusSheet = observer(() => {
   const {currentTheme} = useContext(ThemeContext);

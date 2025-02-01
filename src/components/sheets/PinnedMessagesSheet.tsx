@@ -3,7 +3,6 @@ import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import type BottomSheetCore from '@gorhom/bottom-sheet';
-import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 
 import type {Channel, Message as RevoltMessage} from 'revolt.js';
 
@@ -12,6 +11,7 @@ import {Text} from '@clerotri/components/common/atoms';
 import {BottomSheet} from '@clerotri/components/common/BottomSheet';
 import {Message} from '@clerotri/components/common/messaging';
 import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {useBackHandler} from '@clerotri/lib/ui';
 
 export const PinnedMessagesSheet = observer(() => {
   const {currentTheme} = useContext(ThemeContext);

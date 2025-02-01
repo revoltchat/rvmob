@@ -4,7 +4,6 @@ import {Pressable, ScrollView, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import type BottomSheetCore from '@gorhom/bottom-sheet';
-import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -29,6 +28,7 @@ import {MiniProfile, RoleView} from '@clerotri/components/common/profile';
 import {UserList} from '@clerotri/components/navigation/UserList';
 import {BADGES, USER_IDS} from '@clerotri/lib/consts';
 import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {useBackHandler} from '@clerotri/lib/ui';
 import {openUrl, parseRevoltNodes, showToast} from '@clerotri/lib/utils';
 
 export const ProfileSheet = observer(() => {

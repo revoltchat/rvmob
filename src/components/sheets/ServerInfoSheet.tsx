@@ -3,7 +3,6 @@ import {TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import type BottomSheetCore from '@gorhom/bottom-sheet';
-import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -14,6 +13,7 @@ import {client} from '@clerotri/lib/client';
 import {styles} from '@clerotri/Theme';
 import {SERVER_FLAGS, SPECIAL_SERVERS} from '@clerotri/lib/consts';
 import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {useBackHandler} from '@clerotri/lib/ui';
 import {showToast} from '@clerotri/lib/utils';
 import {
   ContextButton,

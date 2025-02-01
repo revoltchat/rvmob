@@ -4,7 +4,6 @@ import {observer} from 'mobx-react-lite';
 
 import type BottomSheetCore from '@gorhom/bottom-sheet';
 import Clipboard from '@react-native-clipboard/clipboard';
-import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -20,6 +19,7 @@ import {
 import {BottomSheet} from '@clerotri/components/common/BottomSheet';
 import {ReplyMessage} from '@clerotri/components/common/messaging/ReplyMessage';
 import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {useBackHandler} from '@clerotri/lib/ui';
 
 export const MessageMenuSheet = observer(() => {
   const {currentTheme} = useContext(ThemeContext);

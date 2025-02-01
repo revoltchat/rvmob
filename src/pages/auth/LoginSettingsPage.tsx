@@ -1,8 +1,6 @@
 import {useContext, useState} from 'react';
 import {View} from 'react-native';
 
-import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
-
 import {app} from '@clerotri/Generic';
 import {
   BackButton,
@@ -12,6 +10,7 @@ import {
 } from '@clerotri/components/common/atoms';
 import {LoadingScreen} from '@clerotri/components/views/LoadingScreen';
 import {commonValues, ThemeContext} from '@clerotri/lib/themes';
+import {useBackHandler} from '@clerotri/lib/ui';
 
 export const LoginSettingsPage = ({callback}: {callback: () => void}) => {
   const {currentTheme} = useContext(ThemeContext);

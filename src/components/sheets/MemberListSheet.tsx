@@ -3,7 +3,6 @@ import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import type BottomSheetCore from '@gorhom/bottom-sheet';
-import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 
 import {Server, type Channel, type User} from 'revolt.js';
 
@@ -11,6 +10,7 @@ import {setFunction} from '@clerotri/Generic';
 import {Text} from '../common/atoms';
 import {BottomSheet} from '../common/BottomSheet';
 import {UserList} from '../navigation/UserList';
+import {useBackHandler} from '@clerotri/lib/ui';
 
 export const MemberListSheet = observer(() => {
   const [context, setContext] = useState(null as Channel | Server | null);

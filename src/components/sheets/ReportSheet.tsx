@@ -3,7 +3,6 @@ import {ScrollView, StyleSheet, TextInput, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import type BottomSheetCore from '@gorhom/bottom-sheet';
-import {useBackHandler} from '@react-native-community/hooks/lib/useBackHandler';
 
 import type {Message} from 'revolt.js';
 
@@ -20,6 +19,7 @@ import {MarkdownView} from '@clerotri/components/common/MarkdownView';
 import {USER_IDS} from '@clerotri/lib/consts';
 import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
 import type {ReportedObject} from '@clerotri/lib/types';
+import {useBackHandler} from '@clerotri/lib/ui';
 
 type Reason = {
   label: string;
