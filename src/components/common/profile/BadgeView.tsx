@@ -8,7 +8,8 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 
 import type {User} from 'revolt.js';
 
-import {Link, Text} from '@clerotri/components/common/atoms';
+import {Link} from '@clerotri/components/common/atoms/Link';
+import {Text} from '@clerotri/components/common/atoms/Text';
 import {BADGES, USER_IDS} from '@clerotri/lib/consts';
 import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 import {openUrl, showToast} from '@clerotri/lib/utils';
