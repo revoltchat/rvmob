@@ -10,11 +10,13 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
     }
     dependencies {
         classpath('com.android.tools.build:gradle')
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+        classpath("app.accrescent.tools.bundletool:app.accrescent.tools.bundletool.gradle.plugin:0.2.4")
     }
 }
 

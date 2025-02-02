@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+apply plugin: "app.accrescent.tools.bundletool"
 
 /** 
  * This is the configuration block to customize your React Native Android app.
@@ -114,6 +115,18 @@ android {
             }
         }
     }
+
+    bundletool {
+        signingConfig {
+            if (project.hasProperty('CLEROTRI_UPLOAD_STORE_FILE')) {
+                storeFile = file(CLEROTRI_UPLOAD_STORE_FILE)
+                storePassword = CLEROTRI_UPLOAD_STORE_PASSWORD
+                keyAlias = CLEROTRI_UPLOAD_KEY_ALIAS
+                keyPassword = CLEROTRI_UPLOAD_KEY_PASSWORD
+            }
+        }
+    }
+
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
