@@ -170,7 +170,7 @@ export const BADGES = {
   EarlyAdopter: 256,
   ReservedRelevantJokeBadge1: 512,
   ReservedRelevantJokeBadge2: 1024,
-};
+} as const;
 
 export const SERVER_FLAGS = {
   Official: 1,

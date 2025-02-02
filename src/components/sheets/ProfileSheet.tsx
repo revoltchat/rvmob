@@ -1,4 +1,3 @@
-/* eslint-disable no-bitwise */
 import {useContext, useEffect, useRef, useState} from 'react';
 import {Pressable, ScrollView, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
@@ -18,18 +17,20 @@ import {
   ContextButton,
   CopyIDButton,
   GeneralAvatar,
-  Link,
   Text,
   Username,
 } from '@clerotri/components/common/atoms';
 import {BottomSheet} from '@clerotri/components/common/BottomSheet';
 import {MarkdownView} from '@clerotri/components/common/MarkdownView';
-import {MiniProfile, RoleView} from '@clerotri/components/common/profile';
+import {
+  BadgeView,
+  MiniProfile,
+  RoleView,
+} from '@clerotri/components/common/profile';
 import {UserList} from '@clerotri/components/navigation/UserList';
-import {BADGES, USER_IDS} from '@clerotri/lib/consts';
 import {commonValues, ThemeContext} from '@clerotri/lib/themes';
 import {useBackHandler} from '@clerotri/lib/ui';
-import {openUrl, parseRevoltNodes, showToast} from '@clerotri/lib/utils';
+import {parseRevoltNodes} from '@clerotri/lib/utils';
 
 export const ProfileSheet = observer(() => {
   const {currentTheme} = useContext(ThemeContext);
@@ -235,6 +236,7 @@ export const ProfileSheet = observer(() => {
               </View>
             </View>
             {user.flags ? (
+              /* eslint-disable no-bitwise */
               user.flags & 1 ? (
                 <Text colour={currentTheme.error}>User is suspended</Text>
               ) : user.flags & 2 ? (
@@ -244,7 +246,8 @@ export const ProfileSheet = observer(() => {
               ) : user.flags & 4 ? (
                 <Text colour={currentTheme.error}>User is banned</Text>
               ) : null
-            ) : null}
+            ) : /* eslint-enable no-bitwise */
+            null}
             {user.relationship !== 'User' ? (
               <>
                 <View style={{flexDirection: 'row'}}>
@@ -446,257 +449,7 @@ export const ProfileSheet = observer(() => {
                   </>
                 ) : null}
                 {server && <RoleView user={user} server={server} />}
-                {user.badges ? (
-                  <>
-                    <Text type={'profile'}>
-                      BADGES {'('}
-                      <Link
-                        link={'https://support.revolt.chat/kb/account/badges'}
-                        label={'learn more'}
-                        style={{marginVertical: 5, fontWeight: 'bold'}}
-                      />
-                      {')'}
-                    </Text>
-                    <ScrollView
-                      style={{
-                        flexDirection: 'row',
-                        height: 38,
-                        marginVertical: commonValues.sizes.xs,
-                      }}
-                      contentContainerStyle={{alignItems: 'center'}}
-                      horizontal={true}>
-                      <>
-                        {Object.keys(BADGES).map(b => {
-                          if (user.badges! & BADGES[b]) {
-                            return (
-                              <View
-                                style={{
-                                  height: 32,
-                                  width: 32,
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  marginRight: commonValues.sizes.medium,
-                                }}
-                                key={b}>
-                                {(() => {
-                                  switch (b) {
-                                    case 'Founder':
-                                      return (
-                                        <TouchableOpacity
-                                          onPress={() => showToast('Founder')}>
-                                          <MaterialIcon
-                                            name="star"
-                                            size={28}
-                                            color={'red'}
-                                          />
-                                        </TouchableOpacity>
-                                      );
-                                    case 'Developer':
-                                      return (
-                                        <TouchableOpacity
-                                          onPress={() =>
-                                            showToast('Revolt Developer')
-                                          }>
-                                          <MaterialIcon
-                                            name="build"
-                                            size={28}
-                                            color={
-                                              currentTheme.foregroundSecondary
-                                            }
-                                          />
-                                        </TouchableOpacity>
-                                      );
-                                    case 'Translator':
-                                      return (
-                                        <TouchableOpacity
-                                          onPress={() =>
-                                            showToast('Translator')
-                                          }>
-                                          <MaterialIcon
-                                            name="translate"
-                                            size={28}
-                                            color={'green'}
-                                          />
-                                        </TouchableOpacity>
-                                      );
-                                    case 'Supporter':
-                                      return (
-                                        <TouchableOpacity
-                                          onPress={() => showToast('Donator')}
-                                          onLongPress={() =>
-                                            openUrl('https://insrt.uk/donate')
-                                          }>
-                                          <MaterialCommunityIcon
-                                            name="cash"
-                                            size={28}
-                                            color={'#80c95b'}
-                                          />
-                                        </TouchableOpacity>
-                                      );
-                                    case 'ResponsibleDisclosure':
-                                      return (
-                                        <TouchableOpacity
-                                          onPress={() =>
-                                            showToast(
-                                              'Responisbly disclosed a security issue',
-                                            )
-                                          }>
-                                          <MaterialCommunityIcon
-                                            name="bug-check"
-                                            size={28}
-                                            color={'pink'}
-                                          />
-                                        </TouchableOpacity>
-                                      );
-                                    case 'EarlyAdopter':
-                                      return (
-                                        <TouchableOpacity
-                                          onPress={() =>
-                                            showToast('Early Adopter')
-                                          }>
-                                          <MaterialCommunityIcon
-                                            name="beta"
-                                            size={28}
-                                            color={'cyan'}
-                                          />
-                                        </TouchableOpacity>
-                                      );
-                                    case 'PlatformModeration':
-                                      return (
-                                        <TouchableOpacity
-                                          onPress={() =>
-                                            showToast('Platform Moderator')
-                                          }>
-                                          <MaterialIcon
-                                            name="gavel"
-                                            size={28}
-                                            color={'red'}
-                                          />
-                                        </TouchableOpacity>
-                                      );
-                                    case 'Paw':
-                                      return (
-                                        <TouchableOpacity
-                                          onPress={() =>
-                                            showToast("Insert's Paw")
-                                          }>
-                                          <Text style={{fontSize: 24}}>✌️</Text>
-                                        </TouchableOpacity>
-                                      );
-                                    case 'ReservedRelevantJokeBadge1':
-                                      return (
-                                        <TouchableOpacity
-                                          onPress={() => showToast('amogus')}>
-                                          <Text style={{fontSize: 24}}>📮</Text>
-                                        </TouchableOpacity>
-                                      );
-                                    case 'ReservedRelevantJokeBadge2':
-                                      return (
-                                        <TouchableOpacity
-                                          onPress={() =>
-                                            showToast("It's Morbin Time")
-                                          }>
-                                          <Text style={{fontSize: 24}}>🦇</Text>
-                                        </TouchableOpacity>
-                                      );
-                                    default:
-                                      return (
-                                        <TouchableOpacity
-                                          onPress={() => showToast(b)}>
-                                          <Text
-                                            style={{
-                                              color:
-                                                currentTheme.foregroundSecondary,
-                                              fontSize: 8,
-                                            }}>
-                                            [{b}]
-                                          </Text>
-                                        </TouchableOpacity>
-                                      );
-                                  }
-                                })()}
-                              </View>
-                            );
-                          }
-                        })}
-                        {USER_IDS.developers.includes(user._id) ? (
-                          <TouchableOpacity
-                            onPress={() => showToast('Clerotri Developer')}>
-                            <View
-                              style={{
-                                borderRadius: 3,
-                                backgroundColor: currentTheme.accentColor,
-                                height: 21,
-                                padding: 4,
-                              }}>
-                              <Text
-                                style={{
-                                  color: currentTheme.accentColorForeground,
-                                  fontWeight: 'bold',
-                                  fontSize: 16,
-                                  marginTop: -5,
-                                  marginLeft: -1,
-                                }}>
-                                RV
-                              </Text>
-                            </View>
-                          </TouchableOpacity>
-                        ) : null}
-                        {user._id === USER_IDS.teamMembers.lea ? (
-                          <TouchableOpacity
-                            onPress={() => showToast("Lea's Paw")}>
-                            <View
-                              style={{
-                                height: 32,
-                                width: 32,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                marginRight: commonValues.sizes.medium,
-                              }}
-                              key={'lea-paw'}>
-                              <MaterialCommunityIcon
-                                name={'paw'}
-                                size={28}
-                                color={currentTheme.foregroundSecondary}
-                              />
-                            </View>
-                          </TouchableOpacity>
-                        ) : null}
-                        {user._id === USER_IDS.teamMembers.insert ? (
-                          <TouchableOpacity
-                            onPress={() => showToast('raccoon 🦝')}>
-                            <View
-                              style={{
-                                height: 32,
-                                width: 32,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                marginRight: commonValues.sizes.medium,
-                              }}
-                              key={'insert-raccoon'}>
-                              <Text style={{fontSize: 24}}>🦝</Text>
-                            </View>
-                          </TouchableOpacity>
-                        ) : null}
-                        {user._id === USER_IDS.teamMembers.infi ? (
-                          <TouchableOpacity onPress={() => showToast('ink-fi')}>
-                            <View
-                              style={{
-                                height: 32,
-                                width: 32,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                marginRight: commonValues.sizes.medium,
-                              }}
-                              key={'infi-octopus'}>
-                              <Text style={{fontSize: 24}}>🐙</Text>
-                            </View>
-                          </TouchableOpacity>
-                        ) : null}
-                      </>
-                    </ScrollView>
-                  </>
-                ) : null}
+                {user.badges && <BadgeView user={user} />}
                 <Text type={'profile'}>BIO</Text>
                 {profile.content ? (
                   <MarkdownView>
