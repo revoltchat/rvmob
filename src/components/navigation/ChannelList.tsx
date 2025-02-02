@@ -39,6 +39,8 @@ const ServerChannelListCategory = observer(
   ({category}: {category: API.Category}) => {
     const {currentChannel, setCurrentChannel} = useContext(ChannelContext);
 
+    const {setSideMenuOpen} = useContext(SideMenuContext);
+
     const [isVisible, setIsVisible] = useState(true);
 
     return (
@@ -67,6 +69,7 @@ const ServerChannelListCategory = observer(
                   channel={c}
                   onPress={() => {
                     setCurrentChannel(c);
+                    setSideMenuOpen(false);
                   }}
                   selected={
                     typeof currentChannel !== 'string' &&

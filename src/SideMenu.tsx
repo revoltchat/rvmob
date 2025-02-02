@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useState} from 'react';
 import {
   Platform,
   Pressable,
@@ -110,14 +110,12 @@ export const SideMenuHandler = () => {
   const {currentTheme} = useContext(ThemeContext);
   const localStyles = generateLocalStyles(currentTheme);
 
-  const {sideMenuOpen, setSideMenuOpen} = useContext(SideMenuContext);
+  const [sideMenuOpen, setSideMenuOpen] = useState(false);
 
-  const {currentChannel} = useContext(ChannelContext);
-
-  useEffect(() => {
-    console.log('hiii');
-    setSideMenuOpen(false);
-  }, [currentChannel, setSideMenuOpen]);
+  setFunction('openLeftMenu', async (o: boolean) => {
+    console.log(`[APP] Setting left menu open state to ${o}`);
+    setSideMenuOpen(o);
+  });
 
   const {height, width} = useWindowDimensions();
 
@@ -131,7 +129,7 @@ export const SideMenuHandler = () => {
   });
 
   return (
-    <>
+    <SideMenuContext.Provider value={{sideMenuOpen, setSideMenuOpen}}>
       <StatusBar
         animated={true}
         backgroundColor={
@@ -169,7 +167,7 @@ export const SideMenuHandler = () => {
           <ChannelView />
         </Drawer>
       )}
-    </>
+    </SideMenuContext.Provider>
   );
 };
 

@@ -25,7 +25,6 @@ import {
 import {
   ChannelContext,
   OrderedServersContext,
-  SideMenuContext,
 } from '@clerotri/lib/state';
 import {storage} from '@clerotri/lib/storage';
 import {ThemeContext} from '@clerotri/lib/themes';
@@ -71,13 +70,6 @@ function LoggedInViews({
 
   setFunction('getCurrentChannel', () => {
     return currentChannel;
-  });
-
-  const [sideMenuOpen, setSideMenuOpen] = useState(false);
-
-  setFunction('openLeftMenu', async (o: boolean) => {
-    console.log(`[APP] Setting left menu open state to ${o}`);
-    setSideMenuOpen(o);
   });
 
   const {setOrderedServers} = useContext(OrderedServersContext);
@@ -163,7 +155,6 @@ function LoggedInViews({
 
   return (
     <ChannelContext.Provider value={{currentChannel, setCurrentChannel}}>
-      <SideMenuContext.Provider value={{sideMenuOpen, setSideMenuOpen}}>
         <SideMenuHandler />
         <Modals />
         <NetworkIndicator client={client} />
@@ -173,7 +164,6 @@ function LoggedInViews({
             dismiss={() => setNotificationMessage(null)}
           />
         </View>
-      </SideMenuContext.Provider>
     </ChannelContext.Provider>
   );
 }
