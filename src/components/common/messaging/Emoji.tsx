@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {StyleSheet} from 'react-native';
 
-import { SVGEmoji } from './SVGEmoji';
+import {SVGEmoji} from './SVGEmoji';
 import {Image} from '@clerotri/crossplat/Image';
 import {app} from '@clerotri/Generic';
 import {client} from '@clerotri/lib/client';

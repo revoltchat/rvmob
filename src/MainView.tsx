@@ -22,10 +22,7 @@ import {
   handleMessageNotification,
   setUpNotifeeListener,
 } from '@clerotri/lib/notifications';
-import {
-  ChannelContext,
-  OrderedServersContext,
-} from '@clerotri/lib/state';
+import {ChannelContext, OrderedServersContext} from '@clerotri/lib/state';
 import {storage} from '@clerotri/lib/storage';
 import {ThemeContext} from '@clerotri/lib/themes';
 import {CVChannel} from '@clerotri/lib/types';
@@ -155,15 +152,15 @@ function LoggedInViews({
 
   return (
     <ChannelContext.Provider value={{currentChannel, setCurrentChannel}}>
-        <SideMenuHandler />
-        <Modals />
-        <NetworkIndicator client={client} />
-        <View style={{position: 'absolute', top: 20, left: 0, width: '100%'}}>
-          <Notification
-            message={notificationMessage}
-            dismiss={() => setNotificationMessage(null)}
-          />
-        </View>
+      <SideMenuHandler />
+      <Modals />
+      <NetworkIndicator client={client} />
+      <View style={{position: 'absolute', top: 20, left: 0, width: '100%'}}>
+        <Notification
+          message={notificationMessage}
+          dismiss={() => setNotificationMessage(null)}
+        />
+      </View>
     </ChannelContext.Provider>
   );
 }

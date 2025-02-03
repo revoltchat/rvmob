@@ -1,6 +1,6 @@
 import {Platform, ToastAndroid} from 'react-native';
 
-import { DOMParser as CoreDOMParser } from '@xmldom/xmldom';
+import {DOMParser as CoreDOMParser} from '@xmldom/xmldom';
 
 export function showToast(badgeName: string) {
   if (Platform.OS === 'android') {
