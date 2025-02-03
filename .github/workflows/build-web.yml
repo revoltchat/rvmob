@@ -41,6 +41,8 @@ jobs:
         run: yarn web-release
       - name: Set up Pages
         uses: actions/configure-pages@v5
+      - name: Fix paths in index.html
+        run: sed -i -E 's/\/assets/\.\/assets/gm;t' dist/web/index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
