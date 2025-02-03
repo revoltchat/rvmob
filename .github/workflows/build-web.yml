@@ -41,11 +41,13 @@ jobs:
         run: yarn web-release
       - name: Set up Pages
         uses: actions/configure-pages@v5
+      - name: hmmm
+        run: ls ./dist && ls ./dist/web
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload built files
-          path: './dist/web/**/*'
+          path: './dist/web'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
