@@ -1,5 +1,5 @@
 import {useContext, useState} from 'react';
-import {Platform, Pressable, StyleSheet, TextInput, View} from 'react-native';
+import {Platform, Pressable, StyleSheet, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {observer} from 'mobx-react-lite';
 
@@ -14,7 +14,7 @@ import {app, setFunction} from '@clerotri/Generic';
 import {client} from '@clerotri/lib/client';
 import {styles} from '@clerotri/Theme';
 import {DocumentPicker} from '@clerotri/crossplat/DocumentPicker';
-import {Avatar, Text, Username} from '@clerotri/components/common/atoms';
+import {Avatar, Input, Text, Username} from '@clerotri/components/common/atoms';
 import {USER_IDS} from '@clerotri/lib/consts';
 import {storage} from '@clerotri/lib/storage';
 import {commonValues, Theme, ThemeContext} from '@clerotri/lib/themes';
@@ -228,7 +228,7 @@ export const MessageBox = observer((props: MessageBoxProps) => {
             />
           </Pressable>
         ) : null}
-        <TextInput
+        <Input
           multiline
           placeholderTextColor={currentTheme.foregroundSecondary}
           style={{

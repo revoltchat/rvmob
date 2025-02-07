@@ -17,6 +17,9 @@ export function Input(props: InputProps) {
         props.isLoginInput ? localStyles.loginInput : localStyles.input,
         props.style,
       ]}
+      cursorColor={currentTheme.accentColor}
+      selectionHandleColor={currentTheme.accentColor}
+      selectionColor={`${currentTheme.accentColor}60`}
       {...props}
     />
   );

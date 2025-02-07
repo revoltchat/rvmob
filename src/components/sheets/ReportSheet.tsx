@@ -1,5 +1,5 @@
 import {useContext, useMemo, useRef, useState} from 'react';
-import {ScrollView, StyleSheet, TextInput, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
 import type BottomSheetCore from '@gorhom/bottom-sheet';
@@ -11,6 +11,7 @@ import {client} from '@clerotri/lib/client';
 import {
   Avatar,
   Button,
+  Input,
   Text,
   Username,
 } from '@clerotri/components/common/atoms';
@@ -345,7 +346,7 @@ export const ReportSheet = observer(() => {
             {reason.reason && !status.status && (
               <>
                 <Text>You can add more context to your report here.</Text>
-                <TextInput
+                <Input
                   style={localStyles.input}
                   value={additionalContext}
                   onChangeText={(c: string) => {
@@ -387,7 +388,7 @@ export const ReportSheet = observer(() => {
             {reason.reason && !status.status && (
               <>
                 <Text>You can add more context to your report here.</Text>
-                <TextInput
+                <Input
                   style={localStyles.input}
                   value={additionalContext}
                   onChangeText={(c: string) => {
@@ -425,7 +426,7 @@ export const ReportSheet = observer(() => {
             {reason.reason && !status.status && (
               <>
                 <Text>You can add more context to your report here.</Text>
-                <TextInput
+                <Input
                   style={localStyles.input}
                   value={additionalContext}
                   onChangeText={(c: string) => {

@@ -46,6 +46,9 @@ export function InputWithButton({
         onChangeText={v => {
           setValue(v);
         }}
+        cursorColor={currentTheme.accentColor}
+        selectionHandleColor={currentTheme.accentColor}
+        selectionColor={`${currentTheme.accentColor}60`}
         placeholder={placeholder}
         style={[
           localStyles.iwbInput,
