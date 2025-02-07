@@ -1,5 +1,5 @@
 import {useContext, useState} from 'react';
-import {StyleSheet, TextInput, View, ViewStyle} from 'react-native';
+import {StyleSheet, TextInput, type TextStyle, View, type ViewStyle} from 'react-native';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -27,7 +27,7 @@ export function InputWithButton({
     | {type: 'string'; content: string}
     | {type: 'icon'; name: string; pack: 'regular' | 'community'};
 
-  extraStyles?: {container?: ViewStyle; input?: ViewStyle; button?: ViewStyle};
+  extraStyles?: {container?: ViewStyle; input?: TextStyle; button?: ViewStyle};
   backgroundColor?: ViewStyle['backgroundColor'];
   onPress: any;
   skipIfSame?: boolean;
