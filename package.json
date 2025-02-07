@@ -22,7 +22,7 @@
     "knip": "knip"
   },
   "dependencies": {
-    "@gorhom/bottom-sheet": "patch:@gorhom/bottom-sheet@npm%3A5.0.6#~/.yarn/patches/@gorhom-bottom-sheet-npm-5.0.6-ee2c6d5dad.patch",
+    "@gorhom/bottom-sheet": "^5.1.0",
     "@notifee/react-native": "^9.1.8",
     "@react-native-clipboard/clipboard": "1.16.1",
     "@react-native-community/hooks": "patch:@react-native-community/hooks@npm%3A3.0.0#~/.yarn/patches/@react-native-community-hooks-npm-3.0.0-b22393eef2.patch",
@@ -39,10 +39,10 @@
     "react-error-boundary": "^5.0.0",
     "react-i18next": "^15.4.0",
     "react-native": "^0.77.0",
-    "react-native-device-info": "^14.0.2",
+    "react-native-device-info": "^14.0.4",
     "react-native-document-picker": "^9.3.1",
     "react-native-drawer-layout": "^4.1.1",
-    "react-native-gesture-handler": "https://github.com/software-mansion/react-native-gesture-handler",
+    "react-native-gesture-handler": "^2.23.0",
     "react-native-get-random-values": "^1.11.0",
     "react-native-mmkv": "^3.2.0",
     "react-native-reanimated": "3.16.7",
@@ -75,7 +75,7 @@
     "@types/babel__core": "^7.20.5",
     "@types/eslint": "^8.56.12",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.13.0",
+    "@types/node": "^22.13.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@types/react-native-vector-icons": "^6.4.18",
@@ -95,7 +95,7 @@
     "react-test-renderer": "^18.3.1",
     "typescript": "^5.7.3",
     "url-loader": "^4.1.1",
-    "vite": "^6.0.11",
+    "vite": "^6.1.0",
     "vite-plugin-react-native-web": "^2.1.1"
   },
   "engines": {
