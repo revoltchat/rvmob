@@ -269,6 +269,11 @@
             "message_box_saved_notes": "In „Meine Notizen“ gespeichert",
             "no_messages": "Keine Nachrichten",
             "no_messages_body": "Starte ein Gespräch."
+        },
+        "profile": {
+            "roles": {
+                "copied_role_id_toast": "Rollen-ID kopiert"
+            }
         }
     }
 }
