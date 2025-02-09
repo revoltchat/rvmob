@@ -1,1 +1,282 @@
-{}
+{
+    "app": {
+        "actions": {
+            "back": "Voltar",
+            "cancel": "Cancelar",
+            "close": "Fechar",
+            "confirm": "Confirmar",
+            "create_channel": "Criar canal",
+            "delete": "Excluir",
+            "save": "Salvar"
+        },
+        "discover": {
+            "count_bots_one": "{{count}} robô",
+            "count_bots_many": "{{count}} robôs",
+            "count_bots_other": "{{count}} robôs",
+            "header_bots": "Descobrir Robôs",
+            "header_servers": "Descobrir Servidores",
+            "tabs": {
+                "bots": "Robôs",
+                "servers": "Servidores"
+            },
+            "count_servers_one": "{{count}} servidor",
+            "count_servers_many": "{{count}} servidores",
+            "count_servers_other": "{{count}} servidores",
+            "fetching_bots": "Carregando robôs…",
+            "fetching_servers": "Carregando servidores…"
+        },
+        "loading": {
+            "generic": "Carregando…",
+            "connecting": "Entrando…",
+            "unknown_state": "Eita…",
+            "unknown_state_body": "Por favor, permita que os desenvolvedores saibam que você viu isso (valor: {{state}})"
+        },
+        "login": {
+            "forms": {
+                "email_placeholder": "Email",
+                "password_placeholder": "Senha",
+                "mfa_placeholder": "Código de uso único",
+                "session_token_placeholder": "Token"
+            },
+            "instance_notice": "Você está se conectando a {{url}}.",
+            "options": {
+                "login_regular": "Sim, entrar com meu email e senha",
+                "login_regular_body": "Recomendado para a maioria dos usuários.",
+                "login_session_token": "Sim, entrar com um token de sessão",
+                "signup": "Não, registrar-se",
+                "login_session_token_body": "Use isso se você estiver tendo problemas com o sistema de entrada comum. Algumas funcionalidades podem estar indisponíveis.",
+                "signup_body": "Você será redirecionado ao aplicativo da web. Assim que houver se registrado, retorne e entre."
+            },
+            "settings": {
+                "saved": "Salvo!",
+                "saved_body": "Por enquanto, você terá que fechar e reabrir o app para que as suas alterações se apliquem. Sabemos que não é o ideal - nós arrumaremos isso num momento posterior."
+            },
+            "token_info_label": "Como obter o meu token?",
+            "subheader": "Você tem uma conta?"
+        },
+        "home": {
+            "join_lounge": "Juntar-se ao Revolt Lounge",
+            "open_lounge": "Abrir o Revolt Lounge",
+            "open_rvmob": "Abrir o servidor Clerotri",
+            "open_settings": "Abrir configurações",
+            "description": "Deslize a partir da esquerda da tela ou clique no ícone de três linhas para ver os seus servidores e mensagens!",
+            "join_rvmob": "Juntar-se ao servidor Clerotri"
+        },
+        "messaging": {
+            "message_box_channel": "Conversar em #{{name}}",
+            "message_box_group": "Conversar em {{name}}",
+            "message_box_dm": "Conversar com @{{name}}",
+            "message_box_saved_notes": "Salvar nas suas notas",
+            "no_messages": "Nenhuma mensagem",
+            "reply_not_loaded": "Mensagem não carregada",
+            "no_messages_body": "Dê início à conversa."
+        },
+        "modals": {
+            "confirm_deletion": {
+                "header_role": "Excluir cargo?",
+                "header_message": "Excluir mensagem?",
+                "header_server": "Excluir servidor?",
+                "body_role": "Tem certeza que quer excluir <2>esse cargo</2>?",
+                "body_server": "Tem certeza que quer excluir <2>{{name}}</2>?",
+                "warning": "Isso não pode ser desfeito.",
+                "body_message": "Tem certeza que quer excluir <2>essa mensagem</2>?"
+            },
+            "create_channel": {
+                "header": "Criar um canal novo",
+                "name_header": "Nome",
+                "name_placeholder": "Nome do canal",
+                "type_header": "Tipo",
+                "type_text": "Canal de texto",
+                "type_voice": "Canal de voz",
+                "nsfw_header": "NSFW",
+                "nsfw_label": "Marcar canal como NSFW"
+            },
+            "edit_text": {
+                "display_name_header": "Definir nome de exibição",
+                "display_name_placeholder": "Nome de exibição",
+                "nickname_header": "Definir apelido",
+                "nickname_placeholder": "Apelido (deixe em branco para redefinir)",
+                "nickname_other_header": "Definir apelido do membro",
+                "nickname_other_placeholder": "Apelido (deixe em branco para redefinir)",
+                "role_colour_placeholder": "Cor do cargo",
+                "session_name_header": "Definir nome da sessão",
+                "session_name_placeholder": "Nome da sessão",
+                "role_colour_header": "Definir cor do cargo"
+            }
+        },
+        "servers": {
+            "settings": {
+                "general": "Geral",
+                "user_management": "Gerenciamento de Usuário",
+                "delete_server": "Excluir Servidor",
+                "overview": {
+                    "title": "Visão geral",
+                    "name": "Nome do servidor",
+                    "description": "Descrição do servidor",
+                    "markdown_tip": "Descrições de servidor suportam a formatação Markdown.",
+                    "markdown_tip_link": "Saber mais.",
+                    "description_placeholder": "Adicionar descrição…",
+                    "set_description": "Definir descrição",
+                    "system_messages": "Mensagens do sistema",
+                    "system_message_channel_types": {
+                        "user_joined": "Usuário entrou",
+                        "user_left": "Usuário saiu",
+                        "user_kicked": "Usuário expulso",
+                        "user_banned": "Usuário banido"
+                    },
+                    "system_messages_description": "Quando membros entram, saem, são expulsos ou banidos, você pode receber mensagens.",
+                    "errors": {
+                        "empty_server_name": "Nomes de servidor não podem estar vazios!"
+                    }
+                },
+                "channels": {
+                    "title": "Canais",
+                    "name": "Nome do canal",
+                    "name_placeholder": "Definir um nome pro canal…",
+                    "permissions": "Permissões do canal",
+                    "no_perms_set": "Não definido",
+                    "errors": {
+                        "empty_channel_name": "Nomes de canal não podem estar vazios!"
+                    }
+                },
+                "roles": {
+                    "title": "Cargos",
+                    "name": "Nome",
+                    "name_placeholder": "Definir um nome pro cargo…",
+                    "options_header": "Opções",
+                    "options": {
+                        "hoist": "Destacar cargo",
+                        "hoist_body": "Dispor esse cargo sobre outros na lista de membros."
+                    },
+                    "rank": "Posição",
+                    "permissions": "Permissões",
+                    "colour": "Cor",
+                    "delete": "Excluir Cargo",
+                    "set_colour": "Definir cor do cargo",
+                    "open_colour_modal": "Inserir cor manualmente",
+                    "errors": {
+                        "empty_role_name": "Nomes de cargo não podem estar vazios!"
+                    }
+                },
+                "emoji": {
+                    "title": "Emoji",
+                    "added_by": "Adicionado por @{{name}}",
+                    "empty": "Nenhum emoji",
+                    "deleted_toast": "{{name}} excluído"
+                },
+                "members": {
+                    "title": "Membros",
+                    "loading": "Buscando membros…"
+                },
+                "invites": {
+                    "title": "Convites",
+                    "loading": "Buscando convites…",
+                    "empty": "Nenhum convite"
+                },
+                "bans": {
+                    "title": "Banimentos",
+                    "loading": "Buscando banimentos…",
+                    "empty": "Nenhum banimento",
+                    "no_reason": "Nenhum motivo fornecido"
+                },
+                "customisation": "Personalização"
+            }
+        },
+        "settings": {
+            "app": {
+                "language": "Escolha seu idioma",
+                "refetchOnReconnect": "Recuperar mensagens quando reconectar",
+                "reopenLastChannel": "Reabrir o último canal em que você esteve ao abrir o app",
+                "notifications": {
+                    "enabled": "Habilitar notificações push",
+                    "enabledInApp": "Habilitar notificações no app",
+                    "notifyOnSelfPing": "Receber uma notificação quando mencionar a si mesmo"
+                },
+                "showChangelogs": "Mostrar registro de alterações após atualizar o Clerotri"
+            },
+            "ui": {
+                "home": {
+                    "holidays": "Mostrar feriados na página inicial"
+                },
+                "theme": "Tema",
+                "theme_remark": "Você terá de abrir ou fechar o menu lateral para que as suas alterações apareçam em todos os lugares.",
+                "messaging": {
+                    "doubleTapToReply": "Responder a mensagens tocando nelas duas vezes",
+                    "doubleTapToReply_remark": "Isso só é suportado na nova visualização de mensagens.",
+                    "emojiPack": "Pacote de emojis",
+                    "experimentalScrolling": "Habilitar rolagem de canais para a visualização de mensagens antiga",
+                    "experimentalScrolling_remark": "Você só pode rolar para trás.",
+                    "fontSize": "Tamanho da fonte",
+                    "fontSize_remark": "Isso será aplicado para mensagens e certas partes do app.",
+                    "messageSpacing": "Espaçamento das mensagens",
+                    "showReactions": "Mostrar reações sob mensagens",
+                    "showReactions_remark": "Você pode adicionar reações existentes, mas ainda não pode adicionar novas reações.",
+                    "showSelfInTypingIndicator": "Mostrar-se no indicador de digitação",
+                    "statusInChatAvatars": "Mostrar status do usuário nos avatares do chat",
+                    "use24H": "Usar formato de hora 24-horas",
+                    "useNewMessageView": "Usar a nova visualização de mensagem",
+                    "sendAttachments": "Habilitar o envio de anexos",
+                    "showNSFWContent": "Consentir para conteúdo +18",
+                    "showMasqAvatar": "Mostrar avatar mascarado no canto"
+                },
+                "settings": {
+                    "showExperimental": "Mostrar recursos experimentais"
+                },
+                "showDeveloperFeatures": "Mostrar ferramentas de desenvolvedor"
+            }
+        },
+        "settings_menu": {
+            "account": {
+                "title": "Conta"
+            },
+            "appearance": {
+                "title": "Aparência"
+            },
+            "functionality": {
+                "title": "Recursos"
+            },
+            "groups": {
+                "advanced": "Avançado",
+                "app": "Aplicativo",
+                "other": "Outros",
+                "user": "Usuário"
+            },
+            "i18n": {
+                "title": "Idioma"
+            },
+            "info": {
+                "title": "Sobre o Clerotri"
+            },
+            "licenses": {
+                "title": "Licenças de Código Livre",
+                "loading": "Carregando dados de licença…"
+            },
+            "other": {
+                "debug_info": "Copiar Informações de Depuração",
+                "view_issues": "Mostrar Problemas em Aberto",
+                "logout": "Sair"
+            },
+            "profile": {
+                "title": "Perfil"
+            }
+        },
+        "misc": {
+            "generic_errors": {
+                "rateLimited_toast": "Vá mais devagar e tente novamente em alguns segundos."
+            },
+            "network_indicator": {
+                "body": "Conexão perdida",
+                "hide": "(esconder)"
+            },
+            "voice": {
+                "header": "Canais de voz ainda não são suportados no Clerotri!",
+                "body": "No meio-tempo, você pode se juntar a eles através do aplicativo da web ou através do Revolt Desktop."
+            }
+        },
+        "profile": {
+            "roles": {
+                "copied_role_id_toast": "ID do cargo copiado"
+            }
+        }
+    }
+}
